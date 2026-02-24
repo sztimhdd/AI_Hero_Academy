@@ -1,0 +1,328 @@
+﻿Title,Business Line,Description
+Access to Copilot 365 for Business Development,Mid Market Business?,"I would like to pilot this through a BD lens. Being able to write emails to clients, take information in emails and have it populate existing templates for other teams. Download information from our systems like C3 to have excel analyze the data on who we should be calling for win back programs and portfolio analysis. Downloading online lists to help clean up and organize prospects to call, who to call, and what they would want to hear to best open the door for a sales visit.  Analyzing sector information in regions and forecasting where we should be spending out time. Being able to create briefing documents and credit write ups easier and faster, create tailored power point presentations to help sell our product directly to their needs.   I have a heavy list of things I think that copilot could be doing for BD to help remove administrative tasks, increase business development activities, and streamline process."
+AI corporate video post production tool,Marketing,"After shooting raw video there is often a need to add or remove elements to improve the visual storytelling. This post-production work requires frame-by-frame animation/editing to generate the desired effect. AI promises to reduce the cost and time required to do this work. For example, a recent use case would be to add realistic looking fire to a forest. Obviously it is not practical or safe to set a forest on fire therefore animation is a preferred approach.
+Problems solved: Marketing would like to acquire and test the capability of AI to enhance corporate videos with special effects to reduce the cost and time associated with this creative, prost-production process."
+AI Data Goverance on Databricks Platform and Beyond,DTS-EDOT,"Within the Databricks platform there are a couple of modules from Unity Catalog (Lakehouse Monitoring), LakehouseIQ, and Databricks Assistants. 
+
+Within Unity Catalog its currently providing recommendations to auto populate the descriptions of table and columns on the EDP. It's also providing proactive monitoring of data and workflows to automate root cause analysis for data downtime.  
+
+Further use case around automating data classifications for security, copilot experience for developers and the ability to utilize 3rd party LLMs for development of new AI applications.
+Problems solved: We have 10s thousands of data assets that require better descriptions and metadata in order to improve data discovery.  This is a significant amount of effort required to improve data discoverability.   On top of the volume of data is the overall data management, data governance and data solution delivery it takes to main EDC data.  By introducing native capabilities that Databricks offers it can help EDC manage and scale its data maturity across security, monitoring data quality, monitoring data flows, modernization data assets and maintain overall costs."
+AI for business applications,WCS - Portfolio Monitoring and Corporate Service Squad,"Hoping to have a discussion and for our tech lead to share a POC that was done outside EDC servers with mock data.
+Problems solved: I'd like to connect with the group to have a discussion with our tech lead to understand current guidelines and whether we could leverage AI tools and functions within underwriting application. 
+
+Ã‚Â Simpler applications that are quicker to build and provide an integrated user experience."
+AI WIKI for prompts as well as creating guardrails for image generation,,"As we explore the benefits of AI as a marketing tool, I wanted to offer two suggestions:
+
+1. to create a WIKI or centralized form to collaborate/share prompts as well as the results they produce, for image/text generation tools.  This will allow us to share and collaborate key words that produce results most aligned to our branding.  
+
+2. Explore the feasibility of uploading original images into a sandbox environment for the image generation tools to pull from.  The idea here being that if the tool is only pulling from images we have created, the likelihood of it scraping from artists that it maybe infringing the copyrights of might be mitigated.
+Problems solved: Improving campaign process efficiencies"
+Audit Automation Agent,Risk & Audit,Collects evidence and drafts audit reports automatically.
+Audit Evidence Summarization,Risk & Audit,Summarizes audit evidence for reporting.
+Augmented audit reports,Internal Audit,"We could leverage the text enhancement function with the tool to enhance our audit report, to be more readable and comprehensive, also the tool might be able to QA or peer review some of our work which enhance the internal process."
+Auto-Testing Agent,IT,Generates and executes automated tests for IT systems.
+Automated Portfolio Reporting Agent,Finance & Corporate Operations,Generates portfolio reports and executive summaries.
+Automating Data Observability,EDOT (Data Lake data engineers),"I hope that is will help in determine the normal operating parameters of the data lake and alert us any anomalies that pop up. I also want it to produce data quality tests in code save us having to write it manually.  Have an AI process that 'monitors' the data, monitors anomalies, train using our own data, watch the data lake, observe how the data journey taking place. Monitor the freshness, volume, schema changes etc...
+Problems solved: There are not enough human resources to effectively monitor the health of the data lake and data quality. we need a mechanism to allow us to not only perform the atomate the monitoring tasks but to help decided what needs to be monitored and make suggestions on what tests we should perform. Have to ensure data is timely, must prove to the users that 'yes' the data is correct."
+Automating Prospect Profiling,Marketing - Customer Analytics,Using VBA in Excel to call copilot to generate content for Marketing's Prospect Profiling.
+Board Report Summaries,Finance & Corporate Operations,Summarizes board reports for executive consumption.
+Board Report Summaries Agent,Finance & Corporate Operations,Creates concise board reports for executive review.
+Business Enablement - Front line Co-Pilot Use Case Generation,business enablement,"BE will require some copilot licenses to support the front line teams to identify top 'roll-out' use cases.
+Problems solved: Frontline & customer facing staff (RMs & UW) will be provided a coordinate approach in identifying use cases in which copilot can provide benefits to their day-to-day activities. Business enablement is looking to bring the teams together to have a coordinated approach to realizing these gains leveraging the advances in Generative AI technology built into our Office Suite of tools"
+Chat GPT,"Enterprise Architecture to initiate idea, handing off to DTS / Digital Products Delivery & Architecture to operationalize","EDC users would be able to access and use Chat GPT for work purposes form EDC devices, within appropriate controls.
+Problems solved: Right now EDC users are blocked from using Chat GPT which may hinder EDC taking full advantage of market advances in this space."
+Co pilot for Program Management,Program Management,"Creating: high level project plans, job aids, process maps, visualizing complex concepts though power point presentations and visual aids, internal and external communications,   
+Capture: minutes and action items as much of our time is dedicated to writing emails
+Generating analytics from qualitative data (reviewing MI and VOP) 
+Champion the use of AI in their lines of business  
+
+If we were able to leverage this AI to enhance our current capabilities we anticipate that we could increase the quality of our work and produce more output to potentially support more initiatives in less time."
+Content Creation & Lifecycle,Sales & Marketing,Generates and manages internal content with compliance tracking.
+Contract Drafting,Legal,Generates contract drafts using templates and provided information.
+Contract Review Agent,Legal,Reviews contracts to extract risks and obligations.
+Contract Risk Scoring Agent,Legal,Assigns risk scores to contracts based on clauses.
+Copilot for Power Bi,Likely Enterprise Data Operations and Tech,"EDC's current Copilot platform - Copilot for M365 - does not allow for use with Power Bi. For such use, Copilot for Fabric is required.
+Problems solved: Enhance information obtainable from Power Bi sources"
+CoPilot Premium,Customer Analytics & Modeling,Data analysis within Microsoft products ex Excel
+Copilot Premium Access request,Customer Analytics & Modeling,"I'll be using it to incorporate it with Excel, PowerPoint and other tools to hopefully improve efficiency"
+"Corporate Communications (translation, messaging)",,nan
+Create a Proof of Concept for Power BI Insights,,"Please follow up with Andrew Taylor who submitted the Intake with EDOT
+Problems solved: Create a Proof of Concept for Power BI Insights EDOT intake link https://edcanada.sharepoint.com/sites/DataStrategy/Lists/Intake%20Form/DispForm.aspx?ID=420&e=KL1krZ"
+Create GenAI Intake assessment form using Copilot Studio,,"Create a self-assessment tool and intake form, using Copilot based on EDC principles and policy and vetted GenAI tooling in our ecosystem to triage GenAI use-cases for EDC users."
+Customer Interaction Recap,Sales & Marketing,"Summarizes client calls, emails, and CRM notes for insights."
+Customer Sentiment Analysis,Sales & Marketing,Analyzes emails and notes to measure customer sentiment.
+Data mining of Company Information Processes and data quality,Company Information Management,Referencing sharepoint online sites to extract (and reference) information about data quality and processes related to the company information management team's responsibilities.  Finding opportunities to make processes more efficient.
+Document Classification & Tagging,IT,Classifies and tags documents for improved searchability.
+Economics data into text & insights,,nan
+EDC market intelligence enhancement & centralization through Gen AI,"The Business Enablement group's FPI Market Intelligence function, as it facilitates and manages the market intelligence function and MI Huddle weekly","The piloting/testing of the Microsoft Copilot tool through the use of licenses by the Business Enablement group's FPI Market Intelligence function will enable enhancements to the current market intelligence centralization function & process.
+
+The test will be performed by FPI's MI function, which will serve as a use case for to gathering, analyzing, summarizing, synthesizing, visualization and reporting of market intelligence  on a weekly basis. This will serve as a test case for other teams to leverage the same capabilities in the future to process large amounts of market intelligence.
+
+The benefactors of the pilot will be the Market Intelligence Huddle stakeholders and its leadership representation on a weekly basis every Thursday morning. 
+
+
+The use of this tool will enable the enhancement of the current Market Intelligence centralization function and its associated tools:
+
+Word: Microsoft Copilot can write, edit, summarize, and create content along with you, according to the context of your work and language being used
+
+Excel: provide insights, point out trends, and create high-quality data visualizations much quicker than it would when executed manually
+
+Data visualization & reporting: to enhance depth & breath of market intelligence gathered & shared across EDC
+
+MS Teams: create meeting summaries and action items from the context of the conversation taking place (ie: during the MI Huddle)
+Problems solved: The gathering, analysis, summarization and synthesis of market intelligence trends is a cumbersome yet important task for many teams at EDC, in order to keep the pulse on the market that our customers operate in. There is a heavy requirement for internal capacity to process all available market intelligence, in order to report on trends, adapt to market conditions and enable our customers with timely support.
+
+The ability to generate valuable and actionable insights from this large amount of available data is crucial to assist Canadian exporters and address their continuously evolving needs. The use of a Gen AI tool would help alleviate this heavy capacity burden from employees in order to capture key market intelligence and communicate it to the appropriate teams, for example through the weekly MI Huddle."
+Enable AI use in Power BI reporting,EAF,"The Copilot in PBI will help extract insight from the PBI dashboards and will also help the PBI development.
+Problems solved: Currently, sometimes it is difficult to extract the insight from complex PBI dashboards to answer users/leaders questions. A group of EAF PBI experienced developers and AI enablers are going to use the Copilot in Power BI to explore some use cases."
+Enable copilot for Power BI,Enterprise Analytics and Forecasting,"Problems solved: We are hoping to improve productivity by enabling copilot within Power BI. This will allow us to document Power BI code, generate/verify/document DAX code, suggest visualizations and document insights on our data."
+Enabling Apple Intelligence on New Corporate iPhone,Workspace Solutions,"Allow employees with the new enterprise iPhones leverage Apple Intelligence in non-EDC specific applications or work activities.
+Problems solved: Apple Intelligence is Apple's integrated and upgraded Gen AI powered 'Siri' experience that will be available with the new Corporate iPhones to be deployed before end of 2025 Q1. The Workspace Solutions team is looking to understand the guardrails and controls to be implemented in order to determine how to develop controls, policies, and change management ahead of the rollout.
+
+Note that Apple Intelligence will not be integrating with any Enterprise managed applications on the device (re: Office/ Outlook/ MS Auth/ Copilot, etc). There are also controls that can be built leveraging the Microsoft Intune platform, but this requires testing to ensure it doesn't break other needed services.
+
+Access to a GoC Apple Security specialist is available to answer your particular risk domain concerns via Glen Edmond."
+ESG Advisory Enablement,ESG Advisory - VP is Sophie Roy,"-	Use case 1: The ESG Advisory Team undertakes enhanced due diligence for non-credit risk.  The first step to this due diligence for a new transaction is gathering all the relevant information that our team may already have regarding the counterparties from previous work.   The challenge with this is that we do not currently have a case management system which makes the searching through emails an  sharepoint docusets timely/inefficient and error prone.  Copilot 365 would allow our team to search throughout all our Sharpoint site docusets, and emails more efficiently to gather ALL pertinent information and summarize key points quickly and easily.  Having all the key information at our finger tips quickly will ensure a better risk analysis and a better customer experience.  Without all the information we risk asking the client for information we may already have on hand!
+
+-	Use Case 2: Related to the fact that we do not have a case management system, reporting on our transactional work can be difficult and time consuming.  Leveraging Copilot 365 through Excel will allow us to summarize key information and trends in order to be able to quickly understand our business and create visuals for leaders and the team.  
+
+-	Use Case 3:  In ESGaÃ¢â‚¬â„¢s Enhanced Due Diligence work, advisors often receive very large files (>1MB) which Co-Pilot online cannot summrize due to the size limits.  It is assumed that Co-Pilot M365 would be able to help advisors summarize and analyze these large documents.
+
+-	Use Case 4: Advisors are constantly reprioritizing work based on new transactions and are continuously in communication with underwriting.    Co-Pilot 365 could help review calendars and emails to be able to help prioritize and therefore maximize their time increasing benefit to the internal and external client."
+Executive Brief Summaries,Finance & Corporate Operations,Creates executive summaries from structured and unstructured data.
+Expense Compliance Agent,Finance & Corporate Operations,"Validates expenses and contracts, auto-approves or escalates transactions."
+Explore Copilot 360 Option for the Credit Insurance Program,Insurance Automation,"Customer Communication
+- Content Creation: Generate drafts for documents, such as essays, business plans, or cover letters, based on prompts;
+- Formatting Assistance: Provide suggestions for improving document formatting and readability;
+- Email Drafting for customers;
+
+Financial Analysis:
+- translate f/s
+- Summarize financial analysis;
+
+Replace Robot: 
+- At this time, we have robots in place that are costly and complex to manage to manage policyholders' communications;
+
+Coding:
+- We leverage heavily Copilot when coding our model. This would speed up development.
+
+Gather intel on counterparties
+- We recently paid 6 claims totaling 200k because our system information on the parent was not up to date. Copilot had the correct info on file. Copilot can help us make better decision."
+Exporter Journey Optimization Agent,Sales & Marketing,Orchestrates and improves exporter customer journeys.
+Financial Variance Analyzer,Finance & Corporate Operations,Explains causes of financial performance variances.
+Fraud Detection Agent,Risk & Audit,Detects suspicious transactions and behaviors to prevent fraud.
+Gen AI tool for Career Development & Growth,People & Culture in collaboration with DTS EDOT & Integration teams,"The tool will use data from EDC tools and internal databases (Individual Performance data from PeopleSoft, Success Profiles and behavioral competencies, COMPASS and other L&D databases, etc.) and data manually provided by the employee (their Insights profile, areas of interest, roles, etc.) to generate personalized recommendations for individual development plan and career development options in a form of a list of recommended success profile-based roles, the % of fit to the profile and recommended training / upskilling / reskilling for each option (example: there is a 70% fit for a X role at level 19; recommended training to address identified skill gaps are: ...).
+Problems solved: To ""Empower Our Employees"" (one of our 2030 Strategy's goals and consistent with our value of Caring), EDC employees may benefit from a tool that can help them explore different career paths based on data they can feed into the tool. Today, many people managers across EDC cannot dedicate adequate amount of time for in-depth career development exploration, mentoring and coaching conversations with their direct reports. Introducing a tool that will offer meaningful and personalized insights on employee's potential career paths will empower them to actively drive their career development at EDC and help stay them motivated and engaged."
+Gen-AI empowered Market Scan for EA's Research Service,Enterprise Architecture,"Explore the possibility of using Gen-AI to help the ingestion, summarization, and drafting of market scan reports for the review of EA architect and EDC consumption.
+Problems solved: EA research services ingest 3rd party research reports to prepare market scan reports that helps various business units understand the technology market to find the best solution for their business initiatives. EA architects spend many hours reading and summarizing the 3rd party research artifact which we know Gen-AI can largely help with human review in the loop."
+Generative AI for CanCap Research,Sectors & International Advisory (SIA),"The content produced will be text, Excel data and PowerPoint files for internal use. For example, in text it could generate a list of industry associations connected to a specific industry. Another text content produced would be a list of Canadian companies listed as participants in a specific trade show. In Excel, it could classify companies listed in Excel based on the products they offer according to a defined list of value chain segments. Another example of Excel would be graphs and insights extracted from our business connections data. For example, calculate the average number of days a company introduced becomes an opportunity development by industry sector. Processes impacted include business connections CanCap requests, Sector research, CanCap insights and data quality, among others.
+Problems solved: It will help process large quantities of unstructured data to better respond to CanCap requests. For example, it could help find CanCap companies that best match the requirements of a buyer's CanCap request. Another example would be to identify relevant stakeholders in an industry's ecosystem, or processing and segmenting long lists of companies based on the products and services their offer and their position in the industry value chain."
+Global Business Development Market Intel Newsletter Content Automation,Global Business Development,"It will be used to automate the creation and distribution of a market intelligence newsletter for the Global Business Development team, ensuring relevant insights are delivered to stakeholders. It will assist in the following cases: 
+1) Use predefined templates to structure the newsletter
+2) Use natural language to summarize lengthy reports and articles into concise, digestible insights.
+3) Send content to different stakeholders based on their interests and needs."
+Grammarly,Corporate Communications,"Grammarly integrated into MS365 and provides AI based spell check/grammar editing tools in line. Anyone who creates content for their work would benefit from this tool.
+Problems solved: Having system access to Grammarly would be a great resource for the Corp Communications team, as the tool offers AI based spell check and grammar/style editing which would allow the team to produce/ review quality comms materials more efficiently."
+HR Knowledge Article Creation,,nan
+HR Self-Service Agent,"People, Culture & HR",Answers HR questions and generates documents for employees.
+Incident Communication Drafting,IT,Drafts formal communications for IT or operational incidents.
+Intelligent Incident Response Agent,IT,"Correlates IT alerts, identifies causes, and drafts incident communications."
+Internal Knowledge Center,IT,"Centralizes research, documents, and training resources."
+IT Documentation Summaries,IT,Summarizes technical documents and logs for clarity.
+"It's not a specific idea, but I would like to explore if and how AI can support a procurement function within a federal Crown Corporation.",The Procurement Team,"Could streamline many processes, such as drafting contracts, evaluating bids. Help ensure compliance with procurement regulations and policies by automatically checking for compliance issues and flagging potential risks. Provide predictive analytics and scenario planning, helping procurement teams to anticipate and mitigate risks and make more informed decisions related to procurement strategies. Analyze large volumes of data quickly and accurately. Automating and documenting procurement processes, generative AI can potentially enhance transparency and accountability ensuring that procurement activities are conducted in a fair, open and transparent manner, in line with regulations and policy. The Procurement Team would benefit as well as contract owners/business clients who have procurement requirements often viewed as slow, complex and overly bureaucratic.
+Problems solved: There are various procurement related problems/pain points that using AI can potentially help with/solve, that could be worth exploring."
+KYC / CIM Validation Agent,Risk & Audit,Automates client identity and compliance checks for onboarding.
+Legal Services Contract and Document Management,Legal,"There is a major operational inefficiency, and risk with the management and case building capabilities with how the legal team (Clerks and Admins in particular) have to search, consolidate, and share documents as part of active transactions and cases within the group. It takes over 10 hours to search, and consolidate the legal documents found across over 20 sharepoint sites used by the Legal group. There is also a risk in the current process based on document migration process, and hosting of the files. Using AI capabilities will allow for faster searching of key documents and putting together relevant information. This will improve our ability to serve more customers by improving a cumbersome process, and allow for the Legal team to focus on more value added activites."
+Leveraging AI capabilities to support EDC Legal Services Use-cases and enhancements.,Risk and Corporate Service Family,"This idea will reduce the time it takes for several legal service processes and task to be completed. It will provide reliable information to the team without having to rummage through several files, folders and emails.
+Problems solved: This idea will provide quick search capabilities for the Legal Service Team by adopting Generative AI, AI powered searches and Azure Cognitive services to search for and provide brief (or detailed) summary of emails, email attachments and its content. It will also support files and folders indexing in SharePoint, making it easier for the team to search for items with key words and prompts (e.g. Find an email sent by Jamie. F. on risk rating with a spreadsheet attachment containing risk models). These prompt functionalities will save the team a lot of man-hours spent currently to find and analyze information in emails and SharePoint. 
+The prompt functionality may be adopted to: 
+1. Perform intelligent search within Legal Knowledge Management Manuals and SharePoint Links 
+2. Perform intelligent search within EDC emails.
+3. Summarize and highlight updates/changes to Legal services documents, by whom and when last updated (intelligent version analysis)
+4. Incorporating AI searching and indexing functionalities for Legal service documents and/or correspondences. The Legal Team currently needs an improved search and retrieval model across the Legal unit and collaborating Business units. 
+5. Virtual Agent (AI chatbot) that intakes Legal search prompt and provides knowledge/insights from connected repositories 
+6. Ability to identify from AI search legal/business record duplication and compare content.
+7. AI powered Legal research tools and capabilities (the current legal counsel advice database is outdated and sometimes unavailable). The ability to leverage AI to create a self-updating legal counsel advisory platform may add value to the team's work. The ability for the team to conduct legal research across HR, ATIP, Corp Law, Privacy, ATIP, FAA, procurement e.t.c will add value to the timing & quality of work. 
+8. ServiceNow will provide a transaction tracking tool to manage legal transactions (current MS spreadsheet). Integrating Copilot into SNow may help each task owner get regular self-performance updates on their workload."
+Market Insights Generator,Sales & Marketing,Generates insights on market trends from internal and external data.
+Market Intelligence Agent,Sales & Marketing,Analyzes market trends and opportunities for business growth.
+"Meeting ""Recap"" feature in MS-Teams for Project Managers /Scrum Masters (PMs / SMs)",Delivery CoP,"Use of CoPilot in MS-Teams allows for summary of meeting discussions and actions.  An AI assist to this work will help with:
+- automating the creation of meeting summary notes
+- identifying follow-up tasks that are discussed in meetings
+- providing the ability to quickly review the meeting timeline
+- improving the accuracy and quality of notes produced at meetings
+- allowing for more SM/PM participation in meetings to help add value
+Problems solved: PMs and SMs are often the record-keepers at meetings or huddles.  The problem of having to accurately summarize what was discussed, by whom, and assign the work-items appropriately is very important to the success of the team.  Unfortunately, this is made much more challenging as they tend to have many of these meetings per day and aren't able to keep up to the demand."
+Microsoft Co-Pilot for M365 to support EDC Risk Assessments,Business Quality and Risk Support (BQRS),"A key step in a risk assessment is to conduct workshops/interviews with Initiative Owners/Subject Matter Experts (SME) to help in the identification and documentation of risks and controls. Once this step is completed, the BQRS Risk Assessment lead will then need to manually document all notes from the discussion into a complex excel based tool. Leveraging Microsoft Co-Pilot for M365 licenses, we believe we can help streamline and create efficiencies in this process (for both BQRS and our 'customer' (i.e. Initiative Owner/SME) by leveraging Co-Pilot to generate output from these workshops/interviews. This will help create and autogenerate as output a first draft of the Risk and controls tool than we can then review and revise.
+Problems solved: The BQRS team is responsible for performing risk assessments across the organization.  Each year, the team is required to complete a large number of risk assessments against an annual plan. These risk assessments are driven by robust methodology that needs to be followed. Each risk assessment engagement can take up to 4-8 weeks to complete depending on complexity. This process currently uses tools that are cumbersome and complex which result in inefficiencies and time wasted. We believe leveraging Microsoft Co-Pilot for M365 can help in process optimization and provide benefits to both BQRS and the Initiative Owner/SME undergoing the risk assessment."
+Model Risk Management & Audit reporting,,nan
+Multi-Document Summarization,IT,Produces summaries across multiple documents for rapid review.
+NLP in employee discussion,Internal Audit,"We hope to leverage natural language processing method in payroll audit, the new tool would be able to help us text mining the tickets content to analyze whatÃ¢â‚¬â„¢s the most complained related to payroll and evaluate if current areas been improved."
+Optimizing dev/code for Enterprise Portfolio Management,,nan
+Payments & Cashflow Analyzer Agent,Finance & Corporate Operations,Monitors financial flows and flags anomalies.
+Personalized Learning Agent,"People, Culture & HR",Recommends learning paths tailored to employee goals.
+Personalized Learning Path Creation,"People, Culture & HR",Designs learning paths based on employee goals and skills.
+Policy Summarization,Legal,Summarizes internal policies for easier understanding.
+Predictive Maintenance Agent,IT,Predicts equipment failures using sensor and historical data.
+Pricing Benchmark Retrieval,Sales & Marketing,Finds comparable prices in internal and external databases.
+Procurement Evaluation Agent,Finance & Corporate Operations,Compares supplier proposals and assesses risks.
+Product Owner Productivity,WCS/Financing Family,"Looking to try this out and whether it can help with draft business cases, benefits realization and mostly visuals - by using multiple M365 sources.  As a PO I have a number of different stakeholders, I think in bullets and process maps and I believe copilot would help me create higher level visuals that appeal to different audiences."
+Project Investment Summary,Finance & Corporate Operations,"Synthesizes investment files, risks, and ROI for decisions."
+Prospect Intelligence,Sales & Marketing,Creates enriched prospect profiles from various data sources.
+Record governance -  Summarizing Meeting notes and actions (with attendees tagged),not sure. can benefit all teams and record governance.,"Summarized points/actions with tags to attendees, produce an email for record and attach in the Teams meeting chat.  Produce a formal record to store.
+Problems solved: Reduce time spent to summarize meeting notes and actions and send to meeting attendees.
+Improve record governance by simplifying the process and ease of storing."
+Regulatory Change Summarization,Legal,Summarizes regulatory changes and their impacts.
+Regulatory Summary Agent,Legal,Summarizes regulatory changes and impacts for compliance.
+Reinstate the Live Translation feature in Microsoft Teams,Workplace Solutions,"The feature is a subscription service in M365.
+Problems solved: Inclusive accessible meetings for all. Note Live Translations is also bundled with a generative AI recap feature."
+Request for Copilot premium,Marketing,"I'd like to explore having Copilot help me create Power point presentations, look into having Mural connected to ADO (maybe have stories created from widgets on Mural)- would I need an API key for this?, explore auto creation of stories based on a template, autocreate a process flow map based on a description, data analysis, and who knows what else?"
+Request for Customer Care Team,Customer Care,"MS Co-pilot will enable the internal team operations.
+1. Creation of Knowledge Articles and job aids
+2. Drafting customer emails and creation of templates for repeat inquiries
+3. Creating detailed call summaries
+4. Sentiment analysis based on VOCs
+5. Quality reviews/analysis of data"
+Request for Leadership from Small Business National Accounts and Inclusive Trade,SBNA and Inclusive Trade,"To support leadership with data analysis, presentation/document creation, and Outlook - calendar/email/contacts."
+Reuse of IBA Advisory Service Mandates to scale reach of customers,International Business Advisory,"We would like to proactively feed completed mandates into an engine for the purpose of 1) creating templates to decrease effort of future mandates, 2) curate answers to different subsectors and purposes and 3) be able to ask it to create recommended responses leveraging all completed mandates that we can then use to create new material to serve more companies"
+Risk challenge model,Internal Audit,"We could use the new tool in credit risk audits, where it can help us generate some Ã¢â‚¬Å“similarÃ¢â‚¬Â financial statements or company profile based on curtain rating range and see if the model would generate desired output."
+Risk Scenario Simulator Agent,Risk & Audit,Simulates risk scenarios for better decision-making.
+RM Support Agent,Sales & Marketing,Recommends actions for Relationship Managers based on client interactions.
+Role-Based Knowledge Packs,"People, Culture & HR",Creates onboarding packs tailored to employee roles.
+Sales Transcript Analysis,Sales & Marketing,Analyzes sales conversations and suggests next actions.
+Sector Opportunity Identification Agent,Sales & Marketing,Detects and prioritizes new sector opportunities using internal and external data.
+Simultaneous Multi synchronous AI translation,Global Business Development,"CC translation
+Problems solved: Language barriers present in B2B meetings between international buyers and Canadian companies."
+Streamline production of Quarterly analysis and reporting,Insurance Analytics,Help to summarize Quarterly meetings and actions; connect to discrete data sources and compiling data/graphs; summarizing narratives; produce summary slides
+Supplier Proposal Summarization,Finance & Corporate Operations,Summarizes supplier proposals for quick comparison.
+Sustainable Business Narratives Data Ingestion,ESG-I,"We have a manual process that selects and extracts the data at this time and it is very labour intensive. The output of this manual process could be used as training The final result of the analyses and extraction of the data will be presented in a tabular format (Excel?)  This result will be used to drive a report or dashboard, it will not be generating the dashboard.
+Problems solved: We have a collection of 2500+ corporate data folders, each with annual reports for multiple years resulting in 10,000 or more individual files.   These files are in multiple formats, PDF, Excel, images, etc. with no fixed naming convention or data structure.  From this collection of files we need to identify those which are relevant to ESG-I and further extract and standardize the financial data presented."
+Talent Profile Generation,"People, Culture & HR",Generates candidate profiles from resumes and assessments.
+Talent Screening Agent,"People, Culture & HR",Ranks candidates by skills and fit for open positions.
+Teams Premium - AI Notes from Transcripts (inquiry into whether this meets our AI use policy),CEBA,"Intends to take teams meeting transcripts and leverage the teams premium AI notes tool to generate our meeting minutes.
+Problems solved: This is meant to streamline our generation of meeting minutes, ensuring we are capturing detailed discussions, solutioning and decisions during our weekly calls. It also intends to save us significant time in creating meeting minutes while allowing us to actively focus more on the conversation at hand rather than note taking."
+"The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).",FInDev Canada,"The integration of Copilot (Web) into the Impact Enablement team's workflow is designed to streamline the process of identifying and extracting Impact data from various sources, significantly reducing the time required for this task. HereÃ¢â‚¬â„¢s how it works:
+
+Data Extraction: Copilot will be used to extract Impact data from client-related documents, which are often heterogeneous and client-specific. This task is highly time-intensive as it requires reviewing numerous documents to identify and extract relevant data. Copilot's speed and performance in information extraction make it a prime tool for improving this process
+
+Impact Assessment: The Impact team uses several tools and frameworks to assess clients' impact. Copilot can aid in the process of client evaluation and assist Impact Officers in navigating complex evaluation criteria.
+
+Data Analysis: With a growing database of Impact data, Copilot can be used to conduct data analysis, uncovering interesting trends and patterns. This use case has yet to be explored in-depth but holds potential for future efficiency gains.
+
+Drafting Impact-related Documents: Copilot can help produce documents that assess the impact of potential and existing clients, such as the Development Impact section of the Investment Recommendation Memo4. This reduces the time required by officers in summarizing in-depth client research and Impact data collected from clients.
+
+Initial Results: Initial experimentation with Copilot has shown significant time savings. For example, reviewing a client's 200-page sustainability report and identifying impact metrics took approximately 5 minutes manually but only 2.5 minutes with Copilot56. Similarly, extracting data points across multiple pages and calculating portfolio-level metrics took 3 minutes manually but only 1.5 minutes with Copilot.
+
+The integration of Copilot is estimated to result in 30-50% time savings for Impact data collection activities, translating to an estimated 200-400 hours saved in the first year. This would allow the Impact team to focus on more high-value activities and projects.
+Problems solved: The primary issue is the time-intensive and complex nature of collecting, evaluating, and analyzing Impact data from various sources, including client documentation and FinDev Canada documentation. The heterogeneity and client-specific nature of these documents add to the complexity and challenge of identifying and extracting relevant Impact data.
+
+The Impact Strategies & Thought Leadership (IS&TL) team is currently addressing historical data gaps in the Impact database as part of its data modernization project3. The urgency of filling these data gaps has been heightened by the upcoming project, Ã¢â‚¬ËœInterim Evaluation of 2X Challenge Investments,Ã¢â‚¬â„¢ which has time constraints with external consultants. Given the time-sensitive nature of this evaluation, the team's limited capacity, and the identified data gaps, Copilot is seen as a valuable support tool to streamline the process of identifying and extracting Impact data from client-related documents, significantly reducing the time required for this task.
+
+The integration of Copilot (Web) is estimated to result in 30-50% time savings for Impact data collection activities, translating to an estimated 200-400 hours saved in the first year. This would allow the Impact team to focus on more high-value activities and projects."
+The Strategic Change Team (Director - Jenn Robinson) is expressing interest in being included in the initial 300 Copilot M365 licenses,Copilot Enablement Team,"1. Analyzing change impact data: Utilizing Copilot M365 to assess the impact of change initiatives, which helps in strategic decision-making.
+2. Developing content: Collaborating with Copilot M365 to create engaging and informative training content for staff undergoing changes.
+3. Managing stakeholder communications: Using Copilot M365 to draft initial communications, schedule dispatches, and manage follow-ups.
+4. Monitoring engagement and feedback: Applying Copilot M365 to track and analyze feedback on change initiatives for continuous improvement.
+5. Planning change management strategies: Employing predictive analytics to forecast potential outcomes of change strategies.
+6. Enhancing risk management processes: Utilizing Copilot M365 algorithms to predict and mitigate potential risks during the change process.
+Problems solved: As we rollout Copilot M365 across the organization, having Change Advisors part of the initial 300 licenses will allow for:
+- Change management of the pilot: Ensuring the change team is involved during the early stages of Copilot M365 implementation by helping to identify the impacts to stakeholders' groups and workflows and manage appropriate resistance. 
+- Quicker adoption of the tool: We can also create customized awareness and benefits campaigns tailored to the organizationÃ¢â‚¬â„¢s needs.
+- Experiment how the change team can leverage Copilot M365 across the strategic initiatives to be more efficient and focus on the human exclusive tasks"
+Trade Simply,Knowledge Business,"Staying up-to-date with the constantly evolving trade regulations is critical to our customers success abroad. These ever-changing rules and requirements can be complex, overwhelming, and pose a barrier to successfully deliver products to any market. Introducing Trade Simply, powered by EHH. Our latest knowledge solution can distill the dynamic trade regulations into accessible and actionable insights, empowering our customers and our internal advisors with the confidence to navigate them effectively. 
+
+To enhance the EHH experience, we will primarily rely on text-based generative content. It will focus on generating robust text content centered on key inputs provided by either the customer or our advisors to in turn generate a well-rounded trade report. These can be used by our customers to make informed decisions by leveraging the provided regulatory, market intelligence and key product information. It will also be used by our advisors to accelerate the delivery of customized answers and reports and reduce the amount of research required.  
+
+The biggest impact will be on Export Help Hub (evolve the significantly), KB & IBA advisory teams 
+
+This will be a new feature within EHH where the product will leverage expertly crafted prompts (context to be given to a generative AI solution) to help generate the desired content straight to our customers: 
+
+Customers will provide key words and data (market, industry, etc..) to help fill in the prompt that will be sent to the generative AI service. 
+
+Once we have the above information, the prompts will contain one or several phrases constructed by our team where Export Help Hub will send it to the generative AI service. By supplying the prompts to the generative AI service, we will leverage the generated information in Export Help Hub to produce a report that will contain key market knowledge, customs and regulatory information and HS codes, among other key pieces of information. 
+
+We will also have an internal tool for our advisory teams to aid in research and generating custom answers for our customers that have asked trade related questions through Export Help HubÃ¢â‚¬â„¢s ask an advisor feature. This internal tool will contain much of the same technology by leveraging inputs from the advisor and prompts created. 
+
+If customer self-serve generated reports/answers poses an issue or risk, we can mitigate this in several ways where we can introduce employee supervision before the content is shared with the customer.  
+
+Disclaimers can be easily added to all generated reports/answers in Export Help Hub and through any advisory customized answers that are provided to the customer. 
+
+We will put in place strict guidelines on how we engineer the prompts
+Problems solved: Address opportunities both for our customers and for our internal employees by: 
+
+Accelerating the delivery of robust market, customs, regulatory and industry reports for our customers Ã¢â‚¬â€œ they can be produced and generated (with little to no oversight) at any time, for any market and for as many times without significantly impacting internal capacity.  
+
+Significantly reducing the research and drafting time needed for our advisors to produce customized answers and strategy reports for customers Ã¢â‚¬â€œ from days to minutes.  
+
+Supercharging and equipping our advisors with the knowledge they may not possess or may take a long time to acquire, increasing our competitive advantage. 
+
+Evolving how we draft, publish and maintain trade answers for our customers."
+Trade Simply Internal,KB,"- This will be an internal product/tool built by Knowledge Business that will enable the following: 
+
+Knowledge teams will have access to generate new prompts or leverage existing prompts deemed useful to begin their research.  
+
+Knowledge teams will be focusing on generating keywords and prompts that answer or cover the most common topics for customers instead of relying on open ended search. 
+
+Knowledge teams will be able to leverage the generated text from the above research and prompts to be provided in the answers and mandates to customers. 
+
+Knowledge teams will have a review procedure to ensure the information generated is accurate and can be sent to a customer. 
+
+Knowledge teams will be able to Investigate how we can limit the source of data that the GenAI model relies on to only public / tier 1 data as per our research tier guidelines which already exist. 
+
+Disclaimers can be easily added so that the customer is aware that weÃ¢â‚¬â„¢re leveraging GenAI.
+Problems solved: 1. For our KB Knowledge team Ã¢â‚¬â€œ it takes on average 4Ã¢â‚¬â€œ5 hours and to research, draft and send an answer to a customer thatÃ¢â‚¬â„¢s received from an Export Help Hub navigational request. 
+
+2. For our IBA Knowledge team Ã¢â‚¬â€œ it takes on average 15Ã¢â‚¬â€œ20+ hours to research, draft and send a mandate to a customer thatÃ¢â‚¬â„¢s received from an internal medium segment request. 
+
+3. WeÃ¢â‚¬â„¢re looking to supercharge and equipe our internal knowledge teams with a robust internal product/tool built by Knowledge Business to accelerate and optimize the research performed including the ability to quickly draft an answer for a customer. 
+
+4. By using this product/tool, weÃ¢â‚¬â„¢ll be able to fine tune and build out prompts, understand if we can limit the information and models to certain sources, understand how hallucinations behave and 
+
+5. Ultimately, to better learn how we can turn this into a customer facing solution."
+Trend Identification for Internal Audit,Internal Audit,"We would like to use CoPilot to help identify trends amongst audit findings and root causes to enhance reporting provided by Internal Audit. Beneficiaries will be users of audit reporting (e.g. management and the Audit Committee.
+Problems solved: We would like to use CoPilot to identify trends amongst audit findings and root causes. This information, once reviewed, could inform some of our reporting."
+Underwriting Knowledge Assistant,Risk & Audit,Guides underwriters with contextual recommendations.
+Use Copilot Web to convert functional automated tests to Robot Framework,DevSecOps Squad,"Since the use of Copilot is new at EDC, I just want to have more eyes on what I intend to do with an already available feature:  Copilot Web.  For Copilot to provide good conversion we need to provide good context.  Which means, in addition to the tests to be converted, we need to provide the code the tests refers to, examples of converted tests and also the code those refer to.  After converting all the test the entire test solution will have been sent as context.  So I would proceed as follow:
+1) Sanitize the test project (remove all confidential data)
+2) Use a script to concatenate in a single text file all the code files of the project to be converted.
+3) Do the same with the converted tests examples and the referenced code and add those to the same file.
+4) Add some additional conversion instructions.
+-> Which would all fit within 50 mb (max size).
+5) Use that file as context for every query to convert a given test. 
+6) The output is reviewed and refactored to be integrated into the converted test solution.
+
+What would be the non-public information we would provide to Copilot?  The steps and non-confidential data of the functional automated tests might provide indirectly its business rules, limits, partial data structures, etc.
+Problems solved: We are currently converting all EDC functional automated tests to Robot Framework.  We have a script to help doing the conversion, but the result in nothing compared to what we can get with Copilot when given the right context.  I estimate this saves us 6 month of work (one person)."
+"Use Gen-AI to help provide company assessments. This is not a net new idea, but an attempt to leverage external tools - either CB Insights or Alphasense - as a search engine (which may themselves leverage AI) to help with investments due diligence",mid-market and analytics group,"Use cases include:
+
+Ã¢â‚¬Â¢	Ability to provide private and public company assessments (both qualitative and quantitative)
+Ã¢â‚¬Â¢	Ability to mine private, public and M&A deal activities
+Ã¢â‚¬Â¢	Financial data summarization and assessment
+Ã¢â‚¬Â¢	Market, competitive and environmental scans related to private, public and industry domains
+Ã¢â‚¬Â¢	Summarized deals, transactions and industry reports (in generated memo and/or downloadable reports)
+Ã¢â‚¬Â¢	Access to industry research and expert opinion
+Ã¢â‚¬Â¢	Access to private and public data, available through AI powered search engines
+Problems solved: EDCÃ¢â‚¬â„¢s mid-market and analytics groups are open to investigating various ways in which we can reduce research time, streamline due diligence and deal assessments, and provide deeper investment and industry analytics. GenAI is one opportunity which we would like to further investigate to determine if itÃ¢â‚¬â„¢s suitable for our current needs."
+Use Generative AI to assist financial statements reporting,Enterprise Analytics and Forecasting,"The financial statement/report is based on observations from historical and current finance data with the knowledge of financial planning team. Some of the financial statement is comments based on the observations, which potentially can be generated by Gen AI. If Gen AI can be used as an assistant, it will improve the process.
+Problems solved: Currently, it is a lengthy process for Financial Planning & Analysis team in EAF to produce the financial statement/reports. We'd like to explore if Generative AI can assist the process and improve it."
+using Gen AI features in embedded in Adobe Creative Suite (ie in Photoshop) plus Gen AI web app Firefly (which is included in Creative Suite subscription),Marketing,"We already have the license to use all these tools (some are features within a graphic design software like Adobe Photoshop or Canva web app) and some are dedicated image generation tools (Adobe Firefly web app).
+
+The ask is if we can use Gen AI for 
+1) full image, or 
+2) partial image generation 
+Through:
+1) Features embedded in Adobe Photoshop and Illustrator
+2) Adobe Firefly web app
+3) Features embedded in Canva
+
+Anyone in Marketing who needs to work with images will benefit: Content COE, Social, Email and Brand teams. And they would use for generating full or partial images for webpage banners, partner promo packages, social media posts, emails, and ads.
+Problems solved: I spend a lot of time sourcing images for aritcles and landing pages for edc.ca.
+One of my pain points is finding images that are on-brand, targets the Canadian exporter audience and conveys the messages of the article. I source these images from Getty Images, but often times I don't find exactly what the author is looking for that meets the above requirements.
+
+For example: I'm looking for an image to go with a TradeInsights article on doing business in Korea. I find a perfect picture of a business district in Seoul, but the main person standing in the image looks like a tourist, with Gen AI's help I can remove the tourist and ask it to generate an Asian business woman instead. This way I have an image related to the article, matches EDC's image standards, and targets our exporter audience). 
+
+So, the idea is that Gen AI can help us tailor our images to reflect our target audience and match our brand guidelines."
+UW Streamlining,IFG.,"The IFG has to review a lot of 3rd party generated documents, including the bank credit submissions.  Would use MS Copilot 365 to review these pages and summarize, and also to highlight key sections that have key words in them... breach, covenant violation, default...  Believe this can further help IFG to respond quicker to our customers.  Also given we are a multi-sector team, will help us gather relevant industry information to assist in our early alignment discussions and downstream underwriting."
+Verifying completeness of customer FCKYC information,Knowledge Business,"Right now there is a manual step that reviews/confirms customer information that is included in structured data and supporting documentation for FCKYC onboarding (collected through MyEDC). Going through the supporting documenation to ensure that it captures the proof we require to identify directors and ultimate beneficial owners is a tedious process that requires time. We want explore the possibility of being able to quickly analyze the submitted document (that is currently being generated in a common structure as a PDF) and verify that there is sufficient supporting documentation (uploaded as unstructured data in different file formats) for any individuals that have been identified as directors and ultimate beneficial owners. Understanding if and what information is missing as quickly as possible will allow internal teams (e.g. RMs, CIM, sales ops) to quickly go back to the customer and reduce the likelihood of the transaction being delayed."
+Workforce Succession Planning Agent,"People, Culture & HR",Maps skills and plans for future leadership needs.
