@@ -1,0 +1,19 @@
+# This is a Databricks asset bundle definition for my_ai_hero_academy_mvp.
+# The Databricks extension requires databricks.yml configuration file.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+
+bundle:
+  name: my_ai_hero_academy_mvp
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-2717931942638877.17.azuredatabricks.net
+
+  ## Optionally, there could be 'staging' or 'prod' targets here.
+  #
+  # prod:
+  #   workspace:
+  #     host: https://adb-2717931942638877.17.azuredatabricks.net

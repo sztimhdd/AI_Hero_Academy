@@ -1,0 +1,11 @@
+.claude/settings.local.json
+
+.databricks
+
+# Local dev environment variables
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
