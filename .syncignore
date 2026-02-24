@@ -1,0 +1,8 @@
+# Files excluded from Databricks workspace sync (app runtime doesn't need these)
+.github/
+.vscode/
+.claude/
+CLAUDE.md
+PRD.md
+databricks.yml
+.syncignore
