@@ -176,7 +176,7 @@ with st.sidebar:
     st.markdown(f"""
 <div style="padding:1rem 0.5rem; font-family:'Inter',sans-serif; font-size:0.75rem; color:#8990A8">
   <div style="font-weight:600; text-transform:uppercase; letter-spacing:0.08em;
-              color:#545B70; margin-bottom:0.5rem">Module {seq_order}</div>
+              color:#8990A8; margin-bottom:0.5rem">Module {seq_order}</div>
   <div style="color:#EDF0F7; line-height:1.4; margin-bottom:0.8rem">{course_title}</div>
   <div class="module-domain-tag">{DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain)}</div>
 </div>
@@ -622,7 +622,7 @@ elif active_sub == "evaluation":
         st.markdown(f'<div class="question-text">{question_text}</div>', unsafe_allow_html=True)
 
         options = parse_options(item.get("options") or "[]")
-        opt_labels = [f"**{o['label']}.** {o['text']}" for o in options]
+        opt_labels = [f"{o['label']}. {o['text']}" for o in options]
         opt_keys = [o["label"] for o in options]
 
         selected = st.radio(
@@ -708,7 +708,7 @@ elif active_sub == "results":
 <div class="result-score-box">
   <div style="font-family:'IBM Plex Mono',monospace; font-size:3.5rem;
               color:{color_hex}; line-height:1">
-    {rs:.1f}<span style="font-size:1.5rem; color:#545B70"> / 4.0</span>
+    {rs:.1f}<span style="font-size:1.5rem; color:#8990A8"> / 4.0</span>
   </div>
   <div style="font-family:'Inter',sans-serif; font-size:0.8rem; font-weight:600;
               text-transform:uppercase; letter-spacing:0.08em; color:#8990A8;

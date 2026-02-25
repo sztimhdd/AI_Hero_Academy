@@ -158,7 +158,7 @@ with col_card:
     color_hex = {"danger": "#E8455A", "warning": "#F5A623", "success": "#29CC6A"}.get(color_class, "#00D4E8")
     last_updated_html = (
         f'<div style="font-family:\'Inter\',sans-serif; font-size:0.72rem; '
-        f'color:#545B70; margin-top:0.5rem">Last updated: {last_updated_str}</div>'
+        f'color:#8990A8; margin-top:0.5rem">Last updated: {last_updated_str}</div>'
         if last_updated_str else ""
     )
     st.markdown(f"""
@@ -170,7 +170,7 @@ with col_card:
       <div style="font-size:1.3rem; color:{trend_color}; line-height:1">{trend_arrow}</div>
     </div>
     <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem;
-                color:#545B70">/ 4.0</div>
+                color:#8990A8">/ 4.0</div>
     <div style="font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:600;
                 text-transform:uppercase; letter-spacing:0.08em; color:#8990A8;
                 margin-top:0.25rem">{level_label}</div>
@@ -239,10 +239,15 @@ for row in progress_rows:
             pass
 
     lock_icon = "" if not is_locked else "🔒"
-    num_style = "color:#00D4E8" if card_state == "active" else "color:#545B70"
+    if card_state == "active":
+        num_style = "color:#00D4E8"
+    elif card_state == "completed":
+        num_style = "color:#29CC6A"
+    else:
+        num_style = "color:#8990A8"
 
     st.markdown(f"""
-<div class="module-card {card_state if card_state != 'completed' else ''}">
+<div class="module-card {card_state}">
   <div class="module-number" style="{num_style}">
     {str(seq).zfill(2)}
   </div>
@@ -275,7 +280,7 @@ for row in progress_rows:
         else:
             btn_label = f"Take Quiz →"
 
-        if st.button(btn_label, key=f"module_btn_{seq}"):
+        if st.button(btn_label, key=f"module_btn_{seq}", use_container_width=True):
             st.session_state["active_course_id"] = course_id
             if not reading_done:
                 st.session_state["active_submodule"] = "reading"
@@ -285,7 +290,7 @@ for row in progress_rows:
                 st.session_state["active_submodule"] = "evaluation"
             st.switch_page("pages/04_Course_Module.py")
     elif card_state == "completed":
-        if st.button(f"Review Module {seq}", key=f"module_btn_{seq}", type="secondary"):
+        if st.button(f"Review Module {seq}", key=f"module_btn_{seq}", type="secondary", use_container_width=True):
             st.session_state["active_course_id"] = course_id
             st.session_state["active_submodule"] = "overview"
             st.switch_page("pages/04_Course_Module.py")

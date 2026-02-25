@@ -168,7 +168,7 @@ st.markdown("<div style='height:3rem'></div>", unsafe_allow_html=True)
 
 # ── Footer note ───────────────────────────────────────────────────────────────
 st.markdown("""
-<div style="font-family:'Inter',sans-serif; font-size:0.78rem; color:#545B70;
+<div style="font-family:'Inter',sans-serif; font-size:0.78rem; color:#8990A8;
             border-top:1px solid #2A2F3E; padding-top:1.2rem; max-width:540px">
   Your scores and practice conversations are visible only to you.
   No manager dashboard. No rankings. Just your growth.

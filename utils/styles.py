@@ -7,6 +7,7 @@ editorial headings. Feels like an internal dashboard built for professionals
 who take their craft seriously.
 """
 
+import os
 import streamlit as st
 
 # Colour tokens used in inline Python formatting strings
@@ -21,7 +22,7 @@ COLORS = {
     "accent_green":  "#29CC6A",   # success / complete
     "text_primary":  "#EDF0F7",   # main text
     "text_secondary":"#8990A8",   # muted text
-    "text_muted":    "#545B70",   # very muted
+    "text_muted":    "#8990A8",   # faint text — #545B70 fails WCAG AA (3:1); minimum passing is #8990A8 (6.6:1)
 }
 
 
@@ -74,29 +75,11 @@ section[data-testid="stSidebar"] span {{
   font-family: 'Inter', sans-serif !important;
 }}
 
-/* Sidebar nav items */
-[data-testid="stSidebarNavLink"] {{
-  color: var(--text-muted) !important;
-  font-size: 0.85rem !important;
-  font-family: 'Inter', sans-serif !important;
-  border-radius: 6px !important;
-  transition: all 0.15s ease !important;
-}}
-[data-testid="stSidebarNavLink"]:hover {{
-  color: var(--cyan) !important;
-  background: rgba(0, 212, 232, 0.08) !important;
-}}
-[data-testid="stSidebarNavLink"][aria-current="page"] {{
-  color: var(--cyan) !important;
-  background: rgba(0, 212, 232, 0.12) !important;
-  border-left: 2px solid var(--cyan) !important;
-}}
-
 /* ─── MAIN CONTENT AREA ────────────────────────────────────── */
 .block-container {{
   padding-top: 2rem !important;
   padding-bottom: 4rem !important;
-  max-width: 900px !important;
+  max-width: none !important;
 }}
 
 /* ─── TYPOGRAPHY ───────────────────────────────────────────── */
@@ -402,8 +385,39 @@ div[data-testid="stError"] {{
   border-color: var(--cyan);
   background: linear-gradient(135deg, rgba(0,212,232,0.06), var(--bg-surface));
 }}
+.module-card.completed {{
+  border-color: var(--green);
+  background: linear-gradient(135deg, rgba(41,204,106,0.05), var(--bg-surface));
+}}
 .module-card.locked {{
   opacity: 0.5;
+}}
+
+/* ─── MODULE CARD + ACTION BUTTON ATTACHMENT ────────────────
+   Active and completed cards have a Streamlit button rendered
+   immediately below their HTML block. These rules remove the
+   visual gap so the button reads as the card's footer CTA.    */
+.element-container:has(.module-card.active) .module-card.active,
+.element-container:has(.module-card.completed) .module-card.completed {{
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 1rem !important;
+}}
+.element-container:has(.module-card.active) + .element-container [data-testid="stButton"] > button {{
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-top: 1px solid var(--cyan) !important;
+  margin-top: 0 !important;
+  width: 100% !important;
+}}
+.element-container:has(.module-card.completed) + .element-container [data-testid="stButton"] > button {{
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-top: 1px solid var(--green) !important;
+  margin-top: 0 !important;
+  width: 100% !important;
 }}
 .module-number {{
   font-family: 'IBM Plex Mono', monospace;
@@ -854,6 +868,18 @@ tr:last-child td {{ border-bottom: none; }}
 }}
 </style>
 """, unsafe_allow_html=True)
+
+    if os.environ.get("LOCAL_UAT") == "true":
+        _uat_email = os.environ.get("DEV_USER_EMAIL", "dev@example.com")
+        st.sidebar.markdown(
+            f"""<div style="background:rgba(245,166,35,0.10);border:1px solid #F5A623;"""
+            f"""border-radius:6px;padding:0.5rem 0.75rem;font-family:'IBM Plex Mono',"""
+            f"""monospace;font-size:0.72rem;color:#F5A623;margin-bottom:0.5rem;">"""
+            f"""⚠ UAT MODE<br>"""
+            f"""<span style="color:#8990A8;font-size:0.68rem;">{_uat_email}</span>"""
+            f"""</div>""",
+            unsafe_allow_html=True,
+        )
 
 
 def section_header(label: str):

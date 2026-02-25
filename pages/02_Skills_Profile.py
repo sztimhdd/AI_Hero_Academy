@@ -152,12 +152,12 @@ with col_h:
 with col_date:
     st.markdown(
         f'<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.75rem; '
-        f'color:#545B70; text-align:right; margin-top:1.2rem">Last assessed<br>{assessed_date}</div>',
+        f'color:#8990A8; text-align:right; margin-top:1.2rem">Last assessed<br>{assessed_date}</div>',
         unsafe_allow_html=True,
     )
 
-# ── Overall score hero ─────────────────────────────────────────────────────────
-col_score, col_spacer = st.columns([2, 3])
+# ── Overall score hero + domain scores ────────────────────────────────────────
+col_score, col_domains = st.columns([2, 3])
 with col_score:
     st.markdown(f"""
 <div class="result-score-box">
@@ -166,20 +166,18 @@ with col_score:
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
-
-# ── Domain scores ─────────────────────────────────────────────────────────────
-section_header("DOMAIN SCORES")
-st.markdown('<div class="aha-card">', unsafe_allow_html=True)
-for domain_id in DOMAIN_IDS:
-    s = current_domain_scores.get(domain_id, 0.0)
-    try:
-        s = float(s)
-    except (TypeError, ValueError):
-        s = 0.0
-    color = get_score_color(s)
-    score_bar(DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id), s, color_class=color)
-st.markdown('</div>', unsafe_allow_html=True)
+with col_domains:
+    section_header("DOMAIN SCORES")
+    st.markdown('<div class="aha-card">', unsafe_allow_html=True)
+    for domain_id in DOMAIN_IDS:
+        s = current_domain_scores.get(domain_id, 0.0)
+        try:
+            s = float(s)
+        except (TypeError, ValueError):
+            s = 0.0
+        color = get_score_color(s)
+        score_bar(DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id), s, color_class=color)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ── Gap Map ───────────────────────────────────────────────────────────────────
 section_header("YOUR GAP MAP")
@@ -192,6 +190,14 @@ if gap_map_row:
 
     if bullets:
         st.markdown('<div class="aha-card">', unsafe_allow_html=True)
+        st.markdown("""
+<div style="display:flex; gap:1.25rem; margin-bottom:1rem; font-family:'Inter',sans-serif;
+            font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.06em">
+  <span><span class="gap-priority-dot high" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Critical gap</span>
+  <span><span class="gap-priority-dot medium" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Needs work</span>
+  <span><span class="gap-priority-dot low" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>On track</span>
+</div>
+""", unsafe_allow_html=True)
         for b in sorted(bullets, key=lambda x: x.get("priority", 99)):
             domain_id = b.get("domain_id", "")
             domain_score = current_domain_scores.get(domain_id, 0.0)
@@ -260,7 +266,7 @@ st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
 
 # ── Action buttons ─────────────────────────────────────────────────────────────
 section_header("ACTIONS")
-col_a, col_b, col_c = st.columns([1, 1, 2])
+col_a, col_b = st.columns([1, 1])
 
 with col_a:
     if st.button("↩  Retake Diagnostic", use_container_width=True):

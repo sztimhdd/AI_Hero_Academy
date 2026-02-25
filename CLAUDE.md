@@ -186,3 +186,11 @@ All `content` schema tables are populated via Databricks notebooks (not the app)
 ## Out of Scope for MVP
 
 Do not build toward: manager dashboards, multi-role support, admin UI, agent pipelines for content generation, MLflow prompt versioning, SQL Warehouse analytics, materialized views, mobile layout, multilingual content, badges/HR integration, email notifications, or leaderboards.
+
+## UI/UX Development Rules
+
+**Always consult the latest Streamlit SDK documentation via Context7 before attempting any UI/UX fix.**
+
+Use `mcp__context7__resolve-library-id` (library: "streamlit") then `mcp__context7__query-docs` to look up the current API for any Streamlit feature you are about to touch (layout, sidebar, navigation, theming, CSS injection, etc.). Do this before reading or modifying any code. This prevents wasted effort fighting internal `data-testid` selectors or CSS specificity battles that are already solved by the official SDK.
+
+Example: hiding auto-generated sidebar navigation is done via `.streamlit/config.toml` (`showSidebarNavigation = false`), not via CSS.

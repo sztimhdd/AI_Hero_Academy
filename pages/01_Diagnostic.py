@@ -192,7 +192,7 @@ if item_type == "mcq":
 
     options = item["options"] if item["options"] else []
 
-    opt_labels = [f"**{o['label']}.** {o['text']}" for o in options]
+    opt_labels = [f"{o['label']}. {o['text']}" for o in options]
     opt_keys = [o["label"] for o in options]
 
     selected = st.radio(
@@ -242,7 +242,7 @@ elif item_type == "prompt_sandbox":
 
     st.markdown(
         '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.72rem; '
-        'color:#545B70; margin-top:0.3rem">Aim for 3–8 sentences</div>',
+        'color:#8990A8; margin-top:0.3rem">Aim for 3–8 sentences</div>',
         unsafe_allow_html=True,
     )
 

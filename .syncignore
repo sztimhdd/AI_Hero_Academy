@@ -6,3 +6,9 @@ CLAUDE.md
 PRD.md
 databricks.yml
 .syncignore
+# Local UAT tooling — not needed in deployed app
+.env
+.env.example
+run_uat.sh
+scripts/
+plans/
