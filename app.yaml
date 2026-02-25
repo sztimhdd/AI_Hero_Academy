@@ -1,9 +1,15 @@
-command: ["streamlit", "run", "app.py", "--server.port", "8080", "--server.enableCORS", "false", "--server.enableXsrfProtection", "false"]
-
+command:
+  - .venv/bin/streamlit
+  - run
+  - app.py
+  - --server.enableCORS
+  - "false"
+  - --server.enableXsrfProtection
+  - "false"
 env:
   - name: DATABRICKS_WAREHOUSE_ID
     value: "eaa098820703bf5f"
   - name: SERVING_ENDPOINT_NAME
-    value: "databricks-gemini-3-1-pro"
+    value: "databricks-claude-sonnet-4-5"
   - name: UC_CATALOG
-    value: "mdlg_ai"
+    value: "mdlg_ai_shared"

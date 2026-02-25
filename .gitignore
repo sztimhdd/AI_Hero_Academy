@@ -9,3 +9,10 @@
 .venv/
 __pycache__/
 *.pyc
+
+# Playwright browser cache
+.playwright-mcp/
+
+# Debug / test artifacts
+_setup_result.json
+*.png

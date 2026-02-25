@@ -5,6 +5,27 @@
 bundle:
   name: my_ai_hero_academy_mvp
 
+# Seeding jobs — run once to create learner/system schemas and tables.
+# Content is now served from JSON files in content/ (no seeding required).
+# Usage:
+#   databricks bundle deploy -t dev
+#   databricks bundle run seed_00_create_schemas -t dev
+#
+# Runs in the Databricks cloud (serverless compute) — avoids local SSL proxy issues.
+# Idempotent (safe to re-run).
+resources:
+  jobs:
+    seed_00_create_schemas:
+      name: "[seed] 00 - Create Schemas"
+      queue:
+        enabled: true
+      max_concurrent_runs: 1
+      tasks:
+        - task_key: run_notebook
+          notebook_task:
+            notebook_path: ./notebooks/00_create_schemas.py
+            source: WORKSPACE
+
 targets:
   dev:
     mode: development
@@ -17,3 +38,4 @@ targets:
   # prod:
   #   workspace:
   #     host: https://adb-2717931942638877.17.azuredatabricks.net
+  #

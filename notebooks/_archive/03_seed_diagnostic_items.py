@@ -1,0 +1,249 @@
+# Databricks notebook source
+# MAGIC %md
+# MAGIC # 03 — Seed Diagnostic Items
+# MAGIC
+# MAGIC Seeds 12 diagnostic items into `content.diagnostic_items`:
+# MAGIC - 3 items per domain (prompting, verification, data_safety, tool_fluency)
+# MAGIC - Item types: MCQ, prompt_sandbox, micro_task (one of each per domain)
+# MAGIC
+# MAGIC Idempotent: deletes all existing rows before re-inserting.
+
+# COMMAND ----------
+
+import os, json
+
+CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
+
+def sql(statement: str):
+    spark.sql(statement).collect()  # Force eager execution for DML statements
+
+def escape(s: str) -> str:
+    return s.replace("'", "''")
+
+# COMMAND ----------
+
+sql(f"DELETE FROM {CATALOG}.content.diagnostic_items")
+print("Cleared diagnostic_items")
+
+# COMMAND ----------
+
+items = [
+    # ── PROMPTING ──────────────────────────────────────────────────────────────
+    {
+        "item_id": "diag_p1_mcq",
+        "domain_id": "prompting",
+        "item_type": "mcq",
+        "display_order": 1,
+        "question_text": "Your client Maple Industries Ltd. needs a briefing note about export financing options. Which prompt would produce the most useful first draft for an RM?",
+        "scenario_text": None,
+        "options": json.dumps([
+            {"label": "A", "text": "Write a briefing on export financing."},
+            {"label": "B", "text": "You are an expert in export finance. Write a 300-word briefing note for a Relationship Manager to present to a manufacturing client exploring their first export. Include: overview of available products, 3 questions to ask the client, and next steps. Use a professional tone."},
+            {"label": "C", "text": "What are financing options for exporting companies?"},
+            {"label": "D", "text": "Give me a list of financing products."},
+        ]),
+        "correct_option": "B",
+        "scoring_rubric": json.dumps({"correct": 4, "incorrect": 0}),
+    },
+    {
+        "item_id": "diag_p2_sandbox",
+        "domain_id": "prompting",
+        "item_type": "prompt_sandbox",
+        "display_order": 2,
+        "question_text": "Write a prompt you would give an AI assistant to draft a follow-up email to Northern Fabrication Ltd. summarising next steps from your discovery call. Your prompt should include all elements of an effective prompt (role, context, task, format, constraints).",
+        "scenario_text": "You just finished a discovery call with Northern Fabrication Ltd., a new prospect. They expressed interest in accounts receivable insurance and mentioned a potential contract with a buyer in Germany. You promised to send a follow-up with next steps.",
+        "options": None,
+        "correct_option": None,
+        "scoring_rubric": json.dumps({"criteria": [
+            {"name": "Role / Persona", "description": "Assigns the AI a relevant role (e.g., RM, export finance specialist)", "max": 1},
+            {"name": "Context", "description": "Includes relevant context (client type, situation, previous interaction)", "max": 1},
+            {"name": "Specificity", "description": "Task is clear and specific enough to produce a usable output", "max": 1},
+            {"name": "Output Format", "description": "Specifies desired format (email, length, tone)", "max": 1},
+        ]}),
+    },
+    {
+        "item_id": "diag_p3_task",
+        "domain_id": "prompting",
+        "item_type": "micro_task",
+        "display_order": 3,
+        "question_text": "Rewrite this prompt so it would generate a useful, ready-to-use output for an RM. Briefly explain the key improvements you made.",
+        "scenario_text": "Original prompt submitted by a colleague: \"Write an email.\"",
+        "options": None,
+        "correct_option": None,
+        "scoring_rubric": json.dumps({"criteria": [
+            {"name": "Added Specificity", "description": "New prompt specifies recipient, purpose, and context", "max": 2},
+            {"name": "Output Instructions", "description": "Specifies tone, length, or format of the output", "max": 1},
+            {"name": "Explanation Quality", "description": "Clearly explains what was missing in the original and why each addition matters", "max": 1},
+        ]}),
+    },
+    # ── VERIFICATION ───────────────────────────────────────────────────────────
+    {
+        "item_id": "diag_v1_mcq",
+        "domain_id": "verification",
+        "item_type": "mcq",
+        "display_order": 4,
+        "question_text": "AI generated this sentence in a meeting recap: 'Maple Industries confirmed a $4.2M contract with Schneider AG, signed March 15, 2024.' What should you do before including this in a CRM note?",
+        "scenario_text": None,
+        "options": json.dumps([
+            {"label": "A", "text": "Include it directly — AI recaps are accurate."},
+            {"label": "B", "text": "Cross-check the amount and date against your call notes and any signed agreement before using it."},
+            {"label": "C", "text": "Ask the AI to confirm the facts."},
+            {"label": "D", "text": "Only verify if the client later raises a concern."},
+        ]),
+        "correct_option": "B",
+        "scoring_rubric": json.dumps({"correct": 4, "incorrect": 0}),
+    },
+    {
+        "item_id": "diag_v2_sandbox",
+        "domain_id": "verification",
+        "item_type": "prompt_sandbox",
+        "display_order": 5,
+        "question_text": "List every claim in this AI-generated summary that you would need to verify before using it in a client follow-up. For each claim, explain why verification is needed.",
+        "scenario_text": "Copilot generated this after a Teams meeting: 'Northern Fabrication Ltd. agreed to proceed with a $2M accounts receivable insurance policy. The signing meeting is scheduled for April 3. The premium will be 0.8% of the insured amount. The main contact is Sandra Tremblay, CFO.'",
+        "options": None,
+        "correct_option": None,
+        "scoring_rubric": json.dumps({"criteria": [
+            {"name": "Completeness", "description": "Identifies all verifiable claims (dollar amount, date, premium rate, contact title)", "max": 2},
+            {"name": "Reasoning", "description": "Provides a specific reason why each claim needs verification", "max": 1},
+            {"name": "Appropriate Skepticism", "description": "Does not treat any AI-generated fact as automatically reliable", "max": 1},
+        ]}),
+    },
+    {
+        "item_id": "diag_v3_task",
+        "domain_id": "verification",
+        "item_type": "micro_task",
+        "display_order": 6,
+        "question_text": "An AI assistant told you: 'The maximum coverage for SME accounts receivable insurance is $10 million CAD.' How would you verify this before quoting it to a client? Describe your specific steps.",
+        "scenario_text": None,
+        "options": None,
+        "correct_option": None,
+        "scoring_rubric": json.dumps({"criteria": [
+            {"name": "Uses Authoritative Sources", "description": "References official sources (product guide, underwriting team, internal knowledge base)", "max": 2},
+            {"name": "Acknowledges AI Limitation", "description": "Recognises AI may hallucinate figures and does not simply re-ask the AI", "max": 1},
+            {"name": "Actionable Steps", "description": "Steps are specific and could be followed by another RM", "max": 1},
+        ]}),
+    },
+    # ── DATA SAFETY ────────────────────────────────────────────────────────────
+    {
+        "item_id": "diag_d1_mcq",
+        "domain_id": "data_safety",
+        "item_type": "mcq",
+        "display_order": 7,
+        "question_text": "Which of the following would be safe to include in a prompt to a general AI tool (not a secure enterprise system)?",
+        "scenario_text": None,
+        "options": json.dumps([
+            {"label": "A", "text": "Our client Maple Industries has confidential expansion plans valued at $50M."},
+            {"label": "B", "text": "A mid-sized Canadian manufacturer is exploring export financing options for the first time."},
+            {"label": "C", "text": "Client credit limit approved: $8.5M; deal terms: 18-month tenor, 90-day grace period."},
+            {"label": "D", "text": "Prepare talking points using the attached confidential term sheet."},
+        ]),
+        "correct_option": "B",
+        "scoring_rubric": json.dumps({"correct": 4, "incorrect": 0}),
+    },
+    {
+        "item_id": "diag_d2_sandbox",
+        "domain_id": "data_safety",
+        "item_type": "prompt_sandbox",
+        "display_order": 8,
+        "question_text": "Rewrite this prompt so it is safe to enter into a general-purpose AI tool, while preserving the intent. Then explain what you changed and why.",
+        "scenario_text": "Original prompt: 'Maple Industries Ltd. (client ID #8847) is applying for $12M in buyer credit financing for a contract with Eurotech GmbH. Their internal growth projections are confidential. Draft a risk summary for the deal committee.'",
+        "options": None,
+        "correct_option": None,
+        "scoring_rubric": json.dumps({"criteria": [
+            {"name": "Removes Non-Public Info", "description": "Removes client name, client ID, deal amount, and confidential projections", "max": 2},
+            {"name": "Preserves Intent", "description": "Rewritten prompt still asks for a risk summary with useful context", "max": 1},
+            {"name": "Explanation", "description": "Clearly explains which elements were removed and the reason (NPI policy)", "max": 1},
+        ]}),
+    },
+    {
+        "item_id": "diag_d3_task",
+        "domain_id": "data_safety",
+        "item_type": "micro_task",
+        "display_order": 9,
+        "question_text": "A colleague says: 'It's fine to paste client financials into an AI chat tool as long as you delete the conversation history afterward.' Do you agree? Explain your position and describe the correct approach.",
+        "scenario_text": None,
+        "options": None,
+        "correct_option": None,
+        "scoring_rubric": json.dumps({"criteria": [
+            {"name": "Identifies the Flaw", "description": "Explains why deleting chat history does not eliminate the privacy risk (data is sent to the server regardless)", "max": 2},
+            {"name": "States Correct Policy", "description": "Describes the correct approach: abstract/anonymise before inputting, or use only approved secure tools", "max": 1},
+            {"name": "Practical Guidance", "description": "Provides a concrete alternative the colleague could follow", "max": 1},
+        ]}),
+    },
+    # ── TOOL FLUENCY ───────────────────────────────────────────────────────────
+    {
+        "item_id": "diag_t1_mcq",
+        "domain_id": "tool_fluency",
+        "item_type": "mcq",
+        "display_order": 10,
+        "question_text": "After a client call you need to: (1) generate a meeting summary, (2) draft a CRM note, and (3) send a follow-up email — all based on the same call. Which Copilot workflow handles this most efficiently?",
+        "scenario_text": None,
+        "options": json.dumps([
+            {"label": "A", "text": "Outlook → Teams → Word"},
+            {"label": "B", "text": "Copilot in Teams (meeting recap) → Copilot in Word/SharePoint (CRM note draft) → Copilot in Outlook (follow-up email)"},
+            {"label": "C", "text": "Excel → Teams → Outlook"},
+            {"label": "D", "text": "PowerPoint → Outlook → Teams"},
+        ]),
+        "correct_option": "B",
+        "scoring_rubric": json.dumps({"correct": 4, "incorrect": 0}),
+    },
+    {
+        "item_id": "diag_t2_sandbox",
+        "domain_id": "tool_fluency",
+        "item_type": "prompt_sandbox",
+        "display_order": 11,
+        "question_text": "Describe a step-by-step workflow using Copilot and M365 tools to complete this task. For each step, name the tool and the specific prompt or action you would use.",
+        "scenario_text": "You have a spreadsheet with 15 rows of prospect data: company name, sector, last contact date, and deal stage. You want to identify which 3 clients to prioritise for calls this week, then draft a short outreach email for each.",
+        "options": None,
+        "correct_option": None,
+        "scoring_rubric": json.dumps({"criteria": [
+            {"name": "Correct Tool Selection", "description": "Uses Copilot in Excel for data analysis and Copilot in Outlook for email drafting", "max": 2},
+            {"name": "Logical Sequence", "description": "Steps flow logically and output from one step informs the next", "max": 1},
+            {"name": "Prompt Specificity", "description": "At least one step includes a specific, usable Copilot prompt", "max": 1},
+        ]}),
+    },
+    {
+        "item_id": "diag_t3_task",
+        "domain_id": "tool_fluency",
+        "item_type": "micro_task",
+        "display_order": 12,
+        "question_text": "A colleague always writes client emails in a Teams chat message first, then copies and pastes them into Outlook to send. What Copilot feature are they missing? How would you help them work more efficiently?",
+        "scenario_text": None,
+        "options": None,
+        "correct_option": None,
+        "scoring_rubric": json.dumps({"criteria": [
+            {"name": "Identifies Feature", "description": "Correctly identifies Copilot in Outlook (draft with Copilot) as the missing feature", "max": 2},
+            {"name": "Explains Benefit", "description": "Explains how it saves steps and produces better-formatted output", "max": 1},
+            {"name": "Practical Suggestion", "description": "Provides a concrete, actionable tip the colleague could apply immediately", "max": 1},
+        ]}),
+    },
+]
+
+# COMMAND ----------
+
+for item in items:
+    opts  = f"'{escape(item['options'])}'"  if item['options']  else "NULL"
+    copt  = f"'{escape(item['correct_option'])}'" if item['correct_option'] else "NULL"
+    scene = f"'{escape(item['scenario_text'])}'"  if item['scenario_text'] else "NULL"
+    rubric = f"'{escape(item['scoring_rubric'])}'" if item['scoring_rubric'] else "NULL"
+    order = item['display_order']
+
+    sql(f"""
+        INSERT INTO {CATALOG}.content.diagnostic_items
+          (item_id, domain_id, item_type, question_text, scenario_text,
+           options, correct_option, scoring_rubric, display_order)
+        VALUES (
+          '{escape(item["item_id"])}',
+          '{escape(item["domain_id"])}',
+          '{escape(item["item_type"])}',
+          '{escape(item["question_text"])}',
+          {scene},
+          {opts},
+          {copt},
+          {rubric},
+          {order}
+        )
+    """)
+    print(f"  Inserted {item['item_id']}")
+
+print(f"\nDone — {len(items)} diagnostic items seeded.")

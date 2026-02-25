@@ -8,29 +8,18 @@
 # COMMAND ----------
 
 import os, json
-from databricks.sdk import WorkspaceClient
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai")
-WH_ID   = os.environ.get("DATABRICKS_WAREHOUSE_ID", "eaa098820703bf5f")
-
-w = WorkspaceClient()
+CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 
 def sql(statement: str):
-    result = w.statement_execution.execute_statement(
-        warehouse_id=WH_ID,
-        statement=statement,
-        wait_timeout="60s",
-    )
-    if result.status.error:
-        raise RuntimeError(f"SQL error: {result.status.error.message}\n\nStatement:\n{statement}")
-    return result
+    spark.sql(statement).collect()  # Force eager execution for DML statements
 
 def escape(s: str) -> str:
     """Escape single quotes for SQL string literals."""
     return s.replace("'", "''")
 
 # COMMAND ----------
-# MAGIC %md ## Role: Relationship Manager
+# Role: Relationship Manager
 
 ROLE = {
     "role_id": "rm",
@@ -59,7 +48,7 @@ VALUES (
 print(f"Seeded role: {ROLE['title']}")
 
 # COMMAND ----------
-# MAGIC %md ## Domains: 4 AI skill domains for the RM role
+# Domains: 4 AI skill domains for the RM role
 
 DOMAINS = [
     {
