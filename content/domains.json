@@ -1,5 +1,5 @@
 {
-  "prompting": {
+  "rm_prompting": {
     "domain_id": "prompting",
     "role_id": "rm",
     "title": "Prompting for Outcomes",
@@ -15,7 +15,7 @@
     "level_4_label": "Champion",
     "level_4_descriptor": "Designs reusable prompt templates for team workflows. Coaches colleagues on prompting structure. Contributes new use cases."
   },
-  "verification": {
+  "rm_verification": {
     "domain_id": "verification",
     "role_id": "rm",
     "title": "Verification and Judgment",
@@ -31,7 +31,7 @@
     "level_4_label": "Champion",
     "level_4_descriptor": "Develops verification checklists for team use. Can explain failure modes of AI summarization. Trains peers on review discipline."
   },
-  "data_safety": {
+  "rm_data_safety": {
     "domain_id": "data_safety",
     "role_id": "rm",
     "title": "Data Safety and Compliance",
@@ -47,7 +47,7 @@
     "level_4_label": "Champion",
     "level_4_descriptor": "Identifies novel compliance risks in new use cases. Advises team on safe patterns. Acts as a data-safe AI usage model for peers."
   },
-  "tool_fluency": {
+  "rm_tool_fluency": {
     "domain_id": "tool_fluency",
     "role_id": "rm",
     "title": "Tool Fluency (M365 + Copilot)",

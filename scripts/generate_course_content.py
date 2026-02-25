@@ -363,7 +363,7 @@ def generate_structural_json(spec: dict) -> tuple[dict, dict]:
     # Compact few-shot snippets to stay within context budget
     rm_role_ex = json.dumps({"rm": rm_roles.get("rm", {})}, indent=2)[:400]
     rm_domain_ex = json.dumps(
-        {"prompting": rm_domains.get("prompting", {})}, indent=2
+        {"prompting": rm_domains.get("rm_prompting", {})}, indent=2
     )[:600]
     rm_course_ex = json.dumps(
         {"rm_c1_prompting": rm_courses.get("rm_c1_prompting", {})}, indent=2
@@ -1220,24 +1220,26 @@ def assemble_and_write(
     new_roles = dict(existing_roles)
     new_roles.update(structural.get("role_entry", {}))
 
-    # domains.json — collision guard (flat keys are shared across roles; overwrite = data loss)
+    # domains.json — Stage 2 generates flat keys ("prompting", "verification", …).
+    # Prefix them with role_prefix to produce role-scoped keys ("uw_prompting", …)
+    # before merging, so entries from different roles never collide.
     existing_domains = json.loads(
         (content_dir / "domains.json").read_text(encoding="utf-8")
     )
     new_domain_entries = structural.get("domain_entries", {})
-    domain_collisions = [k for k in new_domain_entries if k in existing_domains]
+    scoped_domain_entries = {
+        f"{role_prefix}_{k}": v for k, v in new_domain_entries.items()
+    }
+    domain_collisions = [k for k in scoped_domain_entries if k in existing_domains]
     if domain_collisions:
         print(
             f"ERROR: domain key(s) {domain_collisions!r} already exist in domains.json.\n"
-            "       domains.json uses flat keys shared across roles. Writing new role domains\n"
-            "       would overwrite existing entries. To add a second role, migrate domains.json\n"
-            "       to role-scoped keys (e.g., 'rm_prompting') before running this script.\n"
-            "       Aborting to prevent data loss.",
+            f"       Role '{role_prefix}' has already been added. Aborting to prevent overwrite.",
             file=sys.stderr,
         )
         sys.exit(1)
     new_domains = dict(existing_domains)
-    new_domains.update(new_domain_entries)
+    new_domains.update(scoped_domain_entries)
 
     # courses.json
     existing_courses = json.loads(

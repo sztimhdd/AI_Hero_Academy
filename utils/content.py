@@ -31,9 +31,12 @@ SCENARIOS: dict = _load("practice_scenarios.json")
 EVAL_ITEMS: dict = _load("evaluation_items.json")
 
 # Convenience mapping for generate_gap_map(): domain_id -> description string
+# domains.json uses role-scoped top-level keys (e.g. "rm_prompting"); the domain_id
+# field inside each entry is still the flat key ("prompting"). Build the mapping
+# from field values so callers continue to use flat keys as before.
 DOMAIN_DESCRIPTIONS: dict = {
-    domain_id: d["description"]
-    for domain_id, d in DOMAINS.items()
+    d["domain_id"]: d["description"]
+    for d in DOMAINS.values()
 }
 
 
@@ -44,7 +47,11 @@ def get_role(role_id: str) -> dict:
 
 
 def get_domain(domain_id: str) -> dict:
-    return DOMAINS[domain_id]
+    # DOMAINS keys are role-scoped ("rm_prompting"); look up by the domain_id field.
+    match = next((d for d in DOMAINS.values() if d["domain_id"] == domain_id), None)
+    if match is None:
+        raise KeyError(f"No domain with domain_id={domain_id!r} found in domains.json")
+    return match
 
 
 def get_diagnostic_items() -> list:
