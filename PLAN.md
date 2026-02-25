@@ -27,8 +27,8 @@ Complete inventory of every PRD/TDD requirement and its current implementation s
 | State-based routing on every page load | §6.1 | ✅ | `app.py` routes new_user / needs_diagnostic / needs_course / in_training |
 | Page guards on each page | §6.3 | ✅ | All pages guard-redirect to correct prior state |
 | Welcome guard routes to correct state | §6.3 | ✅ | Fixed L6: full state detection (needs_diagnostic / needs_course / in_training) |
-| Dark theme design system | §7 | ✅ | `utils/styles.py` — full CSS system |
-| Responsive layout (desktop-first) | §5.2 | ✅ | `max-width: none` — removed 900 px cap (U0); `layout="wide"` now fills viewport |
+| Dark theme design system | §7 | ✅ | Colors/font moved to `.streamlit/config.toml [theme]`; CSS injection now only for custom HTML components |
+| Responsive layout (desktop-first) | §5.2 | ✅ | Streamlit's native 900px readable-content width accepted; CSS `max-width` override removed |
 
 ---
 
@@ -746,54 +746,43 @@ Goal: Implement the missing pre-diagnostic orientation screen and conduct a syst
 
 ---
 
-#### Task 6.1 — Add pre-diagnostic orientation screen
+#### Task 6.1 — Add pre-diagnostic orientation screen ✅ DONE
 
 **File**: [pages/01_Diagnostic.py](pages/01_Diagnostic.py)
 
-**Issues.md**: U1
+**Issues.md**: U1 → closed
 
-Add an orientation screen shown on the user's first load before Question 1. Content: estimated time (~5 min), question count (12), format description (mix of multiple choice and written responses), and a "Start Assessment →" CTA button.
-
-**Implementation**:
-
-- At the top of the diagnostic render block, check `st.session_state.get("diag_started")`
-- If falsy: render an orientation card with the info above + "Start Assessment →" button; return early
-- On button click: set `st.session_state["diag_started"] = True` then `st.rerun()`
-- The flag lives only for the current session (no DB write needed) — consistent with the existing "no partial save" contract (TDD §9)
+Orientation screen added before Q1: ~5 min estimate, 12 questions, 4 skill domains, format description, "Start Assessment →" CTA. Guarded by `st.session_state["diag_started"]`; retake path in `02_Skills_Profile.py` clears the flag. Verified via Playwright — card wraps stats correctly, button advances to Q1.
 
 ---
 
-#### Task 6.2 — Verify Home module card layout (P0-3)
+#### Task 6.2 — Verify Home module card layout (P0-3) ✅ DONE
 
 **File**: [pages/03_Home.py](pages/03_Home.py)
 
-**Issues.md**: U2
+**Issues.md**: U2 → closed
 
-**Prerequisite**: The UAT user (`uat-test@edc.ca`) must have `training_progress` rows. Click "🗺️ Build My Training Course" on the Skills Profile page to populate them.
-
-After building: navigate to Home and visually verify:
-
-- Module card bottom edge is flush with its action button (no gap between card body and CTA)
-- Locked cards show greyed number + lock icon; no CTA button
-- Completed cards show green checkmark + score
+Verified Feb 2026 via Playwright (1440×900). Module 1 active: cyan border, sub-badges (Read=current, Practice/Quiz=pending), "Start Module 1 →" CTA. Modules 2-5 locked: greyed number, lock icon, no CTA. Summary card: score 0.7, EXPLORER, → trend, "0 of 5 modules complete". 12px gap between card HTML and Streamlit button is framework's native element spacing — structural constraint, accepted.
 
 ---
 
-#### Task 6.3 — UX audit: Diagnostic page
+#### Task 6.3 — UX audit: Diagnostic page ✅ DONE
 
 **File**: [pages/01_Diagnostic.py](pages/01_Diagnostic.py)
 
-**Issues.md**: U3 (partial)
+**Issues.md**: U3 (partial) | U4 → closed
 
-Full per-page audit against PRD §7.2 and design system. Check each item:
+Audit results (Feb 2026, Playwright):
 
-- All secondary text at `#8990A8` or above (WCAG AA on `#0D0F14`)
-- "X of 12" counter and domain label visible and styled consistently
-- MCQ radio buttons: bold only on selected option (P0-2 already fixed — verify still holds)
-- Open-text `st.text_area`: hint text contrast, placeholder text, character guidance visible
-- Progress bar colour matches domain score palette
-- "Next →" / "Submit" button: disabled state when answer is empty
-- No orphaned empty columns
+| Check | Result |
+| ----- | ------ |
+| All secondary text ≥ `#8990A8` | ✅ Pass — no `#545B70` found anywhere |
+| "X of 12" counter + domain tag | ✅ Visible, styled correctly (top-right, cyan pill) |
+| Progress bar | ✅ Advances correctly (8% at Q2) |
+| MCQ radio: no default selection | ✅ Fixed — `index=None` added (U4) |
+| Open-text Submit: disabled when empty | ✅ Pass — prompt_sandbox and micro_task both correct |
+| Character guidance hint | ✅ "Aim for 3–8 sentences" visible for prompt_sandbox |
+| No orphaned columns | ✅ Pass |
 
 ---
 
@@ -836,11 +825,11 @@ No inline `color:#545B70` remaining anywhere in this file.
 #### Phase 6 Execution Order
 
 ```text
-6.1  Pre-diagnostic orientation screen (self-contained; test with fresh session state)
-6.2  Verify Home module card layout (build course for UAT user first)
-6.3  Diagnostic page UX audit (can run without course)
-6.4  Home page UX audit (requires 6.2 — course must exist)
-6.5  Course Module page UX audit (requires 6.2 — module navigation needed)
+6.1  ✅ Pre-diagnostic orientation screen
+6.2  ✅ Verify Home module card layout
+6.3  ✅ Diagnostic page UX audit  (U4 fixed: MCQ index=None)
+6.4     Home page full UX audit   (pending)
+6.5     Course Module UX audit    (pending)
 ```
 
 ---
@@ -849,14 +838,14 @@ No inline `color:#545B70` remaining anywhere in this file.
 
 ```
 Phase 0 ✅ DONE    Phase 1 ✅ DONE               Phase 2 ✅ DONE             Phase 3 ✅ DONE        Phase 4 ✅ DONE          Phase 5 ✅ DONE      Phase 6 — pending
-Catalog migration   Content DB → JSON refactor    2.1 H2 MCQ local            3.1 M2 Parameterize    4.1 Trend indicator     5.1 L3 Score gap     6.1 Orientation screen
-Bug fixes (H1-H3,   All 7 JSON files created      2.2 H3 Aggregates           3.2 M3 started_at      4.2 Last updated        5.2 L6 guard         6.2 Verify module cards
-L2/L3/L5/L6/L7,    utils/content.py loader        2.3 H1 Domain scores        3.3 M4 Results fix     4.3 Dead link           5.3 L2 stamp         6.3 Diagnostic audit
-M2/M5)              pages/01-04 updated                                        3.4 M5 Gap map fix                             5.4 L4 Cache         6.4 Home audit
-                                                                               3.5 M1 Token counts                                                 6.5 Course Module audit
+Catalog migration   Content DB → JSON refactor    2.1 H2 MCQ local            3.1 M2 Parameterize    4.1 Trend indicator     5.1 L3 Score gap     6.1 ✅ Orientation screen
+Bug fixes (H1-H3,   All 7 JSON files created      2.2 H3 Aggregates           3.2 M3 started_at      4.2 Last updated        5.2 L6 guard         6.2 ✅ Verify module cards
+L2/L3/L5/L6/L7,    utils/content.py loader        2.3 H1 Domain scores        3.3 M4 Results fix     4.3 Dead link           5.3 L2 stamp         6.3 ✅ Diagnostic audit
+M2/M5)              pages/01-04 updated                                        3.4 M5 Gap map fix                             5.4 L4 Cache         6.4    Home audit
+                                                                               3.5 M1 Token counts                                                 6.5    Course Module audit
 ```
 
-**All phases complete. Ready for UAT.**
+**Phases 0–5 complete. Phase 6 in progress (6.4 Home audit, 6.5 Course Module audit pending).**
 
 ---
 

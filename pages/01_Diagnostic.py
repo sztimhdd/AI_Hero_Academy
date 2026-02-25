@@ -70,31 +70,31 @@ if not st.session_state.get("diag_started"):
         'Before we build your personalised training course, we need to understand your current AI skill level.</div>',
         unsafe_allow_html=True,
     )
-    st.markdown('<div class="aha-card">', unsafe_allow_html=True)
     st.markdown(f"""
-<div style="display:flex; gap:2.5rem; flex-wrap:wrap; margin-bottom:1.25rem">
-  <div style="text-align:center; min-width:80px">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">~5</div>
-    <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">minutes</div>
+<div class="aha-card">
+  <div style="display:flex; gap:2.5rem; flex-wrap:wrap; margin-bottom:1.25rem">
+    <div style="text-align:center; min-width:80px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">~5</div>
+      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">minutes</div>
+    </div>
+    <div style="text-align:center; min-width:80px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">{TOTAL}</div>
+      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">questions</div>
+    </div>
+    <div style="text-align:center; min-width:80px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">4</div>
+      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">skill domains</div>
+    </div>
   </div>
-  <div style="text-align:center; min-width:80px">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">{TOTAL}</div>
-    <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">questions</div>
-  </div>
-  <div style="text-align:center; min-width:80px">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">4</div>
-    <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">skill domains</div>
+  <div style="font-family:'Inter',sans-serif; font-size:0.85rem; color:#8990A8; line-height:1.6">
+    Questions include <strong style="color:#E8E9EF">multiple choice</strong>,
+    <strong style="color:#E8E9EF">written responses</strong>, and
+    <strong style="color:#E8E9EF">short tasks</strong>.
+    There are no right or wrong answers — your results shape your personalised training course.
   </div>
 </div>
-<div style="font-family:'Inter',sans-serif; font-size:0.85rem; color:#8990A8; line-height:1.6">
-  Questions include <strong style="color:#E8E9EF">multiple choice</strong>,
-  <strong style="color:#E8E9EF">written responses</strong>, and
-  <strong style="color:#E8E9EF">short tasks</strong>.
-  There are no right or wrong answers — your results shape your personalised training course.
-</div>
+<div style="height:1.5rem"></div>
 """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
     if st.button("Start Assessment →", type="primary"):
         st.session_state["diag_started"] = True
         st.rerun()
@@ -244,6 +244,7 @@ if item_type == "mcq":
         options=opt_labels,
         key=f"mcq_{item_id}",
         label_visibility="collapsed",
+        index=None,
     )
 
     btn_label = "Submit & Continue →" if is_last else "Next →"

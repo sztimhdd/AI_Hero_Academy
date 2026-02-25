@@ -76,10 +76,11 @@ section[data-testid="stSidebar"] span {{
 }}
 
 /* ─── MAIN CONTENT AREA ────────────────────────────────────── */
+/* Leave Streamlit's native max-width (readable-content width) alone.
+   Only adjust vertical padding. */
 .block-container {{
   padding-top: 2rem !important;
   padding-bottom: 4rem !important;
-  max-width: none !important;
 }}
 
 /* ─── TYPOGRAPHY ───────────────────────────────────────────── */
