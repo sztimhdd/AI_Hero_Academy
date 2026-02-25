@@ -12,29 +12,42 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 .venv/Scripts/pip install -r requirements.txt
 ```
 
-### Run locally
+### Run locally (UAT / Playwright testing)
 
 ```bash
-.venv/Scripts/streamlit run app.py
+bash run_uat.sh
 ```
 
-Auth is handled automatically by the Databricks VS Code extension metadata service (configured in `.databricks/.databricks.env`). No manual token setup needed when developing inside VS Code.
+Sources `.env` (copy from `.env.example`, add `DATABRICKS_TOKEN`), starts Streamlit on port 8501 with `LOCAL_UAT=true`. The Playwright Chromium browser only connects to `localhost:8501` — it has no direct Databricks dependency; all auth is handled by the Python process.
 
-### Sync local files to workspace (for live iteration)
+To reset the test user's data between runs:
 
 ```bash
-databricks sync --watch . /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp
+python scripts/reset_uat_user.py
 ```
 
-### Deploy the app
+### Sync + deploy to remote (one command)
 
 ```bash
-databricks apps deploy my-ai-hero-academy-mvp --source-code-path /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp
+bash scripts/sync_deploy.sh
+```
+
+Syncs local files to the Databricks workspace and redeploys the app using the `dev` CLI profile. This is the standard post-commit deploy step. The `/commit` skill runs this automatically.
+
+**Manual equivalents** (if running CLI directly from Git Bash, prefix with `MSYS_NO_PATHCONV=1`):
+
+```bash
+MSYS_NO_PATHCONV=1 databricks sync . /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp --profile dev
+MSYS_NO_PATHCONV=1 databricks apps deploy my-ai-hero-academy-mvp --source-code-path /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp --profile dev
 ```
 
 ### Databricks CLI profile
 
-The `dev` profile (`~/.databrickscfg`) is pre-configured to point at `https://adb-2717931942638877.17.azuredatabricks.net`. Most CLI commands work without `--profile dev` when run from this project directory (the bundle target `dev` is the default).
+The `dev` profile (`~/.databrickscfg`) uses OAuth via `auth_type = databricks-cli`. It is pre-configured for `https://adb-2717931942638877.17.azuredatabricks.net`. If the token expires, refresh with:
+
+```bash
+databricks auth login --profile dev
+```
 
 ---
 
@@ -57,21 +70,21 @@ The MVP targets a single role — **Relationship Manager (RM)** — and implemen
 | Resource | Value |
 | --- | --- |
 | Workspace | `https://adb-2717931942638877.17.azuredatabricks.net` |
-| Unity Catalog | `mdlg_ai` |
+| Unity Catalog | `mdlg_ai_shared` |
 | SQL Warehouse | `eaa098820703bf5f` (Serverless Starter Warehouse) |
-| App serving endpoint | `databricks-gemini-3-1-pro` |
+| App serving endpoint | `databricks-claude-sonnet-4-5` |
 | App name | `my-ai-hero-academy-mvp` |
 | Workspace source path | `/Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp` |
 
-Other available Foundation Model endpoints (all support `llm/v1/chat`): `databricks-claude-sonnet-4-6`, `databricks-claude-opus-4-6`, `databricks-claude-haiku-4-5`.
+Other available Foundation Model endpoints (all support `llm/v1/chat`): `databricks-claude-sonnet-4-5`, `databricks-claude-opus-4-5`, `databricks-claude-haiku-4-5`.
 
 ## Unity Catalog Schema Layout
 
-All tables live under `mdlg_ai`. The three schemas for this app (to be created via seeding notebooks) are:
+All tables live under `mdlg_ai_shared`. The three schemas for this app are:
 
-- `mdlg_ai.content` — read-only; pre-seeded static content
-- `mdlg_ai.learner` — read-write; per-user data, always filtered by `user_email`
-- `mdlg_ai.system` — write by app, read by admins; AI call logs
+- `mdlg_ai_shared.content` — read-only; pre-seeded static content (now served from `content/*.json` in the app bundle — no SQL queries needed)
+- `mdlg_ai_shared.learner` — read-write; per-user data, always filtered by `user_email`
+- `mdlg_ai_shared.system` — write by app, read by admins; AI call logs
 
 ### Accessing Delta tables from app code
 
@@ -82,7 +95,7 @@ import os
 w = WorkspaceClient()  # auto-authenticates in both local VS Code and deployed App contexts
 result = w.statement_execution.execute_statement(
     warehouse_id=os.environ["DATABRICKS_WAREHOUSE_ID"],
-    statement="SELECT * FROM mdlg_ai.content.roles",
+    statement="SELECT * FROM mdlg_ai_shared.learner.user_profiles WHERE user_email = :p1",
     wait_timeout="30s",
 )
 ```
@@ -103,6 +116,7 @@ response = w.serving_endpoints.query(
 Two Unity Catalog schemas:
 
 **`content` schema** (read-only for app, pre-seeded via notebooks):
+
 - `roles` — role definitions (RM only in MVP)
 - `domains` — 4 skill domains with level descriptors
 - `diagnostic_items` — 12 questions (3 per domain; types: MCQ, prompt_sandbox, micro_task)
@@ -112,6 +126,7 @@ Two Unity Catalog schemas:
 - `evaluation_items` — 4 questions per course (3 MCQ + 1 performance task) with scoring rubrics
 
 **`learner` schema** (read-write, all queries filtered by `user_email`):
+
 - `user_profiles` — one row per user; stores role, display_name, created_at
 - `diagnostic_sessions` — each diagnostic attempt; stores all 12 responses and item scores
 - `gap_maps` — AI-generated narrative bullets per session; references diagnostic or evaluation
@@ -119,6 +134,7 @@ Two Unity Catalog schemas:
 - `coach_sessions` — full conversation transcript per practice session; stores turn count
 
 **`system` schema** (app writes, admins read):
+
 - `ai_call_log` — every AI API call with prompt, response, latency, and error status
 
 ## Application Architecture
@@ -126,7 +142,7 @@ Two Unity Catalog schemas:
 The app is a multi-page Streamlit application. Pages map directly to user journey states:
 
 | Page | Trigger condition |
-|------|------------------|
+| ---- | ----------------- |
 | Welcome | No row in `learner.user_profiles` |
 | Diagnostic | Profile exists, no completed diagnostic |
 | Skills Profile | Diagnostic complete |
@@ -136,6 +152,7 @@ The app is a multi-page Streamlit application. Pages map directly to user journe
 On every page load, the app reads `user_email` from Databricks SSO context, queries `learner.user_profiles` and `learner.training_progress`, then routes to the appropriate page.
 
 **Module sub-views** (within the Course Module page):
+
 1. **Overview** — entry point; context-aware CTA based on sub-module completion state
 2. **Reading** — static content rendered from `content.reading_content`; writes `reading_completed_at` on completion
 3. **Practice** (AI Coach) — 4 sequential tasks; max 15 total coach turns; conversation is in-memory only (not persisted mid-session); writes `coach_sessions` + `practice_completed_at` on completion
@@ -156,6 +173,7 @@ All AI calls must write to `system.ai_call_log` and display a graceful error mes
 ## Module Sequencing Algorithm
 
 After diagnostic, courses are ordered per user:
+
 1. **Quick win first**: domain scoring 1.5–2.5, closest to 2.0
 2. **Gaps next**: domains below 1.5, ascending (lowest first)
 3. **Remaining**: domains not in above categories
