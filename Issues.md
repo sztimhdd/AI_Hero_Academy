@@ -50,6 +50,44 @@ Both values are Python `float()` casts from LLM output, so the SQL injection ris
 
 ---
 
+### U1 — Pre-diagnostic orientation screen missing
+
+**File**: [pages/01_Diagnostic.py](pages/01_Diagnostic.py)
+
+**PRD reference**: §7.2 — Diagnostic user flow
+
+**Severity**: 🟡 MEDIUM
+
+**What's wrong**: Users are immediately presented with Question 1 of 12 with zero context. There is no time estimate, no question count, no format overview (MCQ + open-text + micro-task mix), and no "Start Assessment" CTA for mental preparation. Users see the first question cold.
+
+**Expected**: An orientation screen before Q1 showing — estimated time (~5 min), total questions (12), format description (mix of multiple choice and written responses), and a "Start Assessment" button. Use `st.session_state["diag_started"]` flag so the screen shows on first load and is skipped on rerun.
+
+---
+
+### U2 — Home module card layout (P0-3) unverified
+
+**File**: [pages/03_Home.py](pages/03_Home.py)
+
+**Severity**: 🟢 LOW
+
+**What's wrong**: The module card button-attachment fix applied in a prior session cannot be visually confirmed because the UAT user (`uat-test@edc.ca`) has no `training_progress` rows — the Home page shows no module cards at all.
+
+**Blocked by**: UAT user must have a training course. Click "🗺️ Build My Training Course" on the Skills Profile page to unblock, then verify cards render with button attached to card bottom.
+
+---
+
+### U3 — No UX audit performed on Diagnostic, Home, or Course Module pages
+
+**Files**: [pages/01_Diagnostic.py](pages/01_Diagnostic.py), [pages/03_Home.py](pages/03_Home.py), [pages/04_Course_Module.py](pages/04_Course_Module.py)
+
+**Severity**: 🟡 MEDIUM
+
+**What's wrong**: The skills profile UX audit (contrast, layout, legend, column cleanup, max-width fix) covered only `02_Skills_Profile.py`. Three major pages have not yet been reviewed for contrast failures, spacing issues, empty columns, missing feedback, or PRD compliance gaps.
+
+**Expected**: Full per-page audit of all three remaining pages against PRD §7.2, §7.4, §7.5 and the WCAG AA contrast minimum (`#8990A8` on `#0D0F14`).
+
+---
+
 ## Closed Issues
 
 | ID | Severity | Description | Resolution |
@@ -67,3 +105,4 @@ Both values are Python `float()` casts from LLM output, so the SQL injection ris
 | L5 | 🟢 LOW | Dead `<a href="#">` link in Home summary card | Fixed — replaced with a Streamlit button (`st.button("→  View Full Skills Profile", ...)`) |
 | L6 | 🟢 LOW | Welcome guard routes all existing users to Diagnostic | Fixed — guard now checks for completed diagnostic session and training_progress, routing to Diagnostic / Skills Profile / Home as appropriate |
 | L7 | 🟢 LOW | Missing `seed_03_diagnostic_items` job in `databricks.yml` | Resolved by architecture change — all content is now served from JSON files in `content/`; no Delta seeding required for content tables |
+| U0 | 🟢 LOW | `.block-container max-width: 900px` caused blank whitespace on wide screens | Fixed — changed to `max-width: none !important` in `utils/styles.py`; `layout="wide"` now fills viewport correctly |

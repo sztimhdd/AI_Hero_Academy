@@ -28,7 +28,7 @@ Complete inventory of every PRD/TDD requirement and its current implementation s
 | Page guards on each page | §6.3 | ✅ | All pages guard-redirect to correct prior state |
 | Welcome guard routes to correct state | §6.3 | ✅ | Fixed L6: full state detection (needs_diagnostic / needs_course / in_training) |
 | Dark theme design system | §7 | ✅ | `utils/styles.py` — full CSS system |
-| Responsive layout (desktop-first) | §5.2 | ✅ | `max-width: 900px` block container |
+| Responsive layout (desktop-first) | §5.2 | ✅ | `max-width: none` — removed 900 px cap (U0); `layout="wide"` now fills viewport |
 
 ---
 
@@ -740,15 +740,120 @@ Fixed: Results fallback now uses the `progress` dict already loaded at page star
 
 ---
 
+### Phase 6 — UI/UX Polish Wave 2
+
+Goal: Implement the missing pre-diagnostic orientation screen and conduct a systematic UX audit of every page not yet reviewed. Issues U1–U3 from `Issues.md` are resolved here.
+
+---
+
+#### Task 6.1 — Add pre-diagnostic orientation screen
+
+**File**: [pages/01_Diagnostic.py](pages/01_Diagnostic.py)
+
+**Issues.md**: U1
+
+Add an orientation screen shown on the user's first load before Question 1. Content: estimated time (~5 min), question count (12), format description (mix of multiple choice and written responses), and a "Start Assessment →" CTA button.
+
+**Implementation**:
+
+- At the top of the diagnostic render block, check `st.session_state.get("diag_started")`
+- If falsy: render an orientation card with the info above + "Start Assessment →" button; return early
+- On button click: set `st.session_state["diag_started"] = True` then `st.rerun()`
+- The flag lives only for the current session (no DB write needed) — consistent with the existing "no partial save" contract (TDD §9)
+
+---
+
+#### Task 6.2 — Verify Home module card layout (P0-3)
+
+**File**: [pages/03_Home.py](pages/03_Home.py)
+
+**Issues.md**: U2
+
+**Prerequisite**: The UAT user (`uat-test@edc.ca`) must have `training_progress` rows. Click "🗺️ Build My Training Course" on the Skills Profile page to populate them.
+
+After building: navigate to Home and visually verify:
+
+- Module card bottom edge is flush with its action button (no gap between card body and CTA)
+- Locked cards show greyed number + lock icon; no CTA button
+- Completed cards show green checkmark + score
+
+---
+
+#### Task 6.3 — UX audit: Diagnostic page
+
+**File**: [pages/01_Diagnostic.py](pages/01_Diagnostic.py)
+
+**Issues.md**: U3 (partial)
+
+Full per-page audit against PRD §7.2 and design system. Check each item:
+
+- All secondary text at `#8990A8` or above (WCAG AA on `#0D0F14`)
+- "X of 12" counter and domain label visible and styled consistently
+- MCQ radio buttons: bold only on selected option (P0-2 already fixed — verify still holds)
+- Open-text `st.text_area`: hint text contrast, placeholder text, character guidance visible
+- Progress bar colour matches domain score palette
+- "Next →" / "Submit" button: disabled state when answer is empty
+- No orphaned empty columns
+
+---
+
+#### Task 6.4 — UX audit: Home page
+
+**File**: [pages/03_Home.py](pages/03_Home.py)
+
+**Issues.md**: U3 (partial) | **Prerequisite**: Task 6.2 (course must exist)
+
+Full per-page audit against PRD §7.4 and design system:
+
+- Summary card: overall score, trend arrow (↑/→/↓), "Last updated" date — all readable
+- Module card states: completed (green ✓ + score), in-progress (sub-badges + CTA), locked (greyed + lock)
+- CTA button labels match PRD ("Continue", "Start Module", "Review Module")
+- No inline `color:#545B70` remaining (grep before auditing)
+- "View Full Skills Profile" Streamlit button navigates correctly
+
+---
+
+#### Task 6.5 — UX audit: Course Module page
+
+**File**: [pages/04_Course_Module.py](pages/04_Course_Module.py)
+
+**Issues.md**: U3 (partial) | **Prerequisite**: Task 6.2 (module must be navigable)
+
+Full audit of all 5 sub-views against PRD §7.5:
+
+| Sub-view | Key checks |
+| -------- | ---------- |
+| Overview | Progress strip (Read → Practice → Quiz) labels; CTA text matches state |
+| Reading | Body text contrast; Good Example / Common Mistake / Takeaway box styling |
+| Practice | Scenario panel always visible; task counter; turn counter; coach bubble styling |
+| Evaluation | Question counter; MCQ radio styling; performance task text area |
+| Results | Score display (`X.X / 4.0`); domain bar; coach note; next-module CTA |
+
+No inline `color:#545B70` remaining anywhere in this file.
+
+---
+
+#### Phase 6 Execution Order
+
+```text
+6.1  Pre-diagnostic orientation screen (self-contained; test with fresh session state)
+6.2  Verify Home module card layout (build course for UAT user first)
+6.3  Diagnostic page UX audit (can run without course)
+6.4  Home page UX audit (requires 6.2 — course must exist)
+6.5  Course Module page UX audit (requires 6.2 — module navigation needed)
+```
+
+---
+
 ## Execution Order
 
 ```
-Phase 0 ✅ DONE    Phase 1 ✅ DONE               Phase 2 ✅ DONE             Phase 3 ✅ DONE        Phase 4 ✅ DONE          Phase 5 ✅ DONE
-Catalog migration   Content DB → JSON refactor    2.1 H2 MCQ local            3.1 M2 Parameterize    4.1 Trend indicator     5.1 L3 Score gap
-Bug fixes (H1-H3,   All 7 JSON files created      2.2 H3 Aggregates           3.2 M3 started_at      4.2 Last updated        5.2 L6 guard
-L2/L3/L5/L6/L7,    utils/content.py loader        2.3 H1 Domain scores        3.3 M4 Results fix     4.3 Dead link           5.3 L2 stamp
-M2/M5)              pages/01-04 updated                                        3.4 M5 Gap map fix                             5.4 L4 Cache
-                                                                               3.5 M1 Token counts
+Phase 0 ✅ DONE    Phase 1 ✅ DONE               Phase 2 ✅ DONE             Phase 3 ✅ DONE        Phase 4 ✅ DONE          Phase 5 ✅ DONE      Phase 6 — pending
+Catalog migration   Content DB → JSON refactor    2.1 H2 MCQ local            3.1 M2 Parameterize    4.1 Trend indicator     5.1 L3 Score gap     6.1 Orientation screen
+Bug fixes (H1-H3,   All 7 JSON files created      2.2 H3 Aggregates           3.2 M3 started_at      4.2 Last updated        5.2 L6 guard         6.2 Verify module cards
+L2/L3/L5/L6/L7,    utils/content.py loader        2.3 H1 Domain scores        3.3 M4 Results fix     4.3 Dead link           5.3 L2 stamp         6.3 Diagnostic audit
+M2/M5)              pages/01-04 updated                                        3.4 M5 Gap map fix                             5.4 L4 Cache         6.4 Home audit
+                                                                               3.5 M1 Token counts                                                 6.5 Course Module audit
 ```
 
 **All phases complete. Ready for UAT.**

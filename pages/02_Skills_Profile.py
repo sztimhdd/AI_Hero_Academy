@@ -271,7 +271,7 @@ col_a, col_b = st.columns([1, 1])
 with col_a:
     if st.button("↩  Retake Diagnostic", use_container_width=True):
         # Clear any lingering diagnostic session state
-        for k in ["diag_item_index", "diag_responses", "diag_session_started"]:
+        for k in ["diag_item_index", "diag_responses", "diag_session_started", "diag_started"]:
             st.session_state.pop(k, None)
         st.switch_page("pages/01_Diagnostic.py")
 

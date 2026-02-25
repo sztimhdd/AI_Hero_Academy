@@ -56,6 +56,50 @@ if "diag_session_started" not in st.session_state:
     st.session_state["diag_session_started"] = str(uuid.uuid4())
     st.session_state["diag_started_at"] = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
+# ── Orientation screen (shown before Q1 on first load) ───────────────────────
+if not st.session_state.get("diag_started"):
+    st.markdown("""
+<div class="aha-brand" style="margin-bottom:2rem">
+  <div class="aha-brand-icon">⚡</div>
+  <div class="aha-brand-name">AI <span>Hero</span> Academy</div>
+</div>
+""", unsafe_allow_html=True)
+    st.markdown('<h1 style="margin-bottom:0.5rem">AI Skills Diagnostic</h1>', unsafe_allow_html=True)
+    st.markdown(
+        '<div style="font-family:\'Inter\',sans-serif; font-size:0.85rem; color:#8990A8; margin-bottom:2rem">'
+        'Before we build your personalised training course, we need to understand your current AI skill level.</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown('<div class="aha-card">', unsafe_allow_html=True)
+    st.markdown(f"""
+<div style="display:flex; gap:2.5rem; flex-wrap:wrap; margin-bottom:1.25rem">
+  <div style="text-align:center; min-width:80px">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">~5</div>
+    <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">minutes</div>
+  </div>
+  <div style="text-align:center; min-width:80px">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">{TOTAL}</div>
+    <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">questions</div>
+  </div>
+  <div style="text-align:center; min-width:80px">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">4</div>
+    <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">skill domains</div>
+  </div>
+</div>
+<div style="font-family:'Inter',sans-serif; font-size:0.85rem; color:#8990A8; line-height:1.6">
+  Questions include <strong style="color:#E8E9EF">multiple choice</strong>,
+  <strong style="color:#E8E9EF">written responses</strong>, and
+  <strong style="color:#E8E9EF">short tasks</strong>.
+  There are no right or wrong answers — your results shape your personalised training course.
+</div>
+""", unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
+    if st.button("Start Assessment →", type="primary"):
+        st.session_state["diag_started"] = True
+        st.rerun()
+    st.stop()
+
 idx: int = st.session_state["diag_item_index"]
 
 # ── Header ────────────────────────────────────────────────────────────────────
