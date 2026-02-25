@@ -33,5 +33,14 @@ jobs:
 
       - name: Deploy Databricks App
         run: |
-          databricks apps deploy my-ai-hero-academy-mvp \
-            --source-code-path /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp
+          for attempt in 1 2 3 4; do
+            databricks apps deploy my-ai-hero-academy-mvp \
+              --source-code-path /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp && break
+            if [ $attempt -lt 4 ]; then
+              echo "Deploy blocked (attempt $attempt/4) — waiting 30s before retry..."
+              sleep 30
+            else
+              echo "Deploy failed after 4 attempts."
+              exit 1
+            fi
+          done
