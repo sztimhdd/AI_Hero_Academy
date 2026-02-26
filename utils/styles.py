@@ -119,8 +119,8 @@ p, li, .stMarkdown p {{
 
 /* ─── BUTTONS ──────────────────────────────────────────────── */
 /* Primary buttons: styled via config.toml [theme] primaryColor = "#00D4E8"
-   Secondary/default buttons: native Streamlit grey — no override needed.
-   Disabled state: handled natively by disabled=True on st.button. */
+   Secondary buttons: explicit override required — primaryColor bleeds into all
+   button types without it (NX2). Disabled state: handled natively by disabled=True. */
 .stButton > button {{
   border-radius: 6px !important;
   font-family: 'Inter', sans-serif !important;
@@ -129,6 +129,20 @@ p, li, .stMarkdown p {{
   letter-spacing: 0.04em !important;
   padding: 0.55rem 1.4rem !important;
   transition: all 0.15s ease !important;
+}}
+
+/* Secondary buttons — neutral to distinguish from primary CTA.
+   data-testid="stBaseButton-secondary" is the documented community selector for
+   secondary button containers; Streamlit has no stable public class for primary/
+   secondary variants (same rationale as NX10, stInfo, stSuccess in this file). */
+[data-testid="stBaseButton-secondary"] button {{
+  background-color: transparent !important;
+  color: {COLORS['text_primary']} !important;
+  border: 1px solid {COLORS['border']} !important;
+}}
+[data-testid="stBaseButton-secondary"] button:hover {{
+  background-color: {COLORS['bg_elevated']} !important;
+  border-color: {COLORS['text_secondary']} !important;
 }}
 
 /* ─── INPUTS ───────────────────────────────────────────────── */

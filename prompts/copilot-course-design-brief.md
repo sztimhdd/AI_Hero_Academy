@@ -316,11 +316,15 @@ company_map:
   course_5: [FICTIONAL company name for Course 5 scenario]
 
 framework_names:
-  - [Name or acronym of the framework/technique taught in Course 1 reading]
-  - [Name or acronym of the framework/technique taught in Course 2 reading]
-  - [Name or acronym of the framework/technique taught in Course 3 reading]
-  - [Name or acronym of the framework/technique taught in Course 4 reading]
-  - [Name or acronym of the framework/technique taught in Course 5 reading]
+  NOTE: These 5 names are standardized across all roles. Confirm which apply; adapt the
+  role-specific examples in SECTION E (concept_text, good_example, anti_pattern) accordingly.
+  Do NOT invent new framework names unless a standardized name genuinely does not fit.
+
+  - [Course 1 — Prompting domain: standardized name is "CRAF Framework" — use unless the role requires a meaningfully different prompting structure]
+  - [Course 2 — Verification domain: standardized name is "VERIFY Checklist" — use unless the role's verification workflow diverges significantly]
+  - [Course 3 — Data Safety domain: standardized name is "The SAFE Abstraction Method" — use unless the role has a distinct data-handling protocol]
+  - [Course 4 — Tool Fluency domain: standardized name is "Copilot Surface Selector" — use unless the role's M365 tool set differs from standard]
+  - [Course 5 — Capstone: standardized name is "End-to-End AI Workflow" — use unless a role-specific multi-domain framework name is warranted]
 
 real_use_case:
   course_1: [verbatim use case title(s) from Prompt B Task 3 — do not paraphrase]
@@ -371,6 +375,10 @@ SECTION D — All 5 Scenario Seeds
   - Write in second person ("You have just...", "You are preparing...")
   - Use FICTIONAL company names — invent plausible ones appropriate to this role's
     client/counterparty universe (e.g., industries, size bands, geographies this role works with)
+  - Domain balance: all 4 domains must be represented across the 5 scenario seeds (courses 1–5).
+    If the role profile's Section 13B has no scenario seed for tool_fluency, synthesize the
+    Course 4 (Tool Fluency) scenario from the multi-step M365 Copilot chain workflows described
+    in Sections 3–4 of the role profile (tool inventory, surfaces in active use, handoff steps).
   - Each scenario must create an AI temptation (something the learner might rush to do wrong)
     and a skill test (the discipline or judgment required to do it right)
   - Tasks should progress in difficulty: task_1 is foundational, task_4 is the hardest
@@ -450,7 +458,10 @@ QUALITY RULES
 - Descriptions and level descriptors must be specific to this role's workflows — not
   copy-pasted from the RM examples.
 - If the use case mapping flagged a domain gap (Task 4), synthesize a scenario from the
-  role profile's Section 13 operational anchors instead.
+  role profile's Section 13 operational anchors instead. For a tool_fluency gap specifically
+  (the domain most likely to have no Section 13B scenario seed), draw from Sections 3–4 of the
+  role profile — the tool inventory, M365 Copilot surfaces in active use, and any multi-step
+  chain workflows described as pain points. Do NOT skip Course 4 or leave it generic.
 - If you are uncertain about a role-specific detail, check your M365 knowledge of this
   role at EDC (SharePoint, emails, meeting transcripts). Do not guess.
 - Do not truncate. Every section requires complete output.

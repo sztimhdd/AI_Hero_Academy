@@ -36,49 +36,31 @@ Use case library: references/List-of-Use-Cases-all.csv
 
 ---
 
-TASK 1 — Filter and score relevance
+TASK 1 & 2 — Filter, score, and map to domain (combined)
 Read every row in the use case CSV. For each row, assess relevance to [INSERT ROLE]'s
 day-to-day work based on the role profile above.
 
-Score relevance using these criteria:
-  HIGH — the use case describes a task this role does directly, names tools they use,
-         or was submitted by their department / a closely related team
-  MEDIUM — the use case is adjacent (similar workflow, different team) and could be
-            adapted to this role's context
-  LOW / SKIP — unrelated department, unrelated workflow, or too generic to adapt
+Score relevance:
+  HIGH — task this role does directly, tools they use, or their department submitted it
+  MEDIUM — adjacent workflow, different team, adaptable to this role's context
+  LOW / SKIP — unrelated; skip these
 
-Output a ranked shortlist of 8–12 HIGH and MEDIUM use cases only.
-Format as a table:
+Domain mapping (primary domain per use case):
+  → Prompting for Outcomes: drafting, prompt writing, generating structured content,
+     research synthesis, preparing outputs for meetings or clients
+  → Verification and Judgment: reviewing AI output, checking accuracy of generated
+     text, summaries, recaps before acting on them
+  → Data Safety and Compliance: inputting client data, non-public information,
+     privacy, data classification, compliance with AI usage policies
+  → Tool Fluency (M365 + Copilot): choosing the right Copilot surface, chaining M365
+     tools, multi-step workflows across Outlook / Teams / Excel / Word / SharePoint
+  → Capstone candidate: spans 2+ domains naturally
 
-| # | Use Case Title | Business Line | Why Relevant to [ROLE] | Relevance |
-|---|----------------|---------------|------------------------|-----------|
+Output a compact shortlist of 8–12 HIGH and MEDIUM use cases.
+Format as a table with EXACTLY these columns — no extra columns, no prose in cells:
 
----
-
-TASK 2 — Map to AI skill domain
-For each shortlisted use case, identify the primary AI skill domain it anchors:
-
-  → Prompting for Outcomes:
-     use cases about drafting, briefing, prompt writing, generating structured content,
-     research synthesis, preparing for meetings or client interactions
-
-  → Verification and Judgment:
-     use cases about reviewing AI output, meeting recaps, summaries, audit review,
-     checking accuracy of generated text before using it
-
-  → Data Safety and Compliance:
-     use cases about inputting client data, CRM exports, non-public information,
-     privacy concerns, data classification, compliance checking
-
-  → Tool Fluency (M365 + Copilot):
-     use cases about choosing the right tool, chaining M365 surfaces, workflow
-     automation, multi-step AI-assisted processes across Outlook / Teams / Excel / Word
-
-  → Capstone candidate: use cases that span 2 or more domains naturally
-
-Update the table with two new columns:
-
-| # | Use Case Title | Business Line | Why Relevant | Relevance | Domain | Capstone (Y/N) |
+| # | Use Case Title (verbatim) | Relevance | Domain | Capstone |
+|---|---------------------------|-----------|--------|----------|
 
 ---
 
@@ -91,7 +73,8 @@ For each course, provide:
   - real_use_case: the verbatim use case title(s) from the CSV, exactly as they appear in the
     Title column. Do NOT paraphrase, shorten, or rephrase. This field is quoted directly into
     the course content JSON by the generation pipeline.
-  - A 1–2 sentence rationale: what real task from this role does the use case connect to?
+  - A 1-sentence rationale: what real task from this role does the use case connect to?
+    (One sentence only — do not expand.)
   - A suggested course title (plain language, action-oriented, ~8 words)
 
 Format:
@@ -99,35 +82,35 @@ Format:
     course_id: [role_prefix]_c1_prompting
     Use case: [verbatim title from CSV]
     real_use_case: [verbatim title(s) from CSV — multiple titles separated by semicolons]
-    Rationale: [1–2 sentences]
+    Rationale: [1 sentence]
     Suggested title: [draft course title]
 
   Course 2 – Verification and Judgment
     course_id: [role_prefix]_c2_verification
     Use case: [verbatim title from CSV]
     real_use_case: [verbatim title(s) from CSV]
-    Rationale: [1–2 sentences]
+    Rationale: [1 sentence]
     Suggested title: [draft course title]
 
   Course 3 – Data Safety and Compliance
     course_id: [role_prefix]_c3_data_safety
     Use case: [verbatim title from CSV]
     real_use_case: [verbatim title(s) from CSV]
-    Rationale: [1–2 sentences]
+    Rationale: [1 sentence]
     Suggested title: [draft course title]
 
   Course 4 – Tool Fluency (M365 + Copilot)
     course_id: [role_prefix]_c4_tool_fluency
     Use case: [verbatim title from CSV]
     real_use_case: [verbatim title(s) from CSV]
-    Rationale: [1–2 sentences]
+    Rationale: [1 sentence]
     Suggested title: [draft course title]
 
   Course 5 – Capstone
     course_id: [role_prefix]_c5_capstone
     Use case(s): [verbatim title(s) from CSV]
     real_use_case: [verbatim title(s) from CSV — all titles used, semicolon-separated]
-    Rationale: [1–2 sentences explaining how it integrates multiple domains]
+    Rationale: [1 sentence explaining which domains it integrates and how]
     Suggested title: [draft course title]
 
 ---
@@ -147,5 +130,10 @@ OUTPUT RULES
 - Only reference use cases that actually exist in the CSV. Do not invent new ones.
 - Keep rationales grounded in the role profile evidence. Do not use generic language.
 - If you are uncertain about a domain mapping, note the ambiguity briefly.
-- Plain markdown output. Tables for Tasks 1–2. Structured prose for Tasks 3–4.
+- Plain markdown output. Compact table for Tasks 1–2. Structured list for Tasks 3–4.
+- BREVITY IS CRITICAL: the output of this prompt is pasted into Prompt C (Course Design
+  Brief), which has a limited context window. Every extra sentence in Tasks 1–2 burns
+  context that Prompt C needs for content generation.
+- When copying output to paste into Prompt C: include ONLY Tasks 3 and 4.
+  Tasks 1–2 are for your own review — do not paste them into Prompt C.
 ```

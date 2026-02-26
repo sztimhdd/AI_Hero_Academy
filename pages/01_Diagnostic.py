@@ -8,6 +8,7 @@ import streamlit as st
 import uuid
 import json
 import os
+import sys
 from datetime import datetime
 
 from utils.auth import get_user_email
@@ -15,7 +16,7 @@ from utils.db import execute, query_one
 from utils.ai import score_diagnostic, generate_gap_map
 from utils.scoring import DOMAIN_DISPLAY_NAMES
 from utils.styles import inject_global_css
-from utils.content import get_diagnostic_items, DOMAIN_DESCRIPTIONS
+from utils.content import get_diagnostic_items, get_domain_descriptions
 
 st.set_page_config(
     page_title="Diagnostic | AI Hero Academy",
@@ -31,11 +32,13 @@ user_email = get_user_email()
 
 # ── Guard: must have a profile ────────────────────────────────────────────────
 profile = query_one(
-    f"SELECT user_email FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
+    f"SELECT user_email, role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
     [user_email],
 )
 if not profile:
     st.switch_page("pages/00_Welcome.py")
+
+role_id: str = profile["role_id"] if profile else st.session_state.get("role_id", "rm")
 
 # Check for prior completed diagnostic — used to show exit navigation (CX1)
 _prior_diag = query_one(
@@ -46,8 +49,8 @@ _prior_diag = query_one(
 _can_exit = bool(_prior_diag)
 
 # ── Load diagnostic items (ordered) ──────────────────────────────────────────
-items = get_diagnostic_items()
-domain_descriptions = DOMAIN_DESCRIPTIONS
+items = get_diagnostic_items(role_id)
+domain_descriptions = get_domain_descriptions(role_id)
 
 TOTAL = len(items)
 
@@ -194,6 +197,7 @@ def complete_diagnostic(responses: list[dict]):
             st.stop()
 
     with st.spinner("Building your personalised gap map..."):
+        gap_bullets = []
         try:
             gap_bullets = generate_gap_map(
                 domain_scores=domain_scores,
@@ -201,16 +205,21 @@ def complete_diagnostic(responses: list[dict]):
                 user_email=user_email,
                 source_type="diagnostic",
             )
-            gap_map_id = str(uuid.uuid4())
-            bullets_json = json.dumps(gap_bullets, ensure_ascii=False)
-            execute(
-                f"INSERT INTO {CATALOG}.learner.gap_maps "
-                f"(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
-                f"VALUES (?, ?, 'diagnostic', ?, ?, current_timestamp())",
-                [gap_map_id, user_email, session_id, bullets_json],
-            )
-        except Exception:
-            pass  # Non-fatal; Skills Profile will show a fallback message
+        except Exception as _gap_err:
+            # Non-fatal — Skills Profile shows fallback if gap map is missing
+            print(f"[WARNING] gap_map generation failed after diagnostic: {_gap_err}", file=sys.stderr)
+        if gap_bullets:
+            try:
+                gap_map_id = str(uuid.uuid4())
+                bullets_json = json.dumps(gap_bullets, ensure_ascii=False)
+                execute(
+                    f"INSERT INTO {CATALOG}.learner.gap_maps "
+                    f"(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
+                    f"VALUES (?, ?, 'diagnostic', ?, ?, current_timestamp())",
+                    [gap_map_id, user_email, session_id, bullets_json],
+                )
+            except Exception as _db_err:
+                print(f"[WARNING] gap_map write failed after diagnostic: {_db_err}", file=sys.stderr)
 
     # Clear diagnostic session state and navigate
     st.session_state.pop("diag_item_index", None)

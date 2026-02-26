@@ -497,9 +497,19 @@ def _llm_parse_brief(brief_text: str) -> dict:
         f_scenarios = executor.submit(_parse_scenarios_and_reading, scenario_reading_text)
         f_assessment = executor.submit(_parse_assessment, assessment_text)
 
-        structural_result = f_structural.result(timeout=90)
-        scenarios_result = f_scenarios.result(timeout=90)
-        assessment_result = f_assessment.result(timeout=90)
+        try:
+            structural_result = f_structural.result(timeout=90)
+            scenarios_result = f_scenarios.result(timeout=90)
+            assessment_result = f_assessment.result(timeout=90)
+        except FuturesTimeoutError:
+            print(
+                "\n  ERROR: Brief parsing timed out (>90 s). "
+                "Check network connectivity and retry."
+            )
+            sys.exit(1)
+        except Exception as e:
+            print(f"\n  ERROR: Brief parsing failed: {e}")
+            sys.exit(1)
 
     # Merge all three dicts into one spec
     spec = {}
@@ -544,9 +554,14 @@ def generate_structural_json(spec: dict) -> tuple[dict, dict]:
     )
 
     # Load RM examples as few-shot reference
-    rm_roles = json.loads((CONTENT_DIR / "roles.json").read_text(encoding="utf-8"))
-    rm_domains = json.loads((CONTENT_DIR / "domains.json").read_text(encoding="utf-8"))
-    rm_courses = json.loads((CONTENT_DIR / "courses.json").read_text(encoding="utf-8"))
+    try:
+        rm_roles = json.loads((CONTENT_DIR / "roles.json").read_text(encoding="utf-8"))
+        rm_domains = json.loads((CONTENT_DIR / "domains.json").read_text(encoding="utf-8"))
+        rm_courses = json.loads((CONTENT_DIR / "courses.json").read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"  WARNING: Could not load RM reference files for few-shot examples: {e}")
+        print("  Run the pipeline from the project root directory (content/ must exist).")
+        rm_roles, rm_domains, rm_courses = {}, {}, {}
 
     # Compact few-shot snippets to stay within context budget
     rm_role_ex = json.dumps({"rm": rm_roles.get("rm", {})}, indent=2)[:400]
@@ -631,13 +646,18 @@ Requirements:
     )
     structural = extract_json(raw)
 
-    # Validate course_ids
-    for course_id in structural.get("course_entries", {}):
-        if not _validate_course_id(course_id, role_prefix):
-            print(
-                f"  WARNING: course_id '{course_id}' does not match expected pattern "
-                f"{role_prefix}_c<N>_<domain_id>"
-            )
+    # Validate course_ids — abort early rather than running 4 expensive Sonnet calls
+    invalid_ids = [
+        cid for cid in structural.get("course_entries", {})
+        if not _validate_course_id(cid, role_prefix)
+    ]
+    if invalid_ids:
+        print(
+            f"\n  ERROR: Stage 2 produced invalid course_id(s): {invalid_ids}\n"
+            f"  Expected pattern: {role_prefix}_c<N>_<domain_id>\n"
+            f"  Retry — Haiku occasionally formats IDs incorrectly on first attempt."
+        )
+        sys.exit(1)
 
     # Build shared_context
     course_entries = structural.get("course_entries", {})
@@ -980,10 +1000,14 @@ def generate_course_content(
     course_seed = _get_seed(spec.get("course_seeds"), course_pos)
 
     # Load RM few-shot examples
-    rm_reading = json.loads((CONTENT_DIR / "reading_content.json").read_text(encoding="utf-8"))
-    rm_scenarios = json.loads(
-        (CONTENT_DIR / "practice_scenarios.json").read_text(encoding="utf-8")
-    )
+    try:
+        rm_reading = json.loads((CONTENT_DIR / "reading_content.json").read_text(encoding="utf-8"))
+        rm_scenarios = json.loads(
+            (CONTENT_DIR / "practice_scenarios.json").read_text(encoding="utf-8")
+        )
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"  WARNING: Could not load RM reading/scenario examples: {e}")
+        rm_reading, rm_scenarios = {}, {}
     rm_reading_ex = json.dumps(rm_reading.get("rm_c1_prompting", {}), indent=2)[:800]
     rm_scenario_ex = json.dumps(rm_scenarios.get("rm_c1_prompting", {}), indent=2)[:800]
 
@@ -1079,9 +1103,13 @@ Write production-quality content. Requirements:
 
 def generate_diagnostic_items(spec: dict, shared_context: dict) -> list[dict]:
     """Generate 12 diagnostic items: 3 per domain (MCQ + prompt_sandbox + micro_task)."""
-    rm_diag = json.loads(
-        (CONTENT_DIR / "diagnostic_items.json").read_text(encoding="utf-8")
-    )
+    try:
+        rm_diag = json.loads(
+            (CONTENT_DIR / "diagnostic_items.json").read_text(encoding="utf-8")
+        )
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"  WARNING: Could not load RM diagnostic examples: {e}")
+        rm_diag = []
     rm_diag_list = rm_diag if isinstance(rm_diag, list) else list(rm_diag.values())
     rm_diag_ex = json.dumps(rm_diag_list[:3], indent=2)[:1200]
 
@@ -1105,10 +1133,10 @@ ITEM TYPE REQUIREMENTS:
 
 PER DOMAIN: exactly 3 items — Item 1 (mcq), Item 2 (prompt_sandbox), Item 3 (micro_task).
 
-ITEM ID PATTERN: diag_<abbrev><N>_<type>
+ITEM ID PATTERN: {shared_context["role_prefix"]}_diag_<abbrev><N>_<type>
   Domains for this role: {', '.join(domain_ids)}
   Use first 1–3 letters of the domain_id as abbreviation (e.g. "prompting" → "p", "risk_assessment" → "ra").
-  Example pattern: diag_p1_mcq, diag_v2_sandbox, diag_ra3_task
+  Example pattern: {shared_context["role_prefix"]}_diag_p1_mcq, {shared_context["role_prefix"]}_diag_v2_sandbox, {shared_context["role_prefix"]}_diag_ra3_task
 
 CONTENT CONSTRAINTS:
 - Use fictional company names only. No real companies, no real EDC clients.
@@ -1174,9 +1202,13 @@ def generate_evaluation_items(
 
     Runs after Stage 4 so it can align MCQs with what the reading concepts teach.
     """
-    rm_eval = json.loads(
-        (CONTENT_DIR / "evaluation_items.json").read_text(encoding="utf-8")
-    )
+    try:
+        rm_eval = json.loads(
+            (CONTENT_DIR / "evaluation_items.json").read_text(encoding="utf-8")
+        )
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"  WARNING: Could not load RM evaluation examples: {e}")
+        rm_eval = {}
     rm_eval_ex_list = (
         rm_eval.get("rm_c1_prompting", [])
         if isinstance(rm_eval, dict)
@@ -1488,12 +1520,19 @@ def assemble_and_write(
     existing_diag = json.loads(
         (content_dir / "diagnostic_items.json").read_text(encoding="utf-8")
     )
+    # Inject role_id into every new diagnostic item
+    new_diag_items = [
+        {**item, "role_id": role_prefix} for item in all_outputs["diagnostic_items"]
+    ]
+    # Collision guard: skip any item whose item_id already exists
+    existing_ids = {i["item_id"] for i in (existing_diag if isinstance(existing_diag, list) else existing_diag.values())}
+    new_diag_items = [i for i in new_diag_items if i["item_id"] not in existing_ids]
     if isinstance(existing_diag, list):
-        new_diag = existing_diag + all_outputs["diagnostic_items"]
+        new_diag = existing_diag + new_diag_items
     else:
         # dict format — append as keyed entries
         new_diag = dict(existing_diag)
-        for item in all_outputs["diagnostic_items"]:
+        for item in new_diag_items:
             new_diag[item["item_id"]] = item
 
     # evaluation_items.json (dict keyed by course_id)
@@ -1541,8 +1580,8 @@ def assemble_and_write(
     print(f"  diagnostic_items.json  +12")
     print(f"  evaluation_items.json  +20  (5 course groups)")
     print()
-    print("NEXT STEP: Run the seeding notebook to sync content/ to Delta tables.")
-    print("  databricks bundle run seed_courses -t dev")
+    print("NEXT STEP: Deploy the updated app bundle so the new content/ JSON files are served.")
+    print("  bash scripts/sync_deploy.sh")
     print()
 
 

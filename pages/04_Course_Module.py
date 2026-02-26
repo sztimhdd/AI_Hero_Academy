@@ -15,7 +15,7 @@ import streamlit as st
 
 from utils.auth import get_user_email
 from utils.db import execute, query_one
-from utils.content import get_course, get_reading, get_scenario, get_eval_items, DOMAIN_DESCRIPTIONS
+from utils.content import get_course, get_reading, get_scenario, get_eval_items, get_domain_descriptions
 from utils.ai import (
     coach_response,
     score_evaluation,
@@ -535,7 +535,7 @@ elif active_sub == "evaluation":
                 merged_scores = compute_current_domain_scores(diag_domain_scores_gm, eval_domain_scores_gm)
                 gap_bullets = generate_gap_map(
                     domain_scores=merged_scores,
-                    domain_descriptions=DOMAIN_DESCRIPTIONS,
+                    domain_descriptions=get_domain_descriptions(st.session_state.get("role_id", "rm")),
                     user_email=user_email,
                     source_type="evaluation",
                 )

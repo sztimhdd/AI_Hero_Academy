@@ -198,15 +198,17 @@ if gap_map_row:
         bullets = []
 
     if bullets:
-        st.markdown('<div class="aha-card">', unsafe_allow_html=True)
-        st.markdown("""
-<div style="display:flex; gap:1.25rem; margin-bottom:1rem; font-family:'Inter',sans-serif;
-            font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.06em">
-  <span><span class="gap-priority-dot high" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Critical gap</span>
-  <span><span class="gap-priority-dot medium" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Needs work</span>
-  <span><span class="gap-priority-dot low" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>On track</span>
-</div>
-""", unsafe_allow_html=True)
+        # Build all HTML in one st.markdown() call — splitting across multiple calls causes
+        # Streamlit to auto-close the opening <div> immediately, leaving an empty card box.
+        parts = ['<div class="aha-card">']
+        parts.append(
+            '<div style="display:flex; gap:1.25rem; margin-bottom:1rem; font-family:\'Inter\',sans-serif;'
+            ' font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.06em">'
+            '<span><span class="gap-priority-dot high" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Critical gap</span>'
+            '<span><span class="gap-priority-dot medium" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Needs work</span>'
+            '<span><span class="gap-priority-dot low" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>On track</span>'
+            '</div>'
+        )
         for b in sorted(bullets, key=lambda x: x.get("priority", 99)):
             domain_id = b.get("domain_id", "")
             domain_score = current_domain_scores.get(domain_id, 0.0)
@@ -217,16 +219,15 @@ if gap_map_row:
             dot_class = "high" if domain_score < 1.5 else ("medium" if domain_score < 2.5 else "low")
             domain_name_display = DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id)
             bullet_text = b.get("bullet", "")
-            st.markdown(f"""
-<div class="gap-bullet">
-  <div class="gap-priority-dot {dot_class}"></div>
-  <div>
-    <div class="gap-domain-name">{domain_name_display}</div>
-    <div class="gap-bullet-text">{bullet_text}</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+            parts.append(
+                f'<div class="gap-bullet">'
+                f'<div class="gap-priority-dot {dot_class}"></div>'
+                f'<div><div class="gap-domain-name">{domain_name_display}</div>'
+                f'<div class="gap-bullet-text">{bullet_text}</div></div>'
+                f'</div>'
+            )
+        parts.append('</div>')
+        st.markdown("".join(parts), unsafe_allow_html=True)
     else:
         st.info("Gap map is being generated. Refresh the page in a moment.")
 else:

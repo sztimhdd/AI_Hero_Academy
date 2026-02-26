@@ -25,17 +25,20 @@ inject_global_css()
 CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 
 
-def get_user_state(user_email: str) -> str:
+def get_user_state(user_email: str) -> tuple[str, str | None]:
     """
-    Returns one of:
+    Returns (state, role_id) where state is one of:
     new_user | needs_diagnostic | needs_course | in_training
+    role_id is None for new_user, otherwise the role from user_profiles.
     """
     profile = query_one(
         f"SELECT role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
         [user_email],
     )
     if not profile:
-        return "new_user"
+        return "new_user", None
+
+    role_id = profile["role_id"]
 
     session = query_one(
         f"SELECT session_id FROM {CATALOG}.learner.diagnostic_sessions "
@@ -44,7 +47,7 @@ def get_user_state(user_email: str) -> str:
         [user_email],
     )
     if not session:
-        return "needs_diagnostic"
+        return "needs_diagnostic", role_id
 
     progress = query_one(
         f"SELECT progress_id FROM {CATALOG}.learner.training_progress "
@@ -52,18 +55,19 @@ def get_user_state(user_email: str) -> str:
         [user_email],
     )
     if not progress:
-        return "needs_course"
+        return "needs_course", role_id
 
-    return "in_training"
+    return "in_training", role_id
 
 
 # ── Initialise session state ──────────────────────────────────────────────────
 if "user_email" not in st.session_state:
     try:
         user_email = get_user_email()
-        state = get_user_state(user_email)
+        state, role_id = get_user_state(user_email)
         st.session_state["user_email"] = user_email
         st.session_state["user_state"] = state
+        st.session_state["role_id"] = role_id or "rm"
     except Exception as e:
         st.error(f"Unable to connect to the database. Please refresh.\n\n_{e}_")
         st.stop()

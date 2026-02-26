@@ -46,17 +46,32 @@ def get_role(role_id: str) -> dict:
     return ROLES[role_id]
 
 
-def get_domain(domain_id: str) -> dict:
-    # DOMAINS keys are role-scoped ("rm_prompting"); look up by the domain_id field.
-    match = next((d for d in DOMAINS.values() if d["domain_id"] == domain_id), None)
+def get_domain(domain_id: str, role_id: str = "rm") -> dict:
+    # DOMAINS keys are role-scoped ("rm_prompting"); look up by domain_id + role_id.
+    match = next(
+        (d for d in DOMAINS.values() if d["domain_id"] == domain_id and d.get("role_id") == role_id),
+        None,
+    )
+    if match is None:
+        # Fallback: any domain with matching domain_id
+        match = next((d for d in DOMAINS.values() if d["domain_id"] == domain_id), None)
     if match is None:
         raise KeyError(f"No domain with domain_id={domain_id!r} found in domains.json")
     return match
 
 
-def get_diagnostic_items() -> list:
-    """Returns all diagnostic items ordered by display_order."""
-    return DIAGNOSTIC_ITEMS
+def get_domain_descriptions(role_id: str = "rm") -> dict:
+    """Return {domain_id: description} for the given role."""
+    return {
+        d["domain_id"]: d["description"]
+        for d in DOMAINS.values()
+        if d.get("role_id") == role_id
+    }
+
+
+def get_diagnostic_items(role_id: str = "rm") -> list:
+    """Returns diagnostic items for the given role, ordered by display_order."""
+    return [i for i in DIAGNOSTIC_ITEMS if i.get("role_id") == role_id]
 
 
 def get_course(course_id: str) -> dict:

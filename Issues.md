@@ -18,7 +18,7 @@ Last validated: February 2026
 
 ## Open Issues
 
-_None — all known issues resolved._
+None — all known issues resolved.
 
 ---
 
@@ -30,7 +30,7 @@ _None — all known issues resolved._
 | H2 | 🔴 HIGH | MCQ items sent to LLM; `score_mcq()` never called | Fixed — `_score_batch()` now scores MCQ locally via `score_mcq()`; LLM only receives open-ended items |
 | H3 | 🔴 HIGH | `score_evaluation` asked LLM for aggregates; inconsistent with `score_diagnostic` | Fixed — `score_evaluation()` now mirrors `score_diagnostic()`: uses `_score_batch()` per domain, aggregates computed in Python |
 | NX1 | 🔴 HIGH | Practice chat used custom HTML divs instead of `st.chat_message()` + `st.chat_input()` | Fixed (Phase 7.2) — replaced with `st.chat_message("user")` / `st.chat_message("assistant")` context managers and `st.chat_input()`; native ARIA, auto-scroll, theme-consistent |
-| NX2 | 🔴 HIGH | Global `.stButton > button` CSS override destroyed `type="primary"` vs `type="secondary"` affordance | Fixed (Phase 7.1) — removed `background-color` from `.stButton > button` in `utils/styles.py`; `primaryColor` in `config.toml` now drives primary button colour correctly |
+| NX2 | 🔴 HIGH | Global `.stButton > button` CSS override destroyed `type="primary"` vs `type="secondary"` affordance | Fixed (Phase 8.1) — added `[data-testid="stBaseButton-secondary"] button` CSS block in `utils/styles.py` with `transparent` background, muted border, and hover state; secondary buttons now visually distinct from primary cyan CTA |
 | CX1 | 🔴 HIGH | No exit navigation during Diagnostic — user trapped until all 12 questions answered | Fixed — added `← Exit` button to orientation screen (returning users only) and to quiz header; both clear session state and navigate to `pages/03_Home.py` |
 | M1 | 🟡 MEDIUM | Token counts never populated in `ai_call_log` | Fixed — `call_llm()` extracts `resp.usage.prompt_tokens` / `resp.usage.completion_tokens` and passes to `_log_call()` |
 | M2 | 🟡 MEDIUM | `training_progress` UPDATE used inline float interpolation for `evaluation_score` and `domain_score_after` | Fixed — both values moved to parameterised placeholders `?`; parameter list updated to `[eval_score, domain_score_after, progress_id]` |
@@ -40,7 +40,8 @@ _None — all known issues resolved._
 | NX3 | 🟡 MEDIUM | Assessment History used raw HTML `<table>` instead of `st.dataframe()` | Fixed (Phase 7.3) — `pages/02_Skills_Profile.py` now builds a `pandas.DataFrame` and renders with `st.dataframe(use_container_width=True, hide_index=True)` |
 | NX4 | 🟡 MEDIUM | Score/metric displays used custom HTML instead of `st.metric()` | Fixed (Phase 7.4) — Results sub-view score hero now uses `st.metric()`; `[data-testid="stMetric"]` CSS in `styles.py` provides card styling |
 | NX5 | 🟡 MEDIUM | Domain score bars used custom HTML instead of `st.progress()` | Fixed (Phase 7.5) — `score_bar()` replaced with `st.columns` + `st.progress(value / 4.0, text=label)`; native `role="progressbar"` ARIA semantics |
-| NX6 | 🟡 MEDIUM | 30–96 "Invalid color" console warnings per page load for `widgetBackgroundColor`, `widgetBorderColor`, `skeletonBackgroundColor` | Fixed (Phase 7.6) — root cause: Streamlit JS emits warnings when these deprecated internal tokens are absent (GitHub #13831). Added all three to `.streamlit/config.toml` with design-system hex values (`#1E2330`, `#2A2F3E`); visual no-ops since CSS overrides take precedence |
+| NX6 | 🟡 MEDIUM | 30–96 "Invalid color" console warnings per page load for `widgetBackgroundColor`, `widgetBorderColor`, `skeletonBackgroundColor` | Upstream limitation (Phase 8.2) — root cause confirmed as Streamlit issue #13831: JS sidebar theme doesn't inherit these deprecated tokens from `config.toml`. Tokens are already set in config.toml (best-effort); 3 warnings per page persist, are non-blocking, and cannot be suppressed without patching Streamlit's JS bundle. Accepted. |
+| BUG-1 | 🟡 MEDIUM | `gap_maps` table not written after diagnostic completion — AI call succeeds but gap map not persisted | Fixed (Phase 8.3) — root cause: `generate_gap_map()` did a hard `result["gap_bullets"]` that raised `KeyError` when the LLM returned a key variant (e.g. `"bullets"`); silently swallowed by `except Exception: pass`. Fixed in `utils/ai.py`: resilient `.get("gap_bullets") or .get("bullets") or []`. Fixed in `pages/01_Diagnostic.py`: `except` now logs to stderr instead of silently passing. |
 | CX2 | 🟡 MEDIUM | Sidebar navigation different on every page — no persistent chrome | Fixed — pages 02–04 now consistently show `🏠 My Training` + `🏅 Skills Profile`; Course Module additionally shows module context block |
 | CX3 | 🟡 MEDIUM | "📚 My Course" button on Skills Profile silently bounced to Home (active_course_id not set) | Fixed — button now looks up the active (unlocked, incomplete) module from `progress_rows`, sets `st.session_state["active_course_id"]` and `active_submodule = "overview"` before navigating |
 | CX4 | 🟡 MEDIUM | No breadcrumbs or wayfinding trail in Course Module | Fixed — breadcrumb row added at top of `pages/04_Course_Module.py` before all sub-views: `← My Training` button + `Module N: {title} / {sub-view}` text |
