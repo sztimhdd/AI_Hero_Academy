@@ -18,15 +18,7 @@ Last validated: February 2026
 
 ## Open Issues
 
-### NX10 — `data-testid` CSS selectors are Streamlit-version-fragile
-
-**File**: [utils/styles.py](utils/styles.py) (throughout)
-
-**Severity**: 🟢 LOW
-
-**What's wrong**: At least 12 CSS rules target `data-testid` attributes (e.g., `section[data-testid="stSidebar"]`, `div[data-testid="stInfo"]`, `[data-testid="stMetric"]`, `[data-testid="stButton"]`). These are Streamlit internal test IDs, not a public API, and can be renamed in any Streamlit release.
-
-**Expected**: Where possible, replace `data-testid` selectors with Streamlit's public class names or use CSS custom properties via `config.toml [theme]`. For the sidebar specifically, use `st.sidebar` context and rely on theme colours — not CSS overrides on internal test IDs.
+_None — all known issues resolved._
 
 ---
 
@@ -72,6 +64,7 @@ Last validated: February 2026
 | NX7 | 🟢 LOW | Reading content boxes used custom HTML instead of Streamlit callout components | Fixed (Phase 7.9) — "Good Example", "Common Mistake", and "Key Takeaway" boxes replaced with `st.success()`, `st.error()`, and `st.info()`; confirmed as native `alert` elements in Playwright accessibility tree |
 | NX8 | 🟢 LOW | HTML spacer divs (`height:Xrem`) used throughout all pages | Fixed (Phase 7.7) — all `st.markdown("<div style='height:Xrem'>")` spacers removed; grep confirms zero instances remain |
 | NX9 | 🟢 LOW | Page headers used `st.markdown('<h1>')` instead of `st.title()` | Fixed (Phase 7.8) — `st.title()` used in `pages/02_Skills_Profile.py` and all sub-views of `pages/04_Course_Module.py` |
+| NX10 | 🟢 LOW | `data-testid` CSS selectors are Streamlit-version-fragile (12 rules) | Fixed — 7 selectors migrated to stable class names: `section.stSidebar` (3 rules), `.stMetric`, `.stMetricLabel`, `.stMetricValue`; 5 `data-testid` rules retained for `stHeader` + alert variants (`stInfo`/`stSuccess`/`stWarning`/`stError`) — no stable public class exists for these; all retained rules have explanatory comments |
 | NX11 | 🟢 LOW | Module card `:has()` + adjacent sibling CSS was structurally fragile | Fixed (Phase 7.10) — module cards refactored as `st.container(border=True)` with `st.button()` inside; cross-element CSS dependency eliminated |
 | U0 | 🟢 LOW | `.block-container max-width: 900px` — initially flagged as whitespace issue | Accepted — 900px readable-content width is Streamlit's intentional default for `layout="wide"`; design system colors moved to `.streamlit/config.toml [theme]`; CSS injection now limited to custom components only |
 | U2 | 🟢 LOW | Home module card layout unverified (no training_progress rows for UAT user) | Verified Feb 2026 via Playwright — Module 1 active (cyan border, sub-badges, CTA); Modules 2-5 locked (greyed, lock icon, no CTA). 12px gap between card HTML and Streamlit button is framework's native element spacing — structural constraint, accepted as-is |

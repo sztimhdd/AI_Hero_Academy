@@ -56,21 +56,25 @@ def inject_global_css():
   font-family: 'Inter', sans-serif !important;
 }}
 
-/* Hide default Streamlit header/toolbar */
+/* Hide default Streamlit header/toolbar
+   Note: header[data-testid="stHeader"] has no stable public class alternative in
+   Streamlit's CSS API; data-testid is the documented community approach. */
 header[data-testid="stHeader"] {{ display: none !important; }}
 .stToolbar {{ display: none !important; }}
 #MainMenu {{ display: none !important; }}
 footer {{ display: none !important; }}
 
 /* ─── SIDEBAR ──────────────────────────────────────────────── */
-section[data-testid="stSidebar"] > div {{
+/* Use .stSidebar class — stable across Streamlit versions; avoids data-testid.
+   Background also set via config.toml [theme] secondaryBackgroundColor. */
+section.stSidebar > div {{
   background-color: var(--bg-surface) !important;
   border-right: 1px solid var(--border) !important;
 }}
 
-section[data-testid="stSidebar"] .stRadio label,
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] span {{
+section.stSidebar .stRadio label,
+section.stSidebar p,
+section.stSidebar span {{
   color: var(--text) !important;
   font-family: 'Inter', sans-serif !important;
 }}
@@ -200,28 +204,34 @@ hr {{
 }}
 
 /* ─── METRICS ──────────────────────────────────────────────── */
-/* Resolved hex (not var()) to avoid Streamlit JS "Invalid color" warnings */
-[data-testid="stMetric"] {{
+/* Use .stMetric / .stMetricLabel / .stMetricValue class names — stable in
+   Streamlit ≥1.20; avoids data-testid for these elements.
+   Resolved hex (not var()) to avoid Streamlit JS "Invalid color" warnings. */
+.stMetric {{
   background: {COLORS['bg_surface']} !important;
   border: 1px solid {COLORS['border']} !important;
   border-radius: 8px !important;
   padding: 1rem 1.2rem !important;
 }}
-[data-testid="stMetricLabel"] span {{
+.stMetricLabel span {{
   color: {COLORS['text_secondary']} !important;
   font-family: 'Inter', sans-serif !important;
   font-size: 0.75rem !important;
   text-transform: uppercase !important;
   letter-spacing: 0.06em !important;
 }}
-[data-testid="stMetricValue"] {{
+.stMetricValue {{
   color: {COLORS['text_primary']} !important;
   font-family: 'IBM Plex Mono', monospace !important;
   font-size: 2rem !important;
 }}
 
 /* ─── INFO / WARNING / ERROR ────────────────────────────────── */
-/* Resolved hex (not var()) to avoid Streamlit JS "Invalid color" warnings */
+/* .stAlert covers all alert types generically.
+   Per-variant colours use data-testid because Streamlit does not expose stable
+   public class names for individual alert types (info/warning/error/success).
+   This is the documented community approach; see NX10 in Issues.md.
+   Resolved hex (not var()) to avoid Streamlit JS "Invalid color" warnings. */
 .stAlert {{
   border-radius: 6px !important;
   border: 1px solid !important;
