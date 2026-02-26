@@ -9,6 +9,7 @@ import json
 import uuid
 import os
 import pandas as pd
+import plotly.graph_objects as go
 
 from utils.auth import get_user_email
 from utils.db import execute, query_one, escape
@@ -175,18 +176,53 @@ with col_score:
 
 with col_domains:
     section_header("DOMAIN SCORES")
-    for domain_id in DOMAIN_IDS:
-        s = current_domain_scores.get(domain_id, 0.0)
+    # Shortened axis labels — full names overflow on a 4-axis radar
+    _short_names = {
+        "prompting":    "Prompting",
+        "verification": "Verification",
+        "data_safety":  "Data Safety",
+        "tool_fluency": "Tool Fluency",
+    }
+    _cats = [_short_names.get(d, d) for d in DOMAIN_IDS]
+    _vals = []
+    for _d in DOMAIN_IDS:
         try:
-            s = float(s)
+            _vals.append(float(current_domain_scores.get(_d, 0.0)))
         except (TypeError, ValueError):
-            s = 0.0
-        col_lbl, col_val = st.columns([4, 1])
-        with col_lbl:
-            st.caption(DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id))
-            st.progress(max(0.0, min(1.0, s / 4.0)))
-        with col_val:
-            st.caption(f"{s:.1f} / 4.0")
+            _vals.append(0.0)
+    # Close the polygon by repeating first point
+    _fig = go.Figure(go.Scatterpolar(
+        r=_vals + [_vals[0]],
+        theta=_cats + [_cats[0]],
+        fill="toself",
+        fillcolor="rgba(0,212,232,0.12)",
+        line=dict(color="#00D4E8", width=2),
+        mode="lines+markers",
+        marker=dict(color="#00D4E8", size=6),
+    ))
+    _fig.update_layout(
+        polar=dict(
+            bgcolor="#161A22",
+            gridshape="linear",
+            angularaxis=dict(
+                tickfont=dict(color="#8990A8", size=11, family="Inter, sans-serif"),
+                linecolor="#2A2F3E",
+                gridcolor="#2A2F3E",
+            ),
+            radialaxis=dict(
+                range=[0, 4],
+                tickvals=[1, 2, 3, 4],
+                showticklabels=False,
+                linecolor="#2A2F3E",
+                gridcolor="#2A2F3E",
+            ),
+        ),
+        paper_bgcolor="#0D0F14",
+        margin=dict(l=40, r=40, t=20, b=20),
+        height=320,
+        showlegend=False,
+    )
+    st.plotly_chart(_fig, use_container_width=True, config={"displayModeBar": False})
 
 # ── Gap Map ───────────────────────────────────────────────────────────────────
 section_header("YOUR GAP MAP")
