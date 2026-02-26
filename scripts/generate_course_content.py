@@ -34,6 +34,7 @@ from concurrent.futures import (
 from pathlib import Path
 
 from databricks.sdk import WorkspaceClient
+from databricks.sdk.config import Config as DatabricksConfig
 from databricks.sdk.service.serving import ChatMessage, ChatMessageRole
 from databricks.sdk.errors import DatabricksError
 from tenacity import (
@@ -50,18 +51,18 @@ from tenacity import (
 SONNET_ENDPOINT = os.environ.get("SONNET_ENDPOINT", "databricks-claude-sonnet-4-6")
 HAIKU_ENDPOINT = os.environ.get("HAIKU_ENDPOINT", "databricks-claude-haiku-4-5")
 CONTENT_DIR = Path(__file__).parent.parent / "content"
-PARALLEL_TIMEOUT_SECONDS = 180
+PARALLEL_TIMEOUT_SECONDS = 300
 
 DOMAIN_IDS = ["prompting", "verification", "data_safety", "tool_fluency"]
 
 # max_tokens budget per agent (Databricks default is 1,000 — must be set explicitly)
 MAX_TOKENS = {
-    "parser": 6000,  # full spec JSON (5 courses × all seeds + 4 domains × 11 fields) is ~4-5k tokens
-    "structural": 3000,
+    "parser": 6000,   # each of the 3 parallel parser calls uses this; Haiku stays within 60s timeout
+    "structural": 6000,  # 4 domains × 11 level fields + 5 courses generates ~3-5k tokens
     "qa": 2000,
     "course_content": 6000,
-    "assessment": 5000,
-    "evaluation": 6000,
+    "assessment": 7000,   # 12 items × ~500 tokens/item; extra headroom for rubric detail
+    "evaluation": 8000,   # 20 items × ~400 tokens/item; performance tasks are verbose
     "final_qa": 2000,
 }
 
@@ -71,7 +72,9 @@ _w: WorkspaceClient | None = None
 def _get_client() -> WorkspaceClient:
     global _w
     if _w is None:
-        _w = WorkspaceClient()
+        # http_timeout_seconds=300 allows Sonnet to generate 5k+ token responses
+        # (default 60s triggers ReadTimeout for large assessment/evaluation outputs)
+        _w = WorkspaceClient(config=DatabricksConfig(http_timeout_seconds=300))
     return _w
 
 
@@ -114,30 +117,39 @@ def extract_json(raw: str) -> dict | list:
     1. Full fenced block:  ```json ... ```
     2. Truncated fenced block: ```json ...  (closing fence absent — common on large outputs)
     3. Raw JSON with no fences (starts with { or [)
+
+    All cases fall back to _repair_json_with_llm (Haiku) if json.loads fails.
     """
     # Case 1: full code fence
     match = re.search(r"```json\s*(.*?)\s*```", raw, re.DOTALL)
     if match:
-        return json.loads(match.group(1))
+        try:
+            return json.loads(match.group(1))
+        except json.JSONDecodeError:
+            return _repair_json_with_llm(match.group(1))
 
     # Case 2: opening fence present but closing fence absent (truncated output)
     fence_match = re.search(r"```json\s*(\{|\[)", raw, re.DOTALL)
     if fence_match:
         json_start = fence_match.start(1)
         candidate = raw[json_start:].strip()
-        # Try to parse as-is; if truncated it will fail with JSONDecodeError
         try:
             return json.loads(candidate)
         except json.JSONDecodeError:
-            # Try to recover by finding the last complete top-level key/value
-            # by closing any open braces/brackets
+            # Try lightweight structural close first; if that still fails, use LLM repair
             candidate = _close_truncated_json(candidate)
-            return json.loads(candidate)
+            try:
+                return json.loads(candidate)
+            except json.JSONDecodeError:
+                return _repair_json_with_llm(candidate)
 
     # Case 3: raw JSON with no fences
     stripped = raw.strip()
     if stripped.startswith(("{", "[")):
-        return json.loads(stripped)
+        try:
+            return json.loads(stripped)
+        except json.JSONDecodeError:
+            return _repair_json_with_llm(stripped)
 
     raise ValueError(
         f"No JSON block found in LLM response. First 500 chars:\n{raw[:500]}"
@@ -179,6 +191,36 @@ def _close_truncated_json(s: str) -> str:
     # Close open containers in reverse order
     closing += "".join(reversed(depth))
     return s + closing
+
+
+def _repair_json_with_llm(malformed: str) -> dict | list:
+    """Use Haiku to fix malformed JSON. Last-resort fallback in extract_json.
+
+    Passes the broken JSON to Haiku with a strict repair-only system prompt.
+    Caps input at 16 000 chars to stay within Haiku's context window.
+    """
+    print("  [JSON repair] Structural fix failed — calling Haiku to repair JSON...")
+    raw = call_llm(
+        endpoint_name=HAIKU_ENDPOINT,
+        system_prompt=(
+            "You are a JSON repair tool. The user will give you a malformed or truncated "
+            "JSON string. Fix ALL syntax errors — missing commas, unclosed strings, "
+            "truncated values, mismatched brackets, extra trailing text — and return "
+            "ONLY the repaired, complete, valid JSON. No explanation, no markdown fences, "
+            "no surrounding text. The output must start with { or [."
+        ),
+        user_prompt=malformed[:16000],
+        temperature=0.0,
+        max_tokens=MAX_TOKENS["parser"],
+    )
+    stripped = raw.strip()
+    # Haiku should return raw JSON, but handle an accidental fence just in case
+    fence = re.search(r"```(?:json)?\s*([\[{])", stripped, re.DOTALL)
+    if fence:
+        stripped = stripped[fence.start(1):]
+        # Strip closing fence if present
+        stripped = re.sub(r"\s*```\s*$", "", stripped)
+    return json.loads(stripped)
 
 
 # ---------------------------------------------------------------------------
@@ -239,25 +281,49 @@ def _split_supplemental(raw: str) -> tuple[str, str]:
     return raw[:idx], raw[idx + len(marker):]
 
 
-def _llm_parse_brief(brief_text: str) -> dict:
-    """Use Haiku to extract a structured spec_dict from brief text."""
+def _split_brief_sections(brief_text: str) -> tuple[str, str, str]:
+    """Split brief text into three parts for parallel parsing.
+
+    Returns (structural_part, scenario_reading_part, assessment_part).
+    Splits on ## SECTION markers when present; falls through to full text
+    for each part if markers are absent (safe for partial/supplemental briefs).
+    """
+    import re
+
+    section_d_match = re.search(r"^## SECTION D[:\s]", brief_text, re.MULTILINE)
+    section_f_match = re.search(r"^## SECTION F[:\s]", brief_text, re.MULTILINE)
+
+    if section_d_match and section_f_match:
+        d_start = section_d_match.start()
+        f_start = section_f_match.start()
+        structural_part = brief_text[:d_start]
+        scenario_reading_part = brief_text[d_start:f_start]
+        assessment_part = brief_text[f_start:]
+    elif section_d_match:
+        d_start = section_d_match.start()
+        structural_part = brief_text[:d_start]
+        scenario_reading_part = brief_text[d_start:]
+        assessment_part = brief_text[d_start:]  # overlap is fine — missing fields return null
+    elif section_f_match:
+        f_start = section_f_match.start()
+        structural_part = brief_text
+        scenario_reading_part = brief_text[:f_start]
+        assessment_part = brief_text[f_start:]
+    else:
+        # No section markers — send full text to each parser (handles supplemental briefs)
+        structural_part = brief_text
+        scenario_reading_part = brief_text
+        assessment_part = brief_text
+
+    return structural_part, scenario_reading_part, assessment_part
+
+
+def _parse_structural(text: str) -> dict:
+    """Haiku call: extract role/company/domain/course fields from SECTIONS A–C."""
     system_prompt = """\
 You are a structured data extractor for an AI skills course design pipeline.
-You receive a Course Design Brief markdown document and extract all structured fields into JSON.
-
-The brief uses these section headers (if present):
-- ## MACHINE-READABLE HEADER — role_prefix, company_map, framework_names, real_use_case
-- ### Domain: prompting / verification / data_safety / tool_fluency — level descriptors
-- ### Course N — [Title] — course fields (title, tagline, description, real_use_case, primary_domain)
-- ### Course N Scenario — scenario seeds
-- ### Course N Reading — reading concept seeds
-- ### Diagnostic: [domain] — 3 diagnostic item seeds per domain
-- ### Evaluation: Course N — 4 evaluation item seeds per course
-
-Extract ALL fields you find. For fields not present, use null.
-Course positions are 1–5. Domain IDs: prompting, verification, data_safety, tool_fluency.
-
-Return ONLY a valid JSON object inside a fenced json code block. No explanation or text outside the block.
+Extract ONLY the fields shown in the output schema from the provided brief excerpt.
+For fields not found, use null. Return ONLY a valid JSON object in a ```json ``` block.
 
 Output schema:
 {
@@ -267,58 +333,180 @@ Output schema:
   "framework_names": [string, string, string, string, string] | null,
   "real_use_cases": {"1": string, "2": string, "3": string, "4": string, "5": string} | null,
   "domain_seeds": {
-    "prompting": {"description": string, "level_0_label": string, "level_0_descriptor": string,
-      "level_1_label": string, "level_1_descriptor": string, "level_2_label": string,
-      "level_2_descriptor": string, "level_3_label": string, "level_3_descriptor": string,
-      "level_4_label": string, "level_4_descriptor": string} | null,
-    "verification": {"description": string, "level_0_label": string, ...} | null,
-    "data_safety": {"description": string, "level_0_label": string, ...} | null,
-    "tool_fluency": {"description": string, "level_0_label": string, ...} | null
+    "prompting": {
+      "description": string,
+      "level_0_label": string, "level_0_descriptor": string,
+      "level_1_label": string, "level_1_descriptor": string,
+      "level_2_label": string, "level_2_descriptor": string,
+      "level_3_label": string, "level_3_descriptor": string,
+      "level_4_label": string, "level_4_descriptor": string
+    } | null,
+    "verification": {same shape} | null,
+    "data_safety": {same shape} | null,
+    "tool_fluency": {same shape} | null
   },
   "course_seeds": {
     "1": {"title": string, "tagline": string, "description": string,
           "real_use_case": string, "primary_domain": string} | null,
-    "2": {...} | null, "3": {...} | null, "4": {...} | null, "5": {...} | null
-  },
-  "scenario_seeds": {
-    "1": {"scenario_text": string, "task_1_text": string, "task_2_text": string,
-          "task_3_text": string, "task_4_text": string, "coach_system_prompt": string} | null,
-    "2": {...} | null, "3": {...} | null, "4": {...} | null, "5": {...} | null
-  },
-  "reading_seeds": {
-    "1": {"framework_name": string, "concept_text": string, "good_example": string,
-          "anti_pattern": string, "takeaway": string} | null,
-    "2": {...} | null, "3": {...} | null, "4": {...} | null, "5": {...} | null
-  },
-  "diagnostic_seeds": {
-    "prompting": [
-      {"item_type": string, "question_text": string, "scenario_text": string | null,
-       "options": list | null, "correct_option": string | null, "rubric_criteria": list | null}
-    ] | null,
-    "verification": [...] | null,
-    "data_safety": [...] | null,
-    "tool_fluency": [...] | null
-  },
-  "evaluation_seeds": {
-    "1": [
-      {"item_type": string, "question_text": string, "scenario_text": string | null,
-       "options": list | null, "correct_option": string | null,
-       "explanation": string | null, "rubric_keys": list | null}
-    ] | null,
-    "2": [...] | null, "3": [...] | null, "4": [...] | null, "5": [...] | null
+    "2": {same} | null, "3": {same} | null, "4": {same} | null, "5": {same} | null
   }
-}"""
+}
 
-    user_prompt = f"Extract all structured fields from this Course Design Brief:\n\n{brief_text}"
+Notes:
+- role_prefix: the 2–3 letter code from the MACHINE-READABLE HEADER (e.g. "rm", "uw")
+- company_map: keys are "1" through "5" (strings), values are company names
+- real_use_cases: keys are "1" through "5" (strings), values are use case title strings
+- domain_seeds: extract from ### Domain: prompting/verification/data_safety/tool_fluency sections
+- course_seeds: extract from ### Course 1 — [Title] through ### Course 5 — [Title]"""
 
     raw = call_llm(
         endpoint_name=HAIKU_ENDPOINT,
         system_prompt=system_prompt,
-        user_prompt=user_prompt,
+        user_prompt=f"Extract structured fields from this brief excerpt:\n\n{text}",
         temperature=0.1,
-        max_tokens=MAX_TOKENS["parser"],
+        max_tokens=6000,
     )
     return extract_json(raw)
+
+
+def _parse_scenarios_and_reading(text: str) -> dict:
+    """Haiku call: extract scenario_seeds and reading_seeds from SECTIONS D–E."""
+    system_prompt = """\
+You are a structured data extractor for an AI skills course design pipeline.
+Extract ONLY scenario_seeds and reading_seeds from the provided brief excerpt.
+For fields not found, use null. Return ONLY a valid JSON object in a ```json ``` block.
+
+Output schema:
+{
+  "scenario_seeds": {
+    "1": {
+      "scenario_text": string,
+      "task_1_text": string,
+      "task_2_text": string,
+      "task_3_text": string,
+      "task_4_text": string,
+      "coach_system_prompt": string
+    } | null,
+    "2": {same shape} | null,
+    "3": {same shape} | null,
+    "4": {same shape} | null,
+    "5": {same shape} | null
+  },
+  "reading_seeds": {
+    "1": {
+      "framework_name": string,
+      "concept_text": string,
+      "good_example": string,
+      "anti_pattern": string,
+      "takeaway": string
+    } | null,
+    "2": {same shape} | null,
+    "3": {same shape} | null,
+    "4": {same shape} | null,
+    "5": {same shape} | null
+  }
+}
+
+Notes:
+- scenario_seeds: from ### Course N Scenario sections; keys are "1" through "5" (strings)
+- reading_seeds: from ### Course N Reading sections; keys are "1" through "5" (strings)
+- If a course's scenario/reading is absent, use null for that key"""
+
+    raw = call_llm(
+        endpoint_name=HAIKU_ENDPOINT,
+        system_prompt=system_prompt,
+        user_prompt=f"Extract scenario_seeds and reading_seeds from this brief excerpt:\n\n{text}",
+        temperature=0.1,
+        max_tokens=6000,
+    )
+    return extract_json(raw)
+
+
+def _parse_assessment(text: str) -> dict:
+    """Haiku call: extract diagnostic_seeds and evaluation_seeds from SECTIONS F–G."""
+    system_prompt = """\
+You are a structured data extractor for an AI skills course design pipeline.
+Extract ONLY diagnostic_seeds and evaluation_seeds from the provided brief excerpt.
+For fields not found, use null. Return ONLY a valid JSON object in a ```json ``` block.
+
+Output schema:
+{
+  "diagnostic_seeds": {
+    "prompting": [
+      {
+        "item_type": string,
+        "question_text": string,
+        "scenario_text": string | null,
+        "options": [{"label": string, "text": string}] | null,
+        "correct_option": string | null,
+        "rubric_criteria": [string] | null
+      }
+    ] | null,
+    "verification": [same item shape] | null,
+    "data_safety": [same item shape] | null,
+    "tool_fluency": [same item shape] | null
+  },
+  "evaluation_seeds": {
+    "1": [
+      {
+        "item_type": string,
+        "question_text": string,
+        "scenario_text": string | null,
+        "options": [{"label": string, "text": string}] | null,
+        "correct_option": string | null,
+        "explanation": string | null,
+        "rubric_keys": [string] | null
+      }
+    ] | null,
+    "2": [same item shape] | null,
+    "3": [same item shape] | null,
+    "4": [same item shape] | null,
+    "5": [same item shape] | null
+  }
+}
+
+Notes:
+- diagnostic_seeds: from ### Diagnostic: prompting/verification/data_safety/tool_fluency sections
+- evaluation_seeds: from ### Evaluation: Course N sections; keys are "1" through "5" (strings)
+- item_type values: "MCQ", "prompt_sandbox", "micro_task", "performance_task"
+- For MCQ: populate options (list of {label, text}), correct_option, explanation; rubric_criteria=null
+- For prompt_sandbox/micro_task: populate question_text; options=null, correct_option=null
+- If a section is absent, use null"""
+
+    raw = call_llm(
+        endpoint_name=HAIKU_ENDPOINT,
+        system_prompt=system_prompt,
+        user_prompt=f"Extract diagnostic_seeds and evaluation_seeds from this brief excerpt:\n\n{text}",
+        temperature=0.1,
+        max_tokens=6000,
+    )
+    return extract_json(raw)
+
+
+def _llm_parse_brief(brief_text: str) -> dict:
+    """Parse a Course Design Brief by splitting into 3 parallel Haiku calls.
+
+    Splits on SECTION D / SECTION F markers so each call handles a focused
+    subset of fields — keeping output well under the 6k token limit and
+    within the 60s HTTP read timeout per call.
+    """
+    structural_text, scenario_reading_text, assessment_text = _split_brief_sections(brief_text)
+
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        f_structural = executor.submit(_parse_structural, structural_text)
+        f_scenarios = executor.submit(_parse_scenarios_and_reading, scenario_reading_text)
+        f_assessment = executor.submit(_parse_assessment, assessment_text)
+
+        structural_result = f_structural.result(timeout=90)
+        scenarios_result = f_scenarios.result(timeout=90)
+        assessment_result = f_assessment.result(timeout=90)
+
+    # Merge all three dicts into one spec
+    spec = {}
+    spec.update(structural_result)
+    spec.update({k: v for k, v in scenarios_result.items() if v is not None})
+    spec.update({k: v for k, v in assessment_result.items() if v is not None})
+    return spec
 
 
 def _merge_specs(main: dict, supplemental: dict) -> dict:
@@ -940,15 +1128,22 @@ Scenario seeds (use for realistic context ideas — adapt to diagnostic format, 
 Produce exactly 3 items per domain: 1 MCQ + 1 prompt_sandbox + 1 micro_task.
 Items must test concepts genuinely relevant to this role's work, not generic AI knowledge."""
 
-    raw = call_llm(
-        endpoint_name=SONNET_ENDPOINT,
-        system_prompt=system_prompt,
-        user_prompt=user_prompt,
-        temperature=0.3,
-        max_tokens=MAX_TOKENS["assessment"],
-    )
-    result = extract_json(raw)
-    items = result if isinstance(result, list) else result.get("items", [])
+    for attempt in range(1, 4):  # up to 3 attempts
+        raw = call_llm(
+            endpoint_name=SONNET_ENDPOINT,
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            temperature=0.3,
+            max_tokens=MAX_TOKENS["assessment"],
+        )
+        result = extract_json(raw)
+        items = result if isinstance(result, list) else result.get("items", [])
+        if len(items) >= 12:
+            return items
+        print(
+            f"  [diagnostic retry {attempt}/3] Got {len(items)} items, expected 12 — retrying..."
+        )
+    print(f"  WARNING: Could not generate 12 diagnostic items after 3 attempts; got {len(items)}")
     return items
 
 
@@ -1036,15 +1231,22 @@ MCQ questions must be clearly answerable from the reading content of that course
 Performance task must present a NEW scenario (different from the practice scenario)
 requiring the learner to apply the full course concept from scratch."""
 
-    raw = call_llm(
-        endpoint_name=SONNET_ENDPOINT,
-        system_prompt=system_prompt,
-        user_prompt=user_prompt,
-        temperature=0.3,
-        max_tokens=MAX_TOKENS["evaluation"],
-    )
-    result = extract_json(raw)
-    items = result if isinstance(result, list) else result.get("items", [])
+    for attempt in range(1, 4):  # up to 3 attempts
+        raw = call_llm(
+            endpoint_name=SONNET_ENDPOINT,
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            temperature=0.3,
+            max_tokens=MAX_TOKENS["evaluation"],
+        )
+        result = extract_json(raw)
+        items = result if isinstance(result, list) else result.get("items", [])
+        if len(items) >= 20:
+            return items
+        print(
+            f"  [evaluation retry {attempt}/3] Got {len(items)} items, expected 20 — retrying..."
+        )
+    print(f"  WARNING: Could not generate 20 evaluation items after 3 attempts; got {len(items)}")
     return items
 
 
@@ -1128,8 +1330,8 @@ def _llm_final_qa(all_outputs: dict, shared_context: dict) -> list[str]:
                 "course_pos": pos,
                 "course_id": reading.get("course_id"),
                 "assigned_company": shared_context["company_map"].get(pos, ""),
-                "scenario_text_excerpt": (scenario.get("scenario_text") or "")[:150],
-                "coach_prompt_excerpt": (scenario.get("coach_system_prompt") or "")[:200],
+                "scenario_text_excerpt": (scenario.get("scenario_text") or "")[:400],
+                "coach_prompt_excerpt": (scenario.get("coach_system_prompt") or "")[:600],
                 "takeaway": reading.get("takeaway") or "",
             }
         )
@@ -1141,12 +1343,17 @@ Cross-validate these outputs for compliance and quality.
 Check for:
 1. REAL ENTITIES: Any real company names, real EDC clients, real financial institutions,
    or real financial figures in scenario_text or coach_system_prompt excerpts.
+   Only flag if you can positively identify a real entity — do NOT flag fictional names.
 2. COMPANY CONSISTENCY: The assigned company for each course should appear in that course's
-   scenario_text (verify from excerpt — may not be visible if excerpt is truncated; flag only
-   if clearly different).
+   scenario_text. Flag ONLY if the excerpt is ≥150 chars AND a clearly different company
+   name appears in it. If the excerpt is short or the company simply is not mentioned yet,
+   do NOT flag.
 3. DATA SAFETY GUARDRAIL: Each coach_system_prompt excerpt should contain language about
-   flagging real client data. Flag if clearly absent.
-4. RUBRIC SCALE: If any evaluation item rubric keys do not sum to 4, flag it.
+   flagging real client data. Flag ONLY if the excerpt is ≥400 chars AND such language is
+   clearly absent. Short excerpts may be cut off before that section — do NOT flag those.
+4. RUBRIC SCALE: For mcq items, rubric keys 'correct' and 'incorrect' with values 4 and 0
+   are correct (4 points for a right answer). Only flag if rubric values for non-mcq items
+   do not sum to 4.
 
 Return ONLY a valid JSON object inside a fenced json code block. No text outside the block.
 Output: {"issues": ["description", ...]}
@@ -1308,7 +1515,7 @@ def assemble_and_write(
     print("=" * 60)
     print(f"  Role: {shared_context['role_display_name']} ({role_prefix})")
     print()
-    print("Files written to content/:")
+    print(f"Files written to {content_dir}/:")
     for filepath, _ in writes:
         print(f"  ✓  {filepath.name}")
     print()
@@ -1346,6 +1553,16 @@ def main() -> None:
         "brief_filepath",
         help="Path to the Course Design Brief markdown file",
     )
+    cli.add_argument(
+        "--output-dir",
+        metavar="DIR",
+        default=None,
+        help=(
+            "Write output JSON files to DIR instead of content/. "
+            "Existing content/*.json files are copied to DIR first so Stage 8 "
+            "can merge safely. Useful for test runs that must not touch real content."
+        ),
+    )
     args = cli.parse_args()
 
     brief_path = args.brief_filepath
@@ -1353,11 +1570,25 @@ def main() -> None:
         print(f"ERROR: Brief file not found: {brief_path}", file=sys.stderr)
         sys.exit(1)
 
+    # Resolve output directory (default: content/)
+    if args.output_dir:
+        import shutil as _shutil
+        content_dir = Path(args.output_dir)
+        content_dir.mkdir(parents=True, exist_ok=True)
+        for _src in CONTENT_DIR.glob("*.json"):
+            _dst = content_dir / _src.name
+            if not _dst.exists():
+                _shutil.copy(_src, _dst)
+    else:
+        content_dir = CONTENT_DIR
+
     print()
     print("=" * 60)
     print("AI HERO ACADEMY — Course Content Generation Pipeline")
     print("=" * 60)
     print(f"  Brief: {brief_path}")
+    if args.output_dir:
+        print(f"  Output: {content_dir}  (test mode — real content/ not modified)")
     print()
 
     # ── Stage 1: Parse brief ──────────────────────────────────────────────
@@ -1480,8 +1711,8 @@ def main() -> None:
     print()
 
     # ── Stage 8: Assemble and write ───────────────────────────────────────
-    print("[Stage 8] Writing output files to content/...")
-    assemble_and_write(structural, all_outputs, shared_context, CONTENT_DIR)
+    print(f"[Stage 8] Writing output files to {content_dir}...")
+    assemble_and_write(structural, all_outputs, shared_context, content_dir)
 
 
 if __name__ == "__main__":
