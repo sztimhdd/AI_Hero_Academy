@@ -115,7 +115,6 @@ with col3:
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("<div style='height:2rem'></div>", unsafe_allow_html=True)
 
 # ── Role selection + CTA ──────────────────────────────────────────────────────
 st.markdown("""
@@ -128,29 +127,44 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+_available_roles = ["Relationship Manager"]  # extend here for multi-role support
+_derived_name = user_email.split("@")[0].replace(".", " ").title()
+
 col_sel, col_btn = st.columns([2, 1], gap="medium")
 
 with col_sel:
-    role_options = ["— Select your role —", "Relationship Manager"]
-    selected_role = st.selectbox(
-        "Select your role",
-        options=role_options,
-        label_visibility="collapsed",
-        key="welcome_role",
+    # CX8: show a role card when there is only one role; use selectbox when multiple roles exist
+    if len(_available_roles) == 1:
+        st.info(f"Your role: **{_available_roles[0]}**")
+        selected_role = _available_roles[0]
+    else:
+        selected_role = st.selectbox(
+            "Select your role",
+            options=["— Select your role —"] + _available_roles,
+            label_visibility="collapsed",
+            key="welcome_role",
+        )
+
+    # CX7: show derived display name with an editable override
+    display_name_val = st.text_input(
+        "Display name",
+        value=_derived_name,
+        key="welcome_display_name",
+        help="This is how you will be greeted throughout the app. Edit if needed.",
     )
 
-role_selected = selected_role != "— Select your role —"
+role_selected = selected_role not in ("— Select your role —",)
 
 with col_btn:
-    st.markdown("<div style='height:0.35rem'></div>", unsafe_allow_html=True)
     if st.button(
         "Start My Diagnostic →",
         disabled=not role_selected,
         use_container_width=True,
+        type="primary",
     ):
         with st.spinner("Setting up your profile..."):
             try:
-                display_name = user_email.split("@")[0].replace(".", " ").title()
+                display_name = display_name_val.strip() if display_name_val.strip() else _derived_name
                 e_email = escape(user_email)
                 e_name = escape(display_name)
                 execute(f"""
@@ -164,7 +178,6 @@ with col_btn:
             except Exception as err:
                 st.error(f"Could not create your profile. Please refresh and try again.\n\n_{err}_")
 
-st.markdown("<div style='height:3rem'></div>", unsafe_allow_html=True)
 
 # ── Footer note ───────────────────────────────────────────────────────────────
 st.markdown("""

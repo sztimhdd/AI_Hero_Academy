@@ -8,16 +8,17 @@ import streamlit as st
 import json
 import uuid
 import os
+import pandas as pd
 
 from utils.auth import get_user_email
 from utils.db import execute, query_one, escape
 from utils.scoring import (
     DOMAIN_DISPLAY_NAMES, DOMAIN_IDS,
-    get_level_label, get_score_color, calculate_overall_score,
+    get_level_label, calculate_overall_score,
     compute_current_domain_scores,
 )
 from utils.sequencing import compute_module_sequence
-from utils.styles import inject_global_css, section_header, score_bar
+from utils.styles import inject_global_css, section_header
 from utils.content import get_course
 
 st.set_page_config(
@@ -103,7 +104,7 @@ except Exception as e:
 
 if not latest_diag:
     st.info("No diagnostic results yet. Complete the diagnostic to see your profile.")
-    if st.button("Take Diagnostic →"):
+    if st.button("Take Diagnostic →", type="primary"):
         st.switch_page("pages/01_Diagnostic.py")
     st.stop()
 
@@ -134,16 +135,27 @@ with st.sidebar:
 </div>
 """, unsafe_allow_html=True)
     st.markdown("---")
-    if st.button("🏠  Home", use_container_width=True):
+    if st.button("🏠  My Training", use_container_width=True):
         st.switch_page("pages/03_Home.py")
-    if has_course and st.button("📚  My Course", use_container_width=True):
-        st.switch_page("pages/04_Course_Module.py")
+    if has_course:
+        if st.button("📚  My Course", use_container_width=True):
+            # CX3: find the active (unlocked, incomplete) module to navigate directly to it
+            _active = next(
+                (r for r in progress_rows
+                 if str(r.get("is_locked", "true")).lower() == "false"
+                 and not r.get("evaluation_completed_at")),
+                progress_rows[0] if progress_rows else None,
+            )
+            if _active:
+                st.session_state["active_course_id"] = _active["course_id"]
+                st.session_state["active_submodule"] = "overview"
+            st.switch_page("pages/04_Course_Module.py")
 
 
 # ── Page header ───────────────────────────────────────────────────────────────
 col_h, col_date = st.columns([4, 1])
 with col_h:
-    st.markdown('<h1 style="margin-bottom:0.2rem">Your AI Skills Profile</h1>', unsafe_allow_html=True)
+    st.title("Your AI Skills Profile")
     st.markdown(
         f'<div style="font-family:\'Inter\',sans-serif; font-size:0.85rem; color:#8990A8">'
         f'Role: Relationship Manager</div>',
@@ -159,25 +171,22 @@ with col_date:
 # ── Overall score hero + domain scores ────────────────────────────────────────
 col_score, col_domains = st.columns([2, 3])
 with col_score:
-    st.markdown(f"""
-<div class="result-score-box">
-  <div class="score-hero-number">{overall:.1f}<span class="score-hero-denom"> / 4.0</span></div>
-  <div class="score-hero-label">{level_label}</div>
-</div>
-""", unsafe_allow_html=True)
+    st.metric(label=level_label, value=f"{overall:.1f} / 4.0")
 
 with col_domains:
     section_header("DOMAIN SCORES")
-    st.markdown('<div class="aha-card">', unsafe_allow_html=True)
     for domain_id in DOMAIN_IDS:
         s = current_domain_scores.get(domain_id, 0.0)
         try:
             s = float(s)
         except (TypeError, ValueError):
             s = 0.0
-        color = get_score_color(s)
-        score_bar(DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id), s, color_class=color)
-    st.markdown('</div>', unsafe_allow_html=True)
+        col_lbl, col_val = st.columns([4, 1])
+        with col_lbl:
+            st.caption(DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id))
+            st.progress(max(0.0, min(1.0, s / 4.0)))
+        with col_val:
+            st.caption(f"{s:.1f} / 4.0")
 
 # ── Gap Map ───────────────────────────────────────────────────────────────────
 section_header("YOUR GAP MAP")
@@ -189,15 +198,17 @@ if gap_map_row:
         bullets = []
 
     if bullets:
-        st.markdown('<div class="aha-card">', unsafe_allow_html=True)
-        st.markdown("""
-<div style="display:flex; gap:1.25rem; margin-bottom:1rem; font-family:'Inter',sans-serif;
-            font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.06em">
-  <span><span class="gap-priority-dot high" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Critical gap</span>
-  <span><span class="gap-priority-dot medium" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Needs work</span>
-  <span><span class="gap-priority-dot low" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>On track</span>
-</div>
-""", unsafe_allow_html=True)
+        # Build all HTML in one st.markdown() call — splitting across multiple calls causes
+        # Streamlit to auto-close the opening <div> immediately, leaving an empty card box.
+        parts = ['<div class="aha-card">']
+        parts.append(
+            '<div style="display:flex; gap:1.25rem; margin-bottom:1rem; font-family:\'Inter\',sans-serif;'
+            ' font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.06em">'
+            '<span><span class="gap-priority-dot high" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Critical gap</span>'
+            '<span><span class="gap-priority-dot medium" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Needs work</span>'
+            '<span><span class="gap-priority-dot low" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>On track</span>'
+            '</div>'
+        )
         for b in sorted(bullets, key=lambda x: x.get("priority", 99)):
             domain_id = b.get("domain_id", "")
             domain_score = current_domain_scores.get(domain_id, 0.0)
@@ -208,16 +219,15 @@ if gap_map_row:
             dot_class = "high" if domain_score < 1.5 else ("medium" if domain_score < 2.5 else "low")
             domain_name_display = DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id)
             bullet_text = b.get("bullet", "")
-            st.markdown(f"""
-<div class="gap-bullet">
-  <div class="gap-priority-dot {dot_class}"></div>
-  <div>
-    <div class="gap-domain-name">{domain_name_display}</div>
-    <div class="gap-bullet-text">{bullet_text}</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+            parts.append(
+                f'<div class="gap-bullet">'
+                f'<div class="gap-priority-dot {dot_class}"></div>'
+                f'<div><div class="gap-domain-name">{domain_name_display}</div>'
+                f'<div class="gap-bullet-text">{bullet_text}</div></div>'
+                f'</div>'
+            )
+        parts.append('</div>')
+        st.markdown("".join(parts), unsafe_allow_html=True)
     else:
         st.info("Gap map is being generated. Refresh the page in a moment.")
 else:
@@ -232,11 +242,7 @@ else:
 # ── Assessment History ─────────────────────────────────────────────────────────
 if len(all_diags) > 0:
     section_header("ASSESSMENT HISTORY")
-    st.markdown('<div class="aha-card">', unsafe_allow_html=True)
-
-    headers = ["Date", "Overall", "Prompting", "Verification", "Data Safety", "Tool Fluency"]
-    header_row = "".join(f"<th>{h}</th>" for h in headers)
-    rows_html = ""
+    rows = []
     for diag in all_diags:
         date_str = str(diag.get("completed_at", ""))[:10]
         ov = float(diag.get("overall_score") or 0)
@@ -244,25 +250,17 @@ if len(all_diags) > 0:
             ds = json.loads(diag.get("domain_scores") or "{}")
         except (json.JSONDecodeError, TypeError):
             ds = {}
-        cells = [
-            date_str,
-            f"{ov:.1f}",
-            f"{float(ds.get('prompting', 0)):.1f}",
-            f"{float(ds.get('verification', 0)):.1f}",
-            f"{float(ds.get('data_safety', 0)):.1f}",
-            f"{float(ds.get('tool_fluency', 0)):.1f}",
-        ]
-        rows_html += "<tr>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr>"
+        rows.append({
+            "Date": date_str,
+            "Overall": round(ov, 1),
+            "Prompting": round(float(ds.get("prompting", 0)), 1),
+            "Verification": round(float(ds.get("verification", 0)), 1),
+            "Data Safety": round(float(ds.get("data_safety", 0)), 1),
+            "Tool Fluency": round(float(ds.get("tool_fluency", 0)), 1),
+        })
+    df = pd.DataFrame(rows)
+    st.dataframe(df, use_container_width=True, hide_index=True)
 
-    st.markdown(f"""
-<table>
-  <thead><tr>{header_row}</tr></thead>
-  <tbody>{rows_html}</tbody>
-</table>
-""", unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
 
 # ── Action buttons ─────────────────────────────────────────────────────────────
 section_header("ACTIONS")
@@ -277,7 +275,7 @@ with col_a:
 
 with col_b:
     if not has_course:
-        if st.button("🗺️  Build My Training Course", use_container_width=True):
+        if st.button("🗺️  Build My Training Course", use_container_width=True, type="primary"):
             with st.spinner("Building your personalised course..."):
                 try:
                     sequence = compute_module_sequence(current_domain_scores)
@@ -301,5 +299,5 @@ with col_b:
                 except Exception as e:
                     st.error(f"Could not create your course. Please try again.\n\n_{e}_")
     else:
-        if st.button("📚  View My Course", use_container_width=True):
+        if st.button("📚  View My Course", use_container_width=True, type="primary"):
             st.switch_page("pages/03_Home.py")

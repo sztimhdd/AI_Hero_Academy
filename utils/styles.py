@@ -56,30 +56,35 @@ def inject_global_css():
   font-family: 'Inter', sans-serif !important;
 }}
 
-/* Hide default Streamlit header/toolbar */
+/* Hide default Streamlit header/toolbar
+   Note: header[data-testid="stHeader"] has no stable public class alternative in
+   Streamlit's CSS API; data-testid is the documented community approach. */
 header[data-testid="stHeader"] {{ display: none !important; }}
 .stToolbar {{ display: none !important; }}
 #MainMenu {{ display: none !important; }}
 footer {{ display: none !important; }}
 
 /* ─── SIDEBAR ──────────────────────────────────────────────── */
-section[data-testid="stSidebar"] > div {{
+/* Use .stSidebar class — stable across Streamlit versions; avoids data-testid.
+   Background also set via config.toml [theme] secondaryBackgroundColor. */
+section.stSidebar > div {{
   background-color: var(--bg-surface) !important;
   border-right: 1px solid var(--border) !important;
 }}
 
-section[data-testid="stSidebar"] .stRadio label,
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] span {{
+section.stSidebar .stRadio label,
+section.stSidebar p,
+section.stSidebar span {{
   color: var(--text) !important;
   font-family: 'Inter', sans-serif !important;
 }}
 
 /* ─── MAIN CONTENT AREA ────────────────────────────────────── */
+/* Leave Streamlit's native max-width (readable-content width) alone.
+   Only adjust vertical padding. */
 .block-container {{
   padding-top: 2rem !important;
   padding-bottom: 4rem !important;
-  max-width: none !important;
 }}
 
 /* ─── TYPOGRAPHY ───────────────────────────────────────────── */
@@ -113,10 +118,10 @@ p, li, .stMarkdown p {{
 }}
 
 /* ─── BUTTONS ──────────────────────────────────────────────── */
+/* Primary buttons: styled via config.toml [theme] primaryColor = "#00D4E8"
+   Secondary buttons: explicit override required — primaryColor bleeds into all
+   button types without it (NX2). Disabled state: handled natively by disabled=True. */
 .stButton > button {{
-  background: var(--cyan) !important;
-  color: var(--bg-primary) !important;
-  border: none !important;
   border-radius: 6px !important;
   font-family: 'Inter', sans-serif !important;
   font-weight: 600 !important;
@@ -124,65 +129,56 @@ p, li, .stMarkdown p {{
   letter-spacing: 0.04em !important;
   padding: 0.55rem 1.4rem !important;
   transition: all 0.15s ease !important;
-  cursor: pointer !important;
-}}
-.stButton > button:hover {{
-  background: #00B8CA !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 4px 16px rgba(0, 212, 232, 0.25) !important;
-}}
-.stButton > button:disabled {{
-  background: var(--bg-elevated) !important;
-  color: var(--text-faint) !important;
-  cursor: not-allowed !important;
-  transform: none !important;
-  box-shadow: none !important;
 }}
 
-/* Secondary button variant (applied via st.markdown wrapping) */
-.btn-secondary > button,
-button.btn-secondary {{
-  background: transparent !important;
-  color: var(--cyan) !important;
-  border: 1px solid var(--border) !important;
+/* Secondary buttons — neutral to distinguish from primary CTA.
+   data-testid="stBaseButton-secondary" is the documented community selector for
+   secondary button containers; Streamlit has no stable public class for primary/
+   secondary variants (same rationale as NX10, stInfo, stSuccess in this file). */
+[data-testid="stBaseButton-secondary"] button {{
+  background-color: transparent !important;
+  color: {COLORS['text_primary']} !important;
+  border: 1px solid {COLORS['border']} !important;
 }}
-.btn-secondary > button:hover {{
-  background: rgba(0,212,232,0.08) !important;
-  border-color: var(--cyan) !important;
+[data-testid="stBaseButton-secondary"] button:hover {{
+  background-color: {COLORS['bg_elevated']} !important;
+  border-color: {COLORS['text_secondary']} !important;
 }}
 
 /* ─── INPUTS ───────────────────────────────────────────────── */
+/* Resolved hex values used (not var()) to avoid Streamlit JS "Invalid color" warnings */
 .stTextInput > div > input,
 .stTextArea > div > textarea,
 .stSelectbox > div > div {{
-  background-color: var(--bg-elevated) !important;
-  border: 1px solid var(--border) !important;
+  background-color: {COLORS['bg_elevated']} !important;
+  border: 1px solid {COLORS['border']} !important;
   border-radius: 6px !important;
-  color: var(--text) !important;
+  color: {COLORS['text_primary']} !important;
   font-family: 'Inter', sans-serif !important;
   font-size: 0.9rem !important;
 }}
 .stTextInput > div > input:focus,
 .stTextArea > div > textarea:focus {{
-  border-color: var(--cyan) !important;
+  border-color: {COLORS['accent_cyan']} !important;
   box-shadow: 0 0 0 2px rgba(0,212,232,0.15) !important;
   outline: none !important;
 }}
 
 /* Select box */
 .stSelectbox > div > div[data-baseweb="select"] > div {{
-  background-color: var(--bg-elevated) !important;
-  border: 1px solid var(--border) !important;
-  color: var(--text) !important;
+  background-color: {COLORS['bg_elevated']} !important;
+  border: 1px solid {COLORS['border']} !important;
+  color: {COLORS['text_primary']} !important;
 }}
 
 /* ─── RADIO BUTTONS ────────────────────────────────────────── */
+/* Resolved hex values (not var()) to avoid Streamlit JS "Invalid color" warnings */
 .stRadio > div {{
   gap: 0.4rem !important;
 }}
 .stRadio label {{
-  background: var(--bg-elevated) !important;
-  border: 1px solid var(--border) !important;
+  background: {COLORS['bg_elevated']} !important;
+  border: 1px solid {COLORS['border']} !important;
   border-radius: 6px !important;
   padding: 0.7rem 1rem !important;
   cursor: pointer !important;
@@ -190,86 +186,97 @@ button.btn-secondary {{
   display: flex !important;
   align-items: flex-start !important;
   gap: 0.6rem !important;
-  color: var(--text) !important;
+  color: {COLORS['text_primary']} !important;
 }}
 .stRadio label:hover {{
-  border-color: var(--cyan) !important;
+  border-color: {COLORS['accent_cyan']} !important;
   background: rgba(0,212,232,0.05) !important;
 }}
 .stRadio label[data-checked="true"] {{
-  border-color: var(--cyan) !important;
+  border-color: {COLORS['accent_cyan']} !important;
   background: rgba(0,212,232,0.1) !important;
 }}
 
 /* ─── PROGRESS BAR ─────────────────────────────────────────── */
+/* Resolved hex values (not var()) to avoid Streamlit JS "Invalid color" warnings */
 .stProgress > div > div > div {{
-  background-color: var(--bg-elevated) !important;
+  background-color: {COLORS['bg_elevated']} !important;
   border-radius: 4px !important;
   height: 6px !important;
 }}
 .stProgress > div > div > div > div {{
-  background: linear-gradient(90deg, var(--cyan), #0099AA) !important;
+  background: linear-gradient(90deg, {COLORS['accent_cyan']}, #0099AA) !important;
   border-radius: 4px !important;
 }}
 
 /* ─── DIVIDER ──────────────────────────────────────────────── */
+/* Resolved hex (not var()) to avoid Streamlit JS "Invalid color" warnings */
 hr {{
   border: none !important;
-  border-top: 1px solid var(--border) !important;
+  border-top: 1px solid {COLORS['border']} !important;
   margin: 1.5rem 0 !important;
 }}
 
 /* ─── METRICS ──────────────────────────────────────────────── */
-[data-testid="stMetric"] {{
-  background: var(--bg-surface) !important;
-  border: 1px solid var(--border) !important;
+/* Use .stMetric / .stMetricLabel / .stMetricValue class names — stable in
+   Streamlit ≥1.20; avoids data-testid for these elements.
+   Resolved hex (not var()) to avoid Streamlit JS "Invalid color" warnings. */
+.stMetric {{
+  background: {COLORS['bg_surface']} !important;
+  border: 1px solid {COLORS['border']} !important;
   border-radius: 8px !important;
   padding: 1rem 1.2rem !important;
 }}
-[data-testid="stMetricLabel"] span {{
-  color: var(--text-muted) !important;
+.stMetricLabel span {{
+  color: {COLORS['text_secondary']} !important;
   font-family: 'Inter', sans-serif !important;
   font-size: 0.75rem !important;
   text-transform: uppercase !important;
   letter-spacing: 0.06em !important;
 }}
-[data-testid="stMetricValue"] {{
-  color: var(--text) !important;
+.stMetricValue {{
+  color: {COLORS['text_primary']} !important;
   font-family: 'IBM Plex Mono', monospace !important;
   font-size: 2rem !important;
 }}
 
 /* ─── INFO / WARNING / ERROR ────────────────────────────────── */
+/* .stAlert covers all alert types generically.
+   Per-variant colours use data-testid because Streamlit does not expose stable
+   public class names for individual alert types (info/warning/error/success).
+   This is the documented community approach; see NX10 in Issues.md.
+   Resolved hex (not var()) to avoid Streamlit JS "Invalid color" warnings. */
 .stAlert {{
   border-radius: 6px !important;
   border: 1px solid !important;
-  background-color: var(--bg-elevated) !important;
+  background-color: {COLORS['bg_elevated']} !important;
   font-size: 0.88rem !important;
 }}
 div[data-testid="stInfo"] {{
-  border-color: var(--cyan) !important;
+  border-color: {COLORS['accent_cyan']} !important;
   background: rgba(0,212,232,0.08) !important;
-  color: var(--text) !important;
+  color: {COLORS['text_primary']} !important;
 }}
 div[data-testid="stSuccess"] {{
-  border-color: var(--green) !important;
+  border-color: {COLORS['accent_green']} !important;
   background: rgba(41,204,106,0.08) !important;
-  color: var(--text) !important;
+  color: {COLORS['text_primary']} !important;
 }}
 div[data-testid="stWarning"] {{
-  border-color: var(--amber) !important;
+  border-color: {COLORS['accent_amber']} !important;
   background: rgba(245,166,35,0.08) !important;
-  color: var(--text) !important;
+  color: {COLORS['text_primary']} !important;
 }}
 div[data-testid="stError"] {{
-  border-color: var(--red) !important;
+  border-color: {COLORS['accent_red']} !important;
   background: rgba(232,69,90,0.08) !important;
-  color: var(--text) !important;
+  color: {COLORS['text_primary']} !important;
 }}
 
 /* ─── SPINNER / LOADING ─────────────────────────────────────── */
+/* Resolved hex (not var()) to avoid Streamlit JS "Invalid color" warnings */
 .stSpinner > div {{
-  border-top-color: var(--cyan) !important;
+  border-top-color: {COLORS['accent_cyan']} !important;
 }}
 
 /* ─── EXPANDER ─────────────────────────────────────────────── */
@@ -334,97 +341,11 @@ div[data-testid="stError"] {{
 }}
 
 /* ─── SCORE BAR COMPONENT ──────────────────────────────────── */
-.score-bar-container {{
-  margin: 0.6rem 0;
-}}
-.score-bar-header {{
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 0.35rem;
-}}
-.score-bar-label {{
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  color: var(--text);
-  font-weight: 500;
-}}
-.score-bar-value {{
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}}
-.score-bar-track {{
-  width: 100%;
-  height: 8px;
-  background: var(--bg-elevated);
-  border-radius: 4px;
-  overflow: hidden;
-}}
-.score-bar-fill {{
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.5s ease;
-}}
-.score-bar-fill.danger  {{ background: var(--red); }}
-.score-bar-fill.warning {{ background: var(--amber); }}
-.score-bar-fill.success {{ background: var(--green); }}
+/* score_bar() replaced by st.progress() + st.columns (NX5 resolved) */
 
 /* ─── MODULE CARD ──────────────────────────────────────────── */
-.module-card {{
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.2rem 1.4rem;
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}}
-.module-card.active {{
-  border-color: var(--cyan);
-  background: linear-gradient(135deg, rgba(0,212,232,0.06), var(--bg-surface));
-}}
-.module-card.completed {{
-  border-color: var(--green);
-  background: linear-gradient(135deg, rgba(41,204,106,0.05), var(--bg-surface));
-}}
-.module-card.locked {{
-  opacity: 0.5;
-}}
-
-/* ─── MODULE CARD + ACTION BUTTON ATTACHMENT ────────────────
-   Active and completed cards have a Streamlit button rendered
-   immediately below their HTML block. These rules remove the
-   visual gap so the button reads as the card's footer CTA.    */
-.element-container:has(.module-card.active) .module-card.active,
-.element-container:has(.module-card.completed) .module-card.completed {{
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-  border-bottom: none !important;
-  margin-bottom: 0 !important;
-  padding-bottom: 1rem !important;
-}}
-.element-container:has(.module-card.active) + .element-container [data-testid="stButton"] > button {{
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
-  border-top: 1px solid var(--cyan) !important;
-  margin-top: 0 !important;
-  width: 100% !important;
-}}
-.element-container:has(.module-card.completed) + .element-container [data-testid="stButton"] > button {{
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
-  border-top: 1px solid var(--green) !important;
-  margin-top: 0 !important;
-  width: 100% !important;
-}}
-.module-number {{
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--text-faint);
-  min-width: 2rem;
-}}
+/* module-card HTML replaced by st.container(border=True) (NX10/NX11 resolved).
+   Inner content still uses module-title, module-domain-tag, sub-strip, sub-badge. */
 .module-title {{
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
@@ -514,12 +435,8 @@ div[data-testid="stError"] {{
 }}
 
 /* ─── COACH PANEL ──────────────────────────────────────────── */
-.coach-header {{
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.6rem;
-}}
+/* Chat UI now uses st.chat_message() native components (NX1 resolved).
+   Coach label still used in Results sub-view coach note. */
 .coach-label {{
   font-family: 'Inter', sans-serif;
   font-size: 0.75rem;
@@ -528,79 +445,15 @@ div[data-testid="stError"] {{
   letter-spacing: 0.07em;
   color: var(--cyan);
 }}
-.coach-message {{
-  background: var(--bg-elevated);
-  border: 1px solid rgba(0,212,232,0.2);
-  border-radius: 8px;
-  padding: 1rem 1.2rem;
-  font-size: 0.9rem;
-  line-height: 1.65;
-  color: var(--text);
-  margin-bottom: 0.8rem;
-}}
-.turn-counter {{
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--text-faint);
-  text-align: right;
-}}
 
 /* ─── READING CONTENT BLOCKS ────────────────────────────────── */
+/* reading-example-box, reading-antipattern-box, reading-takeaway-box replaced
+   by st.success(), st.error(), st.info() (NX9 resolved) */
 .reading-concept {{
   line-height: 1.8;
   font-size: 0.95rem;
   color: var(--text);
   margin-bottom: 1.5rem;
-}}
-.reading-example-box {{
-  background: rgba(41,204,106,0.06);
-  border: 1px solid rgba(41,204,106,0.25);
-  border-left: 3px solid var(--green);
-  border-radius: 8px;
-  padding: 1rem 1.2rem;
-  margin-bottom: 1.2rem;
-}}
-.reading-example-box .box-label {{
-  font-family: 'Inter', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--green);
-  margin-bottom: 0.5rem;
-}}
-.reading-antipattern-box {{
-  background: rgba(232,69,90,0.06);
-  border: 1px solid rgba(232,69,90,0.25);
-  border-left: 3px solid var(--red);
-  border-radius: 8px;
-  padding: 1rem 1.2rem;
-  margin-bottom: 1.2rem;
-}}
-.reading-antipattern-box .box-label {{
-  font-family: 'Inter', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--red);
-  margin-bottom: 0.5rem;
-}}
-.reading-takeaway-box {{
-  background: rgba(0,212,232,0.06);
-  border: 1px solid rgba(0,212,232,0.25);
-  border-radius: 8px;
-  padding: 1rem 1.2rem;
-  margin-bottom: 1.2rem;
-}}
-.reading-takeaway-box .box-label {{
-  font-family: 'Inter', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--cyan);
-  margin-bottom: 0.5rem;
 }}
 
 /* ─── GAP MAP BULLETS ──────────────────────────────────────── */
@@ -686,31 +539,7 @@ tr:last-child td {{ border-bottom: none; }}
 }}
 
 /* ─── OVERALL SCORE DISPLAY ─────────────────────────────────── */
-.score-hero {{
-  text-align: center;
-  padding: 2rem 0 1rem;
-}}
-.score-hero-number {{
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 4rem;
-  font-weight: 500;
-  color: var(--cyan);
-  line-height: 1;
-}}
-.score-hero-denom {{
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 1.5rem;
-  color: var(--text-faint);
-}}
-.score-hero-label {{
-  font-family: 'Inter', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  margin-top: 0.4rem;
-}}
+/* score-hero replaced by st.metric() (NX4 resolved) */
 
 /* ─── LOGO / BRAND MARK ─────────────────────────────────────── */
 .aha-brand {{
@@ -774,14 +603,7 @@ tr:last-child td {{ border-bottom: none; }}
 }}
 
 /* ─── RESULT SCORE BOX ──────────────────────────────────────── */
-.result-score-box {{
-  background: linear-gradient(135deg, rgba(0,212,232,0.08), var(--bg-surface));
-  border: 1px solid rgba(0,212,232,0.3);
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}}
+/* result-score-box replaced by st.metric() (NX4 resolved) */
 
 /* ─── TASK INDICATOR ────────────────────────────────────────── */
 .task-indicator {{
@@ -842,30 +664,7 @@ tr:last-child td {{ border-bottom: none; }}
   margin-top: -1.2rem;
 }}
 
-/* ─── CHAT BUBBLE ───────────────────────────────────────────── */
-.chat-bubble-user {{
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: 8px 8px 2px 8px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: var(--text);
-  max-width: 85%;
-  margin-left: auto;
-}}
-.chat-bubble-coach {{
-  background: rgba(0,212,232,0.06);
-  border: 1px solid rgba(0,212,232,0.15);
-  border-radius: 8px 8px 8px 2px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: var(--text);
-  max-width: 85%;
-}}
+/* Chat bubbles removed — replaced with st.chat_message() (NX1 resolved) */
 </style>
 """, unsafe_allow_html=True)
 
@@ -892,21 +691,6 @@ def section_header(label: str):
 </div>
 """, unsafe_allow_html=True)
 
-
-def score_bar(label: str, score: float, max_score: float = 4.0, color_class: str = "success"):
-    """Render a labelled score progress bar."""
-    pct = min(100, int(score / max_score * 100))
-    st.markdown(f"""
-<div class="score-bar-container">
-  <div class="score-bar-header">
-    <span class="score-bar-label">{label}</span>
-    <span class="score-bar-value">{score:.1f} / {max_score:.1f}</span>
-  </div>
-  <div class="score-bar-track">
-    <div class="score-bar-fill {color_class}" style="width:{pct}%"></div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
 
 
 def step_progress_strip(steps: list[dict]):

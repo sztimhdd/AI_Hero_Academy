@@ -18,7 +18,7 @@ from utils.styles import inject_global_css, section_header
 from utils.content import get_course
 
 st.set_page_config(
-    page_title="Home | AI Hero Academy",
+    page_title="My Training | AI Hero Academy",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -189,11 +189,16 @@ with col_card:
   </div>
 </div>
 """, unsafe_allow_html=True)
-    if st.button("→  View Full Skills Profile", use_container_width=False, key="view_profile_btn"):
+    if st.button("→  View Full Skills Profile", use_container_width=False, key="view_profile_btn", type="primary"):
         st.switch_page("pages/02_Skills_Profile.py")
 
 # ── Course progress ────────────────────────────────────────────────────────────
 section_header("MY TRAINING COURSE")
+
+
+def _badge(label, state):
+    return f'<span class="sub-badge {state}">{label}</span>'
+
 
 for row in progress_rows:
     seq = int(row.get("module_sequence_order", 0))
@@ -215,10 +220,7 @@ for row in progress_rows:
     else:
         card_state = "active"
 
-    # Sub-module badges
-    def badge(label, state):
-        return f'<span class="sub-badge {state}">{label}</span>'
-
+    # Sub-module badge states
     if card_state == "completed":
         r_state, p_state, q_state = "done", "done", "done"
     elif card_state == "active":
@@ -231,68 +233,58 @@ for row in progress_rows:
     else:
         r_state, p_state, q_state = "pending", "pending", "pending"
 
-    score_display = ""
-    if card_state == "completed" and eval_score is not None:
-        try:
-            score_display = f'<span style="font-family:\'IBM Plex Mono\',monospace; font-size:0.82rem; color:#29CC6A">{float(eval_score):.1f} / 4.0</span>'
-        except (TypeError, ValueError):
-            pass
+    num_color = "#00D4E8" if card_state == "active" else ("#29CC6A" if card_state == "completed" else "#8990A8")
+    opacity = "opacity:0.5;" if is_locked else ""
 
-    lock_icon = "" if not is_locked else "🔒"
-    if card_state == "active":
-        num_style = "color:#00D4E8"
-    elif card_state == "completed":
-        num_style = "color:#29CC6A"
-    else:
-        num_style = "color:#8990A8"
+    with st.container(border=True):
+        col_num, col_body, col_score = st.columns([1, 7, 2])
+        with col_num:
+            st.markdown(
+                f'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:0.9rem;'
+                f'font-weight:700;color:{num_color};padding-top:0.3rem;{opacity}">'
+                f'{str(seq).zfill(2)}</div>',
+                unsafe_allow_html=True,
+            )
+        with col_body:
+            lock_icon = "🔒 " if is_locked else ""
+            st.markdown(
+                f'<div style="{opacity}">'
+                f'<div class="module-title">{lock_icon}{title}</div>'
+                f'<div style="margin-top:0.3rem"><span class="module-domain-tag">{domain_display}</span></div>'
+                f'<div class="sub-strip">{_badge("Read", r_state)}{_badge("Practice", p_state)}{_badge("Quiz", q_state)}</div>'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
+        with col_score:
+            if card_state == "completed" and eval_score is not None:
+                try:
+                    st.markdown(
+                        f'<div style="text-align:right;font-family:\'IBM Plex Mono\',monospace;'
+                        f'font-size:0.82rem;color:#29CC6A">{float(eval_score):.1f} / 4.0</div>',
+                        unsafe_allow_html=True,
+                    )
+                except (TypeError, ValueError):
+                    pass
 
-    st.markdown(f"""
-<div class="module-card {card_state}">
-  <div class="module-number" style="{num_style}">
-    {str(seq).zfill(2)}
-  </div>
-  <div style="flex:1">
-    <div class="module-title">
-      {lock_icon} {title}
-    </div>
-    <div style="margin-top:0.3rem">
-      <span class="module-domain-tag">{domain_display}</span>
-    </div>
-    <div class="sub-strip">
-      {badge("Read", r_state)}
-      {badge("Practice", p_state)}
-      {badge("Quiz", q_state)}
-    </div>
-  </div>
-  <div style="text-align:right">
-    {score_display}
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
-    # Action button for active modules
-    if card_state == "active":
-        # Determine where to resume
-        if not reading_done:
-            btn_label = f"Start Module {seq} →"
-        elif not practice_done:
-            btn_label = f"Continue Practice →"
-        else:
-            btn_label = f"Take Quiz →"
-
-        if st.button(btn_label, key=f"module_btn_{seq}", use_container_width=True):
-            st.session_state["active_course_id"] = course_id
+        if card_state == "active":
             if not reading_done:
-                st.session_state["active_submodule"] = "reading"
+                btn_label = f"Start Module {seq} →"
             elif not practice_done:
-                st.session_state["active_submodule"] = "practice"
+                btn_label = f"Continue Practice →"
             else:
-                st.session_state["active_submodule"] = "evaluation"
-            st.switch_page("pages/04_Course_Module.py")
-    elif card_state == "completed":
-        if st.button(f"Review Module {seq}", key=f"module_btn_{seq}", type="secondary", use_container_width=True):
-            st.session_state["active_course_id"] = course_id
-            st.session_state["active_submodule"] = "overview"
-            st.switch_page("pages/04_Course_Module.py")
+                btn_label = f"Take Quiz →"
+            if st.button(btn_label, key=f"module_btn_{seq}", use_container_width=True, type="primary"):
+                st.session_state["active_course_id"] = course_id
+                if not reading_done:
+                    st.session_state["active_submodule"] = "reading"
+                elif not practice_done:
+                    st.session_state["active_submodule"] = "practice"
+                else:
+                    st.session_state["active_submodule"] = "evaluation"
+                st.switch_page("pages/04_Course_Module.py")
+        elif card_state == "completed":
+            if st.button(f"Review Module {seq}", key=f"module_btn_{seq}", type="secondary", use_container_width=True):
+                st.session_state["active_course_id"] = course_id
+                st.session_state["active_submodule"] = "overview"
+                st.switch_page("pages/04_Course_Module.py")
 
-    st.markdown("<div style='height:0.1rem'></div>", unsafe_allow_html=True)

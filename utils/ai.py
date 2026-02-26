@@ -220,7 +220,7 @@ def generate_gap_map(
     scores_text = json.dumps(domain_scores, ensure_ascii=False, indent=2)
     descs_text = json.dumps(domain_descriptions, ensure_ascii=False, indent=2)
 
-    prompt = f"""You are a learning coach generating a personalized gap analysis for an RM (Relationship Manager) learner at a Canadian export finance institution.
+    prompt = f"""You are a learning coach generating a personalized gap analysis for a learner at a Canadian export finance institution.
 
 Domain scores (0–4 scale, where 0=Unaware and 4=Champion):
 {scores_text}
@@ -230,7 +230,7 @@ Domain descriptions:
 
 Write 3–6 gap bullets. Order by priority (biggest gap = priority 1, i.e. lowest score first).
 Each bullet must be:
-- Specific and actionable (reference the actual domain context for an RM)
+- Specific and actionable (reference the actual domain context from the descriptions above)
 - Encouraging and growth-focused — not punitive
 - 1–2 sentences
 
@@ -250,7 +250,9 @@ Return ONLY valid JSON:
     )
 
     result = _extract_json(raw)
-    return result["gap_bullets"]
+    # Accept both "gap_bullets" and "bullets" in case the LLM varies the key name
+    bullets = result.get("gap_bullets") or result.get("bullets") or []
+    return bullets if isinstance(bullets, list) else []
 
 
 def coach_response(
@@ -348,5 +350,5 @@ Return only the coach note text — no JSON, no quotes."""
         [{"role": "user", "content": prompt}],
         temperature=0.5,
         user_email=user_email,
-        call_type="coach_note",
+        call_type="coach_response",
     )

@@ -8,6 +8,7 @@ import streamlit as st
 import uuid
 import json
 import os
+import sys
 from datetime import datetime
 
 from utils.auth import get_user_email
@@ -15,7 +16,7 @@ from utils.db import execute, query_one
 from utils.ai import score_diagnostic, generate_gap_map
 from utils.scoring import DOMAIN_DISPLAY_NAMES
 from utils.styles import inject_global_css
-from utils.content import get_diagnostic_items, DOMAIN_DESCRIPTIONS
+from utils.content import get_diagnostic_items, get_domain_descriptions
 
 st.set_page_config(
     page_title="Diagnostic | AI Hero Academy",
@@ -31,15 +32,25 @@ user_email = get_user_email()
 
 # ── Guard: must have a profile ────────────────────────────────────────────────
 profile = query_one(
-    f"SELECT user_email FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
+    f"SELECT user_email, role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
     [user_email],
 )
 if not profile:
     st.switch_page("pages/00_Welcome.py")
 
+role_id: str = profile["role_id"] if profile else st.session_state.get("role_id", "rm")
+
+# Check for prior completed diagnostic — used to show exit navigation (CX1)
+_prior_diag = query_one(
+    f"SELECT session_id FROM {CATALOG}.learner.diagnostic_sessions "
+    f"WHERE user_email = ? AND completed_at IS NOT NULL LIMIT 1",
+    [user_email],
+)
+_can_exit = bool(_prior_diag)
+
 # ── Load diagnostic items (ordered) ──────────────────────────────────────────
-items = get_diagnostic_items()
-domain_descriptions = DOMAIN_DESCRIPTIONS
+items = get_diagnostic_items(role_id)
+domain_descriptions = get_domain_descriptions(role_id)
 
 TOTAL = len(items)
 
@@ -64,40 +75,45 @@ if not st.session_state.get("diag_started"):
   <div class="aha-brand-name">AI <span>Hero</span> Academy</div>
 </div>
 """, unsafe_allow_html=True)
-    st.markdown('<h1 style="margin-bottom:0.5rem">AI Skills Diagnostic</h1>', unsafe_allow_html=True)
+    st.title("AI Skills Diagnostic")
     st.markdown(
         '<div style="font-family:\'Inter\',sans-serif; font-size:0.85rem; color:#8990A8; margin-bottom:2rem">'
         'Before we build your personalised training course, we need to understand your current AI skill level.</div>',
         unsafe_allow_html=True,
     )
-    st.markdown('<div class="aha-card">', unsafe_allow_html=True)
     st.markdown(f"""
-<div style="display:flex; gap:2.5rem; flex-wrap:wrap; margin-bottom:1.25rem">
-  <div style="text-align:center; min-width:80px">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">~5</div>
-    <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">minutes</div>
+<div class="aha-card">
+  <div style="display:flex; gap:2.5rem; flex-wrap:wrap; margin-bottom:1.25rem">
+    <div style="text-align:center; min-width:80px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">~5</div>
+      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">minutes</div>
+    </div>
+    <div style="text-align:center; min-width:80px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">{TOTAL}</div>
+      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">questions</div>
+    </div>
+    <div style="text-align:center; min-width:80px">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">4</div>
+      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">skill domains</div>
+    </div>
   </div>
-  <div style="text-align:center; min-width:80px">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">{TOTAL}</div>
-    <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">questions</div>
+  <div style="font-family:'Inter',sans-serif; font-size:0.85rem; color:#8990A8; line-height:1.6">
+    Questions include <strong style="color:#E8E9EF">multiple choice</strong>,
+    <strong style="color:#E8E9EF">written responses</strong>, and
+    <strong style="color:#E8E9EF">short tasks</strong>.
+    There are no right or wrong answers — your results shape your personalised training course.
   </div>
-  <div style="text-align:center; min-width:80px">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">4</div>
-    <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">skill domains</div>
-  </div>
-</div>
-<div style="font-family:'Inter',sans-serif; font-size:0.85rem; color:#8990A8; line-height:1.6">
-  Questions include <strong style="color:#E8E9EF">multiple choice</strong>,
-  <strong style="color:#E8E9EF">written responses</strong>, and
-  <strong style="color:#E8E9EF">short tasks</strong>.
-  There are no right or wrong answers — your results shape your personalised training course.
 </div>
 """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
-    if st.button("Start Assessment →", type="primary"):
-        st.session_state["diag_started"] = True
-        st.rerun()
+    _orient_cols = st.columns([3, 1]) if _can_exit else [None]
+    with (_orient_cols[0] if _can_exit else st.container()):
+        if st.button("Start Assessment →", type="primary"):
+            st.session_state["diag_started"] = True
+            st.rerun()
+    if _can_exit:
+        with _orient_cols[1]:
+            if st.button("← Exit", key="diag_exit_orient", use_container_width=True):
+                st.switch_page("pages/03_Home.py")
     st.stop()
 
 idx: int = st.session_state["diag_item_index"]
@@ -110,20 +126,25 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-col_title, col_counter = st.columns([4, 1])
+col_title, col_counter, col_exit = st.columns([4, 1, 1])
 with col_title:
-    st.markdown('<h1 style="margin-bottom:0.2rem">Diagnostic</h1>', unsafe_allow_html=True)
+    st.title("Diagnostic")
 with col_counter:
     st.markdown(
         f'<div class="question-counter" style="text-align:right; margin-top:1.4rem">'
         f'Question {min(idx + 1, TOTAL)} of {TOTAL}</div>',
         unsafe_allow_html=True,
     )
+with col_exit:
+    if st.button("← Exit", key="diag_exit_quiz", use_container_width=True):
+        for k in ["diag_item_index", "diag_responses", "diag_session_started",
+                  "diag_started_at", "diag_started"]:
+            st.session_state.pop(k, None)
+        st.switch_page("pages/03_Home.py")
 
 # Progress bar
 progress_pct = idx / TOTAL
 st.progress(progress_pct)
-st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
 
 # ── Scoring / completion handler ──────────────────────────────────────────────
 def complete_diagnostic(responses: list[dict]):
@@ -176,6 +197,7 @@ def complete_diagnostic(responses: list[dict]):
             st.stop()
 
     with st.spinner("Building your personalised gap map..."):
+        gap_bullets = []
         try:
             gap_bullets = generate_gap_map(
                 domain_scores=domain_scores,
@@ -183,16 +205,21 @@ def complete_diagnostic(responses: list[dict]):
                 user_email=user_email,
                 source_type="diagnostic",
             )
-            gap_map_id = str(uuid.uuid4())
-            bullets_json = json.dumps(gap_bullets, ensure_ascii=False)
-            execute(
-                f"INSERT INTO {CATALOG}.learner.gap_maps "
-                f"(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
-                f"VALUES (?, ?, 'diagnostic', ?, ?, current_timestamp())",
-                [gap_map_id, user_email, session_id, bullets_json],
-            )
-        except Exception:
-            pass  # Non-fatal; Skills Profile will show a fallback message
+        except Exception as _gap_err:
+            # Non-fatal — Skills Profile shows fallback if gap map is missing
+            print(f"[WARNING] gap_map generation failed after diagnostic: {_gap_err}", file=sys.stderr)
+        if gap_bullets:
+            try:
+                gap_map_id = str(uuid.uuid4())
+                bullets_json = json.dumps(gap_bullets, ensure_ascii=False)
+                execute(
+                    f"INSERT INTO {CATALOG}.learner.gap_maps "
+                    f"(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
+                    f"VALUES (?, ?, 'diagnostic', ?, ?, current_timestamp())",
+                    [gap_map_id, user_email, session_id, bullets_json],
+                )
+            except Exception as _db_err:
+                print(f"[WARNING] gap_map write failed after diagnostic: {_db_err}", file=sys.stderr)
 
     # Clear diagnostic session state and navigate
     st.session_state.pop("diag_item_index", None)
@@ -244,10 +271,11 @@ if item_type == "mcq":
         options=opt_labels,
         key=f"mcq_{item_id}",
         label_visibility="collapsed",
+        index=None,
     )
 
     btn_label = "Submit & Continue →" if is_last else "Next →"
-    if st.button(btn_label, disabled=(selected is None), key=f"btn_{item_id}"):
+    if st.button(btn_label, disabled=(selected is None), key=f"btn_{item_id}", type="primary"):
         chosen_idx = opt_labels.index(selected)
         chosen_label = opt_keys[chosen_idx]
         st.session_state["diag_responses"].append({
@@ -291,7 +319,7 @@ elif item_type == "prompt_sandbox":
     )
 
     btn_label = "Submit →" if is_last else "Submit →"
-    if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}"):
+    if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}", type="primary"):
         st.session_state["diag_responses"].append({
             "item_id": item_id,
             "response": user_text.strip(),
@@ -322,7 +350,7 @@ elif item_type == "micro_task":
     )
 
     btn_label = "Submit →"
-    if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}"):
+    if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}", type="primary"):
         st.session_state["diag_responses"].append({
             "item_id": item_id,
             "response": user_text.strip(),

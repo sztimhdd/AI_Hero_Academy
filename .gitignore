@@ -16,3 +16,8 @@ __pycache__/
 # Debug / test artifacts
 _setup_result.json
 *.png
+content_test/
+console-warnings.log
+
+# Windows shell artifacts
+nul
