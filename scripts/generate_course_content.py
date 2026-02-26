@@ -356,7 +356,7 @@ Notes:
 - role_prefix: the 2–3 letter code from the MACHINE-READABLE HEADER (e.g. "rm", "uw")
 - company_map: keys are "1" through "5" (strings), values are company names
 - real_use_cases: keys are "1" through "5" (strings), values are use case title strings
-- domain_seeds: extract from ### Domain: prompting/verification/data_safety/tool_fluency sections
+- domain_seeds: extract from all ### Domain: <domain_id> sections found in the brief
 - course_seeds: extract from ### Course 1 — [Title] through ### Course 5 — [Title]"""
 
     raw = call_llm(
@@ -466,7 +466,7 @@ Output schema:
 }
 
 Notes:
-- diagnostic_seeds: from ### Diagnostic: prompting/verification/data_safety/tool_fluency sections
+- diagnostic_seeds: from all ### Diagnostic: <domain_id> sections found in the brief
 - evaluation_seeds: from ### Evaluation: Course N sections; keys are "1" through "5" (strings)
 - item_type values: "MCQ", "prompt_sandbox", "micro_task", "performance_task"
 - For MCQ: populate options (list of {label, text}), correct_option, explanation; rubric_criteria=null
@@ -557,6 +557,13 @@ def generate_structural_json(spec: dict) -> tuple[dict, dict]:
         {"rm_c1_prompting": rm_courses.get("rm_c1_prompting", {})}, indent=2
     )[:500]
 
+    # Derive domain IDs from brief spec (fall back to RM defaults so RM still works)
+    spec_domain_ids = list(spec.get("domain_seeds", {}).keys()) or DOMAIN_IDS
+    spec_domains_str = ", ".join(spec_domain_ids)
+    # Capstone primary_domain = first domain (closest to prompting/foundational skill)
+    capstone_primary_domain = spec_domain_ids[0] if spec_domain_ids else "prompting"
+    domain_entries_hint = ", ".join(f'"{d}": {{...}}' for d in spec_domain_ids)
+
     system_prompt = f"""\
 You are a structural JSON generator for an AI skills training pipeline.
 You receive a role specification and produce three JSON structures:
@@ -574,10 +581,10 @@ courses.json entry: {{"<course_id>": {{"course_id": str, "role_id": str, "primar
 
 FIXED RULES:
 - role_id = "{role_prefix}"
-- domain_ids must be exactly: prompting, verification, data_safety, tool_fluency
+- domain_ids for this role (from brief): {spec_domains_str}
 - course_id pattern for courses 1–4: {role_prefix}_c<N>_<domain_id>
 - course_id for course 5 (capstone): {role_prefix}_c5_capstone
-- Course 5 primary_domain = "prompting" (capstone integrates all 4 domains)
+- Course 5 primary_domain = "{capstone_primary_domain}" (capstone integrates all domains)
 - sequence_order 1–5 matching course positions
 
 RM EXAMPLES (for structural reference only — do NOT copy RM-specific content):
@@ -590,7 +597,7 @@ Return ONLY a valid JSON object inside a fenced json code block. No text outside
 Output structure:
 {{
   "role_entry": {{"{role_prefix}": {{...}}}},
-  "domain_entries": {{"prompting": {{...}}, "verification": {{...}}, "data_safety": {{...}}, "tool_fluency": {{...}}}},
+  "domain_entries": {{{domain_entries_hint}}},
   "course_entries": {{"{role_prefix}_c1_<domain>": {{...}}, ...}}
 }}"""
 
@@ -654,7 +661,7 @@ Requirements:
         "role_display_name": role_display_name,
         "company_map": company_map,
         "framework_names": spec.get("framework_names") or [],
-        "domain_ids": DOMAIN_IDS,
+        "domain_ids": list(spec.get("domain_seeds", {}).keys()) or DOMAIN_IDS,
         "course_id_map": course_id_map,
         "real_use_cases": real_use_cases,
     }
@@ -715,7 +722,7 @@ def qa_gap_check(spec: dict, structural: dict) -> tuple[bool, list[dict]]:
             )
 
     domain_seeds = spec.get("domain_seeds") or {}
-    for d in DOMAIN_IDS:
+    for d in (list(domain_seeds.keys()) or DOMAIN_IDS):
         ds = domain_seeds.get(d)
         if not ds:
             flags.append(
@@ -1078,6 +1085,12 @@ def generate_diagnostic_items(spec: dict, shared_context: dict) -> list[dict]:
     rm_diag_list = rm_diag if isinstance(rm_diag, list) else list(rm_diag.values())
     rm_diag_ex = json.dumps(rm_diag_list[:3], indent=2)[:1200]
 
+    domain_ids = shared_context.get("domain_ids", DOMAIN_IDS)
+    domain_order_hint = ", ".join(
+        f"{did} (display_order {i * 3 + 1}–{i * 3 + 3})"
+        for i, did in enumerate(domain_ids)
+    )
+
     system_prompt = f"""\
 You are an assessment designer for AI Hero Academy, an AI skills training program.
 You generate diagnostic items that measure a learner's current AI skill level.
@@ -1092,9 +1105,10 @@ ITEM TYPE REQUIREMENTS:
 
 PER DOMAIN: exactly 3 items — Item 1 (mcq), Item 2 (prompt_sandbox), Item 3 (micro_task).
 
-ITEM ID PATTERN: diag_<initial><N>_<type>
-  Domain initials: p=prompting, v=verification, d=data_safety, t=tool_fluency
-  Example: diag_p1_mcq, diag_v2_sandbox, diag_d3_task, diag_t1_mcq
+ITEM ID PATTERN: diag_<abbrev><N>_<type>
+  Domains for this role: {', '.join(domain_ids)}
+  Use first 1–3 letters of the domain_id as abbreviation (e.g. "prompting" → "p", "risk_assessment" → "ra").
+  Example pattern: diag_p1_mcq, diag_v2_sandbox, diag_ra3_task
 
 CONTENT CONSTRAINTS:
 - Use fictional company names only. No real companies, no real EDC clients.
@@ -1108,8 +1122,7 @@ FEW-SHOT EXAMPLE (RM role):
 Return ONLY a valid JSON object inside a fenced json code block. No text outside the block.
 
 Output: {{"items": [<12 item objects>]}}
-Order: all 3 prompting items (display_order 1–3), then verification (4–6), data_safety (7–9),
-tool_fluency (10–12).
+Order: {domain_order_hint}.
 Each item: {{item_id, domain_id, item_type, display_order, question_text, scenario_text,
              options, correct_option, scoring_rubric}}"""
 
@@ -1298,7 +1311,7 @@ def final_qa(
         for item in diag_items:
             d = item.get("domain_id", "unknown")
             domain_counts[d] = domain_counts.get(d, 0) + 1
-        for d in DOMAIN_IDS:
+        for d in shared_context.get("domain_ids", DOMAIN_IDS):
             if domain_counts.get(d, 0) != 3:
                 issues.append(
                     f"Diagnostic: expected 3 items for '{d}', got {domain_counts.get(d, 0)}"
