@@ -14,7 +14,7 @@ from utils.scoring import (
     DOMAIN_DISPLAY_NAMES, get_level_label, get_score_color,
     calculate_overall_score, compute_current_domain_scores,
 )
-from utils.styles import inject_global_css, section_header
+from utils.styles import inject_global_css, section_header, render_sidebar
 from utils.content import get_course
 
 st.set_page_config(
@@ -127,18 +127,7 @@ last_updated_str = (
 )
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
-with st.sidebar:
-    st.markdown("""
-<div style="padding:1rem 0.5rem">
-  <div class="aha-brand">
-    <div class="aha-brand-icon" style="width:28px;height:28px;font-size:0.9rem">⚡</div>
-    <div class="aha-brand-name" style="font-size:0.95rem">AI <span>Hero</span> Academy</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-    st.markdown("---")
-    if st.button("🏅  Skills Profile", use_container_width=True):
-        st.switch_page("pages/02_Skills_Profile.py")
+render_sidebar("home", has_course=True, progress_rows=progress_rows)
 
 
 # ── Greeting ──────────────────────────────────────────────────────────────────
@@ -285,6 +274,12 @@ for row in progress_rows:
         elif card_state == "completed":
             if st.button(f"Review Module {seq}", key=f"module_btn_{seq}", type="secondary", use_container_width=True):
                 st.session_state["active_course_id"] = course_id
-                st.session_state["active_submodule"] = "overview"
+                # Jump directly to results if fully complete; overview otherwise (UI2)
+                all_done = (
+                    row.get("reading_completed_at")
+                    and row.get("practice_completed_at")
+                    and row.get("evaluation_completed_at")
+                )
+                st.session_state["active_submodule"] = "results" if all_done else "overview"
                 st.switch_page("pages/04_Course_Module.py")
 

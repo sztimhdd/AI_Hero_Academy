@@ -79,6 +79,11 @@ section.stSidebar span {{
   font-family: 'Inter', sans-serif !important;
 }}
 
+/* Hide Streamlit's built-in sidebar collapse toggle — sidebar is always expanded
+   and the Material Icons font is not loaded, causing icon text to bleed through
+   as literal "keyboard_double_arrow_left" on hover (NAV2). */
+[data-testid="collapsedControl"] {{ display: none !important; }}
+
 /* ─── MAIN CONTENT AREA ────────────────────────────────────── */
 /* Leave Streamlit's native max-width (readable-content width) alone.
    Only adjust vertical padding. */
@@ -372,6 +377,7 @@ div[data-testid="stError"] {{
   gap: 0.3rem;
   align-items: center;
   margin-top: 0.5rem;
+  margin-bottom: 0.75rem;   /* UI1: separates badge strip from action button below */
 }}
 .sub-badge {{
   font-size: 0.72rem;
@@ -710,3 +716,69 @@ def step_progress_strip(steps: list[dict]):
         if i < len(steps) - 1:
             parts.append('<div class="step-connector"></div>')
     st.markdown(f'<div class="step-strip">{"".join(parts)}</div>', unsafe_allow_html=True)
+
+
+def render_sidebar(
+    active_page: str,
+    has_course: bool = False,
+    progress_rows: list = None,
+    active_course_id: str = None,
+    module_context: dict = None,
+):
+    """
+    Render consistent sidebar navigation on all post-diagnostic pages (NAV1).
+
+    active_page: "home" | "skills_profile" | "course_module"
+    has_course:  True if the user has training_progress rows
+    progress_rows: list of progress dicts (needed for CX3 My Course navigation)
+    active_course_id: current course_id (Course Module only)
+    module_context: {"seq_order": int, "course_title": str, "domain_display": str}
+                    — rendered as a context block on Course Module only
+    """
+    with st.sidebar:
+        st.markdown("""
+<div style="padding:1rem 0.5rem">
+  <div class="aha-brand">
+    <div class="aha-brand-icon" style="width:28px;height:28px;font-size:0.9rem">⚡</div>
+    <div class="aha-brand-name" style="font-size:0.95rem">AI <span>Hero</span> Academy</div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+        st.markdown("---")
+
+        if st.button("🏠  My Training", use_container_width=True, disabled=(active_page == "home")):
+            st.switch_page("pages/03_Home.py")
+
+        if st.button("🏅  Skills Profile", use_container_width=True, disabled=(active_page == "skills_profile")):
+            st.switch_page("pages/02_Skills_Profile.py")
+
+        if has_course:
+            if st.button("📚  My Course", use_container_width=True, disabled=(active_page == "course_module")):
+                # CX3: find the active (unlocked, incomplete) module to navigate directly to it
+                if progress_rows:
+                    _active = next(
+                        (r for r in progress_rows
+                         if str(r.get("is_locked", "true")).lower() == "false"
+                         and not r.get("evaluation_completed_at")),
+                        progress_rows[0] if progress_rows else None,
+                    )
+                    if _active:
+                        st.session_state["active_course_id"] = _active["course_id"]
+                        st.session_state["active_submodule"] = "overview"
+                st.switch_page("pages/04_Course_Module.py")
+
+        # Module context block — rendered on Course Module only
+        if active_page == "course_module" and active_course_id and module_context:
+            seq = module_context.get("seq_order", "")
+            title = module_context.get("course_title", "")
+            domain_display = module_context.get("domain_display", "")
+            st.markdown(
+                f'<div style="padding:1rem 0.5rem; font-family:\'Inter\',sans-serif;'
+                f' font-size:0.75rem; color:#8990A8">'
+                f'<div style="font-weight:600; text-transform:uppercase; letter-spacing:0.08em;'
+                f' color:#8990A8; margin-bottom:0.5rem">Module {seq}</div>'
+                f'<div style="color:#EDF0F7; line-height:1.4; margin-bottom:0.8rem">{title}</div>'
+                f'<div class="module-domain-tag">{domain_display}</div>'
+                f'</div>',
+                unsafe_allow_html=True,
+            )

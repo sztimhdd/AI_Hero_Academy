@@ -19,7 +19,7 @@ from utils.scoring import (
     compute_current_domain_scores,
 )
 from utils.sequencing import compute_module_sequence
-from utils.styles import inject_global_css, section_header
+from utils.styles import inject_global_css, section_header, render_sidebar
 from utils.content import get_course
 
 st.set_page_config(
@@ -125,32 +125,8 @@ assessed_date = str(latest_diag.get("completed_at", ""))[:10] if latest_diag els
 
 display_name = profile.get("display_name", user_email.split("@")[0].title())
 
-# ── Sidebar navigation hint ───────────────────────────────────────────────────
-with st.sidebar:
-    st.markdown("""
-<div style="padding:1rem 0.5rem">
-  <div class="aha-brand">
-    <div class="aha-brand-icon" style="width:28px;height:28px;font-size:0.9rem">⚡</div>
-    <div class="aha-brand-name" style="font-size:0.95rem">AI <span>Hero</span> Academy</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-    st.markdown("---")
-    if st.button("🏠  My Training", use_container_width=True):
-        st.switch_page("pages/03_Home.py")
-    if has_course:
-        if st.button("📚  My Course", use_container_width=True):
-            # CX3: find the active (unlocked, incomplete) module to navigate directly to it
-            _active = next(
-                (r for r in progress_rows
-                 if str(r.get("is_locked", "true")).lower() == "false"
-                 and not r.get("evaluation_completed_at")),
-                progress_rows[0] if progress_rows else None,
-            )
-            if _active:
-                st.session_state["active_course_id"] = _active["course_id"]
-                st.session_state["active_submodule"] = "overview"
-            st.switch_page("pages/04_Course_Module.py")
+# ── Sidebar ───────────────────────────────────────────────────────────────────
+render_sidebar("skills_profile", has_course=has_course, progress_rows=progress_rows)
 
 
 # ── Page header ───────────────────────────────────────────────────────────────
@@ -314,7 +290,7 @@ with col_b:
         if st.button("🗺️  Build My Training Course", use_container_width=True, type="primary"):
             with st.spinner("Building your personalised course..."):
                 try:
-                    sequence = compute_module_sequence(current_domain_scores)
+                    sequence = compute_module_sequence(current_domain_scores, role_id=profile["role_id"])
                     for i, course_id in enumerate(sequence):
                         progress_id = str(uuid.uuid4())
                         is_locked = "true" if i > 0 else "false"

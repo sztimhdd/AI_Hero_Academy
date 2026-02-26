@@ -211,11 +211,13 @@ Complete inventory of every PRD/TDD requirement and its current implementation s
 | Notebook | Status | Notes |
 |----------|--------|-------|
 | `00_create_schemas.py` | ✅ Complete | Registered as `seed_00_create_schemas`; targets `mdlg_ai_shared`; fixed `# MAGIC %md ##` silent execution bug |
-| `01_seed_roles_domains.py` | ✅ Complete → Retiring | Fixed `# MAGIC %md ##` bug (roles and domains were silently skipped); now seeds correctly to `mdlg_ai_shared` |
-| `02_seed_courses.py` | ✅ Complete → Retiring | Targets `mdlg_ai_shared`; courses=5, reading=5, practice=5, eval_items=20 confirmed |
-| `03_seed_diagnostic_items.py` | ✅ Complete → Retiring | Targets `mdlg_ai_shared`; diagnostic_items=12 confirmed |
+| `01_seed_roles_domains.py` | ✅ Retired | Content now served from `content/roles.json` + `content/domains.json` (RM + UW) — no Delta seeding required |
+| `02_seed_courses.py` | ✅ Retired | Content now served from `content/courses.json` + related JSON files (RM + UW) — no Delta seeding required |
+| `03_seed_diagnostic_items.py` | ✅ Retired | Content now served from `content/diagnostic_items.json` (RM 12 + UW 12 = 24 items) — no Delta seeding required |
 
 **Catalog migration completed (Feb 2026):** All content seeded to `mdlg_ai_shared`. Old `mdlg_ai.content`, `mdlg_ai.learner`, `mdlg_ai.system` schemas dropped. App service principal (`9f2c56cc-8b4a-4904-8729-0698a7c67b01`) granted all required UC privileges on `mdlg_ai_shared`.
+
+**Content → JSON architecture (Feb 2026):** All 7 `content.*` Delta tables retired. Static content now served from `content/*.json` files bundled with the app (`utils/content.py` loads them at startup). Multi-role support enabled: `roles.json` has both `rm` and `uw`; `diagnostic_items.json` has 24 items (12 RM + 12 UW); `courses.json` has 10 courses (`rm_c1_*`–`rm_c5_*`, `uw_c1_*`–`uw_c5_*`); `domains.json` uses role-scoped top-level keys (`rm_prompting`, `uw_prompting`, etc.).
 
 ---
 
@@ -1076,9 +1078,9 @@ All tasks complete (Feb 2026):
 
 ---
 
-### Phase 8 — UAT Regression Fixes ✅ Complete
+### Phase 8 — UAT Regression Fixes ✅ COMPLETE
 
-Resolved by full end-to-end Playwright UAT (Feb 2026) — 25/27 checks passed. Three issues followed up and resolved (Feb 2026).
+Resolved by full end-to-end Playwright UAT (Feb 2026) — 25/27 checks passed. Three issues resolved (Feb 2026). Radar chart added to Skills Profile in this phase as a final UX improvement.
 
 ---
 
@@ -1144,69 +1146,105 @@ Verify all pages: secondary/back buttons should be grey/outlined; primary CTAs s
 
 ### Phase 9 — Multi-Role Content Generation: Underwriter (UW)
 
-Extend the app to support a second role — **Underwriter** — using all content authored in `references/underwriter-course-design.md`. This is a multi-agent LLM pipeline that converts the structured design document into production-ready JSON content files and Delta seed data.
+Extend the app to support a second role — **Underwriter** — using all content authored in `references/underwriter-course-design.md`. The pipeline is a multi-agent LLM script that converts the structured design document into production-ready JSON content files.
 
-The UW role shares the same 4 domain IDs (`prompting`, `verification`, `data_safety`, `tool_fluency`) and the same app shell (no routing changes needed). Content delivery is through the same JSON module used for the RM role.
-
----
-
-#### Task 9.1 — Extend app to support multiple roles
-
-**Files**: [utils/content.py](utils/content.py), [pages/00_Welcome.py](pages/00_Welcome.py), [pages/01_Diagnostic.py](pages/01_Diagnostic.py), [pages/04_Course_Module.py](pages/04_Course_Module.py)
-
-Roles and domains are already keyed by `role_id`. The main changes:
-
-1. **`content/roles.json`**: add UW role entry (`role_id: "uw"`, title, description)
-2. **`content/domains.json`**: domains are shared; UW uses the same 4 domain IDs — verify `role_id` field handling if domains are role-scoped
-3. **Welcome page**: current single-role display (`CX8` fix shows `st.info()` card when only one role exists) must be extended: when UW role exists, restore `st.selectbox()` with both RM and UW options
-4. **Diagnostic page**: diagnostic items must be filtered by `role_id` — ensure `get_diagnostic_items(role_id)` accepts a role parameter
-5. **Course Module page**: course IDs are already role-prefixed (`rm_c1_*`, `uw_c1_*`) — routing is role-agnostic
+The UW role shares the same 4 domain IDs (`prompting`, `verification`, `data_safety`, `tool_fluency`) and the same app shell. Content delivery is through the same JSON module used for the RM role.
 
 ---
 
-#### Task 9.2 — Multi-agent content generation pipeline (notebooks/04_generate_uw_content.py)
+#### Task 9.1 — Extend app to support multiple roles 🔧 PARTIAL
 
-**New file**: `notebooks/04_generate_uw_content.py`
+**Files**: [utils/content.py](utils/content.py), [pages/00_Welcome.py](pages/00_Welcome.py), [pages/01_Diagnostic.py](pages/01_Diagnostic.py)
 
-A Databricks notebook that runs a multi-agent LLM pipeline consuming `references/underwriter-course-design.md` and emitting 7 JSON files into `content/`:
+**Completed sub-tasks:**
+- ✅ `content/roles.json` — now has both `rm` and `uw` top-level entries
+- ✅ `content/domains.json` — role-scoped top-level keys (`rm_prompting`, `uw_prompting`, etc.); `utils/content.py` builds `DOMAIN_DESCRIPTIONS` from `d["domain_id"]` field values
+- ✅ `utils/content.py` — `get_diagnostic_items(role_id)` and `get_domain_descriptions(role_id)` both accept a `role_id` parameter
+- ✅ `pages/01_Diagnostic.py` — reads `role_id` from user profile, calls `get_diagnostic_items(role_id)` and `get_domain_descriptions(role_id)`; UW diagnostic flow works end-to-end
 
-| Agent | Input | Output |
-|-------|-------|--------|
-| **DiagnosticAgent** | Section F (12 item seeds) | `content/diagnostic_items_uw.json` |
-| **CourseAgent** | Section C (5 course specs) | entries for `content/courses.json` |
-| **ReadingAgent** | Section E (5 reading specs) | entries for `content/reading_content.json` |
-| **ScenarioAgent** | Section D (5 scenario seeds) | entries for `content/practice_scenarios.json` |
-| **EvalAgent** | Section G (20 eval seeds) | entries for `content/evaluation_items.json` |
-
-Each agent receives the design spec for its section and a system prompt with the exact JSON schema expected (matching the RM content already in each file). The orchestrator validates output count and schema before merging into existing JSON files.
-
-**Content strategy**: either merge UW entries into existing JSON files (keyed by `course_id` / filtered by `role_id`) or maintain separate `*_uw.json` files loaded by `utils/content.py`.
+**Remaining (blocked on Task 9.4):**
+- ❌ `pages/00_Welcome.py` — still hardcodes `role_id = 'rm'` in the INSERT and `_available_roles = ["Relationship Manager"]`; UW users cannot onboard
 
 ---
 
-#### Task 9.3 — Validate generated UW content
+#### Task 9.2 — Multi-agent content generation pipeline ✅ COMPLETE
 
-After pipeline run:
-- [ ] `len(get_diagnostic_items("uw")) == 12`
-- [ ] `len(COURSES)` includes 5 UW courses
-- [ ] All 5 UW reading entries have `concept_text`, `good_example`, `anti_pattern`, `takeaway`
-- [ ] All 5 UW scenarios have 4 task texts + `coach_system_prompt`
-- [ ] All 20 UW eval items: 15 MCQ with `correct_option`, 5 performance tasks with 4-key rubric
-- [ ] Welcome page shows role selector with RM + UW options
-- [ ] Full diagnostic flow works for UW user (12 questions, correct domain labels)
-- [ ] Module sequencing uses UW course IDs
+**File**: `scripts/generate_course_content.py` (1771 lines)
+
+An 8-stage LLM pipeline (not a notebook) that converts a Course Design Brief markdown into all 7 content JSON files. Stages:
+
+1. Parse & Extract — reads design doc, extracts sections
+2. Structural Generator — builds course/domain skeletons
+3. QA Gap Check — validates coverage
+4. Parallel Content Agents — `CourseAgent`, `ReadingAgent`, `ScenarioAgent`, `DiagnosticAgent`, `EvalAgent`
+5. Final QA — schema validation
+6. Atomic merge — writes UW entries into `content/*.json` alongside existing RM entries
+
+All UW content generated and merged into the shared JSON files.
+
+---
+
+#### Task 9.3 — Validate generated UW content ✅ COMPLETE
+
+Verified counts as of Feb 2026:
+- [x] `len(get_diagnostic_items("uw")) == 12` — confirmed (24 total items in `diagnostic_items.json`)
+- [x] `len(COURSES)` includes 5 UW courses — `uw_c1_*` through `uw_c5_*` in `courses.json`
+- [x] All 5 UW reading entries present in `reading_content.json`
+- [x] All 5 UW scenarios with 4 tasks + `coach_system_prompt` in `practice_scenarios.json`
+- [x] All 20 UW eval items in `evaluation_items.json` (15 MCQ + 5 performance tasks per course)
+- [ ] Welcome page shows role selector with RM + UW options — **blocked on Task 9.4**
+- [ ] Full UW learner journey smoke test — **blocked on Task 9.4**
+
+---
+
+#### Task 9.4 — Wire Welcome page for UW role selection ❌ PENDING
+
+**File**: [pages/00_Welcome.py](pages/00_Welcome.py)
+
+Two changes needed:
+
+1. **Role selector**: replace hardcoded `_available_roles = ["Relationship Manager"]` with dynamic lookup from `ROLES` content:
+   ```python
+   from utils.content import ROLES
+   _available_roles = [(v["role_id"], v["title"]) for v in ROLES.values()]
+   # then display titles in selectbox; map back to role_id on submit
+   ```
+
+2. **INSERT statement**: replace hardcoded `'rm'` with the selected `role_id`:
+   ```python
+   execute(f"""
+       INSERT INTO {CATALOG}.learner.user_profiles
+         (user_email, display_name, role_id, created_at)
+       VALUES ('{e_email}', '{e_name}', '{escape(selected_role_id)}', current_timestamp())
+   """)
+   ```
+
+Note: `CX8` fix (closed) replaced the single-option selectbox with a static `st.info()` card to avoid showing an unfinished UI. Now that UW content is complete, this guard should be relaxed: if `len(ROLES) > 1`, show the selectbox; if exactly 1 role exists, keep the static card.
+
+---
+
+#### Task 9.5 — Full UW journey acceptance test ❌ PENDING
+
+Prerequisite: Task 9.4 complete and deployed.
+
+- [ ] New UW user can complete Welcome → Diagnostic → Skills Profile → Build Course → Module 1
+- [ ] Diagnostic shows 12 UW-specific questions with correct domain labels
+- [ ] Module sequencing uses `uw_c1_*`–`uw_c5_*` course IDs
+- [ ] All reading content, practice scenarios, and evaluation items load correctly
+- [ ] Gap map generates with UW-specific domain descriptions
+- [ ] Retake diagnostic works for UW user without losing module progress
 
 ---
 
 #### Phase 9 Execution Order
 
 ```text
-9.1  Extend app for multi-role support (roles.json, welcome page, diagnostic filter)
-9.2  Build + run multi-agent generation notebook
-     → Validate output JSON counts and schema
-9.3  Merge/load UW content into content/*.json files
-     → Run acceptance checks above
-     → Deploy and smoke-test full UW learner journey
+9.1  🔧 PARTIAL  Multi-role app support (content.py + diagnostic done; Welcome pending)
+9.2  ✅ DONE     Multi-agent content generation pipeline (scripts/generate_course_content.py)
+9.3  ✅ DONE     UW content validation (24 diag items, 10 courses, 10 eval courses confirmed)
+9.4  ❌ PENDING  Wire Welcome page for UW role selection (dynamic ROLES lookup + role_id INSERT)
+9.5  ❌ PENDING  Full UW learner journey acceptance tests
+     → Deploy and smoke-test full UW learner journey after 9.4
 ```
 
 ---
@@ -1226,13 +1264,15 @@ M2/M5)              pages/01-04 updated                                        3
                                                                                                                                                                            7.9 ✅ Callout boxes
                                                                                                                                                                            7.10 ✅ Module cards
 
-Phase 8 — UAT Regressions (in progress)    Phase 9 — Underwriter Role (planned)
-8.1 NX2 secondary button colour            9.1 Multi-role app support
-8.2 NX6 console warnings                  9.2 Multi-agent content generation pipeline
-8.3 BUG-1 gap_maps after diagnostic       9.3 UW content validation + deployment
+Phase 8 ✅ DONE             Phase 9 — Underwriter Role (in progress)
+UAT Regression Fixes       9.1 🔧 Multi-role app support (partial — Welcome page pending)
+8.1 NX2 secondary button   9.2 ✅ Content generation pipeline (scripts/generate_course_content.py)
+8.2 NX6 console warnings   9.3 ✅ UW content validation (24 diag, 10 courses, domains role-scoped)
+8.3 BUG-1 gap_maps fix     9.4 ❌ Wire Welcome page for UW role selection
+                           9.5 ❌ Full UW journey acceptance tests
 ```
 
-**Phases 0–8 complete. All known issues resolved. Next major feature: Underwriter role via multi-agent content generation — Phase 9.**
+**Phases 0–8 complete. Phase 9 in progress: UW content generated and validated; Welcome page wiring (Task 9.4) is the only remaining blocker before UW goes live.**
 
 ---
 
@@ -1253,3 +1293,291 @@ After completing Phases 1 and 2, verify all TDD acceptance criteria:
 - [ ] AC-11 (Phase 1): MCQ `options` render correctly from JSON-native list input to `parse_options()`
 - [ ] AC-12 (Phase 1): `scoring_rubric` dict passed to scoring functions without `json.loads()` error
 - [ ] AC-13 (Phase 1): All 5 module titles and domain labels correct on Home dashboard and sidebar
+
+---
+
+### Phase 10 — UAT Persona Switching ❌ PENDING
+
+**Problem:** The UAT environment uses a single hardcoded test user (`DEV_USER_EMAIL` = `uat-test@edc.ca`). Once the profile is seeded with a completed RM diagnostic and module progress, it is impossible to test:
+
+- The Welcome → profile creation flow
+- The newly added UW (Underwriter) role
+- The Diagnostic flow from scratch
+
+**Solution:** Enhance `scripts/reset_uat_user.py` with two optional CLI flags. No new files, no new emails, no changes to `.env` or `run_uat.sh`.
+
+---
+
+#### Task 10.1 — Enhance `scripts/reset_uat_user.py` ❌ PENDING
+
+**File**: [`scripts/reset_uat_user.py`](scripts/reset_uat_user.py)
+
+**Scope**: Single-file change only. Add `argparse` with two optional flags:
+
+| Flag | Type | Effect |
+| --- | --- | --- |
+| `--role rm/uw` | optional str | After full wipe, inserts one `user_profiles` row → app lands on Diagnostic |
+| `--diag` | optional flag | Requires `--role`; also inserts `diagnostic_sessions` + `gap_maps` → Skills Profile |
+
+**Resulting test states:**
+
+| Command | App landing page | Tables seeded |
+| --- | --- | --- |
+| `python scripts/reset_uat_user.py` | Welcome | nothing (full wipe — existing behaviour) |
+| `python scripts/reset_uat_user.py --role rm` | Diagnostic | `user_profiles` (role_id=rm) |
+| `python scripts/reset_uat_user.py --role uw` | Diagnostic | `user_profiles` (role_id=uw) |
+| `python scripts/reset_uat_user.py --role rm --diag` | Skills Profile | `user_profiles` + `diagnostic_sessions` + `gap_maps` |
+| `python scripts/reset_uat_user.py --role uw --diag` | Skills Profile | `user_profiles` + `diagnostic_sessions` + `gap_maps` |
+
+**Implementation notes:**
+
+1. **argparse block** — add after `load_dotenv` and before the `TABLES` loop:
+
+   ```python
+   import argparse, uuid, json
+   from datetime import datetime, timezone
+
+   parser = argparse.ArgumentParser(description="Reset UAT user data")
+   parser.add_argument("--role", choices=["rm", "uw"], help="Seed a user_profiles row for this role")
+   parser.add_argument("--diag", action="store_true", help="Also seed a completed diagnostic_sessions + gap_maps row (requires --role)")
+   args = parser.parse_args()
+
+   if args.diag and not args.role:
+       parser.error("--diag requires --role")
+   ```
+
+2. **`--role` seed** — insert a `user_profiles` row using parameterised execute():
+
+   ```python
+   display_name = "RM Tester" if args.role == "rm" else "UW Tester"
+   execute(
+       f"INSERT INTO {CATALOG}.learner.user_profiles (user_email, display_name, role_id, created_at) "
+       f"VALUES (?, ?, ?, current_timestamp())",
+       [EMAIL, display_name, args.role],
+   )
+   ```
+
+3. **`--diag` seed** — insert canned `diagnostic_sessions` and `gap_maps` rows:
+   - Use realistic but artificial domain scores: all 4 domains at `1.5` (Practitioner boundary — exercises the full gap map display)
+   - Use the same `DOMAIN_IDS = ["prompting", "verification", "data_safety", "tool_fluency"]` keys for both roles (role-agnostic per `utils/scoring.py`)
+   - Canned `domain_scores_json`: `{"prompting": 1.5, "verification": 1.0, "data_safety": 2.0, "tool_fluency": 1.5}`
+   - `overall_score`: `1.5`
+   - Canned `gap_maps.bullets`: 3 bullets, one per low-scoring domain
+   - `session_id` and `gap_map_id`: generate fresh `uuid.uuid4()` at runtime
+
+4. **Validation** — guard `--diag` with `if args.diag and not args.role: parser.error(...)` (already listed above)
+
+**No changes to:**
+
+- `.env` / `.env.example`
+- `run_uat.sh`
+- `utils/auth.py`
+- Any page or content file
+
+---
+
+#### Phase 10 Acceptance Checks
+
+- [ ] `python scripts/reset_uat_user.py` — app opens on Welcome page (existing behaviour unchanged)
+- [ ] `python scripts/reset_uat_user.py --role rm` — app opens on Diagnostic page with RM role
+- [ ] `python scripts/reset_uat_user.py --role uw` — app opens on Diagnostic page with UW role
+- [ ] `python scripts/reset_uat_user.py --role rm --diag` — app opens on Skills Profile; domain scores visible; gap map bullets visible
+- [ ] `python scripts/reset_uat_user.py --role uw --diag` — same as above for UW role
+- [ ] `python scripts/reset_uat_user.py --diag` (without `--role`) — prints error and exits non-zero
+- [ ] Existing full-wipe path produces no errors after this change
+
+---
+
+### Phase 11 — UI/UX Bug Fixes (Open Issues) ✅ COMPLETE
+
+Fix all 6 open issues currently tracked in `Issues.md`. Ordered by severity then ID.
+
+---
+
+#### Task 11.1 — Fix P1: Add "Continue" option at per-task turn limit
+
+**File**: [pages/04_Course_Module.py](pages/04_Course_Module.py)
+
+**Issues.md**: P1 (MEDIUM)
+
+The turn-limit block at lines 388–396 shows "Next Task →" then calls `st.stop()`, forcing advancement. Learner has no option to extend.
+
+**Fix**:
+
+1. Add `task_extra_turns` to session state (keyed per task index, default 0).
+2. Compute effective turn limit: `effective_limit = MAX_TASK_TURNS + st.session_state.get(f"task_extra_{task_idx}", 0) * 3`.
+3. Replace the existing turn-limit block with a two-button prompt:
+
+```python
+if turns_this_task >= effective_limit:
+    st.info("You've reached the turn limit for this task.")
+    col_cont, col_next = st.columns(2)
+    with col_cont:
+        if st.button("Continue (3 more turns) →", key=f"cont_{task_idx}"):
+            st.session_state[f"task_extra_{task_idx}"] = st.session_state.get(f"task_extra_{task_idx}", 0) + 1
+            st.rerun()
+    with col_next:
+        if st.button("Next Task →", key=f"next_{task_idx}", type="primary"):
+            _advance_task()
+    st.stop()
+```
+
+No changes to `MAX_TASK_TURNS` constant or overall turn counter.
+
+---
+
+#### Task 11.2 — Fix P2: Update practice navigation warning banner copy
+
+**File**: [pages/04_Course_Module.py](pages/04_Course_Module.py)
+
+**Issues.md**: P2 (MEDIUM)
+
+The `st.warning()` at line 344 says "Use **Complete Practice →** to save your work" but that button is not visible at Turn 0 of Task 1. Misleads users.
+
+**Fix**: Change the banner text to remove the button reference:
+
+```python
+st.warning(
+    "⚠️ Navigating away via the sidebar or breadcrumb will end your session "
+    "without saving your practice conversation."
+)
+```
+
+Single-line change. No logic changes.
+
+---
+
+#### Task 11.3 — Fix NAV1: Consistent sidebar navigation across all pages
+
+**Files**: [utils/styles.py](utils/styles.py), [pages/03_Home.py](pages/03_Home.py), [pages/02_Skills_Profile.py](pages/02_Skills_Profile.py), [pages/04_Course_Module.py](pages/04_Course_Module.py)
+
+**Issues.md**: NAV1 (MEDIUM)
+
+Each page independently renders its own sidebar, causing inconsistent navigation:
+
+- Home: only "🏅 Skills Profile"
+- Skills Profile: "🏠 My Training" + "📚 My Course"
+- Course Module: "🏠 My Training" + "🏅 Skills Profile" + context block
+
+**Fix**: Extract a `render_sidebar(active_page, has_course, progress_rows, active_course_id)` utility into `utils/styles.py`. The utility always renders all 3 nav buttons (disabled when active), and conditionally shows the module context block on Course Module only.
+
+```python
+def render_sidebar(
+    active_page: str,           # "home" | "skills_profile" | "course_module"
+    has_course: bool = False,
+    progress_rows: list = None,
+    active_course_id: str = None,
+):
+    with st.sidebar:
+        # ... brand block ...
+        st.markdown("---")
+        if st.button("🏠  My Training", ..., disabled=(active_page == "home")):
+            st.switch_page("pages/03_Home.py")
+        if st.button("🏅  Skills Profile", ..., disabled=(active_page == "skills_profile")):
+            st.switch_page("pages/02_Skills_Profile.py")
+        if has_course:
+            if st.button("📚  My Course", ..., disabled=(active_page == "course_module")):
+                # CX3 logic: set active_course_id then navigate
+                ...
+        # Module context block — Course Module only
+        if active_page == "course_module" and active_course_id:
+            ...
+```
+
+Replace each page's `with st.sidebar:` block with a single `render_sidebar(...)` call.
+
+**Execution order**: implement utility first, then update each page.
+
+---
+
+#### Task 11.4 — Fix NAV2: Hide Streamlit sidebar collapse button
+
+**File**: [utils/styles.py](utils/styles.py)
+
+**Issues.md**: NAV2 (LOW)
+
+The built-in Streamlit sidebar collapse toggle renders its Material Icon font code as plain text on hover. Causes accidental mis-clicks. The sidebar is always expanded; collapse is not a use case for this app.
+
+**Fix**: Add one CSS rule to `inject_global_css()`:
+
+```css
+/* Hide Streamlit's built-in sidebar collapse toggle — sidebar is always expanded
+   and the Material Icons font is not loaded, causing icon text to bleed through. */
+[data-testid="collapsedControl"] {{ display: none !important; }}
+```
+
+One-line CSS addition.
+
+---
+
+#### Task 11.5 — Fix UI1: Add gap between sub-badges and action button on module cards
+
+**File**: [pages/03_Home.py](pages/03_Home.py)
+
+**Issues.md**: UI1 (LOW)
+
+Playwright DOM measurement confirmed: `.sub-strip` bottom = 470px, button top = 470px — zero-pixel gap. The Read/Practice/Quiz badge strip is flush against the CTA button with no visual separation.
+
+**Fix**: Add `margin-top: 0.75rem` to the `.sub-strip` CSS rule in `utils/styles.py`:
+
+```css
+.sub-strip {{
+    ...existing rules...
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;   /* ← new: separates strip from button below */
+}}
+```
+
+Alternatively (if `.sub-strip` bottom margin is insufficient due to Streamlit element spacing): add a small spacer `st.markdown('<div style="margin-top:0.5rem"></div>', unsafe_allow_html=True)` before the `st.button()` call for the active module in `pages/03_Home.py`. CSS approach preferred.
+
+---
+
+#### Task 11.6 — Fix UI2: "Review Module" button jumps directly to Results sub-view
+
+**File**: [pages/03_Home.py](pages/03_Home.py)
+
+**Issues.md**: UI2 (LOW)
+
+Clicking "Review Module N" on the Home page lands on the Overview sub-view (all 3 steps checked ✓, only CTA is "Review Results →"). A second click is required to reach Results. The Overview sub-view adds no value for a fully-completed module.
+
+**Fix**: In the "Review Module" button handler, set `active_submodule = "results"` when all three sub-steps (reading, practice, evaluation) are complete:
+
+```python
+if st.button(f"Review Module {seq} →", key=f"review_{seq}"):
+    st.session_state["active_course_id"] = row["course_id"]
+    # Jump directly to results if fully complete; overview otherwise
+    all_done = (
+        row.get("reading_completed_at")
+        and row.get("practice_completed_at")
+        and row.get("evaluation_completed_at")
+    )
+    st.session_state["active_submodule"] = "results" if all_done else "overview"
+    st.switch_page("pages/04_Course_Module.py")
+```
+
+---
+
+#### Phase 11 Execution Order
+
+Tasks are roughly independent except 11.3 (NAV1) which touches 3 files and should be done last to avoid merge conflicts with 11.1/11.2 which edit the same `04_Course_Module.py`.
+
+```text
+11.4  Hide sidebar collapse button (1 CSS line — lowest risk)
+11.5  Sub-badge gap (1 CSS rule change)
+11.6  Review Module → results shortcut (1 button handler change)
+11.2  Practice banner copy (1 string change)
+11.1  Per-task turn limit: Continue option (logic change in practice sub-view)
+11.3  Consistent sidebar: extract render_sidebar() utility (multi-file refactor)
+      → Run Playwright UAT after 11.3 to verify all pages
+```
+
+---
+
+#### Phase 11 Acceptance Checks
+
+- [x] P1: After 3 turns on a task, page shows "Continue (3 more turns) →" and "Next Task →" side-by-side; clicking Continue allows 3 more turns; clicking Next Task advances to next task
+- [x] P2: Practice sub-view navigation banner at Turn 0 no longer references "Complete Practice →"; new wording confirms navigating away ends the session
+- [x] NAV1: All 3 pages (Home, Skills Profile, Course Module) show the same 3 sidebar buttons; active page button is disabled; "📚 My Course" appears on Home if a course exists
+- [x] NAV2: Sidebar collapse toggle is no longer visible (no text bleed-through on hover)
+- [x] UI1: Visible gap between Read/Practice/Quiz badge strip and the action button on module cards
+- [x] UI2: Clicking "Review Module N" on a fully-completed module lands directly on the Results sub-view; clicking on an incomplete module still lands on Overview

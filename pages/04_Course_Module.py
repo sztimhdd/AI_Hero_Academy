@@ -28,7 +28,7 @@ from utils.scoring import (
     parse_rubric,
     compute_current_domain_scores,
 )
-from utils.styles import inject_global_css, section_header, step_progress_strip
+from utils.styles import inject_global_css, section_header, step_progress_strip, render_sidebar
 
 st.set_page_config(
     page_title="Course Module | AI Hero Academy",
@@ -158,28 +158,16 @@ progress_id = progress.get("progress_id", "")
 
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
-with st.sidebar:
-    st.markdown("""
-<div style="padding:1rem 0.5rem">
-  <div class="aha-brand">
-    <div class="aha-brand-icon" style="width:28px;height:28px;font-size:0.9rem">⚡</div>
-    <div class="aha-brand-name" style="font-size:0.95rem">AI <span>Hero</span> Academy</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-    st.markdown("---")
-    if st.button("🏠  My Training", use_container_width=True):
-        st.switch_page("pages/03_Home.py")
-    if st.button("🏅  Skills Profile", use_container_width=True):
-        st.switch_page("pages/02_Skills_Profile.py")
-    st.markdown(f"""
-<div style="padding:1rem 0.5rem; font-family:'Inter',sans-serif; font-size:0.75rem; color:#8990A8">
-  <div style="font-weight:600; text-transform:uppercase; letter-spacing:0.08em;
-              color:#8990A8; margin-bottom:0.5rem">Module {seq_order}</div>
-  <div style="color:#EDF0F7; line-height:1.4; margin-bottom:0.8rem">{course_title}</div>
-  <div class="module-domain-tag">{DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain)}</div>
-</div>
-""", unsafe_allow_html=True)
+render_sidebar(
+    "course_module",
+    has_course=True,
+    active_course_id=course_id,
+    module_context={
+        "seq_order": seq_order,
+        "course_title": course_title,
+        "domain_display": DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain),
+    },
+)
 
 
 # ── Breadcrumb ────────────────────────────────────────────────────────────────
@@ -342,8 +330,8 @@ elif active_sub == "practice":
     ])
 
     st.warning(
-        "Practice session in progress — navigating away via the sidebar or breadcrumb "
-        "will end your session without saving. Use **Complete Practice →** to save your work."
+        "⚠️ Navigating away via the sidebar or breadcrumb will end your session "
+        "without saving your practice conversation."
     )
 
     section_header("SCENARIO")
@@ -384,15 +372,25 @@ elif active_sub == "practice":
 
     st.caption(f"Turn {total_turns} of {MAX_TOTAL_TURNS}")
 
-    # Task turn limit
-    if current_task_turns >= MAX_TASK_TURNS:
-        st.info("Maximum turns for this task reached.")
-        if st.button("Next Task →", key="next_task_limit", type="primary"):
-            new_tt = dict(task_turns)
-            new_tt[task_idx + 1] = 0
-            st.session_state["practice_task_idx"] = task_idx + 1
-            st.session_state["task_turn_counts"] = new_tt
-            st.rerun()
+    # Task turn limit — offer Continue or advance (P1)
+    def _advance_task():
+        new_tt = dict(task_turns)
+        new_tt[task_idx + 1] = 0
+        st.session_state["practice_task_idx"] = task_idx + 1
+        st.session_state["task_turn_counts"] = new_tt
+        st.rerun()
+
+    effective_limit = MAX_TASK_TURNS + st.session_state.get(f"task_extra_{task_idx}", 0) * 3
+    if current_task_turns >= effective_limit:
+        st.info("You've reached the turn limit for this task.")
+        col_cont, col_next = st.columns(2)
+        with col_cont:
+            if st.button("Continue (3 more turns) →", key=f"cont_{task_idx}"):
+                st.session_state[f"task_extra_{task_idx}"] = st.session_state.get(f"task_extra_{task_idx}", 0) + 1
+                st.rerun()
+        with col_next:
+            if st.button("Next Task →", key=f"next_{task_idx}", type="primary"):
+                _advance_task()
         st.stop()
 
     # Determine if we're waiting for user input
