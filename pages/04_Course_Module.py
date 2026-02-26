@@ -168,7 +168,7 @@ with st.sidebar:
 </div>
 """, unsafe_allow_html=True)
     st.markdown("---")
-    if st.button("← Back to Course List", use_container_width=True):
+    if st.button("🏠  My Training", use_container_width=True):
         st.switch_page("pages/03_Home.py")
     if st.button("🏅  Skills Profile", use_container_width=True):
         st.switch_page("pages/02_Skills_Profile.py")
@@ -180,6 +180,22 @@ with st.sidebar:
   <div class="module-domain-tag">{DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain)}</div>
 </div>
 """, unsafe_allow_html=True)
+
+
+# ── Breadcrumb ────────────────────────────────────────────────────────────────
+_sub_labels = {"reading": "Reading", "practice": "Practice", "evaluation": "Quiz", "results": "Results"}
+_bc_home_col, _bc_info_col = st.columns([2, 10])
+with _bc_home_col:
+    if st.button("← My Training", key="bc_home", use_container_width=True):
+        st.switch_page("pages/03_Home.py")
+with _bc_info_col:
+    _sub_text = f" / {_sub_labels[active_sub]}" if active_sub in _sub_labels else ""
+    st.markdown(
+        f'<div style="font-family:\'Inter\',sans-serif; font-size:0.75rem; color:#8990A8; padding-top:0.65rem">'
+        f'Module {seq_order}: {course_title}{_sub_text}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -324,6 +340,11 @@ elif active_sub == "practice":
         {"label": "Practice", "state": "current"},
         {"label": "Quiz", "state": "pending"},
     ])
+
+    st.warning(
+        "Practice session in progress — navigating away via the sidebar or breadcrumb "
+        "will end your session without saving. Use **Complete Practice →** to save your work."
+    )
 
     section_header("SCENARIO")
     scenario_html = (scenario.get("scenario_text") or "").replace("\n", "<br>")
@@ -473,11 +494,11 @@ elif active_sub == "evaluation":
             try:
                 execute(
                     f"UPDATE {CATALOG}.learner.training_progress "
-                    f"SET evaluation_score = {eval_score}, "
+                    f"SET evaluation_score = ?, "
                     f"    evaluation_completed_at = current_timestamp(), "
-                    f"    domain_score_after = {domain_score_after} "
+                    f"    domain_score_after = ? "
                     f"WHERE progress_id = ?",
-                    [progress_id],
+                    [eval_score, domain_score_after, progress_id],
                 )
                 execute(
                     f"UPDATE {CATALOG}.learner.training_progress "
@@ -706,8 +727,9 @@ elif active_sub == "results":
 
     col_a, col_b = st.columns(2)
     with col_a:
-        if st.button("View Updated Skills Profile →", use_container_width=True, type="secondary"):
-            st.switch_page("pages/02_Skills_Profile.py")
+        if not all_complete:
+            if st.button("View Updated Skills Profile →", use_container_width=True, type="secondary"):
+                st.switch_page("pages/02_Skills_Profile.py")
     with col_b:
         if all_complete:
             if st.button("🏆  View Final Skills Profile →", use_container_width=True, type="primary"):

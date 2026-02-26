@@ -348,5 +348,5 @@ Return only the coach note text — no JSON, no quotes."""
         [{"role": "user", "content": prompt}],
         temperature=0.5,
         user_email=user_email,
-        call_type="coach_note",
+        call_type="coach_response",
     )

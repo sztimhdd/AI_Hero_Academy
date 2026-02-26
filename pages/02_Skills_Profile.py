@@ -135,10 +135,21 @@ with st.sidebar:
 </div>
 """, unsafe_allow_html=True)
     st.markdown("---")
-    if st.button("🏠  Home", use_container_width=True):
+    if st.button("🏠  My Training", use_container_width=True):
         st.switch_page("pages/03_Home.py")
-    if has_course and st.button("📚  My Course", use_container_width=True):
-        st.switch_page("pages/04_Course_Module.py")
+    if has_course:
+        if st.button("📚  My Course", use_container_width=True):
+            # CX3: find the active (unlocked, incomplete) module to navigate directly to it
+            _active = next(
+                (r for r in progress_rows
+                 if str(r.get("is_locked", "true")).lower() == "false"
+                 and not r.get("evaluation_completed_at")),
+                progress_rows[0] if progress_rows else None,
+            )
+            if _active:
+                st.session_state["active_course_id"] = _active["course_id"]
+                st.session_state["active_submodule"] = "overview"
+            st.switch_page("pages/04_Course_Module.py")
 
 
 # ── Page header ───────────────────────────────────────────────────────────────

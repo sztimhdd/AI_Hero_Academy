@@ -37,6 +37,14 @@ profile = query_one(
 if not profile:
     st.switch_page("pages/00_Welcome.py")
 
+# Check for prior completed diagnostic — used to show exit navigation (CX1)
+_prior_diag = query_one(
+    f"SELECT session_id FROM {CATALOG}.learner.diagnostic_sessions "
+    f"WHERE user_email = ? AND completed_at IS NOT NULL LIMIT 1",
+    [user_email],
+)
+_can_exit = bool(_prior_diag)
+
 # ── Load diagnostic items (ordered) ──────────────────────────────────────────
 items = get_diagnostic_items()
 domain_descriptions = DOMAIN_DESCRIPTIONS
@@ -94,9 +102,15 @@ if not st.session_state.get("diag_started"):
   </div>
 </div>
 """, unsafe_allow_html=True)
-    if st.button("Start Assessment →", type="primary"):
-        st.session_state["diag_started"] = True
-        st.rerun()
+    _orient_cols = st.columns([3, 1]) if _can_exit else [None]
+    with (_orient_cols[0] if _can_exit else st.container()):
+        if st.button("Start Assessment →", type="primary"):
+            st.session_state["diag_started"] = True
+            st.rerun()
+    if _can_exit:
+        with _orient_cols[1]:
+            if st.button("← Exit", key="diag_exit_orient", use_container_width=True):
+                st.switch_page("pages/03_Home.py")
     st.stop()
 
 idx: int = st.session_state["diag_item_index"]
@@ -109,7 +123,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-col_title, col_counter = st.columns([4, 1])
+col_title, col_counter, col_exit = st.columns([4, 1, 1])
 with col_title:
     st.title("Diagnostic")
 with col_counter:
@@ -118,6 +132,12 @@ with col_counter:
         f'Question {min(idx + 1, TOTAL)} of {TOTAL}</div>',
         unsafe_allow_html=True,
     )
+with col_exit:
+    if st.button("← Exit", key="diag_exit_quiz", use_container_width=True):
+        for k in ["diag_item_index", "diag_responses", "diag_session_started",
+                  "diag_started_at", "diag_started"]:
+            st.session_state.pop(k, None)
+        st.switch_page("pages/03_Home.py")
 
 # Progress bar
 progress_pct = idx / TOTAL

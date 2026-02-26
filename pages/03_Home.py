@@ -18,7 +18,7 @@ from utils.styles import inject_global_css, section_header
 from utils.content import get_course
 
 st.set_page_config(
-    page_title="Home | AI Hero Academy",
+    page_title="My Training | AI Hero Academy",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -189,7 +189,7 @@ with col_card:
   </div>
 </div>
 """, unsafe_allow_html=True)
-    if st.button("→  View Full Skills Profile", use_container_width=False, key="view_profile_btn"):
+    if st.button("→  View Full Skills Profile", use_container_width=False, key="view_profile_btn", type="primary"):
         st.switch_page("pages/02_Skills_Profile.py")
 
 # ── Course progress ────────────────────────────────────────────────────────────
