@@ -786,39 +786,46 @@ Audit results (Feb 2026, Playwright):
 
 ---
 
-#### Task 6.4 — UX audit: Home page
+#### Task 6.4 — UX audit: Home page ✅ DONE
 
 **File**: [pages/03_Home.py](pages/03_Home.py)
 
-**Issues.md**: U3 (partial) | **Prerequisite**: Task 6.2 (course must exist)
+**Issues.md**: U3 (partial) → closed
 
-Full per-page audit against PRD §7.4 and design system:
+Audit results (Feb 2026, Playwright 1440×900, Streamlit 1.54.0):
 
-- Summary card: overall score, trend arrow (↑/→/↓), "Last updated" date — all readable
-- Module card states: completed (green ✓ + score), in-progress (sub-badges + CTA), locked (greyed + lock)
-- CTA button labels match PRD ("Continue", "Start Module", "Review Module")
-- No inline `color:#545B70` remaining (grep before auditing)
-- "View Full Skills Profile" Streamlit button navigates correctly
+| Check | Result |
+| ----- | ------ |
+| Summary card: score, trend arrow, level label | ✅ Score 1.5, → (grey), PRACTITIONER |
+| "Last updated" date in summary card | ✅ "Last updated: Feb 26, 2026" |
+| Module progress counter | ✅ "0 of 5 modules complete" with inline progress bar |
+| Module 1 active state: sub-badges + CTA | ✅ Read=current, Practice/Quiz=pending; "Start Module 1 →" `type="primary"` |
+| Modules 2-5 locked: 🔒 icon + greyed number | ✅ Lock icon, no CTA, greyed |
+| No `color:#545B70` in source | ✅ grep confirmed zero matches |
+| "→ View Full Skills Profile" navigates | ✅ Navigates to Skills Profile page |
+| Sidebar "🏅 Skills Profile" button | ✅ Present and navigates correctly |
 
 ---
 
-#### Task 6.5 — UX audit: Course Module page
+#### Task 6.5 — UX audit: Course Module page ✅ DONE
 
 **File**: [pages/04_Course_Module.py](pages/04_Course_Module.py)
 
-**Issues.md**: U3 (partial) | **Prerequisite**: Task 6.2 (module must be navigable)
+**Issues.md**: U3 (partial) → closed | U5 (new bug) → fixed
 
-Full audit of all 5 sub-views against PRD §7.5:
+Audit results (Feb 2026, Playwright + code review):
 
-| Sub-view | Key checks |
-| -------- | ---------- |
-| Overview | Progress strip (Read → Practice → Quiz) labels; CTA text matches state |
-| Reading | Body text contrast; Good Example / Common Mistake / Takeaway box styling |
-| Practice | Scenario panel always visible; task counter; turn counter; coach bubble styling |
-| Evaluation | Question counter; MCQ radio styling; performance task text area |
-| Results | Score display (`X.X / 4.0`); domain bar; coach note; next-module CTA |
+| Sub-view | Key checks | Result |
+| -------- | ---------- | ------ |
+| Overview | Progress strip labels; context-aware CTA | ✅ All states correct (`type="primary"`) |
+| Reading | Breadcrumb; `st.title()`; step strip; CONCEPT section; callout boxes | ✅ `st.success/error/info()` confirmed in a11y tree |
+| Practice | Scenario panel; task counter; `st.chat_message()`; `st.chat_input()` | ✅ Native chat components verified |
+| Evaluation | Question counter; `st.progress()`; MCQ radio; performance textarea | ⚠️ Bug found + fixed: MCQ `index=None` added (U5) |
+| Results | `st.metric()` score; `st.progress()` domain bar; coach note; next-module CTA | ✅ Native components verified |
 
-No inline `color:#545B70` remaining anywhere in this file.
+No `color:#545B70` found (grep confirmed). No raw `<h1>` HTML injections found.
+
+**Bug fixed during audit**: Evaluation MCQ `st.radio()` was missing `index=None` — same issue as U4 (Diagnostic) but in the Evaluation sub-view. Submit button guard `disabled=(selected is None)` never fired since radio defaulted to first option. Fix: added `index=None` at [pages/04_Course_Module.py:595](pages/04_Course_Module.py#L595).
 
 ---
 
@@ -828,24 +835,264 @@ No inline `color:#545B70` remaining anywhere in this file.
 6.1  ✅ Pre-diagnostic orientation screen
 6.2  ✅ Verify Home module card layout
 6.3  ✅ Diagnostic page UX audit  (U4 fixed: MCQ index=None)
-6.4     Home page full UX audit   (pending)
-6.5     Course Module UX audit    (pending)
+6.4  ✅ Home page full UX audit   (all checks pass)
+6.5  ✅ Course Module UX audit    (U5 fixed: Evaluation MCQ index=None)
+```
+
+---
+
+### Phase 7 — Native UX Modernisation
+
+Goal: Replace custom HTML/CSS hacks with Streamlit-native components throughout the app. Resolve all NX-series issues from `Issues.md`. The priority order addresses HIGH-severity items (broken affordances) first, then MEDIUM (missing semantics), then LOW (cosmetic / fragility). Each task is independently deployable.
+
+---
+
+#### Task 7.1 — Remove global CSS button override; restore `type=` affordance hierarchy
+
+**File**: [utils/styles.py](utils/styles.py) (~line 117)
+
+**Issues.md**: NX2 → close
+
+Remove the global `.stButton > button { background: var(--cyan) !important; ... }` block and its `:hover`, `:active`, `:focus`, `:disabled` variants. Streamlit's `primaryColor = "#00D4E8"` in `config.toml` already sets the correct cyan for `type="primary"` buttons. After removal:
+
+1. Audit each page for buttons that should be `type="primary"` (main CTA per view) and ensure they have `type="primary"`.
+2. Secondary/back buttons get no `type=` argument (default grey).
+3. The disabled state is handled natively by `disabled=True` on the button.
+4. Test all 5 pages to verify no button styling regressions.
+
+| Page | Primary button | Secondary buttons |
+|------|---------------|------------------|
+| 00_Welcome | "Start My Diagnostic →" | — |
+| 01_Diagnostic | "Start Assessment →", "Next →", "Submit →" | — |
+| 02_Skills_Profile | "Build My Training Course" / "View My Course" | "↩ Retake Diagnostic" |
+| 03_Home | Module CTAs ("Start", "Continue", "Review") | "→ View Full Skills Profile" |
+| 04_Course_Module | Per-sub-view CTA | "← Overview", "← Back" |
+
+---
+
+#### Task 7.2 — Replace Practice chat with `st.chat_message()` + `st.chat_input()`
+
+**File**: [pages/04_Course_Module.py](pages/04_Course_Module.py) (Practice sub-view, render_practice function)
+
+**Issues.md**: NX1 → close
+
+Replace the custom HTML chat loop with native Streamlit chat components:
+
+```python
+# Render conversation history
+for msg in st.session_state["coach_messages"]:
+    with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
+        st.markdown(msg["content"])
+
+# Input
+if user_input := st.chat_input("Your response...", disabled=turn_limit_reached):
+    # handle send
+```
+
+Remove `div.chat-bubble-user`, `div.chat-bubble-coach`, and `div.coach-header` CSS blocks from `styles.py`. The task instruction panel above the chat remains as a custom card (no native equivalent).
+
+---
+
+#### Task 7.3 — Replace Assessment History HTML table with `st.dataframe()`
+
+**File**: [pages/02_Skills_Profile.py:232-262](pages/02_Skills_Profile.py#L232-L262)
+
+**Issues.md**: NX3 → close
+
+Build a `pandas.DataFrame` from `all_diags` and render natively:
+
+```python
+import pandas as pd
+
+rows = []
+for diag in all_diags:
+    ds = json.loads(diag.get("domain_scores") or "{}")
+    rows.append({
+        "Date": str(diag.get("completed_at", ""))[:10],
+        "Overall": round(float(diag.get("overall_score") or 0), 1),
+        "Prompting": round(float(ds.get("prompting", 0)), 1),
+        "Verification": round(float(ds.get("verification", 0)), 1),
+        "Data Safety": round(float(ds.get("data_safety", 0)), 1),
+        "Tool Fluency": round(float(ds.get("tool_fluency", 0)), 1),
+    })
+df = pd.DataFrame(rows)
+st.dataframe(df, use_container_width=True, hide_index=True)
+```
+
+Remove the `<table>` HTML block and the raw `header_row` / `rows_html` string construction.
+
+---
+
+#### Task 7.4 — Replace score hero with `st.metric()`
+
+**Files**: [pages/02_Skills_Profile.py:161-167](pages/02_Skills_Profile.py#L161-L167), [pages/04_Course_Module.py](pages/04_Course_Module.py) (Results sub-view)
+
+**Issues.md**: NX4 → close
+
+The `[data-testid="stMetric"]` CSS block in `styles.py` already styles the metric card — it just needs to be used. Replace:
+
+```python
+st.markdown(f"""
+<div class="result-score-box">
+  <div class="score-hero-number">{overall:.1f}<span class="score-hero-denom"> / 4.0</span></div>
+  <div class="score-hero-label">{level_label}</div>
+</div>
+""", unsafe_allow_html=True)
+```
+
+With:
+
+```python
+st.metric(label=level_label, value=f"{overall:.1f} / 4.0")
+```
+
+Remove `div.result-score-box`, `.score-hero-number`, `.score-hero-denom`, `.score-hero-label` CSS from `styles.py`.
+
+---
+
+#### Task 7.5 — Replace domain score bars with `st.progress()` + columns
+
+**Files**: [utils/styles.py](utils/styles.py) (`score_bar()` function), [pages/02_Skills_Profile.py:169-180](pages/02_Skills_Profile.py#L169-L180), [pages/04_Course_Module.py](pages/04_Course_Module.py) (Results sub-view)
+
+**Issues.md**: NX5 → close
+
+Replace the `score_bar()` utility function with a native pattern. In each call site:
+
+```python
+col_label, col_val = st.columns([4, 1])
+with col_label:
+    st.caption(DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id))
+    st.progress(max(0.0, min(1.0, score / 4.0)))
+with col_val:
+    st.caption(f"{score:.1f} / 4.0")
+```
+
+Remove `score_bar()` from `utils/styles.py` and the associated CSS for `.score-bar-*`. Adjust the `score_bar` import in Skills Profile and Course Module pages.
+
+---
+
+#### Task 7.6 — Investigate and fix console "Invalid color" warnings ✅ DONE
+
+**Files**: [utils/styles.py](utils/styles.py), [.streamlit/config.toml](.streamlit/config.toml)
+
+**Issues.md**: NX6 → closed
+
+**Root cause (Feb 2026)**: Streamlit 1.54.0 JS widget theme code emits warnings when the deprecated internal tokens `widgetBackgroundColor`, `widgetBorderColor`, `skeletonBackgroundColor` have empty string values (Streamlit GitHub issue #13831). These tokens were deprecated in PR #10332 but not yet removed — the JS renderer validates them and warns on empty string.
+
+Our `inject_global_css()` is **not** the cause: all CSS rules already use resolved hex values (not `var()`). The warnings originate purely from Streamlit's own JS theme initialisation.
+
+**Fix applied**: Added the 3 deprecated tokens to `.streamlit/config.toml [theme]` with resolved hex values matching the design system:
+
+```toml
+widgetBackgroundColor   = "#1E2330"   # bg_elevated
+widgetBorderColor       = "#2A2F3E"   # border
+skeletonBackgroundColor = "#1E2330"   # bg_elevated
+```
+
+These are visual no-ops (our CSS overrides all widget styling) but provide valid hex values to the JS validator, suppressing the warnings. Requires server restart to take effect.
+
+---
+
+#### Task 7.7 — Replace HTML spacers with `st.divider()` or removal
+
+**Files**: all pages
+
+**Issues.md**: NX8 → close
+
+Grep for `height:` in `st.markdown()` calls. Remove all `<div style='height:Xrem'>` spacer injections. Where a visual section break is needed, use `st.divider()`. Where only padding was needed, remove entirely and let Streamlit's default spacing apply.
+
+```bash
+grep -n "height:" pages/*.py
+```
+
+---
+
+#### Task 7.8 — Replace `st.markdown('<h1>')` page titles with `st.title()`
+
+**Files**: [pages/02_Skills_Profile.py:146](pages/02_Skills_Profile.py#L146), [pages/04_Course_Module.py](pages/04_Course_Module.py)
+
+**Issues.md**: NX9 → close
+
+Replace raw HTML heading injections with native heading calls. For the two-column layout on Skills Profile (title + date), keep the `st.columns` split and call `st.title()` / `st.caption()` inside columns.
+
+---
+
+#### Task 7.9 — Replace reading content boxes with `st.success()` / `st.error()` / `st.info()`
+
+**File**: [pages/04_Course_Module.py](pages/04_Course_Module.py) (Reading sub-view)
+
+**Issues.md**: NX7 → close
+
+Replace the three reading box types:
+
+| Current div class | Replacement |
+|-------------------|-------------|
+| `reading-example-box` (Good Example) | `st.success()` |
+| `reading-mistake-box` (Common Mistake) | `st.error()` |
+| `reading-takeaway-box` (Key Takeaway) | `st.info()` |
+
+Render the box label as `**Good Example**` bold text at the top of the callout content.
+
+---
+
+#### Task 7.10 — Refactor module cards as `st.container(border=True)` with button inside ✅ DONE
+
+**Files**: [pages/03_Home.py](pages/03_Home.py), [utils/styles.py](utils/styles.py)
+
+**Issues.md**: NX10 (partial), NX11 → closed
+
+Replace the HTML card + `:has()` CSS fusion pattern with a native pattern:
+
+```python
+with st.container(border=True):
+    st.markdown(f"**{title}**")
+    st.caption(domain_label)
+    # sub-badges as st.columns with st.caption()
+    if not is_locked:
+        if st.button("Start Module →", key=f"mod_{seq}", type="primary"):
+            # navigate
+```
+
+This eliminates the fragile `:has()` + adjacent sibling CSS and the `data-testid` button overrides. Remove the entire module card CSS block from `styles.py` (`.module-card`, `.module-card.active`, `.module-card.locked`, the `:has()` rules).
+
+---
+
+#### Phase 7 Execution Order
+
+All tasks complete (Feb 2026):
+
+```text
+7.1  ✅ Remove global button CSS override; restore type= system      (NX2 — HIGH)
+7.2  ✅ Practice chat → st.chat_message() + st.chat_input()          (NX1 — HIGH)
+7.3  ✅ Assessment History → st.dataframe()                          (NX3 — MEDIUM)
+7.4  ✅ Score hero → st.metric()                                     (NX4 — MEDIUM)
+7.5  ✅ Domain score bars → st.progress()                            (NX5 — MEDIUM)
+7.6  ✅ Fix console "Invalid color" warnings                         (NX6 — MEDIUM)
+7.7  ✅ Remove HTML spacers                                          (NX8 — LOW)
+7.8  ✅ Page titles → st.title()                                     (NX9 — LOW)
+7.9  ✅ Reading boxes → st.success/error/info()                      (NX7 — LOW)
+7.10 ✅ Module cards → st.container(border=True)                     (NX10/11 — LOW)
 ```
 
 ---
 
 ## Execution Order
 
-```
-Phase 0 ✅ DONE    Phase 1 ✅ DONE               Phase 2 ✅ DONE             Phase 3 ✅ DONE        Phase 4 ✅ DONE          Phase 5 ✅ DONE      Phase 6 — pending
-Catalog migration   Content DB → JSON refactor    2.1 H2 MCQ local            3.1 M2 Parameterize    4.1 Trend indicator     5.1 L3 Score gap     6.1 ✅ Orientation screen
-Bug fixes (H1-H3,   All 7 JSON files created      2.2 H3 Aggregates           3.2 M3 started_at      4.2 Last updated        5.2 L6 guard         6.2 ✅ Verify module cards
-L2/L3/L5/L6/L7,    utils/content.py loader        2.3 H1 Domain scores        3.3 M4 Results fix     4.3 Dead link           5.3 L2 stamp         6.3 ✅ Diagnostic audit
-M2/M5)              pages/01-04 updated                                        3.4 M5 Gap map fix                             5.4 L4 Cache         6.4    Home audit
-                                                                               3.5 M1 Token counts                                                 6.5    Course Module audit
+```text
+Phase 0 ✅ DONE    Phase 1 ✅ DONE               Phase 2 ✅ DONE             Phase 3 ✅ DONE        Phase 4 ✅ DONE          Phase 5 ✅ DONE      Phase 6 ✅ DONE          Phase 7 ✅ DONE
+Catalog migration   Content DB → JSON refactor    2.1 H2 MCQ local            3.1 M2 Parameterize    4.1 Trend indicator     5.1 L3 Score gap     6.1 ✅ Orientation       7.1 ✅ Button override
+Bug fixes (H1-H3,   All 7 JSON files created      2.2 H3 Aggregates           3.2 M3 started_at      4.2 Last updated        5.2 L6 guard         6.2 ✅ Module cards      7.2 ✅ Chat components
+L2/L3/L5/L6/L7,    utils/content.py loader        2.3 H1 Domain scores        3.3 M4 Results fix     4.3 Dead link           5.3 L2 stamp         6.3 ✅ Diagnostic        7.3 ✅ st.dataframe()
+M2/M5)              pages/01-04 updated                                        3.4 M5 Gap map fix                             5.4 L4 Cache         6.4 ✅ Home audit        7.4 ✅ st.metric()
+                                                                               3.5 M1 Token counts                                                 6.5 ✅ Course audit      7.5 ✅ st.progress()
+                                                                                                                                                                           7.6 ✅ Color warnings
+                                                                                                                                                                           7.7 ✅ Spacers
+                                                                                                                                                                           7.8 ✅ st.title()
+                                                                                                                                                                           7.9 ✅ Callout boxes
+                                                                                                                                                                           7.10 ✅ Module cards
 ```
 
-**Phases 0–5 complete. Phase 6 in progress (6.4 Home audit, 6.5 Course Module audit pending).**
+**All phases complete (0–7). Open items: CX1–CX10 (UX journey improvements, out of scope for MVP), M2 (one remaining parameterised query).**
 
 ---
 

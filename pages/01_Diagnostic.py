@@ -64,7 +64,7 @@ if not st.session_state.get("diag_started"):
   <div class="aha-brand-name">AI <span>Hero</span> Academy</div>
 </div>
 """, unsafe_allow_html=True)
-    st.markdown('<h1 style="margin-bottom:0.5rem">AI Skills Diagnostic</h1>', unsafe_allow_html=True)
+    st.title("AI Skills Diagnostic")
     st.markdown(
         '<div style="font-family:\'Inter\',sans-serif; font-size:0.85rem; color:#8990A8; margin-bottom:2rem">'
         'Before we build your personalised training course, we need to understand your current AI skill level.</div>',
@@ -93,7 +93,6 @@ if not st.session_state.get("diag_started"):
     There are no right or wrong answers — your results shape your personalised training course.
   </div>
 </div>
-<div style="height:1.5rem"></div>
 """, unsafe_allow_html=True)
     if st.button("Start Assessment →", type="primary"):
         st.session_state["diag_started"] = True
@@ -112,7 +111,7 @@ st.markdown("""
 
 col_title, col_counter = st.columns([4, 1])
 with col_title:
-    st.markdown('<h1 style="margin-bottom:0.2rem">Diagnostic</h1>', unsafe_allow_html=True)
+    st.title("Diagnostic")
 with col_counter:
     st.markdown(
         f'<div class="question-counter" style="text-align:right; margin-top:1.4rem">'
@@ -123,7 +122,6 @@ with col_counter:
 # Progress bar
 progress_pct = idx / TOTAL
 st.progress(progress_pct)
-st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
 
 # ── Scoring / completion handler ──────────────────────────────────────────────
 def complete_diagnostic(responses: list[dict]):
@@ -248,7 +246,7 @@ if item_type == "mcq":
     )
 
     btn_label = "Submit & Continue →" if is_last else "Next →"
-    if st.button(btn_label, disabled=(selected is None), key=f"btn_{item_id}"):
+    if st.button(btn_label, disabled=(selected is None), key=f"btn_{item_id}", type="primary"):
         chosen_idx = opt_labels.index(selected)
         chosen_label = opt_keys[chosen_idx]
         st.session_state["diag_responses"].append({
@@ -292,7 +290,7 @@ elif item_type == "prompt_sandbox":
     )
 
     btn_label = "Submit →" if is_last else "Submit →"
-    if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}"):
+    if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}", type="primary"):
         st.session_state["diag_responses"].append({
             "item_id": item_id,
             "response": user_text.strip(),
@@ -323,7 +321,7 @@ elif item_type == "micro_task":
     )
 
     btn_label = "Submit →"
-    if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}"):
+    if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}", type="primary"):
         st.session_state["diag_responses"].append({
             "item_id": item_id,
             "response": user_text.strip(),

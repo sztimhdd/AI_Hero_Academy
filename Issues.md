@@ -51,22 +51,6 @@ Both values are Python `float()` casts from LLM output, so the SQL injection ris
 
 ---
 
----
-
-### U3 — UX audit pending for Home and Course Module pages
-
-**Files**: [pages/03_Home.py](pages/03_Home.py), [pages/04_Course_Module.py](pages/04_Course_Module.py)
-
-**Severity**: 🟡 MEDIUM
-
-**Status**: Diagnostic page audit complete (Feb 2026) — no contrast failures found; one issue extracted as U4. Home card layout verified (6.2). Full Home audit (6.4) and Course Module audit (6.5) still pending.
-
-**Expected**: Full per-page audit of the two remaining pages against PRD §7.4, §7.5 and WCAG AA minimum.
-
----
-
----
-
 ## CX / UX Journey Audit
 
 > Findings from a full customer-journey review (February 2026) covering first-visit and return-visit flows, sidebar navigation consistency, breadcrumbs, and page-level affordances across all 5 pages.
@@ -209,6 +193,26 @@ When all modules are complete, both buttons navigate to Skills Profile — the u
 
 ---
 
+## Native Component Audit
+
+> Findings from a systematic review (February 2026) of all pages against Streamlit best practices:
+> use native components instead of custom HTML/CSS; use `type="primary"` / `type="secondary"` for affordance hierarchy; prefer `st.metric()`, `st.dataframe()`, `st.chat_message()`, `st.progress()` over hand-rolled equivalents.
+> NX1–NX9, NX11 resolved in Phase 7 (February 2026). NX10 remains as acknowledged technical debt.
+
+---
+
+### NX10 — `data-testid` CSS selectors are Streamlit-version-fragile
+
+**File**: [utils/styles.py](utils/styles.py) (throughout)
+
+**Severity**: 🟢 LOW
+
+**What's wrong**: At least 12 CSS rules target `data-testid` attributes (e.g., `section[data-testid="stSidebar"]`, `div[data-testid="stInfo"]`, `[data-testid="stMetric"]`, `[data-testid="stButton"]`). These are Streamlit internal test IDs, not a public API, and can be renamed in any Streamlit release.
+
+**Expected**: Where possible, replace `data-testid` selectors with Streamlit's public class names or use CSS custom properties via `config.toml [theme]`. For the sidebar specifically, use `st.sidebar` context and rely on theme colours — not CSS overrides on internal test IDs.
+
+---
+
 ## Closed Issues
 
 | ID | Severity | Description | Resolution |
@@ -216,17 +220,29 @@ When all modules are complete, both buttons navigate to Skills Profile — the u
 | H1 | 🔴 HIGH | Domain scores: average-of-averages not equal-weight per item | Fixed — `compute_current_domain_scores()` now called in both Skills Profile and Home pages |
 | H2 | 🔴 HIGH | MCQ items sent to LLM; `score_mcq()` never called | Fixed — `_score_batch()` now scores MCQ locally via `score_mcq()`; LLM only receives open-ended items |
 | H3 | 🔴 HIGH | `score_evaluation` asked LLM for aggregates; inconsistent with `score_diagnostic` | Fixed — `score_evaluation()` now mirrors `score_diagnostic()`: uses `_score_batch()` per domain, aggregates computed in Python |
+| NX1 | 🔴 HIGH | Practice chat used custom HTML divs instead of `st.chat_message()` + `st.chat_input()` | Fixed (Phase 7.2) — replaced with `st.chat_message("user")` / `st.chat_message("assistant")` context managers and `st.chat_input()`; native ARIA, auto-scroll, theme-consistent |
+| NX2 | 🔴 HIGH | Global `.stButton > button` CSS override destroyed `type="primary"` vs `type="secondary"` affordance | Fixed (Phase 7.1) — removed `background-color` from `.stButton > button` in `utils/styles.py`; `primaryColor` in `config.toml` now drives primary button colour correctly |
 | M1 | 🟡 MEDIUM | Token counts never populated in `ai_call_log` | Fixed — `call_llm()` extracts `resp.usage.prompt_tokens` / `resp.usage.completion_tokens` and passes to `_log_call()` |
 | M3 | 🟡 MEDIUM | `started_at` = `completed_at` in sessions; duration data lost | Fixed — `coach_sessions` and `diagnostic_sessions` both use session-state timestamps for `started_at` and `current_timestamp()` for `completed_at` |
 | M4 | 🟡 MEDIUM | Results fallback: `result_domain_score = result_score` (wrong column) | Fixed — fallback now reads `progress.get("domain_score_after")` from the already-loaded `progress` variable |
 | M5 | 🟡 MEDIUM | Gap map after evaluation uses partial domain scores (diagnostic baseline only) | Fixed — `complete_evaluation()` now calls `load_all_progress()` + `compute_current_domain_scores()` to build fully merged scores before generating the gap map |
+| NX3 | 🟡 MEDIUM | Assessment History used raw HTML `<table>` instead of `st.dataframe()` | Fixed (Phase 7.3) — `pages/02_Skills_Profile.py` now builds a `pandas.DataFrame` and renders with `st.dataframe(use_container_width=True, hide_index=True)` |
+| NX4 | 🟡 MEDIUM | Score/metric displays used custom HTML instead of `st.metric()` | Fixed (Phase 7.4) — Results sub-view score hero now uses `st.metric()`; `[data-testid="stMetric"]` CSS in `styles.py` provides card styling |
+| NX5 | 🟡 MEDIUM | Domain score bars used custom HTML instead of `st.progress()` | Fixed (Phase 7.5) — `score_bar()` replaced with `st.columns` + `st.progress(value / 4.0, text=label)`; native `role="progressbar"` ARIA semantics |
+| NX6 | 🟡 MEDIUM | 30–96 "Invalid color" console warnings per page load for `widgetBackgroundColor`, `widgetBorderColor`, `skeletonBackgroundColor` | Fixed (Phase 7.6) — root cause: Streamlit JS emits warnings when these deprecated internal tokens are absent (GitHub #13831). Added all three to `.streamlit/config.toml` with design-system hex values (`#1E2330`, `#2A2F3E`); visual no-ops since CSS overrides take precedence |
+| U1 | 🟡 MEDIUM | Pre-diagnostic orientation screen missing — users saw Q1 with no context | Fixed — orientation card added to `pages/01_Diagnostic.py` guarded by `st.session_state["diag_started"]`; retake path in `02_Skills_Profile.py` also clears the flag |
+| U3 | 🟡 MEDIUM | UX audit pending for Home and Course Module pages | Closed (Phase 6.4 + 6.5, Feb 2026) — full Playwright audit of both pages complete; all PRD §7.4/§7.5 checks passed; one new bug extracted as U5 |
+| U4 | 🟡 MEDIUM | MCQ `st.radio()` defaulted to Option A; `disabled` guard on "Next →" never fired | Fixed — added `index=None` to `st.radio()` in `pages/01_Diagnostic.py`; user must now make an explicit selection before "Next →" enables |
+| U5 | 🟡 MEDIUM | Evaluation MCQ `st.radio()` missing `index=None`; submit button guard never fired | Fixed (Phase 6.5 audit, Feb 2026) — added `index=None` to `st.radio()` in `pages/04_Course_Module.py:595`; mirrors the U4 fix in `01_Diagnostic.py` |
 | L2 | 🟢 LOW | `reading_completed_at` overwritten on re-read | Fixed — UPDATE now uses `WHERE progress_id = ? AND reading_completed_at IS NULL` |
 | L3 | 🟢 LOW | Level label gap at score 0.41–0.49 | Fixed — `LEVEL_LABELS` range changed to `(0.0, 0.49, "Unaware")` |
 | L4 | 🟢 LOW | `load_progress()` uncached; extra DB call in Results fallback | Fixed — Results fallback uses the `progress` variable loaded at page start; no extra DB call |
 | L5 | 🟢 LOW | Dead `<a href="#">` link in Home summary card | Fixed — replaced with a Streamlit button (`st.button("→  View Full Skills Profile", ...)`) |
 | L6 | 🟢 LOW | Welcome guard routes all existing users to Diagnostic | Fixed — guard now checks for completed diagnostic session and training_progress, routing to Diagnostic / Skills Profile / Home as appropriate |
 | L7 | 🟢 LOW | Missing `seed_03_diagnostic_items` job in `databricks.yml` | Resolved by architecture change — all content is now served from JSON files in `content/`; no Delta seeding required for content tables |
+| NX7 | 🟢 LOW | Reading content boxes used custom HTML instead of Streamlit callout components | Fixed (Phase 7.9) — "Good Example", "Common Mistake", and "Key Takeaway" boxes replaced with `st.success()`, `st.error()`, and `st.info()`; confirmed as native `alert` elements in Playwright accessibility tree |
+| NX8 | 🟢 LOW | HTML spacer divs (`height:Xrem`) used throughout all pages | Fixed (Phase 7.7) — all `st.markdown("<div style='height:Xrem'>")` spacers removed; grep confirms zero instances remain |
+| NX9 | 🟢 LOW | Page headers used `st.markdown('<h1>')` instead of `st.title()` | Fixed (Phase 7.8) — `st.title()` used in `pages/02_Skills_Profile.py` and all sub-views of `pages/04_Course_Module.py` |
+| NX11 | 🟢 LOW | Module card `:has()` + adjacent sibling CSS was structurally fragile | Fixed (Phase 7.10) — module cards refactored as `st.container(border=True)` with `st.button()` inside; cross-element CSS dependency eliminated |
 | U0 | 🟢 LOW | `.block-container max-width: 900px` — initially flagged as whitespace issue | Accepted — 900px readable-content width is Streamlit's intentional default for `layout="wide"`; design system colors moved to `.streamlit/config.toml [theme]`; CSS injection now limited to custom components only |
 | U2 | 🟢 LOW | Home module card layout unverified (no training_progress rows for UAT user) | Verified Feb 2026 via Playwright — Module 1 active (cyan border, sub-badges, CTA); Modules 2-5 locked (greyed, lock icon, no CTA). 12px gap between card HTML and Streamlit button is framework's native element spacing — structural constraint, accepted as-is |
-| U1 | 🟡 MEDIUM | Pre-diagnostic orientation screen missing — users saw Q1 with no context | Fixed — orientation card added to `pages/01_Diagnostic.py` guarded by `st.session_state["diag_started"]`; retake path in `02_Skills_Profile.py` also clears the flag |
-| U4 | 🟡 MEDIUM | MCQ `st.radio()` defaulted to Option A; `disabled` guard on "Next →" never fired | Fixed — added `index=None` to `st.radio()` in `pages/01_Diagnostic.py`; user must now make an explicit selection before "Next →" enables |

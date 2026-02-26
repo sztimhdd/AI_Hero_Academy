@@ -115,7 +115,6 @@ with col3:
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("<div style='height:2rem'></div>", unsafe_allow_html=True)
 
 # ── Role selection + CTA ──────────────────────────────────────────────────────
 st.markdown("""
@@ -142,11 +141,11 @@ with col_sel:
 role_selected = selected_role != "— Select your role —"
 
 with col_btn:
-    st.markdown("<div style='height:0.35rem'></div>", unsafe_allow_html=True)
     if st.button(
         "Start My Diagnostic →",
         disabled=not role_selected,
         use_container_width=True,
+        type="primary",
     ):
         with st.spinner("Setting up your profile..."):
             try:
@@ -164,7 +163,6 @@ with col_btn:
             except Exception as err:
                 st.error(f"Could not create your profile. Please refresh and try again.\n\n_{err}_")
 
-st.markdown("<div style='height:3rem'></div>", unsafe_allow_html=True)
 
 # ── Footer note ───────────────────────────────────────────────────────────────
 st.markdown("""

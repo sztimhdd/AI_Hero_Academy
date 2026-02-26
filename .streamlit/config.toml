@@ -7,3 +7,8 @@ backgroundColor          = "#0D0F14"
 secondaryBackgroundColor = "#161A22"
 textColor                = "#EDF0F7"
 font                     = "sans serif"
+# Deprecated internal tokens — set to valid hex to suppress JS "Invalid color" console warnings
+# (Streamlit issue #13831; these are no-ops visually since our CSS overrides all widget styling)
+widgetBackgroundColor    = "#1E2330"
+widgetBorderColor        = "#2A2F3E"
+skeletonBackgroundColor  = "#1E2330"

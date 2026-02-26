@@ -24,12 +24,11 @@ from utils.ai import (
 )
 from utils.scoring import (
     DOMAIN_DISPLAY_NAMES,
-    get_score_color,
     parse_options,
     parse_rubric,
     compute_current_domain_scores,
 )
-from utils.styles import inject_global_css, section_header, step_progress_strip, score_bar
+from utils.styles import inject_global_css, section_header, step_progress_strip
 
 st.set_page_config(
     page_title="Course Module | AI Hero Academy",
@@ -188,7 +187,7 @@ with st.sidebar:
 # ═══════════════════════════════════════════════════════════════════════════════
 if active_sub == "overview":
     st.markdown(f'<div class="question-counter">Module {seq_order} of 5</div>', unsafe_allow_html=True)
-    st.markdown(f"<h1>{course_title}</h1>", unsafe_allow_html=True)
+    st.title(course_title)
     st.markdown(
         f'<div style="font-family:\'Inter\',sans-serif; font-size:1rem; '
         f'color:#8990A8; margin-bottom:2rem">{course.get("tagline", "")}</div>',
@@ -203,22 +202,21 @@ if active_sub == "overview":
         {"label": "Practice", "state": _step(practice_done, reading_done and not practice_done)},
         {"label": "Quiz",     "state": _step(eval_done,     practice_done and not eval_done)},
     ])
-    st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
 
     if eval_done:
-        if st.button("Review Results →"):
+        if st.button("Review Results →", type="primary"):
             st.session_state["active_submodule"] = "results"
             st.rerun()
     elif practice_done:
-        if st.button("Take Quiz →"):
+        if st.button("Take Quiz →", type="primary"):
             st.session_state["active_submodule"] = "evaluation"
             st.rerun()
     elif reading_done:
-        if st.button("Continue Practice →"):
+        if st.button("Continue Practice →", type="primary"):
             st.session_state["active_submodule"] = "practice"
             st.rerun()
     else:
-        if st.button("Start Reading →"):
+        if st.button("Start Reading →", type="primary"):
             st.session_state["active_submodule"] = "reading"
             st.rerun()
 
@@ -228,7 +226,7 @@ if active_sub == "overview":
 # ═══════════════════════════════════════════════════════════════════════════════
 elif active_sub == "reading":
     st.markdown(f'<div class="question-counter">Module {seq_order} · Reading</div>', unsafe_allow_html=True)
-    st.markdown(f"<h1>{course_title}</h1>", unsafe_allow_html=True)
+    st.title(course_title)
     step_progress_strip([
         {"label": "Read", "state": "current"},
         {"label": "Practice", "state": "pending"},
@@ -250,39 +248,21 @@ elif active_sub == "reading":
     st.markdown(f'<div class="reading-concept">{_md(reading.get("concept_text",""))}</div>', unsafe_allow_html=True)
 
     if reading.get("good_example"):
-        st.markdown(f"""
-<div class="reading-example-box">
-  <div class="box-label">Good Example</div>
-  <div class="reading-concept">{_md(reading["good_example"])}</div>
-</div>
-""", unsafe_allow_html=True)
+        st.success(f"**Good Example**\n\n{reading['good_example']}")
 
     if reading.get("anti_pattern"):
-        st.markdown(f"""
-<div class="reading-antipattern-box">
-  <div class="box-label">Common Mistake</div>
-  <div class="reading-concept">{_md(reading["anti_pattern"])}</div>
-</div>
-""", unsafe_allow_html=True)
+        st.error(f"**Common Mistake**\n\n{reading['anti_pattern']}")
 
     if reading.get("takeaway"):
-        st.markdown(f"""
-<div class="reading-takeaway-box">
-  <div class="box-label">Key Takeaway</div>
-  <div style="font-family:'Inter',sans-serif; font-size:0.92rem; line-height:1.6; color:#EDF0F7">
-    {reading["takeaway"]}
-  </div>
-</div>
-""", unsafe_allow_html=True)
+        st.info(f"**Key Takeaway**\n\n{reading['takeaway']}")
 
-    st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
     col_back, col_cta = st.columns([1, 2])
     with col_back:
         if st.button("← Overview"):
             st.session_state["active_submodule"] = "overview"
             st.rerun()
     with col_cta:
-        if st.button("I've read this — Start Practice →", use_container_width=True):
+        if st.button("I've read this — Start Practice →", use_container_width=True, type="primary"):
             try:
                 execute(
                     f"UPDATE {CATALOG}.learner.training_progress "
@@ -338,7 +318,7 @@ elif active_sub == "practice":
     coach_prompt = scenario.get("coach_system_prompt", "")
 
     st.markdown(f'<div class="question-counter">Module {seq_order} · Practice</div>', unsafe_allow_html=True)
-    st.markdown(f"<h1>{course_title}</h1>", unsafe_allow_html=True)
+    st.title(course_title)
     step_progress_strip([
         {"label": "Read", "state": "done"},
         {"label": "Practice", "state": "current"},
@@ -359,14 +339,14 @@ elif active_sub == "practice":
   </span>
 </div>
 """, unsafe_allow_html=True)
-        if st.button("Go to Quiz →"):
+        if st.button("Go to Quiz →", type="primary"):
             do_complete_practice(progress_id, messages, total_turns)
         st.stop()
 
     # All 4 tasks done
     if task_idx >= 4:
         st.success("You've completed all 4 practice tasks!")
-        if st.button("Complete Practice →"):
+        if st.button("Complete Practice →", type="primary"):
             do_complete_practice(progress_id, messages, total_turns)
         st.stop()
 
@@ -376,22 +356,17 @@ elif active_sub == "practice":
     section_header(f"TASK {task_idx + 1} OF 4")
     st.markdown(f'<div class="question-text">{current_task_text}</div>', unsafe_allow_html=True)
 
-    # Chat history
+    # Chat history — native Streamlit chat components (NX1)
     for msg in messages:
-        if msg["role"] == "user":
-            st.markdown(f'<div class="chat-bubble-user">{msg["content"]}</div>', unsafe_allow_html=True)
-        else:
-            st.markdown(f"""
-<div class="coach-header"><span>🤖</span><span class="coach-label">AI Coach</span></div>
-<div class="chat-bubble-coach">{msg["content"]}</div>
-""", unsafe_allow_html=True)
+        with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
+            st.markdown(msg["content"])
 
-    st.markdown(f'<div class="turn-counter">Turn {total_turns} of {MAX_TOTAL_TURNS}</div>', unsafe_allow_html=True)
+    st.caption(f"Turn {total_turns} of {MAX_TOTAL_TURNS}")
 
     # Task turn limit
     if current_task_turns >= MAX_TASK_TURNS:
-        st.info(f"Maximum turns for this task reached.")
-        if st.button(f"Next Task →", key="next_task_limit"):
+        st.info("Maximum turns for this task reached.")
+        if st.button("Next Task →", key="next_task_limit", type="primary"):
             new_tt = dict(task_turns)
             new_tt[task_idx + 1] = 0
             st.session_state["practice_task_idx"] = task_idx + 1
@@ -403,68 +378,57 @@ elif active_sub == "practice":
     last_role = messages[-1]["role"] if messages else None
     waiting_for_user = last_role != "user"
 
-    if waiting_for_user:
-        user_input = st.text_area(
-            "Your response:",
-            key=f"p_input_{task_idx}_{current_task_turns}",
-            height=110,
-            placeholder="Type your response here...",
-            label_visibility="collapsed",
-        )
-        col_send, col_skip = st.columns([3, 1])
-        with col_send:
-            if st.button(
-                "Send to Coach →",
-                disabled=not (user_input or "").strip(),
-                use_container_width=True,
-                key="p_send",
-            ):
-                with st.spinner("Coach is thinking..."):
-                    try:
-                        reply = coach_response(
-                            system_prompt=coach_prompt,
-                            conversation=messages,
-                            user_input=user_input.strip(),
-                            user_email=user_email,
-                        )
-                    except Exception as e:
-                        st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
-                        st.stop()
-
-                new_tt = dict(task_turns)
-                new_tt[task_idx] = current_task_turns + 1
-                st.session_state["coach_messages"] = messages + [
-                    {"role": "user", "content": user_input.strip()},
-                    {"role": "assistant", "content": reply},
-                ]
-                st.session_state["practice_turns"] = total_turns + 1
-                st.session_state["task_turn_counts"] = new_tt
-                st.rerun()
-        with col_skip:
-            if st.button("Skip →", use_container_width=True, key="p_skip"):
-                new_tt = dict(task_turns)
-                new_tt[task_idx + 1] = 0
-                st.session_state["practice_task_idx"] = task_idx + 1
-                st.session_state["task_turn_counts"] = new_tt
-                st.rerun()
-    else:
-        # Coach just replied
+    if not waiting_for_user:
+        # Coach just replied — show navigation buttons
         col_nxt, col_done = st.columns([1, 1])
         with col_nxt:
             if task_idx < 3:
-                if st.button("Next Task →", key="p_next"):
+                if st.button("Next Task →", key="p_next", type="primary"):
                     new_tt = dict(task_turns)
                     new_tt[task_idx + 1] = 0
                     st.session_state["practice_task_idx"] = task_idx + 1
                     st.session_state["task_turn_counts"] = new_tt
                     st.rerun()
             else:
-                if st.button("Complete Practice →", key="p_complete_final"):
+                if st.button("Complete Practice →", key="p_complete_final", type="primary"):
                     do_complete_practice(progress_id, messages, total_turns)
         with col_done:
             if task_idx < 3:
                 if st.button("Complete Practice Early →", key="p_complete_early"):
                     do_complete_practice(progress_id, messages, total_turns)
+    else:
+        # Waiting for user — show skip option
+        if st.button("Skip this task →", use_container_width=False, key="p_skip"):
+            new_tt = dict(task_turns)
+            new_tt[task_idx + 1] = 0
+            st.session_state["practice_task_idx"] = task_idx + 1
+            st.session_state["task_turn_counts"] = new_tt
+            st.rerun()
+
+    # Native chat input pinned to page bottom (only rendered when waiting for user)
+    if waiting_for_user:
+        if user_input := st.chat_input("Your response...", key=f"p_input_{task_idx}_{current_task_turns}"):
+            with st.spinner("Coach is thinking..."):
+                try:
+                    reply = coach_response(
+                        system_prompt=coach_prompt,
+                        conversation=messages,
+                        user_input=user_input.strip(),
+                        user_email=user_email,
+                    )
+                except Exception as e:
+                    st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
+                    st.stop()
+
+            new_tt = dict(task_turns)
+            new_tt[task_idx] = current_task_turns + 1
+            st.session_state["coach_messages"] = messages + [
+                {"role": "user", "content": user_input.strip()},
+                {"role": "assistant", "content": reply},
+            ]
+            st.session_state["practice_turns"] = total_turns + 1
+            st.session_state["task_turn_counts"] = new_tt
+            st.rerun()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -591,14 +555,13 @@ elif active_sub == "evaluation":
         f'Question {min(eval_idx + 1, EVAL_TOTAL)} of {EVAL_TOTAL}</div>',
         unsafe_allow_html=True,
     )
-    st.markdown(f"<h1>Quiz: {course_title}</h1>", unsafe_allow_html=True)
+    st.title(f"Quiz: {course_title}")
     step_progress_strip([
         {"label": "Read", "state": "done"},
         {"label": "Practice", "state": "done"},
         {"label": "Quiz", "state": "current"},
     ])
     st.progress(eval_idx / EVAL_TOTAL if EVAL_TOTAL > 0 else 0)
-    st.markdown("<div style='height:1.5rem'></div>", unsafe_allow_html=True)
 
     if eval_idx >= EVAL_TOTAL:
         complete_evaluation(st.session_state["eval_responses"])
@@ -629,11 +592,12 @@ elif active_sub == "evaluation":
             "Answer:",
             options=opt_labels,
             key=f"eq_{item_id}",
+            index=None,
             label_visibility="collapsed",
         )
 
         btn_label = "Submit Quiz →" if is_last else "Next →"
-        if st.button(btn_label, disabled=(selected is None), key=f"eb_{item_id}"):
+        if st.button(btn_label, disabled=(selected is None), key=f"eb_{item_id}", type="primary"):
             st.session_state["eval_responses"].append({
                 "item_id": item_id,
                 "response": opt_keys[opt_labels.index(selected)],
@@ -658,7 +622,7 @@ elif active_sub == "evaluation":
             placeholder="Write your response here...",
             label_visibility="collapsed",
         )
-        if st.button("Submit Quiz →", disabled=not (user_text or "").strip(), key=f"eb_{item_id}"):
+        if st.button("Submit Quiz →", disabled=not (user_text or "").strip(), key=f"eb_{item_id}", type="primary"):
             st.session_state["eval_responses"].append({
                 "item_id": item_id,
                 "response": user_text.strip(),
@@ -690,7 +654,7 @@ elif active_sub == "results":
             result_domain_score = result_score
 
     st.markdown(f'<div class="question-counter">Module {seq_order} · Complete</div>', unsafe_allow_html=True)
-    st.markdown("<h1>Module Complete!</h1>", unsafe_allow_html=True)
+    st.title("Module Complete!")
     step_progress_strip([
         {"label": "Read", "state": "done"},
         {"label": "Practice", "state": "done"},
@@ -704,26 +668,19 @@ elif active_sub == "results":
 
     color_hex = "#29CC6A" if rs >= 2.5 else ("#F5A623" if rs >= 1.5 else "#E8455A")
 
-    st.markdown(f"""
-<div class="result-score-box">
-  <div style="font-family:'IBM Plex Mono',monospace; font-size:3.5rem;
-              color:{color_hex}; line-height:1">
-    {rs:.1f}<span style="font-size:1.5rem; color:#8990A8"> / 4.0</span>
-  </div>
-  <div style="font-family:'Inter',sans-serif; font-size:0.8rem; font-weight:600;
-              text-transform:uppercase; letter-spacing:0.08em; color:#8990A8;
-              margin-top:0.5rem">{course_title}</div>
-</div>
-""", unsafe_allow_html=True)
+    st.metric(label=course_title, value=f"{rs:.1f} / 4.0")
 
     if result_domain_score is not None:
         try:
             ds = float(result_domain_score)
         except (TypeError, ValueError):
             ds = 0.0
-        st.markdown('<div class="aha-card">', unsafe_allow_html=True)
-        score_bar(DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain), ds, color_class=get_score_color(ds))
-        st.markdown('</div>', unsafe_allow_html=True)
+        col_lbl, col_val = st.columns([4, 1])
+        with col_lbl:
+            st.caption(DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain))
+            st.progress(max(0.0, min(1.0, ds / 4.0)))
+        with col_val:
+            st.caption(f"{ds:.1f} / 4.0")
 
     if coach_note:
         st.markdown(f"""
@@ -749,14 +706,14 @@ elif active_sub == "results":
 
     col_a, col_b = st.columns(2)
     with col_a:
-        if st.button("View Updated Skills Profile →", use_container_width=True):
+        if st.button("View Updated Skills Profile →", use_container_width=True, type="secondary"):
             st.switch_page("pages/02_Skills_Profile.py")
     with col_b:
         if all_complete:
-            if st.button("🏆  View Final Skills Profile →", use_container_width=True):
+            if st.button("🏆  View Final Skills Profile →", use_container_width=True, type="primary"):
                 st.switch_page("pages/02_Skills_Profile.py")
         elif next_module:
-            if st.button(f"Start Module {seq_order + 1} →", use_container_width=True):
+            if st.button(f"Start Module {seq_order + 1} →", use_container_width=True, type="primary"):
                 st.session_state.update({
                     "active_course_id": next_module["course_id"],
                     "active_submodule": "overview",
