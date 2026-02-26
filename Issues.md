@@ -18,7 +18,7 @@ Last validated: February 2026
 
 ## Open Issues
 
-None — all known issues resolved.
+_No open issues._
 
 ---
 
@@ -69,3 +69,9 @@ None — all known issues resolved.
 | NX11 | 🟢 LOW | Module card `:has()` + adjacent sibling CSS was structurally fragile | Fixed (Phase 7.10) — module cards refactored as `st.container(border=True)` with `st.button()` inside; cross-element CSS dependency eliminated |
 | U0 | 🟢 LOW | `.block-container max-width: 900px` — initially flagged as whitespace issue | Accepted — 900px readable-content width is Streamlit's intentional default for `layout="wide"`; design system colors moved to `.streamlit/config.toml [theme]`; CSS injection now limited to custom components only |
 | U2 | 🟢 LOW | Home module card layout unverified (no training_progress rows for UAT user) | Verified Feb 2026 via Playwright — Module 1 active (cyan border, sub-badges, CTA); Modules 2-5 locked (greyed, lock icon, no CTA). 12px gap between card HTML and Streamlit button is framework's native element spacing — structural constraint, accepted as-is |
+| P1 | 🟡 MEDIUM | Per-task turn limit offers no "continue" option — forced skip only | Fixed (Phase 11) — replaced forced "Next Task →" at the turn limit with a two-button prompt: "Continue (3 more turns) →" increments `task_extra_{task_idx}` session state to extend the effective limit by 3; "Next Task →" (primary) advances `practice_task_idx`. `MAX_TASK_TURNS` constant unchanged. |
+| P2 | 🟡 MEDIUM | "Complete Practice →" banner reference misleads at session start | Fixed (Phase 11) — banner copy updated to remove the button reference; new wording: "⚠️ Navigating away via the sidebar or breadcrumb will end your session without saving your practice conversation." |
+| NAV1 | 🟡 MEDIUM | Inconsistent sidebar navigation — different buttons on every page | Fixed (Phase 11) — extracted `render_sidebar(active_page, has_course, progress_rows, active_course_id, module_context)` utility in `utils/styles.py`; all 3 pages (Home, Skills Profile, Course Module) now render the same 3 nav buttons (My Training · Skills Profile · My Course); active-page button is disabled; CX3 look-up logic consolidated into the utility. |
+| NAV2 | 🟢 LOW | Streamlit sidebar collapse button bleeds through as text | Fixed (Phase 11) — added `[data-testid="collapsedControl"] { display: none !important; }` to `inject_global_css()` in `utils/styles.py`; sidebar is always expanded so hiding the toggle is safe. |
+| UI1 | 🟢 LOW | Zero-pixel gap between sub-badges and action button on course cards | Fixed (Phase 11) — added `margin-bottom: 0.75rem` to the `.sub-strip` CSS rule in `utils/styles.py`, creating visible separation between the Read/Practice/Quiz badge strip and the action button below. |
+| UI2 | 🟢 LOW | "Review Module" requires two clicks to reach results | Fixed (Phase 11) — "Review Module" button handler in `pages/03_Home.py` now checks all three completion timestamps (`reading_completed_at`, `practice_completed_at`, `evaluation_completed_at`); sets `active_submodule = "results"` when all three are set, otherwise `"overview"`. |

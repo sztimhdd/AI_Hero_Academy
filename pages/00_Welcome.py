@@ -9,6 +9,7 @@ import os
 from utils.auth import get_user_email
 from utils.db import execute, query_one, escape
 from utils.styles import inject_global_css
+from utils.content import ROLES
 
 st.set_page_config(
     page_title="Welcome | AI Hero Academy",
@@ -127,7 +128,9 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-_available_roles = ["Relationship Manager"]  # extend here for multi-role support
+# Build role options from content — {title: role_id}, ordered by roles.json insertion order
+_role_map = {v["title"]: k for k, v in ROLES.items()}
+_available_roles = list(_role_map.keys())
 _derived_name = user_email.split("@")[0].replace(".", " ").title()
 
 col_sel, col_btn = st.columns([2, 1], gap="medium")
@@ -165,12 +168,13 @@ with col_btn:
         with st.spinner("Setting up your profile..."):
             try:
                 display_name = display_name_val.strip() if display_name_val.strip() else _derived_name
+                role_id = _role_map.get(selected_role, "rm")
                 e_email = escape(user_email)
                 e_name = escape(display_name)
                 execute(f"""
                     INSERT INTO {CATALOG}.learner.user_profiles
                       (user_email, display_name, role_id, created_at)
-                    VALUES ('{e_email}', '{e_name}', 'rm', current_timestamp())
+                    VALUES ('{e_email}', '{e_name}', '{role_id}', current_timestamp())
                 """)
                 st.session_state["user_email"] = user_email
                 st.session_state["user_state"] = "needs_diagnostic"

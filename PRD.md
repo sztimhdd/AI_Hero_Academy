@@ -148,11 +148,23 @@ Key characteristics relevant to training design:
 3.2 SECONDARY USERS (Post-MVP)
 -------------------------------
 
-The following roles are planned for future versions but are explicitly
-out of scope for MVP:
+3.2.1 UNDERWRITER (UW) — v1 IN PROGRESS (Feb 2026)
+
+  All UW content has been generated and is loaded into the app:
+  12 diagnostic items (3 per domain), 5 training courses with
+  reading content, practice scenarios, and evaluation items.
+  The diagnostic and course module flows are fully multi-role aware.
+
+  Remaining blocker: Welcome page (pages/00_Welcome.py) still
+  hardcodes role_id = 'rm'. Task 9.4 (PLAN.md) will wire the role
+  selector to display both RM and UW, enabling UW users to onboard.
+
+3.2.2 OTHER ROLES (Post-MVP)
+
+  The following roles are planned for future versions but remain
+  explicitly out of scope until after the UW role is validated:
 
   - Finance Analysts
-  - Underwriters (IFG)
   - Customer Care Team
   - IT / DevOps
   - Legal / Compliance
