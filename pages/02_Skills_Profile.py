@@ -221,7 +221,7 @@ if gap_map_row:
             '<span><span class="gap-priority-dot low" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>On track</span>'
             '</div>'
         )
-        for b in sorted(bullets, key=lambda x: x.get("priority", 99)):
+        for b in sorted([b for b in bullets if isinstance(b, dict)], key=lambda x: x.get("priority", 99)):
             domain_id = b.get("domain_id", "")
             domain_score = current_domain_scores.get(domain_id, 0.0)
             try:

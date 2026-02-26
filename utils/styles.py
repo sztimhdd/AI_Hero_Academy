@@ -81,8 +81,9 @@ section.stSidebar span {{
 
 /* Hide Streamlit's built-in sidebar collapse toggle — sidebar is always expanded
    and the Material Icons font is not loaded, causing icon text to bleed through
-   as literal "keyboard_double_arrow_left" on hover (NAV2). */
-[data-testid="collapsedControl"] {{ display: none !important; }}
+   as literal "keyboard_double_arrow_left" on hover (NAV2).
+   Confirmed via UAT: actual testid is stSidebarCollapseButton (not collapsedControl). */
+[data-testid="stSidebarCollapseButton"] {{ display: none !important; }}
 
 /* ─── MAIN CONTENT AREA ────────────────────────────────────── */
 /* Leave Streamlit's native max-width (readable-content width) alone.
