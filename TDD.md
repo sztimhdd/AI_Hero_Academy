@@ -9,9 +9,9 @@
 
 ## 1. Overview
 
-AI Hero Academy is a Streamlit-based Databricks App that delivers personalized AI skills training to Relationship Managers (RMs). It implements a four-stage learning loop: **Diagnose → Map Gaps → Train → Score & Track**.
+AI Hero Academy is a Streamlit-based Databricks App that delivers personalized AI skills training to employees. It implements a four-stage learning loop: **Diagnose → Map Gaps → Train → Score & Track**.
 
-The MVP covers one role (RM), four skill domains, 12 diagnostic questions, and 5 training courses. All AI scoring, coaching, and gap analysis is powered by Databricks Foundation Model serving endpoints. All state is persisted in Delta tables via Unity Catalog (`mdlg_ai_shared`).
+The MVP covers the Relationship Manager (RM) role. The Underwriter (UW) role content is fully generated and in-app — welcome page wiring is the remaining step before UW users can onboard. Each role has 12 diagnostic questions across 4 skill domains and 5 training courses. All AI scoring, coaching, and gap analysis is powered by Databricks Foundation Model serving endpoints. All learner state is persisted in Delta tables via Unity Catalog (`mdlg_ai_shared`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no Delta queries needed for content.
 
 ---
 
@@ -36,19 +36,21 @@ The MVP covers one role (RM), four skill domains, 12 diagnostic questions, and 5
 │  (Welcome / Diagnostic / Skills Profile / Home / Module)   │
 └──────────────────────┬─────────────────────────────────────┘
                        │ st.session_state (in-memory)
-            ┌──────────┴──────────┐
-            │                     │
-     ┌──────▼──────┐       ┌──────▼──────────────────┐
-     │  utils/db.py │       │  utils/ai.py            │
-     │  SQL via SDK │       │  serving_endpoints.query │
-     └──────┬──────┘       └──────┬──────────────────┘
-            │                     │
-     ┌──────▼──────────────────────▼────┐
-     │    Unity Catalog (mdlg_ai)        │
-     │  ├─ content.*  (read-only)        │
-     │  ├─ learner.*  (read-write)       │
-     │  └─ system.*   (write-only)       │
-     └──────────────────────────────────┘
+        ┌──────────────┼───────────────────┐
+        │              │                   │
+ ┌──────▼──────┐ ┌──────▼──────────┐ ┌────▼──────────────┐
+ │ utils/db.py  │ │  utils/ai.py    │ │ utils/content.py  │
+ │ SQL via SDK  │ │ serving_endpts  │ │ JSON file loader  │
+ └──────┬──────┘ └──────┬──────────┘ └────┬──────────────┘
+        │               │                  │
+ ┌──────▼───────────────▼──┐    ┌──────────▼────────────┐
+ │  Unity Catalog           │    │  content/*.json       │
+ │  mdlg_ai_shared          │    │  (bundled with app)   │
+ │  ├─ learner.* (rw)       │    │  roles, domains,      │
+ │  └─ system.*  (wo)       │    │  courses, diagnostic  │
+ └──────────────────────────┘    │  items, reading,      │
+                                 │  scenarios, eval items│
+                                 └───────────────────────┘
 ```
 
 ### 2.3 Foundation Model Endpoints
@@ -74,7 +76,9 @@ All endpoints support the OpenAI-compatible `llm/v1/chat` interface. The active 
 
 ### 3.2 Content Schema
 
-All tables in `content` are pre-seeded via notebooks. The app has read-only access.
+> **Architecture note (Feb 2026):** All `content.*` Delta tables have been retired. Static content is now served from `content/*.json` files bundled with the app and loaded at startup by `utils/content.py`. The Delta DDL below is preserved as reference for the data shape; the app no longer queries these tables.
+
+All content that was previously in `content.*` Delta tables is now served from `content/*.json` files.
 
 #### `content.roles`
 ```sql
@@ -278,76 +282,68 @@ Every AI call writes one row. Used for monitoring, debugging, and token cost tra
 
 ---
 
-## 4. Content Seeding Pipeline
+## 4. Content Architecture
 
-Content is seeded via Databricks notebooks run manually by an admin. The app has no write access to `content.*`.
+> **Architecture change (Feb 2026):** All static content was migrated from Delta tables to JSON files bundled with the app. The `content.*` Delta schema is retired. `notebooks/01_seed_roles_domains.py`, `02_seed_courses.py`, and `03_seed_diagnostic_items.py` are no longer used.
 
-### Notebook run order
+### 4.1 JSON File Layout
 
-```
-notebooks/00_create_schemas.py   → creates all schemas and tables (idempotent)
-notebooks/01_seed_roles_domains.py → seeds content.roles + content.domains
-notebooks/02_seed_courses.py      → seeds content.courses + reading_content +
-                                     practice_scenarios + evaluation_items
-notebooks/03_seed_diagnostic_items.py → seeds content.diagnostic_items (12 items)
-```
+All content lives in `content/` at the project root and is loaded by `utils/content.py` at module import time (once per container process).
 
-### Critical: `# MAGIC %md ##` silent execution gotcha
+| File | Key structure | Counts |
+|------|---------------|--------|
+| `content/roles.json` | `{role_id: {...}}` | 2 roles (rm, uw) |
+| `content/domains.json` | `{rm_prompting: {...}, uw_prompting: {...}, ...}` | 8 entries (4 per role); role-scoped top-level keys |
+| `content/diagnostic_items.json` | `[{item_id, role_id, domain_id, ...}]` | 24 items (12 RM + 12 UW); ordered by `display_order` |
+| `content/courses.json` | `{course_id: {...}}` | 10 courses (5 RM + 5 UW); keyed by `course_id` |
+| `content/reading_content.json` | `{course_id: {...}}` | 10 entries (1 per course) |
+| `content/practice_scenarios.json` | `{course_id: {...}}` | 10 entries; includes `task_1_text`–`task_4_text` + `coach_system_prompt` |
+| `content/evaluation_items.json` | `{course_id: [{...}]}` | 10 × 4 = 40 items |
 
-In Databricks `.py` notebook format, a line starting with `# MAGIC %md` marks the **entire cell** (up to the next `# COMMAND ----------`) as a markdown cell. Any Python code in that same cell is **silently ignored** — no error, no warning.
+**`domains.json` key format**: top-level keys are role-scoped (`rm_prompting`, `uw_prompting`, etc.); each entry has a `domain_id` field with the flat key (`prompting`). `utils/content.py` exposes `get_domain(domain_id, role_id)` and `get_domain_descriptions(role_id)` that filter by `role_id` field value.
 
-**Symptom**: notebook run reports SUCCESS but writes 0 rows to tables.
-
-**Fix**: Use plain Python comments (`# Section Name`) instead of `# MAGIC %md ## Section Name` between `# COMMAND ----------` delimiters. All seeding notebooks in this project have been corrected.
-
-### Idempotency pattern
-
-All seeding notebooks use `DELETE WHERE ... IN (...)` before inserting, so they can be safely re-run:
+### 4.2 Content Loader (`utils/content.py`)
 
 ```python
-COURSE_IDS = ["rm_c1_prompting", "rm_c2_verification", ...]
-ids_sql = ", ".join(f"'{cid}'" for cid in COURSE_IDS)
-for table in ["evaluation_items", "practice_scenarios", "reading_content", "courses"]:
-    sql(f"DELETE FROM {CATALOG}.content.{table} WHERE course_id IN ({ids_sql})")
+# Module-level constants — loaded once at startup
+ROLES: dict           # {role_id: {...}}
+DOMAINS: dict         # role-scoped keys; use get_domain()/get_domain_descriptions()
+DIAGNOSTIC_ITEMS: list  # all items; filter by role_id via get_diagnostic_items(role_id)
+COURSES: dict         # {course_id: {...}}
+READING: dict         # {course_id: {...}}
+SCENARIOS: dict       # {course_id: {...}}
+EVAL_ITEMS: dict      # {course_id: [{...}, ...]}
+DOMAIN_DESCRIPTIONS: dict  # {domain_id: description} for default role (rm)
+
+# Typed getters
+def get_role(role_id: str) -> dict
+def get_domain(domain_id: str, role_id: str = "rm") -> dict
+def get_domain_descriptions(role_id: str = "rm") -> dict[str, str]
+def get_diagnostic_items(role_id: str = "rm") -> list[dict]
+def get_course(course_id: str) -> dict
+def get_reading(course_id: str) -> dict
+def get_scenario(course_id: str) -> dict
+def get_eval_items(course_id: str) -> list[dict]
 ```
 
-### Shared boilerplate (all seeding notebooks)
+### 4.3 Content Generation Pipeline
+
+UW content (and future role content) is generated by `scripts/generate_course_content.py` — an 8-stage multi-agent LLM pipeline that converts a Course Design Brief markdown document into all content JSON files. The pipeline does not require running notebooks or writing to Delta.
+
+### 4.4 Remaining Seeding (learner + system schemas only)
+
+`notebooks/00_create_schemas.py` is still used to create `learner.*` and `system.*` Delta schemas on first deploy. It no longer creates `content.*` tables.
+
+### 4.5 Verification (post-startup)
+
+After deploying the app, verify content loaded correctly by checking:
 
 ```python
-import os, json
-from databricks.sdk import WorkspaceClient
-
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai")
-WH_ID   = os.environ.get("DATABRICKS_WAREHOUSE_ID", "eaa098820703bf5f")
-
-w = WorkspaceClient()
-
-def sql(statement: str):
-    result = w.statement_execution.execute_statement(
-        warehouse_id=WH_ID,
-        statement=statement,
-        wait_timeout="60s",
-    )
-    if result.status.error:
-        raise RuntimeError(result.status.error.message)
-    return result
-
-def escape(s: str) -> str:
-    return s.replace("'", "''")
-```
-
-### Verification queries
-
-After running all seeding notebooks, verify with:
-
-```sql
-SELECT course_id, title FROM mdlg_ai_shared.content.courses ORDER BY sequence_order;
--- expect 5 rows
-
-SELECT count(*) FROM mdlg_ai_shared.content.evaluation_items;    -- expect 20
-SELECT count(*) FROM mdlg_ai_shared.content.reading_content;     -- expect 5
-SELECT count(*) FROM mdlg_ai_shared.content.practice_scenarios;  -- expect 5
-SELECT count(*) FROM mdlg_ai_shared.content.diagnostic_items;    -- expect 12
+from utils.content import DIAGNOSTIC_ITEMS, COURSES, EVAL_ITEMS, ROLES
+assert len(ROLES) == 2                             # rm + uw
+assert len(DIAGNOSTIC_ITEMS) == 24                 # 12 RM + 12 UW
+assert len(COURSES) == 10                          # 5 RM + 5 UW
+assert len(EVAL_ITEMS["rm_c1_prompting"]) == 4     # 4 items per course
 ```
 
 ---
@@ -358,9 +354,10 @@ SELECT count(*) FROM mdlg_ai_shared.content.diagnostic_items;    -- expect 12
 
 ```
 app.py                        # entry point; handles routing based on user state
+app.yml                       # Databricks App command + env vars
 pages/
   00_Welcome.py               # new user onboarding + role selection
-  01_Diagnostic.py            # 12-question diagnostic assessment
+  01_Diagnostic.py            # 12-question diagnostic assessment (multi-role)
   02_Skills_Profile.py        # domain scores, gap map, assessment history
   03_Home.py                  # course progress dashboard
   04_Course_Module.py         # reading / practice / evaluation sub-views
@@ -368,10 +365,24 @@ utils/
   db.py                       # SQL execution helper; wraps WorkspaceClient
   ai.py                       # serving endpoint calls; writes to ai_call_log
   auth.py                     # extracts user_email from Databricks App context
+  content.py                  # JSON file loader; typed getters for all content
   scoring.py                  # MCQ scoring; rubric parsing; domain score calculation
   sequencing.py               # module sequence algorithm
-requirements.txt
-app.yml
+  styles.py                   # inject_global_css(); section_header()
+content/
+  roles.json                  # {role_id: {...}} — rm + uw
+  domains.json                # role-scoped keys (rm_prompting, uw_prompting, ...)
+  diagnostic_items.json       # list of 24 items (12 RM + 12 UW)
+  courses.json                # {course_id: {...}} — 10 courses
+  reading_content.json        # {course_id: {...}} — 10 entries
+  practice_scenarios.json     # {course_id: {...}} — 10 entries
+  evaluation_items.json       # {course_id: [{...}]} — 40 items
+scripts/
+  generate_course_content.py  # multi-agent LLM pipeline for new role content
+  reset_uat_user.py           # clears UAT test user data for re-testing
+notebooks/
+  00_create_schemas.py        # creates learner.* + system.* Delta schemas
+requirements.txt              # streamlit, databricks-sdk, plotly, tenacity, ...
 ```
 
 ### 5.2 Auth: Extracting `user_email`
@@ -831,9 +842,7 @@ databricks apps deploy my-ai-hero-academy-mvp \
 Do not build toward:
 
 - Manager or leadership dashboards
-- Multi-role support (only RM)
 - Admin content management UI
-- Agent pipeline for content generation
 - Proficient/advanced training tier
 - MLflow prompt versioning
 - Materialized views or SQL Warehouse analytics
@@ -842,3 +851,5 @@ Do not build toward:
 - Multilingual content (English only)
 - Email notifications or leaderboards
 - Peer comparison features
+
+**Multi-role status (updated Feb 2026):** The Underwriter (UW) role is in progress — content fully generated and loaded; Welcome page wiring (Task 9.4 in PLAN.md) is the only remaining step. Additional roles beyond UW remain out of scope for MVP.
