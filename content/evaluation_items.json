@@ -1,0 +1,1152 @@
+{
+  "rm_c1_prompting": [
+    {
+      "item_id": "ev_rm_c1_prompting_q1",
+      "course_id": "rm_c1_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "Which CRAF element is missing from this prompt: \"Write an email to a prospect about our export financing products\"?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Context — there is no information about who the prospect is or their situation"
+        },
+        {
+          "label": "B",
+          "text": "Role — the AI has not been told what professional is asking"
+        },
+        {
+          "label": "C",
+          "text": "Action — the task (write an email) is not specified"
+        },
+        {
+          "label": "D",
+          "text": "Format — the email structure has not been defined"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "The prompt has an implied Role (an EDC employee), an Action (write an email), and an implied Format (email). What it completely lacks is Context — who is the prospect, what do they export, what is their current situation? Without context the AI will write a generic email applicable to no one in particular.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c1_prompting_q2",
+      "course_id": "rm_c1_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "A well-structured CRAF prompt should tell the AI:",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "The client context, the role to speak from, exactly what to produce, and how to format the output"
+        },
+        {
+          "label": "B",
+          "text": "The client's full legal name, credit history, and account balance"
+        },
+        {
+          "label": "C",
+          "text": "Your personal background, your manager's name, and today's date"
+        },
+        {
+          "label": "D",
+          "text": "The AI tool version you are using and your preferred language"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "CRAF = Context (who/what/situation) + Role (voice the AI speaks from) + Action (specific deliverable) + Format (structure of output). Together these four elements give the AI everything it needs to produce output that is specific and directly usable in an RM workflow.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c1_prompting_q3",
+      "course_id": "rm_c1_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "After using AI to draft a discovery brief, the best next step is:",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Review it, remove anything inaccurate or generic, then use it"
+        },
+        {
+          "label": "B",
+          "text": "Send it to the client immediately to save time"
+        },
+        {
+          "label": "C",
+          "text": "Submit it to your manager for approval before using any AI output"
+        },
+        {
+          "label": "D",
+          "text": "Regenerate it with a different prompt until it looks exactly right"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "AI output is a starting point, not a final product. Reviewing and editing ensures accuracy and relevance before use. Sending unreviewed AI output to a client is a quality and trust risk. Regenerating indefinitely is inefficient. Manager approval is not the standard process for internal preparation documents.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c1_prompting_q4",
+      "course_id": "rm_c1_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Write a complete CRAF prompt to generate a one-page briefing document before your first discovery call with a new prospect.",
+      "scenario_text": "Company: Shoreline Advisory Group Ltd., a financial advisory firm based in Vancouver with approximately $20M in annual revenues. They are planning to expand into the US market over the next 12 months and have not worked with EDC before. You are an RM preparing for a discovery call with their VP of Finance.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "context_present": 1,
+        "role_present": 1,
+        "action_specific": 1,
+        "format_specified": 1
+      }
+    }
+  ],
+  "rm_c2_verification": [
+    {
+      "item_id": "ev_rm_c2_verification_q1",
+      "course_id": "rm_c2_verification",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "An AI meeting recap says a client \"committed to sending financials by Friday\". Your notes say they \"mentioned financials\". What should you do before logging to C3?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Change 'committed' to 'mentioned' and add 'no firm deadline given'"
+        },
+        {
+          "label": "B",
+          "text": "Log it as written — the AI is usually reliable about commitments"
+        },
+        {
+          "label": "C",
+          "text": "Delete the financials reference entirely to avoid confusion"
+        },
+        {
+          "label": "D",
+          "text": "Email the client to ask if they recall making the commitment"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "The difference between 'committed' and 'mentioned' is material. Logging a false commitment creates follow-up risk and erodes CRM data quality. The correct action is to correct the language to match what was actually said and note that no deadline was set.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c2_verification_q2",
+      "course_id": "rm_c2_verification",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "Which of these is NOT a reliable source for verifying an AI meeting recap?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Another AI-generated summary of the same call"
+        },
+        {
+          "label": "B",
+          "text": "Your handwritten notes taken during the call"
+        },
+        {
+          "label": "C",
+          "text": "A recorded transcript you reviewed manually"
+        },
+        {
+          "label": "D",
+          "text": "A follow-up email listing agreed action items"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "Using one AI output to verify another does not add reliability — both could share the same underlying hallucination from the same audio source. Personal notes, manually reviewed transcripts, and follow-up emails are independent sources that provide genuine verification.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c2_verification_q3",
+      "course_id": "rm_c2_verification",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "The best format for a CRM activity note after a client call is:",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Factual, present-tense bullets with confirmed commitments and clear next steps"
+        },
+        {
+          "label": "B",
+          "text": "A narrative paragraph that captures the tone and energy of the conversation"
+        },
+        {
+          "label": "C",
+          "text": "The full Copilot transcript pasted verbatim"
+        },
+        {
+          "label": "D",
+          "text": "A forward-looking interpretation of what the client probably wants next"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "CRM notes are corporate memory. They should be factual, structured, and based only on what was confirmed — not speculative or narrative. A colleague or future RM reading the note should be able to understand the client's situation and next steps without having been on the call.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c2_verification_q4",
+      "course_id": "rm_c2_verification",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "The following AI-generated recap contains errors. Identify all errors and rewrite it as a corrected, CRM-ready activity note.",
+      "scenario_text": "AI Recap: Call with Eastport Composites Ltd. — Jan 9, 2025. Attendees: Priya Nair (RM), Daniel Osei (CEO). Daniel confirmed they are closing a $5M export contract with a US buyer this quarter. He committed to sending the signed term sheet by Jan 13. The company wants to explore BCAP and PRI immediately. Follow-up call scheduled for Jan 16.\n\nPriya's notes: Daniel = CFO not CEO. $5M contract still in negotiation, not confirmed. He said he might send term sheet — no date given. Interested in BCAP, PRI is new to him and he asked for more info. Follow-up call TBD.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "errors_identified": 1,
+        "corrections_accurate": 1,
+        "crm_ready_format": 1,
+        "explanation_provided": 1
+      }
+    }
+  ],
+  "rm_c3_data_safety": [
+    {
+      "item_id": "ev_rm_c3_data_safety_q1",
+      "course_id": "rm_c3_data_safety",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "You want to use Copilot to draft an outreach email for a client whose $3.2M facility is expiring. The safest approach is:",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Describe the client as 'a mid-market client with a facility expiring this quarter' without naming the amount or client"
+        },
+        {
+          "label": "B",
+          "text": "Include the exact facility amount so Copilot can write a more specific email"
+        },
+        {
+          "label": "C",
+          "text": "Include the client name but not the facility amount"
+        },
+        {
+          "label": "D",
+          "text": "Only use Copilot if the client has given verbal consent to share their data"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "The safest prompt removes both the client identifier and the specific financial detail. The email can still be useful and personalized without these — Copilot does not need the exact figure to write an effective renewal message. Option C still identifies the client, which is non-public in combination with any relationship context.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c3_data_safety_q2",
+      "course_id": "rm_c3_data_safety",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "Which of the following C3 data fields is safe to include in a Copilot prompt without abstraction?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "The client's industry sector (e.g., 'food processing')"
+        },
+        {
+          "label": "B",
+          "text": "The client's exact credit facility amount"
+        },
+        {
+          "label": "C",
+          "text": "A verbatim copy of your CRM relationship notes"
+        },
+        {
+          "label": "D",
+          "text": "The client's full legal name as it appears in C3"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "Industry sector is typically publicly available information and does not identify the specific client or reveal confidential deal terms. The other options are all non-public: facility amount reveals deal terms, relationship notes are confidential observations, and the client's name combined with any relationship context is identifying.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c3_data_safety_q3",
+      "course_id": "rm_c3_data_safety",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "The \"press release test\" for AI prompts means:",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Only include information that could appear in a public press release without causing a compliance issue"
+        },
+        {
+          "label": "B",
+          "text": "Ask your manager to review every AI prompt before you submit it"
+        },
+        {
+          "label": "C",
+          "text": "Only use AI tools that are approved by the communications department"
+        },
+        {
+          "label": "D",
+          "text": "Draft a press release first, then use it as context for your AI prompt"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "The press release test is a quick mental check: if the information couldn't appear publicly without causing a compliance or confidentiality issue, it shouldn't go into an AI prompt. It's a fast, practical way to apply the public/non-public rule in real-time without needing to consult a policy document.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c3_data_safety_q4",
+      "course_id": "rm_c3_data_safety",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Rewrite the following prompt so it is safe to use in Copilot. Remove or abstract all non-public information while keeping the prompt useful and specific enough to produce a usable email.",
+      "scenario_text": "Original prompt: 'I need to re-engage Cedar Valley Foods Ltd., a food processing company in Manitoba. They had a $2.8M BCAP facility that expired in September 2024. My CRM notes say they are exploring other lenders due to pricing concerns. Write me a re-engagement email that addresses pricing objections and emphasizes EDC's long-term partnership value.'",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "npi_removed": 1,
+        "utility_preserved": 1,
+        "prompt_functional": 1,
+        "no_compliance_violation": 1
+      }
+    }
+  ],
+  "rm_c4_tool_fluency": [
+    {
+      "item_id": "ev_rm_c4_tool_fluency_q1",
+      "course_id": "rm_c4_tool_fluency",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "You need to catch up on a 45-minute Teams meeting that happened while you were with another client. The meeting transcript is available. Which Copilot surface should you use?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Teams Copilot — it has direct access to the meeting transcript"
+        },
+        {
+          "label": "B",
+          "text": "Outlook Copilot — search for a follow-up email summarizing the meeting"
+        },
+        {
+          "label": "C",
+          "text": "Word Copilot — paste the transcript text and ask for a summary"
+        },
+        {
+          "label": "D",
+          "text": "Excel Copilot — structured data extraction works best for long meetings"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "Teams Copilot is the only M365 surface with native access to Teams meeting transcripts. It can generate a summary, extract action items, and identify key decisions in seconds — without you manually copying or pasting anything. Outlook has no access to Teams transcripts, and Word/Excel Copilot would require manual effort to get the transcript in.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c4_tool_fluency_q2",
+      "course_id": "rm_c4_tool_fluency",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "You have a Copilot-generated meeting summary and want to turn it into a one-page structured briefing note for your manager. The best next step is:",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Open Word and use Word Copilot to structure the summary into a briefing note format"
+        },
+        {
+          "label": "B",
+          "text": "Email the summary to yourself and use Outlook Copilot to reformat it"
+        },
+        {
+          "label": "C",
+          "text": "Paste it back into Teams chat and ask Teams Copilot to add headings"
+        },
+        {
+          "label": "D",
+          "text": "Log it directly into C3 — a meeting summary is already a usable format"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "Word Copilot is the right surface for document structuring and drafting. It can take unstructured text (a meeting summary) and reformat it into a professional briefing note with headings, sections, and consistent structure. Outlook is for email; Teams is for meeting data; C3 is for CRM logs — none of these are designed for document formatting.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c4_tool_fluency_q3",
+      "course_id": "rm_c4_tool_fluency",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "In a multi-step Copilot workflow, the correct sequence for going from a missed Teams call to a follow-up email is:",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Teams Copilot (recap) → Word Copilot (briefing note) → Outlook Copilot (draft email)"
+        },
+        {
+          "label": "B",
+          "text": "Outlook Copilot (summarize) → Word Copilot (structure) → Teams Copilot (send)"
+        },
+        {
+          "label": "C",
+          "text": "Excel Copilot (analyze) → Teams Copilot (share) → Outlook Copilot (draft)"
+        },
+        {
+          "label": "D",
+          "text": "SharePoint Copilot (search) → Teams Copilot (recap) → Word Copilot (summarize)"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "The input type drives the starting surface: a Teams transcript starts in Teams. Structuring content into a document is Word's strength. Drafting outbound communication is Outlook's strength. The sequence follows the natural flow: extract information → structure it → communicate it.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c4_tool_fluency_q4",
+      "course_id": "rm_c4_tool_fluency",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Describe a complete three-step M365 Copilot workflow for the following scenario.",
+      "scenario_text": "You missed a Friday Teams call with a client about renewing their trade finance facility. The transcript is available in Teams. By noon on Monday you need to: (1) understand what was discussed and any commitments made, (2) prepare a one-page summary for your manager, and (3) send the client a follow-up email with clear next steps.\n\nFor each step, specify: which M365 Copilot surface you use, what prompt you write, and what the output is.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "correct_tools_named": 1,
+        "logical_sequence": 1,
+        "handoff_between_steps": 1,
+        "output_format_practical": 1
+      }
+    }
+  ],
+  "rm_c5_capstone": [
+    {
+      "item_id": "ev_rm_c5_capstone_q1",
+      "course_id": "rm_c5_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "Before using AI to analyze a C3 export for a win-back program, the first step is:",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Abstract all non-public fields — remove client names, round amounts, generalize sectors"
+        },
+        {
+          "label": "B",
+          "text": "Ask your manager for permission to upload the C3 data to Copilot"
+        },
+        {
+          "label": "C",
+          "text": "Use only the last contact date field since dates are not confidential"
+        },
+        {
+          "label": "D",
+          "text": "Run the analysis first, then redact sensitive output before sharing it"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "Abstraction must happen before any AI tool receives the data. Running the analysis first and redacting later does not fix the policy violation — the non-public data has already been processed by an unapproved surface. Option C is insufficient: last contact date combined with facility type can still identify a client in context.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c5_capstone_q2",
+      "course_id": "rm_c5_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "A Copilot-generated outreach email includes a specific claim about a client interest rate that you never provided in your prompt. What should you do?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Delete the claim — it is likely hallucinated since you never provided that data"
+        },
+        {
+          "label": "B",
+          "text": "Keep the claim — Copilot probably accessed current market rate data"
+        },
+        {
+          "label": "C",
+          "text": "Call the client first to confirm whether the rate is accurate"
+        },
+        {
+          "label": "D",
+          "text": "Add a disclaimer saying the rate is approximate before sending"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "If you did not provide the rate data, the AI invented it. AI models do not have access to private client records — any specific figure that appears without being in the prompt is a hallucination. Sending a hallucinated financial claim to a client is both inaccurate and a compliance risk. Delete it and replace with a verified or general statement.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c5_capstone_q3",
+      "course_id": "rm_c5_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "In a multi-step win-back workflow, the correct sequence is:",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Abstract C3 data → analyze with Excel Copilot → draft with Outlook Copilot → verify before sending"
+        },
+        {
+          "label": "B",
+          "text": "Draft with Outlook Copilot → analyze with Excel → abstract data → verify and send"
+        },
+        {
+          "label": "C",
+          "text": "Export raw C3 data → summarize with Teams Copilot → draft with Outlook → send"
+        },
+        {
+          "label": "D",
+          "text": "Verify first → abstract → draft outreach → analyze results"
+        }
+      ],
+      "correct_option": "A",
+      "explanation": "Data safety comes first (abstract), then analysis (Excel), then communication drafting (Outlook), then verification before anything goes to a client. Running steps out of order — especially drafting before abstracting or sending before verifying — creates compliance and quality risks that are difficult to reverse.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c5_capstone_q4",
+      "course_id": "rm_c5_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Describe your complete AI-assisted win-back workflow for the scenario below.",
+      "scenario_text": "You have a C3 export of 8 lapsed clients in the food processing sector. You want to identify your top 3 priority targets and draft a personalized re-engagement email for each priority segment.\n\nFor each step of your workflow, describe: (1) which tool or Copilot surface you use, (2) what data preparation you perform before using it, (3) what prompt you write, and (4) what verification you perform before acting on the output.\n\nYour workflow must address all four RM AI skill domains: data safety, prompting structure, tool selection, and output verification.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "data_safety_applied": 1,
+        "craf_structure_present": 1,
+        "correct_tool_sequence": 1,
+        "verification_step_included": 1
+      }
+    }
+  ],
+  "uw_c1_prompting": [
+    {
+      "item_id": "ev_uw_c1_prompting_q1",
+      "course_id": "uw_c1_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "An underwriter types this prompt: \"Draft a credit decision email for the borrower.\" According to the CRAF Framework, which element is most critically missing?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Action — the prompt does not specify that an email should be drafted"
+        },
+        {
+          "label": "B",
+          "text": "Context — there is no information about the borrower's situation, deal type, or relevant financials"
+        },
+        {
+          "label": "C",
+          "text": "Format — the prompt does not describe the desired email structure"
+        },
+        {
+          "label": "D",
+          "text": "Role — the AI has not been told it is assisting an underwriter"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "CRAF's Context element requires the underwriter to supply the situation — who the borrower is, what the deal involves, and any relevant financial details. Without Context, the AI has no grounding to produce a usable, compliance-safe draft.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c1_prompting_q2",
+      "course_id": "uw_c1_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "According to the CRAF Framework, what is the purpose of specifying a Role in a Copilot prompt for credit decision emails?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "It tells Copilot which Microsoft 365 surface to use when generating the draft"
+        },
+        {
+          "label": "B",
+          "text": "It instructs Copilot to adopt the perspective and professional standards of the person asking, shaping the tone and content accordingly"
+        },
+        {
+          "label": "C",
+          "text": "It replaces the need to provide Context by letting Copilot infer the borrower's situation"
+        },
+        {
+          "label": "D",
+          "text": "It ensures the email is automatically routed to the correct compliance reviewer"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The Role element in CRAF tells the AI what professional is asking, which calibrates the tone, terminology, and standards the output should reflect — essential for producing credit-decision language that survives compliance review.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c1_prompting_q3",
+      "course_id": "uw_c1_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "The CRAF Framework's primary goal for underwriters is best described as which of the following?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Producing polished, publication-ready prose that requires no further editing"
+        },
+        {
+          "label": "B",
+          "text": "Replacing the underwriter's judgment with AI-generated credit decisions"
+        },
+        {
+          "label": "C",
+          "text": "Turning Copilot into a controlled assistant that produces structured, compliance-safe first drafts the underwriter can review and send with confidence"
+        },
+        {
+          "label": "D",
+          "text": "Automating the full credit file so that no human review is needed before submission"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The reading explicitly states that CRAF turns Copilot from an unpredictable drafter into a controlled assistant producing structured, compliance-safe credit decision emails the underwriter can review and send with confidence — not a replacement for human judgment.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c1_prompting_q4",
+      "course_id": "uw_c1_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Write a complete CRAF-structured Copilot prompt that could generate a usable first-draft credit decision email for the scenario below. Your response must clearly include all four CRAF elements and explain briefly why each element you included serves the framework's purpose.",
+      "scenario_text": "You are an underwriter at a trade finance institution. HarborLight Components Ltd. has applied for a $2.1 million export credit facility to fulfill a purchase order from a buyer in Germany. The company has been operating for 11 years, carries moderate leverage, and has no prior defaults. Your credit committee approved the deal with one condition: HarborLight must provide a personal guarantee from its majority shareholder before funds are released. You need to send a decision email to the relationship manager.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response includes a clear Role element that identifies the professional perspective (e.g., underwriter at a trade finance institution) to calibrate tone and standards.",
+        "key2": "The response includes a substantive Context element that names HarborLight Components Ltd., the deal type and amount, the borrower's profile details, and the conditional approval outcome.",
+        "key3": "The response includes a specific Action element that directs Copilot to draft a credit decision email to the relationship manager communicating the conditional approval.",
+        "key4": "The response includes a Format element that describes the desired email structure (e.g., subject line, opening summary, condition statement, next steps, professional closing) and the learner briefly explains why each CRAF element contributes to a compliance-safe, usable draft."
+      }
+    }
+  ],
+  "uw_c2_verification": [
+    {
+      "item_id": "ev_uw_c2_verification_q1",
+      "course_id": "uw_c2_verification",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, why is an AI output that sounds authoritative particularly risky in underwriting?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Authoritative tone causes the email to be flagged automatically by compliance filters"
+        },
+        {
+          "label": "B",
+          "text": "Confidence in tone is not the same as accuracy, and a wrong number or invented claim in a credit file is an audit finding and a decision risk"
+        },
+        {
+          "label": "C",
+          "text": "Authoritative language makes it harder for the relationship manager to negotiate with the borrower"
+        },
+        {
+          "label": "D",
+          "text": "AI outputs that sound authoritative are always based on outdated training data"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly warns that AI can sound authoritative while being inaccurate, and that in underwriting a wrong number or invented claim is not a minor error — it is an audit finding, a decision risk, and potentially a compliance issue.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c2_verification_q2",
+      "course_id": "uw_c2_verification",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The VERIFY Checklist is designed to keep AI a productivity tool rather than a liability. Which statement best captures the core principle the checklist enforces?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Every AI-generated sentence must be rewritten by the underwriter before it enters the credit file"
+        },
+        {
+          "label": "B",
+          "text": "If you cannot point to the source document that supports a claim, that claim does not belong in the credit file"
+        },
+        {
+          "label": "C",
+          "text": "AI outputs should only be used for internal memos, never for client-facing credit decisions"
+        },
+        {
+          "label": "D",
+          "text": "Verification is only required for numerical data; qualitative statements can be accepted as drafted"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's explicit takeaway states: 'If you cannot point to the source document that supports a claim, that claim does not belong in the credit file' — this is the foundational principle the VERIFY Checklist enforces.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c2_verification_q3",
+      "course_id": "uw_c2_verification",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "An underwriter receives an AI-generated company profile that includes a revenue figure and a claim about the borrower's market position. According to the reading's verification principles, what should the underwriter do before including these in the credit file?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Accept both items because AI summarization tools are trained on verified financial databases"
+        },
+        {
+          "label": "B",
+          "text": "Accept the revenue figure but flag the market position claim as qualitative and therefore lower risk"
+        },
+        {
+          "label": "C",
+          "text": "Trace both the revenue figure and the market position claim back to specific source documents before including them"
+        },
+        {
+          "label": "D",
+          "text": "Ask the relationship manager to confirm the figures verbally, which satisfies the audit requirement"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The VERIFY Checklist principle requires that every claim — numerical or qualitative — be traceable to a source document before it enters the credit file; verbal confirmation or assumed database accuracy does not satisfy this standard.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c2_verification_q4",
+      "course_id": "uw_c2_verification",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Review the AI-generated credit file excerpt below and apply the VERIFY Checklist. Identify every claim that requires source verification, explain the specific risk each unverified claim poses in an underwriting context, and describe the verification step you would take for each.",
+      "scenario_text": "Copilot has generated the following paragraph for inclusion in a credit file for Solstice Agri-Equipment Inc.: 'Solstice Agri-Equipment Inc. reported revenues of $8.4 million in its most recent fiscal year, representing a 12% increase over the prior year. The company holds a leading market position in the prairie agricultural equipment sector and has maintained a debt-service coverage ratio of 1.6x. Management has over 20 years of combined industry experience, and the company has no history of loan defaults or restructurings.'",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response identifies all specific numerical claims (revenue of $8.4M, 12% growth, DSCR of 1.6x) as requiring verification and names the type of source document (e.g., audited financial statements, borrower-provided financials) that would support each.",
+        "key2": "The response identifies the qualitative claims (leading market position, 20 years combined experience, no default history) as requiring verification and explains that AI can generate plausible-sounding but invented qualitative assertions.",
+        "key3": "The response articulates the specific underwriting risk for at least two claims — explaining that an unverified figure or invented claim in a credit file constitutes an audit finding and a decision risk, not merely a minor error.",
+        "key4": "The response describes a concrete verification step for each category of claim (e.g., cross-reference revenue and DSCR against audited financials; confirm management tenure via corporate documents or LinkedIn; check default history against credit bureau or internal records) consistent with the principle that every claim must be traceable to a source document."
+      }
+    }
+  ],
+  "uw_c3_data_safety": [
+    {
+      "item_id": "ev_uw_c3_data_safety_q1",
+      "course_id": "uw_c3_data_safety",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, when are underwriters most likely to experience data incidents involving AI tools?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "When they are using AI for the first time and are unfamiliar with the interface"
+        },
+        {
+          "label": "B",
+          "text": "During low-pressure periods when attention to detail is reduced"
+        },
+        {
+          "label": "C",
+          "text": "Under time pressure, when a deadline looms and the fastest path feels justified"
+        },
+        {
+          "label": "D",
+          "text": "When senior management is not monitoring AI usage in the underwriting team"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The reading explicitly states that 'time pressure is exactly when data incidents happen' — a deadline looms, a document lands in the inbox, and the fastest path feels justified, making pressure the primary risk condition.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c3_data_safety_q2",
+      "course_id": "uw_c3_data_safety",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The SAFE framework is designed to help underwriters get analytical help from AI without creating a data incident. What does SAFE change, according to the reading's takeaway?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "It changes which AI tool the underwriter uses depending on the sensitivity of the document"
+        },
+        {
+          "label": "B",
+          "text": "It changes what the underwriter shares with AI and what the underwriter asks AI for"
+        },
+        {
+          "label": "C",
+          "text": "It changes the approval workflow so that a compliance officer reviews every AI prompt"
+        },
+        {
+          "label": "D",
+          "text": "It changes the format of the output so that sensitive data is automatically redacted"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway states that SAFE keeps AI useful under pressure 'by changing what you share and what you ask for' — the framework governs the underwriter's inputs and requests, not the tool selection or approval workflow.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c3_data_safety_q3",
+      "course_id": "uw_c3_data_safety",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "Which of the following types of information does the reading identify as among the most sensitive data underwriters handle?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Published annual reports, industry benchmarks, and publicly available credit ratings"
+        },
+        {
+          "label": "B",
+          "text": "Financial forecasts, draft term sheets, internal risk ratings, and personal guarantor information"
+        },
+        {
+          "label": "C",
+          "text": "Meeting agendas, relationship manager contact lists, and deal pipeline summaries"
+        },
+        {
+          "label": "D",
+          "text": "Regulatory guidance documents, compliance checklists, and policy manuals"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly lists financial forecasts, draft term sheets, internal risk ratings, and personal guarantor information as examples of the most sensitive data underwriters work with — the categories that make data safety discipline essential.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c3_data_safety_q4",
+      "course_id": "uw_c3_data_safety",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the SAFE framework to the scenario below. Describe exactly what you would and would not share with the AI tool, what you would ask the AI to do instead of sharing raw sensitive data, and explain how your approach prevents a data incident while still getting useful analytical help.",
+      "scenario_text": "You are an underwriter with a same-day deadline to complete a risk assessment for IronPeak Renewables Ltd., a borrower seeking a $15 million project finance facility. You have just received a confidential package containing: (1) IronPeak's five-year financial forecast with projected EBITDA margins, (2) a draft term sheet with proposed covenants and pricing, (3) your institution's internal risk rating for IronPeak marked 'Restricted,' and (4) a personal guarantee signed by the majority shareholder including their home address and net worth statement. You want to use Copilot to help you structure your risk narrative quickly.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response explicitly identifies which items must NOT be shared with the AI tool (draft term sheet, internal risk rating marked Restricted, personal guarantor details including address and net worth) and provides a clear rationale tied to data sensitivity.",
+        "key2": "The response describes a safe alternative approach for at least one sensitive item — for example, replacing specific guarantor details with anonymized or hypothetical figures, or asking the AI to generate a risk narrative template rather than inputting the raw restricted document.",
+        "key3": "The response demonstrates understanding that SAFE changes what is shared and what is asked for — showing how the underwriter can still obtain useful AI-generated analytical structure (e.g., risk narrative framework, covenant analysis template) without exposing sensitive data.",
+        "key4": "The response acknowledges the time-pressure context and explains how applying SAFE under deadline conditions prevents a data incident, consistent with the reading's point that pressure is exactly when incidents happen and SAFE keeps AI useful without turning urgency into a breach."
+      }
+    }
+  ],
+  "uw_c4_tool_fluency": [
+    {
+      "item_id": "ev_uw_c4_tool_fluency_q1",
+      "course_id": "uw_c4_tool_fluency",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the Copilot Surface Selector, what is the primary rule for deciding which Microsoft 365 surface to open first after a credit committee meeting?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Always open SharePoint first so that records are filed before any drafting begins"
+        },
+        {
+          "label": "B",
+          "text": "Always open Outlook first because the decision email is the most time-sensitive output"
+        },
+        {
+          "label": "C",
+          "text": "Start in the surface where the meeting input already lives, beginning with Teams"
+        },
+        {
+          "label": "D",
+          "text": "Open whichever surface the relationship manager used to send the original deal request"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The reading's takeaway states: 'Always start in the surface where the meeting input already lives — Teams first, then chain forward to Outlook and SharePoint' — the decision rule is anchored to where the input exists, not to output urgency.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c4_tool_fluency_q2",
+      "course_id": "uw_c4_tool_fluency",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The Copilot Surface Selector describes a chaining sequence after a meeting. What is the correct order of surfaces according to the reading?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "SharePoint → Teams → Outlook"
+        },
+        {
+          "label": "B",
+          "text": "Outlook → SharePoint → Teams"
+        },
+        {
+          "label": "C",
+          "text": "Teams → Outlook → SharePoint"
+        },
+        {
+          "label": "D",
+          "text": "Teams → SharePoint → Outlook"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The reading explicitly states the chain is Teams first (where meeting input lives), then forward to Outlook (for the decision email), then SharePoint (for filing the record) — ensuring every decision becomes a traceable, filed record.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c4_tool_fluency_q3",
+      "course_id": "uw_c4_tool_fluency",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "What outcome does the Copilot Surface Selector workflow achieve for underwriters, according to the reading's takeaway?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "It eliminates the need for human review by automating the full record-keeping process"
+        },
+        {
+          "label": "B",
+          "text": "It ensures every decision becomes a traceable, filed record without duplicated effort"
+        },
+        {
+          "label": "C",
+          "text": "It allows underwriters to bypass SharePoint filing when deadlines are tight"
+        },
+        {
+          "label": "D",
+          "text": "It automatically notifies compliance whenever a credit decision email is sent"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states the Surface Selector workflow ensures 'every decision becomes a traceable, filed record without duplicated effort' — the goal is complete, efficient record-keeping, not automation of human review.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c4_tool_fluency_q4",
+      "course_id": "uw_c4_tool_fluency",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the Copilot Surface Selector to the scenario below. Describe the exact sequence of surfaces you would use, what you would do with Copilot in each surface, and explain how this sequence turns the meeting outcomes into a complete, traceable record without duplicated effort.",
+      "scenario_text": "You have just finished a Teams video call — with a recorded transcript available — for a credit review of Northstar Marine Furnishings Ltd. During the call, the credit committee approved a $4.5 million revolving credit facility with two conditions: (1) the borrower must submit updated accounts receivable aging within 10 business days, and (2) a revised personal guarantee must be executed before first drawdown. You need to communicate the decision to the relationship manager, assign the open items, and file the record in the deal's SharePoint folder.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response correctly identifies Teams as the first surface to open because the meeting transcript (the input) already lives there, and describes using Copilot in Teams to extract the decision, the two conditions, and any assigned action items from the transcript.",
+        "key2": "The response describes chaining forward to Outlook as the second surface, using the Teams-extracted content to draft a credit decision email to the relationship manager that communicates the conditional approval and the two specific conditions for Northstar Marine Furnishings Ltd.",
+        "key3": "The response describes chaining forward to SharePoint as the third surface to file the decision record (e.g., the meeting summary, the decision email, or both) in the deal's SharePoint folder, completing the traceable record.",
+        "key4": "The response explicitly explains how following the Teams → Outlook → SharePoint sequence avoids duplicated effort — for example, by reusing the Copilot-extracted content from Teams rather than re-entering information manually in each subsequent surface — consistent with the Surface Selector's design principle."
+      }
+    }
+  ],
+  "uw_c5_capstone": [
+    {
+      "item_id": "ev_uw_c5_capstone_q1",
+      "course_id": "uw_c5_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what is the capstone skill for an AI-enabled underwriter?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Writing highly detailed prompts that eliminate the need for any post-generation editing"
+        },
+        {
+          "label": "B",
+          "text": "Orchestrating AI safely across a full underwriting sprint using a four-stage workflow"
+        },
+        {
+          "label": "C",
+          "text": "Selecting the correct AI tool for each individual underwriting task"
+        },
+        {
+          "label": "D",
+          "text": "Automating compliance review so that credit files are submitted without manual checking"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly states: 'The capstone skill for an AI-enabled underwriter is not simply using AI — it is orchestrating AI safely across a full underwriting sprint,' structured through the four-stage End-to-End AI Workflow.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c5_capstone_q2",
+      "course_id": "uw_c5_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The End-to-End AI Workflow begins with Stage 1: Intake & Triage. According to the reading, what does this stage involve?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Drafting the credit decision email using a CRAF-structured prompt"
+        },
+        {
+          "label": "B",
+          "text": "Filing the completed credit file in SharePoint and notifying the relationship manager"
+        },
+        {
+          "label": "C",
+          "text": "Summarizing a long application or document package to identify key deal parameters and risks"
+        },
+        {
+          "label": "D",
+          "text": "Running the VERIFY Checklist against all AI-generated claims before submission"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The reading describes Stage 1 — Intake & Triage — as summarizing a long application or document package to identify key deal parameters and risks, establishing the foundation for the subsequent stages of the workflow.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c5_capstone_q3",
+      "course_id": "uw_c5_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, what makes AI speed safe in an underwriting sprint?",
+      "scenario_text": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Using only enterprise-approved AI tools that have built-in compliance filters"
+        },
+        {
+          "label": "B",
+          "text": "Running every sprint through all four stages — prompt, pull guidance, draft, verify — because the workflow itself is what makes AI speed safe"
+        },
+        {
+          "label": "C",
+          "text": "Skipping stages when deadlines are tight, since the most critical stage is verification at the end"
+        },
+        {
+          "label": "D",
+          "text": "Having a compliance officer review the AI outputs at each stage before the underwriter proceeds"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway is explicit: 'Run every underwriting sprint through all four stages — prompt, pull guidance, draft, verify — because the workflow is what makes AI speed safe, not a shortcut around it.' Skipping stages undermines the safety the workflow provides.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c5_capstone_q4",
+      "course_id": "uw_c5_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the full End-to-End AI Workflow to the scenario below. Walk through all four stages — Intake & Triage, pulling guidance, drafting, and verifying — describing what you would do with AI at each stage, what safeguards you would apply, and how the complete workflow keeps you fast, accurate, and accountable.",
+      "scenario_text": "You are an underwriter assigned to a new deal for CedarBridge Infrastructure Partners, which is seeking a $22 million construction loan to develop a regional logistics hub. You have received a 90-page application package including financial statements for the past three years, a project feasibility study, environmental assessment, and a draft term sheet. The credit committee meeting is in 48 hours. Your institution has internal lending policies for infrastructure construction deals that include specific LTV limits, debt-service coverage thresholds, and environmental risk requirements. You must produce a complete credit file with a recommendation and a decision email ready for the relationship manager.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response describes Stage 1 (Intake & Triage) by explaining how AI would be used to summarize the 90-page application package to extract key deal parameters (loan amount, project type, borrower profile) and flag initial risk indicators — and applies a data safety consideration about what raw document content should or should not be shared with the AI tool.",
+        "key2": "The response describes Stage 2 (pulling guidance) by explaining how the underwriter would use AI to surface or reference relevant internal lending policies — specifically the LTV limits, DSCR thresholds, and environmental risk requirements — to frame the analysis before drafting.",
+        "key3": "The response describes Stage 3 (drafting) by applying a CRAF-structured prompt to generate the credit file narrative and/or the decision email for CedarBridge Infrastructure Partners, demonstrating that the draft is grounded in the parameters identified in Stages 1 and 2.",
+        "key4": "The response describes Stage 4 (verifying) by applying VERIFY Chec"
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "rm": {
+    "role_id": "rm",
+    "title": "Relationship Manager",
+    "description": "Client-facing professionals who manage prospect and customer relationships across EDC's Mid-Market, Small Business, and Regional segments. Core responsibilities include lead qualification, discovery conversations, CRM documentation, pipeline forecasting, and multi-solution adoption. Supported by Associate Relationship Managers (ARMs) for top-of-funnel prospecting. Performance measured on customer growth, customer experience, process discipline, and education KPIs.",
+    "department": "Business Development / Sales"
+  },
+  "uw": {
+    "role_id": "uw",
+    "title": "Underwriter",
+    "description": "Credit professionals who evaluate loan applications, assess borrower creditworthiness, and make underwriting decisions across EDC's portfolio. Core responsibilities include financial analysis, risk assessment, credit memo preparation, client communications, and compliance with underwriting standards and delegated authority limits.",
+    "department": "Credit"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "rm_c1_prompting": {
+    "course_id": "rm_c1_prompting",
+    "role_id": "rm",
+    "primary_domain": "prompting",
+    "title": "Brief Like a Pro: From ARM Handoff to Discovery Brief",
+    "tagline": "Turn a messy ARM handoff into a sharp discovery brief using the CRAF prompt framework.",
+    "description": "RMs spend significant time preparing for discovery calls. This course teaches the CRAF framework (Context, Role, Action, Format) to produce briefing documents, discovery questions, and talking points that are directly usable — not generic AI output that needs full rewrites.",
+    "real_use_case": "Access to Copilot 365 for Business Development (Mid Market); Prospect Intelligence; RM Support Agent",
+    "sequence_order": 1
+  },
+  "rm_c2_verification": {
+    "course_id": "rm_c2_verification",
+    "role_id": "rm",
+    "primary_domain": "verification",
+    "title": "Recap, Review, Then Log: Post-Meeting AI Discipline",
+    "tagline": "Catch the errors AI puts into your meeting recaps before they make it into C3.",
+    "description": "Teams Copilot and similar tools generate meeting recaps automatically — but they hallucinate names, invent commitments, and misstate figures. This course teaches a verification discipline: what to check, how to check it, and how to log a corrected, reliable CRM note.",
+    "real_use_case": "Customer Interaction Recap; Meeting Recap in MS-Teams; Record Governance; Sales Transcript Analysis",
+    "sequence_order": 2
+  },
+  "rm_c3_data_safety": {
+    "course_id": "rm_c3_data_safety",
+    "role_id": "rm",
+    "primary_domain": "data_safety",
+    "title": "The C3 Line: What Goes Into AI and What Doesn't",
+    "tagline": "Apply the public/non-public test before any C3 data touches an AI prompt.",
+    "description": "EDC's GenAI policy requires that non-public client information never be input into unapproved AI tools. For RMs, this means C3 data — credit figures, deal terms, NPS scores, relationship notes — must be abstracted before use. This course makes the public/non-public test automatic.",
+    "real_use_case": "Non-public client data into MS Copilot on the Web (FinDev Canada use case); Access to Copilot 365 for Business Development C3 extraction tension (Mid Market)",
+    "sequence_order": 3
+  },
+  "rm_c4_tool_fluency": {
+    "course_id": "rm_c4_tool_fluency",
+    "role_id": "rm",
+    "primary_domain": "tool_fluency",
+    "title": "Your Monday Morning Copilot Reset",
+    "tagline": "Match the right M365 Copilot surface to the right task and chain them into a workflow.",
+    "description": "M365 Copilot is available across Teams, Outlook, Excel, and Word — but the right surface for each task is not obvious. This course teaches RMs which tool to reach for first and how to chain outputs across surfaces into a complete Monday morning workflow: from missed call to briefing note to follow-up email.",
+    "real_use_case": "Business Enablement — Frontline Copilot Use Case Generation (explicitly names RMs and UWs); Request for Leadership from Small Business National Accounts; Meeting Recap; Record Governance",
+    "sequence_order": 4
+  },
+  "rm_c5_capstone": {
+    "course_id": "rm_c5_capstone",
+    "role_id": "rm",
+    "primary_domain": "prompting",
+    "title": "Win-Back and Portfolio Intelligence: AI for Pipeline Decisions",
+    "tagline": "Run an end-to-end AI-assisted win-back program: abstract, analyze, draft, verify.",
+    "description": "The capstone course integrates all four RM AI skill domains in a realistic win-back program scenario. Learners must abstract C3 data before analysis, choose the right Copilot surfaces, write CRAF prompts for outreach, and verify AI output before it reaches a client — all in the correct sequence.",
+    "real_use_case": "Access to Copilot 365 for Business Development — explicit C3 export and Excel win-back scenario (Mid Market); Automating Prospect Profiling; Sector Opportunity Identification Agent",
+    "sequence_order": 5
+  },
+  "uw_c1_prompting": {
+    "course_id": "uw_c1_prompting",
+    "role_id": "uw",
+    "primary_domain": "prompting",
+    "title": "Write Client-Ready Credit Decisions with AI",
+    "tagline": "Turn a complex credit decision into a clear, compliant email using the CRAF Framework.",
+    "description": "Underwriters write high-volume customer communications (approvals, declines, info requests) where wording matters. This course teaches the CRAF Framework (Context, Role, Action, Format) to generate usable first drafts in Outlook/Word while staying consistent with approved wording patterns and avoiding over-disclosure of internal credit models.",
+    "real_use_case": "Explore Copilot 360 Option for the Credit Insurance Program",
+    "sequence_order": 1
+  },
+  "uw_c2_verification": {
+    "course_id": "uw_c2_verification",
+    "role_id": "uw",
+    "primary_domain": "verification",
+    "title": "Trust but Verify: Validating AI's Credit Analysis",
+    "tagline": "Use the VERIFY Checklist to catch errors before they reach the credit file or the client.",
+    "description": "AI can speed up due diligence summaries and risk flag extraction, but underwriting requires disciplined verification. This course teaches a practical verification workflow (VERIFY Checklist) for checking AI-generated company assessments against source documents and underwriting guidance, and documenting what was verified.",
+    "real_use_case": "Use Gen-AI to help provide company assessments.",
+    "sequence_order": 2
+  },
+  "uw_c3_data_safety": {
+    "course_id": "uw_c3_data_safety",
+    "role_id": "uw",
+    "primary_domain": "data_safety",
+    "title": "Safely Harnessing AI with Confidential Data",
+    "tagline": "Use the SAFE Abstraction Method to get AI help without leaking non-public client data.",
+    "description": "Underwriters handle sensitive financial and personal data, so tool choice and prompt content must follow policy. This course teaches how to screen for sensitive data, abstract/anonymize safely, and use approved tools consistent with policy—especially under time pressure.",
+    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).",
+    "sequence_order": 3
+  },
+  "uw_c4_tool_fluency": {
+    "course_id": "uw_c4_tool_fluency",
+    "role_id": "uw",
+    "primary_domain": "tool_fluency",
+    "title": "Mastering Copilot for Meetings and Follow-Ups",
+    "tagline": "Use the Copilot Surface Selector to turn meetings into accurate actions and records.",
+    "description": "Underwriters attend frequent huddles, deal forums, and pipeline reviews where decisions and actions must be captured and stored. This course trains learners to use Copilot across Teams, Outlook, and SharePoint to produce a meeting recap, validate it, send follow-ups, and file the record properly.",
+    "real_use_case": "Record governance - Summarizing Meeting notes and actions (with attendees tagged)",
+    "sequence_order": 4
+  },
+  "uw_c5_capstone": {
+    "course_id": "uw_c5_capstone",
+    "role_id": "uw",
+    "primary_domain": "prompting",
+    "title": "AI in Action: End-to-End Underwriting Simulation",
+    "tagline": "Run an end-to-end AI-assisted workflow across documents, knowledge search, and pricing—without sacrificing judgment or compliance.",
+    "description": "This capstone integrates all four domains in one realistic underwriting sprint: summarize a long third-party submission, pull internal guidance through an underwriting knowledge assistant, draft a recommendation and client note, retrieve pricing benchmarks, and validate everything before finalizing. Learners must demonstrate prompting skill, verification discipline, safe abstraction, and tool chaining.",
+    "real_use_case": "UW Streamlining; Underwriting Knowledge Assistant; Pricing Benchmark Retrieval",
+    "sequence_order": 5
+  }
+}

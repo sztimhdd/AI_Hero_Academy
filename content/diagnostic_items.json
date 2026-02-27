@@ -1,0 +1,753 @@
+[
+  {
+    "item_id": "diag_p1_mcq",
+    "domain_id": "prompting",
+    "item_type": "mcq",
+    "display_order": 1,
+    "question_text": "Your client Maple Industries Ltd. needs a briefing note about export financing options. Which prompt would produce the most useful first draft for an RM?",
+    "scenario_text": null,
+    "options": [
+      {
+        "label": "A",
+        "text": "Write a briefing on export financing."
+      },
+      {
+        "label": "B",
+        "text": "You are an expert in export finance. Write a 300-word briefing note for a Relationship Manager to present to a manufacturing client exploring their first export. Include: overview of available products, 3 questions to ask the client, and next steps. Use a professional tone."
+      },
+      {
+        "label": "C",
+        "text": "What are financing options for exporting companies?"
+      },
+      {
+        "label": "D",
+        "text": "Give me a list of financing products."
+      }
+    ],
+    "correct_option": "B",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_p2_sandbox",
+    "domain_id": "prompting",
+    "item_type": "prompt_sandbox",
+    "display_order": 2,
+    "question_text": "Write a prompt you would give an AI assistant to draft a follow-up email to Northern Fabrication Ltd. summarising next steps from your discovery call. Your prompt should include all elements of an effective prompt (role, context, task, format, constraints).",
+    "scenario_text": "You just finished a discovery call with Northern Fabrication Ltd., a new prospect. They expressed interest in accounts receivable insurance and mentioned a potential contract with a buyer in Germany. You promised to send a follow-up with next steps.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Role / Persona",
+          "description": "Assigns the AI a relevant role (e.g., RM, export finance specialist)",
+          "max": 1
+        },
+        {
+          "name": "Context",
+          "description": "Includes relevant context (client type, situation, previous interaction)",
+          "max": 1
+        },
+        {
+          "name": "Specificity",
+          "description": "Task is clear and specific enough to produce a usable output",
+          "max": 1
+        },
+        {
+          "name": "Output Format",
+          "description": "Specifies desired format (email, length, tone)",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_p3_task",
+    "domain_id": "prompting",
+    "item_type": "micro_task",
+    "display_order": 3,
+    "question_text": "Rewrite this prompt so it would generate a useful, ready-to-use output for an RM. Briefly explain the key improvements you made.",
+    "scenario_text": "Original prompt submitted by a colleague: \"Write an email.\"",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Added Specificity",
+          "description": "New prompt specifies recipient, purpose, and context",
+          "max": 2
+        },
+        {
+          "name": "Output Instructions",
+          "description": "Specifies tone, length, or format of the output",
+          "max": 1
+        },
+        {
+          "name": "Explanation Quality",
+          "description": "Clearly explains what was missing in the original and why each addition matters",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_v1_mcq",
+    "domain_id": "verification",
+    "item_type": "mcq",
+    "display_order": 4,
+    "question_text": "AI generated this sentence in a meeting recap: 'Maple Industries confirmed a $4.2M contract with Schneider AG, signed March 15, 2024.' What should you do before including this in a CRM note?",
+    "scenario_text": null,
+    "options": [
+      {
+        "label": "A",
+        "text": "Include it directly \u00e2\u20ac\u201d AI recaps are accurate."
+      },
+      {
+        "label": "B",
+        "text": "Cross-check the amount and date against your call notes and any signed agreement before using it."
+      },
+      {
+        "label": "C",
+        "text": "Ask the AI to confirm the facts."
+      },
+      {
+        "label": "D",
+        "text": "Only verify if the client later raises a concern."
+      }
+    ],
+    "correct_option": "B",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_v2_sandbox",
+    "domain_id": "verification",
+    "item_type": "prompt_sandbox",
+    "display_order": 5,
+    "question_text": "List every claim in this AI-generated summary that you would need to verify before using it in a client follow-up. For each claim, explain why verification is needed.",
+    "scenario_text": "Copilot generated this after a Teams meeting: 'Northern Fabrication Ltd. agreed to proceed with a $2M accounts receivable insurance policy. The signing meeting is scheduled for April 3. The premium will be 0.8% of the insured amount. The main contact is Sandra Tremblay, CFO.'",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Completeness",
+          "description": "Identifies all verifiable claims (dollar amount, date, premium rate, contact title)",
+          "max": 2
+        },
+        {
+          "name": "Reasoning",
+          "description": "Provides a specific reason why each claim needs verification",
+          "max": 1
+        },
+        {
+          "name": "Appropriate Skepticism",
+          "description": "Does not treat any AI-generated fact as automatically reliable",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_v3_task",
+    "domain_id": "verification",
+    "item_type": "micro_task",
+    "display_order": 6,
+    "question_text": "An AI assistant told you: 'The maximum coverage for SME accounts receivable insurance is $10 million CAD.' How would you verify this before quoting it to a client? Describe your specific steps.",
+    "scenario_text": null,
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Uses Authoritative Sources",
+          "description": "References official sources (product guide, underwriting team, internal knowledge base)",
+          "max": 2
+        },
+        {
+          "name": "Acknowledges AI Limitation",
+          "description": "Recognises AI may hallucinate figures and does not simply re-ask the AI",
+          "max": 1
+        },
+        {
+          "name": "Actionable Steps",
+          "description": "Steps are specific and could be followed by another RM",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_d1_mcq",
+    "domain_id": "data_safety",
+    "item_type": "mcq",
+    "display_order": 7,
+    "question_text": "Which of the following would be safe to include in a prompt to a general AI tool (not a secure enterprise system)?",
+    "scenario_text": null,
+    "options": [
+      {
+        "label": "A",
+        "text": "Our client Maple Industries has confidential expansion plans valued at $50M."
+      },
+      {
+        "label": "B",
+        "text": "A mid-sized Canadian manufacturer is exploring export financing options for the first time."
+      },
+      {
+        "label": "C",
+        "text": "Client credit limit approved: $8.5M; deal terms: 18-month tenor, 90-day grace period."
+      },
+      {
+        "label": "D",
+        "text": "Prepare talking points using the attached confidential term sheet."
+      }
+    ],
+    "correct_option": "B",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_d2_sandbox",
+    "domain_id": "data_safety",
+    "item_type": "prompt_sandbox",
+    "display_order": 8,
+    "question_text": "Rewrite this prompt so it is safe to enter into a general-purpose AI tool, while preserving the intent. Then explain what you changed and why.",
+    "scenario_text": "Original prompt: 'Maple Industries Ltd. (client ID #8847) is applying for $12M in buyer credit financing for a contract with Eurotech GmbH. Their internal growth projections are confidential. Draft a risk summary for the deal committee.'",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Removes Non-Public Info",
+          "description": "Removes client name, client ID, deal amount, and confidential projections",
+          "max": 2
+        },
+        {
+          "name": "Preserves Intent",
+          "description": "Rewritten prompt still asks for a risk summary with useful context",
+          "max": 1
+        },
+        {
+          "name": "Explanation",
+          "description": "Clearly explains which elements were removed and the reason (NPI policy)",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_d3_task",
+    "domain_id": "data_safety",
+    "item_type": "micro_task",
+    "display_order": 9,
+    "question_text": "A colleague says: 'It's fine to paste client financials into an AI chat tool as long as you delete the conversation history afterward.' Do you agree? Explain your position and describe the correct approach.",
+    "scenario_text": null,
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identifies the Flaw",
+          "description": "Explains why deleting chat history does not eliminate the privacy risk (data is sent to the server regardless)",
+          "max": 2
+        },
+        {
+          "name": "States Correct Policy",
+          "description": "Describes the correct approach: abstract/anonymise before inputting, or use only approved secure tools",
+          "max": 1
+        },
+        {
+          "name": "Practical Guidance",
+          "description": "Provides a concrete alternative the colleague could follow",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_t1_mcq",
+    "domain_id": "tool_fluency",
+    "item_type": "mcq",
+    "display_order": 10,
+    "question_text": "After a client call you need to: (1) generate a meeting summary, (2) draft a CRM note, and (3) send a follow-up email \u00e2\u20ac\u201d all based on the same call. Which Copilot workflow handles this most efficiently?",
+    "scenario_text": null,
+    "options": [
+      {
+        "label": "A",
+        "text": "Outlook \u00e2\u2020\u2019 Teams \u00e2\u2020\u2019 Word"
+      },
+      {
+        "label": "B",
+        "text": "Copilot in Teams (meeting recap) \u00e2\u2020\u2019 Copilot in Word/SharePoint (CRM note draft) \u00e2\u2020\u2019 Copilot in Outlook (follow-up email)"
+      },
+      {
+        "label": "C",
+        "text": "Excel \u00e2\u2020\u2019 Teams \u00e2\u2020\u2019 Outlook"
+      },
+      {
+        "label": "D",
+        "text": "PowerPoint \u00e2\u2020\u2019 Outlook \u00e2\u2020\u2019 Teams"
+      }
+    ],
+    "correct_option": "B",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_t2_sandbox",
+    "domain_id": "tool_fluency",
+    "item_type": "prompt_sandbox",
+    "display_order": 11,
+    "question_text": "Describe a step-by-step workflow using Copilot and M365 tools to complete this task. For each step, name the tool and the specific prompt or action you would use.",
+    "scenario_text": "You have a spreadsheet with 15 rows of prospect data: company name, sector, last contact date, and deal stage. You want to identify which 3 clients to prioritise for calls this week, then draft a short outreach email for each.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Correct Tool Selection",
+          "description": "Uses Copilot in Excel for data analysis and Copilot in Outlook for email drafting",
+          "max": 2
+        },
+        {
+          "name": "Logical Sequence",
+          "description": "Steps flow logically and output from one step informs the next",
+          "max": 1
+        },
+        {
+          "name": "Prompt Specificity",
+          "description": "At least one step includes a specific, usable Copilot prompt",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "diag_t3_task",
+    "domain_id": "tool_fluency",
+    "item_type": "micro_task",
+    "display_order": 12,
+    "question_text": "A colleague always writes client emails in a Teams chat message first, then copies and pastes them into Outlook to send. What Copilot feature are they missing? How would you help them work more efficiently?",
+    "scenario_text": null,
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identifies Feature",
+          "description": "Correctly identifies Copilot in Outlook (draft with Copilot) as the missing feature",
+          "max": 2
+        },
+        {
+          "name": "Explains Benefit",
+          "description": "Explains how it saves steps and produces better-formatted output",
+          "max": 1
+        },
+        {
+          "name": "Practical Suggestion",
+          "description": "Provides a concrete, actionable tip the colleague could apply immediately",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "uw_diag_p1_mcq",
+    "domain_id": "prompting",
+    "item_type": "mcq",
+    "display_order": 1,
+    "question_text": "You need AI to draft a partial-approval decision email to a broker at NorthStar Exports Inc. regarding a credit insurance limit. Which prompt will produce the most client-ready first draft?",
+    "scenario_text": "The requested limit of $500,000 was partially approved at $250,000 due to limited recent financial information. The broker needs to understand the decision and what to submit for reconsideration.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Write an email about a partial credit insurance approval."
+      },
+      {
+        "label": "B",
+        "text": "You are an underwriting communications specialist. Draft a 180\u00e2\u20ac\u201c220 word email to a broker explaining that NorthStar Exports Inc.'s credit insurance limit request of $500,000 has been partially approved at $250,000. Reason category: limited recent financial information. Include: (1) a plain-language explanation of the decision, (2) a bullet list of documents that would support reconsideration (audited financials, AR aging report), and (3) a clear next-steps sentence. Do not reference internal rating models or scoring thresholds. Use a professional, courteous tone."
+      },
+      {
+        "label": "C",
+        "text": "Draft a professional email telling the broker their client was only partially approved and list what documents we need. Keep it short."
+      },
+      {
+        "label": "D",
+        "text": "Explain to the broker why the limit was reduced from $500,000 to $250,000 based on our internal risk model output and buyer score."
+      }
+    ],
+    "correct_option": "B",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_p2_sandbox",
+    "domain_id": "prompting",
+    "item_type": "prompt_sandbox",
+    "display_order": 2,
+    "question_text": "Write a prompt asking an AI assistant to produce a first-draft internal credit memo recommendation for a new trade credit insurance submission.",
+    "scenario_text": "You are underwriting a new trade credit insurance policy for Crestwood Manufacturing Ltd., a mid-sized exporter. The submission includes 2 years of audited financials, a buyer concentration report, and a broker cover note. Your credit memo must summarise the risk, state a recommended limit and premium rate band, list key conditions, and flag any information gaps. The memo is for internal approval only \u00e2\u20ac\u201d it must not include speculative figures or invented financial data.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Underwriting Context",
+          "description": "Prompt specifies the product type (trade credit insurance), the submission inputs available (financials, buyer concentration, broker note), and the decision being made (limit and rate recommendation).",
+          "max": 1
+        },
+        {
+          "name": "Audience and Purpose",
+          "description": "Prompt clearly states the output is an internal credit memo for approval purposes, not a client-facing document.",
+          "max": 1
+        },
+        {
+          "name": "Required Structure",
+          "description": "Prompt requests specific memo sections: risk summary, recommended limit and premium rate band, key conditions, and information gaps.",
+          "max": 1
+        },
+        {
+          "name": "Guardrails",
+          "description": "Prompt includes at least one explicit constraint preventing AI from inventing figures or speculating beyond the provided facts (e.g., 'use only the information provided; flag gaps rather than assume').",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_p3_task",
+    "domain_id": "prompting",
+    "item_type": "micro_task",
+    "display_order": 3,
+    "question_text": "The prompt below was used to draft a conditional approval email for a policyholder. Identify TWO specific weaknesses and rewrite the prompt to fix them.",
+    "scenario_text": "Original prompt used: \"Write an email to the client saying their policy is approved but with some conditions. Mention the conditions and what they need to do next.\"\n\nContext you have: The policyholder is Ridgeline Agri-Products Corp. The policy is approved subject to: (1) submission of Q3 management accounts within 30 days, and (2) a buyer concentration covenant (no single buyer >35% of insured turnover). The audience is the policyholder's CFO. Internal model details must not be disclosed.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Weakness Identification",
+          "description": "Learner correctly identifies two distinct weaknesses (e.g., missing policyholder name/role, no specific conditions listed, no word count or format, no guardrail against internal disclosure, no audience specification).",
+          "max": 2
+        },
+        {
+          "name": "Revised Prompt Quality",
+          "description": "Rewritten prompt includes: named policyholder and audience (CFO), both specific conditions stated explicitly, a format or length instruction, and at least one guardrail (e.g., do not reference internal models or scoring).",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "diag_v4_mcq",
+    "domain_id": "verification",
+    "item_type": "mcq",
+    "display_order": 4,
+    "question_text": "An AI assistant has drafted a credit memo for a new submission from Pelican Trade Finance Ltd. Before filing the memo, which verification step is MOST critical for an underwriter?",
+    "scenario_text": null,
+    "options": [
+      {
+        "label": "A",
+        "text": "Check that the memo is written in a professional tone and has no spelling errors."
+      },
+      {
+        "label": "B",
+        "text": "Confirm that every financial figure, ratio, and buyer concentration statistic cited in the memo can be traced back to the source documents provided in the submission."
+      },
+      {
+        "label": "C",
+        "text": "Verify that the memo is under the maximum word count specified in the prompt."
+      },
+      {
+        "label": "D",
+        "text": "Ensure the AI used the correct email template format before converting it to a memo."
+      }
+    ],
+    "correct_option": "B",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "diag_v5_sandbox",
+    "domain_id": "verification",
+    "item_type": "prompt_sandbox",
+    "display_order": 5,
+    "question_text": "Write a prompt that asks an AI assistant to help you verify an AI-generated covenant summary before it is included in a policy schedule.",
+    "scenario_text": "You have an AI-generated summary of three covenants for a trade credit policy issued to Solaris Grain Exporters Ltd. The source document is a 4-page underwriting conditions sheet. You need the AI to cross-check the summary against the source, flag any discrepancies or missing items, and highlight any covenant wording that has been paraphrased in a way that could change its legal meaning.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Task Clarity",
+          "description": "Prompt clearly instructs the AI to compare the generated covenant summary against the source conditions sheet, not simply to rewrite or improve it.",
+          "max": 1
+        },
+        {
+          "name": "Discrepancy Flagging",
+          "description": "Prompt explicitly asks the AI to identify missing covenants, numerical differences, or omitted conditions between the summary and the source.",
+          "max": 1
+        },
+        {
+          "name": "Wording Risk Instruction",
+          "description": "Prompt asks the AI to flag paraphrased covenant wording that may alter legal or contractual meaning, distinguishing it from acceptable plain-language simplification.",
+          "max": 1
+        },
+        {
+          "name": "Output Format",
+          "description": "Prompt requests a structured output (e.g., table or numbered list) showing each covenant, its source wording, the summary wording, and a discrepancy/risk flag.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "diag_v6_task",
+    "domain_id": "verification",
+    "item_type": "micro_task",
+    "display_order": 6,
+    "question_text": "Review the AI-generated excerpt below from a credit memo. Identify all errors, hallucinations, or unsupported claims, and explain what an underwriter must do before filing this memo.",
+    "scenario_text": "AI-generated credit memo excerpt for Ironwood Packaging Solutions Ltd.:\n\n\"Ironwood Packaging Solutions Ltd. reported revenue of $42.3M and a net profit margin of 11.2% for FY2023, reflecting strong year-on-year growth of 18%. The company's largest buyer, RetailCo Global, accounts for 28% of insured turnover, comfortably within the 35% concentration covenant. Ironwood holds an investment-grade credit rating of BBB from GlobalRatings Agency, supporting the recommended limit of $750,000.\"\n\nSource documents provided: FY2023 management accounts (unaudited) showing revenue of $39.1M and net profit margin of 9.4%. No buyer concentration report was submitted. No external credit rating was referenced in any submission document.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Factual Error Identification",
+          "description": "Learner identifies both numerical errors: revenue stated as $42.3M (source: $39.1M) and net profit margin stated as 11.2% (source: 9.4%), and notes the growth figure of 18% is unsupported.",
+          "max": 2
+        },
+        {
+          "name": "Hallucination Identification",
+          "description": "Learner identifies that the buyer concentration figure (28%, RetailCo Global) and the BBB credit rating are hallucinated \u00e2\u20ac\u201d neither appears in any submitted document.",
+          "max": 1
+        },
+        {
+          "name": "Required Underwriter Action",
+          "description": "Learner states that the memo must not be filed as-is; all figures must be corrected to match source documents, hallucinated claims must be removed, and missing data (buyer concentration report, credit rating) must be flagged as information gaps.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "diag_ds7_mcq",
+    "domain_id": "data_safety",
+    "item_type": "mcq",
+    "display_order": 7,
+    "question_text": "A broker emails you a full submission for Cascade Textiles Ltd., including audited financials, a buyer list with credit limits, and the policyholder's bank account details. You want to use an AI drafting tool to prepare a credit memo. What is the MOST appropriate data-safety action before pasting content into the AI tool?",
+    "scenario_text": null,
+    "options": [
+      {
+        "label": "A",
+        "text": "Paste the entire submission into the AI tool to give it full context for the most accurate memo."
+      },
+      {
+        "label": "B",
+        "text": "Remove or anonymise sensitive identifiers (bank account details, personal contact information) and confirm the AI tool is approved for handling confidential commercial data under your organisation's policy before inputting any submission content."
+      },
+      {
+        "label": "C",
+        "text": "Only paste the financial summary table, as the AI tool cannot read tables accurately anyway."
+      },
+      {
+        "label": "D",
+        "text": "Forward the broker email directly to the AI tool's email integration so it can process the full document automatically."
+      }
+    ],
+    "correct_option": "B",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "diag_ds8_sandbox",
+    "domain_id": "data_safety",
+    "item_type": "prompt_sandbox",
+    "display_order": 8,
+    "question_text": "Write a prompt that asks an AI assistant to help draft a decline letter, while demonstrating safe data-handling practice in how you structure the input.",
+    "scenario_text": "You need to decline a credit insurance limit request for a buyer associated with a policyholder account. The decline is based on adverse payment history and insufficient financial disclosure. You must not share the buyer's full legal name, account number, or any third-party credit agency report content with the AI tool, as these are restricted under your organisation's data classification policy. The letter will be sent to the broker.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Data Minimisation",
+          "description": "Prompt uses a placeholder or anonymised reference for the buyer (e.g., '[Buyer]' or a fictional stand-in) rather than including real or full identifying details, and does not paste restricted report content.",
+          "max": 1
+        },
+        {
+          "name": "Reason Framing",
+          "description": "Prompt provides the decline reason categories (adverse payment history, insufficient financial disclosure) in general terms sufficient for drafting, without referencing specific third-party agency data or scores.",
+          "max": 1
+        },
+        {
+          "name": "Audience and Tone Instruction",
+          "description": "Prompt specifies the letter is addressed to a broker, requests a professional and courteous tone, and instructs the AI not to include speculative or legally sensitive language.",
+          "max": 1
+        },
+        {
+          "name": "Output Constraint",
+          "description": "Prompt includes at least one explicit constraint aligned to data safety or compliance (e.g., 'do not reference specific credit scores, agency names, or internal system outputs').",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "diag_ds9_task",
+    "domain_id": "data_safety",
+    "item_type": "micro_task",
+    "display_order": 9,
+    "question_text": "Review the prompt below that a colleague drafted to use with a public AI chatbot. Identify ALL data-safety risks present and rewrite the prompt to eliminate them.",
+    "scenario_text": "Colleague's prompt:\n\n\"Here is the full submission for Brightwater Foods Ltd. (Policy #BW-2024-0091, ABN 55 123 456 789). Their FY2024 audited financials show revenue of $18.7M. The buyer is Meridian Retail Group \u00e2\u20ac\u201d they have a 90-day overdue balance of $340,000 and our internal risk score is 4/10. Draft a decline letter explaining we can't approve the $500,000 limit request due to the overdue balance and low score.\"\n\nThe AI chatbot being used is a free public tool not approved for confidential data under the organisation's AI use policy.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Risk Identification",
+          "description": "Learner identifies at least three distinct data-safety risks: (1) use of a non-approved public AI tool for confidential data, (2) inclusion of real policyholder name and policy number, (3) inclusion of buyer name and specific financial/overdue details, and/or (4) disclosure of internal risk score.",
+          "max": 2
+        },
+        {
+          "name": "Rewritten Prompt Quality",
+          "description": "Rewritten prompt removes or anonymises all identifying details (policyholder name, policy number, ABN, buyer name, specific dollar figures tied to identities) and replaces internal risk score with a general reason category, while still providing enough context to draft a useful decline letter.",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "diag_tf10_mcq",
+    "domain_id": "tool_fluency",
+    "item_type": "mcq",
+    "display_order": 10,
+    "question_text": "You are using an AI writing assistant integrated into your underwriting platform to iterate on a conditional approval email. After your first prompt, the draft is too formal and omits the required next-steps bullet list. What is the MOST efficient next action?",
+    "scenario_text": null,
+    "options": [
+      {
+        "label": "A",
+        "text": "Start a completely new chat session and rewrite the entire prompt from scratch with all original context included again."
+      },
+      {
+        "label": "B",
+        "text": "Send a follow-up prompt in the same session specifying the two changes needed: adjust tone to plain business English and add a bullet list of next steps, so the AI can revise without losing prior context."
+      },
+      {
+        "label": "C",
+        "text": "Manually edit the draft yourself for tone and add the bullet list, since AI cannot handle multi-part revision instructions."
+      },
+      {
+        "label": "D",
+        "text": "Ask the AI to 'make it better' and review whatever it produces next."
+      }
+    ],
+    "correct_option": "B",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "diag_tf11_sandbox",
+    "domain_id": "tool_fluency",
+    "item_type": "prompt_sandbox",
+    "display_order": 11,
+    "question_text": "Write a follow-up (iteration) prompt to refine an AI-generated draft submission summary that has two specific problems.",
+    "scenario_text": "You used an AI assistant to generate a first-draft submission summary for a new credit insurance account: Vantage Logistics Partners Ltd. The draft has two problems: (1) it includes a speculative revenue growth forecast that was not in the source documents, and (2) the risk summary section is written in technical actuarial language that the approving manager has asked to be in plain business English. You are now writing a follow-up prompt in the same session to fix only these two issues without regenerating the entire summary.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Targeted Revision Instruction",
+          "description": "Prompt clearly instructs the AI to revise only the two identified problems rather than regenerating the full summary, preserving the rest of the draft.",
+          "max": 1
+        },
+        {
+          "name": "Hallucination Removal Instruction",
+          "description": "Prompt explicitly asks the AI to remove the speculative revenue growth forecast and replace it only with information present in the source documents, or flag it as an information gap.",
+          "max": 1
+        },
+        {
+          "name": "Plain Language Instruction",
+          "description": "Prompt asks the AI to rewrite the risk summary section in plain business English suitable for a non-actuarial approving manager, with a clear description of the target audience or language standard.",
+          "max": 1
+        },
+        {
+          "name": "Session Continuity Awareness",
+          "description": "Prompt is written as a follow-up (e.g., references 'the draft above' or 'the summary you just produced') demonstrating the learner understands how to use conversational context rather than re-entering all original details.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "diag_tf12_task",
+    "domain_id": "tool_fluency",
+    "item_type": "micro_task",
+    "display_order": 12,
+    "question_text": "A colleague has shared the AI interaction log below. Analyse the prompting approach and output quality, then answer the two questions that follow.",
+    "scenario_text": "Interaction log:\n\nPrompt 1: \"Summarise this policy for me.\"\nAI Output 1: \"This policy provides coverage for trade credit risks. It includes standard terms and conditions applicable to the insured. The policyholder should review all sections carefully.\"\n\nPrompt 2: \"Make it better.\"\nAI Output 2: \"This policy offers comprehensive trade credit insurance coverage with robust terms designed to protect the policyholder's receivables against buyer default and insolvency risks.\"\n\nContext: The colleague needed a 3-bullet internal summary of key coverage triggers, sublimit amounts, and any exclusions for a policy issued to Harrington Industrial Supplies Ltd., to attach to an approval file.\n\nQuestion A: Identify TWO specific tool-fluency mistakes the colleague made in this interaction.\nQuestion B: Write a single improved prompt that would have produced a usable output for the approval file in one attempt.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Mistake Identification",
+          "description": "Learner correctly identifies two tool-fluency mistakes, such as: Prompt 1 lacks context (no document provided, no output format, no purpose stated); 'Make it better' is a vague iteration that gives the AI no actionable direction; neither prompt specifies the required content (coverage triggers, sublimits, exclusions) or the internal approval file purpose.",
+          "max": 2
+        },
+        {
+          "name": "Improved Prompt \u00e2\u20ac\u201d Content Specification",
+          "description": "Improved prompt specifies the three required content elements: coverage triggers, sublimit amounts, and exclusions, and requests a 3-bullet format suitable for an internal approval file.",
+          "max": 1
+        },
+        {
+          "name": "Improved Prompt \u00e2\u20ac\u201d Context and Constraints",
+          "description": "Improved prompt identifies the document being summarised (the Harrington Industrial Supplies Ltd. policy), states the internal audience and purpose, and includes at least one constraint (e.g., use only information in the document; do not add assumptions).",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  }
+]

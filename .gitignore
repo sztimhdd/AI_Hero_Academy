@@ -1,0 +1,29 @@
+# Local dev environment variables
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Google Cloud Platform
+.gcp/
+service-account-key.json
+gcp-credentials.json
+
+# Docker
+.dockerignore
+Dockerfile.local
+
+# Debug / test artifacts
+_setup_result.json
+*.png
+content_test/
+console-warnings.log
+
+# Windows shell artifacts
+nul
+
+# IDE
+.vscode/settings.json
+.idea/
