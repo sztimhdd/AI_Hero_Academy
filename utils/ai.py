@@ -3,9 +3,10 @@ import re
 import time
 import uuid
 import json
+import logging
 
-from databricks.sdk import WorkspaceClient
-from databricks.sdk.service.serving import ChatMessage, ChatMessageRole
+from google import genai
+from google.genai import types
 
 
 def call_llm(
@@ -15,73 +16,81 @@ def call_llm(
     call_type: str = "unknown",
 ) -> str:
     """
-    Call the configured Foundation Model serving endpoint.
+    Call Google Gemini API.
 
     messages: list of {"role": "system"|"user"|"assistant", "content": "..."}
     Returns the assistant reply string.
-    Always writes one row to system.ai_call_log.
+    Logs call details to console (DB logging disabled in Phase 2).
     """
-    w = WorkspaceClient()
-    endpoint = os.environ.get("SERVING_ENDPOINT_NAME", "databricks-claude-sonnet-4-5")
+    # Model selection based on call type
+    if call_type in ["coach_response"]:
+        model = os.environ.get("GEMINI_FLASH_MODEL", "gemini-3-flash-preview")
+    else:
+        model = os.environ.get("GEMINI_PRO_MODEL", "gemini-3.1-pro-preview")
 
-    sdk_messages = [
-        ChatMessage(
-            role=ChatMessageRole[m["role"].upper()],
-            content=m["content"],
-        )
-        for m in messages
-    ]
+    client = genai.Client()  # Uses GOOGLE_API_KEY env var
+
+    # Extract system instruction if present
+    system_instruction = None
+    user_messages = []
+
+    for msg in messages:
+        if msg["role"] == "system":
+            system_instruction = msg["content"]
+        else:
+            user_messages.append(msg)
+
+    # Build conversation content
+    conversation_content = ""
+    for msg in user_messages:
+        if msg["role"] == "user":
+            conversation_content += f"User: {msg['content']}\n"
+        elif msg["role"] == "assistant":
+            conversation_content += f"Assistant: {msg['content']}\n"
+
+    # Remove trailing newline
+    conversation_content = conversation_content.rstrip()
 
     t0 = time.time()
     try:
-        resp = w.serving_endpoints.query(
-            name=endpoint,
-            messages=sdk_messages,
-            temperature=temperature,
+        config = types.GenerateContentConfig(temperature=temperature)
+        if system_instruction:
+            config.system_instruction = system_instruction
+
+        resp = client.models.generate_content(
+            model=model,
+            contents=conversation_content,
+            config=config,
         )
-        content = resp.choices[0].message.content
+
+        content = resp.text
         latency_ms = int((time.time() - t0) * 1000)
-        usage = getattr(resp, "usage", None)
-        prompt_tokens = getattr(usage, "prompt_tokens", None)
-        completion_tokens = getattr(usage, "completion_tokens", None)
-        _log_call(user_email, call_type, endpoint, latency_ms, success=True,
-                  prompt_tokens=prompt_tokens, completion_tokens=completion_tokens)
+        _log_call(user_email, call_type, model, latency_ms, success=True)
         return content
     except Exception as e:
         latency_ms = int((time.time() - t0) * 1000)
-        _log_call(user_email, call_type, endpoint, latency_ms, success=False, error=str(e))
+        _log_call(user_email, call_type, model, latency_ms, success=False, error=str(e))
         raise
 
 
-def _log_call(user_email, call_type, endpoint, latency_ms, success, error=None,
-              prompt_tokens=None, completion_tokens=None):
-    """Write one row to system.ai_call_log. Silently ignore log failures."""
-    try:
-        from utils.db import execute, escape
+def _log_call(user_email, call_type, model, latency_ms, success, error=None):
+    """Log AI call details to console (Phase 2: DB logging disabled)."""
+    log_entry = {
+        "timestamp": time.time(),
+        "user_email": user_email or "unknown",
+        "call_type": call_type,
+        "model": model,
+        "latency_ms": latency_ms,
+        "success": success,
+        "error": str(error)[:500] if error else None
+    }
 
-        log_id = str(uuid.uuid4())
-        catalog = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
-        error_val = f"'{escape(str(error)[:500])}'" if error else "NULL"
-        pt_val = str(int(prompt_tokens)) if prompt_tokens is not None else "NULL"
-        ct_val = str(int(completion_tokens)) if completion_tokens is not None else "NULL"
-        execute(f"""
-            INSERT INTO {catalog}.system.ai_call_log
-              (log_id, user_email, call_type, model_endpoint,
-               prompt_tokens, completion_tokens, latency_ms, success, error_message)
-            VALUES (
-              '{log_id}',
-              '{escape(user_email or "")}',
-              '{escape(call_type)}',
-              '{escape(endpoint)}',
-              {pt_val},
-              {ct_val},
-              {latency_ms},
-              {str(success).upper()},
-              {error_val}
-            )
-        """)
-    except Exception:
-        pass  # Never let logging failures break the main flow
+    if success:
+        logging.info(f"AI call successful: {call_type} via {model} ({latency_ms}ms)")
+    else:
+        logging.error(f"AI call failed: {call_type} via {model} - {error}")
+
+    # TODO Phase 3: Write to Firestore ai_call_log collection
 
 
 def _extract_json(raw: str) -> dict:
