@@ -31,12 +31,11 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 user_email = get_user_email()
 
 # ── Guard: must have completed diagnostic ─────────────────────────────────────
 profile = query_one(
-    f"SELECT display_name, role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
+    "SELECT display_name, role_id FROM users WHERE user_email = ?",
     [user_email],
 )
 if not profile:
@@ -46,36 +45,36 @@ if not profile:
 # ── Load data ─────────────────────────────────────────────────────────────────
 def load_latest_diagnostic():
     return query_one(
-        f"SELECT session_id, completed_at, domain_scores, overall_score "
-        f"FROM {CATALOG}.learner.diagnostic_sessions "
-        f"WHERE user_email = ? AND completed_at IS NOT NULL "
-        f"ORDER BY completed_at DESC LIMIT 1",
+        "SELECT session_id, completed_at, domain_scores, overall_score "
+        "FROM diagnostic_sessions "
+        "WHERE user_email = ? AND completed_at IS NOT NULL "
+        "ORDER BY completed_at DESC LIMIT 1",
         [user_email],
     )
 
 def load_all_diagnostics():
     return execute(
-        f"SELECT session_id, completed_at, domain_scores, overall_score "
-        f"FROM {CATALOG}.learner.diagnostic_sessions "
-        f"WHERE user_email = ? AND completed_at IS NOT NULL "
-        f"ORDER BY completed_at DESC",
+        "SELECT session_id, completed_at, domain_scores, overall_score "
+        "FROM diagnostic_sessions "
+        "WHERE user_email = ? AND completed_at IS NOT NULL "
+        "ORDER BY completed_at DESC",
         [user_email],
     )
 
 def load_latest_gap_map():
     return query_one(
-        f"SELECT bullets FROM {CATALOG}.learner.gap_maps "
-        f"WHERE user_email = ? "
-        f"ORDER BY generated_at DESC LIMIT 1",
+        "SELECT bullets FROM gap_maps "
+        "WHERE user_email = ? "
+        "ORDER BY generated_at DESC LIMIT 1",
         [user_email],
     )
 
 def load_training_progress():
     return execute(
-        f"SELECT course_id, module_sequence_order, is_locked, "
-        f"evaluation_completed_at, evaluation_score, domain_score_after "
-        f"FROM {CATALOG}.learner.training_progress "
-        f"WHERE user_email = ? ORDER BY module_sequence_order",
+        "SELECT course_id, module_sequence_order, is_locked, "
+        "evaluation_completed_at, evaluation_score, domain_score_after "
+        "FROM training_progress "
+        "WHERE user_email = ? ORDER BY module_sequence_order",
         [user_email],
     )
 
@@ -295,7 +294,7 @@ with col_b:
                         progress_id = str(uuid.uuid4())
                         is_locked = "true" if i > 0 else "false"
                         execute(f"""
-                            INSERT INTO {CATALOG}.learner.training_progress
+                            INSERT INTO training_progress
                               (progress_id, user_email, course_id, module_sequence_order,
                                is_locked)
                             VALUES (

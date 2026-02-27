@@ -74,23 +74,24 @@ def call_llm(
 
 
 def _log_call(user_email, call_type, model, latency_ms, success, error=None):
-    """Log AI call details to console (Phase 2: DB logging disabled)."""
-    log_entry = {
-        "timestamp": time.time(),
-        "user_email": user_email or "unknown",
-        "call_type": call_type,
-        "model": model,
-        "latency_ms": latency_ms,
-        "success": success,
-        "error": str(error)[:500] if error else None
-    }
+    """Log AI call details to Firestore ai_call_log collection."""
+    try:
+        from utils.db import execute
 
-    if success:
-        logging.info(f"AI call successful: {call_type} via {model} ({latency_ms}ms)")
-    else:
-        logging.error(f"AI call failed: {call_type} via {model} - {error}")
+        log_id = str(uuid.uuid4())
+        execute(f"""
+            INSERT INTO ai_call_log
+              (log_id, user_email, call_type, model_endpoint, prompt_tokens, completion_tokens, latency_ms, success, error_message)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, [log_id, user_email or "", call_type, model, None, None, latency_ms, success, error])
 
-    # TODO Phase 3: Write to Firestore ai_call_log collection
+        if success:
+            logging.info(f"AI call successful: {call_type} via {model} ({latency_ms}ms)")
+        else:
+            logging.error(f"AI call failed: {call_type} via {model} - {error}")
+    except Exception:
+        # Never let logging failures break the main flow
+        pass
 
 
 def _extract_json(raw: str) -> dict:

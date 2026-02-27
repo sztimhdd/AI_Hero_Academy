@@ -27,12 +27,11 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 user_email = get_user_email()
 
 # ── Guard: must have a profile ────────────────────────────────────────────────
 profile = query_one(
-    f"SELECT user_email, role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
+    "SELECT role_id FROM users WHERE user_email = ?",
     [user_email],
 )
 if not profile:
@@ -42,8 +41,8 @@ role_id: str = profile["role_id"] if profile else st.session_state.get("role_id"
 
 # Check for prior completed diagnostic — used to show exit navigation (CX1)
 _prior_diag = query_one(
-    f"SELECT session_id FROM {CATALOG}.learner.diagnostic_sessions "
-    f"WHERE user_email = ? AND completed_at IS NOT NULL LIMIT 1",
+    "SELECT session_id FROM diagnostic_sessions "
+    "WHERE user_email = ? AND completed_at IS NOT NULL LIMIT 1",
     [user_email],
 )
 _can_exit = bool(_prior_diag)
@@ -186,9 +185,8 @@ def complete_diagnostic(responses: list[dict]):
         domain_scores_json = json.dumps(domain_scores, ensure_ascii=False)
         try:
             execute(
-                f"INSERT INTO {CATALOG}.learner.diagnostic_sessions "
-                f"(session_id, user_email, started_at, completed_at, "
-                f"responses, item_scores, domain_scores, overall_score) "
+                "INSERT INTO diagnostic_sessions "
+                "(session_id, user_email, started_at, completed_at, responses, item_scores, domain_scores, overall_score) "
                 f"VALUES (?, ?, CAST(? AS TIMESTAMP), current_timestamp(), ?, ?, ?, ?)",
                 [session_id, user_email, started_at, resp_json, item_scores_json, domain_scores_json, overall_score],
             )
@@ -213,8 +211,8 @@ def complete_diagnostic(responses: list[dict]):
                 gap_map_id = str(uuid.uuid4())
                 bullets_json = json.dumps(gap_bullets, ensure_ascii=False)
                 execute(
-                    f"INSERT INTO {CATALOG}.learner.gap_maps "
-                    f"(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
+                    "INSERT INTO gap_maps "
+                    "(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
                     f"VALUES (?, ?, 'diagnostic', ?, ?, current_timestamp())",
                     [gap_map_id, user_email, session_id, bullets_json],
                 )

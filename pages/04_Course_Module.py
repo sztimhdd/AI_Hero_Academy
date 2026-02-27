@@ -39,15 +39,11 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
-MAX_TASK_TURNS = 3
-MAX_TOTAL_TURNS = 15
-
 user_email = get_user_email()
 
 # ── Guards ────────────────────────────────────────────────────────────────────
 profile = query_one(
-    f"SELECT display_name FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
+    "SELECT display_name FROM users WHERE user_email = ?",
     [user_email],
 )
 if not profile:
@@ -63,20 +59,20 @@ active_sub = st.session_state.get("active_submodule", "overview")
 # ── Data loaders ──────────────────────────────────────────────────────────────
 def load_progress(cid: str):
     return query_one(
-        f"SELECT progress_id, module_sequence_order, is_locked, "
-        f"reading_completed_at, practice_completed_at, "
-        f"evaluation_completed_at, evaluation_score "
-        f"FROM {CATALOG}.learner.training_progress "
-        f"WHERE user_email = ? AND course_id = ?",
+        "SELECT progress_id, module_sequence_order, is_locked, "
+        "reading_completed_at, practice_completed_at, "
+        "evaluation_completed_at, evaluation_score "
+        "FROM training_progress "
+        "WHERE user_email = ? AND course_id = ?",
         [user_email, cid],
     )
 
 
 def load_all_progress() -> list:
     _rows = execute(
-        f"SELECT course_id, module_sequence_order, is_locked, evaluation_completed_at, domain_score_after "
-        f"FROM {CATALOG}.learner.training_progress "
-        f"WHERE user_email = ? ORDER BY module_sequence_order",
+        "SELECT course_id, module_sequence_order, is_locked, evaluation_completed_at, domain_score_after "
+        "FROM training_progress "
+        "WHERE user_email = ? ORDER BY module_sequence_order",
         [user_email],
     )
     result = []
@@ -88,8 +84,8 @@ def load_all_progress() -> list:
 
 def load_next_module_title(current_seq: int):
     nxt = query_one(
-        f"SELECT course_id FROM {CATALOG}.learner.training_progress "
-        f"WHERE user_email = ? AND module_sequence_order = ?",
+        "SELECT course_id FROM training_progress "
+        "WHERE user_email = ? AND module_sequence_order = ?",
         [user_email, current_seq + 1],
     )
     if nxt:
@@ -105,15 +101,15 @@ def do_complete_practice(progress_id: str, messages: list, total_turns: int):
             started_at = st.session_state.pop("practice_started_at", datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
             conv_json = json.dumps(messages, ensure_ascii=False)
             execute(
-                f"INSERT INTO {CATALOG}.learner.coach_sessions "
-                f"(session_id, user_email, course_id, started_at, completed_at, turn_count, conversation_json) "
-                f"VALUES (?, ?, ?, CAST(? AS TIMESTAMP), current_timestamp(), ?, ?)",
+                "INSERT INTO coach_sessions "
+                "(session_id, user_email, course_id, started_at, completed_at, turn_count, conversation_json) "
+                "VALUES (?, ?, ?, CAST(? AS TIMESTAMP), current_timestamp(), ?, ?)",
                 [session_id, user_email, course_id, started_at, total_turns, conv_json],
             )
             execute(
-                f"UPDATE {CATALOG}.learner.training_progress "
-                f"SET practice_completed_at = current_timestamp() "
-                f"WHERE progress_id = ?",
+                "UPDATE training_progress "
+                "SET practice_completed_at = current_timestamp() "
+                "WHERE progress_id = ?",
                 [progress_id],
             )
         except Exception as e:
@@ -269,9 +265,9 @@ elif active_sub == "reading":
         if st.button("I've read this — Start Practice →", use_container_width=True, type="primary"):
             try:
                 execute(
-                    f"UPDATE {CATALOG}.learner.training_progress "
-                    f"SET reading_completed_at = current_timestamp() "
-                    f"WHERE progress_id = ? AND reading_completed_at IS NULL",
+                    "UPDATE training_progress "
+                    "SET reading_completed_at = current_timestamp() "
+                    "WHERE progress_id = ? AND reading_completed_at IS NULL",
                     [progress_id],
                 )
             except Exception as e:
@@ -491,17 +487,17 @@ elif active_sub == "evaluation":
         with st.spinner("Updating skills profile..."):
             try:
                 execute(
-                    f"UPDATE {CATALOG}.learner.training_progress "
-                    f"SET evaluation_score = ?, "
-                    f"    evaluation_completed_at = current_timestamp(), "
-                    f"    domain_score_after = ? "
-                    f"WHERE progress_id = ?",
+                    "UPDATE training_progress "
+                    "SET evaluation_score = ?, "
+                    "    evaluation_completed_at = current_timestamp(), "
+                    "    domain_score_after = ? "
+                    "WHERE progress_id = ?",
                     [eval_score, domain_score_after, progress_id],
                 )
                 execute(
-                    f"UPDATE {CATALOG}.learner.training_progress "
-                    f"SET is_locked = false "
-                    f"WHERE user_email = ? AND module_sequence_order = ?",
+                    "UPDATE training_progress "
+                    "SET is_locked = false "
+                    "WHERE user_email = ? AND module_sequence_order = ?",
                     [user_email, seq_order + 1],
                 )
             except Exception as e:
@@ -511,9 +507,9 @@ elif active_sub == "evaluation":
         with st.spinner("Generating updated gap map..."):
             try:
                 diag_row = query_one(
-                    f"SELECT domain_scores FROM {CATALOG}.learner.diagnostic_sessions "
-                    f"WHERE user_email = ? AND completed_at IS NOT NULL "
-                    f"ORDER BY completed_at DESC LIMIT 1",
+                    "SELECT domain_scores FROM diagnostic_sessions "
+                    "WHERE user_email = ? AND completed_at IS NOT NULL "
+                    "ORDER BY completed_at DESC LIMIT 1",
                     [user_email],
                 )
                 try:
@@ -539,9 +535,9 @@ elif active_sub == "evaluation":
                 )
                 gm_id = str(uuid.uuid4())
                 execute(
-                    f"INSERT INTO {CATALOG}.learner.gap_maps "
-                    f"(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
-                    f"VALUES (?, ?, 'evaluation', ?, ?, current_timestamp())",
+                    "INSERT INTO gap_maps "
+                    "(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
+                    "VALUES (?, ?, 'evaluation', ?, ?, current_timestamp())",
                     [gm_id, user_email, progress_id, json.dumps(gap_bullets, ensure_ascii=False)],
                 )
             except Exception:

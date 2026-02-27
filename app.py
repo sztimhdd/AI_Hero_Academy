@@ -11,7 +11,7 @@ import streamlit as st
 from utils.auth import get_user_email
 from utils.db import query_one
 from utils.styles import inject_global_css
-import os
+
 
 st.set_page_config(
     page_title="AI Hero Academy",
@@ -22,8 +22,6 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
-
 
 def get_user_state(user_email: str) -> tuple[str, str | None]:
     """
@@ -32,7 +30,7 @@ def get_user_state(user_email: str) -> tuple[str, str | None]:
     role_id is None for new_user, otherwise the role from user_profiles.
     """
     profile = query_one(
-        f"SELECT role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
+        "SELECT role_id FROM users WHERE user_email = ?",
         [user_email],
     )
     if not profile:
@@ -41,17 +39,17 @@ def get_user_state(user_email: str) -> tuple[str, str | None]:
     role_id = profile["role_id"]
 
     session = query_one(
-        f"SELECT session_id FROM {CATALOG}.learner.diagnostic_sessions "
-        f"WHERE user_email = ? AND completed_at IS NOT NULL "
-        f"ORDER BY completed_at DESC LIMIT 1",
+        "SELECT session_id FROM diagnostic_sessions "
+        "WHERE user_email = ? AND completed_at IS NOT NULL "
+        "ORDER BY completed_at DESC LIMIT 1",
         [user_email],
     )
     if not session:
         return "needs_diagnostic", role_id
 
     progress = query_one(
-        f"SELECT progress_id FROM {CATALOG}.learner.training_progress "
-        f"WHERE user_email = ? LIMIT 1",
+        "SELECT progress_id FROM training_progress "
+        "WHERE user_email = ? LIMIT 1",
         [user_email],
     )
     if not progress:

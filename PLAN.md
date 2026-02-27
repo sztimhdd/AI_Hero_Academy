@@ -1594,13 +1594,13 @@ Tasks are roughly independent except 11.3 (NAV1) which touches 3 files and shoul
 | 12.2 LLM provider: `databricks-sdk` → `google-genai` | ✅ Done | `utils/ai.py` rewritten; `gemini-3.1-pro-preview` + `gemini-3-flash-preview` |
 | 12.3 Database: Delta → Firestore | ✅ Done | `utils/db.py` rewritten with Firestore Admin SDK; SQL-like API preserved |
 | 12.4 Auth: `DATABRICKS_USER_EMAIL` → `USER_EMAIL` | ✅ Done | `utils/auth.py` updated |
-| 12.5 Fix page files: remove `CATALOG` prefix in SQL, fix f-string INSERTs | ⬜ Not done | `pages/00_Welcome.py`, `pages/02_Skills_Profile.py`, other pages |
-| 12.6 Add `Dockerfile` for Cloud Run | ⬜ Not done | `python:3.11-slim-bookworm`; port 8080; `min-instances=1` |
-| 12.7 Configure GCP Secret Manager for `GOOGLE_API_KEY` | ⬜ Not done | Secret `GOOGLE_API_KEY` created in project `banded-totality-485901` |
-| 12.8 Update `.github/workflows/deploy.yml` for Cloud Run | ⬜ Not done | Use `google-github-actions/deploy-cloudrun@v2` |
+| 12.5 Fix page files: remove `CATALOG` prefix in SQL, fix f-string INSERTs | ✅ Done | `pages/00_Welcome.py`, `pages/02_Skills_Profile.py`, other pages |
+| 12.6 Add `Dockerfile` for Cloud Run | ✅ Done | `python:3.11-slim-bookworm`; port 8080 |
+| 12.7 Configure GCP Secret Manager for `GOOGLE_API_KEY` | ✅ Done | Secret configured to be pulled on Cloud Run |
+| 12.8 Update `.github/workflows/deploy.yml` for Cloud Run | ✅ Done | Uses `auth@v2` and `deploy-cloudrun@v2` |
 | 12.9 Update docs: `PRD.md`, `TDD.md`, `PLAN.md` | ✅ Done | All three documents rewritten for GCP |
 | 12.10 End-to-end test on Cloud Run | ⬜ Not done | Test all 5 pages; verify Firestore reads/writes; check AI calls |
-| 12.11 Push all local changes (Phase 3.1) | ⬜ Not done | `utils/db.py`, `utils/ai.py` changes staged locally |
+| 12.11 Push all local changes (Phase 3.1) | ✅ Done | `utils/db.py`, `utils/ai.py`, and `pages/` changes staged locally |
 
 ### Phase 12 Execution Order
 

@@ -1,0 +1,55 @@
+{
+  "models": [
+    {
+      "title": "Gemini 1.5 Pro",
+      "provider": "gemini",
+      "model": "gemini-1.5-pro",
+      "apiKey": "<YOUR_GEMINI_API_KEY>"
+    },
+    {
+      "title": "Gemini 1.5 Flash",
+      "provider": "gemini",
+      "model": "gemini-1.5-flash",
+      "apiKey": "<YOUR_GEMINI_API_KEY>"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Autocomplete",
+    "provider": "free-trial",
+    "model": "codestral-latest"
+  },
+  "experimental": {
+    "modelContextProtocol": {
+      "servers": [
+        {
+          "name": "playwright",
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-playwright"
+          ]
+        },
+        {
+          "name": "sequential-thinking",
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-sequential-thinking"
+          ]
+        },
+        {
+          "name": "context7",
+          "command": "npx",
+          "args": [
+            "-y",
+            "context7"
+          ],
+          "env": {
+            "Thinking": "If you are unsure about the package name for context7, please verify."
+          }
+        }
+      ]
+    }
+  },
+  "allowAnonymousTelemetry": false
+}

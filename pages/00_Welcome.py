@@ -20,28 +20,27 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 user_email = get_user_email()
 
 # Guard: if user already has a profile, route to the correct page for their state
 existing = query_one(
-    f"SELECT role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
+    "SELECT role_id FROM users WHERE user_email = ?",
     [user_email],
 )
 if existing:
     st.session_state["user_email"] = user_email
     session = query_one(
-        f"SELECT session_id FROM {CATALOG}.learner.diagnostic_sessions "
-        f"WHERE user_email = ? AND completed_at IS NOT NULL "
-        f"ORDER BY completed_at DESC LIMIT 1",
+        "SELECT session_id FROM diagnostic_sessions "
+        "WHERE user_email = ? AND completed_at IS NOT NULL "
+        "ORDER BY completed_at DESC LIMIT 1",
         [user_email],
     )
     if not session:
         st.session_state["user_state"] = "needs_diagnostic"
         st.switch_page("pages/01_Diagnostic.py")
     progress = query_one(
-        f"SELECT progress_id FROM {CATALOG}.learner.training_progress "
-        f"WHERE user_email = ? LIMIT 1",
+        "SELECT progress_id FROM training_progress "
+        "WHERE user_email = ? LIMIT 1",
         [user_email],
     )
     if not progress:
@@ -169,13 +168,12 @@ with col_btn:
             try:
                 display_name = display_name_val.strip() if display_name_val.strip() else _derived_name
                 role_id = _role_map.get(selected_role, "rm")
-                e_email = escape(user_email)
-                e_name = escape(display_name)
-                execute(f"""
-                    INSERT INTO {CATALOG}.learner.user_profiles
-                      (user_email, display_name, role_id, created_at)
-                    VALUES ('{e_email}', '{e_name}', '{role_id}', current_timestamp())
-                """)
+                execute(
+                    "INSERT INTO users "
+                    "(user_email, display_name, role_id) "
+                    "VALUES (?, ?, ?)",
+                    [user_email, display_name, role_id]
+                )
                 st.session_state["user_email"] = user_email
                 st.session_state["user_state"] = "needs_diagnostic"
                 st.switch_page("pages/01_Diagnostic.py")

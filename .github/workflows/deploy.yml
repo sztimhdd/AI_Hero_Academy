@@ -24,11 +24,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Google Cloud CLI
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: ${{ env.GCP_PROJECT_ID }}
 
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker us-central1-docker.pkg.dev
@@ -39,10 +44,13 @@ jobs:
           docker push us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/ai-hero-academy/${{ env.SERVICE_NAME }}:${{ github.sha }}
 
       - name: Deploy to Cloud Run
-        run: |
-          gcloud run deploy ${{ env.SERVICE_NAME }} \
-            --image us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/ai-hero-academy/${{ env.SERVICE_NAME }}:${{ github.sha }} \
-            --region ${{ env.REGION }} \
-            --platform managed \
-            --allow-unauthenticated \
-            --set-env-vars="GCP_PROJECT_ID=${{ env.GCP_PROJECT_ID }}"
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE_NAME }}
+          region: ${{ env.REGION }}
+          image: us-central1-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/ai-hero-academy/${{ env.SERVICE_NAME }}:${{ github.sha }}
+          env_vars: |
+            GCP_PROJECT_ID=${{ env.GCP_PROJECT_ID }}
+            USER_EMAIL=test@example.com
+          secrets: |
+            GOOGLE_API_KEY=GOOGLE_API_KEY:latest

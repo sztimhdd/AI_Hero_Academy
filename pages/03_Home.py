@@ -26,35 +26,34 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 user_email = get_user_email()
 
 # ── Guards ────────────────────────────────────────────────────────────────────
 profile = query_one(
-    f"SELECT display_name, role_id FROM {CATALOG}.learner.user_profiles "
-    f"WHERE user_email = ?",
+    "SELECT display_name, role_id FROM users "
+    "WHERE user_email = ?",
     [user_email],
 )
 if not profile:
     st.switch_page("pages/00_Welcome.py")
 
 diag = query_one(
-    f"SELECT session_id, domain_scores, overall_score, completed_at "
-    f"FROM {CATALOG}.learner.diagnostic_sessions "
-    f"WHERE user_email = ? AND completed_at IS NOT NULL "
-    f"ORDER BY completed_at DESC LIMIT 1",
+    "SELECT session_id, domain_scores, overall_score, completed_at "
+    "FROM diagnostic_sessions "
+    "WHERE user_email = ? AND completed_at IS NOT NULL "
+    "ORDER BY completed_at DESC LIMIT 1",
     [user_email],
 )
 if not diag:
     st.switch_page("pages/01_Diagnostic.py")
 
 _raw_progress = execute(
-    f"SELECT progress_id, course_id, module_sequence_order, "
-    f"is_locked, reading_completed_at, practice_completed_at, "
-    f"evaluation_completed_at, evaluation_score, domain_score_after "
-    f"FROM {CATALOG}.learner.training_progress "
-    f"WHERE user_email = ? "
-    f"ORDER BY module_sequence_order",
+    "SELECT progress_id, course_id, module_sequence_order, "
+    "is_locked, reading_completed_at, practice_completed_at, "
+    "evaluation_completed_at, evaluation_score, domain_score_after "
+    "FROM training_progress "
+    "WHERE user_email = ? "
+    "ORDER BY module_sequence_order",
     [user_email],
 )
 if not _raw_progress:
