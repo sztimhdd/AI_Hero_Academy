@@ -52,5 +52,4 @@ jobs:
           env_vars: |
             GCP_PROJECT_ID=${{ env.GCP_PROJECT_ID }}
             USER_EMAIL=test@example.com
-          secrets: |
-            GOOGLE_API_KEY=GOOGLE_API_KEY:latest
+            GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}
