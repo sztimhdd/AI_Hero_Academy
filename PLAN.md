@@ -1,7 +1,7 @@
 # PLAN.md — AI Hero Academy MVP
 **Next Steps Implementation Plan**
 Based on: PRD.md, TDD.md, Issues.md
-Date: February 2026
+Date: February 2026 (Updated for GCP Migration)
 
 ---
 
@@ -23,7 +23,7 @@ Complete inventory of every PRD/TDD requirement and its current implementation s
 | Requirement | PRD Ref | Status | Notes |
 |-------------|---------|--------|-------|
 | Multi-page Streamlit app | §4.2 | ✅ | 5 pages + app.py entry point |
-| SSO auth via `DATABRICKS_USER_EMAIL` | §13.4, TDD §5.2 | ✅ | `utils/auth.py` correct |
+| SSO auth via `USER_EMAIL` env var | §13.4, TDD §5.2 | ✅ | `utils/auth.py` uses `USER_EMAIL` (GCP) |
 | State-based routing on every page load | §6.1 | ✅ | `app.py` routes new_user / needs_diagnostic / needs_course / in_training |
 | Page guards on each page | §6.3 | ✅ | All pages guard-redirect to correct prior state |
 | Welcome guard routes to correct state | §6.3 | ✅ | Fixed L6: full state detection (needs_diagnostic / needs_course / in_training) |
@@ -1581,3 +1581,45 @@ Tasks are roughly independent except 11.3 (NAV1) which touches 3 files and shoul
 - [x] NAV2: Sidebar collapse toggle is no longer visible (no text bleed-through on hover)
 - [x] UI1: Visible gap between Read/Practice/Quiz badge strip and the action button on module cards
 - [x] UI2: Clicking "Review Module N" on a fully-completed module lands directly on the Results sub-view; clicking on an incomplete module still lands on Overview
+
+---
+
+## Phase 12 — GCP Migration
+
+> **Status as of February 2026.** This phase tracks the migration from Databricks to GCP Cloud Run.
+
+| Task | Status | Notes |
+|------|--------|-------|
+| 12.1 Source repo copied to `AI_Hero_Academy` (public) | ✅ Done | Databricks files, secrets, proprietary assets removed |
+| 12.2 LLM provider: `databricks-sdk` → `google-genai` | ✅ Done | `utils/ai.py` rewritten; `gemini-3.1-pro-preview` + `gemini-3-flash-preview` |
+| 12.3 Database: Delta → Firestore | ✅ Done | `utils/db.py` rewritten with Firestore Admin SDK; SQL-like API preserved |
+| 12.4 Auth: `DATABRICKS_USER_EMAIL` → `USER_EMAIL` | ✅ Done | `utils/auth.py` updated |
+| 12.5 Fix page files: remove `CATALOG` prefix in SQL, fix f-string INSERTs | ⬜ Not done | `pages/00_Welcome.py`, `pages/02_Skills_Profile.py`, other pages |
+| 12.6 Add `Dockerfile` for Cloud Run | ⬜ Not done | `python:3.11-slim-bookworm`; port 8080; `min-instances=1` |
+| 12.7 Configure GCP Secret Manager for `GOOGLE_API_KEY` | ⬜ Not done | Secret `GOOGLE_API_KEY` created in project `banded-totality-485901` |
+| 12.8 Update `.github/workflows/deploy.yml` for Cloud Run | ⬜ Not done | Use `google-github-actions/deploy-cloudrun@v2` |
+| 12.9 Update docs: `PRD.md`, `TDD.md`, `PLAN.md` | ✅ Done | All three documents rewritten for GCP |
+| 12.10 End-to-end test on Cloud Run | ⬜ Not done | Test all 5 pages; verify Firestore reads/writes; check AI calls |
+| 12.11 Push all local changes (Phase 3.1) | ⬜ Not done | `utils/db.py`, `utils/ai.py` changes staged locally |
+
+### Phase 12 Execution Order
+
+```text
+12.5  Fix page files (remove Databricks SQL syntax)
+12.11 Push Phase 3.1 changes (db.py + ai.py)
+12.6  Add Dockerfile
+12.7  Configure GCP Secret Manager
+12.8  Update GitHub Actions workflow
+12.10 End-to-end test on Cloud Run
+```
+
+### Phase 12 Acceptance Checks
+
+- [ ] App loads successfully on Cloud Run URL
+- [ ] New user onboarding creates Firestore document at `users/{email}`
+- [ ] Diagnostic scoring calls Gemini API and stores result in Firestore
+- [ ] Gap map generated and stored in `users/{email}/gap_maps/`
+- [ ] Training progress created and modules unlock correctly
+- [ ] `ai_call_log` documents created for every Gemini call
+- [ ] `GOOGLE_API_KEY` sourced from Secret Manager (not hardcoded)
+- [ ] No Databricks references remain in runtime code paths

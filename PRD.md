@@ -1,6 +1,6 @@
 ================================================================================
 PRD.md — AI Hero Academy — MVP Product Requirements Document
-Version 1.0 | June 2025
+Version 2.0 | February 2026 (GCP Migration)
 ================================================================================
 
 TABLE OF CONTENTS
@@ -25,9 +25,9 @@ TABLE OF CONTENTS
 1. EXECUTIVE SUMMARY
 ================================================================================
 
-AI Hero Academy is an internal Databricks App that evaluates, trains, and
+AI Hero Academy is a GCP Cloud Run application that evaluates, trains, and
 benchmarks employees on AI skills through real-life, job-specific use cases
-and AI coaching powered by Mosaic AI Foundation Models.
+and AI coaching powered by the Google Gemini API.
 
 The MVP focuses on a single role — Relationship Manager (RM) — and delivers
 a complete learning loop:
@@ -202,10 +202,13 @@ the organization's actual use cases and policies.
                          then Post-module Evaluation
   Modules per course     3 sub-modules (reading, practice, evaluation)
   Dashboard              Employee-only (personal progress view)
-  AI models              Mosaic AI Foundation Model APIs (single endpoint)
-  Hosting                Databricks App (Streamlit)
-  Authentication         Databricks workspace SSO
-  Persistence            Delta tables in Unity Catalog
+  AI models              Google Gemini API — gemini-3.1-pro-preview
+                         (scoring/generation) + gemini-3-flash-preview
+                         (AI coach responses)
+  Hosting                GCP Cloud Run (containerized Streamlit, port 8080)
+  Authentication         USER_EMAIL environment variable (Cloud Run env
+                         for prod; .env file for local dev)
+  Persistence            Google Cloud Firestore (NoSQL document store)
   Language               English only
 
 
@@ -226,7 +229,7 @@ the organization's actual use cases and policies.
   - Employee home page with progress tracking
   - Permanent skills profile and results page
   - Retake diagnostic capability
-  - Full state persistence in Delta tables (cross-device, cross-session)
+  - Full state persistence in Firestore (cross-device, cross-session)
   - Personalized module sequencing based on gap priorities
   - Module locking (sequential unlock after completing prior module)
 
@@ -239,9 +242,8 @@ the organization's actual use cases and policies.
   - Content generation UI or admin interface
   - Agent pipeline for automated role-to-use-case mapping
   - Human review queue for AI scoring
-  - MLflow integration for prompt or model versioning
-  - SQL Warehouse for analytics
-  - Materialized views
+  - Firebase Authentication (future; USER_EMAIL env var used for MVP)
+  - Advanced analytics dashboard
   - Badge export or HR system integration
   - Content management, SCORM, or LMS features
   - Mobile-optimized layout (desktop-first only)
@@ -262,7 +264,7 @@ Every user is in exactly one of these states at any time:
 
   STATE                CONDITION                     DEFAULT PAGE
   -------------------  ----------------------------  ----------------
-  new_user             No profile record exists       Welcome screen
+  new_user             No profile doc in Firestore    Welcome screen
   needs_diagnostic     Profile exists, no diagnostic  Diagnostic
   needs_course         Diagnostic done, no course     Skills Profile
   in_training          Course created, in progress    Home
@@ -283,9 +285,9 @@ Every user is in exactly one of these states at any time:
        v
   Loading Screen ("Analyzing your responses...")
        |
-       | AI scores all responses
-       | AI generates personalized gap map
-       | Results written to Delta
+       | AI scores all responses (Gemini API)
+       | AI generates personalized gap map (Gemini API)
+       | Results written to Firestore
        v
   Skills Profile Screen
        |
@@ -294,7 +296,7 @@ Every user is in exactly one of these states at any time:
        v
   Loading Screen ("Building your personalized course...")
        |
-       | System creates 5 training_progress records
+       | System creates 5 training_progress Firestore docs
        | Module sequence personalized by gap priorities
        v
   Home Screen
@@ -309,8 +311,8 @@ Every user is in exactly one of these states at any time:
 
   App loads
        |
-       | System reads user_email from SSO
-       | System queries Delta for user state
+       | System reads user_email from USER_EMAIL env var
+       | System queries Firestore for user state
        v
   Route to appropriate page based on state:
        |
@@ -332,18 +334,18 @@ Every user is in exactly one of these states at any time:
        |
        | User reads content (concept, example, anti-pattern, takeaway)
        | Clicks "I've read this — Start Practice"
-       | Delta write: reading_completed_at
+       | Firestore write: reading_completed_at
        v
   Practice Sub-module (AI Coach)
        |
        | User sees scenario and simulated content
-       | Task 1: user submits response, coach replies
-       | Task 2: user submits response, coach replies
-       | Task 3: user submits response, coach replies
-       | Task 4: user submits response, coach replies
+       | Task 1: user submits response, coach replies (Gemini Flash)
+       | Task 2: user submits response, coach replies (Gemini Flash)
+       | Task 3: user submits response, coach replies (Gemini Flash)
+       | Task 4: user submits response, coach replies (Gemini Flash)
        | (Max 15 total coach turns across all tasks)
        | Clicks "Complete Practice"
-       | Delta write: coach_session + practice_completed_at
+       | Firestore write: coach_session + practice_completed_at
        v
   Evaluation Sub-module (Mandatory Quiz)
        |
@@ -352,11 +354,11 @@ Every user is in exactly one of these states at any time:
        v
   Loading Screen ("Scoring your responses...")
        |
-       | AI scores responses
-       | AI updates gap map
+       | AI scores responses (Gemini Pro)
+       | AI updates gap map (Gemini Pro)
        | Domain scores recalculated
        | Next module unlocked
-       | Delta writes: evaluation_results + gap_maps + training_progress
+       | Firestore writes: training_progress + gap_maps
        v
   Module Results Screen
        |
@@ -389,7 +391,7 @@ Every user is in exactly one of these states at any time:
 7.1 WELCOME SCREEN
 --------------------
 
-Trigger: User has no record in learner.user_profiles
+Trigger: User has no document in Firestore users collection
 
 Elements:
   - App logo/icon area
@@ -407,7 +409,7 @@ Elements:
 
 Behavior:
   - On CTA click:
-    1. Write new row to learner.user_profiles
+    1. Write new document to Firestore users/{email} collection
     2. Store role_id in session_state
     3. Navigate to Diagnostic screen
 
@@ -454,16 +456,16 @@ Item type rendering:
 Final question behavior:
   - After submitting question 12, show loading state:
     "Analyzing your responses..." with a progress animation
-  - AI scoring call runs (all 12 responses scored in one call)
-  - Gap map generation call runs
-  - Results written to Delta
+  - AI scoring call runs via Gemini Pro (all 12 responses in one call)
+  - Gap map generation call runs via Gemini Pro
+  - Results written to Firestore
   - Redirect to Skills Profile screen
 
 Session state during diagnostic:
   - All responses stored in session_state as a list
   - If user refreshes mid-diagnostic, they restart from question 1
     (acceptable for a 5-minute assessment)
-  - No partial saves to Delta during the diagnostic
+  - No partial saves to Firestore during the diagnostic
 
 7.3 SKILLS PROFILE SCREEN
 ---------------------------
@@ -526,7 +528,8 @@ Behavior:
       baseline; each completed evaluation updates the domain score
       as the average of the diagnostic score and all evaluation
       scores for that domain)
-  - Gap map is the most recent version from learner.gap_maps
+  - Gap map is the most recent version from the Firestore
+    gap_maps subcollection
 
 7.4 HOME SCREEN
 -----------------
@@ -633,7 +636,7 @@ sub-module the user is in.
 
   Behavior:
     - On CTA click:
-      1. Write reading_completed_at to learner.training_progress
+      1. Write reading_completed_at to Firestore training_progress doc
       2. Navigate to Practice sub-view
 
 7.5.3 PRACTICE SUB-VIEW (AI Coach)
@@ -656,7 +659,7 @@ sub-module the user is in.
 
     COACH PANEL (below task, appears after submission):
       - Label: "AI Coach" with a robot/coach icon
-      - Coach response text
+      - Coach response text (powered by Gemini Flash)
       - Follow-up text input for user reply
       - "Reply" button
       - Turn counter: "Turn X of 15"
@@ -675,8 +678,8 @@ sub-module the user is in.
       session. Let us move to the quiz to check your understanding."
       Show "Go to Quiz" button
     - On "Complete Practice" click:
-      1. Write coach_session to learner.coach_sessions
-      2. Write practice_completed_at to learner.training_progress
+      1. Write coach_session to Firestore coach_sessions subcollection
+      2. Write practice_completed_at to Firestore training_progress doc
       3. Navigate to Evaluation sub-view
     - If user refreshes during practice:
       Coach conversation is lost (acceptable — practice is exploratory)
@@ -702,11 +705,11 @@ sub-module the user is in.
   Final question behavior:
     - After submitting question 4, show loading state:
       "Scoring your responses..."
-    - AI scoring call runs
-    - Gap map update call runs
-    - Domain scores recalculated
-    - Next module unlocked (status changed from "locked" to "available")
-    - Results written to Delta
+    - AI scoring call runs (Gemini Pro)
+    - Gap map update call runs (Gemini Pro)
+    - Domain scores recalculated in Python
+    - Next module unlocked (Firestore document updated)
+    - Results written to Firestore
     - Navigate to Module Results sub-view
 
 7.5.5 MODULE RESULTS SUB-VIEW
@@ -1031,17 +1034,19 @@ Deep linking:
 
   DATA TYPE                CLASSIFICATION       HANDLING
   -----------------------  -------------------  ---------------------------
-  Employee email/name      Internal / PII       Stored in Delta; accessed
-                                                only by the employee
-  Diagnostic responses     Internal             Stored in Delta; no
+  Employee email/name      Internal / PII       Stored in Firestore;
+                                                accessed only by the employee
+  Diagnostic responses     Internal             Stored in Firestore; no
                                                 external sharing
   Skill scores             Internal/Sensitive   Visible only to the
                                                 employee; no manager view
   Gap map narratives       Internal             Personal to the employee
-  Coach conversations      Internal             Stored in Delta; contain
-                                                only simulated data
+  Coach conversations      Internal             Stored in Firestore;
+                                                contain only simulated data
   AI call logs             Internal/Operational Used for monitoring and
                                                 debugging only
+  API keys                 Secret               Stored in GCP Secret
+                                                Manager; never in code
 
 13.2 CONTENT SAFETY RULES
 ---------------------------
@@ -1064,6 +1069,8 @@ Deep linking:
   - All AI scoring uses low temperature (0.1) for consistency
   - AI coach uses moderate temperature (0.4) constrained by system
     prompt rules
+  - Gemini API called via google-genai SDK with structured output
+    (response_mime_type + response_schema) for deterministic JSON
   - No AI output is presented as authoritative or used for employment
     decisions
   - All scoring includes rationale text that the user can read
@@ -1073,14 +1080,20 @@ Deep linking:
 13.4 ACCESS CONTROL
 ---------------------
 
-  - Authentication via Databricks workspace SSO (no custom auth)
-  - Each user can only see their own data
-  - No admin role in MVP (content is seeded via notebooks)
-  - Delta tables use Unity Catalog permissions:
-    - content schema: read-only for the app service principal
-    - learner schema: read-write for the app service principal,
-      filtered by user_email in all queries
-    - system schema: write for the app, read for administrators
+  - Authentication via USER_EMAIL environment variable (MVP)
+    Future: Firebase Authentication (post-MVP)
+  - Each user can only see their own data (server-side enforcement
+    via user_email filter on all Firestore queries)
+  - No admin role in MVP (content served from JSON files bundled
+    with the app; no database writes for content)
+  - Firestore security model:
+    - Server-side (Admin SDK): security enforced in Python code
+    - All learner queries filtered by user_email
+    - ai_call_log: write-only for the app; readable by GCP admins
+  - GOOGLE_API_KEY stored in GCP Secret Manager; exposed to Cloud
+    Run as environment variable via native Secret Manager integration
+  - Cloud Run service account: Principle of Least Privilege —
+    only secretmanager.secretAccessor + Firestore read/write
 
 
 ================================================================================
@@ -1099,9 +1112,9 @@ that anticipate them unless doing so costs zero additional effort.
   Manager dashboard                    v1
   Leadership dashboard                 v2
   Proficient tier (advanced courses)   v1
-  MLflow prompt versioning             v1
-  SQL Warehouse analytics              v1
-  Materialized views                   v1
+  Firebase Authentication (SSO)        v1
+  Advanced analytics dashboard         v1
+  Vertex AI / model versioning         v1
   Badge export / HR integration        v2
   Multilingual content (French)        v2
   Mobile-optimized layout              v2
@@ -1115,5 +1128,5 @@ that anticipate them unless doing so costs zero additional effort.
 
 
 ================================================================================
-END OF PRD.md
+END OF PRD.md — Version 2.0 (GCP Migration, February 2026)
 ================================================================================
