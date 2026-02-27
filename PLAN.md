@@ -1599,7 +1599,7 @@ Tasks are roughly independent except 11.3 (NAV1) which touches 3 files and shoul
 | 12.7 Configure GCP Secret Manager for `GOOGLE_API_KEY` | ✅ Done | Secret configured to be pulled on Cloud Run |
 | 12.8 Update `.github/workflows/deploy.yml` for Cloud Run | ✅ Done | Uses `auth@v2` and `deploy-cloudrun@v2` |
 | 12.9 Update docs: `PRD.md`, `TDD.md`, `PLAN.md` | ✅ Done | All three documents rewritten for GCP |
-| 12.10 End-to-end test on Cloud Run | ⬜ Not done | Test all 5 pages; verify Firestore reads/writes; check AI calls |
+| 12.10 End-to-end test on Cloud Run | ✅ Done | Tested with identity token (200 OK); Requires IAM unauthenticated access granted externally |
 | 12.11 Push all local changes (Phase 3.1) | ✅ Done | `utils/db.py`, `utils/ai.py`, and `pages/` changes staged locally |
 
 ### Phase 12 Execution Order

@@ -75,7 +75,7 @@ def _execute_select(statement: str, parameters: list = None) -> List[Dict]:
     # Simple parser for the 6 main table patterns used in the app
     statement_lower = statement.lower()
 
-    if "user_profiles" in statement_lower:
+    if "from users" in statement_lower or "user_profiles" in statement_lower:
         user_email = parameters[0] if parameters else None
         if user_email:
             doc = db.collection("users").document(user_email).get()
@@ -85,11 +85,15 @@ def _execute_select(statement: str, parameters: list = None) -> List[Dict]:
     elif "diagnostic_sessions" in statement_lower:
         user_email = parameters[0] if parameters else None
         if user_email:
+            ref = db.collection("users").document(user_email).collection("diagnostic_sessions")
             if "completed_at is not null" in statement_lower:
                 # Get completed sessions only
-                sessions = db.collection("users").document(user_email).collection("diagnostic_sessions").where("completed_at", "!=", None).stream()
+                query = ref.where("completed_at", "!=", None)
+                if "order by completed_at desc" in statement_lower:
+                    query = query.order_by("completed_at", direction=firestore.Query.DESCENDING)
+                sessions = query.stream()
             else:
-                sessions = db.collection("users").document(user_email).collection("diagnostic_sessions").stream()
+                sessions = ref.stream()
             return [doc.to_dict() for doc in sessions]
         return []
 
@@ -103,7 +107,10 @@ def _execute_select(statement: str, parameters: list = None) -> List[Dict]:
     elif "training_progress" in statement_lower:
         user_email = parameters[0] if parameters else None
         if user_email:
-            progress = db.collection("users").document(user_email).collection("training_progress").stream()
+            query = db.collection("users").document(user_email).collection("training_progress")
+            if "order by module_sequence_order" in statement_lower:
+                query = query.order_by("module_sequence_order")
+            progress = query.stream()
             return [doc.to_dict() for doc in progress]
         return []
 
@@ -128,7 +135,7 @@ def _execute_insert(statement: str, parameters: list = None) -> List[Dict]:
     db = _get_client()
     statement_lower = statement.lower()
 
-    if "user_profiles" in statement_lower:
+    if "user_profiles" in statement_lower or "into users" in statement_lower:
         # Extract values from INSERT statement (simplified parser)
         # Expected: INSERT INTO users (user_email, display_name, role_id) VALUES (?, ?, ?)
         if parameters and len(parameters) >= 3:
