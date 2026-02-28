@@ -8,6 +8,10 @@ On every page load:
 """
 
 import streamlit as st
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from utils.auth import get_user_email
 from utils.db import query_one
 from utils.styles import inject_global_css

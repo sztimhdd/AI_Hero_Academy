@@ -1239,11 +1239,11 @@ Prerequisite: Task 9.4 complete and deployed.
 #### Phase 9 Execution Order
 
 ```text
-9.1  🔧 PARTIAL  Multi-role app support (content.py + diagnostic done; Welcome pending)
+9.1  ✅ DONE     Multi-role app support (content.py + diagnostic done; Welcome done)
 9.2  ✅ DONE     Multi-agent content generation pipeline (scripts/generate_course_content.py)
 9.3  ✅ DONE     UW content validation (24 diag items, 10 courses, 10 eval courses confirmed)
-9.4  ❌ PENDING  Wire Welcome page for UW role selection (dynamic ROLES lookup + role_id INSERT)
-9.5  ❌ PENDING  Full UW learner journey acceptance tests
+9.4  ✅ DONE     Wire Welcome page for UW role selection (dynamic ROLES lookup + role_id INSERT)
+9.5  ✅ DONE     Full UW learner journey acceptance tests
      → Deploy and smoke-test full UW learner journey after 9.4
 ```
 
@@ -1264,15 +1264,18 @@ M2/M5)              pages/01-04 updated                                        3
                                                                                                                                                                            7.9 ✅ Callout boxes
                                                                                                                                                                            7.10 ✅ Module cards
 
-Phase 8 ✅ DONE             Phase 9 — Underwriter Role (in progress)
-UAT Regression Fixes       9.1 🔧 Multi-role app support (partial — Welcome page pending)
-8.1 NX2 secondary button   9.2 ✅ Content generation pipeline (scripts/generate_course_content.py)
-8.2 NX6 console warnings   9.3 ✅ UW content validation (24 diag, 10 courses, domains role-scoped)
-8.3 BUG-1 gap_maps fix     9.4 ❌ Wire Welcome page for UW role selection
-                           9.5 ❌ Full UW journey acceptance tests
+Phase 8 ✅ DONE             Phase 9 — Underwriter Role ✅ DONE
+UAT Regression Fixes       9.1 ✅ Multi-role app support
+8.1 NX2 secondary button   9.2 ✅ Content generation pipeline
+8.2 NX6 console warnings   9.3 ✅ UW content validation
+8.3 BUG-1 gap_maps fix     9.4 ✅ Wire Welcome page for UW role selection
+                           9.5 ✅ Full UW journey acceptance tests
+
+Phase 10 — UAT Persona Switching ✅ DONE
+10.1 ✅ Enhance scripts/reset_uat_user.py
 ```
 
-**Phases 0–8 complete. Phase 9 in progress: UW content generated and validated; Welcome page wiring (Task 9.4) is the only remaining blocker before UW goes live.**
+**Phases 0–12 complete. All MVP requirements met.**
 
 ---
 
@@ -1296,7 +1299,7 @@ After completing Phases 1 and 2, verify all TDD acceptance criteria:
 
 ---
 
-### Phase 10 — UAT Persona Switching ❌ PENDING
+### Phase 10 — UAT Persona Switching ✅ DONE
 
 **Problem:** The UAT environment uses a single hardcoded test user (`DEV_USER_EMAIL` = `uat-test@edc.ca`). Once the profile is seeded with a completed RM diagnostic and module progress, it is impossible to test:
 
@@ -1308,7 +1311,7 @@ After completing Phases 1 and 2, verify all TDD acceptance criteria:
 
 ---
 
-#### Task 10.1 — Enhance `scripts/reset_uat_user.py` ❌ PENDING
+#### Task 10.1 — Enhance `scripts/reset_uat_user.py` ✅ DONE
 
 **File**: [`scripts/reset_uat_user.py`](scripts/reset_uat_user.py)
 
@@ -1591,8 +1594,8 @@ Tasks are roughly independent except 11.3 (NAV1) which touches 3 files and shoul
 | Task | Status | Notes |
 |------|--------|-------|
 | 12.1 Source repo copied to `AI_Hero_Academy` (public) | ✅ Done | Databricks files, secrets, proprietary assets removed |
-| 12.2 LLM provider: `databricks-sdk` → `google-genai` | ✅ Done | `utils/ai.py` rewritten; `gemini-3.1-pro-preview` + `gemini-3-flash-preview` |
-| 12.3 Database: Delta → Firestore | ✅ Done | `utils/db.py` rewritten with Firestore Admin SDK; SQL-like API preserved |
+| 12.2 LLM provider: `databricks-sdk` → `google-genai` | ✅ Done | `utils/ai.py` rewritten; `gemini-3.1-pro-preview` + `gemini-3-flash-preview` (supports `GEMINI_API_KEY` fallback) |
+| 12.3 Database: Delta → Firestore | ✅ Done | `utils/db.py` rewritten with Firestore Admin SDK; SQL-like API preserved (supports `GOOGLE_CLOUD_PROJECT` fallback) |
 | 12.4 Auth: `DATABRICKS_USER_EMAIL` → `USER_EMAIL` | ✅ Done | `utils/auth.py` updated |
 | 12.5 Fix page files: remove `CATALOG` prefix in SQL, fix f-string INSERTs | ✅ Done | `pages/00_Welcome.py`, `pages/02_Skills_Profile.py`, other pages |
 | 12.6 Add `Dockerfile` for Cloud Run | ✅ Done | `python:3.11-slim-bookworm`; port 8080 |

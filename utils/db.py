@@ -28,9 +28,9 @@ def _get_client() -> firestore.Client:
     """Get Firestore client instance."""
     global _client
     if _client is None:
-        project_id = os.environ.get("GCP_PROJECT_ID")
+        project_id = os.environ.get("GCP_PROJECT_ID") or os.environ.get("GOOGLE_CLOUD_PROJECT")
         if not project_id:
-            raise RuntimeError("GCP_PROJECT_ID environment variable not set")
+            raise RuntimeError("GCP_PROJECT_ID or GOOGLE_CLOUD_PROJECT environment variable not set")
         _client = firestore.Client(project=project_id)
     return _client
 
@@ -150,7 +150,7 @@ def _execute_insert(statement: str, parameters: list = None) -> List[Dict]:
             return [doc_data]
 
     elif "diagnostic_sessions" in statement_lower:
-        if parameters and len(parameters) >= 8:
+        if parameters and len(parameters) >= 7:
             session_id, user_email = parameters[0], parameters[1]
             doc_data = {
                 "session_id": session_id,

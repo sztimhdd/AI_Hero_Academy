@@ -28,7 +28,8 @@ def call_llm(
     else:
         model = os.environ.get("GEMINI_PRO_MODEL", "gemini-3.1-pro-preview")
 
-    client = genai.Client()  # Uses GOOGLE_API_KEY env var
+    api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    client = genai.Client(api_key=api_key) if api_key else genai.Client()
 
     # Extract system instruction if present
     system_instruction = None
