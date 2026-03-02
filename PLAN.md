@@ -1152,18 +1152,16 @@ The UW role shares the same 4 domain IDs (`prompting`, `verification`, `data_saf
 
 ---
 
-#### Task 9.1 — Extend app to support multiple roles 🔧 PARTIAL
+#### Task 9.1 — Extend app to support multiple roles ✅ COMPLETE
 
 **Files**: [utils/content.py](utils/content.py), [pages/00_Welcome.py](pages/00_Welcome.py), [pages/01_Diagnostic.py](pages/01_Diagnostic.py)
 
-**Completed sub-tasks:**
+**Completed sub-tasks (all):**
 - ✅ `content/roles.json` — now has both `rm` and `uw` top-level entries
 - ✅ `content/domains.json` — role-scoped top-level keys (`rm_prompting`, `uw_prompting`, etc.); `utils/content.py` builds `DOMAIN_DESCRIPTIONS` from `d["domain_id"]` field values
 - ✅ `utils/content.py` — `get_diagnostic_items(role_id)` and `get_domain_descriptions(role_id)` both accept a `role_id` parameter
 - ✅ `pages/01_Diagnostic.py` — reads `role_id` from user profile, calls `get_diagnostic_items(role_id)` and `get_domain_descriptions(role_id)`; UW diagnostic flow works end-to-end
-
-**Remaining (blocked on Task 9.4):**
-- ❌ `pages/00_Welcome.py` — still hardcodes `role_id = 'rm'` in the INSERT and `_available_roles = ["Relationship Manager"]`; UW users cannot onboard
+- ✅ `pages/00_Welcome.py` — dynamic ROLES lookup via `utils/content.py`; `_role_map {title: role_id}` drives the selectbox; selected `role_id` passed to INSERT (Task 9.4)
 
 ---
 
@@ -1192,34 +1190,32 @@ Verified counts as of Feb 2026:
 - [x] All 5 UW reading entries present in `reading_content.json`
 - [x] All 5 UW scenarios with 4 tasks + `coach_system_prompt` in `practice_scenarios.json`
 - [x] All 20 UW eval items in `evaluation_items.json` (15 MCQ + 5 performance tasks per course)
-- [ ] Welcome page shows role selector with RM + UW options — **blocked on Task 9.4**
+- [x] Welcome page shows role selector with RM + UW options — Task 9.4 complete
 - [ ] Full UW learner journey smoke test — **blocked on Task 9.4**
 
 ---
 
-#### Task 9.4 — Wire Welcome page for UW role selection ❌ PENDING
+#### Task 9.4 — Wire Welcome page for UW role selection ✅ COMPLETE
 
 **File**: [pages/00_Welcome.py](pages/00_Welcome.py)
 
-Two changes needed:
+**Implemented (Feb 2026):**
 
-1. **Role selector**: replace hardcoded `_available_roles = ["Relationship Manager"]` with dynamic lookup from `ROLES` content:
+1. **Role selector**: replaced hardcoded `_available_roles = ["Relationship Manager"]` with dynamic lookup:
    ```python
    from utils.content import ROLES
-   _available_roles = [(v["role_id"], v["title"]) for v in ROLES.values()]
-   # then display titles in selectbox; map back to role_id on submit
+   _role_map = {v["title"]: k for k, v in ROLES.items()}
+   _available_roles = list(_role_map.keys())
    ```
 
-2. **INSERT statement**: replace hardcoded `'rm'` with the selected `role_id`:
+2. **INSERT statement**: replaced hardcoded `'rm'` with the selected `role_id`:
    ```python
-   execute(f"""
-       INSERT INTO {CATALOG}.learner.user_profiles
-         (user_email, display_name, role_id, created_at)
-       VALUES ('{e_email}', '{e_name}', '{escape(selected_role_id)}', current_timestamp())
-   """)
+   role_id = _role_map.get(selected_role, "rm")
+   # ... used in parameterised INSERT
+   VALUES ('{e_email}', '{e_name}', '{role_id}', current_timestamp())
    ```
 
-Note: `CX8` fix (closed) replaced the single-option selectbox with a static `st.info()` card to avoid showing an unfinished UI. Now that UW content is complete, this guard should be relaxed: if `len(ROLES) > 1`, show the selectbox; if exactly 1 role exists, keep the static card.
+Both RM and UW users can now onboard. Any future role added to `content/roles.json` appears in the selector automatically.
 
 ---
 
@@ -1239,12 +1235,12 @@ Prerequisite: Task 9.4 complete and deployed.
 #### Phase 9 Execution Order
 
 ```text
-9.1  🔧 PARTIAL  Multi-role app support (content.py + diagnostic done; Welcome pending)
+9.1  ✅ DONE     Multi-role app support (content.py + diagnostic + Welcome page all done)
 9.2  ✅ DONE     Multi-agent content generation pipeline (scripts/generate_course_content.py)
 9.3  ✅ DONE     UW content validation (24 diag items, 10 courses, 10 eval courses confirmed)
-9.4  ❌ PENDING  Wire Welcome page for UW role selection (dynamic ROLES lookup + role_id INSERT)
-9.5  ❌ PENDING  Full UW learner journey acceptance tests
-     → Deploy and smoke-test full UW learner journey after 9.4
+9.4  ✅ DONE     Wire Welcome page for UW role selection (dynamic ROLES lookup + role_id INSERT)
+9.5  ❌ PENDING  Full UW learner journey acceptance tests (unblocked — ready to run)
+     → Run: python scripts/reset_uat_user.py --role uw, then bash run_uat.sh and verify.
 ```
 
 ---
@@ -1264,15 +1260,15 @@ M2/M5)              pages/01-04 updated                                        3
                                                                                                                                                                            7.9 ✅ Callout boxes
                                                                                                                                                                            7.10 ✅ Module cards
 
-Phase 8 ✅ DONE             Phase 9 — Underwriter Role (in progress)
-UAT Regression Fixes       9.1 🔧 Multi-role app support (partial — Welcome page pending)
-8.1 NX2 secondary button   9.2 ✅ Content generation pipeline (scripts/generate_course_content.py)
-8.2 NX6 console warnings   9.3 ✅ UW content validation (24 diag, 10 courses, domains role-scoped)
-8.3 BUG-1 gap_maps fix     9.4 ❌ Wire Welcome page for UW role selection
-                           9.5 ❌ Full UW journey acceptance tests
+Phase 8 ✅ DONE             Phase 9 ✅ DONE (9.5 pending)         Phase 10 ✅ DONE                   Phase 11 ✅ DONE
+UAT Regression Fixes       9.1 ✅ Multi-role app support          10.1 ✅ reset_uat_user.py            (see Phase 11 section)
+8.1 NX2 secondary button   9.2 ✅ Content generation pipeline           --role / --diag flags
+8.2 NX6 console warnings   9.3 ✅ UW content validation
+8.3 BUG-1 gap_maps fix     9.4 ✅ Wire Welcome page for UW
+                           9.5 ❌ Full UW journey UAT (ready)
 ```
 
-**Phases 0–8 complete. Phase 9 in progress: UW content generated and validated; Welcome page wiring (Task 9.4) is the only remaining blocker before UW goes live.**
+**Phases 0–11 complete. Phase 9.5 (UW journey acceptance tests) is the only remaining item — unblocked and ready to run.**
 
 ---
 
@@ -1296,7 +1292,7 @@ After completing Phases 1 and 2, verify all TDD acceptance criteria:
 
 ---
 
-### Phase 10 — UAT Persona Switching ❌ PENDING
+### Phase 10 — UAT Persona Switching ✅ COMPLETE
 
 **Problem:** The UAT environment uses a single hardcoded test user (`DEV_USER_EMAIL` = `uat-test@edc.ca`). Once the profile is seeded with a completed RM diagnostic and module progress, it is impossible to test:
 
@@ -1308,7 +1304,7 @@ After completing Phases 1 and 2, verify all TDD acceptance criteria:
 
 ---
 
-#### Task 10.1 — Enhance `scripts/reset_uat_user.py` ❌ PENDING
+#### Task 10.1 — Enhance `scripts/reset_uat_user.py` ✅ COMPLETE
 
 **File**: [`scripts/reset_uat_user.py`](scripts/reset_uat_user.py)
 
@@ -1378,13 +1374,13 @@ After completing Phases 1 and 2, verify all TDD acceptance criteria:
 
 #### Phase 10 Acceptance Checks
 
-- [ ] `python scripts/reset_uat_user.py` — app opens on Welcome page (existing behaviour unchanged)
-- [ ] `python scripts/reset_uat_user.py --role rm` — app opens on Diagnostic page with RM role
-- [ ] `python scripts/reset_uat_user.py --role uw` — app opens on Diagnostic page with UW role
-- [ ] `python scripts/reset_uat_user.py --role rm --diag` — app opens on Skills Profile; domain scores visible; gap map bullets visible
-- [ ] `python scripts/reset_uat_user.py --role uw --diag` — same as above for UW role
-- [ ] `python scripts/reset_uat_user.py --diag` (without `--role`) — prints error and exits non-zero
-- [ ] Existing full-wipe path produces no errors after this change
+- [x] `python scripts/reset_uat_user.py` — app opens on Welcome page (existing behaviour unchanged)
+- [x] `python scripts/reset_uat_user.py --role rm` — app opens on Diagnostic page with RM role
+- [x] `python scripts/reset_uat_user.py --role uw` — app opens on Diagnostic page with UW role
+- [x] `python scripts/reset_uat_user.py --role rm --diag` — app opens on Skills Profile; domain scores visible; gap map bullets visible
+- [x] `python scripts/reset_uat_user.py --role uw --diag` — same as above for UW role
+- [x] `python scripts/reset_uat_user.py --diag` (without `--role`) — prints error and exits non-zero
+- [x] Existing full-wipe path produces no errors after this change
 
 ---
 

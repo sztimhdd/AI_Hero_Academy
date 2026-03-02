@@ -55,7 +55,7 @@ databricks auth login --profile dev
 
 **AI Hero Academy** is an internal Databricks App that evaluates, trains, and benchmarks employees on AI skills through real-life, job-specific scenarios and AI coaching powered by Mosaic AI Foundation Models.
 
-The MVP targets a single role — **Relationship Manager (RM)** — and implements a four-stage learning loop: Diagnose → Map Gaps → Train → Score & Track.
+The app implements a four-stage learning loop: Diagnose → Map Gaps → Train → Score & Track. **Relationship Manager (RM)** is fully live. **Underwriter (UW)** content is generated and loaded; the Welcome page role selector (Task 9.4) is the remaining blocker before UW users can onboard.
 
 ## Technology Stack
 
@@ -115,15 +115,17 @@ response = w.serving_endpoints.query(
 
 Two Unity Catalog schemas:
 
-**`content` schema** (read-only for app, pre-seeded via notebooks):
+**`content` schema** (retired — all static content now served from `content/*.json` files bundled with the app; no SQL queries at runtime):
 
-- `roles` — role definitions (RM only in MVP)
-- `domains` — 4 skill domains with level descriptors
-- `diagnostic_items` — 12 questions (3 per domain; types: MCQ, prompt_sandbox, micro_task)
-- `courses` — 5 training courses mapped to RM use cases
-- `reading_content` — reading material per course
-- `practice_scenarios` — scenario text, 4 tasks, and coach system prompt per course
-- `evaluation_items` — 4 questions per course (3 MCQ + 1 performance task) with scoring rubrics
+- `content/roles.json` — role definitions (rm, uw)
+- `content/domains.json` — skill domains with level descriptors; top-level keys are role-scoped (e.g. `rm_prompting`, `uw_prompting`)
+- `content/diagnostic_items.json` — 24 items (12 RM + 12 UW); 3 per domain per role
+- `content/courses.json` — 10 courses (5 RM + 5 UW); mapped to domains via `primary_domain`
+- `content/reading_content.json` — reading material per course
+- `content/practice_scenarios.json` — scenario text, 4 tasks, and coach system prompt per course
+- `content/evaluation_items.json` — 4 questions per course (3 MCQ + 1 performance task) with scoring rubrics
+
+Access content via `utils/content.py` typed getters (e.g. `get_diagnostic_items(role_id)`, `get_domain_descriptions(role_id)`). Never query `mdlg_ai_shared.content.*` from app code.
 
 **`learner` schema** (read-write, all queries filtered by `user_email`):
 
@@ -197,13 +199,17 @@ Courses are mapped to domains via `primary_domain`; Module 1 unlocks immediately
 - **Content uses only fictional data** — no real client names, financials, or non-public information anywhere in seeded content (use entities like "Northern Fabrication Ltd.", "Maple Industries Ltd.")
 - **No admin UI in MVP** — content is seeded and updated via notebooks
 
-## Content Seeding
+## Content Architecture
 
-All `content` schema tables are populated via Databricks notebooks (not the app). The app service principal has read-only access to `content`. Any content changes require running the seeding notebook.
+Static app content lives in `content/*.json` (committed to the repo, loaded at startup by `utils/content.py`). The `mdlg_ai_shared.content.*` Delta tables are retired and no longer used by the app.
 
-## Out of Scope for MVP
+`learner` and `system` schema tables are still created via `notebooks/00_create_schemas.py` (run once via `databricks bundle run`). Any content changes require editing the JSON files directly and redeploying the app.
 
-Do not build toward: manager dashboards, multi-role support, admin UI, agent pipelines for content generation, MLflow prompt versioning, SQL Warehouse analytics, materialized views, mobile layout, multilingual content, badges/HR integration, email notifications, or leaderboards.
+## Out of Scope
+
+Do not build toward: manager dashboards, admin UI, MLflow prompt versioning, SQL Warehouse analytics, materialized views, mobile layout, multilingual content, badges/HR integration, email notifications, or leaderboards.
+
+**Note**: Multi-role support (UW) and the agent content generation pipeline are no longer out of scope — both are in progress.
 
 ## UI/UX Development Rules
 
@@ -212,3 +218,24 @@ Do not build toward: manager dashboards, multi-role support, admin UI, agent pip
 Use `mcp__context7__resolve-library-id` (library: "streamlit") then `mcp__context7__query-docs` to look up the current API for any Streamlit feature you are about to touch (layout, sidebar, navigation, theming, CSS injection, etc.). Do this before reading or modifying any code. This prevents wasted effort fighting internal `data-testid` selectors or CSS specificity battles that are already solved by the official SDK.
 
 Example: hiding auto-generated sidebar navigation is done via `.streamlit/config.toml` (`showSidebarNavigation = false`), not via CSS.
+
+---
+
+## Project Verification Checklist
+
+> General engineering standards (plan before acting, subagents, elegance, autonomy) are in `~/.claude/CLAUDE.md`. Below are the **project-specific** verification steps for "Verify before marking done":
+
+- Run the app locally (`bash run_uat.sh`) and exercise the changed flow
+- For data changes: query the affected Delta table to confirm the write
+- For AI call changes: check `system.ai_call_log` for correct prompt/response
+- For scoring changes: run `pytest` and confirm expected scores
+- Ask: would a senior engineer approve this diff?
+
+---
+
+## Lessons Learned
+
+> Append new entries here after any correction or unexpected failure. Format: `date — what went wrong — rule to prevent recurrence.`
+
+- **2026-02** — Attempted to query `mdlg_ai_shared.content.*` tables after they were retired; app errored at runtime. **Rule**: always use `utils/content.py` getters for static content; never write raw SQL against `content.*`.
+- **2026-02** — UI/UX fixes fought internal `data-testid` CSS selectors that broke across Streamlit versions. **Rule**: always look up the current Streamlit API via Context7 before any UI change.

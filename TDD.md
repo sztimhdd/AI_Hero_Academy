@@ -11,7 +11,7 @@
 
 AI Hero Academy is a Streamlit-based Databricks App that delivers personalized AI skills training to employees. It implements a four-stage learning loop: **Diagnose → Map Gaps → Train → Score & Track**.
 
-The MVP covers the Relationship Manager (RM) role. The Underwriter (UW) role content is fully generated and in-app — welcome page wiring is the remaining step before UW users can onboard. Each role has 12 diagnostic questions across 4 skill domains and 5 training courses. All AI scoring, coaching, and gap analysis is powered by Databricks Foundation Model serving endpoints. All learner state is persisted in Delta tables via Unity Catalog (`mdlg_ai_shared`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no Delta queries needed for content.
+The MVP covers the Relationship Manager (RM) role. The Underwriter (UW) role is fully live — content generated, loaded, and Welcome page role selection wired (Task 9.4 complete). Both RM and UW users can onboard. Each role has 12 diagnostic questions across 4 skill domains and 5 training courses. All AI scoring, coaching, and gap analysis is powered by Databricks Foundation Model serving endpoints. All learner state is persisted in Delta tables via Unity Catalog (`mdlg_ai_shared`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no Delta queries needed for content.
 
 ---
 
@@ -666,19 +666,30 @@ Same pattern as diagnostic scoring (§6.2). Uses `content.evaluation_items` rubr
 Run once after the user clicks "Build My Training Course". Creates 5 rows in `learner.training_progress`.
 
 ```python
-def compute_module_sequence(domain_scores: dict) -> list[str]:
-    """
-    domain_scores: {"prompting": 2.0, "verification": 0.8, ...}
-    Returns: list of course_ids in personalised order (index 0 = module 1).
-    """
-    # Map primary_domain -> course_id (from content.courses)
-    domain_to_course = {
+DOMAIN_TO_COURSE = {
+    "rm": {
         "prompting":    "rm_c1_prompting",
         "verification": "rm_c2_verification",
         "data_safety":  "rm_c3_data_safety",
         "tool_fluency": "rm_c4_tool_fluency",
-    }
-    capstone = "rm_c5_capstone"  # always last
+    },
+    "uw": {
+        "prompting":    "uw_c1_prompting",
+        "verification": "uw_c2_verification",
+        "data_safety":  "uw_c3_data_safety",
+        "tool_fluency": "uw_c4_tool_fluency",
+    },
+}
+CAPSTONE_COURSE_ID = {"rm": "rm_c5_capstone", "uw": "uw_c5_capstone"}
+
+def compute_module_sequence(domain_scores: dict, role_id: str = "rm") -> list[str]:
+    """
+    domain_scores: {"prompting": 2.0, "verification": 0.8, ...}
+    role_id: "rm" or "uw"
+    Returns: list of course_ids in personalised order (index 0 = module 1).
+    """
+    domain_to_course = DOMAIN_TO_COURSE.get(role_id, DOMAIN_TO_COURSE["rm"])
+    capstone = CAPSTONE_COURSE_ID.get(role_id, CAPSTONE_COURSE_ID["rm"])
 
     quick_wins = sorted(
         [(d, s) for d, s in domain_scores.items() if 1.5 <= s <= 2.5],
@@ -852,4 +863,4 @@ Do not build toward:
 - Email notifications or leaderboards
 - Peer comparison features
 
-**Multi-role status (updated Feb 2026):** The Underwriter (UW) role is in progress — content fully generated and loaded; Welcome page wiring (Task 9.4 in PLAN.md) is the only remaining step. Additional roles beyond UW remain out of scope for MVP.
+**Multi-role status (updated Feb 2026):** The Underwriter (UW) role is complete — content fully generated and loaded, Welcome page role selection wired (Task 9.4 complete). Both RM and UW users can onboard. Additional roles beyond UW remain out of scope for MVP.
