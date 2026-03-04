@@ -22,6 +22,17 @@ _No open issues._
 
 ---
 
+## UAT Execution Log
+
+| Date | Commit | Tester | Result |
+| ---- | ------ | ------ | ------ |
+| 2026-03-04 | `a311052` | `uat-test@edc.ca` | ✅ PASS — 13/13 scenarios |
+
+**Scenarios covered (2026-03-04):**
+UAT-01 Welcome (RM) · UAT-02 Diagnostic (RM, 12q) · UAT-03 Skills Profile + gap map · UAT-04 Home Dashboard + 5 modules · UAT-05 Module Overview · UAT-06 Reading sub-view · UAT-07 AI Coach practice (4 turns) · UAT-08 Evaluation quiz (3 MCQ + 1 text) · UAT-09 Module Results + Delta writes · UAT-10 Module 2 unlock + Home refresh · UAT-11 Skills Profile post-evaluation · UAT-12 Retake Diagnostic (progress preserved) · UAT-13 UW role selector + UW Diagnostic Q1/Q2
+
+---
+
 ## Closed Issues
 
 | ID | Severity | Description | Resolution |
@@ -76,3 +87,5 @@ _No open issues._
 | UI1 | 🟢 LOW | Zero-pixel gap between sub-badges and action button on course cards | Fixed (Phase 11) — added `margin-bottom: 0.75rem` to the `.sub-strip` CSS rule in `utils/styles.py`, creating visible separation between the Read/Practice/Quiz badge strip and the action button below. |
 | UI2 | 🟢 LOW | "Review Module" requires two clicks to reach results | Fixed (Phase 11) — "Review Module" button handler in `pages/03_Home.py` now checks all three completion timestamps (`reading_completed_at`, `practice_completed_at`, `evaluation_completed_at`); sets `active_submodule = "results"` when all three are set, otherwise `"overview"`. |
 | BUG-2 | 🟡 MEDIUM | `gap_maps.bullets` column may contain plain strings — `AttributeError: 'str' object has no attribute 'get'` on Skills Profile | Fixed (UAT) — root cause: early gap map generations (pre-BUG-1 fix) stored strings `["Domain (score): text", ...]` instead of dicts. Fixed in `pages/02_Skills_Profile.py`: added `isinstance(b, dict)` filter on the bullets list before sorting and rendering. No data migration needed — stale records are overwritten after the next evaluation. |
+| Phase9.5 | 🟡 MEDIUM | Full UW learner journey acceptance tests — blocked on Task 9.4 | Closed (UAT-13, March 2026) — UW welcome → diagnostic → skills profile → build course → module 1 all confirmed; UW-specific questions and content verified end-to-end. |
+| HEX-1 | 🟡 MEDIUM | Platform domain taxonomy expansion — 4-domain/5-course → 6-domain/7-course architecture required for new role content generation | Closed (Phase 12, March 2026) — all 11 hexagon refactor tasks complete; platform constants, content pipeline, prompt files, skills profile hexagon viz, and copilot-course-design-brief.md all updated; backward compatible with existing RM/UW 4-domain content; 33/33 tests passing. |

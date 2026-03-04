@@ -14,13 +14,22 @@ LEVEL_LABELS = [
 ]
 
 DOMAIN_DISPLAY_NAMES = {
-    "prompting":    "Prompting for Outcomes",
-    "verification": "Verification and Judgment",
-    "data_safety":  "Data Safety and Compliance",
-    "tool_fluency": "Tool Fluency (M365 + Copilot)",
+    "responsible_ai":      "Responsible AI",
+    "strategic_prompting": "Strategic Prompting",
+    "critical_eval":       "Critical Evaluation",
+    "relationship_intel":  "Relationship Intelligence",
+    "data_decision":       "Data-Driven Decision Making",
+    "augmented_comm":      "Augmented Communication",
 }
 
-DOMAIN_IDS = ["prompting", "verification", "data_safety", "tool_fluency"]
+DOMAIN_IDS = [
+    "responsible_ai",
+    "strategic_prompting",
+    "critical_eval",
+    "relationship_intel",
+    "data_decision",
+    "augmented_comm",
+]
 
 
 def get_level_label(score: float) -> str:
@@ -153,6 +162,6 @@ def calculate_domain_scores(
 
 
 def calculate_overall_score(domain_scores: dict) -> float:
-    """Average of the 4 domain scores."""
+    """Average of the 6 domain scores."""
     scores = [v for v in domain_scores.values() if v is not None]
     return round(sum(scores) / len(scores), 2) if scores else 0.0

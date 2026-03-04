@@ -1577,3 +1577,61 @@ Tasks are roughly independent except 11.3 (NAV1) which touches 3 files and shoul
 - [x] NAV2: Sidebar collapse toggle is no longer visible (no text bleed-through on hover)
 - [x] UI1: Visible gap between Read/Practice/Quiz badge strip and the action button on module cards
 - [x] UI2: Clicking "Review Module N" on a fully-completed module lands directly on the Results sub-view; clicking on an incomplete module still lands on Overview
+
+---
+
+### Phase 12 — Hexagon Domain Refactor ✅ COMPLETE
+
+Expand the platform from 4-domain/5-course to 6-domain/7-course architecture. All existing RM and UW content (4 domains, 5 courses, 12 diagnostic items) remains backward-compatible. New roles generated via the updated content pipeline will use 6 domains, 7 courses, and 18 diagnostic items.
+
+---
+
+#### New Domain Architecture
+
+| # | Domain ID | Display Name |
+|---|-----------|--------------|
+| 1 | `responsible_ai` | Responsible AI |
+| 2 | `strategic_prompting` | Strategic Prompting |
+| 3 | `critical_eval` | Critical Evaluation |
+| 4 | `relationship_intel` | Relationship Intelligence |
+| 5 | `data_decision` | Data-Driven Decision Making |
+| 6 | `augmented_comm` | Augmented Communication |
+
+Per new role: 7 courses (c1–c6 domain-mapped + c7_capstone), 18 diagnostic items (3 per domain), 28 evaluation items (4 per course × 7 courses).
+
+---
+
+#### Task List (all ✅ COMPLETE)
+
+| Task | Description | Files Changed |
+|------|-------------|---------------|
+| 12.1 | Update domain ID constants | `utils/scoring.py` |
+| 12.2 | Update domain sequencing constants | `utils/sequencing.py` |
+| 12.3 | Update pipeline domain constants | `scripts/generate_course_content.py` |
+| 12.4 | Update Prompt A + B to reference 6 domains / 7 courses | `prompts/copilot-role-intelligence.md`, `prompts/copilot-use-case-mapping.md` |
+| 12.5 | Create stub content JSON files for 6-domain new roles | `content/*.json` |
+| 12.6 | Update `reset_uat_user.py` for new domain IDs | `scripts/reset_uat_user.py` |
+| 12.7 | Add hexagon radar chart to Skills Profile | `pages/02_Skills_Profile.py` |
+| 12.8 | Update page-level domain references | `pages/01_Diagnostic.py`, `pages/03_Home.py`, `pages/04_Course_Module.py` |
+| 12.9 | All tests pass (33/33) | `tests/` |
+| 12.10 | Final grep + boot check + Playwright UAT | (verification) |
+| 12.11 | Rewrite Prompt C (course design brief) for 6 domains / 7 courses | `prompts/copilot-course-design-brief.md` |
+
+---
+
+#### Phase 12 UAT Results (2026-03-04)
+
+Full end-to-end UAT: **PASS — 13/13 scenarios** (commit `a311052`).
+
+RM journey (UAT-01 → UAT-12): all passing. UW role selector + UW Diagnostic (UAT-13): passing. No open issues. App deployed to Databricks.
+
+---
+
+## Execution Order (all phases)
+
+```text
+Phase 0  ✅  Phase 1  ✅  Phase 2  ✅  Phase 3  ✅  Phase 4  ✅  Phase 5  ✅
+Phase 6  ✅  Phase 7  ✅  Phase 8  ✅  Phase 9  ✅  Phase 10 ✅  Phase 11 ✅
+Phase 12 ✅  Hexagon Domain Refactor — 6-domain/7-course platform architecture
+             All tasks complete. UAT PASS 2026-03-04.
+```

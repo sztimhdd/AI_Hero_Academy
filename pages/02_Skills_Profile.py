@@ -152,12 +152,14 @@ with col_score:
 
 with col_domains:
     section_header("DOMAIN SCORES")
-    # Shortened axis labels — full names overflow on a 4-axis radar
+    # Shortened axis labels — full names overflow on a 6-axis radar
     _short_names = {
-        "prompting":    "Prompting",
-        "verification": "Verification",
-        "data_safety":  "Data Safety",
-        "tool_fluency": "Tool Fluency",
+        "responsible_ai":      "Resp. AI",
+        "strategic_prompting": "Prompting",
+        "critical_eval":       "Crit. Eval",
+        "relationship_intel":  "Rel. Intel",
+        "data_decision":       "Data Dec.",
+        "augmented_comm":      "Comm.",
     }
     _cats = [_short_names.get(d, d) for d in DOMAIN_IDS]
     _vals = []
@@ -265,10 +267,12 @@ if len(all_diags) > 0:
         rows.append({
             "Date": date_str,
             "Overall": round(ov, 1),
-            "Prompting": round(float(ds.get("prompting", 0)), 1),
-            "Verification": round(float(ds.get("verification", 0)), 1),
-            "Data Safety": round(float(ds.get("data_safety", 0)), 1),
-            "Tool Fluency": round(float(ds.get("tool_fluency", 0)), 1),
+            "Resp. AI": round(float(ds.get("responsible_ai", 0)), 1),
+            "Prompting": round(float(ds.get("strategic_prompting", 0)), 1),
+            "Crit. Eval": round(float(ds.get("critical_eval", 0)), 1),
+            "Rel. Intel": round(float(ds.get("relationship_intel", 0)), 1),
+            "Data Dec.": round(float(ds.get("data_decision", 0)), 1),
+            "Comm.": round(float(ds.get("augmented_comm", 0)), 1),
         })
     df = pd.DataFrame(rows)
     st.dataframe(df, use_container_width=True, hide_index=True)

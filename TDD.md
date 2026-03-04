@@ -11,7 +11,7 @@
 
 AI Hero Academy is a Streamlit-based Databricks App that delivers personalized AI skills training to employees. It implements a four-stage learning loop: **Diagnose → Map Gaps → Train → Score & Track**.
 
-The MVP covers the Relationship Manager (RM) role. The Underwriter (UW) role is fully live — content generated, loaded, and Welcome page role selection wired (Task 9.4 complete). Both RM and UW users can onboard. Each role has 12 diagnostic questions across 4 skill domains and 5 training courses. All AI scoring, coaching, and gap analysis is powered by Databricks Foundation Model serving endpoints. All learner state is persisted in Delta tables via Unity Catalog (`mdlg_ai_shared`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no Delta queries needed for content.
+The MVP launched with Relationship Manager (RM) and expanded in v1 to include Underwriter (UW). Both roles are fully live — end-to-end UW journey validated in UAT-13 (2026-03-04, all 13/13 scenarios passed). Each role has 12 diagnostic questions across 4 skill domains and 5 training courses. Phase 12 (March 2026) extended the platform to a 6-domain architecture for future role content generation. All AI scoring, coaching, and gap analysis is powered by Databricks Foundation Model serving endpoints. All learner state is persisted in Delta tables via Unity Catalog (`mdlg_ai_shared`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no Delta queries needed for content.
 
 ---
 
@@ -301,6 +301,8 @@ All content lives in `content/` at the project root and is loaded by `utils/cont
 | `content/evaluation_items.json` | `{course_id: [{...}]}` | 10 × 4 = 40 items |
 
 **`domains.json` key format**: top-level keys are role-scoped (`rm_prompting`, `uw_prompting`, etc.); each entry has a `domain_id` field with the flat key (`prompting`). `utils/content.py` exposes `get_domain(domain_id, role_id)` and `get_domain_descriptions(role_id)` that filter by `role_id` field value.
+
+> **Phase 12 (March 2026):** The content pipeline has been extended to a 6-domain platform architecture for new role content generation. New roles will use domain IDs: `responsible_ai`, `strategic_prompting`, `critical_eval`, `relationship_intel`, `data_decision`, `augmented_comm`. The existing RM and UW JSON files above remain unchanged (4-domain model) and are fully backward compatible.
 
 ### 4.2 Content Loader (`utils/content.py`)
 
@@ -681,6 +683,9 @@ DOMAIN_TO_COURSE = {
     },
 }
 CAPSTONE_COURSE_ID = {"rm": "rm_c5_capstone", "uw": "uw_c5_capstone"}
+# Phase 12: new roles generated via 6-domain pipeline will extend DOMAIN_TO_COURSE with
+# keys: responsible_ai, strategic_prompting, critical_eval, relationship_intel,
+# data_decision, augmented_comm — all following the same course_id naming convention.
 
 def compute_module_sequence(domain_scores: dict, role_id: str = "rm") -> list[str]:
     """

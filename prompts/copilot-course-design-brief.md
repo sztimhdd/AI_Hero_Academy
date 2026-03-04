@@ -23,16 +23,18 @@ in the few-shot examples below.
 
 PROGRAM STRUCTURE
 Each role in AI Hero Academy gets exactly:
-  - 4 AI skill domains (always the same 4 titles; descriptors are role-specific)
-  - 5 courses (1 per domain for courses 1–4; course 5 is a capstone integrating all 4 domains)
+  - 6 AI skill domains (always the same 6 titles; descriptors are role-specific)
+  - 7 courses (1 per domain for courses 1–6; course 7 is a capstone integrating all 6 domains)
   - Per course: 1 reading module, 1 practice scenario (4 tasks), 4 evaluation items (3 MCQ + 1 performance task)
-  - 1 diagnostic: 12 questions total (3 per domain: 1 MCQ + 1 prompt_sandbox + 1 micro_task)
+  - 1 diagnostic: 18 questions total (3 per domain × 6 domains: 1 MCQ + 1 prompt_sandbox + 1 micro_task)
 
-The 4 fixed domain titles (descriptions and level descriptors must be adapted to the new role):
-  Domain 1: Prompting for Outcomes
-  Domain 2: Verification and Judgment
-  Domain 3: Data Safety and Compliance
-  Domain 4: Tool Fluency (M365 + Copilot)
+The 6 fixed domain titles (descriptions and level descriptors must be adapted to the new role):
+  Domain 1: Responsible AI
+  Domain 2: Strategic Prompting
+  Domain 3: Critical Evaluation
+  Domain 4: Relationship Intelligence
+  Domain 5: Data-Driven Decision Making
+  Domain 6: Augmented Communication
 
 INPUTS
 Role: [INSERT ROLE TITLE HERE]
@@ -64,12 +66,29 @@ hygiene, and portfolio retention. Works closely with Associate Relationship Mana
 Sales Operations, and internal product teams."
 
 ════════════════════════════════════════════════════════════════════
-EXAMPLE: DOMAIN SPECS (all 4, RM role)
+EXAMPLE: DOMAIN SPECS (all 6, RM role)
 ════════════════════════════════════════════════════════════════════
 
-DOMAIN 1 — Prompting for Outcomes
-  domain_id: prompting
-  title: Prompting for Outcomes
+DOMAIN 1 — Responsible AI
+  domain_id: responsible_ai
+  title: Responsible AI
+  description: "Applying EDC's Responsible AI usage policy before inputting client data into
+  AI tools. Abstracting and anonymising non-public information (credit figures, deal terms,
+  private expansion plans) while still getting useful AI assistance."
+  level_0_label: Unaware
+  level_0_descriptor: "Unaware of the non-public data rule or does not apply it in practice. May paste CRM records directly into public AI tools."
+  level_1_label: Explorer
+  level_1_descriptor: "Knows the rule ('don't share non-public info') but cannot reliably distinguish public from non-public in real client scenarios."
+  level_2_label: Practitioner
+  level_2_descriptor: "Applies the public/non-public test consistently. Abstracts client names and specific figures before prompting. Avoids policy violations."
+  level_3_label: Proficient
+  level_3_descriptor: "Handles borderline cases confidently (e.g., NPS scores, internal notes, inferred financials). Rewrites prompts to preserve utility while removing risk."
+  level_4_label: Champion
+  level_4_descriptor: "Identifies novel compliance risks in new use cases. Advises team on safe patterns. Acts as a data-safe AI usage model for peers."
+
+DOMAIN 2 — Strategic Prompting
+  domain_id: strategic_prompting
+  title: Strategic Prompting
   description: "Structuring AI prompts with context, constraints, format, and audience to
   produce outputs that are directly usable in RM workflows — briefing documents, emails,
   CRM notes, and talking points."
@@ -84,9 +103,9 @@ DOMAIN 1 — Prompting for Outcomes
   level_4_label: Champion
   level_4_descriptor: "Designs reusable prompt templates for team workflows. Coaches colleagues on prompting structure. Contributes new use cases."
 
-DOMAIN 2 — Verification and Judgment
-  domain_id: verification
-  title: Verification and Judgment
+DOMAIN 3 — Critical Evaluation
+  domain_id: critical_eval
+  title: Critical Evaluation
   description: "Reviewing AI outputs critically before acting on them — catching hallucinations,
   incorrect dates, invented facts, and misattributed statements in meeting recaps, summaries,
   and CRM entries."
@@ -99,50 +118,68 @@ DOMAIN 2 — Verification and Judgment
   level_3_label: Proficient
   level_3_descriptor: "Identifies subtle errors (plausible but wrong details). Adjusts prompts to reduce hallucination risk. Reviews with a skeptical lens."
   level_4_label: Champion
-  level_4_descriptor: "Develops verification checklists for team use. Can explain failure modes of AI summarization. Trains peers on review discipline."
+  level_4_descriptor: "Develops verification checklists for team use. Can explain failure modes of AI summarisation. Trains peers on review discipline."
 
-DOMAIN 3 — Data Safety and Compliance
-  domain_id: data_safety
-  title: Data Safety and Compliance
-  description: "Applying the public/non-public test before inputting client data into AI tools.
-  Abstracting and anonymizing non-public information (credit figures, deal terms, private
-  expansion plans) while still getting useful AI assistance."
+DOMAIN 4 — Relationship Intelligence
+  domain_id: relationship_intel
+  title: Relationship Intelligence
+  description: "Using AI to prepare for client interactions with deeper context — researching
+  client backgrounds, synthesising relationship history, and personalising outreach so every
+  meeting, email, and follow-up reflects what the RM already knows about the client's
+  situation, sector, and priorities."
   level_0_label: Unaware
-  level_0_descriptor: "Unaware of the non-public data rule or does not apply it in practice. May paste CRM records directly into public AI tools."
+  level_0_descriptor: "Has not used AI to research clients or prepare for meetings. Relies entirely on memory or manual CRM review before calls."
   level_1_label: Explorer
-  level_1_descriptor: "Knows the rule ('don't share non-public info') but cannot reliably distinguish public from non-public in real client scenarios."
+  level_1_descriptor: "Uses AI for basic client research (sector summaries, news). Output is generic and not tailored to the specific relationship or deal stage."
   level_2_label: Practitioner
-  level_2_descriptor: "Applies the public/non-public test consistently. Abstracts client names and specific figures before prompting. Avoids policy violations."
+  level_2_descriptor: "Uses AI to synthesise CRM notes, meeting history, and sector context into targeted briefing materials. Personalises outreach with relationship signals."
   level_3_label: Proficient
-  level_3_descriptor: "Handles borderline cases confidently (e.g., NPS scores, internal notes, inferred financials). Rewrites prompts to preserve utility while removing risk."
+  level_3_descriptor: "Anticipates client objections and preferences using AI-surfaced relationship patterns. Adapts briefing depth based on deal stage and client sophistication."
   level_4_label: Champion
-  level_4_descriptor: "Identifies novel compliance risks in new use cases. Advises team on safe patterns. Acts as a data-safe AI usage model for peers."
+  level_4_descriptor: "Develops AI-assisted relationship playbooks for the team. Identifies client relationship signals that colleagues miss. Coaches peers on AI-powered meeting prep."
 
-DOMAIN 4 — Tool Fluency (M365 + Copilot)
-  domain_id: tool_fluency
-  title: Tool Fluency (M365 + Copilot)
-  description: "Choosing the right M365 Copilot surface (Outlook, Teams, Excel, Word/SharePoint)
-  for each task and building multi-step workflows where output from one tool feeds the next —
-  from meeting recap to CRM log to follow-up email."
+DOMAIN 5 — Data-Driven Decision Making
+  domain_id: data_decision
+  title: Data-Driven Decision Making
+  description: "Using AI to surface portfolio patterns, identify cross-sell opportunities, and
+  support deal qualification and pipeline prioritisation — without over-relying on AI outputs
+  that lack the full commercial context an RM holds."
   level_0_label: Unaware
-  level_0_descriptor: "Has not used Copilot features in M365 tools for work tasks. Unaware of which tools have AI capabilities."
+  level_0_descriptor: "Does not use AI for portfolio analysis or pipeline decisions. Relies exclusively on manual CRM review and intuition."
   level_1_label: Explorer
-  level_1_descriptor: "Has tried one or two Copilot features (e.g., Outlook email draft). Does not connect tools into workflows."
+  level_1_descriptor: "Uses AI to summarise sector reports or market news. Does not connect AI outputs to specific deal or portfolio decisions."
   level_2_label: Practitioner
-  level_2_descriptor: "Uses at least three M365 Copilot surfaces regularly. Builds simple two-step workflows (e.g., Teams recap → C3 log)."
+  level_2_descriptor: "Uses AI to analyse pipeline health, flag at-risk accounts, or identify cross-sell opportunities from CRM data. Validates AI suggestions against own knowledge."
   level_3_label: Proficient
-  level_3_descriptor: "Designs multi-step workflows across 3+ Copilot surfaces. Chooses the right entry point based on input type. Recovers gracefully when one step produces poor output."
+  level_3_descriptor: "Designs AI queries to surface deal patterns across multiple factors (sector, tenure, product mix). Uses AI to stress-test assumptions before client conversations."
   level_4_label: Champion
-  level_4_descriptor: "Documents and shares workflows with the team. Identifies new Copilot surfaces or features applicable to RM work. Trains peers on multi-step patterns."
+  level_4_descriptor: "Develops team-level AI prompts for quarterly portfolio reviews. Identifies data signals that predict client attrition or expansion. Shares AI prioritisation frameworks with peers."
+
+DOMAIN 6 — Augmented Communication
+  domain_id: augmented_comm
+  title: Augmented Communication
+  description: "Choosing the right M365 Copilot surface (Outlook, Teams, Word/SharePoint)
+  for each communication task and building multi-step workflows where output from one tool
+  feeds the next — from meeting recap to CRM log to follow-up email."
+  level_0_label: Unaware
+  level_0_descriptor: "Has not used Copilot features in M365 tools for communication tasks. Unaware of which tools have AI capabilities."
+  level_1_label: Explorer
+  level_1_descriptor: "Has tried one or two Copilot features (e.g., Outlook email draft). Does not connect tools into multi-step communication workflows."
+  level_2_label: Practitioner
+  level_2_descriptor: "Uses at least three M365 Copilot surfaces regularly for RM communications. Builds simple two-step workflows (e.g., Teams recap → CRM log)."
+  level_3_label: Proficient
+  level_3_descriptor: "Designs multi-step communication workflows across 3+ Copilot surfaces. Chooses the right entry point based on input type and output goal. Recovers gracefully when one step produces poor output."
+  level_4_label: Champion
+  level_4_descriptor: "Documents and shares communication workflows with the team. Identifies new Copilot surfaces or features applicable to RM work. Trains peers on multi-step patterns."
 
 ════════════════════════════════════════════════════════════════════
-EXAMPLE: COURSE SPECS (Course 1 shown in full; same structure for courses 2–5)
+EXAMPLE: COURSE SPECS (Course 2 shown in full; same structure for courses 1, 3–7)
 ════════════════════════════════════════════════════════════════════
 
-course_id: rm_c1_prompting
+course_id: rm_c2_strategic_prompting
 role_id: rm
-primary_domain: prompting
-sequence_order: 1
+primary_domain: strategic_prompting
+sequence_order: 2
 title: "Brief Like a Pro: From ARM Handoff to Discovery Brief"
 tagline: "Turn a messy ARM handoff into a sharp discovery brief using the CRAF prompt framework."
 description: "RMs spend significant time preparing for discovery calls. This course teaches the
@@ -153,10 +190,10 @@ real_use_case: "Access to Copilot 365 for Business Development (Mid Market); Pro
 Intelligence; RM Support Agent"
 
 ════════════════════════════════════════════════════════════════════
-EXAMPLE: SCENARIO SEEDS (Course 1 shown in full; same structure for courses 2–5)
+EXAMPLE: SCENARIO SEEDS (Course 2 shown in full; same structure for courses 1, 3–7)
 ════════════════════════════════════════════════════════════════════
 
-Course 1 — Scenario seed:
+Course 2 — Scenario seed:
   scenario_text: "Your ARM, Jordan, just handed off Maple Industries Ltd. after a successful
   intro call. Notes show: Ontario manufacturer, $45M revenue, exports to US and Germany,
   currently uses another bank's letter of credit facility, open to exploring alternatives.
@@ -174,13 +211,15 @@ Course 1 — Scenario seed:
   coach_system_prompt: "You are an AI skills coach for EDC Relationship Managers. The learner
   is practicing the CRAF prompt framework applied to discovery prep. Guide them to improve
   their prompts through questions — do not write the prompt for them. If a CRAF element is
-  missing, ask which element they think is weakest. Flag if any real client data appears."
+  missing, ask which element they think is weakest. Flag if any sensitive or non-public data
+  appears (client records, internal financials, unpublished research, system credentials,
+  or similar)."
 
 ════════════════════════════════════════════════════════════════════
-EXAMPLE: READING CONCEPT SPECS (Course 1 shown; same structure for courses 2–5)
+EXAMPLE: READING CONCEPT SPECS (Course 2 shown; same structure for courses 1, 3–7)
 ════════════════════════════════════════════════════════════════════
 
-Course 1 — Reading concept:
+Course 2 — Reading concept:
   framework_name: "CRAF (Context, Role, Action, Format)"
   concept_text: "Great AI output starts with a great prompt. The CRAF framework gives you four
   elements that consistently produce usable output:
@@ -203,10 +242,10 @@ Course 1 — Reading concept:
   CRAF elements is what separates output you can use from output you have to rewrite."
 
 ════════════════════════════════════════════════════════════════════
-EXAMPLE: DIAGNOSTIC ITEM SEEDS (Prompting domain shown; same for all 4 domains)
+EXAMPLE: DIAGNOSTIC ITEM SEEDS (Strategic Prompting domain shown; same for all 6 domains)
 ════════════════════════════════════════════════════════════════════
 
-Domain: prompting — 3 items
+Domain: strategic_prompting — 3 items
 
   Item 1 — type: mcq
   Tests: knowing which CRAF element is most commonly missing
@@ -242,10 +281,10 @@ Domain: prompting — 3 items
     - "Correctly identifies Action or Format as missing": max 2
 
 ════════════════════════════════════════════════════════════════════
-EXAMPLE: EVALUATION ITEM SEEDS (Course 1 shown; same for all 5 courses)
+EXAMPLE: EVALUATION ITEM SEEDS (Course 2 shown; same for all 7 courses)
 ════════════════════════════════════════════════════════════════════
 
-Course 1 (rm_c1_prompting) — 4 items
+Course 2 (rm_c2_strategic_prompting) — 4 items
 
   Item 1 — type: mcq, sequence: 1
   question_text: "Which CRAF element tells the AI how to structure its output?"
@@ -292,6 +331,58 @@ Course 1 (rm_c1_prompting) — 4 items
     key4: "Format defines the structure (sections, bullet list, headers, or equivalent)"
 
 ════════════════════════════════════════════════════════════════════
+CONTRAST EXAMPLE: ANALYST ROLE (abbreviated — structural reference only)
+Use this to calibrate tone and scenario structure when the target role is NOT
+client-facing. The RM example above shows the client-relationship pattern; this
+example shows the internal research-and-synthesis pattern.
+════════════════════════════════════════════════════════════════════
+
+role_id: an
+title: Analyst (Financial / Business / Sector)
+description: "Produces research, financial models, sector briefings, and analytical
+reports that inform decisions by internal stakeholders (underwriters, RMs, leadership).
+Works across data sources, Excel models, and SharePoint repositories. Does not manage
+client relationships directly — outputs are internal deliverables."
+
+DOMAIN 1 (Analyst contrast) — Responsible AI
+  domain_id: responsible_ai
+  description: "Knowing which research inputs and outputs are safe to pass into AI tools —
+  distinguishing publicly available sector data from embargoed third-party reports,
+  unpublished financial models, and draft strategy documents. Abstracting confidential
+  inputs while preserving analytical utility."
+  level_2_descriptor: "Applies the public/non-public test to research inputs. Does not
+  paste draft strategy documents, embargoed reports, or internal financial models into
+  non-approved AI tools. Shares abstracted summaries or anonymised data instead."
+  level_4_descriptor: "Identifies novel compliance risks in analytical AI workflows (e.g.,
+  AI summarisation of embargoed sector reports). Documents safe vs. unsafe input patterns
+  for the team. Acts as a data-safe AI usage model for peers."
+
+DOMAIN 6 (Analyst contrast) — Augmented Communication
+  domain_id: augmented_comm
+  description: "Choosing the right M365 Copilot surface for research and synthesis tasks —
+  using Copilot in Word to structure draft briefings, Excel for data interpretation, and
+  Teams Recap for cross-functional meeting follow-up. Building multi-step workflows from
+  raw data inputs to polished internal deliverables."
+  level_2_descriptor: "Uses at least two Copilot surfaces for analytical work (e.g., Word
+  for structuring a sector brief, Excel for summarising model outputs). Connects outputs
+  from one tool into the next step without manual re-entry."
+
+Scenario seed (Analyst — internal stakeholder context):
+  scenario_text: "You have just completed a sector intelligence review for the Clean Energy
+  portfolio. You have an internal briefing with the Underwriting team on Thursday and need
+  to turn your raw research notes — spread across three Word docs and a Teams meeting
+  recap — into a sharp 1-page sector brief."
+  task_1: "Write a CRAF prompt to generate an executive summary of the sector review using
+  your Teams meeting recap as the primary input."
+  task_2: "The draft summary cited a third-party report that is still under embargo. Identify
+  the data safety failure and rewrite the offending sentence using only publicly available
+  data."
+  coach_system_prompt: "You are an AI skills coach for EDC Analysts. The learner is
+  practicing structured prompting for internal research synthesis. Guide them through
+  questions — do not write the prompt for them. Flag if any embargoed, draft, or
+  non-public source material appears to have been pasted directly into the prompt."
+
+════════════════════════════════════════════════════════════════════
 END OF FEW-SHOT EXAMPLES
 ════════════════════════════════════════════════════════════════════
 
@@ -314,17 +405,22 @@ company_map:
   course_3: [FICTIONAL company name for Course 3 scenario]
   course_4: [FICTIONAL company name for Course 4 scenario]
   course_5: [FICTIONAL company name for Course 5 scenario]
+  course_6: [FICTIONAL company name for Course 6 scenario]
+  course_7: [FICTIONAL company name for Course 7 (capstone) scenario]
 
 framework_names:
-  NOTE: These 5 names are standardized across all roles. Confirm which apply; adapt the
-  role-specific examples in SECTION E (concept_text, good_example, anti_pattern) accordingly.
-  Do NOT invent new framework names unless a standardized name genuinely does not fit.
+  NOTE: These names are standardized across all roles where possible. Confirm which apply;
+  adapt the role-specific examples in SECTION E (concept_text, good_example, anti_pattern)
+  accordingly. Do NOT invent new framework names unless a standardized name genuinely does
+  not fit.
 
-  - [Course 1 — Prompting domain: standardized name is "CRAF Framework" — use unless the role requires a meaningfully different prompting structure]
-  - [Course 2 — Verification domain: standardized name is "VERIFY Checklist" — use unless the role's verification workflow diverges significantly]
-  - [Course 3 — Data Safety domain: standardized name is "The SAFE Abstraction Method" — use unless the role has a distinct data-handling protocol]
-  - [Course 4 — Tool Fluency domain: standardized name is "Copilot Surface Selector" — use unless the role's M365 tool set differs from standard]
-  - [Course 5 — Capstone: standardized name is "End-to-End AI Workflow" — use unless a role-specific multi-domain framework name is warranted]
+  - [Course 1 — Responsible AI domain: standardized name is "The SAFE Abstraction Method" — use unless the role has a distinct data-handling protocol]
+  - [Course 2 — Strategic Prompting domain: standardized name is "CRAF Framework" — use unless the role requires a meaningfully different prompting structure]
+  - [Course 3 — Critical Evaluation domain: standardized name is "VERIFY Checklist" — use unless the role's verification workflow diverges significantly]
+  - [Course 4 — Relationship Intelligence domain: no standardized name yet — propose a memorable acronym or framework name grounded in this role's client/stakeholder context]
+  - [Course 5 — Data-Driven Decision Making domain: no standardized name yet — propose a memorable acronym or framework name grounded in this role's data and decision workflows]
+  - [Course 6 — Augmented Communication domain: standardized name is "Copilot Surface Selector" — use unless the role's M365 tool set differs significantly from standard]
+  - [Course 7 — Capstone: standardized name is "End-to-End AI Workflow" — use unless a role-specific multi-domain framework name is warranted]
 
 real_use_case:
   course_1: [verbatim use case title(s) from Prompt B Task 3 — do not paraphrase]
@@ -332,13 +428,18 @@ real_use_case:
   course_3: [verbatim use case title(s) from Prompt B Task 3]
   course_4: [verbatim use case title(s) from Prompt B Task 3]
   course_5: [verbatim use case title(s) from Prompt B Task 3]
+  course_6: [verbatim use case title(s) from Prompt B Task 3]
+  course_7: [verbatim use case title(s) from Prompt B Task 3]
 ```
 
-Each fictional company name must be unique across all 5 courses (no repeats). Use company names
-appropriate to this role's client/counterparty universe (industries, sizes, geographies).
+Each fictional entity name must be unique across all 7 courses (no repeats). For client-facing
+roles, use fictional external company names appropriate to this role's client universe (industries,
+sizes, geographies). For internally-focused roles, use fictional internal project names, working
+group names, or team initiatives that reflect realistic EDC internal work (e.g., "Credit Analytics
+Working Group", "FinOps Modernization Initiative", "Enterprise Data Governance Program").
 
 Ground every section in:
-1. The Role Intelligence Profile (pasted above) — especially Sections 2, 3, 9, 13
+1. The Role Intelligence Profile (pasted above) — especially Sections 2, 3, 5, 6
 2. The Use Case Mapping (pasted above) — use the proposed course anchors from Task 3
 3. The attached use case CSV — reference use case titles by name in real_use_case fields
 4. Your M365 knowledge of this role at EDC (emails, SharePoint, Teams, meeting transcripts)
@@ -351,41 +452,43 @@ SECTION A — Role Entry
   title: [exact job title]
   description: [2–3 sentences; what the role does, who it serves, who it works with]
 
-SECTION B — All 4 Domain Specs
+SECTION B — All 6 Domain Specs
   For each domain:
-  - Keep the 4 domain titles and IDs exactly as shown in the examples
+  - Keep the 6 domain titles and IDs exactly as shown in the examples
   - Adapt the description to name the specific artifacts and workflows of THIS role
     (not "briefing documents, emails, CRM notes" for the RM — those were RM-specific)
   - Write level descriptors (0–4) with concrete, role-specific behavioral examples
   - Level 2 (Practitioner) is the target proficiency for training completion
   - Level 4 (Champion) represents peer teaching and team contribution behaviors
 
-SECTION C — All 5 Course Specs
+SECTION C — All 7 Course Specs
   For each course, provide:
   course_id, role_id, primary_domain, sequence_order, title, tagline, description,
   real_use_case (cite actual use case titles from the CSV attachment)
-  - Course 5 must be a capstone that integrates all 4 domains in a single workflow
+  - Course 7 must be a capstone that integrates all 6 domains in a single workflow
   - Course titles should be action-oriented and role-specific (not generic)
   - Use the Use Case Mapping's Task 3 course assignments as your anchor
 
-SECTION D — All 5 Scenario Seeds
+SECTION D — All 7 Scenario Seeds
   For each course, provide:
   scenario_text, task_1_text through task_4_text, coach_system_prompt
   Requirements:
   - Write in second person ("You have just...", "You are preparing...")
-  - Use FICTIONAL company names — invent plausible ones appropriate to this role's
-    client/counterparty universe (e.g., industries, size bands, geographies this role works with)
-  - Domain balance: all 4 domains must be represented across the 5 scenario seeds (courses 1–5).
-    If the role profile's Section 13B has no scenario seed for tool_fluency, synthesize the
-    Course 4 (Tool Fluency) scenario from the multi-step M365 Copilot chain workflows described
-    in Sections 3–4 of the role profile (tool inventory, surfaces in active use, handoff steps).
+  - Use FICTIONAL entity names — for client-facing roles, invent plausible external company names
+    (industries, size bands, geographies); for internally-focused roles (analysts, advisors, IT),
+    use fictional internal project names, working group names, or team initiatives rather than
+    external client companies
+  - Domain balance: all 6 domains must be represented across the 7 scenario seeds (courses 1–7).
+    If the role profile's Section 6B has no scenario seed for augmented_comm, synthesize the
+    Course 6 (Augmented Communication) scenario from the multi-step M365 Copilot chain workflows
+    described in Section 3 of the role profile (Workflow and Tools).
   - Each scenario must create an AI temptation (something the learner might rush to do wrong)
     and a skill test (the discipline or judgment required to do it right)
   - Tasks should progress in difficulty: task_1 is foundational, task_4 is the hardest
   - Coach system prompt: tell the AI coach what NOT to do (do not write the answer for them),
     what to watch for (red flags like real data entry), and how to guide without solving
 
-SECTION E — All 5 Reading Concept Specs
+SECTION E — All 7 Reading Concept Specs
   For each course, provide:
   framework_name (give the concept a memorable name or acronym if appropriate),
   concept_text, good_example, anti_pattern, takeaway
@@ -395,15 +498,15 @@ SECTION E — All 5 Reading Concept Specs
   - anti_pattern: describe the exact wrong behavior and its consequence in this role's context
   - concept_text: 150–300 words; clear teaching narrative with role-specific examples
 
-SECTION F — Diagnostic Item Seeds (12 items: 3 per domain)
+SECTION F — Diagnostic Item Seeds (18 items: 3 per domain × 6 domains)
   For each domain, produce 3 items:
   Item 1: mcq — tests conceptual knowledge of the domain
   Item 2: prompt_sandbox — asks the learner to write a prompt for a role-specific scenario
-  Item 3: micro_task — asks the learner to analyze or correct something
+  Item 3: micro_task — asks the learner to analyse or correct something
   For each item: question_text, scenario_text (for items 2–3), options (for MCQ),
   correct_option (for MCQ), scoring rubric criteria (for items 2–3, 4 criteria scoring 0–1 each)
 
-SECTION G — Evaluation Item Seeds (20 items: 4 per course)
+SECTION G — Evaluation Item Seeds (28 items: 4 per course × 7 courses)
   For each course, produce 4 items:
   Items 1–3: mcq — tests application of the course concept
   Item 4: performance_task — asks the learner to apply the full concept in a realistic task
@@ -418,16 +521,20 @@ OUTPUT FORMAT
 - Start with the MACHINE-READABLE HEADER block (see above) before any section content
 - Use the top-level section headers exactly as labeled: SECTION A through SECTION G
 - Within SECTION B (Domains), use this exact sub-header for each domain (parser-critical):
-    ### Domain: prompting
-    ### Domain: verification
-    ### Domain: data_safety
-    ### Domain: tool_fluency
+    ### Domain: responsible_ai
+    ### Domain: strategic_prompting
+    ### Domain: critical_eval
+    ### Domain: relationship_intel
+    ### Domain: data_decision
+    ### Domain: augmented_comm
 - Within SECTION C (Courses), use this exact sub-header format (parser-critical):
     ### Course 1 — [Title]
     ### Course 2 — [Title]
     ### Course 3 — [Title]
     ### Course 4 — [Title]
     ### Course 5 — [Title]
+    ### Course 6 — [Title]
+    ### Course 7 — [Title]
 - Within SECTION D (Scenarios), use this exact sub-header format:
     ### Course 1 Scenario
     ### Course 2 Scenario
@@ -437,31 +544,34 @@ OUTPUT FORMAT
     ### Course 2 Reading
     (etc.)
 - Within SECTION F (Diagnostic), use this exact sub-header format:
-    ### Diagnostic: prompting
-    ### Diagnostic: verification
-    ### Diagnostic: data_safety
-    ### Diagnostic: tool_fluency
+    ### Diagnostic: responsible_ai
+    ### Diagnostic: strategic_prompting
+    ### Diagnostic: critical_eval
+    ### Diagnostic: relationship_intel
+    ### Diagnostic: data_decision
+    ### Diagnostic: augmented_comm
 - Within SECTION G (Evaluation), use this exact sub-header format:
     ### Evaluation: Course 1
     ### Evaluation: Course 2
     (etc.)
 - Within each section, use the field names from the examples (course_id, domain_id, etc.)
 - No JSON — this is a brief, not code
-- Do not truncate or abbreviate any section. If a section has 5 courses, produce all 5.
+- Do not truncate or abbreviate any section. If a section has 7 courses, produce all 7.
 
 ---
 
 QUALITY RULES
-- Every scenario must use FICTIONAL client/counterparty names — no real EDC clients, no
-  real employees, no real transaction data.
+- Every scenario must use FICTIONAL names — no real EDC clients, no real employees, no real
+  internal projects, no real transaction data. For client-facing roles use fictional company
+  names; for internal roles use fictional project or team names.
 - All tools and systems referenced must be tools this role actually uses (from the role profile).
 - Descriptions and level descriptors must be specific to this role's workflows — not
   copy-pasted from the RM examples.
-- If the use case mapping flagged a domain gap (Task 4), synthesize a scenario from the
-  role profile's Section 13 operational anchors instead. For a tool_fluency gap specifically
-  (the domain most likely to have no Section 13B scenario seed), draw from Sections 3–4 of the
-  role profile — the tool inventory, M365 Copilot surfaces in active use, and any multi-step
-  chain workflows described as pain points. Do NOT skip Course 4 or leave it generic.
+- If the use case mapping flagged a domain gap (Task 4), synthesise a scenario from the
+  role profile's Section 6A operational anchors instead. For an augmented_comm gap specifically
+  (the domain most likely to have no Section 6B scenario seed), draw from Section 3 of the
+  role profile (Workflow and Tools) — the M365 Copilot surfaces in active use and any multi-step
+  chain workflows described there. Do NOT skip Course 6 or leave it generic.
 - If you are uncertain about a role-specific detail, check your M365 knowledge of this
   role at EDC (SharePoint, emails, meeting transcripts). Do not guess.
 - Do not truncate. Every section requires complete output.
@@ -476,6 +586,6 @@ output ONLY the requested sections under the heading:
 
 ## SUPPLEMENTAL OUTPUT
 
-Use the same section headers and field labels as above (e.g., "### Domain: data_safety",
+Use the same section headers and field labels as above (e.g., "### Domain: responsible_ai",
 "### Course 3 — [Title]"). Do not re-output sections that were already complete.
 ```
