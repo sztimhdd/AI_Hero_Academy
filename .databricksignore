@@ -1,0 +1,13 @@
+# Databricks sync exclusions
+# Large binary files that exceed the 10MB App snapshot limit
+references/*.mp4
+references/*.mov
+references/*.avi
+references/*.mkv
+
+# Local development only
+.venv/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
