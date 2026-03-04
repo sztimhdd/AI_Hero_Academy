@@ -190,7 +190,7 @@ with _bc_info_col:
 # OVERVIEW
 # ═══════════════════════════════════════════════════════════════════════════════
 if active_sub == "overview":
-    st.markdown(f'<div class="question-counter">Module {seq_order} of 5</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="question-counter">Module {seq_order} of 7</div>', unsafe_allow_html=True)
     st.title(course_title)
     st.markdown(
         f'<div style="font-family:\'Inter\',sans-serif; font-size:1rem; '
