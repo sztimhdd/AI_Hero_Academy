@@ -1,308 +1,106 @@
-# Relationship Manager (RM) / Account Manager Role Intelligence Profile (Enterprise-wide)
 
-This profile describes how the **Relationship Manager (RM)** role operates in practice across EDC, including where **Small Business Account Manager** language is used and where **Associate Relationship Managers (ARMs)** support the funnel. It focuses on **what people actually do**, the rhythms of work, the tools and artifacts they touch, and the compliance constraints that shape safe AI usage. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan), [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-***
-
-## SECTION 1: Role Fundamentals
-
-### Official title and internal variants
-
-*   **Relationship Manager** is an official job title used in the organization (seen directly in multiple employee profiles).
-*   **Account Manager** language is used in the Small Business context (for example, “Small Business Account Manager”).
-*   Segment-specific phrasing is used in routing and positioning (for example, “Relationship Manager, Mid-Market” and “Small Business Account Manager”).
-
-### Department / business unit
-
-*   The role exists across **region- and segment-aligned groups**, including Ontario Region, Quebec Region, MMB West, Market Development, and Sectors & International Advisory (based on directory facts for RMs).
-*   In MMB onboarding materials, the role is explicitly supported by **Sales Enablement** and references **Sales Operations** support for learning the sales process and documenting/managing customer activities. [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-### Reporting line
-
-*   Employee profile results show the RM role has a direct **manager** relationship. The retrieved snippets do not standardize the manager’s title across all segments/regions, so I’m not asserting a single enterprise-wide manager title here.
-
-### How many people are in the role
-
-*   The retrieved sources do **not** provide an enterprise-wide headcount for all Relationship Managers. The people search returned examples, but that is not a total.
-
-### Seniority range and sub-levels
-
-*   Performance measurement refers to “activities logged in C3 based on tiers,” which indicates internal tiering exists. The retrieved snippets do not enumerate official RM sub-level titles across all segments. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-***
-
-## SECTION 2: Core Responsibilities (what they do, how often, who depends)
-
-### 1) Lead intake and qualification (often supported by ARMs)
-
-*   **What they do:** Work inbound and referred leads; in ARM-supported motions, ARMs research leads and attempt to book meetings for RMs, then enter research into CRM to support the RM’s first meeting. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[\[EXTERNE\]C...te edition \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEMAAAGnI%2f31YHQTrC2Ti3zzuavAAONw1nXAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   **Frequency:** Daily/weekly, driven by lead inflow and SLA expectations. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan), [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   **Who depends:** Sales Ops for process and data hygiene; leaders monitoring KPIs; customers expecting timely follow-through; ARMs depend on RMs to accept/act on qualified handoffs. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan), [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-### 2) Discovery conversations and needs understanding
-
-*   **What they do:** Conduct discovery meetings (often ARM-booked) to understand needs and determine next steps for solutions, referrals, or nurture. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   **Frequency:** Weekly (often multiple per week). [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Who depends:** The customer; internal product/solution partners; routing teams that rely on accurate discovery outcomes. [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-### 3) CRM activity documentation and corporate memory
-
-*   **What they do:** Document customer activities and manage customer interactions as part of the sales process; keep records current enough to support continuity and performance measurement. [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Frequency:** Daily (after calls/meetings) and weekly (pipeline upkeep). [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan), [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Who depends:** Leaders and dashboards; colleagues who pick up files; the RM for follow-ups and next steps. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan), [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-### 4) Responsiveness and SLA adherence (process discipline)
-
-*   **What they do:** Maintain lead responsiveness and engagement discipline; comply with lead aging rules; keep planned activities forward-dated where required; maintain forecasting completeness. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Frequency:** Daily/weekly. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Who depends:** Customers; sales leadership; performance dashboards used for measurement and coaching. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### 5) Pipeline forecasting hygiene (structured fields)
-
-*   **What they do:** Complete and maintain forecasting fields and conversion hygiene (for example, probability and forecasted close date completion tied to conversion timing). [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Frequency:** Ongoing; triggered at lead conversion and opportunity updates. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Who depends:** Leadership planning; anyone relying on pipeline forecasts; downstream operational planning tied to the pipeline. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### 6) Retention and customer experience management
-
-*   **What they do:** Manage relationships for retention, track and respond to customer experience measures such as NPS, and maintain engagement in the portfolio. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Frequency:** Ongoing; reviewed on monthly/quarterly rhythms via performance structures. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Who depends:** Customers; leaders tracking customer experience outcomes. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### 7) Multi-solution adoption and value expansion
-
-*   **What they do:** Move customers toward multi-solution usage when appropriate, aligned to segment needs such as financing, risk protection, and knowledge-based growth support. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Frequency:** Weekly/monthly planning and execution. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Who depends:** Customers; leadership tracking growth KPIs; cross-functional partners supporting solution delivery. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### 8) Cross-functional collaboration and internal relationship building
-
-*   **What they do:** Connect with other teams to learn internal processes and collaborate; onboarding explicitly expects relationship-building across internal teams and learning internal process touchpoints. [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Frequency:** Weekly plus ad hoc for deal execution and escalations. [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Who depends:** Customers (orchestration); internal teams that need RM context; leaders expecting readiness and effective collaboration. [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-### 9) Segment routing and expectation management (“no wrong door” behavior)
-
-*   **What they do:** Support a triage model where inbound companies are guided to the right next step and not all are assigned a dedicated account manager; ensure consistent messaging on who will follow up.
-*   **Frequency:** Daily/weekly where inbound volume is high.
-*   **Who depends:** Customers; front-door teams; downstream BD teams receiving warm leads.
-
-***
-
-## SECTION 3: Daily and Weekly Workflows (typical patterns)
-
-### Monday morning pattern (common operational “reset”)
-
-*   **Pipeline and KPI hygiene check:** The workplan measures lead responsiveness, lead aging, forecasting completeness, and CRM activity logging; a practical Monday reset is to check what is overdue/missing and reset weekly priorities accordingly. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **ARM handoff alignment:** ARMs run high-volume lead work with defined capacity constraints and SLAs; a weekly alignment loop with RMs is a natural operational touchpoint (even if not explicitly labelled “Monday” in sources). [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-
-### Recurring meetings (documented examples)
-
-*   Some RMs are connected to a recurring **Salesforce Monthly SME Touchpoint** meeting series (evidence that there is a recurring CRM enablement rhythm).
-*   There are recurring enablement mechanisms around Copilot: live training sessions, office hours, recordings, and an internal community for peer tips and support (documented in internal comms). [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   Onboarding expects a cadence of buddy/mentor support and shadowing, plus product training sessions, which implies recurring internal learning routines especially early in role. [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### Most time-consuming activities (supported by what is measured)
-
-*   **Customer conversations plus documentation:** Calls/meetings drive a large share of work, and performance measurement ties directly to logging activities and maintaining pipeline hygiene, which adds significant time for documentation and updates. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan), [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Lead qualification motions at scale:** ARMs explicitly perform repeated research and outreach at volume, which signals the overall sales motion includes a large time investment in prospecting and early-stage qualification. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[\[EXTERNE\]C...te edition \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEMAAAGnI%2f31YHQTrC2Ti3zzuavAAONw1nXAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-
-### Most repetitive tasks
-
-*   **CRM maintenance tasks:** logging activities, ensuring lead aging compliance, setting planned activities, and keeping forecasting fields complete and current. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Outbound touches and follow-ups:** ARMs’ defined outreach model (phone, email, and professional network outreach) signals a repetitive communication pattern that RMs also participate in through discovery follow-ups and next steps. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-
-### Low-value or administrative work (explicitly observable)
-
-*   **Mandatory training and attestations for Copilot access:** time spent completing training, attestation, surveys, and attending office hours is required overhead (even when helpful). [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Data completeness policing:** KPI definitions include required timeliness and completeness rules that often translate into admin-heavy “keeping fields current” work. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-***
-
-## SECTION 4: Tools and Systems (what they use, specifically)
-
-### Microsoft 365 tools (documented usage)
-
-*   **Email:** used for mandatory enablement communications and reminders (and is a core channel for operational work, though only the training comms are explicitly surfaced here). [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Teams:** used for live training sessions, office hours, and recordings tied to Copilot adoption. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **SharePoint/internal sites:** used to host onboarding materials, customer journey materials, and value proposition decks. [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Compass (learning platform):** used for mandatory Copilot training and broader RM learning expectations. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### CRM systems
-
-*   **C3:** ARMs enter research into C3 and reassign qualified leads to the RM; RM performance measurement also references CRM activity logging and other CRM-derived metrics. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Salesforce:** evidence of recurring SME touchpoints indicates active enablement and/or adoption work underway for RMs.
-
-### Internal platforms and governance resources
-
-*   **Customer journey artifacts:** used to align teams on customer goals, pain points, and service moments.
-*   **GenAI governance resources:** there is a central governance hub describing policy, governance contacts, and where to submit ideas/use cases.
-
-### Reporting and performance tools
-
-*   **Performance dashboard outputs:** the MMB workplan explicitly relies on a performance dashboard for KPI results. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-***
-
-## SECTION 5: Documents and Content
-
-### A) What they create or produce regularly
-
-*   **CRM activity records:** customer interaction notes and activity logs used for continuity and performance measurement. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan), [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Lead/opportunity updates:** structured field completion and hygiene tied to forecasting and lead conversion. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Segment messaging artifacts:** standardized talking points and value proposition content used to keep positioning consistent, especially in Small Business motion.
-*   **Training attestations and surveys:** required proof of completion for mandatory Copilot enablement. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-### B) What they receive, read, or analyze regularly
-
-*   **Lead research summaries:** ARMs research leads (revenue, markets, decision makers) and enter relevant context to support RM discovery meetings. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[\[EXTERNE\]C...te edition \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEMAAAGnI%2f31YHQTrC2Ti3zzuavAAONw1nXAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   **KPI and SLA outputs:** dashboards and metrics around responsiveness, lead aging, forecasting completeness, and logged activity behavior. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Customer journey guidance:** material summarizing customer goals, pain points, and ideal service experiences to guide interaction design.
-*   **AI policy and governance requirements:** policy requirements that define acceptable and prohibited GenAI usage, required approvals, and mandatory controls such as human review and restrictions on non-public information.
-
-***
-
-## SECTION 6: Communication and Stakeholders
-
-### Primary internal stakeholders (roles)
-
-*   **Sales Operations** (supports sales process learning and CRM activity management). [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   **Marketing** (lead source; co-development of positioning materials). [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   **Exporter Engagement Team and Exporter Engagement Advisors** (front-door and discovery call routing in Small Business motion).
-*   **CRM/Salesforce SMEs** (recurring SME touchpoints).
-*   **NEXUS enablement team** (Copilot training, office hours, adoption community). [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **Leaders/managers** (goal setting, onboarding readiness, KPI coaching, probation decisions). [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### External stakeholders
-
-*   **Canadian companies (customers and prospects), segmented by revenue bands and needs** (small businesses under $10M are explicitly referenced; mid-market is referenced by routing language).
-*   **Financial institution partners** (explicitly referenced in the small business motion and referral language).
-
-### Common communications (documented patterns)
-
-*   **Lead follow-ups and meeting booking/confirmation flows** are central to the ARM/RM funnel design. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[\[EXTERNE\]C...te edition \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEMAAAGnI%2f31YHQTrC2Ti3zzuavAAONw1nXAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   **Enablement and compliance communications** are driven by mandatory Copilot training, deadlines, and recorded training support. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-***
-
-## SECTION 7: Data and Information Handling
-
-### Client/customer data accessed (explicit in sources)
-
-*   Lead/prospect work involves data such as **estimated revenue, nature of business, markets of interest, and key decision makers**. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[\[EXTERNE\]C...te edition \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEMAAAGnI%2f31YHQTrC2Ti3zzuavAAONw1nXAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   Segment routing and positioning explicitly references revenue bands and need types (financing, risk protection, growth through knowledge).
-
-### Sensitive/confidential data and handling rules (explicit)
-
-*   GenAI governance materials explicitly frame major risks including legal, compliance, reputational, privacy, and data security risks, and require safeguards such as human review and restrictions on non-public information.
-*   GenAI enablement requirements explicitly state constraints such as not inputting non-public information and not using GenAI output without manual human review.
-
-### Compliance constraints relevant to AI usage (explicit)
-
-*   Initial adoption of a GenAI application for EDC work is subject to governance approvals (GenAI advisory group and architecture governance with leadership approval).
-*   Mandatory Copilot training and attestation is explicitly tied to working within the GenAI policy. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-***
-
-## SECTION 8: Decisions and Judgment
-
-### Key decisions RMs make (directly tied to measured behaviors)
-
-*   **Prioritization and follow-through:** performance is measured on lead responsiveness, lead aging compliance, forecasting completeness, and activity logging, which requires ongoing prioritization decisions. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Appropriate use of ARMs:** ARMs explicitly instruct that “warm” leads with recent RM engagement should not be routed to ARMs, requiring judgment in what to send where. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   **Triage decisions in Small Business:** routing rules indicate that not every inbound company gets assigned a Small Business Account Manager, requiring judgment in expectation-setting and handoff decisions.
-
-### Where errors have biggest consequences (explicit governance signals)
-
-*   **SLA and pipeline integrity failures** impact measured performance and customer experience. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Unsafe GenAI use** creates privacy/security/compliance exposure and violates explicitly defined controls such as human review and restrictions on non-public information.
-
-### What “good judgment” looks like (explicit policy language)
-
-*   **Human review, attribution, and validation** of AI outputs used for work purposes; strong discipline around what can be entered into AI tools.
-*   **Process discipline** that keeps pipeline and activity records timely and complete, because the organization measures those behaviors explicitly. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-***
-
-## SECTION 9: Pain Points and Time Sinks
-
-### What’s explicitly evidenced
-
-*   **Messaging inconsistency burden:** small business value proposition work was initiated because of inconsistency in how support was positioned, which typically creates extra effort for front-line teams who must explain and align.
-*   **Mandatory training overhead:** Copilot enablement requires training, attestation, and deadlines that add operational overhead. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   **High-volume top-of-funnel work:** ARMs run high-volume lead work with explicit capacity constraints and SLAs, indicating bottlenecks can emerge when volume rises or handoffs slow. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-*   **CRM hygiene burden:** lead aging, responsiveness, and forecasting completeness rules create ongoing repetitive update requirements. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### Where automation is already “designed in” (EDC-specific)
-
-*   EDC has already structurally reduced RM burden by assigning large parts of early-stage prospecting and meeting booking to ARMs, suggesting recognized pain around time spent on top-of-funnel tasks. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[\[EXTERNE\]C...te edition \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEMAAAGnI%2f31YHQTrC2Ti3zzuavAAONw1nXAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-
-***
-
-## SECTION 10: Performance and Success Metrics
-
-### KPI categories and weights (explicit in workplan)
-
-*   **Customer Growth (35%):** New Financial Customers Served; Multi-Solution Users. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Customer Experience (30%):** Retention; NPS; Customer Engagement. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Process and Behaviours (25%):** Lead Responsiveness; Lead Aging; Lead Forecasting. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Education and Growth (10%):** Completion of learning path expectations (different expectations for new employees vs. employees with more time in role). [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### Operational definitions (explicit)
-
-*   **Responsiveness SLAs:** New leads and engagement have defined SLA expectations (New: 3 business days; Engagement: 30 business days). [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Lead aging compliance:** required activity recency and planned activity requirements vary by lead age bands. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   **Forecasting completeness:** probability and forecast close date completion expectations tied to lead conversion timing. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-### Observable behaviors of top performers (directly linked to metrics)
-
-*   Meet SLAs consistently, keep leads current, ensure forecasting completeness, and maintain disciplined CRM activity logging. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-*   Complete required learning paths and maintain ongoing capability growth expectations embedded in the workplan. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan), [\[EGP ITG Re...l PDD v5.0 \| Word\]](https://edcanada.sharepoint.com/sites/communityam/_layouts/15/Doc.aspx?sourcedoc=%7B39D857DB-202B-467D-83BA-472CD255CD48%7D&file=EGP%20ITG%20Renewal%20PDD%20v5.0.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-***
-
-## SECTION 11: Current AI Tool Usage (what is known)
-
-### What is clearly documented
-
-*   There is a structured **Copilot enablement program** with mandatory training and attestation. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   There are **office hours**, live training sessions, and recordings, plus an internal peer community for tips and support. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-*   Training is explicitly positioned as a mechanism to ensure employees work within the GenAI policy. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-### What is not explicitly documented in retrieved snippets
-
-*   RM-specific task-level Copilot usage patterns (for example, exact “top use cases” for RMs) and RM-specific outcomes were not surfaced in the retrieved text snippets during this run. [\[Innovation...nt Tracker \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B006693C1-8CA1-49E4-90FA-69A350AB09B8%7D&file=Innovation%20%26%20Product%20Enablement%20Tracker.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1), [\[merged_ai_use_cases \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7BC6528134-F9C3-4448-B4D8-33E8FFF38165%7D&file=merged_ai_use_cases.csv&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-***
-
-## SECTION 12: Regulatory and Compliance Context
-
-### AI governance and policy requirements (explicit)
-
-*   The GenAI policy establishes principles and requirements for legal, ethical, and effective GenAI use, explicitly identifying risks including legal, compliance, reputational, privacy, data security, and societal/ethical risk.
-*   The enablement guidance includes explicit constraints such as:
-    *   using approved GenAI applications for EDC work,
-    *   human review requirements for GenAI outputs,
-    *   restrictions on entering non-public information into GenAI tools,
-    *   approvals required for initial adoption of GenAI tools for EDC work.
-
-### Record-keeping and process governance (explicit)
-
-*   The RM workplan measures CRM-based activities, SLAs, lead aging compliance, and forecasting completeness—these requirements drive record-keeping discipline as part of performance governance. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-
-***
-
-## Clean operational anchors for AI skills training (EDC-specific)
-
-Use these as scenario building blocks for training, practice labs, and assessments:
-
-1.  **Lead responsiveness:** meet the 3-business-day responsiveness SLA and document the activity properly. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-2.  **Lead aging hygiene:** ensure recent activity and planned next steps exist based on lead age rules. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-3.  **Forecasting completeness:** maintain probability and forecasted close date hygiene at conversion and during pipeline updates. [\[office.com\]](https://www.office.com/search?q=Barona%2c+Dan)
-4.  **ARM-to-RM handoff:** turn ARM research and CRM context into a strong first discovery meeting and clear next steps. [\[RE: Copilo...Protection \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEJAAAGnI%2f31YHQTrC2Ti3zzuavAAH034kOAAA%3d&exvsurl=1&viewmodel=ReadMessageItem), [\[\[EXTERNE\]C...te edition \| Outlook\]](https://outlook.office365.com/owa/?ItemID=AAMkADhmZjVhOWIyLTNlMzAtNGQyOS04NWI2LTQwZDRkMjNiNmNhMABGAAAAAAA%2bSZohuQAESLo6TOpqFIawBwC80c3vtpztRKPOnzB3RTqfAAAAAAEMAAAGnI%2f31YHQTrC2Ti3zzuavAAONw1nXAAA%3d&exvsurl=1&viewmodel=ReadMessageItem)
-5.  **Small business triage:** apply consistent positioning and routing in the “no wrong door” model.
-6.  **AI-safe habits:** practice human review, safe prompting, and strict handling of non-public information under GenAI policy rules.
-
-***
-
-If you want the **same cleaned format** but expanded back into a **full training-ready narrative** (still no links, no URLs), tell me which segments you want emphasized most: Small Business, Mid-Market, or Large/Strategic.
+SECTION 1: ROLE IDENTITY
+
+role_prefix: rm
+Official titles: Relationship Manager (RM) – often segmented by market (e.g. Mid-Market Relationship Manager); Associate Relationship Manager (ARM) for junior sales support; Small Business Account Manager (for smaller clients); Senior Relationship Manager (experienced RM).
+Departments/Units: RMs operate across Commercial Markets & Small Business (regional teams), Corporate Lending (large accounts), and specialized segments like Sectors & International Advisory or Financial Institutions.
+Reporting lines: Typically report to a Regional Director (e.g. RMs in Quebec report to a Regional Director, Quebec Region). Regional Directors oversee RM teams by region or segment and approve lead allocations.
+Seniority levels: Variations include Associate RM (entry-level lead generation role), Relationship Manager (standard role), and Senior Relationship Manager (seasoned RM). (Specific level bands not found.)
+SECTION 2: CORE RESPONSIBILITIES (with actions, frequency, AI opportunity)
+
+Prospecting & Lead Qualification – RMs follow up on new prospect leads (mostly generated by Marketing or ARMs) and qualify exporters’ needs. This involves reviewing lead info (e.g. revenue, markets, key contacts) and reaching out to schedule discovery meetings. Frequency: Daily outreach to prospects; 50+ new company contacts per month via calls/emails (often via ARMs). AI opportunity: Prompting for Outcomes – using Copilot to draft personalized intro emails or call scripts for each prospect, based on industry context.
+Client Relationship Development – Manage an assigned portfolio of customers, building trust and understanding their business to spot opportunities. RMs conduct regular client meetings (virtual or on-site) to identify challenges and pitch EDC solutions. They act as the client’s point of contact for all EDC services. Frequency: Client touchpoints occur weekly (quick check-ins) and formal account review meetings quarterly. AI opportunity: Relationship Intelligence – leveraging AI to synthesize past interactions (from CRM notes, emails) into briefing highlights, helping RMs prepare with insight into client history and needs.
+Solution Consultation & Deal Structuring – Work with clients to propose appropriate EDC products (financing, insurance, guarantees). RMs gather necessary financial info and collaborate with underwriters to structure deals within risk appetite. They present term sheets or offers to clients and negotiate terms. Frequency: Monthly for active deals (more during peak quarters). AI opportunity: Data-Driven Decision Making – using AI analytics to compare deal scenarios or analyze client financials for a proposal, while still applying human judgment on risk vs. reward.
+Internal Collaboration & Handoffs – Coordinate across EDC teams for seamless execution. RMs hand off qualified leads to underwriters or credit teams and loop in product specialists as needed. They also rely on ARMs for prospect research and on Sales Operations for certain follow-ups. Frequency: Daily internal chats/emails; formal pipeline calls weekly. AI opportunity: Tool Fluency (M365 + Copilot) – using Teams and SharePoint Copilot to keep everyone aligned (e.g. auto-summarizing meeting notes to share with underwriting), ensuring faster team handoffs.
+Pipeline Management & Reporting – Maintain an up-to-date sales pipeline in CRM (C3). This means entering new leads, updating opportunity stages, and tracking progress toward targets. RMs regularly review pipeline health with their leader, focusing on aging deals and next actions. Frequency: Updates daily (as activities occur); summary reviews weekly (team “huddle” meetings). AI opportunity: Verification and Judgment – using Copilot to highlight inconsistencies or stale entries in the pipeline and exercising judgment to correct data, ensuring forecasts are accurate (AI flags, human verifies).
+Customer Service & Issue Resolution – Serve as the front-line for client queries and problems. RMs answer product questions, expedite support requests (often partnering with Customer Care or legal for complex issues), and ensure any complaints are addressed promptly. They also help clients navigate EDC’s online tools (e.g. MyEDC). Frequency: Daily, on an ad-hoc basis. AI opportunity: Augmented Communication – using AI writing assistants to draft clear explanations of complex financial solutions or policy decisions, then refining tone and accuracy before sending.
+Compliance & Risk Management – Adhere to all internal and regulatory requirements when engaging customers. RMs ensure Know-Your-Customer (KYC) and sanction screenings are done for new deals (handled by relevant teams but RM must gather info). They obtain anti-spam consent for marketing outreach (CASL compliance) and follow EDC’s guidelines on ESG and data privacy. Frequency: Ongoing (built into deal process and communications). AI opportunity: Data Safety and Compliance – e.g. using AI to check communications for sensitive data before sending, and knowing what not to input into any AI tools (customer financials, personal data) in line with policy.
+(Max 8 responsibilities listed.)
+SECTION 3: WORKFLOW AND TOOLS
+A) Workflow Snapshot:
+
+Weekly cadence: Mondays often start with team pipeline reviews or “huddle” meetings – aligning on which deals need attention and sharing prospect updates. Mid-week tends to be packed with client calls, prospect meetings, and travel to client sites (peaks Tue–Thu for external meetings). Fridays are commonly used for administrative wrap-up: updating CRM entries, sending follow-up emails, and planning the next week’s outreach (end-of-week clean-up of pipeline and tasks).
+Peaks & rituals: RMs participate in recurring rituals like weekly pod meetings (regional sales team calls to coordinate short-term tactics and capacity) and bi-weekly 1:1 meetings with their manager or Sales Ops to review pipeline health and remove roadblocks. Quarterly business reviews may occur to assess progress against targets.
+Most time-consuming activities: 1) Client-facing meetings and prep – significant time goes into preparing for customer meetings (researching the company, tailoring pitch materials) and then traveling or virtually meeting, as these directly drive deals. 2) Internal deal coordination – RMs spend considerable time in back-and-forth with underwriters, risk analysts, legal, and partners to structure deals or resolve client issues, which can span months for complex cases.
+Most repetitive tasks: Routine CRM updates (logging call notes, updating opportunity stages) and scheduling tasks are a constant, manual effort. Also, repetitive prospecting outreach – e.g. contacting multiple new leads with similar introduction messages – and following up several times (the “3x3” attempt model) is a standard grind. RMs also answer similar product questions from different clients, requiring them to repeatedly explain EDC solutions in emails or calls.
+B) Tools in Active Use:
+
+Microsoft Outlook & Teams: For daily communication – email is used to correspond with clients (e.g. sending proposals, follow-ups) and internal stakeholders, while Teams chat/calls connect RMs with colleagues (underwriters, ARMs, etc.) across regions instantly. Teams meetings are common for virtual client calls and internal pipeline discussions. (These tools form the backbone of daily interactions.)
+Microsoft Excel: Used to analyze customer financial data or model basic scenarios for deals. RMs might use Excel to input client financials (when evaluating capacity or preparing informal cash flow analyses) and rely on templates provided by underwriting. Also utilized for tracking personal sales metrics or account plans outside the CRM.
+Microsoft PowerPoint: Employed when RMs need to prepare client-facing presentations or pitch decks showcasing EDC’s solutions. For example, customizing a slide deck for a client’s executive meeting or a partner bank presentation – often with content from marketing, adjusted to the customer’s context. Internally, used for sharing success stories or regional results in team meetings.
+C3 (Salesforce CRM): The core Customer Relationship Management system where RMs and ARMs log all leads, contacts, and deals. RMs use C3 to update company profiles, document each interaction, create leads/opportunities, and progress them through stages. It’s also where RMs assign leads from marketing or ARMs to themselves and manage their portfolio pipeline. CRM dashboards (often in Power BI) give RMs real-time views of their funnel (new business vs. renewals, deal aging, etc.) and coach’s corner analytics to improve pipeline hygiene.
+Power BI Reports: RMs access Power BI for sales and portfolio analytics – e.g. the Mid-Market Portfolio Dashboard and Huddle Pipeline reports show performance metrics by solution stage, conversion rates, and cross-team contributions. These data tools help RMs identify which deals need focus and provide visuals for discussions with directors.
+External research databases: To gather background on prospects and customers, RMs (often via ARMs or library services) use tools like Mergent, D&B Hoovers, S&P Capital IQ, ZoomInfo, and LinkedIn Sales Navigator. These sources provide company financials, industry info, and key contacts to better prepare for outreach or proposals. ARMs typically have primary access, but RMs can request reports or get training to use these for their own prospecting needs.
+Internal knowledge portals: RMs leverage EDC’s internal portals such as Compass (for mandatory training modules and policy refreshers), and the Sales Enablement SharePoint (hosts playbooks, product sheets, pricing guidelines). Frontline Insider newsletters and LiveWire updates keep RMs informed on new product launches or success stories to share with clients. These resources ensure RMs stay current on offerings and compliance while in the field.
+Collaboration & workflow tools: SharePoint and OneDrive are used to collaborate on account plans or credit memos (e.g. an RM may input business context on a SharePoint deal workbook for underwriting). OneNote or Loop components can be used during team huddles to capture action items. E-signature tools (e.g. Adobe Sign) are used for getting client signatures on agreements, coordinated by RMs.
+Data/Reporting platforms: RMs interact with risk and operations systems indirectly – e.g. checking a client’s risk rating or exposure in EDC’s internal risk system (Chinook/FACT) as communicated by underwriters. They also review monthly or quarterly reports from Business Analytics (BIRA reports, OneView dashboards) which highlight their region’s volume, customer satisfaction, and product uptake, using that data to adjust their strategies.
+(Tools list is not exhaustive; focuses on key tools in daily use.)
+SECTION 4: DATA AND COMPLIANCE
+
+Sensitive data handled: RMs regularly work with non-public client information – financial statements, business plans, trade data, internal credit ratings – all of which are considered confidential. They also handle personal contact details of company officers and any information clients share about future projects or challenges. Internally, pipeline reports and customer notes are classified as “Non-Public EDC Information” and must be protected.
+Key compliance constraints: RMs must ensure all exporter onboarding and transactions follow regulations. This includes KYC (Know Your Customer) and anti-money-laundering checks for new borrower or policyholder onboarding (usually conducted by risk teams, but RMs coordinate by collecting info). They must adhere to sanctions and restricted market policies – e.g. not engaging sanctioned entities and flagging any potential issues to compliance early. Environmental and social (E&S) guidelines also affect RMs: if a deal poses E&S or anti-corruption concerns, it triggers escalation to special risk committees, and the RM as the customer owner is part of that review process. Additionally, RMs selling credit insurance or financing must operate within their Delegation of Authority limits – bigger deals need higher approvals, and RMs prepare the justification for those approvals per policy standards (credit decisions are governed by formal DOA rules).
+“Safe AI use” boundaries: Per EDC’s Responsible AI Policy, RMs (like all employees) must never input confidential or personally identifiable information into unapproved generative AI tools. For example, they cannot paste a customer’s financial report or a full account overview from C3 into ChatGPT or any external AI. Even with internal M365 Copilot, they are instructed to be cautious – AI suggestions must be treated as drafts, and any content containing client data should remain within EDC’s secure environment. RMs are also reminded to fact-check AI outputs and avoid bias, especially if using Copilot to draft customer communications or credit memos. In practice, this means an RM might use Copilot to outline a client email but would exclude any sensitive figures or names from the prompt and thoroughly review the output for accuracy and tone before sending.
+Major data-related risks: The biggest risk is inadvertent disclosure of client information – for instance, emailing the wrong party a term sheet or storing client data in an unprotected manner. Such a breach could harm EDC’s reputation and violate privacy law. Another risk is misuse of insider information: RMs learn a lot about customers (e.g. expansion plans, M&A intentions); this data must not be misused or shared inappropriately. Data quality risk is also significant – if RMs fail to log interactions or update CRM records, decisions down the line (credit assessments, resource allocation) might be made on outdated info. Lastly, compliance slip-ups – e.g. not obtaining explicit consent for marketing emails – could lead to regulatory penalties. RMs mitigate this by using approved templates and processes (e.g. CASL-compliant email templates for prospect outreach). They know that any content entered in customer-facing portals, or even in internal notes that feed customer portals, must be carefully vetted to avoid exposing EDC beyond intended disclosures.
+SECTION 5: PAIN POINTS AND AI OPPORTUNITIES
+
+Repetitive manual tasks: RMs spend a lot of time on administrative updates that are ripe for automation. For example, after every meeting they must input notes and next steps into C3 – a tedious task if done from scratch. Compiling those notes into weekly pipeline reports for their director is another repetitive chore. Similarly, crafting follow-up emails that cover similar ground (e.g. thanking the client, attaching info, next steps) can feel formulaic and time-consuming. AI acceleration: Copilot could transcribe and summarize meeting notes directly into CRM, or generate a first draft of a follow-up email, saving minutes on each occurrence. It could also auto-suggest which CRM fields need updating based on the meeting content (reducing the cognitive load on the RM).
+High-value output improvements: Where RMs truly create value is in the quality of their client interactions and proposals. AI could help enhance this by providing data-driven insights and polish. For instance, RMs often have to customize pitch materials for each client – an AI assistant could quickly pull in relevant success stories or industry benchmarks for that client’s context, helping the RM deliver richer advice. It could also suggest more compelling phrasing or visualizations in a client presentation, improving clarity. In credit discussions, an AI tool could flag anomalies in the client’s financials or prepare questions the RM should ask, thereby improving the substance of meetings. Overall, AI can elevate the RM’s output by acting as a research and editing aid, letting the RM focus on relationship aspects.
+Common bottlenecks: RMs frequently experience delays around deal underwriting and approvals – after they hand over to underwriting, the back-and-forth to get a deal approved or a policy issued can be lengthy. They often have to chase updates or mediate between the client’s timeline and internal risk assessments. AI won’t replace credit approval processes, but it could assist RMs in tracking and nudging these workflows (e.g. an AI agent that monitors the status in underwriting systems and pre-alerts an RM if additional info will be needed). Another bottleneck is coordination with external partners, such as a client’s bank or a broker – waiting for those parties’ input or aligning schedules can slow things down. AI could help by automating some partner communications or even by matching calendars and proposing meeting slots. Data access can be a pain point too: relevant info might reside in lengthy internal reports or past emails. Copilot’s ability to search and summarize internal knowledge can break those silos, giving RMs quick answers instead of days of hunting.
+If they had 2 extra hours per week (hypotheses): Likely, RMs would reinvest that time into proactive client engagement – for example, reaching out to one or two additional dormant clients with a check-in call, or doing deeper prep for an upcoming strategic client meeting (which often gets shortchanged by urgent tasks). They might also spend it on strategic account planning, mapping a customer’s long-term needs and aligning EDC solutions, an activity that often falls to the wayside under daily firefighting. Another plausible use (hypothesis) is focusing on professional development – e.g. exploring an advanced trade finance course or practicing with the latest sales enablement tool – which they seldom do due to lack of time. In short, extra hours would likely go toward high-impact relationship-building or skill-building areas that currently get squeezed.
+SECTION 6: AI TRAINING DESIGN SEEDS
+A) Operational anchors (for scenario-based AI exercises):
+
+Prospect Lead Research: Use AI to quickly compile a prospect’s key info (industry, recent news) and draft a first outreach message – tests strategic_prompting skills in getting targeted, useful outputs.
+Follow-Up Email Drafting: After a client meeting, have Copilot draft a summary email with action items, then edit it for accuracy and tone – exercises augmented_comm and critical_eval (reviewing AI content).
+Credit Memo Preparation: Leverage an AI assistant to summarize a customer’s financial statements into key ratios and risks for an internal credit memo – the RM must validate the AI’s analysis, honing verification & judgment.
+Account Plan Ideation: Have AI generate ideas for deepening the relationship with a top customer (cross-sell opportunities, timing of touchpoints) based on past data, then refine into a quarterly account plan – practices data-driven decision-making (using AI suggestions + human insight).
+Language Localization Check: Use AI to translate a draft proposal or email into the client’s preferred language (French/English) and check for nuance – tests tool fluency with AI and cultural judgment in communication.
+Internal Debrief Summary: After a complex deal closure, ask AI to summarize the deal learnings and next steps for internal stakeholders (sales ops, legal) – the RM ensures nothing sensitive is included, reinforcing responsible_ai usage.
+(Each anchor corresponds to a realistic RM task and the AI skill domain it highlights.)
+B) Scenario seeds:
+Scenario 1:
+
+Company: Westport Machinery Co.
+Trigger: A client just sent the RM a 50-page confidential financial report for a new loan request, asking for a quick analysis.
+AI_temptation: Paste the full report into ChatGPT to generate a summary and risk analysis without sanitizing the data (attempting to speed up credit prep by offloading it entirely to an external AI).
+Skill_test: The RM must uphold data confidentiality and use approved tools – e.g. summarizing manually or via an internal Copilot – demonstrating responsible handling of sensitive data and verifying any AI-derived insights against the original report.
+Domain: responsible_ai
+Scenario 2:
+
+Company: Lakeview Foods Ltd.
+Trigger: A new marketing-qualified lead appears in the CRM with minimal info besides revenue and sector. The RM needs to craft an introductory email to the prospect.
+AI_temptation: Ask Copilot to “write a generic sales email for this lead” and send it without further customization – resulting in a bland message that misses the client’s context.
+Skill_test: The RM should practice strategic prompting – feeding Copilot specific details (e.g. industry challenges, EDC solution of interest) to get a tailored draft, then editing it to ensure relevance and personal touch before sending.
+Domain: strategic_prompting
+Scenario 3:
+
+Company: Northern AeroParts Inc.
+Trigger: The RM uses Excel Copilot to calculate financial ratios from the client’s statements and generate commentary for a credit review meeting. Copilot produces a set of ratios and some narrative analysis.
+AI_temptation: Trust the AI-generated analysis blindly and forward it to the credit team without cross-checking the numbers or logic.
+Skill_test: The RM needs to exercise critical evaluation – verifying each AI-produced figure against the source financials and ensuring the interpretation makes sense. They must correct any errors (e.g. if Copilot misread a figure) before it goes into the credit memo, thus maintaining accuracy in high-stakes data.
+Domain: critical_eval
+Scenario 4:
+
+Company: GlobeTech Innovators
+Trigger: In preparation for a big annual review meeting, the RM wants a summary of all interactions EDC had with GlobeTech over the last year (emails, support tickets, product usage). Copilot for Teams can search this info.
+AI_temptation: Rely solely on Copilot’s auto-generated “client recap” to prepare for the meeting, without reading the actual CRM notes or verifying the context of what the AI surfaced.
+Skill_test: The RM should use relationship intelligence wisely – using Copilot’s summary as a starting point but then drilling into the CRM for nuance (e.g. checking the full email threads for any flagged issues). This tests the ability to blend AI-generated connection insights with personal knowledge, ensuring nothing important (like a subtle client concern) is overlooked due to over-reliance on AI.
+Domain: relationship_intel
+Scenario 5:
+
+Company: Maple Leaf Exports
+Trigger: The client asks the RM for a written recap of their current solutions and pending actions, to share with their new CFO. The RM needs to provide a clear, professional summary by end of day.
+AI_temptation: Use M365 Copilot to draft the entire client summary letter and send it off as-is, without editing – risking that the tone might be off or the content not perfectly aligned to EDC’s messaging.
+Skill_test: The RM should leverage augmented communication properly – generating a draft with Copilot to save time, then reviewing it critically to adjust wording, ensure all facts are correct, and add a personal touch (like referencing the CFO’s goals). This scenario tests the balance between AI efficiency and the RM’s oversight in client communications.
+Domain: augmented_comm
+C) Domain-to-workflow map:
+
+Domain	Highest-Risk / Highest-Value Moments for This Role
+Responsible AI	Handling sensitive customer data with AI tools (e.g. summarizing financials); Using generative AI for content that might include proprietary client info (ensuring no policy breaches); Navigating AI usage under strict EDC data guidelines during everyday tasks (like preparing reports).
+Strategic Prompting	Crafting tailored Copilot prompts when generating outreach or proposal content for clients (instead of generic outputs); Researching complex trade questions by asking AI the right questions (the RM must break down the query cleverly to get useful intel); Using AI to brainstorm deal approaches or negotiation angles, where prompt quality dictates the value of suggestions.
+Critical Evaluation	Reviewing AI-generated emails, credit analyses, or market insights for factual accuracy before use; Validating Copilot’s suggested action items or pipeline priorities against the RM’s own knowledge (not accepting AI recommendations at face value); Double-checking that no AI-induced bias or hallucination slips into client-facing material.
+Relationship Intelligence	Preparing for client meetings by leveraging AI to aggregate past interactions and identify relationship themes (then verifying them); Transitioning accounts (AI summarizing notes from a previous RM to a new RM) – high value if done right, high risk if AI misses context; Identifying upsell opportunities by having AI scan CRM histories and external news for a client – requires the RM to interpret and act on these insights.
+Data-Driven Decision Making	Prioritizing leads or accounts using data models (e.g. an AI scoring of lead quality) combined with the RM’s intuition; Deciding deal tactics based on AI scenario analysis (e.g. Copilot in Excel projecting outcomes) – the RM uses these projections but also considers qualitative factors; Analyzing portfolio performance via Power BI (with AI explanations of trends) to adjust territory strategy.
+Augmented Communication	Drafting complex client correspondence (credit explanations, proposal letters) with AI assistance and then refining tone/detail; Explaining EDC solutions in simpler terms – e.g. using AI to rewrite a legal clause in plain language for a customer, then confirming it’s accurate; Multilingual communications – using AI translation but the RM reviews for nuance and professionalism before sending.
+
+(End of Role Intelligence Profile)
