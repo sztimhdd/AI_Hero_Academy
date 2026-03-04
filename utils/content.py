@@ -31,9 +31,9 @@ SCENARIOS: dict = _load("practice_scenarios.json")
 EVAL_ITEMS: dict = _load("evaluation_items.json")
 
 # Convenience mapping for generate_gap_map(): domain_id -> description string
-# domains.json uses role-scoped top-level keys (e.g. "rm_responsible_ai"); the domain_id
-# field inside each entry is the flat key (e.g. "responsible_ai"). Build the mapping
-# from field values so callers use flat keys as before.
+# domains.json uses role-scoped top-level keys (e.g. "rm_prompting"); the domain_id
+# field inside each entry is still the flat key ("prompting"). Build the mapping
+# from field values so callers continue to use flat keys as before.
 DOMAIN_DESCRIPTIONS: dict = {
     d["domain_id"]: d["description"]
     for d in DOMAINS.values()
@@ -84,14 +84,6 @@ def get_reading(course_id: str) -> dict:
 
 def get_scenario(course_id: str) -> dict:
     return SCENARIOS[course_id]
-
-
-def get_courses(role_id: str) -> list[dict]:
-    """Returns all courses for the given role, ordered by sequence_order."""
-    return sorted(
-        [c for c in COURSES.values() if c.get("role_id") == role_id],
-        key=lambda c: c.get("sequence_order", 99),
-    )
 
 
 def get_eval_items(course_id: str) -> list:

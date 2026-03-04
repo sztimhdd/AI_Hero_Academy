@@ -212,8 +212,8 @@ def generate_gap_map(
     """
     Generate gap map bullets from domain scores.
 
-    domain_scores: {"responsible_ai": 2.0, "strategic_prompting": 0.8, ...}
-    domain_descriptions: {"responsible_ai": "Applying AI usage policies...", ...}
+    domain_scores: {"prompting": 2.0, "verification": 0.8, ...}
+    domain_descriptions: {"prompting": "Structuring AI prompts...", ...}
 
     Returns list of {"priority": int, "domain_id": str, "bullet": str}
     """

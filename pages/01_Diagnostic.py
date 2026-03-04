@@ -1,5 +1,5 @@
 """
-Diagnostic page — 18-question assessment (3 per domain × 6 domains).
+Diagnostic page — 12-question assessment.
 Supports MCQ, prompt_sandbox, and micro_task item types.
 No partial saves. On completion, triggers AI scoring + gap map generation.
 """
@@ -93,7 +93,7 @@ if not st.session_state.get("diag_started"):
       <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">questions</div>
     </div>
     <div style="text-align:center; min-width:80px">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">6</div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">4</div>
       <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">skill domains</div>
     </div>
   </div>
