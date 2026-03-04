@@ -1,809 +1,4 @@
 {
-  "rm_c1_responsible_ai": [
-    {
-      "item_id": "ev_rm_c1_responsible_ai_q1",
-      "course_id": "rm_c1_responsible_ai",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c1_responsible_ai_q2",
-      "course_id": "rm_c1_responsible_ai",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c1_responsible_ai_q3",
-      "course_id": "rm_c1_responsible_ai",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c1_responsible_ai_q4",
-      "course_id": "rm_c1_responsible_ai",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "rm_c2_strategic_prompting": [
-    {
-      "item_id": "ev_rm_c2_strategic_prompting_q1",
-      "course_id": "rm_c2_strategic_prompting",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c2_strategic_prompting_q2",
-      "course_id": "rm_c2_strategic_prompting",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c2_strategic_prompting_q3",
-      "course_id": "rm_c2_strategic_prompting",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c2_strategic_prompting_q4",
-      "course_id": "rm_c2_strategic_prompting",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "rm_c3_critical_eval": [
-    {
-      "item_id": "ev_rm_c3_critical_eval_q1",
-      "course_id": "rm_c3_critical_eval",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c3_critical_eval_q2",
-      "course_id": "rm_c3_critical_eval",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c3_critical_eval_q3",
-      "course_id": "rm_c3_critical_eval",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c3_critical_eval_q4",
-      "course_id": "rm_c3_critical_eval",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "rm_c4_relationship_intel": [
-    {
-      "item_id": "ev_rm_c4_relationship_intel_q1",
-      "course_id": "rm_c4_relationship_intel",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c4_relationship_intel_q2",
-      "course_id": "rm_c4_relationship_intel",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c4_relationship_intel_q3",
-      "course_id": "rm_c4_relationship_intel",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c4_relationship_intel_q4",
-      "course_id": "rm_c4_relationship_intel",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "rm_c5_data_decision": [
-    {
-      "item_id": "ev_rm_c5_data_decision_q1",
-      "course_id": "rm_c5_data_decision",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c5_data_decision_q2",
-      "course_id": "rm_c5_data_decision",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c5_data_decision_q3",
-      "course_id": "rm_c5_data_decision",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c5_data_decision_q4",
-      "course_id": "rm_c5_data_decision",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "rm_c6_augmented_comm": [
-    {
-      "item_id": "ev_rm_c6_augmented_comm_q1",
-      "course_id": "rm_c6_augmented_comm",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c6_augmented_comm_q2",
-      "course_id": "rm_c6_augmented_comm",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c6_augmented_comm_q3",
-      "course_id": "rm_c6_augmented_comm",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c6_augmented_comm_q4",
-      "course_id": "rm_c6_augmented_comm",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "rm_c7_capstone": [
-    {
-      "item_id": "ev_rm_c7_capstone_q1",
-      "course_id": "rm_c7_capstone",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c7_capstone_q2",
-      "course_id": "rm_c7_capstone",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c7_capstone_q3",
-      "course_id": "rm_c7_capstone",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_rm_c7_capstone_q4",
-      "course_id": "rm_c7_capstone",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
   "uw_c1_responsible_ai": [
     {
       "item_id": "ev_uw_c1_responsible_ai_q1",
@@ -2411,6 +1606,559 @@
         "key2": "The response explicitly describes at least two quality gates — points between tool handoffs where the analyst verifies the output before passing it to the next step — demonstrating understanding that each handoff is a deliberate checkpoint, not an automatic transfer.",
         "key3": "The response demonstrates integration of at least two frameworks from earlier courses (e.g., SAFE before prompting, CRAF for prompt construction, VERIFY for output checking, TRACE for data interpretation, or STAKE for audience adaptation) showing that the End-to-End Workflow connects all prior learning.",
         "key4": "The response explicitly explains how the analyst's judgment is preserved and amplified throughout the workflow — for example, by describing a specific decision point where the analyst interprets, challenges, or contextualizes an AI-generated finding before it enters the next step or reaches the executive sponsor."
+      }
+    }
+  ],
+  "rm_c1_responsible_ai": [
+    {
+      "item_id": "ev_rm_c1_responsible_ai_q1",
+      "course_id": "rm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the SAFE framework, what should a Relationship Manager do FIRST before entering any client information into an AI tool?",
+      "scenario_text": null,
+      "options": {
+        "A": "Focus on the specific decision that needs to be made",
+        "B": "Substitute client identifiers with generic placeholders",
+        "C": "Ensure the tool is on the approved software list",
+        "D": "Abstain from including any financial figures in the prompt"
+      },
+      "correct_option": "B",
+      "explanation": "The SAFE framework begins with 'S' — substitute identifiers — meaning you replace real client names, account numbers, and other identifying details with generic placeholders before anything enters the AI tool. This is the first protective step in the sequence.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c1_responsible_ai_q2",
+      "course_id": "rm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "An RM wants to use an AI tool to draft a follow-up email after a client meeting. The client's audited financials were discussed. Which action best reflects the 'A' step in SAFE?",
+      "scenario_text": null,
+      "options": {
+        "A": "Paste the audited financials directly into the prompt so the AI has full context",
+        "B": "Ask the AI to summarise the financials before drafting the email",
+        "C": "Abstain from entering the exact financial figures and instead describe the general trend",
+        "D": "Use the AI tool only after obtaining written client consent"
+      },
+      "correct_option": "C",
+      "explanation": "The 'A' in SAFE stands for 'abstain from exact figures.' Rather than inputting precise non-public financial data, the RM should describe the situation in general terms to protect client confidentiality while still getting a useful draft.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c1_responsible_ai_q3",
+      "course_id": "rm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "Why does the SAFE framework include a step to verify you are working inside an approved tool, even if the other three steps are followed correctly?",
+      "scenario_text": null,
+      "options": {
+        "A": "Unapproved tools may produce lower-quality drafts that require more editing",
+        "B": "Approved tools are faster and integrate directly with the CRM system",
+        "C": "Using an unapproved tool can expose non-public data regardless of how carefully the prompt was constructed",
+        "D": "Regulators require all AI outputs to be logged in an approved system before use"
+      },
+      "correct_option": "C",
+      "explanation": "Even a carefully anonymised prompt can expose non-public client data if it is processed by an unapproved tool that lacks the required data-handling controls. The 'E' step — ensure you are in an approved tool — closes this gap regardless of how well the other steps were executed.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c1_responsible_ai_q4",
+      "course_id": "rm_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the full SAFE framework to the scenario below. Write a response that walks through each of the four SAFE steps and produces a compliant, ready-to-use AI prompt.",
+      "scenario_text": "You are preparing for a credit renewal meeting with Harbourline Fabrication Ltd. Your files contain the client's KYC records, a draft business plan showing a planned $4.2 million equipment purchase, and internal pipeline notes flagging a competitor bank that is also pitching the client. You want to use an approved AI tool to draft a briefing note that summarises the client's strategic priorities and likely objections ahead of the meeting.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Substitute: The response replaces Harbourline Fabrication Ltd.'s name and any identifying details (e.g., client name, account references) with a generic placeholder such as 'Client A' or 'a mid-sized fabrication company' before constructing the prompt.",
+        "key2": "Abstain: The response omits the exact $4.2 million figure and any verbatim KYC or pipeline details, instead describing the situation in general terms (e.g., 'a significant planned capital expenditure' or 'competitive pressure from another lender').",
+        "key3": "Focus: The response clearly frames the prompt around the specific decision or output needed — a pre-meeting briefing note covering strategic priorities and likely objections — rather than asking a vague or open-ended question.",
+        "key4": "Ensure: The response explicitly confirms or states that the tool being used is on the organisation's approved list before submitting the prompt, demonstrating awareness that tool approval is a non-negotiable guardrail."
+      }
+    }
+  ],
+  "rm_c2_strategic_prompting": [
+    {
+      "item_id": "ev_rm_c2_strategic_prompting_q1",
+      "course_id": "rm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "What problem does the CRAF framework primarily solve for Relationship Managers working with new leads?",
+      "scenario_text": null,
+      "options": {
+        "A": "It automates the full email-sending process so the RM does not need to review drafts",
+        "B": "It turns limited lead data into a structured, send-ready outreach by making prompts precisely specific",
+        "C": "It scores leads by likelihood to convert before any outreach is drafted",
+        "D": "It pulls additional lead data from external databases to fill information gaps"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that CRAF gives RMs a repeatable structure to turn thin lead data — such as only a sector, region, and exporter status — into send-ready outreach by being precisely specific, preventing the vague prompts that produce vague emails and undermine credibility.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c2_strategic_prompting_q2",
+      "course_id": "rm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "In the CRAF framework, what does the 'R' component require the RM to specify?",
+      "scenario_text": null,
+      "options": {
+        "A": "The region and sector data available about the lead",
+        "B": "The required deliverable — what the AI output should actually be",
+        "C": "The guardrails that keep the draft accurate and RM-authentic",
+        "D": "The relationship history between the RM and the prospect"
+      },
+      "correct_option": "B",
+      "explanation": "In CRAF, 'R' stands for the required deliverable — the RM must tell the AI exactly what output is needed (e.g., a first-contact email, a briefing note) so the prompt produces something usable rather than a generic response.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c2_strategic_prompting_q3",
+      "course_id": "rm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "Why does the CRAF framework include guardrails as a distinct component rather than leaving tone and accuracy to the AI's judgment?",
+      "scenario_text": null,
+      "options": {
+        "A": "Guardrails allow the AI to generate multiple draft versions for the RM to choose from",
+        "B": "Without explicit guardrails, AI-generated drafts may be inaccurate or fail to sound like the RM, undermining credibility",
+        "C": "Guardrails are required by compliance policy before any AI-generated email can be sent",
+        "D": "They instruct the AI to pull verified data from the CRM before drafting"
+      },
+      "correct_option": "B",
+      "explanation": "The reading states that guardrails keep every AI-generated draft accurate and RM-authentic. Without them, the output may sound generic or contain errors, which damages the RM's credibility — especially critical when reaching out to a new lead for the first time.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c2_strategic_prompting_q4",
+      "course_id": "rm_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Using the CRAF framework, write a complete, structured AI prompt for the scenario below. Your response must clearly label and address all four CRAF components.",
+      "scenario_text": "You have just received a new lead in your CRM: Prairie Pulse Foods Inc., a mid-sized food processing company based in Saskatchewan, classified as an active exporter to the United States. You have no prior relationship with this company. Your goal is to send a first-contact outreach email introducing yourself and your trade finance services, and to secure an introductory call.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Context: The prompt clearly establishes the specific context of the lead — including the sector (food processing/agri-food), region (Saskatchewan), and exporter status (active U.S. exporter) — so the AI has precise background rather than vague generalities.",
+        "key2": "Required Deliverable: The prompt explicitly states what output is needed — a first-contact outreach email — and specifies the goal of securing an introductory call, leaving no ambiguity about the type of document to be produced.",
+        "key3": "Audience & Structure: The prompt specifies the intended recipient (a senior decision-maker at a food processing exporter) and indicates the desired structure or length of the email (e.g., brief introduction, value proposition, call-to-action).",
+        "key4": "Guardrails: The prompt includes at least one explicit guardrail — such as instructing the AI to avoid making unverified claims about the company, to maintain a professional but approachable tone consistent with the RM's voice, or to flag any assumptions it has made."
+      }
+    }
+  ],
+  "rm_c3_critical_eval": [
+    {
+      "item_id": "ev_rm_c3_critical_eval_q1",
+      "course_id": "rm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, why is AI-generated financial commentary particularly dangerous in a credit context?",
+      "scenario_text": null,
+      "options": {
+        "A": "AI tools are not permitted to access financial data under most bank policies",
+        "B": "AI-generated commentary can sound authoritative even when the underlying numbers are wrong",
+        "C": "Credit underwriters do not accept any AI-generated documents as supporting evidence",
+        "D": "Financial commentary requires a licensed analyst signature that AI cannot provide"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly warns that AI-generated financial commentary can sound authoritative even when the numbers are wrong, and that this false confidence is especially dangerous in a credit context where errors can reach underwriting or the client.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c3_critical_eval_q2",
+      "course_id": "rm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "What is the core discipline the VERIFY Checklist is designed to instil in Relationship Managers?",
+      "scenario_text": null,
+      "options": {
+        "A": "Rewriting all AI-generated commentary from scratch before submitting it",
+        "B": "Catching errors in AI-generated variance commentary before they reach underwriting, CRM notes, or the client",
+        "C": "Training the AI model with verified financial data to improve future outputs",
+        "D": "Obtaining client sign-off on all AI-generated financial summaries"
+      },
+      "correct_option": "B",
+      "explanation": "The reading states that the VERIFY Checklist gives RMs a fast, repeatable discipline to catch errors before they reach underwriting, CRM notes, or the client — making error-catching before distribution the central purpose of the framework.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c3_critical_eval_q3",
+      "course_id": "rm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, what are the only two defensible options when reviewing a claim in AI-generated variance commentary?",
+      "scenario_text": null,
+      "options": {
+        "A": "Accept the claim if it sounds plausible, or delete it if it seems unlikely",
+        "B": "Verify the claim with a second AI tool, or escalate it to a senior RM",
+        "C": "Tie the claim back to a figure personally verified in the source file, or explicitly label it as unconfirmed",
+        "D": "Include the claim with a disclaimer footnote, or request the client to confirm it"
+      },
+      "correct_option": "C",
+      "explanation": "The reading's takeaway states there is no defensible middle ground: every claim must either tie back to a figure the RM personally verified in the source file, or be explicitly labelled as unconfirmed. Any other approach leaves the RM exposed.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c3_critical_eval_q4",
+      "course_id": "rm_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the VERIFY Checklist discipline to the scenario below. Write a structured response that evaluates each AI-generated claim and states what action you would take for each.",
+      "scenario_text": "You asked an AI tool to generate variance commentary for SkyNorth Aero Components Inc.'s latest quarterly financials. The AI produced the following three statements: (1) 'Revenue increased 18% year-over-year, driven by a new contract with a defence supplier.' (2) 'Operating margins improved to 14.2%, reflecting cost efficiencies in the supply chain.' (3) 'The company's cash position remains strong, suggesting no near-term liquidity concerns.' You have the client's source financial statements in front of you. Statement 1's revenue figure matches your source file, but no contract detail is mentioned there. Statement 2's margin figure does not appear in your source file. Statement 3 contains no specific figure at all.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Statement 1 handling: The response correctly identifies that the 18% revenue figure is verified against the source file but flags the defence supplier contract detail as unconfirmed (not in the source), and states it must be labelled as unconfirmed or removed before the commentary is used.",
+        "key2": "Statement 2 handling: The response correctly identifies that the 14.2% operating margin figure cannot be tied to the source file and therefore must be explicitly labelled as unconfirmed or deleted — not used as stated — before reaching underwriting or the client.",
+        "key3": "Statement 3 handling: The response correctly identifies that the claim contains no specific verifiable figure and that a vague qualitative assertion without a source-verified number represents an unconfirmed claim that must be labelled as such or removed.",
+        "key4": "Overall discipline: The response demonstrates the VERIFY principle that there is no defensible middle ground — each claim is either verified to a specific source figure or explicitly flagged, with no claims accepted simply because they 'sound plausible' or authoritative."
+      }
+    }
+  ],
+  "rm_c4_relationship_intel": [
+    {
+      "item_id": "ev_rm_c4_relationship_intel_q1",
+      "course_id": "rm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what distinguishes a relationship brief from a standard company profile pulled from a database?",
+      "scenario_text": null,
+      "options": {
+        "A": "A relationship brief is generated by AI and updated automatically, while a database profile is static",
+        "B": "A relationship brief is the living story of interactions, commitments, and the people who made them",
+        "C": "A relationship brief focuses on financial metrics, while a database profile covers qualitative information",
+        "D": "A relationship brief is shared with the client, while a database profile is for internal use only"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that a relationship brief is not a company profile pulled from a database — it is the living story of interactions, commitments, and the people who made them, capturing what was promised, what is unresolved, and what each person cares about.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c4_relationship_intel_q2",
+      "course_id": "rm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "What is the primary purpose of the RELATE framework as described in the reading?",
+      "scenario_text": null,
+      "options": {
+        "A": "To automate the creation of client relationship briefs without RM input",
+        "B": "To help RMs walk into every client meeting prepared, while keeping AI honest about what it knows versus what it invented",
+        "C": "To score client relationships by engagement level and flag at-risk accounts",
+        "D": "To standardise the format of CRM notes so they can be processed by AI tools"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway states that RELATE helps you walk into every client meeting prepared like you remember everything — while keeping AI honest about what it actually knows versus what it invented. Preparation and AI accountability are the dual purposes.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c4_relationship_intel_q3",
+      "course_id": "rm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "When preparing for a quarterly review using AI-assisted relationship intelligence, what three things does the reading say an RM needs to know about the people in the room?",
+      "scenario_text": null,
+      "options": {
+        "A": "Their job titles, their company's revenue, and their preferred communication style",
+        "B": "What was promised, what is still unresolved, and what each person actually cares about",
+        "C": "Their decision-making authority, their tenure at the company, and their LinkedIn activity",
+        "D": "Their last interaction date, their product holdings, and their credit rating"
+      },
+      "correct_option": "B",
+      "explanation": "The reading states that when walking into a quarterly review, the RM needs to know what was promised, what is still unresolved, and what each person in the room actually cares about — these are the three relationship intelligence priorities the RELATE framework is built around.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c4_relationship_intel_q4",
+      "course_id": "rm_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Using the RELATE framework, write a structured pre-meeting preparation plan for the scenario below. Your response must address all key components of RELATE and demonstrate how you would keep AI honest about what it knows versus what it may have invented.",
+      "scenario_text": "You are preparing for a quarterly business review with GlacierTech Robotics Ltd. tomorrow morning. The meeting will include the CFO, the VP of Operations, and a new procurement manager who joined three months ago. Your CRM notes show that six months ago you committed to introducing the client to your trade finance team, but there is no follow-up record confirming this happened. The AI tool you used to draft a pre-meeting brief has included a statement that 'the client expressed strong interest in expanding their credit facility at the last meeting' — but you have no personal recollection of this and cannot find it in your notes.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Relationship history: The response identifies and addresses the unresolved commitment (trade finance team introduction) from six months ago, treating it as an open action item that must be acknowledged or resolved in the meeting rather than ignored.",
+        "key2": "People intelligence: The response demonstrates awareness of each person in the room — noting the CFO's and VP's established relationship context and specifically flagging that the new procurement manager is unknown and requires an introductory approach.",
+        "key3": "AI accountability: The response explicitly flags the AI's claim about 'strong interest in expanding the credit facility' as unverified — stating it cannot be used in the meeting brief or raised with the client without a source note confirming it, consistent with keeping AI honest about what it knows versus invented.",
+        "key4": "Preparation output: The response produces or describes a usable pre-meeting plan that integrates verified relationship history, people context, and open commitments into a coherent brief — demonstrating that RELATE produces meeting-ready intelligence, not just a list of concerns."
+      }
+    }
+  ],
+  "rm_c5_data_decision": [
+    {
+      "item_id": "ev_rm_c5_data_decision_q1",
+      "course_id": "rm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what is the primary danger RMs face when working with a portfolio dashboard that surfaces many data points?",
+      "scenario_text": null,
+      "options": {
+        "A": "Having too little data to make informed prioritisation decisions",
+        "B": "Acting on the wrong signals or letting AI auto-prioritise without RM judgment",
+        "C": "Spending too much time manually reviewing each data point instead of using AI",
+        "D": "Dashboard data becoming outdated before the RM can act on it"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that the danger isn't too little data — it's acting on the wrong signals, or worse, letting AI auto-prioritise without the RM's judgment. The SIGNAL framework is designed to address this specific risk.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c5_data_decision_q2",
+      "course_id": "rm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "What does the SIGNAL framework ultimately enable a Relationship Manager to do with portfolio data?",
+      "scenario_text": null,
+      "options": {
+        "A": "Automate weekly portfolio reports and send them to clients without manual review",
+        "B": "Turn dashboard metrics into decisions the RM can explain, execute, and defend",
+        "C": "Identify which clients should be offboarded based on activity recency scores",
+        "D": "Synchronise dashboard data with the CRM to eliminate duplicate data entry"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway states that SIGNAL turns dashboard metrics into decisions you can explain, execute, and defend — because the RM, not the AI, is accountable for the portfolio. Explainability and defensibility are the key outcomes.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c5_data_decision_q3",
+      "course_id": "rm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "The reading mentions several types of data points that appear on a Monday morning portfolio dashboard. Which of the following best represents the combination of signals described?",
+      "scenario_text": null,
+      "options": {
+        "A": "Client credit scores, loan-to-value ratios, and interest rate sensitivity flags",
+        "B": "Lead ages, SLA countdowns, activity recency flags, and market insight summaries",
+        "C": "Revenue trends, headcount changes, and competitor activity alerts",
+        "D": "Email open rates, call logs, and product cross-sell opportunity scores"
+      },
+      "correct_option": "B",
+      "explanation": "The reading specifically lists lead ages, SLA countdowns, activity recency flags, and market insight summaries from the Market Insights Generator as the types of data points that surface on the portfolio dashboard each Monday morning.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c5_data_decision_q4",
+      "course_id": "rm_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the SIGNAL framework to the scenario below. Write a structured response that walks through your prioritisation reasoning and produces a defensible action plan for the week.",
+      "scenario_text": "It is Monday morning and your portfolio dashboard for Maple Ridge Exporters Co. shows the following: (1) An SLA countdown indicating a credit renewal application is due in 4 business days. (2) An activity recency flag showing no RM contact with the client in 47 days. (3) A market insight summary generated by the AI tool stating 'the agricultural export sector is experiencing headwinds due to currency fluctuation — clients in this segment may be reassessing financing needs.' (4) A lead age indicator showing a new referral from this client has been sitting uncontacted for 12 days. The AI tool has automatically ranked the market insight as the top priority action for the week.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Signal identification: The response correctly identifies and distinguishes between the four data signals — the SLA deadline, the activity gap, the AI-generated market insight, and the aging referral — rather than treating them as a single undifferentiated list.",
+        "key2": "RM judgment over AI auto-prioritisation: The response explicitly overrides or questions the AI's automatic ranking of the market insight as the top priority, applying the SIGNAL principle that the RM — not the AI — is accountable for prioritisation decisions.",
+        "key3": "Defensible prioritisation: The response produces a clear, reasoned priority order (e.g., SLA deadline first given the 4-day window, then the activity gap/contact, then the aging referral, then the market insight as context) with a rationale the RM could explain to a manager or client.",
+        "key4": "Action plan: The response translates the prioritised signals into specific, executable actions for the week (e.g., 'Contact client today to begin credit renewal documentation; schedule call to address 47-day gap; reach out to referral by Wednesday') — demonstrating that SIGNAL produces decisions, not just analysis."
+      }
+    }
+  ],
+  "rm_c6_augmented_comm": [
+    {
+      "item_id": "ev_rm_c6_augmented_comm_q1",
+      "course_id": "rm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the Copilot Surface Selector discipline, where should a Relationship Manager always begin when using AI to support communication tasks?",
+      "scenario_text": null,
+      "options": {
+        "A": "In the CRM, because that is where client action is ultimately recorded",
+        "B": "In the surface where the best raw input lives",
+        "C": "In the email client, because most RM communication is delivered by email",
+        "D": "In whichever AI tool produces the fastest first draft"
+      },
+      "correct_option": "B",
+      "explanation": "The reading states the rule clearly: always start where the best raw input lives. The Copilot Surface Selector is a discipline built on this principle — the quality of the starting surface determines the quality of everything that follows in the chain.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c6_augmented_comm_q2",
+      "course_id": "rm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading describes the Copilot Surface Selector as 'a discipline, not just a tip.' What does this distinction mean in practice?",
+      "scenario_text": null,
+      "options": {
+        "A": "RMs must complete a certification before using any Copilot surface in client communications",
+        "B": "The surface selection process must be documented in the CRM for compliance purposes",
+        "C": "RMs must deliberately chain outputs toward where action happens, not just pick a convenient starting point",
+        "D": "The discipline requires using all available Copilot surfaces in sequence for every communication task"
+      },
+      "correct_option": "C",
+      "explanation": "The reading explains that the Copilot Surface Selector is a discipline because it requires RMs to deliberately chain outputs toward where action happens — not simply choose a convenient tool. Deliberate chaining, not convenience, is what makes it a discipline.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c6_augmented_comm_q3",
+      "course_id": "rm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, what risk does an RM take by skipping the verification gate when chaining AI outputs?",
+      "scenario_text": null,
+      "options": {
+        "A": "The CRM will not accept AI-generated content without a verification timestamp",
+        "B": "Speed without the verification check is just a faster way to make expensive mistakes",
+        "C": "Skipping verification invalidates the output and requires the RM to restart the chain",
+        "D": "The AI tool will flag the output as unverified and prevent it from being sent"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states: 'speed without that check is just a faster way to make expensive mistakes.' The verification gate is non-negotiable — skipping it in the name of efficiency amplifies rather than reduces risk.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c6_augmented_comm_q4",
+      "course_id": "rm_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the Copilot Surface Selector discipline to the scenario below. Write a response that maps out the full communication chain — identifying the best starting surface, the deliberate chain of steps, and the verification gate — before producing the final output.",
+      "scenario_text": "You have just finished a 45-minute call with Bluewave Marine Logistics Inc. During the call, you took scattered notes in Microsoft OneNote covering three topics: (1) the client's request to explore a new revolving credit facility, (2) a concern the CFO raised about rising fuel costs affecting cash flow, and (3) a commitment you made to send a product comparison document by end of week. You now need to: send a follow-up email to the CFO summarising the call and confirming your commitment, and log a structured CRM note capturing the key discussion points and next steps.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Starting surface: The response correctly identifies Microsoft OneNote (where the call notes live) as the best starting surface — the place where the richest raw input exists — and begins the AI-assisted workflow there rather than jumping straight to email or CRM.",
+        "key2": "Deliberate chain: The response maps a logical, deliberate chain of steps — e.g., use Copilot in OneNote to organise and summarise the raw notes, then chain the structured summary into the email draft, then chain the verified summary into the CRM note — rather than treating each output as independent.",
+        "key3": "Verification gate: The response explicitly includes a verification step before the follow-up email is sent and before the CRM note is saved — confirming that all three discussion points (credit facility, fuel cost concern, commitment) are accurately reflected and that no AI-generated detail is unverified.",
+        "key4": "Final outputs: The response produces or clearly describes both required outputs — a follow-up email to the CFO and a structured CRM note — demonstrating that the chain was completed through to where action happens, not stopped at the draft stage."
+      }
+    }
+  ],
+  "rm_c7_capstone": [
+    {
+      "item_id": "ev_rm_c7_capstone_q1",
+      "course_id": "rm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the capstone reading, where does AI deliver its greatest value for Relationship Managers?",
+      "scenario_text": null,
+      "options": {
+        "A": "From a single, highly optimised prompt that covers all workflow needs at once",
+        "B": "From a disciplined chain of connected steps that integrates multiple frameworks",
+        "C": "From AI tools that autonomously complete the full client engagement workflow",
+        "D": "From real-time AI coaching that guides the RM during client calls"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that AI delivers its greatest value not from a single clever prompt, but from a disciplined chain of connected steps — the End-to-End AI Workflow that integrates the six disciplines practised across the program.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c7_capstone_q2",
+      "course_id": "rm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The capstone reading describes the End-to-End AI Workflow as beginning with SAFE. Why is SAFE positioned as the first step in the workflow rather than later in the chain?",
+      "scenario_text": null,
+      "options": {
+        "A": "SAFE is the fastest step and completing it first saves time on subsequent steps",
+        "B": "SAFE must be completed before anything enters a tool — protecting inputs is the prerequisite for all other steps",
+        "C": "Regulators require SAFE documentation to be submitted before any AI tool is activated",
+        "D": "SAFE generates the context data that all subsequent framework steps depend on"
+      },
+      "correct_option": "B",
+      "explanation": "The reading states that SAFE is the step to 'protect inputs before anything enters a tool' — making it the foundational prerequisite. If non-public data enters an AI tool without SAFE being applied first, no subsequent step can undo that exposure.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c7_capstone_q3",
+      "course_id": "rm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the capstone reading's takeaway, what is the one input in the End-to-End AI Workflow that no Copilot surface can replace?",
+      "scenario_text": null,
+      "options": {
+        "A": "Verified financial data from the client's source files",
+        "B": "The RM's judgment",
+        "C": "CRM notes from previous client interactions",
+        "D": "Approved AI tool outputs that have passed the verification gate"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway states that 'the RM's judgment is the one input no Copilot surface can replace.' Every step in the workflow has a guardrail, but human judgment remains the irreplaceable element that gives the chain its integrity.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c7_capstone_q4",
+      "course_id": "rm_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the full End-to-End AI Workflow to the scenario below. Your response must demonstrate how you would integrate at least four of the six frameworks (SAFE, CRAF, VERIFY, RELATE, SIGNAL, and the Copilot Surface Selector) across the workflow, with clear handoffs between steps and explicit RM judgment at each guardrail.",
+      "scenario_text": "You are an RM at a financial institution. Evergreen Advanced Materials Group is a new lead in your pipeline — a mid-sized advanced materials manufacturer based in British Columbia, classified as an active exporter to Asia-Pacific markets. You have the following information: a sector classification, a region, and an exporter flag in your CRM. You also have a portfolio dashboard alert showing the lead has been uncontacted for 18 days and an SLA deadline for first contact in 2 business days. An AI tool has pre-generated a market insight summary stating 'advanced materials exporters in BC are experiencing strong demand growth of approximately 22% year-over-year.' You have not verified this figure. Your tasks are: (1) safely prepare your AI inputs, (2) draft a first-contact outreach email, (3) evaluate the AI-generated market insight before using it, and (4) log a structured CRM note after your outreach.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "SAFE application: The response applies SAFE before any information enters an AI tool — substituting Evergreen Advanced Materials Group's identifying details with a placeholder, abstaining from any non-public figures, focusing the prompt on the specific task (first-contact email), and confirming use of an approved tool.",
+        "key2": "CRAF prompt construction: The response constructs a CRAF-structured prompt for the first-contact email — specifying the context (BC advanced materials exporter, Asia-Pacific markets), the required deliverable (first-contact outreach email to secure an introductory call), the audience and structure, and guardrails that prevent unverified claims (including the unverified 22% figure) from appearing in the draft.",
+        "key3": "VERIFY discipline: The response explicitly flags the AI-generated '22% demand growth' figure as unverified — stating it cannot be included in the outreach email or CRM note without being tied to a source file the RM has personally checked — and either removes it or labels it as unconfirmed in all outputs.",
+        "key4": "Copilot Surface Selector and RM judgment: The response maps a deliberate chain from the best starting surface (CRM lead data and dashboard) through to the email draft and CRM note, includes a verification gate before sending, and demonstrates RM judgment at least once — such as overriding the AI's prioritisation of the market insight or making a deliberate decision about tone and content that the AI could not make autonomously."
       }
     }
   ]

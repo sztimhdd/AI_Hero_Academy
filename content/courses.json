@@ -1,74 +1,4 @@
 {
-  "rm_c1_responsible_ai": {
-    "course_id": "rm_c1_responsible_ai",
-    "role_id": "rm",
-    "primary_domain": "responsible_ai",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 1
-  },
-  "rm_c2_strategic_prompting": {
-    "course_id": "rm_c2_strategic_prompting",
-    "role_id": "rm",
-    "primary_domain": "strategic_prompting",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 2
-  },
-  "rm_c3_critical_eval": {
-    "course_id": "rm_c3_critical_eval",
-    "role_id": "rm",
-    "primary_domain": "critical_eval",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 3
-  },
-  "rm_c4_relationship_intel": {
-    "course_id": "rm_c4_relationship_intel",
-    "role_id": "rm",
-    "primary_domain": "relationship_intel",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 4
-  },
-  "rm_c5_data_decision": {
-    "course_id": "rm_c5_data_decision",
-    "role_id": "rm",
-    "primary_domain": "data_decision",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 5
-  },
-  "rm_c6_augmented_comm": {
-    "course_id": "rm_c6_augmented_comm",
-    "role_id": "rm",
-    "primary_domain": "augmented_comm",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 6
-  },
-  "rm_c7_capstone": {
-    "course_id": "rm_c7_capstone",
-    "role_id": "rm",
-    "primary_domain": "responsible_ai",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 7
-  },
   "uw_c1_responsible_ai": {
     "course_id": "uw_c1_responsible_ai",
     "role_id": "uw",
@@ -207,6 +137,76 @@
     "tagline": "Put it all together — responsible, accurate, audience-aware, data-driven AI assistance from raw data to final communication.",
     "description": "This capstone integrates all six skill domains in a realistic end-to-end workflow. You'll step into the shoes of an EDC analyst preparing an annual programme review for senior leadership. Starting from an Excel portfolio dataset, a Teams meeting transcript, and an internal strategy memo, you'll use AI at each stage: surfacing portfolio insights (Data-Driven Decision Making), verifying AI outputs before they enter the narrative (Critical Evaluation), tailoring the briefing for two different internal audiences (Relationship Intelligence), structuring the brief using CRAF (Strategic Prompting), maintaining data safety throughout (Responsible AI), and chaining Copilot tools across Excel to Word to Outlook (Augmented Communication). By completing this course, you demonstrate the ability to orchestrate AI across a complex, multi-step analytical workflow — just as you would on the job.",
     "real_use_case": "Streamline production of Quarterly analysis and reporting; Financial Variance Analyzer; KYC / CIM Validation Agent",
+    "sequence_order": 7
+  },
+  "rm_c1_responsible_ai": {
+    "course_id": "rm_c1_responsible_ai",
+    "role_id": "rm",
+    "primary_domain": "responsible_ai",
+    "title": "Safeguard Before You Summarize: Client Data and AI",
+    "tagline": "Use SAFE abstraction to get AI help without exposing non-public client information.",
+    "description": "RMs often feel time pressure to summarize client documents, meeting notes, and deal context quickly. This course builds the habit of sanitizing inputs, choosing safe tools, and rewriting prompts so you keep confidentiality intact while still getting useful drafts for internal work.",
+    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).",
+    "sequence_order": 1
+  },
+  "rm_c2_strategic_prompting": {
+    "course_id": "rm_c2_strategic_prompting",
+    "role_id": "rm",
+    "primary_domain": "strategic_prompting",
+    "title": "Prompt for Prospect Precision: From Thin Lead to Strong Outreach",
+    "tagline": "Turn minimal lead info into tailored outreach using CRAF.",
+    "description": "New leads often arrive with only basic details. This course teaches the CRAF framework (Context, Role, Action, Format) to generate usable prospect snapshots and first-contact emails that sound informed, relevant, and RM-authentic—not generic templates.",
+    "real_use_case": "Prospect Intelligence",
+    "sequence_order": 2
+  },
+  "rm_c3_critical_eval": {
+    "course_id": "rm_c3_critical_eval",
+    "role_id": "rm",
+    "primary_domain": "critical_eval",
+    "title": "Trust, Then Verify: Catching AI Errors in Financial Commentary",
+    "tagline": "Use VERIFY to validate AI-driven variance explanations before sharing.",
+    "description": "When AI helps interpret financials or ratios, small errors can create big downstream risk. This course gives RMs a practical verification routine to confirm numbers, assumptions, and interpretations before anything reaches underwriting, CRM, or the client.",
+    "real_use_case": "Financial Variance Analyzer",
+    "sequence_order": 3
+  },
+  "rm_c4_relationship_intel": {
+    "course_id": "rm_c4_relationship_intel",
+    "role_id": "rm",
+    "primary_domain": "relationship_intel",
+    "title": "Brief the Relationship: AI-Powered Meeting Prep That Keeps Nuance",
+    "tagline": "Use RELATE to synthesize history, stakeholders, and open threads—then validate.",
+    "description": "RMs need more than a company summary—they need the relationship story: what happened, what's unresolved, and what matters to the people in the room. This course teaches a structured way to generate relationship briefs from internal signals (notes, emails, prior actions) without over-relying on automated recaps.",
+    "real_use_case": "Customer Interaction Recap",
+    "sequence_order": 4
+  },
+  "rm_c5_data_decision": {
+    "course_id": "rm_c5_data_decision",
+    "role_id": "rm",
+    "primary_domain": "data_decision",
+    "title": "Decide With Signals: Turning Dashboards and Market Insights into Actions",
+    "tagline": "Use SIGNAL to translate analytics into next-best actions for your portfolio.",
+    "description": "Dashboards and market tools can surface risks and opportunities—but only if you know what to look for and how to act. This course teaches RMs to combine portfolio analytics (lead aging, SLA risk, activity recency) with market insights to prioritize outreach and planning with clear rationale.",
+    "real_use_case": "Market Insights Generator",
+    "sequence_order": 5
+  },
+  "rm_c6_augmented_comm": {
+    "course_id": "rm_c6_augmented_comm",
+    "role_id": "rm",
+    "primary_domain": "augmented_comm",
+    "title": "Close the Loop: From Meeting to Actions to Clean Records",
+    "tagline": "Use Copilot surfaces to produce accurate recaps, owners, and follow-ups—fast.",
+    "description": "RMs live in back-to-back calls. This course builds a repeatable multi-step workflow to convert meeting outcomes into action lists, clean CRM updates, and polished follow-ups—without losing accuracy, ownership clarity, or compliance discipline.",
+    "real_use_case": "Record governance - Summarizing Meeting notes and actions (with attendees tagged)",
+    "sequence_order": 6
+  },
+  "rm_c7_capstone": {
+    "course_id": "rm_c7_capstone",
+    "role_id": "rm",
+    "primary_domain": "responsible_ai",
+    "title": "End-to-End AI Assist: From Prospecting to Client Follow-Up",
+    "tagline": "Run an integrated workflow across all six domains without cutting corners.",
+    "description": "A realistic, end-to-end RM scenario: use AI to identify and prioritize a target account, craft outreach, prepare for a meeting using relationship history, validate AI-assisted analysis, and deliver compliant follow-ups and record updates. Learners must demonstrate good judgment, verification, and safe handling of information across the full chain.",
+    "real_use_case": "Access to Copilot 365 for Business Development; Customer Interaction Recap; Record governance - Summarizing Meeting notes and actions (with attendees tagged)",
     "sequence_order": 7
   }
 }

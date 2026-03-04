@@ -1,617 +1,5 @@
 [
   {
-    "item_id": "rm_diag_ra1_mcq",
-    "role_id": "rm",
-    "domain_id": "responsible_ai",
-    "item_type": "mcq",
-    "display_order": 1,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "rm_diag_ra2_sandbox",
-    "role_id": "rm",
-    "domain_id": "responsible_ai",
-    "item_type": "prompt_sandbox",
-    "display_order": 2,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_ra3_task",
-    "role_id": "rm",
-    "domain_id": "responsible_ai",
-    "item_type": "micro_task",
-    "display_order": 3,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_sp1_mcq",
-    "role_id": "rm",
-    "domain_id": "strategic_prompting",
-    "item_type": "mcq",
-    "display_order": 4,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "rm_diag_sp2_sandbox",
-    "role_id": "rm",
-    "domain_id": "strategic_prompting",
-    "item_type": "prompt_sandbox",
-    "display_order": 5,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_sp3_task",
-    "role_id": "rm",
-    "domain_id": "strategic_prompting",
-    "item_type": "micro_task",
-    "display_order": 6,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_ce1_mcq",
-    "role_id": "rm",
-    "domain_id": "critical_eval",
-    "item_type": "mcq",
-    "display_order": 7,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "rm_diag_ce2_sandbox",
-    "role_id": "rm",
-    "domain_id": "critical_eval",
-    "item_type": "prompt_sandbox",
-    "display_order": 8,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_ce3_task",
-    "role_id": "rm",
-    "domain_id": "critical_eval",
-    "item_type": "micro_task",
-    "display_order": 9,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_ri1_mcq",
-    "role_id": "rm",
-    "domain_id": "relationship_intel",
-    "item_type": "mcq",
-    "display_order": 10,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "rm_diag_ri2_sandbox",
-    "role_id": "rm",
-    "domain_id": "relationship_intel",
-    "item_type": "prompt_sandbox",
-    "display_order": 11,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_ri3_task",
-    "role_id": "rm",
-    "domain_id": "relationship_intel",
-    "item_type": "micro_task",
-    "display_order": 12,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_dd1_mcq",
-    "role_id": "rm",
-    "domain_id": "data_decision",
-    "item_type": "mcq",
-    "display_order": 13,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "rm_diag_dd2_sandbox",
-    "role_id": "rm",
-    "domain_id": "data_decision",
-    "item_type": "prompt_sandbox",
-    "display_order": 14,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_dd3_task",
-    "role_id": "rm",
-    "domain_id": "data_decision",
-    "item_type": "micro_task",
-    "display_order": 15,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_ac1_mcq",
-    "role_id": "rm",
-    "domain_id": "augmented_comm",
-    "item_type": "mcq",
-    "display_order": 16,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "rm_diag_ac2_sandbox",
-    "role_id": "rm",
-    "domain_id": "augmented_comm",
-    "item_type": "prompt_sandbox",
-    "display_order": 17,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "rm_diag_ac3_task",
-    "role_id": "rm",
-    "domain_id": "augmented_comm",
-    "item_type": "micro_task",
-    "display_order": 18,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
     "item_id": "uw_diag_ra1_mcq",
     "role_id": "uw",
     "domain_id": "responsible_ai",
@@ -1814,5 +1202,597 @@
       ]
     },
     "role_id": "an"
+  },
+  {
+    "item_id": "rm_diag_ra1_mcq",
+    "domain_id": "responsible_ai",
+    "item_type": "mcq",
+    "display_order": 1,
+    "question_text": "Which of the following inputs is SAFE to paste directly into a non-approved external AI tool when preparing a client briefing?",
+    "scenario_text": "You are preparing a briefing note for an upcoming review meeting with Crestwood Logistics Pty Ltd. You have access to their latest audited financials, an internal risk rating of 'Watch', a draft term sheet, and a publicly available industry report on freight logistics trends. You want to use an AI tool to help structure the briefing quickly.",
+    "options": [
+      {
+        "label": "A",
+        "text": "The publicly available industry report on freight logistics trends, with no client-specific details added."
+      },
+      {
+        "label": "B",
+        "text": "The client's audited financial statements, since they are already signed off and filed."
+      },
+      {
+        "label": "C",
+        "text": "The internal risk rating note, because it is only one line of text and unlikely to cause harm."
+      },
+      {
+        "label": "D",
+        "text": "The draft term sheet, because it has not yet been executed and is therefore not a final document."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ra2_sandbox",
+    "domain_id": "responsible_ai",
+    "item_type": "prompt_sandbox",
+    "display_order": 2,
+    "question_text": "Write a SAFE AI prompt to help you prepare an internal briefing note for a credit review meeting. Your prompt must not include any non-public client information, but must still give the AI enough context to produce a useful output.",
+    "scenario_text": "You are an RM preparing for a credit review meeting on Friday. Your client is a mid-sized manufacturing company that exports to North America and Europe. Their latest financials show revenue growth of 18% but tightening EBITDA margins. They have an existing trade finance facility and are requesting an increase. You have internal CRM notes flagging some concentration risk in their customer base. You need a structured 1-page internal briefing note with key talking points for the credit team.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Sanitization of client identity",
+          "description": "The prompt contains no real or fictional client name, specific financial figures, or CRM-sourced identifiers — uses abstracted descriptors only (e.g., 'mid-sized manufacturer exporting to North America and Europe').",
+          "max": 1
+        },
+        {
+          "name": "Sufficient context for useful output",
+          "description": "The prompt includes enough abstracted context (industry, facility type, growth profile, risk theme) that the AI can generate a genuinely useful briefing structure rather than a generic template.",
+          "max": 1
+        },
+        {
+          "name": "Clear output format instruction",
+          "description": "The prompt specifies the desired output format — e.g., 1-page internal note, headings, bullet points, audience (credit team).",
+          "max": 1
+        },
+        {
+          "name": "Appropriate tone and purpose framing",
+          "description": "The prompt frames the output as internal (not client-facing) and specifies the purpose (credit review preparation), reducing risk of generating inappropriate client-facing language.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ra3_task",
+    "domain_id": "responsible_ai",
+    "item_type": "micro_task",
+    "display_order": 3,
+    "question_text": "Review the AI prompt below that a colleague drafted to get help with a client follow-up email. Identify ALL responsible AI problems in the prompt and rewrite it as a SAFE version that still produces a useful output.",
+    "scenario_text": "A colleague shares this prompt they are about to submit to an external AI chatbot:\n\n'Draft a follow-up email to Pinnacle Steel Works after our meeting on 14 March. They have a $4.2M trade finance facility with us, currently rated B2 internally. Their CFO, Marcus Holt, mentioned cash flow pressure due to a delayed shipment from their Vietnamese supplier. Remind them we can restructure the facility and ask for updated financials by end of month.'\n\nYour task: (1) List the specific responsible AI violations in this prompt. (2) Rewrite the prompt in a SAFE version suitable for a non-approved external tool.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of client identity disclosure",
+          "description": "Learner correctly identifies that the client name ('Pinnacle Steel Works') and named individual ('Marcus Holt, CFO') are non-public identifiers that must not be entered into a non-approved tool.",
+          "max": 1
+        },
+        {
+          "name": "Identification of non-public financial and risk data",
+          "description": "Learner correctly flags the facility size ($4.2M), internal risk rating (B2), and the cash flow/supplier detail as non-public confidential information that violates safe AI-use boundaries.",
+          "max": 1
+        },
+        {
+          "name": "Quality of SAFE rewrite — sanitization",
+          "description": "The rewritten prompt removes all client names, individual names, specific dollar amounts, internal ratings, and operationally specific details (e.g., Vietnamese supplier, delayed shipment).",
+          "max": 1
+        },
+        {
+          "name": "Quality of SAFE rewrite — preserved usefulness",
+          "description": "The rewritten prompt retains enough abstracted context (e.g., 'mid-market industrial client, trade finance facility, cash flow discussion, request for updated financials') that the AI can still draft a useful follow-up email structure.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_sp4_mcq",
+    "domain_id": "strategic_prompting",
+    "item_type": "mcq",
+    "display_order": 4,
+    "question_text": "Which prompt structure is most likely to produce a high-quality first draft of a client needs analysis summary for an RM's pre-call preparation?",
+    "scenario_text": "You have a discovery call tomorrow with the CFO of a mid-market food processing company that is expanding into Southeast Asia. You want to use an approved AI tool to draft a structured needs analysis summary to guide your conversation. You have 10 minutes to write the prompt.",
+    "options": [
+      {
+        "label": "A",
+        "text": "'Act as an experienced Relationship Manager preparing for a discovery call with the CFO of a mid-market food processor expanding into Southeast Asia. Draft a structured needs analysis summary covering: likely business objectives, potential financing needs (trade, working capital, FX), key risks to probe, and 3 open-ended discovery questions. Format as a 1-page brief with headings.'"
+      },
+      {
+        "label": "B",
+        "text": "'Write a needs analysis for a food company going to Asia.'"
+      },
+      {
+        "label": "C",
+        "text": "'List all the questions I should ask a CFO in a sales meeting about their business needs and expansion plans.'"
+      },
+      {
+        "label": "D",
+        "text": "'Summarise what a food processing company expanding to Southeast Asia might need from a bank, and give me a template I can use for any client meeting.'"
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_sp5_sandbox",
+    "domain_id": "strategic_prompting",
+    "item_type": "prompt_sandbox",
+    "display_order": 5,
+    "question_text": "Write an AI prompt to generate a tailored relationship deepening plan for a client segment. Your prompt should be specific enough to produce an actionable output, not a generic template.",
+    "scenario_text": "You manage a portfolio of 12 mid-market clients in the agribusiness sector. Your bank has recently launched a new supply chain finance product. You want to use an approved AI tool to help you draft a 90-day relationship deepening plan that identifies which client interactions, touchpoints, and product conversations could help you introduce the new product to the right clients at the right time. You do not want a generic plan — you want one shaped around agribusiness seasonality and typical cash conversion cycles.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Role and context framing",
+          "description": "The prompt establishes a clear role (e.g., 'Act as a Relationship Manager') and provides relevant sector context (agribusiness, mid-market, supply chain finance product launch) rather than leaving the AI to guess the scenario.",
+          "max": 1
+        },
+        {
+          "name": "Specificity of task instruction",
+          "description": "The prompt requests a 90-day plan with specific components (e.g., touchpoints, product conversation triggers, client interaction cadence) rather than asking for a generic relationship plan.",
+          "max": 1
+        },
+        {
+          "name": "Sector-relevant constraints included",
+          "description": "The prompt incorporates agribusiness-specific factors such as seasonality, harvest cycles, or cash conversion cycle timing to shape the plan's recommendations.",
+          "max": 1
+        },
+        {
+          "name": "Output format specified",
+          "description": "The prompt specifies a usable output format (e.g., table, timeline, phased plan with headings) so the result is immediately actionable rather than a narrative essay.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_sp6_task",
+    "domain_id": "strategic_prompting",
+    "item_type": "micro_task",
+    "display_order": 6,
+    "question_text": "The prompt below was used to prepare for a client renewal conversation but produced a vague, unhelpful response. Diagnose the prompting weaknesses and rewrite it as a stronger prompt that would generate a more useful output for an RM.",
+    "scenario_text": "An RM used this prompt before a facility renewal meeting:\n\n'Help me prepare for a meeting with a client about renewing their loan.'\n\nThe AI returned a generic list of 'tips for client meetings' that was not useful for the RM's specific situation. The client is a mid-market construction company with a $3M working capital facility up for annual review. The RM wants to anticipate objections, identify upsell opportunities, and prepare 3 tailored talking points about the value the bank has delivered over the past year.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Diagnosis of prompt weaknesses",
+          "description": "Learner correctly identifies at least two specific weaknesses: missing role/persona, no sector or client context, no specific output requested, and no constraints on format or purpose.",
+          "max": 2
+        },
+        {
+          "name": "Quality of rewritten prompt",
+          "description": "The rewritten prompt includes: a role frame (RM preparing for renewal), abstracted client context (mid-market construction, working capital facility), specific outputs requested (objection anticipation, upsell opportunities, value talking points), and a clear format instruction.",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ce7_mcq",
+    "domain_id": "critical_eval",
+    "item_type": "mcq",
+    "display_order": 7,
+    "question_text": "An AI tool drafts the following sentence for inclusion in a credit memo: 'Vantara Foods has consistently demonstrated strong liquidity management, with a current ratio well above industry benchmarks.' What is the most important critical evaluation step before including this in the memo?",
+    "scenario_text": "You used an approved AI tool to help draft sections of a credit memo for Vantara Foods (a fictional client). The AI generated the sentence above based on your abstracted prompt describing the client as a 'food manufacturer with stable working capital.' You are about to paste it into the memo for submission to the credit committee.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Verify the claim against the client's actual financial data — confirm the current ratio figure and check it against a credible industry benchmark before including it."
+      },
+      {
+        "label": "B",
+        "text": "Check that the sentence is grammatically correct and professionally worded before pasting it in."
+      },
+      {
+        "label": "C",
+        "text": "Ask the AI to regenerate the sentence with more specific language to make it sound more authoritative."
+      },
+      {
+        "label": "D",
+        "text": "Accept the sentence as accurate because it matches the general description you provided in your prompt."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ce8_sandbox",
+    "domain_id": "critical_eval",
+    "item_type": "prompt_sandbox",
+    "display_order": 8,
+    "question_text": "Write an AI prompt that asks the AI to help you critically stress-test a client proposal summary before you present it to your credit team. Your prompt should instruct the AI to identify weaknesses, assumptions, and gaps — not just validate the proposal.",
+    "scenario_text": "You have drafted a 1-page proposal summary recommending that your bank increase the working capital facility for a mid-market retail distribution client from $2M to $3.5M. The summary cites revenue growth, a new supply contract, and improved debtor days as justification. Before presenting to the credit team, you want to use an approved AI tool to pressure-test your own reasoning and identify anything the credit team is likely to challenge.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Adversarial framing instruction",
+          "description": "The prompt explicitly instructs the AI to take a critical or sceptical stance (e.g., 'identify weaknesses', 'challenge assumptions', 'act as a credit analyst stress-testing this proposal') rather than asking it to improve or validate the proposal.",
+          "max": 1
+        },
+        {
+          "name": "Relevant risk dimensions specified",
+          "description": "The prompt asks the AI to evaluate specific risk dimensions relevant to an RM's credit proposal — e.g., revenue sustainability, concentration risk, assumption validity, repayment capacity — not just generic 'risks'.",
+          "max": 1
+        },
+        {
+          "name": "Context provided without non-public data",
+          "description": "The prompt provides enough abstracted context (facility type, growth rationale, sector) for the AI to give meaningful feedback, without including real client names or specific confidential figures.",
+          "max": 1
+        },
+        {
+          "name": "Actionable output format requested",
+          "description": "The prompt requests a structured output (e.g., list of challenges, questions the credit team will ask, gaps to address) that the RM can directly use to strengthen the proposal.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ce9_task",
+    "domain_id": "critical_eval",
+    "item_type": "micro_task",
+    "display_order": 9,
+    "question_text": "Read the AI-generated paragraph below, which was drafted for inclusion in a client-facing market update email. Identify all critical evaluation issues and annotate each problem with a brief explanation of why it is problematic for an RM to send this without review.",
+    "scenario_text": "An RM used an AI tool to draft this paragraph for a client market update email:\n\n'Interest rates are expected to fall significantly over the next 12 months, which will reduce your borrowing costs and improve your cash flow position. We recommend locking in a fixed rate now before the cuts arrive. The RBA has signalled multiple rate reductions are imminent, and most economists agree that the easing cycle will be aggressive. This is an excellent time to expand your facilities.'\n\nYour task: Identify and annotate at least 3 distinct critical evaluation problems with this paragraph before it is sent to a client.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of unverified factual claims",
+          "description": "Learner flags that specific claims (e.g., 'RBA has signalled multiple rate reductions are imminent', 'most economists agree') are presented as fact but may be AI hallucinations or outdated, and must be verified against current sources before client distribution.",
+          "max": 1
+        },
+        {
+          "name": "Identification of inappropriate financial advice language",
+          "description": "Learner identifies that phrases like 'We recommend locking in a fixed rate now' and 'This is an excellent time to expand your facilities' constitute financial advice that requires compliance review and cannot be sent as a general client email without appropriate disclaimers or authorisation.",
+          "max": 1
+        },
+        {
+          "name": "Identification of overconfident or absolute language",
+          "description": "Learner flags that language such as 'will reduce', 'are imminent', and 'aggressive easing cycle' presents uncertain forecasts as certainties, which is misleading and creates reputational and regulatory risk for the RM and the bank.",
+          "max": 1
+        },
+        {
+          "name": "Overall evaluation quality",
+          "description": "Learner's annotations are specific, clearly explained, and demonstrate understanding of why each issue matters in the context of an RM's client communication responsibilities — not just generic 'AI can be wrong' observations.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ri10_mcq",
+    "domain_id": "relationship_intel",
+    "item_type": "mcq",
+    "display_order": 10,
+    "question_text": "An RM wants to use AI to prepare a client intelligence summary before an annual review meeting. Which approach best demonstrates effective use of AI for relationship intelligence while staying within responsible AI boundaries?",
+    "scenario_text": "You have an annual review meeting next week with the CEO of Driftwood Packaging Co., a long-standing client. You want to walk in with a sharp understanding of their business context, recent industry developments, and potential needs. You have access to publicly available news, the company's published annual report, and your own (sanitised) notes from previous meetings.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Prompt the AI with publicly available information (industry news, published annual report excerpts, sector trends) and your sanitised meeting notes to generate a structured pre-meeting intelligence brief covering business context, likely priorities, and suggested conversation angles."
+      },
+      {
+        "label": "B",
+        "text": "Paste the client's full CRM record including internal risk ratings and deal history into the AI tool to get the most comprehensive intelligence summary possible."
+      },
+      {
+        "label": "C",
+        "text": "Ask the AI to generate a client profile from scratch using only the company name, since AI tools have access to up-to-date business databases."
+      },
+      {
+        "label": "D",
+        "text": "Use the AI to write a summary of the client's financial performance based on figures you recall from internal credit reports, without checking the source."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ri11_sandbox",
+    "domain_id": "relationship_intel",
+    "item_type": "prompt_sandbox",
+    "display_order": 11,
+    "question_text": "Write an AI prompt to help you build a pre-meeting intelligence brief for a client in a sector you are less familiar with. Your prompt should help you quickly get up to speed on the sector context and identify smart questions to ask the client.",
+    "scenario_text": "You have been assigned a new client — a mid-market company in the cold chain logistics sector (temperature-controlled warehousing and transport). You have a first meeting with their CFO in three days. You are not deeply familiar with this sector's economics, typical financing needs, or current pressures. You want to use an approved AI tool to help you prepare a sharp, credible pre-meeting brief so you can have an informed conversation.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Sector intelligence framing",
+          "description": "The prompt asks the AI to explain the cold chain logistics sector's key economics, business model drivers, and current industry pressures — not just generic logistics information.",
+          "max": 1
+        },
+        {
+          "name": "RM-relevant financing angle",
+          "description": "The prompt asks the AI to identify typical financing needs or banking product relevance for this sector (e.g., asset finance for refrigerated vehicles/warehouses, working capital cycles, trade finance) to help the RM spot opportunities.",
+          "max": 1
+        },
+        {
+          "name": "Discovery question generation",
+          "description": "The prompt requests tailored discovery questions the RM can use with the CFO — questions that demonstrate sector knowledge and probe for genuine client needs, not generic 'tell me about your business' questions.",
+          "max": 1
+        },
+        {
+          "name": "Output structure and usability",
+          "description": "The prompt specifies a structured, scannable output format (e.g., sections for sector overview, financing themes, and suggested questions) that the RM can use directly in meeting preparation.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ri12_task",
+    "domain_id": "relationship_intel",
+    "item_type": "micro_task",
+    "display_order": 12,
+    "question_text": "Below is an AI-generated client intelligence summary prepared by a colleague before a relationship review meeting. Review it critically and identify: (1) what is useful and why, and (2) what is missing or potentially unreliable, and what the RM should do before using it.",
+    "scenario_text": "AI-generated summary (prepared using only a company name and sector as inputs):\n\n'Meridian Timber Holdings operates in the Australian hardwood timber industry. The sector is currently experiencing strong export demand from Asian markets, particularly Japan and South Korea. Meridian likely has significant capital tied up in inventory and may benefit from working capital solutions. The company's CEO is focused on sustainability credentials to access premium markets. Key risks include currency exposure on export revenues and potential regulatory changes around native timber harvesting. Recommended talking points: working capital facility, FX hedging products, and green finance options.'\n\nYour task: Annotate the summary — mark what is genuinely useful for meeting prep, and flag what needs verification or is potentially unreliable before the RM relies on it.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of useful elements",
+          "description": "Learner correctly identifies genuinely useful elements: sector-level context (export demand, currency risk, regulatory risk) and the logical product angle suggestions (working capital, FX, green finance) as reasonable starting hypotheses for conversation.",
+          "max": 1
+        },
+        {
+          "name": "Identification of unverified client-specific claims",
+          "description": "Learner flags that claims about Meridian specifically (e.g., 'CEO is focused on sustainability', 'significant capital tied up in inventory') are AI inferences with no cited source and could be inaccurate or hallucinated — these must be verified before the meeting.",
+          "max": 1
+        },
+        {
+          "name": "Identification of currency/timeliness risk",
+          "description": "Learner notes that sector claims (e.g., 'strong export demand from Asian markets') may be outdated or based on the AI's training data cutoff, and should be cross-checked against current industry sources or recent news before being relied upon.",
+          "max": 1
+        },
+        {
+          "name": "Recommended remediation actions",
+          "description": "Learner provides at least two specific, practical steps the RM should take before using this summary (e.g., verify CEO priorities via LinkedIn/news, check current timber export data, confirm product relevance against actual client financials or CRM history).",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_dd13_mcq",
+    "domain_id": "data_decision",
+    "item_type": "mcq",
+    "display_order": 13,
+    "question_text": "An RM uses an AI tool to analyse portfolio data and receives the output: 'Clients in the manufacturing sector in your portfolio have a 34% higher likelihood of facility utilisation increase in Q3 based on historical patterns.' How should the RM best use this insight?",
+    "scenario_text": "You manage a portfolio of 18 mid-market clients across manufacturing, retail, and logistics. You asked an approved AI tool to analyse anonymised portfolio utilisation patterns and flag any segments showing seasonal trends. The AI returned the insight above. You are deciding how to act on it ahead of Q3 planning.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Use the insight as a prompt to proactively reach out to manufacturing clients before Q3 to discuss facility headroom, while verifying the pattern against your own portfolio data and checking whether individual client circumstances support the trend."
+      },
+      {
+        "label": "B",
+        "text": "Immediately increase facility limits for all manufacturing clients in the portfolio based on the AI's prediction, to get ahead of demand."
+      },
+      {
+        "label": "C",
+        "text": "Disregard the insight because AI-generated portfolio analysis is not reliable enough to inform any RM decisions."
+      },
+      {
+        "label": "D",
+        "text": "Share the AI output directly with clients as evidence that they should increase their facilities before Q3."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_dd14_sandbox",
+    "domain_id": "data_decision",
+    "item_type": "prompt_sandbox",
+    "display_order": 14,
+    "question_text": "Write an AI prompt to help you interpret a set of anonymised portfolio metrics and identify which client segments may need proactive outreach in the next 90 days. Your prompt should produce a prioritised, actionable output — not just a data summary.",
+    "scenario_text": "You have just received a quarterly portfolio health report. The anonymised data shows: 4 clients with facility utilisation above 85%, 3 clients with overdue annual reviews, 2 clients whose sector (commercial construction) has recently been flagged in industry news for margin pressure, and 1 client with a significant upcoming debt maturity. You want to use an approved AI tool to help you turn this data into a prioritised outreach plan for the next 90 days.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Data inputs clearly described",
+          "description": "The prompt accurately describes the anonymised portfolio data points (utilisation levels, overdue reviews, sector risk flags, debt maturity) without including any real client names or confidential identifiers.",
+          "max": 1
+        },
+        {
+          "name": "Prioritisation logic requested",
+          "description": "The prompt asks the AI to apply a prioritisation framework or logic (e.g., urgency, risk level, opportunity size) to rank outreach actions — not just list all clients equally.",
+          "max": 1
+        },
+        {
+          "name": "Action-oriented output specified",
+          "description": "The prompt requests specific recommended actions for each priority segment (e.g., type of conversation, timing, product angle) rather than a descriptive summary of the data.",
+          "max": 1
+        },
+        {
+          "name": "90-day timeframe and RM workflow context",
+          "description": "The prompt anchors the output to a 90-day planning horizon and frames it within an RM's workflow (proactive outreach, relationship review, risk management) so the output is directly usable.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_dd15_task",
+    "domain_id": "data_decision",
+    "item_type": "micro_task",
+    "display_order": 15,
+    "question_text": "An AI tool produced the portfolio insight summary below. Evaluate the quality of the data reasoning and identify any decisions an RM should NOT make based solely on this output, explaining why.",
+    "scenario_text": "AI-generated portfolio insight summary:\n\n'Analysis of your portfolio indicates that clients in the retail sector are your lowest-performing segment by revenue contribution. These clients have the highest average cost-to-serve and the lowest product cross-sell ratio. Based on this, it is recommended that you deprioritise retail clients in your outreach plan and focus resources on manufacturing and logistics clients, who show stronger revenue metrics and higher facility utilisation.'\n\nYour task: (1) Identify at least two data reasoning problems or missing considerations in this analysis. (2) Explain what decisions an RM should not make based solely on this AI output, and why.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of data reasoning gaps",
+          "description": "Learner identifies at least two specific gaps: e.g., the analysis ignores strategic value of retail relationships (referrals, tenure, growth potential), does not account for individual client variation within the segment, and may be based on incomplete or point-in-time data.",
+          "max": 2
+        },
+        {
+          "name": "Decisions the RM should not make solely on this output",
+          "description": "Learner correctly identifies that the RM should not deprioritise or reduce service to retail clients, reallocate portfolio resources, or make any client-facing decisions based solely on this AI summary — and explains that such decisions require human judgement, relationship context, and management input.",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ac16_mcq",
+    "domain_id": "augmented_comm",
+    "item_type": "mcq",
+    "display_order": 16,
+    "question_text": "An RM uses AI to draft a follow-up email to a client after a difficult conversation about a declined credit application. Which of the following best describes the correct approach to using the AI draft?",
+    "scenario_text": "You had a tense call with the CFO of Irongate Civil Pty Ltd after their facility increase request was declined by the credit committee. You want to send a professional, empathetic follow-up email that acknowledges their disappointment, explains the next steps, and keeps the relationship intact. You use an approved AI tool to draft the email.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Review the AI draft carefully, adjust the tone to reflect your genuine relationship with the CFO, verify that all stated next steps are accurate, and ensure no confidential credit committee reasoning is inadvertently disclosed before sending."
+      },
+      {
+        "label": "B",
+        "text": "Send the AI draft immediately — it will be more professionally worded than anything you could write quickly, and speed matters after a difficult conversation."
+      },
+      {
+        "label": "C",
+        "text": "Ask the AI to make the email more persuasive so the client feels the decision was the right one, without changing any factual content."
+      },
+      {
+        "label": "D",
+        "text": "Use the AI draft as the final version but add the client's name and your signature, since personalisation is sufficient review for a routine follow-up."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ac17_sandbox",
+    "domain_id": "augmented_comm",
+    "item_type": "prompt_sandbox",
+    "display_order": 17,
+    "question_text": "Write an AI prompt to help you draft a client-facing proposal summary email for a new product recommendation. Your prompt must produce a draft that is professional, tailored to the client's context, and ready for your review — not a generic template.",
+    "scenario_text": "You want to introduce a supply chain finance solution to a long-standing client in the food manufacturing sector. The client has previously expressed interest in improving payment terms with their suppliers. You have had a strong relationship with their CFO for three years. You want to send a concise, professional email that introduces the product concept, connects it to their stated interest, and proposes a 30-minute call to explore further. You will use an approved AI tool to draft the email.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Client context and relationship tone",
+          "description": "The prompt provides enough abstracted client context (sector, relationship tenure, stated interest in supplier payment terms) and instructs the AI to adopt a warm, established-relationship tone — not a cold outreach style.",
+          "max": 1
+        },
+        {
+          "name": "Product-to-need connection instruction",
+          "description": "The prompt explicitly asks the AI to connect the supply chain finance product to the client's previously expressed interest in improving supplier payment terms, rather than describing the product in isolation.",
+          "max": 1
+        },
+        {
+          "name": "Clear call to action specified",
+          "description": "The prompt instructs the AI to include a specific, low-friction call to action (e.g., a 30-minute exploratory call) and specifies that the email should be concise — not a lengthy product brochure.",
+          "max": 1
+        },
+        {
+          "name": "Review-ready framing",
+          "description": "The prompt acknowledges that the output is a draft for RM review (e.g., 'draft for my review', 'I will personalise before sending') and does not include any real client names or confidential details.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
+  },
+  {
+    "item_id": "rm_diag_ac18_task",
+    "domain_id": "augmented_comm",
+    "item_type": "micro_task",
+    "display_order": 18,
+    "question_text": "Review the AI-drafted client email below. Identify all issues that an RM must fix before sending, and rewrite the most problematic paragraph to demonstrate the correct standard.",
+    "scenario_text": "An RM used an AI tool to draft this email to a client after a quarterly review meeting:\n\nSubject: Follow-Up from Our Meeting\n\nDear Valued Client,\n\nThank you for taking the time to meet with us today. We appreciate your continued business and look forward to supporting your financial needs going forward.\n\nAs discussed, your current facility is performing well and we are confident that your business will continue to grow strongly over the next 12 months. We recommend that you consider increasing your facility limit to take advantage of upcoming growth opportunities in your sector.\n\nPlease do not hesitate to contact us if you have any questions. We value your relationship and are committed to your success.\n\nKind regards,\n[RM Name]\n\nYour task: (1) List all issues with this email that an RM must address before sending. (2) Rewrite the second paragraph to a higher professional standard.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of generic and impersonal language",
+          "description": "Learner identifies that 'Dear Valued Client', 'your financial needs', and 'your continued business' are generic placeholders that must be personalised with the client's name, specific meeting topics discussed, and relevant context before sending.",
+          "max": 1
+        },
+        {
+          "name": "Identification of unsubstantiated claims and advice risk",
+          "description": "Learner flags that 'your business will continue to grow strongly over the next 12 months' is an unverified forward-looking statement, and 'we recommend that you consider increasing your facility limit' is a product recommendation that requires a factual basis and may need compliance review.",
+          "max": 1
+        },
+        {
+          "name": "Quality of rewritten paragraph — accuracy and specificity",
+          "description": "The rewritten second paragraph removes unsubstantiated growth claims, grounds any product suggestion in a specific client need or discussion point from the meeting, and avoids making unsupported recommendations.",
+          "max": 1
+        },
+        {
+          "name": "Quality of rewritten paragraph — professional tone and personalisation",
+          "description": "The rewritten paragraph uses a professional, relationship-appropriate tone, references something specific to the client's situation (even if abstracted), and reads as a genuine RM communication rather than a generic AI draft.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "rm"
   }
 ]
