@@ -1222,5 +1222,597 @@
         }
       ]
     }
+  },
+  {
+    "item_id": "an_diag_ra1_mcq",
+    "domain_id": "responsible_ai",
+    "item_type": "mcq",
+    "display_order": 1,
+    "question_text": "Which of the following inputs is safe to include verbatim in a Copilot prompt without any abstraction or modification?",
+    "scenario_text": "You are an Analyst preparing a sector overview for a client briefing. You have several documents on your desk: an internal credit risk rating memo for a corporate client, a published annual report from a publicly listed company, a draft strategy document from your team, and a third-party embargoed research report. You need to use Copilot to help synthesise background information.",
+    "options": [
+      {
+        "label": "A",
+        "text": "The published annual report of the publicly listed company, sourced from its investor relations website."
+      },
+      {
+        "label": "B",
+        "text": "The internal credit risk rating memo, because it is already stored in your organisation's secure drive."
+      },
+      {
+        "label": "C",
+        "text": "The embargoed third-party research report, because it contains sector-level data rather than client-specific data."
+      },
+      {
+        "label": "D",
+        "text": "The draft strategy document, because it has not yet been formally classified as confidential."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ra2_sandbox",
+    "domain_id": "responsible_ai",
+    "item_type": "prompt_sandbox",
+    "display_order": 2,
+    "question_text": "Write a Copilot prompt to help you summarise the key ownership structure and business activities of a corporate client for a KYC intake file. You must follow responsible AI data-handling practices: do not include the client's real name, registration numbers, individual names, or any non-public financial figures. Use abstraction techniques to preserve analytical utility while keeping the prompt safe.",
+    "scenario_text": "You are an Analyst in the Company Information Management team. You have just received a KYC onboarding file for a new corporate client, Meridian Logistics Group. The file includes a certificate of incorporation, a corporate ownership chart showing three beneficial owners, and an internal note with the client's projected credit exposure of $47 million. You want to use Copilot to draft a structured summary of the ownership structure and business activities for the intake record.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Sensitive data excluded",
+          "description": "The prompt does not include the real client name, individual names, registration numbers, or specific non-public financial figures (e.g., the $47M exposure).",
+          "max": 1
+        },
+        {
+          "name": "Abstraction technique applied",
+          "description": "The prompt uses generic descriptors (e.g., 'Client A', 'a logistics company', 'a mid-sized exposure') to replace identifiable or confidential details while preserving analytical intent.",
+          "max": 1
+        },
+        {
+          "name": "Clear analytical task specified",
+          "description": "The prompt clearly instructs Copilot on what to produce (e.g., a structured summary of ownership structure and business activities for a KYC intake record).",
+          "max": 1
+        },
+        {
+          "name": "Output review awareness",
+          "description": "The prompt includes an instruction or the learner notes the need to review Copilot's output for any accidentally surfaced sensitive details before sharing or filing.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ra3_task",
+    "domain_id": "responsible_ai",
+    "item_type": "micro_task",
+    "display_order": 3,
+    "question_text": "Review the Copilot prompt below. Identify ALL responsible AI violations present, then rewrite the prompt so it is safe to use while preserving its analytical purpose.",
+    "scenario_text": "An Analyst on your team submitted the following Copilot prompt:\n\n---\n\"Summarise the financial health of Vantara Construction Ltd based on the following: their internal credit rating is BB-, their unaudited Q3 net revenue is $83.4 million, their CFO is Jean-Pierre Moreau, and our internal risk committee flagged elevated exposure concerns last week. Produce a one-page briefing note I can share with the deal team.\"\n---\n\nYour task: (1) List every responsible AI violation in this prompt. (2) Rewrite the prompt so it is compliant with responsible AI data-handling practices while still enabling the analyst to get a useful briefing note.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Violation identification — confidential data types",
+          "description": "Correctly identifies at least three of the four violations: real client name (Vantara Construction Ltd), internal credit rating (BB-), unaudited financial figure ($83.4M), named individual (Jean-Pierre Moreau), and/or internal risk committee finding.",
+          "max": 2
+        },
+        {
+          "name": "Rewritten prompt — abstraction applied",
+          "description": "The rewritten prompt replaces all identified sensitive elements with generic descriptors (e.g., 'Client A', 'a construction company', 'a senior finance executive', 'a below-investment-grade internal rating', 'revenue in the low-to-mid double-digit millions') without losing the analytical intent.",
+          "max": 1
+        },
+        {
+          "name": "Rewritten prompt — analytical utility preserved",
+          "description": "The rewritten prompt still clearly instructs Copilot to produce a useful briefing note on financial health for a deal team audience, demonstrating that safety and utility are not mutually exclusive.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_sp4_mcq",
+    "domain_id": "strategic_prompting",
+    "item_type": "mcq",
+    "display_order": 4,
+    "question_text": "Which prompting technique would most effectively help an Analyst get a structured, role-appropriate output from Copilot when drafting a sector risk summary?",
+    "scenario_text": "You are an Analyst preparing a two-page sector risk summary on the agri-food processing industry for a portfolio review. You want to use Copilot to accelerate the first draft. You have access to publicly available trade data, published industry reports, and news sources. You are deciding how to structure your prompt to get the most useful output.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Specify the role Copilot should adopt (e.g., 'Act as a sector analyst'), define the output format (e.g., structured headings), state the audience (e.g., portfolio review committee), and provide the key themes to cover."
+      },
+      {
+        "label": "B",
+        "text": "Ask Copilot a broad open question such as 'What are the risks in agri-food processing?' and then manually restructure the output."
+      },
+      {
+        "label": "C",
+        "text": "Paste the full text of three industry reports into the prompt and ask Copilot to combine them into a summary."
+      },
+      {
+        "label": "D",
+        "text": "Use a single-sentence prompt and iterate by asking follow-up questions until the output matches your needs, without specifying format or audience upfront."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_sp5_sandbox",
+    "domain_id": "strategic_prompting",
+    "item_type": "prompt_sandbox",
+    "display_order": 5,
+    "question_text": "Write a high-quality Copilot prompt to produce a structured first draft of a two-page sector risk summary for the renewable energy equipment manufacturing sector. Your prompt should be strategic: define the role, audience, format, scope, and key analytical dimensions Copilot should address.",
+    "scenario_text": "You are an Analyst supporting a portfolio review at Crestfield Capital Partners. Your director has asked you to prepare a two-page sector risk summary on renewable energy equipment manufacturing. The summary will be presented to a credit committee that needs to understand demand drivers, supply chain vulnerabilities, regulatory tailwinds and headwinds, and key financial risk indicators for companies in this sector. You plan to use Copilot with publicly available information to draft the document.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Role and audience defined",
+          "description": "The prompt specifies a role for Copilot (e.g., 'Act as a sector analyst') and identifies the intended audience (e.g., credit committee) so the tone and depth are calibrated appropriately.",
+          "max": 1
+        },
+        {
+          "name": "Output format specified",
+          "description": "The prompt requests a specific structure (e.g., named sections or headings such as demand drivers, supply chain risks, regulatory environment, financial risk indicators) and approximate length or format (e.g., two pages, bullet points under each heading).",
+          "max": 1
+        },
+        {
+          "name": "Analytical scope and key dimensions covered",
+          "description": "The prompt explicitly instructs Copilot to address the relevant analytical dimensions for the sector (at least three of: demand drivers, supply chain vulnerabilities, regulatory environment, financial risk indicators, competitive dynamics).",
+          "max": 1
+        },
+        {
+          "name": "Prompt clarity and actionability",
+          "description": "The prompt is specific, unambiguous, and actionable — it provides enough context that Copilot could produce a useful first draft without requiring significant clarification or restructuring by the analyst.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_sp6_task",
+    "domain_id": "strategic_prompting",
+    "item_type": "micro_task",
+    "display_order": 6,
+    "question_text": "Review the Copilot prompt below. Identify its weaknesses as a strategic prompt, then rewrite it to be significantly more effective for the analyst's stated purpose.",
+    "scenario_text": "An Analyst at Northgate Advisory submitted this Copilot prompt to help prepare for a client meeting:\n\n---\n\"Tell me about the mining sector.\"\n---\n\nThe analyst's actual goal was to prepare a five-minute verbal briefing for a relationship manager who is meeting a mid-sized copper mining company to discuss potential export financing. The briefing should cover current commodity price trends, key operational risks, and one or two talking points relevant to export financing conversations.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Weakness diagnosis",
+          "description": "Correctly identifies at least two weaknesses in the original prompt: it is too broad/vague, specifies no audience or purpose, defines no output format, and provides no analytical focus or scope.",
+          "max": 1
+        },
+        {
+          "name": "Role and context added",
+          "description": "The rewritten prompt specifies a role for Copilot and provides relevant context (e.g., preparing a verbal briefing for a relationship manager meeting a copper mining company to discuss export financing).",
+          "max": 1
+        },
+        {
+          "name": "Format and scope defined",
+          "description": "The rewritten prompt specifies the output format (e.g., a concise verbal briefing outline or bullet points) and scope (e.g., commodity price trends, operational risks, export financing talking points).",
+          "max": 1
+        },
+        {
+          "name": "Overall improvement in strategic quality",
+          "description": "The rewritten prompt is substantially more likely to produce a useful, targeted output than the original — it is specific, purposeful, and calibrated to the analyst's actual workflow need.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ce7_mcq",
+    "domain_id": "critical_eval",
+    "item_type": "mcq",
+    "display_order": 7,
+    "question_text": "An Analyst uses Copilot to generate a summary of financial risk indicators for a sector report. Which action best reflects critical evaluation of the AI output before it is used in a client-facing document?",
+    "scenario_text": "You are an Analyst at Harlow Financial Group. You used Copilot to generate a paragraph summarising key financial risk indicators for the commercial real estate sector. The output reads fluently and cites what appear to be specific statistics (e.g., 'vacancy rates rose to 18.4% in Q2' and 'debt-service coverage ratios fell below 1.2x for 34% of loans'). You are about to paste this paragraph into a sector briefing note that will be shared with clients.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Verify the specific statistics against the original source documents or authoritative databases before including them, and flag any figures that cannot be confirmed."
+      },
+      {
+        "label": "B",
+        "text": "Accept the output as accurate because Copilot is connected to organisational data and would not fabricate statistics."
+      },
+      {
+        "label": "C",
+        "text": "Lightly edit the paragraph for tone and include it, since the figures are plausible and consistent with general market knowledge."
+      },
+      {
+        "label": "D",
+        "text": "Ask Copilot to regenerate the paragraph twice more and use the version that appears most consistent across the three outputs."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ce8_sandbox",
+    "domain_id": "critical_eval",
+    "item_type": "prompt_sandbox",
+    "display_order": 8,
+    "question_text": "Write a Copilot prompt that asks it to help you critically evaluate a draft sector analysis paragraph for factual reliability, logical consistency, and unsupported claims — so you can decide what needs to be verified before the document is shared externally.",
+    "scenario_text": "You are an Analyst at Crestfield Capital Partners. A junior colleague has drafted the following paragraph for a sector briefing note on the cold-chain logistics industry:\n\n'Cold-chain logistics is experiencing rapid growth globally, driven by e-commerce and pharmaceutical demand. Margins in the sector have consistently improved over the past five years, and most operators have successfully passed rising fuel costs on to customers. The sector is considered low-risk by most institutional lenders, and default rates remain negligible.'\n\nYou want to use Copilot to help you identify which claims in this paragraph are well-supported, which are overly broad or potentially inaccurate, and what a reviewer should verify before the note goes to clients.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Evaluation task clearly framed",
+          "description": "The prompt clearly instructs Copilot to evaluate the paragraph for reliability, not just summarise or rewrite it — e.g., asking it to identify unsupported claims, overgeneralisations, or statements that require source verification.",
+          "max": 1
+        },
+        {
+          "name": "Paragraph provided as input",
+          "description": "The prompt includes the draft paragraph (or a clear reference to it) so Copilot has the specific content to evaluate, rather than asking a generic question about cold-chain logistics.",
+          "max": 1
+        },
+        {
+          "name": "Specific evaluation dimensions requested",
+          "description": "The prompt asks Copilot to assess at least two of the following: factual accuracy, logical consistency, overly broad claims, missing caveats, or what should be verified before external distribution.",
+          "max": 1
+        },
+        {
+          "name": "Output structured for analyst action",
+          "description": "The prompt requests an output format that is actionable for the analyst — e.g., a list of flagged claims with reasoning, or a table distinguishing supported vs. unsupported statements.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ce9_task",
+    "domain_id": "critical_eval",
+    "item_type": "micro_task",
+    "display_order": 9,
+    "question_text": "Read the AI-generated paragraph below. Identify every claim that should be verified before this content is used in a client-facing document, and briefly explain why each claim is problematic.",
+    "scenario_text": "A Copilot-generated paragraph has been drafted for inclusion in a sector briefing note on the Canadian forestry and lumber industry:\n\n---\n'The Canadian lumber sector has seen consistent revenue growth of approximately 12% annually over the past decade, driven by strong US housing starts and export demand from Asia. Lumber prices stabilised in 2023 after the volatility of the pandemic years, and most major producers have returned to pre-pandemic profitability levels. Environmental regulations have had minimal impact on production volumes, and the sector is broadly regarded as low-credit-risk by Canadian institutional lenders. Supply chain disruptions are no longer a material concern for the industry.'\n---\n\nYour task: List each claim that requires verification before this paragraph is used externally, and for each one, explain what makes it unreliable or potentially inaccurate as written.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Volume of problematic claims identified",
+          "description": "Identifies at least four distinct claims requiring verification (e.g., the 12% annual growth figure, price stabilisation in 2023, return to pre-pandemic profitability, minimal regulatory impact, low-credit-risk characterisation, supply chain claim).",
+          "max": 2
+        },
+        {
+          "name": "Quality of reasoning for each flagged claim",
+          "description": "For at least three flagged claims, provides a clear and accurate explanation of why the claim is unreliable — e.g., it is an unsourced specific statistic, an overgeneralisation, a contested characterisation, or a claim that may be outdated.",
+          "max": 1
+        },
+        {
+          "name": "Analyst judgment demonstrated",
+          "description": "The response demonstrates analyst-level judgment — distinguishing between claims that are plausible but unverified vs. claims that are likely inaccurate or misleading, rather than flagging everything indiscriminately.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ri10_mcq",
+    "domain_id": "relationship_intel",
+    "item_type": "mcq",
+    "display_order": 10,
+    "question_text": "An Analyst is asked to use AI to help prepare a relationship intelligence briefing ahead of a client meeting. Which approach best demonstrates responsible and effective use of AI for this task?",
+    "scenario_text": "You are an Analyst at Harlow Financial Group supporting a relationship manager who has a first meeting next week with Solaris Packaging Inc., a mid-sized manufacturer. The relationship manager wants a briefing note covering the company's recent business developments, key decision-makers, and any publicly known strategic priorities. You have access to Copilot and a range of public sources.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Use Copilot to synthesise publicly available information (press releases, news articles, published financials) into a structured briefing note, then verify key facts and add analyst commentary before sharing with the relationship manager."
+      },
+      {
+        "label": "B",
+        "text": "Export the client's CRM interaction history and financial exposure data into Copilot to generate a comprehensive briefing that includes internal relationship notes."
+      },
+      {
+        "label": "C",
+        "text": "Ask Copilot to generate a full briefing note from memory without providing any source documents, since it has broad knowledge of business and industry."
+      },
+      {
+        "label": "D",
+        "text": "Use Copilot only to format and proofread a briefing note you have already written manually, since AI should not be involved in relationship intelligence tasks."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ri11_sandbox",
+    "domain_id": "relationship_intel",
+    "item_type": "prompt_sandbox",
+    "display_order": 11,
+    "question_text": "Write a Copilot prompt to help you prepare a relationship intelligence briefing note for a relationship manager ahead of a first meeting with a prospective client in the industrial packaging sector. The briefing should draw only on publicly available information and be structured to support a productive business conversation.",
+    "scenario_text": "You are an Analyst at Northgate Advisory. Your relationship manager, Priya Sharma, has a first meeting in four days with the CFO of Solaris Packaging Inc., a mid-sized industrial packaging manufacturer. Priya wants a two-page briefing note covering: recent company news and strategic announcements, key financial highlights from their most recent published annual report, industry trends relevant to their business, and two or three potential conversation starters or areas of strategic interest she could raise in the meeting. All information must come from public sources only.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Public sources constraint respected",
+          "description": "The prompt explicitly instructs Copilot to draw only on publicly available information (e.g., press releases, published annual reports, news articles, industry publications) and does not request or imply use of internal CRM data or non-public client information.",
+          "max": 1
+        },
+        {
+          "name": "Structured output requested",
+          "description": "The prompt requests a structured briefing note with clearly defined sections (e.g., recent news, financial highlights, industry trends, conversation starters) rather than a generic summary.",
+          "max": 1
+        },
+        {
+          "name": "Audience and purpose specified",
+          "description": "The prompt identifies the audience (relationship manager preparing for a first client meeting with a CFO) and the purpose (supporting a productive business conversation), so Copilot can calibrate tone and depth appropriately.",
+          "max": 1
+        },
+        {
+          "name": "Actionable conversation intelligence included",
+          "description": "The prompt specifically asks for elements that support relationship-building — such as potential talking points, strategic questions, or areas of interest — not just a factual company summary.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ri12_task",
+    "domain_id": "relationship_intel",
+    "item_type": "micro_task",
+    "display_order": 12,
+    "question_text": "Review the AI-generated relationship intelligence briefing excerpt below. Identify any problems with the content from a responsible use and analytical quality perspective, and suggest specific improvements.",
+    "scenario_text": "A Copilot-generated excerpt from a relationship intelligence briefing note reads as follows:\n\n---\n'Solaris Packaging Inc. is a strong candidate for export financing. Based on our internal records, their current credit exposure with Northgate Advisory is $12.4 million, and their last relationship review flagged moderate risk. The CFO, David Okonkwo, has been in the role for 18 months and previously worked at a competitor. The company is likely facing margin pressure given rising input costs across the sector, and they will probably be receptive to refinancing conversations. Their Q3 results have not yet been published but are expected to show a decline.'\n---\n\nYour task: Identify all problems in this excerpt — including responsible AI violations, unsupported claims, and analytical quality issues — and for each problem, suggest a specific correction or improvement.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Responsible AI violations identified",
+          "description": "Correctly identifies that the excerpt contains non-public internal data (credit exposure figure, internal risk rating, unpublished Q3 results) that should not have been included in a Copilot-generated output or prompt, and explains why this is a responsible AI violation.",
+          "max": 2
+        },
+        {
+          "name": "Unsupported or speculative claims flagged",
+          "description": "Identifies at least two speculative or unsupported claims (e.g., 'likely facing margin pressure', 'will probably be receptive to refinancing', 'expected to show a decline') and notes that these should be either removed or grounded in verifiable public evidence.",
+          "max": 1
+        },
+        {
+          "name": "Specific improvements suggested",
+          "description": "Provides at least two concrete, actionable suggestions for improving the excerpt — e.g., replacing internal data with publicly available financial highlights, removing speculative language, or sourcing claims to published reports.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_dd13_mcq",
+    "domain_id": "data_decision",
+    "item_type": "mcq",
+    "display_order": 13,
+    "question_text": "An Analyst is using Copilot to help interpret a dataset of sector-level financial ratios. Which approach best demonstrates sound data-informed decision-making when using AI assistance?",
+    "scenario_text": "You are an Analyst at Crestfield Capital Partners. You have a spreadsheet containing five years of published financial ratios (debt-to-equity, interest coverage, and EBITDA margins) for 40 companies in the industrial manufacturing sector. You want to use Copilot to help identify trends and flag outliers that may warrant further investigation in a portfolio review.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Ask Copilot to identify trends and outliers in the dataset, then independently verify the flagged patterns against the underlying data before drawing conclusions or making recommendations."
+      },
+      {
+        "label": "B",
+        "text": "Accept Copilot's trend analysis as the final output and present its findings directly in the portfolio review without further review, since the data was publicly sourced."
+      },
+      {
+        "label": "C",
+        "text": "Avoid using Copilot for any quantitative analysis, since AI tools are unreliable when working with numerical data."
+      },
+      {
+        "label": "D",
+        "text": "Ask Copilot to make a final recommendation on which companies represent the highest credit risk, and use that recommendation as the basis for the portfolio review conclusions."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_dd14_sandbox",
+    "domain_id": "data_decision",
+    "item_type": "prompt_sandbox",
+    "display_order": 14,
+    "question_text": "Write a Copilot prompt to help you analyse a dataset of sector-level financial ratios and identify patterns, outliers, and potential areas of concern for a portfolio review. Your prompt should be specific about what analysis you need and how the output should be structured to support analyst decision-making.",
+    "scenario_text": "You are an Analyst at Harlow Financial Group preparing for a quarterly portfolio review of the industrial manufacturing sector. You have a dataset (which you will paste into Copilot) containing five years of published financial ratios — debt-to-equity, interest coverage ratio, and EBITDA margin — for 40 companies. You want Copilot to help you identify sector-wide trends, flag companies that appear to be outliers on any of the three metrics, and highlight any patterns that might indicate emerging credit risk. The output will be used to prioritise which companies to investigate further.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Analytical task clearly specified",
+          "description": "The prompt clearly instructs Copilot on the specific analytical tasks required — at minimum, identifying trends, flagging outliers, and highlighting patterns relevant to credit risk — rather than asking a vague question about the data.",
+          "max": 1
+        },
+        {
+          "name": "Metrics and scope defined",
+          "description": "The prompt references the specific financial metrics (debt-to-equity, interest coverage, EBITDA margin) and the scope of the dataset (five years, 40 companies, industrial manufacturing sector) so Copilot can perform targeted analysis.",
+          "max": 1
+        },
+        {
+          "name": "Output structured for decision support",
+          "description": "The prompt requests an output format that supports analyst decision-making — e.g., a ranked list of outliers, a summary table of trends, or a prioritised list of companies for further investigation — rather than a narrative summary.",
+          "max": 1
+        },
+        {
+          "name": "Analyst judgment preserved",
+          "description": "The prompt frames Copilot's role as supporting analysis (e.g., flagging patterns for the analyst to investigate) rather than making final credit risk decisions, preserving the analyst's role in interpreting and acting on the output.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_dd15_task",
+    "domain_id": "data_decision",
+    "item_type": "micro_task",
+    "display_order": 15,
+    "question_text": "Review the AI-generated data interpretation below. Identify any analytical errors, unsupported conclusions, or data reasoning problems, and explain what the analyst should do before using this output in a portfolio review.",
+    "scenario_text": "An Analyst asked Copilot to analyse five years of EBITDA margin data for 40 industrial manufacturers. Copilot returned the following interpretation:\n\n---\n'Analysis of the dataset shows that EBITDA margins across the sector have improved steadily by an average of 2.3 percentage points per year over the five-year period. This confirms that the industrial manufacturing sector is in a strong growth phase and presents low credit risk overall. Three companies — Ferrotek Industries, Caldwell Precision, and Morrow Components — show margins significantly below the sector average and should be immediately flagged as high credit risk and removed from the portfolio. The trend is consistent and unlikely to reverse given current macroeconomic conditions.'\n---\n\nYour task: Identify all analytical and reasoning problems in this output, and specify what steps the analyst should take before acting on these findings.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Analytical errors identified",
+          "description": "Identifies at least two analytical errors: (1) conflating EBITDA margin improvement with 'low credit risk overall' — margin is one indicator, not a complete credit assessment; (2) the conclusion that below-average margin alone justifies 'high credit risk' and immediate portfolio removal is an unsupported leap; (3) the forward-looking claim about macroeconomic conditions is speculative and unsourced.",
+          "max": 2
+        },
+        {
+          "name": "Reasoning problems flagged",
+          "description": "Flags that Copilot has made a definitive recommendation (remove companies from portfolio) that exceeds its appropriate role — AI should surface patterns for analyst review, not make portfolio decisions — and that the output presents speculation as certainty.",
+          "max": 1
+        },
+        {
+          "name": "Corrective analyst steps specified",
+          "description": "Specifies at least two concrete steps the analyst should take before acting: e.g., verify the 2.3pp average figure against the raw data, conduct a fuller credit assessment of the three flagged companies using multiple indicators, and treat the macroeconomic claim as unverified.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ac16_mcq",
+    "domain_id": "augmented_comm",
+    "item_type": "mcq",
+    "display_order": 16,
+    "question_text": "An Analyst uses Copilot to draft a client-facing briefing note. Which approach best reflects responsible and effective use of AI for professional communication?",
+    "scenario_text": "You are an Analyst at Northgate Advisory. Your director has asked you to produce a two-page briefing note for a corporate client summarising recent developments in the global shipping and logistics sector. You use Copilot to generate a first draft based on publicly available sources. The draft is well-structured and reads fluently, but you have not yet reviewed it in detail.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Review the draft carefully for factual accuracy, tone appropriateness, and any claims that need verification or caveating, then edit and personalise it before sending to the client."
+      },
+      {
+        "label": "B",
+        "text": "Send the Copilot draft directly to the client, since it is based on public sources and reads professionally."
+      },
+      {
+        "label": "C",
+        "text": "Ask Copilot to review its own draft for errors and send the revised version without further analyst review."
+      },
+      {
+        "label": "D",
+        "text": "Discard the Copilot draft and write the briefing note entirely from scratch to ensure full ownership of the content."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ac17_sandbox",
+    "domain_id": "augmented_comm",
+    "item_type": "prompt_sandbox",
+    "display_order": 17,
+    "question_text": "Write a Copilot prompt to help you draft a concise executive summary email to a relationship manager, summarising the key findings from a sector risk analysis you have completed. The email should be professional, clearly structured, and highlight the two or three most important points the relationship manager needs to know before a client meeting.",
+    "scenario_text": "You are an Analyst at Crestfield Capital Partners. You have just completed a sector risk analysis on the cold-chain logistics industry. Your key findings are: (1) demand growth is strong but concentrated among a small number of large e-commerce and pharmaceutical clients, creating customer concentration risk; (2) rising fuel and refrigerant costs are compressing margins for mid-sized operators; (3) regulatory changes to refrigerant standards in 2025 will require significant capital expenditure for many operators. You need to send a brief, professional email to relationship manager Marcus Tran summarising these findings before his client meeting tomorrow.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Communication purpose and audience specified",
+          "description": "The prompt identifies the communication type (executive summary email), the recipient (relationship manager), and the purpose (preparing for a client meeting) so Copilot can calibrate tone, length, and level of detail appropriately.",
+          "max": 1
+        },
+        {
+          "name": "Key findings provided as input",
+          "description": "The prompt includes the three key findings (or a clear reference to them) so Copilot is drafting from the analyst's actual conclusions rather than generating generic sector content.",
+          "max": 1
+        },
+        {
+          "name": "Format and length specified",
+          "description": "The prompt requests a specific format (e.g., concise email, bullet points or short paragraphs, professional tone) and indicates the appropriate length or level of brevity for an executive summary communication.",
+          "max": 1
+        },
+        {
+          "name": "Action-oriented framing",
+          "description": "The prompt asks Copilot to frame the findings in a way that is actionable or relevant for the relationship manager's meeting context — not just a neutral summary, but content that helps the RM understand what matters and why.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ac18_task",
+    "domain_id": "augmented_comm",
+    "item_type": "micro_task",
+    "display_order": 18,
+    "question_text": "Review the AI-generated email draft below. Identify all communication quality problems — including tone, structure, clarity, and professional appropriateness — and rewrite the email so it is suitable to send to a senior client.",
+    "scenario_text": "An Analyst used Copilot to draft an email to a senior client contact at Ferrotek Industries summarising the outcome of a recent sector analysis. The draft reads:\n\n---\nSubject: Stuff from our analysis\n\nHi,\n\nSo we did the analysis you asked for on the metals and mining sector. Basically things are pretty mixed right now. Prices are up but costs are also up so it kind of cancels out. There are some risks you should probably know about but nothing too crazy. We think the sector is okay for now but could get worse. Let me know if you want more details or whatever.\n\nThanks\n---\n\nYour task: (1) List all communication quality problems in this draft. (2) Rewrite the email so it is professional, clearly structured, and appropriate for a senior client contact.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Problem identification — volume and accuracy",
+          "description": "Correctly identifies at least four communication problems: unprofessional subject line, overly casual tone ('Stuff', 'Hi', 'kind of', 'whatever'), vague and uninformative content, lack of structure, absence of specific findings, and no clear call to action.",
+          "max": 1
+        },
+        {
+          "name": "Rewritten email — professional tone and register",
+          "description": "The rewritten email uses a professional tone and register appropriate for a senior client contact — formal greeting, clear subject line, and language free of colloquialisms or hedging phrases.",
+          "max": 1
+        },
+        {
+          "name": "Rewritten email — structure and clarity",
+          "description": "The rewritten email is clearly structured with a professional subject line, a brief context-setting opening, a concise summary of key findings (even if illustrative), and a clear closing with a specific next step or offer.",
+          "max": 1
+        },
+        {
+          "name": "Rewritten email — substantive improvement",
+          "description": "The rewritten email is substantively more informative and useful than the original — it replaces vague statements ('things are pretty mixed') with specific, structured observations and demonstrates analyst credibility.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
   }
 ]

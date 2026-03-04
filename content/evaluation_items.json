@@ -1608,5 +1608,810 @@
         "key4": "[PLACEHOLDER — regenerate after Prompt C]"
       }
     }
+  ],
+  "an_c1_responsible_ai": [
+    {
+      "item_id": "ev_an_c1_responsible_ai_q1",
+      "course_id": "an_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "What is the primary purpose of the SAFE Abstraction Method as described in the reading?",
+      "scenario_text": "An analyst is about to paste a client's incorporation document details into a Copilot prompt to generate a risk summary.",
+      "options": [
+        {
+          "label": "A",
+          "text": "To speed up the prompt-writing process by using pre-approved templates"
+        },
+        {
+          "label": "B",
+          "text": "To ensure analysts stay compliant with data protection requirements without sacrificing analytical value"
+        },
+        {
+          "label": "C",
+          "text": "To help Copilot produce more creative and detailed outputs"
+        },
+        {
+          "label": "D",
+          "text": "To replace the need for EDC-approved tools by sanitizing data before use"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that SAFE lets analysts stay compliant without sacrificing analytical value, because protecting client and EDC data is not optional. It is a compliance method, not a productivity shortcut or a substitute for approved tools.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c1_responsible_ai_q2",
+      "course_id": "an_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "According to the SAFE Abstraction Method, what does the 'A' step require an analyst to do?",
+      "scenario_text": "Before submitting a Copilot prompt that references a client's ownership chart, an analyst is working through each step of the SAFE checklist.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Approve the output for distribution to stakeholders"
+        },
+        {
+          "label": "B",
+          "text": "Abstract identifiers into generic descriptors"
+        },
+        {
+          "label": "C",
+          "text": "Authenticate the data source before prompting"
+        },
+        {
+          "label": "D",
+          "text": "Analyze the sensitivity level of the final output"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly defines the 'A' in SAFE as 'abstract identifiers into generic descriptors,' which is the step that removes or replaces specific client-identifying information before it enters a prompt.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c1_responsible_ai_q3",
+      "course_id": "an_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "Which of the following types of information does the reading explicitly identify as confidential by nature when analysts work with client files?",
+      "scenario_text": "A new analyst is being trained on what kinds of data require the SAFE Abstraction Method before any Copilot prompt is written.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Public financial statements, press releases, and industry benchmarks"
+        },
+        {
+          "label": "B",
+          "text": "Incorporation documents, ownership charts, credit bureau extracts, and internal risk ratings"
+        },
+        {
+          "label": "C",
+          "text": "Meeting minutes, project timelines, and analyst performance reviews"
+        },
+        {
+          "label": "D",
+          "text": "Sector reports, macroeconomic forecasts, and regulatory guidance documents"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly lists incorporation documents, ownership charts, credit bureau extracts, and internal risk ratings as examples of information that is confidential by nature in an analyst's workflow.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c1_responsible_ai_q4",
+      "course_id": "an_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the SAFE Abstraction Method to the scenario below. Write a response that walks through each of the four SAFE steps and demonstrates how you would handle this situation before submitting any Copilot prompt.",
+      "scenario_text": "You are an analyst working on the KYC Onboarding Review for a new corporate client. You have received a file containing the client's full legal name, a detailed ownership chart showing three beneficial owners with their passport numbers and shareholding percentages, a credit bureau extract with a numerical risk score, and an internal risk rating memo flagged as confidential. You want to use Copilot to draft a summary of the ownership structure and flag any concentration risk for the onboarding committee. Describe exactly how you would apply the SAFE Abstraction Method before writing your Copilot prompt.",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response correctly identifies and explains the 'S' step — scrutinizing what is sensitive — by naming specific sensitive elements from the scenario (e.g., legal name, passport numbers, credit score, internal risk rating).",
+        "key2": "The response correctly explains the 'A' step — abstracting identifiers into generic descriptors — by showing how specific client details would be replaced (e.g., replacing the client name with 'a corporate entity,' replacing passport numbers with 'beneficial owner identifiers').",
+        "key3": "The response correctly addresses the 'F' step — filtering the output for leaked details — by describing how the analyst would review Copilot's output to ensure no abstracted or sensitive information has re-appeared in the generated text.",
+        "key4": "The response correctly addresses the 'E' step — ensuring the work is done inside an EDC-approved tool — and demonstrates understanding that SAFE does not replace the requirement to use approved tools, but works alongside it."
+      }
+    }
+  ],
+  "an_c2_strategic_prompting": [
+    {
+      "item_id": "ev_an_c2_strategic_prompting_q1",
+      "course_id": "an_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the CRAF Framework, what does the 'C — Context' element require the analyst to provide in a Copilot prompt?",
+      "scenario_text": "An analyst is writing a Copilot prompt to summarize a sector exposure report for a board presentation and wants to apply the CRAF Framework correctly.",
+      "options": [
+        {
+          "label": "A",
+          "text": "The specific action Copilot should perform, such as summarizing or comparing data"
+        },
+        {
+          "label": "B",
+          "text": "What the analyst is working with and who will read the output"
+        },
+        {
+          "label": "C",
+          "text": "The desired format of the output, such as a table or bullet list"
+        },
+        {
+          "label": "D",
+          "text": "The professional role Copilot should adopt when generating the response"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly defines 'C — Context' as telling Copilot what you are working with and who will read the output, illustrated by the example of specifying a 28-page document and its intended audience.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c2_strategic_prompting_q2",
+      "course_id": "an_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "What does the reading identify as the key differentiator between a Copilot output that is board-ready and one that requires complete rewriting?",
+      "scenario_text": "Two analysts each submit a Copilot prompt to generate a briefing note. One receives a polished, presentation-ready output; the other receives a vague draft that needs to be entirely rewritten.",
+      "options": [
+        {
+          "label": "A",
+          "text": "The analyst who received the better output used a longer prompt with more words"
+        },
+        {
+          "label": "B",
+          "text": "The analyst who received the better output had a higher Copilot subscription tier"
+        },
+        {
+          "label": "C",
+          "text": "The analyst who received the better output applied specificity across all four CRAF elements"
+        },
+        {
+          "label": "D",
+          "text": "The analyst who received the better output submitted the prompt during off-peak hours"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The reading's takeaway explicitly states that 'specificity across all four CRAF elements — Context, Role, Action, and Format — is what separates a Copilot output you can present to the board from one you have to rewrite entirely.'",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c2_strategic_prompting_q3",
+      "course_id": "an_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "In the CRAF Framework, which element instructs the analyst to assign Copilot a professional identity relevant to the task?",
+      "scenario_text": "An analyst wants Copilot to generate analysis that reflects the perspective of a senior credit risk professional reviewing a portfolio report.",
+      "options": [
+        {
+          "label": "A",
+          "text": "C — Context"
+        },
+        {
+          "label": "B",
+          "text": "R — Role"
+        },
+        {
+          "label": "C",
+          "text": "A — Action"
+        },
+        {
+          "label": "D",
+          "text": "F — Format"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The CRAF Framework's 'R — Role' element is the component that tells Copilot what professional identity or perspective to adopt, which shapes the tone and framing of the generated output.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c2_strategic_prompting_q4",
+      "course_id": "an_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Using the CRAF Framework, write a complete, board-ready Copilot prompt for the scenario below. Your response must explicitly address all four CRAF elements and explain how each element contributes to the quality of the expected output.",
+      "scenario_text": "You are an analyst preparing for the Meridian Infrastructure Briefing. You have a 35-page infrastructure sector risk report that will be reviewed by an executive committee of five senior leaders who have limited time and need to make a go/no-go decision on a new financing facility. You need Copilot to help you produce a concise executive summary that highlights the top three risk factors, any concentration concerns, and a recommended next step. Write a full CRAF-structured prompt and explain each element.",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response includes a clearly articulated 'C — Context' element that specifies what the document is (the 35-page infrastructure sector risk report) and who the audience is (the executive committee making a go/no-go decision).",
+        "key2": "The response includes a clearly articulated 'R — Role' element that assigns Copilot a relevant professional identity (e.g., senior risk analyst, executive briefing specialist) appropriate to the task and audience.",
+        "key3": "The response includes a clearly articulated 'A — Action' element that specifies exactly what Copilot should do (e.g., summarize the top three risk factors, identify concentration concerns, and recommend a next step).",
+        "key4": "The response includes a clearly articulated 'F — Format' element that specifies the desired output structure (e.g., a concise executive summary with bullet points or numbered sections) and explains how this format serves the executive audience."
+      }
+    }
+  ],
+  "an_c3_critical_eval": [
+    {
+      "item_id": "ev_an_c3_critical_eval_q1",
+      "course_id": "an_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, why is it insufficient to simply review an AI-generated analysis for logical coherence before sharing it with a stakeholder?",
+      "scenario_text": "An analyst receives a Copilot-generated financial summary that reads clearly and appears internally consistent. She is considering sending it directly to the Finance Director.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Because Copilot outputs are always formatted incorrectly for Finance Director audiences"
+        },
+        {
+          "label": "B",
+          "text": "Because AI can produce plausible-sounding figures that are simply wrong, and the analyst's credibility depends on what they sign off on"
+        },
+        {
+          "label": "C",
+          "text": "Because the Finance Director will always request a second version regardless of quality"
+        },
+        {
+          "label": "D",
+          "text": "Because logical coherence is only one of the two required approval steps before distribution"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly warns that 'even the most capable AI can produce plausible-sounding figures that are simply wrong,' and that the analyst's credibility depends on what they sign off on — not what the AI drafted.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c3_critical_eval_q2",
+      "course_id": "an_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading describes the VERIFY Checklist as a habit to apply in which specific tools?",
+      "scenario_text": "An analyst wants to know exactly when and where the VERIFY Checklist should be used according to the course reading.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Only in Microsoft Teams when reviewing meeting summaries"
+        },
+        {
+          "label": "B",
+          "text": "In any third-party AI tool approved by the organization"
+        },
+        {
+          "label": "C",
+          "text": "Every time Copilot in Excel or Microsoft 365 Copilot is used to generate analysis"
+        },
+        {
+          "label": "D",
+          "text": "Only when the output will be shared externally with clients"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The reading explicitly states that the VERIFY Checklist is 'a six-step habit to apply every time you use Copilot in Excel or Microsoft 365 Copilot to generate' analysis, specifying these tools by name.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c3_critical_eval_q3",
+      "course_id": "an_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "What does the reading's takeaway identify as 'the only thing standing between a plausible AI draft and an embarrassing error in a Finance Director's inbox'?",
+      "scenario_text": "A team lead is explaining to junior analysts why they must not skip the post-generation review step, even when under deadline pressure.",
+      "options": [
+        {
+          "label": "A",
+          "text": "A peer review by a second analyst before any output is distributed"
+        },
+        {
+          "label": "B",
+          "text": "A few minutes of systematic checking using the VERIFY Checklist"
+        },
+        {
+          "label": "C",
+          "text": "Re-running the same prompt twice and comparing the two outputs"
+        },
+        {
+          "label": "D",
+          "text": "Submitting the output to the compliance team for sign-off"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states that 'a few minutes of systematic checking is the only thing standing between a plausible AI draft and an embarrassing error in a Finance Director's inbox,' referring to the VERIFY Checklist.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c3_critical_eval_q4",
+      "course_id": "an_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the VERIFY Checklist to the scenario below. Write a structured response that walks through each step of the checklist, identifies specific risks in the AI-generated output, and explains what corrective action you would take before sharing the analysis.",
+      "scenario_text": "You are an analyst working on the Aurora Initiative Variance Analysis. You used Copilot in Excel to generate a variance summary comparing Q2 and Q3 budget actuals across five project workstreams. The output includes a table with percentage variances, a written narrative identifying three workstreams as 'significantly over budget,' and a projected year-end shortfall figure of $4.2 million. The narrative reads clearly and the numbers appear internally consistent. However, you notice that one workstream label in the table does not match the label used in the source data file, and the projected shortfall figure does not appear anywhere in the source data — it appears to have been extrapolated by Copilot. Describe how you would apply the VERIFY Checklist to this output before sending it to the Finance Director.",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response demonstrates understanding that the VERIFY Checklist must be applied systematically to every AI-generated analysis, not selectively, and frames the review as a professional responsibility rather than an optional step.",
+        "key2": "The response specifically addresses the mismatched workstream label as a verification failure — explaining that each data point must be traced back to the source data and that label discrepancies indicate a potential data mapping error that must be corrected before distribution.",
+        "key3": "The response specifically addresses the $4.2 million projected shortfall as a high-risk finding — recognizing that figures not present in the source data represent AI extrapolation, not verified analysis, and must either be validated against a documented methodology or removed from the output.",
+        "key4": "The response concludes with a clear corrective action plan — describing what changes would be made to the output (e.g., correcting the label, removing or validating the extrapolated figure) and confirming that the revised output would be re-checked before it reaches the Finance Director."
+      }
+    }
+  ],
+  "an_c4_relationship_intel": [
+    {
+      "item_id": "ev_an_c4_relationship_intel_q1",
+      "course_id": "an_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what is the core problem with sending the same analytical deliverable to multiple different stakeholders?",
+      "scenario_text": "An analyst has completed a sector exposure analysis and is deciding whether to send the same document to the underwriting committee, the BD leadership team, and an executive.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Different stakeholders use different file formats, making a single document technically incompatible"
+        },
+        {
+          "label": "B",
+          "text": "Each audience has a different decision context, and the same document cannot serve all three effectively"
+        },
+        {
+          "label": "C",
+          "text": "Sending the same document to multiple audiences violates data confidentiality policies"
+        },
+        {
+          "label": "D",
+          "text": "The underwriting committee and BD team are not permitted to receive the same risk data"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly illustrates that the same sector exposure analysis lands differently for an underwriting committee worried about concentration risk, a BD team hunting for growth, and an executive with four minutes — each has a distinct decision context that a single document cannot serve.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c4_relationship_intel_q2",
+      "course_id": "an_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading's takeaway specifies that applying the STAKE framework means doing more than just changing the tone of a deliverable. What does it say analysts must also do?",
+      "scenario_text": "An analyst believes that adapting a report for a new audience simply means adjusting the language from technical to plain English.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Reformat the document into a new template approved for that audience type"
+        },
+        {
+          "label": "B",
+          "text": "Apply all five STAKE steps and use Copilot to research the audience's decision context before rewriting"
+        },
+        {
+          "label": "C",
+          "text": "Shorten the document to no more than one page for any executive audience"
+        },
+        {
+          "label": "D",
+          "text": "Submit the adapted version to a relationship manager for approval before distribution"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states analysts must 'apply all five STAKE steps — not just a tone change — each time you adapt an analytical deliverable for a new audience, and use Copilot to research the audience's decision context before you start rewriting.'",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c4_relationship_intel_q3",
+      "course_id": "an_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading, which of the following best describes the executive audience's primary constraint when receiving an analytical deliverable?",
+      "scenario_text": "An analyst is adapting a sector exposure analysis for three different audiences and needs to understand what matters most to the executive reader.",
+      "options": [
+        {
+          "label": "A",
+          "text": "The executive needs the full methodology section to validate the analysis before acting"
+        },
+        {
+          "label": "B",
+          "text": "The executive has four minutes before their next call and needs the key point immediately"
+        },
+        {
+          "label": "C",
+          "text": "The executive is primarily concerned with concentration risk and portfolio limits"
+        },
+        {
+          "label": "D",
+          "text": "The executive requires a separate appendix with all supporting data before making a decision"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly describes the executive as someone who 'has four minutes before their next call,' establishing time as the executive's primary constraint and the reason the same document cannot serve all three audiences.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c4_relationship_intel_q4",
+      "course_id": "an_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the STAKE framework to the scenario below. Write a response that demonstrates all five STAKE steps and produces audience-adapted communication plans for each of the two stakeholders described.",
+      "scenario_text": "You are an analyst working on the Risk Enablement Working Group. You have completed a detailed 20-page analysis of counterparty concentration risk across a regional portfolio. The analysis includes quantitative exposure tables, a methodology section, scenario stress tests, and a written narrative. You need to share findings with two very different audiences: (1) a Risk Committee of senior underwriters who will use the findings to set new exposure limits at their meeting next week, and (2) a Chief Operating Officer who needs to decide by end of day whether to pause new deal approvals in the affected sector. Describe how you would apply all five STAKE steps to adapt your deliverable for each audience, and explain what Copilot's role would be in that process.",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response demonstrates understanding of the STAKE framework as a multi-step process — not just a tone change — and explicitly names or describes at least three of the five STAKE steps as they apply to this scenario.",
+        "key2": "The response produces a clearly differentiated adaptation plan for the Risk Committee — recognizing their decision context (setting exposure limits) and explaining how the deliverable would be structured to serve that need (e.g., retaining methodology, exposure tables, and stress test results).",
+        "key3": "The response produces a clearly differentiated adaptation plan for the COO — recognizing their decision context (a same-day binary decision) and explaining how the deliverable would be restructured to serve that need (e.g., a one-page summary with a clear recommendation and the single most critical data point).",
+        "key4": "The response explicitly describes how Copilot would be used to research each audience's decision context before rewriting begins, demonstrating that audience research is a step in the process, not an assumption."
+      }
+    }
+  ],
+  "an_c5_data_decision": [
+    {
+      "item_id": "ev_an_c5_data_decision_q1",
+      "course_id": "an_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what is the core risk when an analyst accepts an AI-generated data anomaly finding without applying the TRACE Framework?",
+      "scenario_text": "An analyst is reviewing a Copilot-generated portfolio analysis that flags an unusual spike in one sector's exposure. She is under deadline pressure and considers including the finding directly in her report.",
+      "options": [
+        {
+          "label": "A",
+          "text": "The analyst may miss the opportunity to present the finding in the most visually compelling format"
+        },
+        {
+          "label": "B",
+          "text": "The AI-generated finding may reflect patterns in how data is structured rather than patterns in underlying business reality"
+        },
+        {
+          "label": "C",
+          "text": "The finding may be duplicated in a second AI-generated report, causing inconsistency"
+        },
+        {
+          "label": "D",
+          "text": "The analyst may inadvertently share confidential data with an unapproved tool"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly warns that 'AI-generated analysis can reflect patterns in how data is structured, not patterns in the underlying business reality,' which is the specific risk the TRACE Framework is designed to address.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c5_data_decision_q2",
+      "course_id": "an_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading identifies a specific behavioral tendency that makes analysts vulnerable to accepting AI-generated findings uncritically. What is it?",
+      "scenario_text": "A team lead is coaching an analyst who has been copying AI-generated findings directly into reports without verification.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Overconfidence in the analyst's own domain expertise"
+        },
+        {
+          "label": "B",
+          "text": "The instinct to accept the finding and move on, especially under deadline pressure"
+        },
+        {
+          "label": "C",
+          "text": "A preference for quantitative data over qualitative judgment"
+        },
+        {
+          "label": "D",
+          "text": "Reluctance to challenge outputs generated by senior colleagues"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly identifies the behavioral risk as 'the instinct to accept the finding and move on — especially under deadline pressure,' which is the specific human tendency the TRACE Framework is designed to counteract.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c5_data_decision_q3",
+      "course_id": "an_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, how should analysts treat every AI-generated data interpretation?",
+      "scenario_text": "An analyst is deciding how much weight to give a Copilot-generated trend analysis before including it in a quarterly portfolio report.",
+      "options": [
+        {
+          "label": "A",
+          "text": "As a final conclusion that can be cited directly if the output appears internally consistent"
+        },
+        {
+          "label": "B",
+          "text": "As a hypothesis to verify against source data, not a conclusion to copy into the report"
+        },
+        {
+          "label": "C",
+          "text": "As a draft that only needs to be reviewed if the finding is unexpected or counterintuitive"
+        },
+        {
+          "label": "D",
+          "text": "As a reliable starting point that requires only a formatting review before distribution"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states analysts should 'use the TRACE Framework to treat every AI-generated data interpretation as a hypothesis to verify against source data — not a conclusion to copy into your report.'",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c5_data_decision_q4",
+      "course_id": "an_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the TRACE Framework to the scenario below. Write a structured response that walks through each step of the framework, identifies the specific risks in the AI-generated finding, and explains what verification actions you would take before including any conclusion in your report.",
+      "scenario_text": "You are an analyst working on the Cascade Portfolio Q3 Analytics. You used Copilot in Excel to analyze a dataset of 200 transactions across six industry sectors. Copilot's output flags that the 'Advanced Manufacturing' sector shows a 34% increase in average deal size compared to Q2, and labels this as a 'significant positive trend.' However, you recall that the data team recently recategorized several transactions from 'General Industrial' into 'Advanced Manufacturing' as part of a mid-year taxonomy update. You are not certain whether the Q2 baseline in the dataset reflects the old or new categorization. The Q3 report is due in two hours. Describe how you would apply the TRACE Framework to this finding before including it in the report.",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response correctly identifies the core risk — that the 34% increase may reflect a data reclassification artifact (the taxonomy update) rather than a genuine business trend — and frames this as a structural data pattern rather than a business reality finding.",
+        "key2": "The response describes a concrete verification action tied to the source data — such as checking whether the Q2 baseline uses the old or new taxonomy, or requesting confirmation from the data team about which transactions were recategorized and when.",
+        "key3": "The response demonstrates disciplined application of the TRACE Framework by treating the AI finding as a hypothesis, not a conclusion, and explicitly states that the 'significant positive trend' label cannot be used in the report until the categorization question is resolved.",
+        "key4": "The response addresses the deadline pressure explicitly — either by describing a minimum viable verification step that can be completed within the time constraint, or by recommending that the finding be flagged as 'pending verification' rather than omitted or included unchecked."
+      }
+    }
+  ],
+  "an_c6_augmented_comm": [
+    {
+      "item_id": "ev_an_c6_augmented_comm_q1",
+      "course_id": "an_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what is the guiding principle analysts should apply before starting any Copilot-assisted task?",
+      "scenario_text": "An analyst needs to complete three tasks: summarize a meeting transcript, draft a stakeholder memo, and compose a follow-up email. She is deciding which Copilot surface to use for each.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Always start in Excel Copilot because it produces the most structured outputs"
+        },
+        {
+          "label": "B",
+          "text": "Ask 'which Copilot surface owns this task?' before prompting, to match tool to task"
+        },
+        {
+          "label": "C",
+          "text": "Use the same Copilot surface for all tasks to maintain consistency across outputs"
+        },
+        {
+          "label": "D",
+          "text": "Choose the Copilot surface that produces the longest output for maximum detail"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states: 'Always ask which Copilot surface owns this task? before prompting — matching tool to task means each output is immediately usable as the input for the next step.'",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c6_augmented_comm_q2",
+      "course_id": "an_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "According to the reading, which M365 Copilot surface is specifically described as purpose-built for composing and toning stakeholder emails?",
+      "scenario_text": "An analyst needs to send a carefully worded follow-up message to a senior stakeholder after a difficult meeting and wants to use the most appropriate Copilot surface.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Teams Copilot"
+        },
+        {
+          "label": "B",
+          "text": "Word Copilot"
+        },
+        {
+          "label": "C",
+          "text": "Excel Copilot"
+        },
+        {
+          "label": "D",
+          "text": "Outlook Copilot"
+        }
+      ],
+      "correct_option": "D",
+      "explanation": "The reading explicitly states that 'Outlook Copilot composes and tones stakeholder emails,' identifying it as the purpose-built surface for this specific communication task.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c6_augmented_comm_q3",
+      "course_id": "an_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "The reading describes the benefit of matching tool to task as ensuring each output is 'immediately usable as the input for the next step.' What problem does this solve?",
+      "scenario_text": "An analyst reflects on why her previous workflow — using a single Copilot surface for all tasks — kept producing outputs she had to heavily edit before moving to the next step.",
+      "options": [
+        {
+          "label": "A",
+          "text": "It eliminates the need to apply the VERIFY Checklist to any Copilot output"
+        },
+        {
+          "label": "B",
+          "text": "It eliminates rework and keeps the analytical workflow clean"
+        },
+        {
+          "label": "C",
+          "text": "It ensures all outputs are automatically formatted for board-level presentation"
+        },
+        {
+          "label": "D",
+          "text": "It reduces the number of prompts needed to complete any analytical task"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that matching tool to task 'means each output is immediately usable as the input for the next step, eliminating rework and keeping your analytical workflow clean.'",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c6_augmented_comm_q4",
+      "course_id": "an_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the M365 Copilot surface-matching principle to the scenario below. Write a response that assigns the correct Copilot surface to each task, explains why that surface is the right choice, and describes how the output of each step feeds into the next.",
+      "scenario_text": "You are an analyst working on the Enterprise Intelligence Program. You have just attended a 90-minute working group session that was recorded and transcribed. Following the session, you need to complete four tasks: (1) identify the key decisions and action items from the meeting transcript; (2) draft a formal 3-page briefing note summarizing the program's current status and risks for a steering committee; (3) analyze an attached Excel dataset of program KPIs to identify which metrics are off-track; and (4) send a concise, professionally toned update email to the program sponsor summarizing the top two risks and the next milestone. Describe which Copilot surface you would use for each task, why it is the right choice, and how the output of each task feeds into the next.",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response correctly assigns Teams Copilot to Task 1 (extracting decisions and action items from the meeting transcript) and explains that Teams Copilot is purpose-built for understanding meeting transcripts and conversation threads.",
+        "key2": "The response correctly assigns Word Copilot to Task 2 (drafting the formal briefing note) and Excel Copilot to Task 3 (analyzing the KPI dataset), explaining that Word Copilot drafts and structures long-form documents while Excel Copilot interrogates data and surfaces trends.",
+        "key3": "The response correctly assigns Outlook Copilot to Task 4 (the stakeholder update email) and explains that Outlook Copilot is purpose-built for composing and toning stakeholder communications.",
+        "key4": "The response explicitly describes the chain of handoffs — how the Teams output feeds into the Word briefing note, how the Excel KPI findings are incorporated into the briefing note or email, and how the verified analysis from Word/Excel becomes the input for the Outlook email — demonstrating that each output is immediately usable as the input for the next step."
+      }
+    }
+  ],
+  "an_c7_capstone": [
+    {
+      "item_id": "ev_an_c7_capstone_q1",
+      "course_id": "an_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what is the key distinction between using Copilot as a shortcut versus using it as a strategic analytical tool?",
+      "scenario_text": "A senior analyst is mentoring a junior colleague who has been using Copilot to quickly generate outputs but not connecting them into a coherent workflow.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Strategic use requires purchasing a higher-tier Copilot license with more features"
+        },
+        {
+          "label": "B",
+          "text": "Strategic use means treating every AI-assisted task as a deliberate chain of connected steps, each feeding verified output into the next"
+        },
+        {
+          "label": "C",
+          "text": "Strategic use means using Copilot only for tasks that have been pre-approved by a compliance officer"
+        },
+        {
+          "label": "D",
+          "text": "Strategic use requires writing longer prompts with more detailed instructions for each task"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly defines the End-to-End AI Workflow as 'treating every AI-assisted task not as a one-off prompt, but as a deliberate chain of connected steps — each one feeding verified, audience-appropriate output into the next,' which is what distinguishes strategic use from using Copilot as a shortcut.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c7_capstone_q2",
+      "course_id": "an_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading describes each tool handoff in an End-to-End AI Workflow as a 'quality gate.' What does this mean in practice?",
+      "scenario_text": "An analyst is moving from an Excel analysis to a Word draft to an Outlook email and wants to apply the capstone principle correctly at each transition.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Each tool handoff requires a formal sign-off from a manager before the next step can begin"
+        },
+        {
+          "label": "B",
+          "text": "Each tool handoff is a point where the analyst must verify before drafting and audit before delivering"
+        },
+        {
+          "label": "C",
+          "text": "Each tool handoff automatically reformats the output to match the requirements of the next tool"
+        },
+        {
+          "label": "D",
+          "text": "Each tool handoff should be documented in a workflow log for compliance purposes"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states: 'Treat every tool handoff — Excel to Word to Outlook — as a quality gate: verify before you draft, audit before you deliver,' establishing verification and auditing as the practical meaning of a quality gate.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c7_capstone_q3",
+      "course_id": "an_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, what is the outcome when an analyst correctly applies the End-to-End AI Workflow with quality gates at each handoff?",
+      "scenario_text": "An analyst asks her manager why the capstone workflow matters if each individual tool already produces good outputs on its own.",
+      "options": [
+        {
+          "label": "A",
+          "text": "The AI workflow will replace the need for human judgment on routine analytical tasks"
+        },
+        {
+          "label": "B",
+          "text": "The AI workflow will amplify the analyst's judgment rather than bypass it"
+        },
+        {
+          "label": "C",
+          "text": "The AI workflow will reduce the total number of prompts needed across all tools"
+        },
+        {
+          "label": "D",
+          "text": "The AI workflow will automatically ensure all outputs are compliant with data policies"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states that applying quality gates at each handoff means 'your AI workflow will amplify your judgment rather than bypass it,' positioning human judgment as the central element that the workflow enhances.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c7_capstone_q4",
+      "course_id": "an_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Design a complete End-to-End AI Workflow for the scenario below. Your response must identify each step in the workflow, specify which Copilot surface and framework applies at each step, describe the quality gate at each tool handoff, and explain how the final output reflects the analyst's judgment rather than bypassing it.",
+      "scenario_text": "You are the lead analyst for the Horizon Program Annual Review. The review requires you to: (1) extract key themes and unresolved risks from transcripts of four quarterly steering committee meetings held over the past year; (2) analyze a multi-sheet Excel workbook containing program KPIs, budget actuals vs. forecasts, and milestone completion rates to identify the top three performance concerns; (3) produce a 5-page annual review report for the program's executive sponsor that synthesizes the meeting themes and data findings into a coherent narrative with recommendations; and (4) send a briefing email to the sponsor's chief of staff summarizing the report's three main recommendations and requesting a 30-minute review meeting. Design the complete End-to-End AI Workflow for this assignment, applying the capstone principles from the reading.",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response correctly maps each of the four tasks to the appropriate Copilot surface (Teams Copilot for meeting transcripts, Excel Copilot for KPI/budget analysis, Word Copilot for the annual review report, Outlook Copilot for the briefing email) and explains why each surface is the right choice for its task.",
+        "key2": "The response explicitly describes at least two quality gates — points between tool handoffs where the analyst verifies the output before passing it to the next step — demonstrating understanding that each handoff is a deliberate checkpoint, not an automatic transfer.",
+        "key3": "The response demonstrates integration of at least two frameworks from earlier courses (e.g., SAFE before prompting, CRAF for prompt construction, VERIFY for output checking, TRACE for data interpretation, or STAKE for audience adaptation) showing that the End-to-End Workflow connects all prior learning.",
+        "key4": "The response explicitly explains how the analyst's judgment is preserved and amplified throughout the workflow — for example, by describing a specific decision point where the analyst interprets, challenges, or contextualizes an AI-generated finding before it enters the next step or reaches the executive sponsor."
+      }
+    }
   ]
 }

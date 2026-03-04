@@ -138,5 +138,75 @@
     "description": "[PLACEHOLDER — regenerate after Prompt C]",
     "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
     "sequence_order": 7
+  },
+  "an_c1_responsible_ai": {
+    "course_id": "an_c1_responsible_ai",
+    "role_id": "an",
+    "primary_domain": "responsible_ai",
+    "title": "Protect the Data: Safe AI Usage for Analysts",
+    "tagline": "Leverage AI without compromise — guard confidential data and comply with EDC's policies.",
+    "description": "Working with data comes with great responsibility. This course empowers analysts to use Copilot effectively while strictly adhering to EDC's data security and privacy rules. You will learn the SAFE Abstraction Method for GenAI: a four-step approach to ensure you never expose Non-Public EDC Information when using AI. In a simulated Know-Your-Customer (KYC) onboarding scenario, you'll practice identifying sensitive content (personal identifiers, financial details, internal rankings) and transforming or removing it before prompting Copilot. You'll also learn how to interpret EDC's Responsible AI policy in day-to-day analyst work — so you can confidently use AI for data validation, document review, and research without risking compliance violations.",
+    "real_use_case": "KYC / CIM Validation Agent",
+    "sequence_order": 1
+  },
+  "an_c2_strategic_prompting": {
+    "course_id": "an_c2_strategic_prompting",
+    "role_id": "an",
+    "primary_domain": "strategic_prompting",
+    "title": "Summarize and Succeed: Board-Ready Briefs",
+    "tagline": "Turn dense reports into clear board-level summaries using structured prompts.",
+    "description": "Analysts frequently condense large volumes of information — lengthy performance reports, research findings, sector data — into concise briefs for senior management and committees. This course teaches the CRAF framework (Context, Role, Action, Format) applied to real analyst scenarios such as creating an executive summary of a complex quarterly report. You'll practice prompting with precision: specifying the audience, the key focus areas, and the exact format needed so Copilot's output is usable directly in your deliverables. Mastering this skill saves editing time while ensuring AI output aligns with what your stakeholders need.",
+    "real_use_case": "Board Report Summaries",
+    "sequence_order": 2
+  },
+  "an_c3_critical_eval": {
+    "course_id": "an_c3_critical_eval",
+    "role_id": "an",
+    "primary_domain": "critical_eval",
+    "title": "Trust but Verify: Validating AI Analyses",
+    "tagline": "Never take AI at face value — learn to fact-check and refine Copilot's outputs.",
+    "description": "As an analyst, accuracy is non-negotiable — an AI-generated variance analysis or risk assessment is only useful if it's correct. This course develops your ability to detect and correct errors in Copilot's output before you rely on them. You'll practice the VERIFY Checklist, a systematic approach to reviewing AI outputs: checking figures against source data, questioning assumptions, and fixing logical inconsistencies. Through a realistic Financial Planning & Analysis scenario, you'll sharpen your judgment in evaluating AI suggestions — identifying subtle mistakes in calculations or reasoning and ensuring the final analysis can withstand scrutiny from managers and auditors.",
+    "real_use_case": "Financial Variance Analyzer",
+    "sequence_order": 3
+  },
+  "an_c4_relationship_intel": {
+    "course_id": "an_c4_relationship_intel",
+    "role_id": "an",
+    "primary_domain": "relationship_intel",
+    "title": "Know Your Audience: AI-Assisted Stakeholder Briefings",
+    "tagline": "Use AI to research your audience and tailor every deliverable to how they make decisions.",
+    "description": "Analysts produce deliverables for multiple internal audiences — risk-focused underwriters, growth-focused business development leaders, and time-pressured executives — yet the same data often needs to be framed differently for each. This course teaches the STAKE framework for audience intelligence: how to use AI to research a stakeholder's role and priorities, adapt the structure and emphasis of your analytical output, and prepare for the questions each audience is likely to ask. Through a realistic scenario where you must brief two different internal committees from the same underlying analysis, you'll practice using Copilot to tailor your deliverable without starting from scratch each time.",
+    "real_use_case": "Access to Copilot 365 for Business Development",
+    "sequence_order": 4
+  },
+  "an_c5_data_decision": {
+    "course_id": "an_c5_data_decision",
+    "role_id": "an",
+    "primary_domain": "data_decision",
+    "title": "From Data to Insight: AI-Assisted Portfolio Analysis",
+    "tagline": "Surface anomalies, validate interpretations, and build AI-assisted analytical workflows for portfolio reviews.",
+    "description": "Analysts are expected to detect patterns and draw conclusions from complex financial and portfolio data — but AI can both accelerate and mislead that process. This course teaches the TRACE framework: a structured approach to using AI for data analysis while cross-verifying outputs against source data before conclusions reach internal stakeholders. You'll work through a realistic quarterly portfolio review scenario, using Excel Copilot to surface anomalies, verify AI-generated interpretations against the underlying data, and draft an evidence-based executive summary in Word Copilot — building judgment about when to trust AI analysis and when to investigate further.",
+    "real_use_case": "Financial Variance Analyzer; Streamline production of Quarterly analysis and reporting",
+    "sequence_order": 5
+  },
+  "an_c6_augmented_comm": {
+    "course_id": "an_c6_augmented_comm",
+    "role_id": "an",
+    "primary_domain": "augmented_comm",
+    "title": "Right Tool, Right Step: M365 Copilot for Analysts",
+    "tagline": "Master the Copilot toolkit — Excel, Word, Teams, PowerPoint, Outlook — in sequence.",
+    "description": "Why copy-paste data between apps when Copilot can seamlessly assist you within each tool you use? This course teaches analysts to maximize productivity by choosing the right M365 Copilot surface at each step of an analytical workflow — and to chain those surfaces together so output from one tool becomes the input for the next. Through a multi-step scenario building a programme intelligence brief, you'll practice a sequence from Teams meeting recap to Word briefing draft to Outlook stakeholder communication — eliminating manual transfers, reducing re-work, and keeping content within EDC's secure M365 environment.",
+    "real_use_case": "Streamline production of Quarterly analysis and reporting",
+    "sequence_order": 6
+  },
+  "an_c7_capstone": {
+    "course_id": "an_c7_capstone",
+    "role_id": "an",
+    "primary_domain": "responsible_ai",
+    "title": "Analyst in Action: End-to-End AI Workflow (Capstone)",
+    "tagline": "Put it all together — responsible, accurate, audience-aware, data-driven AI assistance from raw data to final communication.",
+    "description": "This capstone integrates all six skill domains in a realistic end-to-end workflow. You'll step into the shoes of an EDC analyst preparing an annual programme review for senior leadership. Starting from an Excel portfolio dataset, a Teams meeting transcript, and an internal strategy memo, you'll use AI at each stage: surfacing portfolio insights (Data-Driven Decision Making), verifying AI outputs before they enter the narrative (Critical Evaluation), tailoring the briefing for two different internal audiences (Relationship Intelligence), structuring the brief using CRAF (Strategic Prompting), maintaining data safety throughout (Responsible AI), and chaining Copilot tools across Excel to Word to Outlook (Augmented Communication). By completing this course, you demonstrate the ability to orchestrate AI across a complex, multi-step analytical workflow — just as you would on the job.",
+    "real_use_case": "Streamline production of Quarterly analysis and reporting; Financial Variance Analyzer; KYC / CIM Validation Agent",
+    "sequence_order": 7
   }
 }

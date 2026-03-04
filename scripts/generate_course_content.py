@@ -364,10 +364,10 @@ Output schema:
 
 Notes:
 - role_prefix: the 2–3 letter code from the MACHINE-READABLE HEADER (e.g. "rm", "uw")
-- company_map: keys are "1" through "5" (strings), values are company names
-- real_use_cases: keys are "1" through "5" (strings), values are use case title strings
+- company_map: keys are "1" through "7" (strings), values are company names
+- real_use_cases: keys are "1" through "7" (strings), values are use case title strings
 - domain_seeds: extract from all ### Domain: <domain_id> sections found in the brief
-- course_seeds: extract from ### Course 1 — [Title] through ### Course 5 — [Title]"""
+- course_seeds: extract from ### Course 1 — [Title] through ### Course 7 — [Title]"""
 
     raw = call_llm(
         endpoint_name=HAIKU_ENDPOINT,
@@ -400,7 +400,9 @@ Output schema:
     "2": {same shape} | null,
     "3": {same shape} | null,
     "4": {same shape} | null,
-    "5": {same shape} | null
+    "5": {same shape} | null,
+    "6": {same shape} | null,
+    "7": {same shape} | null
   },
   "reading_seeds": {
     "1": {
@@ -413,13 +415,15 @@ Output schema:
     "2": {same shape} | null,
     "3": {same shape} | null,
     "4": {same shape} | null,
-    "5": {same shape} | null
+    "5": {same shape} | null,
+    "6": {same shape} | null,
+    "7": {same shape} | null
   }
 }
 
 Notes:
-- scenario_seeds: from ### Course N Scenario sections; keys are "1" through "5" (strings)
-- reading_seeds: from ### Course N Reading sections; keys are "1" through "5" (strings)
+- scenario_seeds: from ### Course N Scenario sections; keys are "1" through "7" (strings)
+- reading_seeds: from ### Course N Reading sections; keys are "1" through "7" (strings)
 - If a course's scenario/reading is absent, use null for that key"""
 
     raw = call_llm(
@@ -473,13 +477,15 @@ Output schema:
     "2": [same item shape] | null,
     "3": [same item shape] | null,
     "4": [same item shape] | null,
-    "5": [same item shape] | null
+    "5": [same item shape] | null,
+    "6": [same item shape] | null,
+    "7": [same item shape] | null
   }
 }
 
 Notes:
 - diagnostic_seeds: from all ### Diagnostic: <domain_id> sections found in the brief
-- evaluation_seeds: from ### Evaluation: Course N sections; keys are "1" through "5" (strings)
+- evaluation_seeds: from ### Evaluation: Course N sections; keys are "1" through "7" (strings)
 - item_type values: "MCQ", "prompt_sandbox", "micro_task", "performance_task"
 - For MCQ: populate options (list of {label, text}), correct_option, explanation; rubric_criteria=null
 - For prompt_sandbox/micro_task: populate question_text; options=null, correct_option=null
@@ -595,8 +601,8 @@ def generate_structural_json(spec: dict) -> tuple[dict, dict]:
 You are a structural JSON generator for an AI skills training pipeline.
 You receive a role specification and produce three JSON structures:
 1. A roles.json entry for the new role
-2. Four domains.json entries (one per skill domain) for the new role
-3. Five courses.json entries for the new role
+2. Six domains.json entries (one per skill domain) for the new role
+3. Seven courses.json entries for the new role
 
 SCHEMAS (from existing RM data):
 roles.json entry: {{"<role_id>": {{"role_id": str, "title": str, "description": str, "department": str}}}}
@@ -609,10 +615,10 @@ courses.json entry: {{"<course_id>": {{"course_id": str, "role_id": str, "primar
 FIXED RULES:
 - role_id = "{role_prefix}"
 - domain_ids for this role (from brief): {spec_domains_str}
-- course_id pattern for courses 1–4: {role_prefix}_c<N>_<domain_id>
-- course_id for course 5 (capstone): {role_prefix}_c5_capstone
-- Course 5 primary_domain = "{capstone_primary_domain}" (capstone integrates all domains)
-- sequence_order 1–5 matching course positions
+- course_id pattern for courses 1–6: {role_prefix}_c<N>_<domain_id>
+- course_id for course 7 (capstone): {role_prefix}_c7_capstone
+- Course 7 primary_domain = "{capstone_primary_domain}" (capstone integrates all domains)
+- sequence_order 1–7 matching course positions
 
 RM EXAMPLES (for structural reference only — do NOT copy RM-specific content):
 Role: {rm_role_ex}
@@ -646,7 +652,7 @@ real_use_cases (verbatim — use for real_use_case field in courses.json):
 Requirements:
 - Adapt ALL domain descriptions and level descriptors to this role's specific workflows and artifacts.
   Do NOT copy RM-specific language.
-- All 5 course_ids must follow the pattern exactly.
+- All 7 course_ids must follow the pattern exactly.
 - Use the real_use_case strings verbatim (from the brief — these come from the EDC use case library)."""
 
     raw = call_llm(
@@ -783,7 +789,7 @@ def qa_gap_check(spec: dict, structural: dict) -> tuple[bool, list[dict]]:
         "task_3_text",
         "task_4_text",
     ]
-    for i in range(1, 6):
+    for i in range(1, 8):
         ss = scenario_seeds.get(str(i)) or scenario_seeds.get(i)
         if not ss:
             flags.append(
@@ -1683,7 +1689,7 @@ def main() -> None:
 
     # ── Stages 4 + 5: Parallel content generation ────────────────────────
     print("[Stage 4+5] Generating course content + diagnostic items in parallel...")
-    print(f"  Agents: 5 course content (Sonnet) + 1 assessment designer (Sonnet)")
+    print(f"  Agents: 7 course content (Sonnet) + 1 assessment designer (Sonnet)")
     print(f"  max_workers=3 (rate-limit safe at ~2 req/s)")
     print()
 
