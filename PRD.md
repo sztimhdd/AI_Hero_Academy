@@ -29,8 +29,8 @@ AI Hero Academy is an internal Databricks App that evaluates, trains, and
 benchmarks employees on AI skills through real-life, job-specific use cases
 and AI coaching powered by Mosaic AI Foundation Models.
 
-The MVP focuses on a single role — Relationship Manager (RM) — and delivers
-a complete learning loop:
+The MVP launched with Relationship Manager (RM) and expanded in v1 to include
+Underwriter (UW). Both roles deliver a complete learning loop:
 
   1. DIAGNOSE the employee's AI skill level through a role-specific assessment
   2. MAP GAPS using AI-generated personalized gap analysis
@@ -148,7 +148,7 @@ Key characteristics relevant to training design:
 3.2 SECONDARY USERS (Post-MVP)
 -------------------------------
 
-3.2.1 UNDERWRITER (UW) — v1 COMPLETE (Feb 2026)
+3.2.1 UNDERWRITER (UW) — COMPLETE (March 2026)
 
   All UW content has been generated and is loaded into the app:
   12 diagnostic items (3 per domain), 5 training courses with
@@ -158,6 +158,9 @@ Key characteristics relevant to training design:
   Welcome page role selection is fully wired (Task 9.4 complete).
   UW users can now onboard — the role selector displays both
   Relationship Manager and Underwriter as options.
+
+  Full end-to-end UW learner journey validated in UAT-13 (2026-03-04,
+  commit a311052). All 13/13 UAT scenarios passed.
 
 3.2.2 OTHER ROLES (Post-MVP)
 
@@ -191,7 +194,7 @@ the organization's actual use cases and policies.
 
   DIMENSION              MVP SCOPE
   ---------------------  ------------------------------------------------
-  Roles supported        1 (Relationship Manager)
+  Roles supported        2 (Relationship Manager, Underwriter)
   Skill domains          4 (Prompting, Verification, Data Safety,
                          Tool Fluency)
   Skill levels           0-4 scale per domain
@@ -733,6 +736,13 @@ sub-module the user is in.
 
 8.1 DOMAINS
 -------------
+
+  NOTE (March 2026): The platform has been extended to a 6-domain
+  architecture for new role content generation (Phase 12 — Hexagon
+  Domain Refactor). New roles use: responsible_ai, strategic_prompting,
+  critical_eval, relationship_intel, data_decision, augmented_comm.
+  Existing RM and UW content retains the original 4-domain model below
+  and remains fully functional.
 
   DOMAIN 1: PROMPTING FOR OUTCOMES
     Structuring AI prompts with context, constraints, format, and

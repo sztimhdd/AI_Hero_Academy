@@ -31,109 +31,59 @@ D) Chats: operational Q&A, pain points, repeated questions, informal process rea
 E) People: job title variants, manager patterns, departments, location distribution (avoid naming individuals in output; use roles and org patterns).
 Also retrieve and incorporate any relevant EDC Responsible/GenAI usage policy constraints that affect the role's work.
 
-OUTPUT FORMAT (STRICT)
-Provide the following sections with bullet points and operational detail. Keep it clean: no hyperlinks, no URLs.
+OUTPUT FORMAT (COMPACT COURSE-DESIGN SEED)
+This profile will be pasted directly into Prompt B (use case mapping) and Prompt C (course design
+brief). Write for downstream consumption, not human reading. Short bullets only — no prose paragraphs.
+No hyperlinks, no URLs.
 
-SECTION 1: ROLE FUNDAMENTALS
-- role_prefix: [2–3 lowercase letters uniquely identifying this role — e.g., "rm" for Relationship Manager, "uw" for Underwriter, "arm" for Associate Relationship Manager, "cs" for Customer Care Specialist. This prefix is used to build course_ids and file names in the generation pipeline.]
+SECTION 1: ROLE IDENTITY
+- role_prefix: [2–3 lowercase letters uniquely identifying this role — e.g., "rm" for Relationship
+  Manager, "uw" for Underwriter, "arm" for Associate Relationship Manager, "cs" for Customer Care
+  Specialist. This prefix is used to build course_ids and file names in the generation pipeline.]
 - Official job title(s) and variants used internally
 - Departments / business units where this role sits (across segments)
 - Reporting lines (what managers/leaders they typically report to — titles/roles, not names)
-- Approximate headcount (only if you can find explicit evidence; otherwise say "not found")
-- Seniority range / levels / sub-levels (only if evidence exists)
+- Seniority range / levels / sub-levels (only if evidence exists; otherwise say "not found")
 
-SECTION 2: CORE RESPONSIBILITIES (8–10)
+SECTION 2: CORE RESPONSIBILITIES (6–8)
 For each responsibility:
 - What they actually do (step-level actions)
-- Frequency (daily/weekly/monthly/quarterly) and any SLAs
-- Inputs they need and where they come from
-- Outputs produced and who depends on them (internal roles + external stakeholders)
-- Systems where the work is recorded (system-of-record)
-- AI opportunity: which of these four skill areas most applies to this responsibility?
+- Frequency (daily/weekly/monthly/quarterly)
+- AI opportunity: which of these four skill areas most applies?
     Prompting for Outcomes | Verification and Judgment | Data Safety and Compliance | Tool Fluency (M365 + Copilot)
   If none clearly apply, say "not applicable."
+[Max 8 responsibilities. 3 bullets per responsibility.]
 
-SECTION 3: DAILY AND WEEKLY WORKFLOWS
-- Typical Monday morning
-- Typical week pattern (cadence, peaks, end-of-week admin)
-- Recurring meetings: what they are, why they happen, what the role does in them
-- Most time-consuming activities
-- Most repetitive tasks
-- Low-value/admin work (and why it exists)
+SECTION 3: WORKFLOW AND TOOLS
+A) Workflow snapshot:
+- Typical week pattern (peaks, recurring rituals, end-of-week admin)
+- Most time-consuming activities (2–3)
+- Most repetitive tasks (2–3)
 
-SECTION 4: TOOLS AND SYSTEMS (COMPREHENSIVE)
-List every tool you find evidence for, grouped by:
-- Microsoft 365 tools
-- CRM(s) and what they do in it
-- Internal platforms/portals
-- Data/reporting tools
-- Any other software
-For each tool: specific usage scenarios, typical artifacts created/updated, and pain points.
+B) Tools in active use:
+- Microsoft 365 tools — list each with the specific scenario this role uses it for
+- CRM(s) — what they do in it (if applicable; otherwise omit)
+- Internal platforms / portals — list each with usage scenario
+- Data / reporting tools — list each with usage scenario
+[Max 30 bullets combined across A and B.]
 
-SECTION 5: DOCUMENTS AND CONTENT
-A) They CREATE regularly:
-- Document type
-- Audience
-- Typical length/format
-- Frequency
-- Source-of-truth location (e.g., CRM record vs. SharePoint vs. email attachment) — describe without links
-
-B) They RECEIVE/READ/ANALYZE regularly:
-- Document type
-- Source
-- What they look for
-- Actions/decisions triggered
-
-SECTION 6: COMMUNICATION AND STAKEHOLDERS
-- Primary internal stakeholders (roles)
-- External stakeholders
-- Most common email types
-- Meetings they lead vs attend
-- Presentations/briefings: for whom and how often
-- Communication tasks that take the most time/effort
-
-SECTION 7: DATA AND INFORMATION HANDLING
-- Types of customer/client data accessed
-- Sensitive/confidential data categories encountered
-- Compliance/regulatory constraints relevant to this role
-- Financial data types handled (if any)
-- PII exposure (if any)
+SECTION 4: DATA AND COMPLIANCE
+- Sensitive data categories this role accesses (types, not specific values)
+- Key compliance / regulatory constraints affecting their work
+- Explicit "safe AI use" boundaries: what must never be entered into GenAI tools for this role
+  (based on EDC Responsible AI policy — be specific)
 - Biggest data-related risks
-- Explicit "safe AI use" boundaries for this role based on EDC policy (what must never be entered into GenAI; human review; transparency expectations)
+[Max 20 bullets.]
 
-SECTION 8: DECISIONS AND JUDGMENT
-- Most important decisions they make
-- Where mistakes have biggest consequences
-- What must be verified before acting
-- Escalation triggers (when they must escalate vs decide)
-- What "good judgment" looks like in observable behaviors
+SECTION 5: PAIN POINTS AND AI OPPORTUNITIES
+- Top manual/repetitive tasks that are candidates for AI acceleration
+- Where AI could create the most value for this role's output quality
+- Bottlenecks this role experiences (handoffs, approvals, data access)
+- If they had 2 extra hours/week: where would it go (only if evidenced; otherwise 2–3 plausible
+  options clearly labeled as "hypotheses")
+[Max 15 bullets.]
 
-SECTION 9: PAIN POINTS AND TIME SINKS
-- Common frustrations (only if evidenced)
-- Manual work candidates for automation/acceleration
-- Bottlenecks and where they occur (handoffs, approvals, systems)
-- If they had 2 extra hours/week: where would it go (only if evidenced; otherwise provide 2–3 plausible options clearly labeled as "hypotheses")
-
-SECTION 10: PERFORMANCE AND SUCCESS METRICS
-- How performance is measured (KPIs/targets/SLAs) — only from evidence
-- Observable behaviors of top performers vs average (only if evidence exists; otherwise label as hypotheses)
-- Valued skills/capabilities
-- Common development areas/skill gaps (only if evidence exists)
-
-SECTION 11: CURRENT AI TOOL USAGE (IF EVIDENCED)
-- Which AI tools are used (Copilot, approved tools)
-- Use cases (what they use it for)
-- What works well
-- What concerns exist (privacy, accuracy, tone, compliance)
-- Any known misuse/risky patterns (only if evidenced)
-
-SECTION 12: REGULATORY AND COMPLIANCE CONTEXT
-- Relevant regulations/standards affecting the role
-- Client communication rules, record-keeping requirements
-- Consequences of compliance failures (only if evidenced)
-- Restrictions on AI use for specific tasks
-
-SECTION 13: AI TRAINING DESIGN SEEDS
+SECTION 6: AI TRAINING DESIGN SEEDS
 Purpose: direct input for scenario-based AI skills training design. Do not skip this section.
 
 A) Operational anchors (6–8 items):
@@ -155,28 +105,33 @@ B) Scenario seeds (3–5 items):
                    the exact mistake. Vague temptations like "use AI without thinking" are not
                    acceptable.]
    Skill_test: [The specific discipline or judgment required to handle this correctly — one sentence.]
-   Domain: [Exactly one of: prompting | verification | data_safety | tool_fluency]
+   Domain: [Exactly one of: responsible_ai | strategic_prompting | critical_eval | relationship_intel | data_decision | augmented_comm]
 
    Do NOT use real client names. Invent plausible ones appropriate to this role's industry context.
 
 C) Domain-to-workflow map (table):
-   For each of the 4 AI skill domains below, list the 2–3 responsibilities or workflow moments
+   For each of the 6 AI skill domains below, list the 2–3 responsibilities or workflow moments
    where that domain would be most tested for this role:
 
    | Domain                          | Highest-Risk / Highest-Value Moments for This Role |
    |---------------------------------|----------------------------------------------------|
-   | Prompting for Outcomes          |                                                    |
-   | Verification and Judgment       |                                                    |
-   | Data Safety and Compliance      |                                                    |
-   | Tool Fluency (M365 + Copilot)   |                                                    |
+   | Responsible AI                  |                                                    |
+   | Strategic Prompting             |                                                    |
+   | Critical Evaluation             |                                                    |
+   | Relationship Intelligence       |                                                    |
+   | Data-Driven Decision Making     |                                                    |
+   | Augmented Communication         |                                                    |
 
 QUALITY BAR / CONSTRAINTS
 - No generic filler. If you can't find specifics, say "not found."
 - Do not include any links or URLs in the output.
 - Do not use individual names; use roles/titles.
-- Use short bullets; avoid long paragraphs.
-- End with a short "Evidence Coverage" section listing which enterprise sources were most useful
-  (e.g., "onboarding guide," "workplan," "job aid," "policy," "meeting transcript") without links.
+- Short bullets only — no prose paragraphs.
+- OUTPUT SIZE TARGET: 15,000–20,000 characters total. Stay within this range.
+  Section caps: S2 max 32 bullets | S3 max 30 bullets | S4 max 20 bullets | S5 max 15 bullets.
+- Section 6 field labels (Company, Trigger, AI_temptation, Skill_test, Domain) are machine-read
+  by the generation pipeline. Do not rename, reorder, or omit them.
+- Do NOT produce an Evidence Coverage section.
 
 NOW DO THE WORK.
 ```

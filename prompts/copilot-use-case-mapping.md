@@ -1,6 +1,6 @@
 # Prompt B — Use Case Mapping
 **Tool:** Microsoft 365 Copilot (regular chat) or Claude Code
-**Purpose:** Filter the EDC use case library to the most relevant cases for the target role, map them to the 4 AI skill domains, and propose course anchors
+**Purpose:** Filter the EDC use case library to the most relevant cases for the target role, map them to the 6 AI skill domains, and propose course anchors
 **Output feeds into:** Course Design Brief → Claude Code content generation
 
 > **Where to run this:**
@@ -15,15 +15,17 @@
 CONTEXT
 You are helping design an AI skills training program for a new role at EDC (Export Development Canada).
 
-The program has 4 fixed skill domains — all roles use the same 4 domains:
-  1. Prompting for Outcomes — structuring AI prompts to produce directly usable outputs
-  2. Verification and Judgment — reviewing AI outputs critically before acting on them
-  3. Data Safety and Compliance — applying the public/non-public test; abstracting sensitive data
-  4. Tool Fluency (M365 + Copilot) — choosing the right Copilot surface and chaining M365 tools
+The program has 6 fixed skill domains — all roles use the same 6 domains:
+  1. Responsible AI — applying the public/non-public test; abstracting sensitive data; AI usage policies
+  2. Strategic Prompting — structuring AI prompts to produce directly usable outputs
+  3. Critical Evaluation — reviewing AI outputs critically before acting on them
+  4. Relationship Intelligence — using AI to strengthen client/stakeholder relationships
+  5. Data-Driven Decision Making — using AI to surface insights and support decisions
+  6. Augmented Communication — using AI to prepare, enhance, and tailor communications
 
-Each role gets 5 courses:
-  - Courses 1–4: one per domain
-  - Course 5: a capstone that integrates all 4 domains in a single realistic workflow
+Each role gets 7 courses:
+  - Courses 1–6: one per domain
+  - Course 7: a capstone that integrates all 6 domains in a single realistic workflow
 
 INPUTS
 Role: [INSERT ROLE TITLE]
@@ -46,14 +48,19 @@ Score relevance:
   LOW / SKIP — unrelated; skip these
 
 Domain mapping (primary domain per use case):
-  → Prompting for Outcomes: drafting, prompt writing, generating structured content,
+  → Responsible AI: inputting client data, non-public information, privacy,
+     data classification, compliance with AI usage policies
+  → Strategic Prompting: drafting, prompt writing, generating structured content,
      research synthesis, preparing outputs for meetings or clients
-  → Verification and Judgment: reviewing AI output, checking accuracy of generated
+  → Critical Evaluation: reviewing AI output, checking accuracy of generated
      text, summaries, recaps before acting on them
-  → Data Safety and Compliance: inputting client data, non-public information,
-     privacy, data classification, compliance with AI usage policies
-  → Tool Fluency (M365 + Copilot): choosing the right Copilot surface, chaining M365
-     tools, multi-step workflows across Outlook / Teams / Excel / Word / SharePoint
+  → Relationship Intelligence: personalising outreach, briefing materials,
+     client intelligence, stakeholder mapping, meeting prep with AI
+  → Data-Driven Decision Making: using AI to analyse data, surface trends,
+     build models or reports, support investment/underwriting decisions
+  → Augmented Communication: drafting emails, presentations, summaries, and
+     communications with AI; choosing the right Copilot surface; chaining M365
+     tools across Outlook / Teams / Word / SharePoint
   → Capstone candidate: spans 2+ domains naturally
 
 Output a compact shortlist of 8–12 HIGH and MEDIUM use cases.
@@ -65,9 +72,9 @@ Format as a table with EXACTLY these columns — no extra columns, no prose in c
 ---
 
 TASK 3 — Propose course anchors
-Based on your table above, recommend which use case best anchors each of the 5 courses.
+Based on your table above, recommend which use case best anchors each of the 7 courses.
 For each course, provide:
-  - course_id: [role_prefix]_c[N]_[domain_id]  — e.g., uw_c1_prompting, uw_c2_verification
+  - course_id: [role_prefix]_c[N]_[domain_id]  — e.g., uw_c1_responsible_ai, uw_c2_strategic_prompting
     (use the role prefix from Section 1 of the Role Intelligence Profile)
   - The use case title (verbatim from the CSV — do not paraphrase)
   - real_use_case: the verbatim use case title(s) from the CSV, exactly as they appear in the
@@ -78,36 +85,50 @@ For each course, provide:
   - A suggested course title (plain language, action-oriented, ~8 words)
 
 Format:
-  Course 1 – Prompting for Outcomes
-    course_id: [role_prefix]_c1_prompting
+  Course 1 – Responsible AI
+    course_id: [role_prefix]_c1_responsible_ai
     Use case: [verbatim title from CSV]
     real_use_case: [verbatim title(s) from CSV — multiple titles separated by semicolons]
     Rationale: [1 sentence]
     Suggested title: [draft course title]
 
-  Course 2 – Verification and Judgment
-    course_id: [role_prefix]_c2_verification
+  Course 2 – Strategic Prompting
+    course_id: [role_prefix]_c2_strategic_prompting
     Use case: [verbatim title from CSV]
     real_use_case: [verbatim title(s) from CSV]
     Rationale: [1 sentence]
     Suggested title: [draft course title]
 
-  Course 3 – Data Safety and Compliance
-    course_id: [role_prefix]_c3_data_safety
+  Course 3 – Critical Evaluation
+    course_id: [role_prefix]_c3_critical_eval
     Use case: [verbatim title from CSV]
     real_use_case: [verbatim title(s) from CSV]
     Rationale: [1 sentence]
     Suggested title: [draft course title]
 
-  Course 4 – Tool Fluency (M365 + Copilot)
-    course_id: [role_prefix]_c4_tool_fluency
+  Course 4 – Relationship Intelligence
+    course_id: [role_prefix]_c4_relationship_intel
     Use case: [verbatim title from CSV]
     real_use_case: [verbatim title(s) from CSV]
     Rationale: [1 sentence]
     Suggested title: [draft course title]
 
-  Course 5 – Capstone
-    course_id: [role_prefix]_c5_capstone
+  Course 5 – Data-Driven Decision Making
+    course_id: [role_prefix]_c5_data_decision
+    Use case: [verbatim title from CSV]
+    real_use_case: [verbatim title(s) from CSV]
+    Rationale: [1 sentence]
+    Suggested title: [draft course title]
+
+  Course 6 – Augmented Communication
+    course_id: [role_prefix]_c6_augmented_comm
+    Use case: [verbatim title from CSV]
+    real_use_case: [verbatim title(s) from CSV]
+    Rationale: [1 sentence]
+    Suggested title: [draft course title]
+
+  Course 7 – Capstone
+    course_id: [role_prefix]_c7_capstone
     Use case(s): [verbatim title(s) from CSV]
     real_use_case: [verbatim title(s) from CSV — all titles used, semicolon-separated]
     Rationale: [1 sentence explaining which domains it integrates and how]
@@ -120,9 +141,9 @@ For any domain where no use case in the shortlist is a strong fit, flag it expli
 
   "Domain [X]: No strong use case match found in the library.
    Recommend synthesizing a scenario directly from the role profile.
-   Suggested scenario seed: [1–2 sentences based on Section 13B of the role profile]."
+   Suggested scenario seed: [1–2 sentences based on Section 6B of the role profile (AI Training Design Seeds)]."
 
-If all 4 domains are covered, say: "All domains covered. No synthesis needed."
+If all 6 domains are covered, say: "All domains covered. No synthesis needed."
 
 ---
 

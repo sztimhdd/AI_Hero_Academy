@@ -97,24 +97,36 @@ if args.role:
 
 # ── Seed: --diag ─────────────────────────────────────────────────────────────
 
+# DOMAIN REFACTOR NOTE (2026-03):
+# After the hexagon domain refactor, domain_scores JSON columns store 6 new domain IDs:
+#   responsible_ai, strategic_prompting, critical_eval,
+#   relationship_intel, data_decision, augmented_comm
+# Any diagnostic_sessions rows created before this refactor contain 4 old keys
+# (prompting, verification, data_safety, tool_fluency) and will produce incorrect
+# scores on the Skills Profile page.
+# For dev/UAT: use this script to reset the test user (handles full row deletion).
+# For production: a data migration is out of scope for MVP.
+
 if args.diag:
     now = datetime.now(timezone.utc).isoformat()
     session_id = str(uuid.uuid4())
     gap_map_id = str(uuid.uuid4())
 
     domain_scores = {
-        "prompting": 1.5,
-        "verification": 1.0,
-        "data_safety": 2.0,
-        "tool_fluency": 1.5,
+        "responsible_ai":      2.0,
+        "strategic_prompting": 1.5,
+        "critical_eval":       1.0,
+        "relationship_intel":  1.5,
+        "data_decision":       2.0,
+        "augmented_comm":      1.5,
     }
-    overall_score = 1.5
+    overall_score = round(sum(domain_scores.values()) / len(domain_scores), 2)
 
     # Canned bullets: one per gap/borderline domain (ordered by priority)
     bullets = json.dumps([
-        "Verification (1.0): Practise reviewing AI outputs for accuracy and completeness before sharing with clients — challenge AI-generated summaries with at least one follow-up prompt.",
-        "Prompting (1.5): Build more structured, context-rich prompts for complex RM scenarios — include client context, desired output format, and explicit constraints.",
-        "Tool Fluency (1.5): Explore AI tool integrations for client research and CRM workflows — experiment with chaining tools to reduce manual steps.",
+        "Critical Evaluation (1.0): Practise reviewing AI outputs for accuracy before acting — challenge AI-generated summaries with at least one verification step.",
+        "Strategic Prompting (1.5): Build more structured, context-rich prompts for your workflows — include client context, desired output format, and explicit constraints.",
+        "Relationship Intelligence (1.5): Explore using AI to prepare personalised client briefings and surface relationship patterns across your portfolio.",
     ])
 
     execute(

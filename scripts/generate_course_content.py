@@ -12,9 +12,9 @@ Pipeline stages:
     Stage 1  — Brief Parser Agent (Haiku)
     Stage 2  — Structural Generator (Haiku): roles.json, domains.json, courses.json
     Stage 3  — QA Gap Check (Sonnet): quality gate; prints follow-up prompt if gaps found
-    Stage 4  — Course Content Agents x5 (Sonnet, parallel): reading + practice scenario
-    Stage 5  — Assessment Designer (Sonnet, parallel with Stage 4): 12 diagnostic items
-    Stage 6  — Evaluation Designer (Sonnet, sequential after Stage 4): 20 eval items
+    Stage 4  — Course Content Agents x7 (Sonnet, parallel): reading + practice scenario
+    Stage 5  — Assessment Designer (Sonnet, parallel with Stage 4): 18 diagnostic items
+    Stage 6  — Evaluation Designer (Sonnet, sequential after Stage 4): 28 eval items
     Stage 7  — Final QA Agent (Sonnet): cross-validation
     Stage 8  — Assemble & Write: merge into existing content/ JSON files atomically
 """
@@ -53,16 +53,23 @@ HAIKU_ENDPOINT = os.environ.get("HAIKU_ENDPOINT", "databricks-claude-haiku-4-5")
 CONTENT_DIR = Path(__file__).parent.parent / "content"
 PARALLEL_TIMEOUT_SECONDS = 300
 
-DOMAIN_IDS = ["prompting", "verification", "data_safety", "tool_fluency"]
+DOMAIN_IDS = [
+    "responsible_ai",
+    "strategic_prompting",
+    "critical_eval",
+    "relationship_intel",
+    "data_decision",
+    "augmented_comm",
+]
 
 # max_tokens budget per agent (Databricks default is 1,000 — must be set explicitly)
 MAX_TOKENS = {
     "parser": 6000,   # each of the 3 parallel parser calls uses this; Haiku stays within 60s timeout
-    "structural": 6000,  # 4 domains × 11 level fields + 5 courses generates ~3-5k tokens
+    "structural": 9000,  # 6 domains × 11 level fields + 7 courses generates ~6-8k tokens
     "qa": 2000,
     "course_content": 6000,
-    "assessment": 7000,   # 12 items × ~500 tokens/item; extra headroom for rubric detail
-    "evaluation": 8000,   # 20 items × ~400 tokens/item; performance tasks are verbose
+    "assessment": 12000,  # 18 items × ~500 tokens/item
+    "evaluation": 14000,  # 28 items × ~400 tokens/item; performance tasks are verbose
     "final_qa": 2000,
 }
 
@@ -329,11 +336,11 @@ Output schema:
 {
   "role_prefix": string | null,
   "role_display_name": string | null,
-  "company_map": {"1": string, "2": string, "3": string, "4": string, "5": string} | null,
-  "framework_names": [string, string, string, string, string] | null,
-  "real_use_cases": {"1": string, "2": string, "3": string, "4": string, "5": string} | null,
+  "company_map": {"1": string, "2": string, "3": string, "4": string, "5": string, "6": string, "7": string} | null,
+  "framework_names": [string, string, string, string, string, string] | null,
+  "real_use_cases": {"1": string, "2": string, "3": string, "4": string, "5": string, "6": string, "7": string} | null,
   "domain_seeds": {
-    "prompting": {
+    "responsible_ai": {
       "description": string,
       "level_0_label": string, "level_0_descriptor": string,
       "level_1_label": string, "level_1_descriptor": string,
@@ -341,14 +348,17 @@ Output schema:
       "level_3_label": string, "level_3_descriptor": string,
       "level_4_label": string, "level_4_descriptor": string
     } | null,
-    "verification": {same shape} | null,
-    "data_safety": {same shape} | null,
-    "tool_fluency": {same shape} | null
+    "strategic_prompting": {same shape} | null,
+    "critical_eval": {same shape} | null,
+    "relationship_intel": {same shape} | null,
+    "data_decision": {same shape} | null,
+    "augmented_comm": {same shape} | null
   },
   "course_seeds": {
     "1": {"title": string, "tagline": string, "description": string,
           "real_use_case": string, "primary_domain": string} | null,
-    "2": {same} | null, "3": {same} | null, "4": {same} | null, "5": {same} | null
+    "2": {same} | null, "3": {same} | null, "4": {same} | null,
+    "5": {same} | null, "6": {same} | null, "7": {same} | null
   }
 }
 
@@ -432,7 +442,7 @@ For fields not found, use null. Return ONLY a valid JSON object in a ```json ```
 Output schema:
 {
   "diagnostic_seeds": {
-    "prompting": [
+    "responsible_ai": [
       {
         "item_type": string,
         "question_text": string,
@@ -442,9 +452,11 @@ Output schema:
         "rubric_criteria": [string] | null
       }
     ] | null,
-    "verification": [same item shape] | null,
-    "data_safety": [same item shape] | null,
-    "tool_fluency": [same item shape] | null
+    "strategic_prompting": [same item shape] | null,
+    "critical_eval": [same item shape] | null,
+    "relationship_intel": [same item shape] | null,
+    "data_decision": [same item shape] | null,
+    "augmented_comm": [same item shape] | null
   },
   "evaluation_seeds": {
     "1": [
@@ -566,17 +578,17 @@ def generate_structural_json(spec: dict) -> tuple[dict, dict]:
     # Compact few-shot snippets to stay within context budget
     rm_role_ex = json.dumps({"rm": rm_roles.get("rm", {})}, indent=2)[:400]
     rm_domain_ex = json.dumps(
-        {"prompting": rm_domains.get("rm_prompting", {})}, indent=2
+        {"responsible_ai": rm_domains.get("rm_responsible_ai", {})}, indent=2
     )[:600]
     rm_course_ex = json.dumps(
-        {"rm_c1_prompting": rm_courses.get("rm_c1_prompting", {})}, indent=2
+        {"rm_c1_responsible_ai": rm_courses.get("rm_c1_responsible_ai", {})}, indent=2
     )[:500]
 
     # Derive domain IDs from brief spec (fall back to RM defaults so RM still works)
     spec_domain_ids = list(spec.get("domain_seeds", {}).keys()) or DOMAIN_IDS
     spec_domains_str = ", ".join(spec_domain_ids)
-    # Capstone primary_domain = first domain (closest to prompting/foundational skill)
-    capstone_primary_domain = spec_domain_ids[0] if spec_domain_ids else "prompting"
+    # Capstone primary_domain = first domain (foundational skill)
+    capstone_primary_domain = spec_domain_ids[0] if spec_domain_ids else "responsible_ai"
     domain_entries_hint = ", ".join(f'"{d}": {{...}}' for d in spec_domain_ids)
 
     system_prompt = f"""\
@@ -690,7 +702,7 @@ Requirements:
 
 
 def _validate_course_id(course_id: str, role_prefix: str) -> bool:
-    pattern = rf"^{re.escape(role_prefix)}_c[1-5]_\w+$"
+    pattern = rf"^{re.escape(role_prefix)}_c[1-7]_\w+$"
     return bool(re.match(pattern, course_id))
 
 
@@ -718,7 +730,7 @@ def qa_gap_check(spec: dict, structural: dict) -> tuple[bool, list[dict]]:
         )
 
     company_map = spec.get("company_map") or {}
-    for i in range(1, 6):
+    for i in range(1, 8):
         val = company_map.get(str(i)) or company_map.get(i)
         if not val:
             flags.append(
@@ -730,7 +742,7 @@ def qa_gap_check(spec: dict, structural: dict) -> tuple[bool, list[dict]]:
             )
 
     real_use_cases = spec.get("real_use_cases") or {}
-    for i in range(1, 6):
+    for i in range(1, 8):
         val = real_use_cases.get(str(i)) or real_use_cases.get(i)
         if not val:
             flags.append(
@@ -1097,12 +1109,12 @@ Write production-quality content. Requirements:
 
 
 # ---------------------------------------------------------------------------
-# Stage 5 — Assessment Designer (12 diagnostic items, parallel with Stage 4)
+# Stage 5 — Assessment Designer (18 diagnostic items, parallel with Stage 4)
 # ---------------------------------------------------------------------------
 
 
 def generate_diagnostic_items(spec: dict, shared_context: dict) -> list[dict]:
-    """Generate 12 diagnostic items: 3 per domain (MCQ + prompt_sandbox + micro_task)."""
+    """Generate 18 diagnostic items: 3 per domain × 6 domains (MCQ + prompt_sandbox + micro_task)."""
     try:
         rm_diag = json.loads(
             (CONTENT_DIR / "diagnostic_items.json").read_text(encoding="utf-8")
@@ -1135,8 +1147,8 @@ PER DOMAIN: exactly 3 items — Item 1 (mcq), Item 2 (prompt_sandbox), Item 3 (m
 
 ITEM ID PATTERN: {shared_context["role_prefix"]}_diag_<abbrev><N>_<type>
   Domains for this role: {', '.join(domain_ids)}
-  Use first 1–3 letters of the domain_id as abbreviation (e.g. "prompting" → "p", "risk_assessment" → "ra").
-  Example pattern: {shared_context["role_prefix"]}_diag_p1_mcq, {shared_context["role_prefix"]}_diag_v2_sandbox, {shared_context["role_prefix"]}_diag_ra3_task
+  Use first 1–3 letters of the domain_id as abbreviation (e.g. "responsible_ai" → "ra", "strategic_prompting" → "sp").
+  Example pattern: {shared_context["role_prefix"]}_diag_ra1_mcq, {shared_context["role_prefix"]}_diag_sp2_sandbox, {shared_context["role_prefix"]}_diag_ce3_task
 
 CONTENT CONSTRAINTS:
 - Use fictional company names only. No real companies, no real EDC clients.
@@ -1149,13 +1161,13 @@ FEW-SHOT EXAMPLE (RM role):
 
 Return ONLY a valid JSON object inside a fenced json code block. No text outside the block.
 
-Output: {{"items": [<12 item objects>]}}
+Output: {{"items": [<18 item objects>]}}
 Order: {domain_order_hint}.
 Each item: {{item_id, domain_id, item_type, display_order, question_text, scenario_text,
              options, correct_option, scoring_rubric}}"""
 
     user_prompt = f"""\
-Generate 12 diagnostic items for:
+Generate 18 diagnostic items for:
 
 role: {shared_context["role_display_name"]}
 role_prefix: {shared_context["role_prefix"]}
@@ -1179,17 +1191,17 @@ Items must test concepts genuinely relevant to this role's work, not generic AI 
         )
         result = extract_json(raw)
         items = result if isinstance(result, list) else result.get("items", [])
-        if len(items) >= 12:
+        if len(items) >= 18:
             return items
         print(
-            f"  [diagnostic retry {attempt}/3] Got {len(items)} items, expected 12 — retrying..."
+            f"  [diagnostic retry {attempt}/3] Got {len(items)} items, expected 18 — retrying..."
         )
-    print(f"  WARNING: Could not generate 12 diagnostic items after 3 attempts; got {len(items)}")
+    print(f"  WARNING: Could not generate 18 diagnostic items after 3 attempts; got {len(items)}")
     return items
 
 
 # ---------------------------------------------------------------------------
-# Stage 6 — Evaluation Designer (20 items, sequential after Stage 4)
+# Stage 6 — Evaluation Designer (28 items, sequential after Stage 4)
 # ---------------------------------------------------------------------------
 
 
@@ -1198,7 +1210,7 @@ def generate_evaluation_items(
     spec: dict,
     shared_context: dict,
 ) -> list[dict]:
-    """Generate 20 evaluation items: 4 per course (3 MCQ + 1 performance_task).
+    """Generate 28 evaluation items: 4 per course × 7 courses (3 MCQ + 1 performance_task).
 
     Runs after Stage 4 so it can align MCQs with what the reading concepts teach.
     """
@@ -1210,7 +1222,7 @@ def generate_evaluation_items(
         print(f"  WARNING: Could not load RM evaluation examples: {e}")
         rm_eval = {}
     rm_eval_ex_list = (
-        rm_eval.get("rm_c1_prompting", [])
+        rm_eval.get("rm_c1_responsible_ai", [])
         if isinstance(rm_eval, dict)
         else []
     )
@@ -1251,13 +1263,13 @@ FEW-SHOT EXAMPLE (RM role):
 
 Return ONLY a valid JSON object inside a fenced json code block. No text outside the block.
 
-Output: {{"items": [<20 item objects>]}}
-Order: all 4 items for Course 1 first, then Course 2, ..., Course 5.
+Output: {{"items": [<28 item objects>]}}
+Order: all 4 items for Course 1 first, then Course 2, ..., Course 7.
 Each item: {{item_id, course_id, item_type, sequence, question_text, scenario_text,
              options, correct_option, explanation, scoring_rubric}}"""
 
     user_prompt = f"""\
-Generate 20 evaluation items for:
+Generate 28 evaluation items for:
 
 role: {shared_context["role_display_name"]}
 role_prefix: {shared_context["role_prefix"]}
@@ -1286,12 +1298,12 @@ requiring the learner to apply the full course concept from scratch."""
         )
         result = extract_json(raw)
         items = result if isinstance(result, list) else result.get("items", [])
-        if len(items) >= 20:
+        if len(items) >= 28:
             return items
         print(
-            f"  [evaluation retry {attempt}/3] Got {len(items)} items, expected 20 — retrying..."
+            f"  [evaluation retry {attempt}/3] Got {len(items)} items, expected 28 — retrying..."
         )
-    print(f"  WARNING: Could not generate 20 evaluation items after 3 attempts; got {len(items)}")
+    print(f"  WARNING: Could not generate 28 evaluation items after 3 attempts; got {len(items)}")
     return items
 
 
@@ -1321,7 +1333,7 @@ def final_qa(
 
     # Validate company uniqueness
     seen_companies: dict[str, int] = {}
-    for pos in range(1, 6):
+    for pos in range(1, 8):
         company = shared_context["company_map"].get(pos, "")
         if company:
             if company in seen_companies:
@@ -1334,9 +1346,9 @@ def final_qa(
 
     # Validate diagnostic item count
     diag_items = all_outputs.get("diagnostic_items", [])
-    if len(diag_items) != 12:
+    if len(diag_items) != 18:
         issues.append(
-            f"Expected 12 diagnostic items, got {len(diag_items)}"
+            f"Expected 18 diagnostic items, got {len(diag_items)}"
         )
     else:
         domain_counts: dict[str, int] = {}
@@ -1351,8 +1363,8 @@ def final_qa(
 
     # Validate evaluation item count
     eval_items = all_outputs.get("evaluation_items", [])
-    if len(eval_items) != 20:
-        issues.append(f"Expected 20 evaluation items, got {len(eval_items)}")
+    if len(eval_items) != 28:
+        issues.append(f"Expected 28 evaluation items, got {len(eval_items)}")
 
     # Skip LLM check if there are structural failures
     if issues:
@@ -1472,8 +1484,8 @@ def assemble_and_write(
     new_roles = dict(existing_roles)
     new_roles.update(structural.get("role_entry", {}))
 
-    # domains.json — Stage 2 generates flat keys ("prompting", "verification", …).
-    # Prefix them with role_prefix to produce role-scoped keys ("uw_prompting", …)
+    # domains.json — Stage 2 generates flat keys ("responsible_ai", "strategic_prompting", …).
+    # Prefix them with role_prefix to produce role-scoped keys ("uw_responsible_ai", …)
     # before merging, so entries from different roles never collide.
     existing_domains = json.loads(
         (content_dir / "domains.json").read_text(encoding="utf-8")
@@ -1573,12 +1585,12 @@ def assemble_and_write(
     print()
     print("Entries added:")
     print(f"  roles.json              +1  (role: {role_prefix})")
-    print(f"  domains.json            +4  (all 4 domains for {role_prefix})")
-    print(f"  courses.json            +5  ({role_prefix}_c1 through {role_prefix}_c5)")
-    print(f"  reading_content.json    +5")
-    print(f"  practice_scenarios.json +5")
-    print(f"  diagnostic_items.json  +12")
-    print(f"  evaluation_items.json  +20  (5 course groups)")
+    print(f"  domains.json            +6  (all 6 domains for {role_prefix})")
+    print(f"  courses.json            +7  ({role_prefix}_c1 through {role_prefix}_c7)")
+    print(f"  reading_content.json    +7")
+    print(f"  practice_scenarios.json +7")
+    print(f"  diagnostic_items.json  +18")
+    print(f"  evaluation_items.json  +28  (7 course groups)")
     print()
     print("NEXT STEP: Deploy the updated app bundle so the new content/ JSON files are served.")
     print("  bash scripts/sync_deploy.sh")
@@ -1682,8 +1694,8 @@ def main() -> None:
         with ThreadPoolExecutor(max_workers=3) as executor:
             future_map: dict = {}
 
-            # Submit 5 course content agents
-            for pos in range(1, 6):
+            # Submit 7 course content agents
+            for pos in range(1, 8):
                 f = executor.submit(generate_course_content, pos, spec, shared_context)
                 future_map[f] = pos
                 cid = shared_context["course_id_map"].get(pos, f"course_{pos}")
@@ -1693,7 +1705,7 @@ def main() -> None:
             # Submit assessment designer
             diag_future = executor.submit(generate_diagnostic_items, spec, shared_context)
             future_map[diag_future] = "diagnostics"
-            print(f"  → Submitted: Diagnostic items (12 items)")
+            print(f"  → Submitted: Diagnostic items (18 items)")
             print()
 
             for future in as_completed(future_map, timeout=PARALLEL_TIMEOUT_SECONDS * 2):
