@@ -1,8 +1,11 @@
 import os
+import re
 from databricks.sdk import WorkspaceClient
 from databricks.sdk.service.sql import StatementParameterListItem
 
 _client = None
+
+_DML_RE = re.compile(r"^\s*(INSERT|UPDATE|DELETE|MERGE)\b", re.IGNORECASE)
 
 
 def _get_client() -> WorkspaceClient:
@@ -12,17 +15,22 @@ def _get_client() -> WorkspaceClient:
     return _client
 
 
-def execute(statement: str, parameters: list = None) -> list[dict]:
+def _is_demo_mode() -> bool:
+    try:
+        import streamlit as st
+        return bool(st.session_state.get("demo_mode"))
+    except Exception:
+        return False
+
+
+def _raw_execute(statement: str, parameters: list = None) -> list[dict]:
     """
-    Execute a SQL statement and return rows as list of dicts.
-    parameters: list of values, substituted positionally using ? placeholders.
-    Internally converts ? to :p1, :p2, ... for the Databricks named-parameter API.
+    Execute a SQL statement without demo-mode suppression.
+    Used exclusively by demo seeding in utils/demo.py.
     """
     w = _get_client()
     wh_id = os.environ.get("DATABRICKS_WAREHOUSE_ID", "eaa098820703bf5f")
 
-    # Databricks Statement Execution API requires named params (:p1, :p2, ...).
-    # Replace each ? placeholder with the corresponding :pN token.
     if parameters:
         for i in range(len(parameters)):
             statement = statement.replace("?", f":p{i + 1}", 1)
@@ -49,6 +57,19 @@ def execute(statement: str, parameters: list = None) -> list[dict]:
     for row in (data or []):
         rows.append(dict(zip(cols, row)))
     return rows
+
+
+def execute(statement: str, parameters: list = None) -> list[dict]:
+    """
+    Execute a SQL statement and return rows as list of dicts.
+    parameters: list of values, substituted positionally using ? placeholders.
+    Internally converts ? to :p1, :p2, ... for the Databricks named-parameter API.
+
+    In demo mode, all DML (INSERT/UPDATE/DELETE/MERGE) is suppressed silently.
+    """
+    if _is_demo_mode() and _DML_RE.match(statement):
+        return []
+    return _raw_execute(statement, parameters)
 
 
 def query_one(statement: str, parameters: list = None) -> dict | None:

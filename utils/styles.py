@@ -676,6 +676,22 @@ tr:last-child td {{ border-bottom: none; }}
 """, unsafe_allow_html=True)
 
     if os.environ.get("LOCAL_UAT") == "true":
+        # Detect ?demo=true on ANY page URL and initialize demo mode session state
+        if (
+            st.query_params.get("demo") == "true"
+            and not st.session_state.get("demo_mode")
+        ):
+            from utils.demo import DEMO_PROFILES, DEFAULT_PROFILE, ensure_demo_seeded
+            profile_id = st.query_params.get("profile", DEFAULT_PROFILE)
+            if profile_id not in DEMO_PROFILES:
+                profile_id = DEFAULT_PROFILE
+            st.session_state["demo_mode"] = True
+            st.session_state["demo_profile_id"] = profile_id
+            ensure_demo_seeded(profile_id)
+            for key in ["user_email", "user_state", "role_id"]:
+                st.session_state.pop(key, None)
+            st.rerun()
+
         _uat_email = os.environ.get("DEV_USER_EMAIL", "dev@example.com")
         st.sidebar.markdown(
             f"""<div style="background:rgba(245,166,35,0.10);border:1px solid #F5A623;"""
@@ -686,6 +702,32 @@ tr:last-child td {{ border-bottom: none; }}
             f"""</div>""",
             unsafe_allow_html=True,
         )
+
+    if os.environ.get("LOCAL_UAT") == "true" and st.session_state.get("demo_mode"):
+        from utils.demo import DEMO_PROFILES, DEFAULT_PROFILE, ensure_demo_seeded
+        with st.sidebar:
+            st.markdown("**🎭 Demo Mode**")
+            profile_labels = {pid: p["label"] for pid, p in DEMO_PROFILES.items()}
+            current_id = st.session_state.get("demo_profile_id", DEFAULT_PROFILE)
+            selected_label = st.selectbox(
+                "Demo profile",
+                options=list(profile_labels.values()),
+                index=list(profile_labels.keys()).index(current_id),
+                key="demo_profile_select",
+                label_visibility="collapsed",
+            )
+            selected_id = next(k for k, v in profile_labels.items() if v == selected_label)
+            if selected_id != current_id:
+                ensure_demo_seeded(selected_id)
+                keys_to_clear = [
+                    k for k in st.session_state
+                    if k not in ("demo_mode", "demo_profile_id", "demo_profile_select")
+                ]
+                for k in keys_to_clear:
+                    del st.session_state[k]
+                st.session_state["demo_profile_id"] = selected_id
+                st.rerun()
+            st.divider()
 
 
 def section_header(label: str):

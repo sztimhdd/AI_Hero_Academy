@@ -23,6 +23,8 @@ st.set_page_config(
 inject_global_css()
 
 CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
+# Note: demo mode detection + sidebar dropdown are handled by inject_global_css()
+# (called above), which runs on every page and detects ?demo=true from any URL.
 
 
 def get_user_state(user_email: str) -> tuple[str, str | None]:
