@@ -5,7 +5,6 @@ Sub-views controlled by st.session_state["active_submodule"]:
   overview | reading | practice | evaluation | results
 """
 
-import re
 import json
 import uuid
 import os
@@ -207,6 +206,17 @@ if active_sub == "overview":
         {"label": "Quiz",     "state": _step(eval_done,     practice_done and not eval_done)},
     ])
 
+    with st.expander("About this module", expanded=False):
+        domain_display = DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain)
+        st.caption(f"📍 Domain: {domain_display}")
+        st.markdown(
+            "| Step | Format | Est. time |\n"
+            "|------|--------|-----------|\n"
+            "| Read | Article + callouts | ~5 min |\n"
+            "| Practice | AI coach conversation (4 tasks) | ~10–15 min |\n"
+            "| Quiz | 3 MCQ + 1 written response | ~5 min |"
+        )
+
     if eval_done:
         if st.button("Review Results →", type="primary"):
             st.session_state["active_submodule"] = "results"
@@ -229,6 +239,9 @@ if active_sub == "overview":
 # READING
 # ═══════════════════════════════════════════════════════════════════════════════
 elif active_sub == "reading":
+    if "reading_section_idx" not in st.session_state:
+        st.session_state.reading_section_idx = 0
+
     st.markdown(f'<div class="question-counter">Module {seq_order} · Reading</div>', unsafe_allow_html=True)
     st.title(course_title)
     step_progress_strip([
@@ -244,48 +257,72 @@ elif active_sub == "reading":
             st.rerun()
         st.stop()
 
-    def _md(text: str) -> str:
-        t = (text or "").replace("\n", "<br>")
-        return re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', t)
+    SECTION_TOTAL = 4
+    section_idx = st.session_state.reading_section_idx
 
-    section_header("CONCEPT")
-    st.markdown(f'<div class="reading-concept">{_md(reading.get("concept_text",""))}</div>', unsafe_allow_html=True)
+    section_steps = [
+        {"label": lbl, "state": ("done" if i < section_idx else ("current" if i == section_idx else "pending"))}
+        for i, lbl in enumerate(["Concept", "Example", "Pitfall", "Takeaway"])
+    ]
+    step_progress_strip(section_steps)
 
-    if reading.get("good_example"):
-        st.success(f"**Good Example**\n\n{reading['good_example']}")
+    _, content_col, _ = st.columns([1, 4, 1])
+    with content_col:
+        st.caption(f"SECTION {section_idx + 1} OF {SECTION_TOTAL}")
+        if section_idx == 0:
+            concept_text = reading.get("concept_text", "")
+            if concept_text:
+                with st.container(border=True):
+                    st.markdown(concept_text)
+        elif section_idx == 1:
+            if reading.get("good_example"):
+                st.success(f"**Good example** — {reading['good_example']}")
+        elif section_idx == 2:
+            if reading.get("anti_pattern"):
+                st.warning(f"**Common mistake** — {reading['anti_pattern']}")
+        elif section_idx == 3:
+            if reading.get("takeaway"):
+                st.info(f"**Key takeaway** — {reading['takeaway']}")
 
-    if reading.get("anti_pattern"):
-        st.error(f"**Common Mistake**\n\n{reading['anti_pattern']}")
+    def _section_next():
+        st.session_state.reading_section_idx = min(st.session_state.reading_section_idx + 1, SECTION_TOTAL - 1)
 
-    if reading.get("takeaway"):
-        st.info(f"**Key Takeaway**\n\n{reading['takeaway']}")
+    def _section_prev():
+        st.session_state.reading_section_idx = max(st.session_state.reading_section_idx - 1, 0)
 
-    col_back, col_cta = st.columns([1, 2])
-    with col_back:
-        if st.button("← Overview"):
-            st.session_state["active_submodule"] = "overview"
-            st.rerun()
-    with col_cta:
-        if st.button("I've read this — Start Practice →", use_container_width=True, type="primary"):
-            try:
-                execute(
-                    f"UPDATE {CATALOG}.learner.training_progress "
-                    f"SET reading_completed_at = current_timestamp() "
-                    f"WHERE progress_id = ? AND reading_completed_at IS NULL",
-                    [progress_id],
-                )
-            except Exception as e:
-                st.error(f"Could not save progress.\n\n_{e}_")
-                st.stop()
-            st.session_state.update({
-                "coach_messages": [],
-                "practice_task_idx": 0,
-                "practice_turns": 0,
-                "task_turn_counts": {0: 0, 1: 0, 2: 0, 3: 0},
-                "practice_started_at": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
-                "active_submodule": "practice",
-            })
-            st.rerun()
+    nav_l, _, nav_r = st.columns([1, 6, 1])
+    with nav_l:
+        st.button(
+            "← Back",
+            on_click=_section_prev,
+            disabled=(section_idx == 0),
+            use_container_width=True,
+        )
+    with nav_r:
+        if section_idx < SECTION_TOTAL - 1:
+            st.button("Next →", on_click=_section_next, type="primary", use_container_width=True)
+        else:
+            if st.button("Mark Reading Complete →", key="r_complete", type="primary", use_container_width=True):
+                try:
+                    execute(
+                        f"UPDATE {CATALOG}.learner.training_progress "
+                        f"SET reading_completed_at = current_timestamp() "
+                        f"WHERE progress_id = ? AND reading_completed_at IS NULL",
+                        [progress_id],
+                    )
+                except Exception as e:
+                    st.error(f"Could not save progress.\n\n_{e}_")
+                    st.stop()
+                st.session_state.pop("reading_section_idx", None)
+                st.session_state.update({
+                    "coach_messages": [],
+                    "practice_task_idx": 0,
+                    "practice_turns": 0,
+                    "task_turn_counts": {0: 0, 1: 0, 2: 0, 3: 0},
+                    "practice_started_at": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+                    "active_submodule": "practice",
+                })
+                st.rerun()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -329,14 +366,11 @@ elif active_sub == "practice":
         {"label": "Quiz", "state": "pending"},
     ])
 
-    st.warning(
-        "⚠️ Navigating away via the sidebar or breadcrumb will end your session "
-        "without saving your practice conversation."
-    )
+    st.caption("ℹ️ Navigating away will end this practice session. Use **Complete Practice →** to save your progress.")
 
-    section_header("SCENARIO")
     scenario_html = (scenario.get("scenario_text") or "").replace("\n", "<br>")
-    st.markdown(f'<div class="scenario-box">{scenario_html}</div>', unsafe_allow_html=True)
+    with st.expander("📋 Scenario", expanded=(len(messages) == 0)):
+        st.markdown(f'<div class="scenario-box">{scenario_html}</div>', unsafe_allow_html=True)
 
     # Turn limit reached
     if total_turns >= MAX_TOTAL_TURNS:
@@ -361,6 +395,12 @@ elif active_sub == "practice":
 
     current_task_text = tasks[task_idx]
     current_task_turns = int(task_turns.get(task_idx, 0))
+
+    task_steps = [
+        {"label": f"Task {t + 1}", "state": ("done" if t < task_idx else ("current" if t == task_idx else "pending"))}
+        for t in range(4)
+    ]
+    step_progress_strip(task_steps)
 
     section_header(f"TASK {task_idx + 1} OF 4")
     st.markdown(f'<div class="question-text">{current_task_text}</div>', unsafe_allow_html=True)
@@ -398,31 +438,30 @@ elif active_sub == "practice":
     waiting_for_user = last_role != "user"
 
     if not waiting_for_user:
-        # Coach just replied — show navigation buttons
-        col_nxt, col_done = st.columns([1, 1])
-        with col_nxt:
-            if task_idx < 3:
-                if st.button("Next Task →", key="p_next", type="primary"):
-                    new_tt = dict(task_turns)
-                    new_tt[task_idx + 1] = 0
-                    st.session_state["practice_task_idx"] = task_idx + 1
-                    st.session_state["task_turn_counts"] = new_tt
-                    st.rerun()
-            else:
-                if st.button("Complete Practice →", key="p_complete_final", type="primary"):
-                    do_complete_practice(progress_id, messages, total_turns)
-        with col_done:
-            if task_idx < 3:
-                if st.button("Complete Practice Early →", key="p_complete_early"):
-                    do_complete_practice(progress_id, messages, total_turns)
-    else:
-        # Waiting for user — show skip option
-        if st.button("Skip this task →", use_container_width=False, key="p_skip"):
-            new_tt = dict(task_turns)
-            new_tt[task_idx + 1] = 0
-            st.session_state["practice_task_idx"] = task_idx + 1
-            st.session_state["task_turn_counts"] = new_tt
-            st.rerun()
+        # Coach just replied — show primary CTA
+        if task_idx < 3:
+            if st.button("Next Task →", key="p_next", type="primary"):
+                new_tt = dict(task_turns)
+                new_tt[task_idx + 1] = 0
+                st.session_state["practice_task_idx"] = task_idx + 1
+                st.session_state["task_turn_counts"] = new_tt
+                st.rerun()
+        else:
+            if st.button("Complete Practice →", key="p_complete_final", type="primary"):
+                do_complete_practice(progress_id, messages, total_turns)
+
+    # Secondary actions — always accessible via popover
+    with st.popover("⋯ More options"):
+        if waiting_for_user and task_idx < 3:
+            if st.button("Skip this task", key="p_skip_pop"):
+                new_tt = dict(task_turns)
+                new_tt[task_idx + 1] = 0
+                st.session_state["practice_task_idx"] = task_idx + 1
+                st.session_state["task_turn_counts"] = new_tt
+                st.rerun()
+        if task_idx < 3:
+            if st.button("Complete Practice Early", key="p_early_pop"):
+                do_complete_practice(progress_id, messages, total_turns)
 
     # Native chat input pinned to page bottom (only rendered when waiting for user)
     if waiting_for_user:
@@ -569,11 +608,7 @@ elif active_sub == "evaluation":
             st.session_state.pop(k, None)
         st.rerun()
 
-    st.markdown(
-        f'<div class="question-counter">Module {seq_order} · Quiz · '
-        f'Question {min(eval_idx + 1, EVAL_TOTAL)} of {EVAL_TOTAL}</div>',
-        unsafe_allow_html=True,
-    )
+    st.caption(f"MODULE {seq_order}  ·  QUIZ  ·  QUESTION {min(eval_idx + 1, EVAL_TOTAL)} OF {EVAL_TOTAL}")
     st.title(f"Quiz: {course_title}")
     step_progress_strip([
         {"label": "Read", "state": "done"},
@@ -593,10 +628,7 @@ elif active_sub == "evaluation":
     scenario_text = item.get("scenario_text") or ""
     is_last = eval_idx == EVAL_TOTAL - 1
 
-    st.markdown(
-        f'<div class="domain-tag-inline">{DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain)}</div>',
-        unsafe_allow_html=True,
-    )
+    st.caption(f"📍 {DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain).upper()}")
 
     if item_type == "mcq":
         if scenario_text:
@@ -626,11 +658,7 @@ elif active_sub == "evaluation":
 
     elif item_type == "performance_task":
         if scenario_text:
-            st.markdown("""
-<div style="font-family:'Inter',sans-serif; font-size:0.78rem; font-weight:700;
-            text-transform:uppercase; letter-spacing:0.08em; color:#8990A8; margin-bottom:0.4rem">
-  Scenario
-</div>""", unsafe_allow_html=True)
+            st.caption("SCENARIO")
             st.markdown(f'<div class="scenario-box">{scenario_text}</div>', unsafe_allow_html=True)
 
         st.markdown(f'<div class="question-text">{question_text}</div>', unsafe_allow_html=True)
@@ -672,6 +700,26 @@ elif active_sub == "results":
         else:
             result_domain_score = result_score
 
+    # Fetch diagnostic baseline for score delta (cached in session state)
+    if "module_result_diag_baseline" not in st.session_state:
+        try:
+            diag_row = query_one(
+                f"SELECT domain_scores FROM {CATALOG}.learner.diagnostic_sessions "
+                f"WHERE user_email = ? AND completed_at IS NOT NULL "
+                f"ORDER BY completed_at DESC LIMIT 1",
+                [user_email],
+            )
+            diag_domain_scores = {}
+            if diag_row:
+                try:
+                    diag_domain_scores = json.loads(diag_row.get("domain_scores") or "{}")
+                except Exception:
+                    pass
+            st.session_state["module_result_diag_baseline"] = diag_domain_scores.get(primary_domain)
+        except Exception:
+            st.session_state["module_result_diag_baseline"] = None
+    diag_baseline = st.session_state["module_result_diag_baseline"]
+
     st.markdown(f'<div class="question-counter">Module {seq_order} · Complete</div>', unsafe_allow_html=True)
     st.title("Module Complete!")
     step_progress_strip([
@@ -685,9 +733,15 @@ elif active_sub == "results":
     except (TypeError, ValueError):
         rs = 0.0
 
-    color_hex = "#29CC6A" if rs >= 2.5 else ("#F5A623" if rs >= 1.5 else "#E8455A")
+    delta_str = None
+    if diag_baseline is not None:
+        try:
+            delta_val = rs - float(diag_baseline)
+            delta_str = f"{delta_val:+.1f} vs. diagnostic"
+        except (TypeError, ValueError):
+            pass
 
-    st.metric(label=course_title, value=f"{rs:.1f} / 4.0")
+    st.metric(label=course_title, value=f"{rs:.1f} / 4.0", delta=delta_str)
 
     if result_domain_score is not None:
         try:
@@ -702,19 +756,11 @@ elif active_sub == "results":
             st.caption(f"{ds:.1f} / 4.0")
 
     if coach_note:
-        st.markdown(f"""
-<div class="aha-card-accent">
-  <div class="coach-header"><span>🤖</span><span class="coach-label">AI Coach Note</span></div>
-  <div style="font-family:'Inter',sans-serif; font-size:0.92rem; line-height:1.65; color:#EDF0F7">
-    {coach_note}
-  </div>
-</div>
-""", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.caption("🤖 AI COACH NOTE")
+            st.markdown(coach_note)
 
-    st.markdown("""
-<div style="font-family:'Inter',sans-serif; font-size:0.82rem; color:#8990A8;
-            margin:0.5rem 0 1.5rem">✓ Your skills profile has been updated.</div>
-""", unsafe_allow_html=True)
+    st.success("✓ Your skills profile has been updated.")
 
     all_prog = load_all_progress()
     next_module = next(
