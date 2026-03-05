@@ -1,10 +1,4 @@
 {
-  "uw": {
-    "role_id": "uw",
-    "title": "Underwriter",
-    "description": "Credit professionals who evaluate loan applications, assess borrower creditworthiness, and make underwriting decisions across EDC's portfolio. Core responsibilities include financial analysis, risk assessment, credit memo preparation, client communications, and compliance with underwriting standards and delegated authority limits.",
-    "department": "Credit"
-  },
   "an": {
     "role_id": "an",
     "title": "Analyst (Non-IT)",
@@ -16,5 +10,11 @@
     "title": "Relationship Manager",
     "description": "Relationship Managers build and maintain client relationships, manage pipelines, and drive business development through informed outreach, strategic account planning, and data-driven prioritization. They synthesize client context, market intelligence, and internal insights to deliver tailored engagement and accurate record-keeping.",
     "department": "Business Development"
+  },
+  "uw": {
+    "role_id": "uw",
+    "title": "Underwriter",
+    "description": "Underwriters evaluate credit risk, analyze financial statements and borrower data, and make approval/decline/condition decisions on loans and credit insurance. They synthesize financial analysis, policy compliance, and stakeholder context to deliver sound credit decisions supported by clear documentation and audit-ready records. They use AI to accelerate analysis, improve consistency, and maintain compliance with EDC's Responsible AI policy.",
+    "department": "Credit & Risk"
   }
 }

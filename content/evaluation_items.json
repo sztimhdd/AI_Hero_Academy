@@ -1,809 +1,4 @@
 {
-  "uw_c1_responsible_ai": [
-    {
-      "item_id": "ev_uw_c1_responsible_ai_q1",
-      "course_id": "uw_c1_responsible_ai",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c1_responsible_ai_q2",
-      "course_id": "uw_c1_responsible_ai",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c1_responsible_ai_q3",
-      "course_id": "uw_c1_responsible_ai",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c1_responsible_ai_q4",
-      "course_id": "uw_c1_responsible_ai",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "uw_c2_strategic_prompting": [
-    {
-      "item_id": "ev_uw_c2_strategic_prompting_q1",
-      "course_id": "uw_c2_strategic_prompting",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c2_strategic_prompting_q2",
-      "course_id": "uw_c2_strategic_prompting",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c2_strategic_prompting_q3",
-      "course_id": "uw_c2_strategic_prompting",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c2_strategic_prompting_q4",
-      "course_id": "uw_c2_strategic_prompting",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "uw_c3_critical_eval": [
-    {
-      "item_id": "ev_uw_c3_critical_eval_q1",
-      "course_id": "uw_c3_critical_eval",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c3_critical_eval_q2",
-      "course_id": "uw_c3_critical_eval",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c3_critical_eval_q3",
-      "course_id": "uw_c3_critical_eval",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c3_critical_eval_q4",
-      "course_id": "uw_c3_critical_eval",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "uw_c4_relationship_intel": [
-    {
-      "item_id": "ev_uw_c4_relationship_intel_q1",
-      "course_id": "uw_c4_relationship_intel",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c4_relationship_intel_q2",
-      "course_id": "uw_c4_relationship_intel",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c4_relationship_intel_q3",
-      "course_id": "uw_c4_relationship_intel",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c4_relationship_intel_q4",
-      "course_id": "uw_c4_relationship_intel",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "uw_c5_data_decision": [
-    {
-      "item_id": "ev_uw_c5_data_decision_q1",
-      "course_id": "uw_c5_data_decision",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c5_data_decision_q2",
-      "course_id": "uw_c5_data_decision",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c5_data_decision_q3",
-      "course_id": "uw_c5_data_decision",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c5_data_decision_q4",
-      "course_id": "uw_c5_data_decision",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "uw_c6_augmented_comm": [
-    {
-      "item_id": "ev_uw_c6_augmented_comm_q1",
-      "course_id": "uw_c6_augmented_comm",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c6_augmented_comm_q2",
-      "course_id": "uw_c6_augmented_comm",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c6_augmented_comm_q3",
-      "course_id": "uw_c6_augmented_comm",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c6_augmented_comm_q4",
-      "course_id": "uw_c6_augmented_comm",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
-  "uw_c7_capstone": [
-    {
-      "item_id": "ev_uw_c7_capstone_q1",
-      "course_id": "uw_c7_capstone",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c7_capstone_q2",
-      "course_id": "uw_c7_capstone",
-      "item_type": "mcq",
-      "sequence": 2,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c7_capstone_q3",
-      "course_id": "uw_c7_capstone",
-      "item_type": "mcq",
-      "sequence": 3,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": [
-        {
-          "label": "A",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "B",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "C",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        },
-        {
-          "label": "D",
-          "text": "[PLACEHOLDER — regenerate after Prompt C]"
-        }
-      ],
-      "correct_option": "A",
-      "explanation": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scoring_rubric": {
-        "correct": 4,
-        "incorrect": 0
-      }
-    },
-    {
-      "item_id": "ev_uw_c7_capstone_q4",
-      "course_id": "uw_c7_capstone",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-      "options": null,
-      "correct_option": null,
-      "explanation": null,
-      "scoring_rubric": {
-        "key1": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key2": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key3": "[PLACEHOLDER — regenerate after Prompt C]",
-        "key4": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    }
-  ],
   "an_c1_responsible_ai": [
     {
       "item_id": "ev_an_c1_responsible_ai_q1",
@@ -2159,6 +1354,559 @@
         "key2": "CRAF prompt construction: The response constructs a CRAF-structured prompt for the first-contact email — specifying the context (BC advanced materials exporter, Asia-Pacific markets), the required deliverable (first-contact outreach email to secure an introductory call), the audience and structure, and guardrails that prevent unverified claims (including the unverified 22% figure) from appearing in the draft.",
         "key3": "VERIFY discipline: The response explicitly flags the AI-generated '22% demand growth' figure as unverified — stating it cannot be included in the outreach email or CRM note without being tied to a source file the RM has personally checked — and either removes it or labels it as unconfirmed in all outputs.",
         "key4": "Copilot Surface Selector and RM judgment: The response maps a deliberate chain from the best starting surface (CRM lead data and dashboard) through to the email draft and CRM note, includes a verification gate before sending, and demonstrates RM judgment at least once — such as overriding the AI's prioritisation of the market insight or making a deliberate decision about tone and content that the AI could not make autonomously."
+      }
+    }
+  ],
+  "uw_c1_responsible_ai": [
+    {
+      "item_id": "ev_uw_c1_responsible_ai_q1",
+      "course_id": "uw_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the SAFE framework, what is the PRIMARY purpose of the 'S' step before entering underwriting data into an AI tool?",
+      "scenario_text": null,
+      "options": {
+        "A": "Summarise the key financial ratios so the AI can focus on the most important figures",
+        "B": "Substitute real client identifiers and non-public details with generic placeholders",
+        "C": "Select the most appropriate AI tool from the approved software list",
+        "D": "Schedule a compliance review before submitting any prompt to the AI"
+      },
+      "correct_option": "B",
+      "explanation": "The 'S' in SAFE stands for 'strip identifiers' — replacing real client names, account numbers, deal terms, and other non-public information with generic placeholders before anything is entered into the AI tool. This is the foundational first step that protects confidential underwriting data.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c1_responsible_ai_q2",
+      "course_id": "uw_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "An underwriter is about to use an AI tool to help draft a credit memo. Which of the following types of information does the reading EXPLICITLY identify as requiring protection under the SAFE framework?",
+      "scenario_text": null,
+      "options": {
+        "A": "Publicly available industry benchmarks and sector reports",
+        "B": "Internal risk ratings, covenant headroom calculations, and deal terms",
+        "C": "General macroeconomic commentary sourced from published research",
+        "D": "Standardised financial ratio definitions used across the industry"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly lists internal risk ratings, covenant headroom calculations, deal terms, and decision rationale as examples of non-public information that must be protected before using AI tools. These are the categories the SAFE framework is specifically designed to safeguard.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c1_responsible_ai_q3",
+      "course_id": "uw_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading, what is the core tension the SAFE framework is designed to resolve for underwriters using AI tools?",
+      "scenario_text": null,
+      "options": {
+        "A": "The tension between producing longer memos and meeting tight credit committee deadlines",
+        "B": "The tension between capturing AI efficiency gains and protecting non-public client data",
+        "C": "The tension between using approved tools and accessing more capable external AI platforms",
+        "D": "The tension between junior analyst output quality and senior underwriter review time"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly frames the SAFE framework as the solution to a specific tension: AI tools like MS Copilot can meaningfully speed up drafting and structuring, but underwriting work is dense with non-public information that must not be put at risk. SAFE allows underwriters to capture efficiency without compromising data confidentiality.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c1_responsible_ai_q4",
+      "course_id": "uw_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the SAFE framework to the underwriting scenario below. Write a full response that demonstrates each step of SAFE before any AI tool is used.",
+      "scenario_text": "You are an underwriter at a regional commercial bank. You have just received a confidential credit application from Bayfield Composites Ltd., a mid-market manufacturer. The file includes: the company's internal risk rating of BB–, a covenant headroom calculation showing only 8% headroom on the interest coverage ratio, a proposed deal term of a $4.2M revolving credit facility at a margin of 275bps, and internal decision rationale noting concerns about customer concentration risk. You want to use an AI tool to help you draft the risk narrative section of the credit memo. Demonstrate how you would apply the SAFE framework before submitting any prompt to the AI tool.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response substitutes all real client identifiers (company name, specific dollar amounts, specific ratings, and named deal terms) with generic placeholders before constructing the AI prompt — demonstrating the 'S' (Substitute/Strip) step.",
+        "key2": "The response abstracts or generalises sensitive numerical details (e.g., exact covenant headroom percentage, exact margin, exact facility size) so that the AI prompt does not contain precise non-public figures — demonstrating the 'A' (Abstract) step.",
+        "key3": "The response clearly focuses the AI prompt on a specific, bounded task (e.g., drafting only the risk narrative section) rather than submitting the entire file or an open-ended request — demonstrating the 'F' (Focus) step.",
+        "key4": "The response includes explicit constraints in the AI prompt (e.g., instructing the AI not to infer or add client-specific details, to use only the information provided, or to flag assumptions) — demonstrating the 'E' (Enforce constraints) step."
+      }
+    }
+  ],
+  "uw_c2_strategic_prompting": [
+    {
+      "item_id": "ev_uw_c2_strategic_prompting_q1",
+      "course_id": "uw_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what problem does the CRAF framework solve when underwriters use AI for financial analysis write-ups?",
+      "scenario_text": null,
+      "options": {
+        "A": "It prevents AI tools from accessing confidential client data during the drafting process",
+        "B": "It transforms a vague AI request into a controlled drafting instruction with four structured elements",
+        "C": "It automates the verification of AI-generated financial ratios against source documents",
+        "D": "It selects the correct Copilot surface based on the confidentiality level of the task"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that the CRAF framework turns a vague request into a controlled drafting instruction by supplying four elements every underwriting prompt needs. This is the core problem CRAF solves — moving from unpredictable AI output to credit-committee-ready narratives.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c2_strategic_prompting_q2",
+      "course_id": "uw_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading describes financial analysis write-ups as 'high-stakes but repetitive.' Why does this characteristic make them particularly suited to AI assistance according to the CRAF framework?",
+      "scenario_text": null,
+      "options": {
+        "A": "Because repetitive tasks require less human oversight, allowing AI to operate autonomously",
+        "B": "Because the repetitive structure means CRAF prompts can be templated and reused across similar deals",
+        "C": "Because the high-stakes nature means AI output will automatically be reviewed by compliance",
+        "D": "Because repetitive tasks have lower confidentiality requirements, reducing the need for data protection"
+      },
+      "correct_option": "B",
+      "explanation": "The reading identifies the repetitive nature of financial analysis write-ups as the quality that makes them ideal for AI assistance — the structured, recurring format means a well-constructed CRAF prompt can be templated and applied consistently, producing controlled drafting output with minimal rework.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c2_strategic_prompting_q3",
+      "course_id": "uw_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's description of CRAF, what is the intended outcome when an underwriter correctly applies all four elements of the framework to an AI prompt?",
+      "scenario_text": null,
+      "options": {
+        "A": "The AI tool automatically verifies all financial figures against the source model before drafting",
+        "B": "The AI produces a credit-committee-ready narrative with minimal rework required",
+        "C": "The AI flags any non-public information included in the prompt and removes it automatically",
+        "D": "The AI generates multiple draft versions so the underwriter can select the most accurate one"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states that CRAF transforms AI from an unpredictable writer into a controlled drafting assistant that produces credit-committee-ready narratives with minimal rework. This is the stated outcome of correctly applying all four CRAF elements.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c2_strategic_prompting_q4",
+      "course_id": "uw_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Using the CRAF framework, write a complete, structured AI prompt for the underwriting scenario below. Your response must clearly demonstrate all four CRAF elements.",
+      "scenario_text": "You are an underwriter at Northshore Windworks Inc.'s relationship bank. The company has applied for a $7.5M term loan to fund the acquisition of two wind turbine maintenance vessels. You have completed your financial analysis and have the following anonymised inputs ready: EBITDA has grown 18% year-over-year to $3.1M; net debt-to-EBITDA is 2.4x post-transaction; the company has a strong order book covering 80% of projected revenue for the next 24 months; the main risk is customer concentration, with the top two clients representing 61% of revenue. You need to draft the 'Financial Assessment' section of the credit memo for the credit committee. Write a full CRAF-structured prompt you would submit to the AI drafting tool.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The prompt clearly establishes the Context element of CRAF — specifying the underwriting role, the type of document being drafted (credit memo financial assessment section), and the audience (credit committee) so the AI understands the professional setting and purpose.",
+        "key2": "The prompt includes the Role element of CRAF — explicitly instructing the AI to adopt a specific persona or voice appropriate to underwriting (e.g., acting as a senior credit analyst or underwriting assistant producing formal credit committee language).",
+        "key3": "The prompt supplies the Audience/Action element of CRAF — providing the specific anonymised financial inputs (EBITDA growth, leverage ratio, order book coverage, concentration risk) as structured data for the AI to work from, and specifying the exact action required (draft the Financial Assessment section).",
+        "key4": "The prompt includes the Format/Constraints element of CRAF — specifying output format requirements (e.g., paragraph structure, length, tone, use of specific headings) and at least one constraint (e.g., use only the data provided, do not infer additional figures, flag assumptions)."
+      }
+    }
+  ],
+  "uw_c3_critical_eval": [
+    {
+      "item_id": "ev_uw_c3_critical_eval_q1",
+      "course_id": "uw_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, why is a 'polished paragraph with a confident-sounding ratio' potentially dangerous in an AI-generated credit document?",
+      "scenario_text": null,
+      "options": {
+        "A": "Because polished language signals that the AI has exceeded its approved usage parameters",
+        "B": "Because confident presentation can make an incorrect figure appear verified when it has not been checked",
+        "C": "Because formal language in AI output typically indicates the tool has used external data sources",
+        "D": "Because well-structured paragraphs are harder for compliance teams to audit than bullet-point formats"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly warns that 'a polished paragraph with a confident-sounding ratio is not the same as a verified fact.' The danger is that professional-looking AI output can make errors appear credible, causing underwriters to accept incorrect figures without verification — which is precisely what the VERIFY checklist is designed to prevent.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c3_critical_eval_q2",
+      "course_id": "uw_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading states that underwriters 'can't outsource judgment.' In the context of the VERIFY checklist, what does this mean for how AI-generated credit summaries should be treated?",
+      "scenario_text": null,
+      "options": {
+        "A": "AI-generated summaries should only be used for internal drafts and never submitted to credit committees",
+        "B": "Every AI-generated text must pass a six-step VERIFY discipline before it enters a credit decision",
+        "C": "Underwriters should rewrite all AI output from scratch to ensure the language reflects their own judgment",
+        "D": "AI tools should be limited to formatting tasks and excluded from any analytical or narrative work"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's core message is that because underwriters cannot delegate their judgment to AI, every piece of AI-generated text must be run through the VERIFY checklist — a six-step discipline — before it enters a credit decision. The checklist is the mechanism through which human judgment is applied to AI output.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c3_critical_eval_q3",
+      "course_id": "uw_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, what is the fundamental distinction the VERIFY checklist enforces that makes it essential for underwriting work?",
+      "scenario_text": null,
+      "options": {
+        "A": "The distinction between AI tools that are approved for use and those that are not",
+        "B": "The distinction between a number that looks right and a number that actually is right",
+        "C": "The distinction between a first draft and a final credit committee submission",
+        "D": "The distinction between quantitative financial data and qualitative risk commentary"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states: 'a number that looks right and a number that is right are not the same thing, and only one of them belongs in a credit decision.' This is the fundamental distinction the VERIFY checklist enforces — ensuring that apparent accuracy is replaced by confirmed accuracy before AI output drives any underwriting decision.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c3_critical_eval_q4",
+      "course_id": "uw_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the VERIFY checklist to the AI-generated output below. Write a full evaluation response that works through each of the six VERIFY steps and reaches a clear conclusion about whether this output is safe to include in a credit decision.",
+      "scenario_text": "You are an underwriter reviewing a credit renewal for HarborGate Foods Ltd., a food processing and distribution company. You submitted an anonymised prompt to an AI drafting tool and received the following AI-generated paragraph for the 'Leverage and Debt Service' section of the credit memo:\n\n'HarborGate Foods has demonstrated consistent deleveraging over the review period. Net debt-to-EBITDA has improved from 3.8x to 2.9x over the past two fiscal years, supported by EBITDA growth of approximately 14%. Interest coverage stands at 4.1x, comfortably above the covenant threshold of 3.0x, providing 37% headroom. Free cash flow conversion remains strong at 82%, indicating the company retains sufficient liquidity to service its obligations without reliance on revolving credit drawdowns.'\n\nYour source financial model shows: Net debt-to-EBITDA moved from 3.8x to 3.1x (not 2.9x); EBITDA growth was 11% (not 14%); interest coverage is 3.8x (not 4.1x); the covenant threshold is 3.0x; and free cash flow conversion is 79% (not 82%). Apply the full VERIFY checklist and write your evaluation.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response systematically identifies and flags each specific numerical discrepancy between the AI-generated output and the source financial model (net debt-to-EBITDA 2.9x vs. 3.1x; EBITDA growth 14% vs. 11%; interest coverage 4.1x vs. 3.8x; FCF conversion 82% vs. 79%), demonstrating the verification step of checking figures against source data.",
+        "key2": "The response evaluates the materiality and risk implications of the errors — specifically noting that the overstated interest coverage ratio (4.1x vs. actual 3.8x) and the understated leverage ratio affect the accuracy of the covenant headroom calculation and could mislead the credit committee about the company's true risk position.",
+        "key3": "The response applies at least two additional VERIFY steps beyond numerical checking — for example: assessing whether the AI's narrative logic is internally consistent, checking whether the conclusions drawn (e.g., 'comfortable headroom') are still valid given the corrected figures, or identifying any claims in the AI output that cannot be traced to the source data provided.",
+        "key4": "The response reaches a clear, justified conclusion about the AI output — stating that it cannot be used as drafted, specifying which figures must be corrected before the section enters the credit memo, and confirming that the corrected version must be re-reviewed before submission to the credit committee."
+      }
+    }
+  ],
+  "uw_c4_relationship_intel": [
+    {
+      "item_id": "ev_uw_c4_relationship_intel_q1",
+      "course_id": "uw_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what types of messages does the RELATE framework specifically help underwriters handle?",
+      "scenario_text": null,
+      "options": {
+        "A": "Internal credit committee presentations and risk rating justification memos",
+        "B": "Credit limit reductions, declines, and information requests that can feel like interrogations",
+        "C": "Regulatory reporting submissions and compliance disclosures to external auditors",
+        "D": "Covenant waiver negotiations and restructuring term sheet communications"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly identifies credit limit reductions, declines, and information requests that can feel like interrogations to a frustrated customer as the difficult messages the RELATE framework is designed to handle. These are described as some of the most difficult messages in commercial finance.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c4_relationship_intel_q2",
+      "course_id": "uw_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading warns that a poorly worded underwriter response can have consequences beyond just damaging a relationship. What specific escalation risks does the reading identify?",
+      "scenario_text": null,
+      "options": {
+        "A": "Regulatory fines and mandatory retraining requirements for the underwriting team",
+        "B": "Formal complaints and escalation to senior management or external dispute channels",
+        "C": "Automatic credit file suspension and mandatory compliance review of the account",
+        "D": "Loss of the relationship manager's client portfolio and reassignment of the account"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that a poorly worded response 'can trigger formal complaints, escalate' — identifying formal complaints and escalation as the specific downstream risks of poor communication in difficult underwriting messages. The RELATE framework is designed to prevent these outcomes.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c4_relationship_intel_q3",
+      "course_id": "uw_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, what is the critical constraint the RELATE framework places on AI-generated customer communications regarding internal underwriting logic?",
+      "scenario_text": null,
+      "options": {
+        "A": "Internal risk ratings must always be disclosed to customers to maintain transparency",
+        "B": "AI-generated responses must be reviewed by the relationship manager before being sent",
+        "C": "The AI prompt must be constrained so that internal decision logic is never leaked in the output",
+        "D": "Customer communications must be limited to 200 words to reduce the risk of misinterpretation"
+      },
+      "correct_option": "C",
+      "explanation": "The reading's takeaway explicitly states that embedding RELATE as a six-point constraint in every AI prompt ensures the message 'never leaks internal logic.' Preventing the disclosure of internal underwriting rationale, risk ratings, and decision logic in customer-facing communications is a core constraint of the RELATE framework.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c4_relationship_intel_q4",
+      "course_id": "uw_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Using the RELATE framework, write a complete AI prompt AND the customer-facing communication it should produce for the scenario below. Your response must demonstrate all six RELATE constraints.",
+      "scenario_text": "You are an underwriter at a commercial bank. Seabright Equipment Brokers Ltd., a mid-market equipment brokerage, has held a $3.0M revolving credit facility with your bank for six years. Following your annual review, you have determined that the facility limit must be reduced to $2.2M due to a deterioration in the company's working capital cycle — days sales outstanding has stretched from 42 to 67 days over the past 18 months, and the company's net debt-to-EBITDA has risen to 3.6x. Internally, the account has been re-rated from BB to BB–. The relationship manager has asked you to draft the communication to the company's CFO informing them of the limit reduction. The CFO is known to be commercially assertive and has previously escalated issues to senior management. Write: (1) the RELATE-structured AI prompt you would use, and (2) the customer-facing message the AI should produce.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The AI prompt explicitly embeds constraints that prevent internal underwriting logic from appearing in the customer message — specifically, the internal re-rating (BB to BB–), the exact net debt-to-EBITDA figure used in the decision, and any internal risk assessment language are excluded from the customer-facing output.",
+        "key2": "The AI prompt and resulting customer message demonstrate the relationship-preserving elements of RELATE — the tone is professional and empathetic, acknowledges the long-standing relationship (six years), and frames the limit reduction in terms of the bank's support for the company's ongoing needs rather than as a punitive action.",
+        "key3": "The customer-facing message clearly communicates the key facts the CFO needs (the new facility limit of $2.2M, the effective date or next steps) without being evasive, and includes a constructive forward-looking element (e.g., an invitation to discuss, a review timeline, or an offer of support) — demonstrating that RELATE produces actionable, not just diplomatic, communication.",
+        "key4": "The response demonstrates awareness of the escalation risk posed by the assertive CFO — the prompt includes a constraint or the message includes language specifically designed to reduce the likelihood of a formal complaint or escalation (e.g., proactive offer of a call, acknowledgment of the impact, clear point of contact), consistent with RELATE's purpose of turning high-friction messages into relationship-preserving conversations."
+      }
+    }
+  ],
+  "uw_c5_data_decision": [
+    {
+      "item_id": "ev_uw_c5_data_decision_q1",
+      "course_id": "uw_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, why does the SIFT Variance Lens describe the instinct to 'reach for the nearest explanation' when seeing a financial variance as dangerous?",
+      "scenario_text": null,
+      "options": {
+        "A": "Because the nearest explanation is usually the most complex one and requires specialist knowledge to evaluate",
+        "B": "Because acting on an unconfirmed hypothesis treats a clue as a conclusion before the evidence has been validated",
+        "C": "Because AI-generated variance hypotheses are statistically less reliable than manually calculated ones",
+        "D": "Because financial variances in AI tools are typically caused by data input errors rather than real business changes"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that 'financial variances are clues, not conclusions' and that the instinct to reach for the nearest explanation is dangerous. SIFT is designed to prevent underwriters from acting on a hypothesis before it has been confirmed with evidence — treating a possible explanation as a verified fact is the core risk the framework addresses.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c5_data_decision_q2",
+      "course_id": "uw_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading gives specific examples of financial variances that might appear in the Financial Variance Analyzer. Which of the following correctly reflects the examples used in the reading?",
+      "scenario_text": null,
+      "options": {
+        "A": "A 50-basis-point increase in the cost of debt and a 15-day improvement in inventory turnover",
+        "B": "A 200-basis-point margin drop and a 30-day stretch in receivables",
+        "C": "A 10% revenue decline and a doubling of the capital expenditure budget",
+        "D": "A 5x increase in net debt-to-EBITDA and a 45-day extension of payables"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly uses a '200-basis-point margin drop' and a '30-day stretch in receivables' as the illustrative examples of financial variances that might appear in the Financial Variance Analyzer. These specific examples are used to demonstrate why the SIFT lens is needed before acting on AI-generated variance hypotheses.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c5_data_decision_q3",
+      "course_id": "uw_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, what does SIFT require an underwriter to confirm before acting on an AI-generated variance hypothesis?",
+      "scenario_text": null,
+      "options": {
+        "A": "That the AI tool used to generate the hypothesis is on the bank's approved software list",
+        "B": "That the variance has been reviewed by the relationship manager and the credit committee",
+        "C": "The 'why' behind the variance must be confirmed with evidence before acting on the 'what'",
+        "D": "That the variance exceeds a materiality threshold defined in the bank's credit policy"
+      },
+      "correct_option": "C",
+      "explanation": "The reading's takeaway explicitly states that 'SIFT turns AI-generated variance hypotheses into validated, evidence-backed underwriting decisions by forcing you to confirm the why before you act on the what.' This is the core discipline SIFT enforces — evidence-based confirmation of the cause before any decision is made.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c5_data_decision_q4",
+      "course_id": "uw_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the SIFT Variance Lens to the scenario below. Write a full response that works through each SIFT step and reaches a validated, evidence-backed underwriting position.",
+      "scenario_text": "You are an underwriter conducting the annual review of AtlasForge Machinery Ltd., a mid-market industrial machinery manufacturer. You have run the company's financials through the Financial Variance Analyzer and the AI tool has flagged the following variances versus the prior year:\n\n• Gross margin has declined 180 basis points (from 34.2% to 32.4%)\n• Days payables outstanding has extended from 38 days to 59 days\n• Revenue has grown 9% year-over-year\n\nThe AI tool has generated the following hypothesis: 'The margin compression is likely attributable to rising raw material input costs, consistent with sector-wide steel price inflation. The payables extension may reflect deliberate working capital optimisation by management.'\n\nYou have access to the following additional information: (a) AtlasForge's two largest competitors reported flat or improving margins in the same period; (b) the company's management accounts show a 6% increase in direct labour costs with no corresponding productivity improvement; (c) the CFO mentioned in a recent call that they have been 'stretching suppliers a bit' due to a short-term cash flow squeeze. Apply the full SIFT Variance Lens and write your underwriting assessment.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response applies the first SIFT step by treating the AI-generated variances as clues rather than conclusions — explicitly stating that the AI hypotheses (steel price inflation, deliberate working capital optimisation) are unconfirmed starting points that require evidence-based validation before they can drive an underwriting decision.",
+        "key2": "The response interrogates the AI's margin compression hypothesis against the available evidence — specifically using the competitor data (flat/improving margins in the same period) and the management accounts (6% direct labour cost increase with no productivity gain) to challenge or refine the AI's 'sector-wide steel price inflation' explanation, demonstrating the SIFT discipline of testing hypotheses against source evidence.",
+        "key3": "The response interrogates the AI's payables extension hypothesis against the available evidence — specifically using the CFO's comment about 'stretching suppliers due to a short-term cash flow squeeze' to reframe the payables extension as a potential liquidity signal rather than deliberate optimisation, demonstrating that SIFT requires the underwriter to confirm the 'why' before accepting the AI's framing.",
+        "key4": "The response reaches a clear, evidence-backed underwriting position that goes beyond the AI's hypotheses — identifying the combination of margin compression (likely driven by labour cost inefficiency), payables extension (likely driven by cash flow pressure), and revenue growth as a pattern that warrants further investigation or specific credit conditions, and explicitly stating what additional evidence would be needed before a final decision is made."
+      }
+    }
+  ],
+  "uw_c6_augmented_comm": [
+    {
+      "item_id": "ev_uw_c6_augmented_comm_q1",
+      "course_id": "uw_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what is the core problem with using Copilot across multiple work surfaces without a deliberate matching strategy?",
+      "scenario_text": null,
+      "options": {
+        "A": "Different Copilot surfaces produce outputs in incompatible formats that cannot be merged into a single document",
+        "B": "Each surface carries different strengths and different confidentiality risks, and using the wrong one at the wrong time creates exposure",
+        "C": "Copilot on Teams and Copilot on Outlook use different AI models, producing inconsistent analytical quality",
+        "D": "Using multiple surfaces simultaneously exceeds the approved usage limits set by most bank IT policies"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that 'each surface carries different strengths and different confidentiality risks' and that 'using the wrong one at the wrong time' is the core problem. The solution the reading teaches is to always match the Copilot surface to the task and confidentiality level of the work.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c6_augmented_comm_q2",
+      "course_id": "uw_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading identifies the underwriter's daily work as spanning multiple surfaces. Which of the following correctly lists the surfaces the reading explicitly names?",
+      "scenario_text": null,
+      "options": {
+        "A": "Teams, Outlook, Word, Excel, and SharePoint",
+        "B": "Teams, Outlook, PowerPoint, OneNote, and SharePoint",
+        "C": "Word, Excel, PowerPoint, SharePoint, and the web browser",
+        "D": "Outlook, Excel, SharePoint, OneNote, and Teams"
+      },
+      "correct_option": "A",
+      "explanation": "The reading explicitly lists Teams threads, Outlook inboxes, Word memos, Excel models, and SharePoint repositories as the five surfaces that span an underwriter's daily work and across which Copilot is available. This is the exact set of surfaces the course's surface-matching framework addresses.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c6_augmented_comm_q3",
+      "course_id": "uw_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, what specific risk must be verified at every handoff between Copilot surfaces?",
+      "scenario_text": null,
+      "options": {
+        "A": "That the output format is compatible with the receiving surface's document standards",
+        "B": "That internal-only content has not leaked into external-facing outputs",
+        "C": "That the AI model version used on each surface is current and approved by IT",
+        "D": "That the word count and tone of the output meet credit committee submission requirements"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states: 'verify at every handoff that internal-only content has not leaked into external-facing outputs.' This is the specific verification requirement the reading places on underwriters when moving AI-assisted work across different Copilot surfaces.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c6_augmented_comm_q4",
+      "course_id": "uw_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "For the multi-surface underwriting workflow described below, write a full response that identifies the correct Copilot surface for each task, explains the confidentiality risk at each stage, and describes the verification check required at each handoff.",
+      "scenario_text": "You are an underwriter managing the annual credit review for PrairiePulse Exporters Inc., a grain and pulse export company. Over the next two days, you need to complete the following tasks:\n\nTask 1: Summarise the key themes from a 45-minute internal credit discussion that took place on a Teams call with the relationship manager and credit risk team. The discussion included the company's internal risk rating, covenant headroom concerns, and a preliminary decision to request additional security.\n\nTask 2: Draft the 'Risk Assessment' section of the credit memo in a Word document, drawing on the financial model outputs stored in an Excel workbook on SharePoint.\n\nTask 3: Prepare a brief internal update for the credit committee via a Teams message to the credit director, summarising the three key risks identified in the review.\n\nTask 4: Draft an information request letter to PrairiePulse Exporters Inc.'s CFO, asking for updated management accounts and a debtor aging schedule.\n\nFor each task: identify the appropriate Copilot surface, explain the confidentiality risk specific to that surface and task, and describe the verification check you would perform before the output moves to the next stage.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "For Tasks 1 and 3 (Teams-based tasks), the response correctly identifies Copilot in Teams as the surface, explains the confidentiality risk of Teams summaries potentially capturing and surfacing internal risk ratings, preliminary decisions, or covenant concerns in a format that could be shared beyond the intended audience, and describes a verification check (e.g., reviewing the summary to confirm no internal rating language or preliminary decision language appears before the summary is saved or forwarded).",
+        "key2": "For Task 2 (Word/Excel/SharePoint), the response correctly identifies Copilot in Word and/or Excel as the appropriate surface for drafting the risk assessment section, explains the confidentiality risk of SharePoint-linked content (e.g., the financial model) being referenced or surfaced in a document that may later be shared externally, and describes a verification check at the handoff (e.g., confirming that model-specific internal figures or SharePoint file references do not appear in the final Word document in a form that could be shared with the client).",
+        "key3": "For Task 4 (the external customer letter), the response correctly identifies that this task requires the highest level of surface and content scrutiny — the output is external-facing — and explicitly describes the verification check required to ensure that no internal underwriting logic, risk ratings, covenant concerns, or preliminary decisions from Tasks 1–3 have leaked into the customer-facing information request letter.",
+        "key4": "The response demonstrates the overarching principle from the reading by explicitly applying the surface-matching rule across all four tasks — showing that the choice of Copilot surface is driven by both the nature of the task and the confidentiality level of the content, and that each handoff between tasks requires a deliberate check that internal-only content has not migrated into outputs intended for a broader or external audience."
+      }
+    }
+  ],
+  "uw_c7_capstone": [
+    {
+      "item_id": "ev_uw_c7_capstone_q1",
+      "course_id": "uw_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what does 'End-to-End AI Workflow Integration' mean in the context of an underwriting case?",
+      "scenario_text": null,
+      "options": {
+        "A": "Using a single AI tool to complete all stages of the underwriting process without switching platforms",
+        "B": "Treating each stage of an underwriting case as a distinct checkpoint where AI assists and a human verifies before output moves forward",
+        "C": "Integrating AI output directly into the credit management system to eliminate manual data entry",
+        "D": "Allowing AI to complete the analytical stages while the underwriter focuses on client communication"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly defines End-to-End AI Workflow Integration as 'treating each stage of an underwriting case as a distinct checkpoint where AI assists and a human verifies before the output moves forward.' This human-gated checkpoint model is the defining characteristic of integration as the reading teaches it.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c7_capstone_q2",
+      "course_id": "uw_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The reading describes the six domains as forming a chain. According to the reading, what is the role of SAFE at the start of this chain?",
+      "scenario_text": null,
+      "options": {
+        "A": "SAFE structures the AI prompt so that the output is formatted correctly for credit committee review",
+        "B": "SAFE protects confidentiality by abstracting inputs before any prompt is written",
+        "C": "SAFE verifies that all AI-generated figures are accurate before they enter the credit memo",
+        "D": "SAFE selects the appropriate Copilot surface based on the confidentiality level of the task"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that in the six-domain chain, 'SAFE protects confidentiality by abstracting inputs before any prompt is written.' SAFE is the first link in the chain precisely because confidentiality protection must occur before any other AI-assisted step begins.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c7_capstone_q3",
+      "course_id": "uw_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading's takeaway, what three qualities must every AI output possess before it can drive an underwriting decision in an integrated workflow?",
+      "scenario_text": null,
+      "options": {
+        "A": "Formatted, approved, and submitted to the credit management system",
+        "B": "Verified, labelled, and traceable",
+        "C": "Summarised, anonymised, and reviewed by the relationship manager",
+        "D": "Drafted, edited, and signed off by a senior underwriter"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states that integration means 'every AI output is verified, labelled, and traceable before it drives an underwriting decision.' These three qualities — verified, labelled, and traceable — are the specific standards the capstone framework requires of all AI output in an integrated workflow.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c7_capstone_q4",
+      "course_id": "uw_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Design and document a complete end-to-end AI-assisted underwriting workflow for the case below. Your response must demonstrate how all six domains (SAFE, CRAF, VERIFY, RELATE, SIFT, and surface-matching) function as sequential human-gated checkpoints across the case.",
+      "scenario_text": "You are the lead underwriter on a new credit application from Cascadia Marine Systems Ltd., a marine engineering and vessel outfitting company. The company is seeking a $9.5M term loan and a $2.0M revolving credit facility to fund the expansion of its dry-dock facility and increase working capital capacity. The application file contains: three years of audited financials, a management-prepared five-year forecast, a detailed project cost breakdown for the dry-dock expansion, and a letter of support from the company's largest customer (representing 48% of revenue) confirming a five-year contract renewal.\n\nYour workflow will involve: (1) preparing inputs for AI-assisted analysis, (2) drafting the financial assessment section of the credit memo, (3) evaluating AI-generated variance analysis on the company's working capital metrics, (4) communicating a request for additional information to the company's CFO (the company has previously pushed back on information requests), and (5) preparing a final integrated credit recommendation.\n\nWrite a complete workflow document that maps each of the five workflow stages to the appropriate AI framework(s), identifies the human verification checkpoint at each stage, and explains how you would ensure that every AI output is verified, labelled, and traceable before it contributes to the final credit decision.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response correctly applies SAFE at Stage 1 (input preparation) — demonstrating that all non-public identifiers, specific financial figures, internal ratings, and deal terms are abstracted before any AI prompt is written, and identifies this as the first human-gated checkpoint where the underwriter confirms that no confidential data will enter the AI tool in raw form.",
+        "key2": "The response correctly applies CRAF at Stage 2 (drafting the financial assessment) and SIFT at Stage 3 (evaluating working capital variance analysis) — for CRAF, demonstrating that the AI prompt includes all four structured elements to produce a controlled credit memo draft; for SIFT, demonstrating that AI-generated variance hypotheses about working capital metrics are treated as clues requiring evidence-based confirmation before they influence the credit recommendation, with a human verification checkpoint at each stage.",
+        "key3": "The response correctly applies VERIFY at the appropriate stage(s) — demonstrating that AI-generated financial figures, ratios, and narrative claims in the credit memo draft are checked against source documents before the output moves forward, and that the human verification checkpoint explicitly confirms that every figure in the AI output is accurate and traceable to a source before it is labelled as verified.",
+        "key4": "The response correctly applies RELATE at Stage 4 (CFO communication) and the surface-matching principle across all stages — for RELATE, demonstrating that the AI prompt for the information request letter includes constraints preventing internal logic from leaking and is designed to manage the CFO's known tendency to push back; for surface-matching, identifying the appropriate Copilot surface for each stage and describing the handoff verification check that ensures internal-only content does not migrate into the external-facing CFO communication or the final credit recommendation."
       }
     }
   ]

@@ -1,617 +1,5 @@
 [
   {
-    "item_id": "uw_diag_ra1_mcq",
-    "role_id": "uw",
-    "domain_id": "responsible_ai",
-    "item_type": "mcq",
-    "display_order": 1,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "uw_diag_ra2_sandbox",
-    "role_id": "uw",
-    "domain_id": "responsible_ai",
-    "item_type": "prompt_sandbox",
-    "display_order": 2,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_ra3_task",
-    "role_id": "uw",
-    "domain_id": "responsible_ai",
-    "item_type": "micro_task",
-    "display_order": 3,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_sp1_mcq",
-    "role_id": "uw",
-    "domain_id": "strategic_prompting",
-    "item_type": "mcq",
-    "display_order": 4,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "uw_diag_sp2_sandbox",
-    "role_id": "uw",
-    "domain_id": "strategic_prompting",
-    "item_type": "prompt_sandbox",
-    "display_order": 5,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_sp3_task",
-    "role_id": "uw",
-    "domain_id": "strategic_prompting",
-    "item_type": "micro_task",
-    "display_order": 6,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_ce1_mcq",
-    "role_id": "uw",
-    "domain_id": "critical_eval",
-    "item_type": "mcq",
-    "display_order": 7,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "uw_diag_ce2_sandbox",
-    "role_id": "uw",
-    "domain_id": "critical_eval",
-    "item_type": "prompt_sandbox",
-    "display_order": 8,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_ce3_task",
-    "role_id": "uw",
-    "domain_id": "critical_eval",
-    "item_type": "micro_task",
-    "display_order": 9,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_ri1_mcq",
-    "role_id": "uw",
-    "domain_id": "relationship_intel",
-    "item_type": "mcq",
-    "display_order": 10,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "uw_diag_ri2_sandbox",
-    "role_id": "uw",
-    "domain_id": "relationship_intel",
-    "item_type": "prompt_sandbox",
-    "display_order": 11,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_ri3_task",
-    "role_id": "uw",
-    "domain_id": "relationship_intel",
-    "item_type": "micro_task",
-    "display_order": 12,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_dd1_mcq",
-    "role_id": "uw",
-    "domain_id": "data_decision",
-    "item_type": "mcq",
-    "display_order": 13,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "uw_diag_dd2_sandbox",
-    "role_id": "uw",
-    "domain_id": "data_decision",
-    "item_type": "prompt_sandbox",
-    "display_order": 14,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_dd3_task",
-    "role_id": "uw",
-    "domain_id": "data_decision",
-    "item_type": "micro_task",
-    "display_order": 15,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_ac1_mcq",
-    "role_id": "uw",
-    "domain_id": "augmented_comm",
-    "item_type": "mcq",
-    "display_order": 16,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": [
-      {
-        "label": "A",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "B",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "C",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      },
-      {
-        "label": "D",
-        "text": "[PLACEHOLDER — regenerate after Prompt C]"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    }
-  },
-  {
-    "item_id": "uw_diag_ac2_sandbox",
-    "role_id": "uw",
-    "domain_id": "augmented_comm",
-    "item_type": "prompt_sandbox",
-    "display_order": 17,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
-    "item_id": "uw_diag_ac3_task",
-    "role_id": "uw",
-    "domain_id": "augmented_comm",
-    "item_type": "micro_task",
-    "display_order": 18,
-    "question_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "scenario_text": "[PLACEHOLDER — regenerate after Prompt C]",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Criterion 1",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 2",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 3",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        },
-        {
-          "name": "Criterion 4",
-          "description": "[PLACEHOLDER — regenerate after Prompt C]",
-          "max": 1
-        }
-      ]
-    }
-  },
-  {
     "item_id": "an_diag_ra1_mcq",
     "domain_id": "responsible_ai",
     "item_type": "mcq",
@@ -1794,5 +1182,557 @@
       ]
     },
     "role_id": "rm"
+  },
+  {
+    "item_id": "uw_diag_ra1_mcq",
+    "domain_id": "responsible_ai",
+    "item_type": "mcq",
+    "display_order": 1,
+    "question_text": "Which of the following inputs is safe to include verbatim in an EDC-approved AI tool prompt without any abstraction or modification?",
+    "scenario_text": "You are an Underwriter preparing a risk summary for a new transaction involving Thornfield Agri-Export Inc. You have four documents available: an internal CIS buyer-file note with payment history and risk commentary, a publicly available trade credit rating report published by a recognised ratings agency, a draft term sheet with proposed covenant thresholds, and an internal memo showing the deal's preliminary risk rating and rationale. You want to use an EDC-approved AI tool to help structure your analysis.",
+    "options": [
+      {
+        "label": "A",
+        "text": "The publicly available trade credit rating report sourced from the ratings agency's published website."
+      },
+      {
+        "label": "B",
+        "text": "The internal CIS buyer-file note, because it is stored on EDC's secure internal system."
+      },
+      {
+        "label": "C",
+        "text": "The draft term sheet, because the deal has not yet been approved and no client has signed it."
+      },
+      {
+        "label": "D",
+        "text": "The internal risk rating memo, because it contains analytical reasoning rather than raw financial figures."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ra2_sandbox",
+    "domain_id": "responsible_ai",
+    "item_type": "prompt_sandbox",
+    "display_order": 2,
+    "question_text": "Write a policy-safe AI prompt that asks for a structured risk summary of a mid-market manufacturing borrower, using only abstracted inputs. Your prompt must not include any client identifiers, exact financial figures, or deal-specific terms. Include an explicit instruction that the AI should flag any gaps rather than invent details.",
+    "scenario_text": "You are an Underwriter working on a transaction for a mid-market manufacturer in Southeast Asia. The deal package includes confidential financial statements, internal covenant headroom calculations, and a draft guarantee structure. You want to use an EDC-approved AI tool to help draft a risk summary section for the credit paper. Before prompting, you have abstracted the inputs: the borrower is referred to as 'the Company,' revenue is described as 'mid-range for the sector,' and the guarantee structure is described generically. You now need to write the actual prompt.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "No identifying or non-public information",
+          "description": "The prompt contains no client names, deal identifiers, exact financial figures, internal ratings, or covenant-specific terms that could identify the transaction.",
+          "max": 1
+        },
+        {
+          "name": "Clear task instruction for underwriting output",
+          "description": "The prompt clearly requests a structured risk summary relevant to underwriting (e.g., key risks, mitigants, financial profile) using only the abstracted inputs provided.",
+          "max": 1
+        },
+        {
+          "name": "Explicit gap-handling constraint",
+          "description": "The prompt includes an explicit instruction directing the AI to flag missing or unknown information rather than assume, estimate, or invent details.",
+          "max": 1
+        },
+        {
+          "name": "Appropriate role or context framing",
+          "description": "The prompt provides sufficient context about the type of borrower, sector, or transaction structure (in abstracted form) to make the AI output useful for an underwriting audience.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ra3_task",
+    "domain_id": "responsible_ai",
+    "item_type": "micro_task",
+    "display_order": 3,
+    "question_text": "Review the prompt excerpt below. Identify ALL elements that violate EDC's Responsible Use of Generative AI Policy and explain why each is a problem. Then rewrite the prompt so it is policy-safe while preserving its analytical usefulness.",
+    "scenario_text": "An Underwriter has drafted the following prompt to paste into a general-purpose AI chatbot (not an EDC-approved tool):\n\n---\n\"Summarise the key credit risks for Vantara Steel Holdings Ltd (VSH), a steel manufacturer in Vietnam. Their 2023 audited revenue was USD 412 million, EBITDA margin was 8.2%, and net debt-to-EBITDA was 4.1x. EDC's internal risk rating is BB- with a negative outlook. The proposed facility is a USD 35 million revolving credit with a 3.5x leverage covenant. Identify the top three risks and suggest mitigants.\"\n---\n\nList each policy violation and provide a rewritten, policy-safe version of the prompt.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of non-public information violations",
+          "description": "Correctly identifies at least three distinct policy violations: use of a non-approved tool/platform, inclusion of the client's full name and identifier, inclusion of exact confidential financial figures (revenue, EBITDA margin, leverage ratio), and inclusion of the internal risk rating and outlook.",
+          "max": 2
+        },
+        {
+          "name": "Quality of rewritten prompt",
+          "description": "The rewritten prompt removes all identifying and non-public details, uses safe abstractions (e.g., 'a mid-market steel manufacturer in Southeast Asia,' 'leverage above sector median'), targets an EDC-approved tool context, and preserves the analytical intent of the original request.",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_sp4_mcq",
+    "domain_id": "strategic_prompting",
+    "item_type": "mcq",
+    "display_order": 4,
+    "question_text": "Which prompting technique would most improve the usefulness of AI-generated output when drafting the 'Key Risks and Mitigants' section of a credit paper for a first-loss guarantee transaction?",
+    "scenario_text": "You are an Underwriter drafting a credit paper for a first-loss guarantee transaction supporting an agri-processing exporter. You have used an EDC-approved AI tool and submitted the following prompt: 'Write the key risks and mitigants for an agri-processing exporter.' The output is generic, lists common risks without prioritisation, and does not reflect the guarantee structure or the borrower's specific profile. You want to revise your prompting approach.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Add role framing, specify the transaction structure (first-loss guarantee), define the output format (e.g., top three risks ranked by severity), and provide abstracted borrower context such as sector, geography, and leverage profile."
+      },
+      {
+        "label": "B",
+        "text": "Ask the AI to 'be more specific' in a follow-up message, since iterative refinement always produces better results than restructuring the original prompt."
+      },
+      {
+        "label": "C",
+        "text": "Include the full credit paper template so the AI understands the required format, even if it contains internal EDC section headings and deal-specific placeholders."
+      },
+      {
+        "label": "D",
+        "text": "Switch to a more powerful AI model, because output quality is primarily determined by model capability rather than prompt structure."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_sp5_sandbox",
+    "domain_id": "strategic_prompting",
+    "item_type": "prompt_sandbox",
+    "display_order": 5,
+    "question_text": "Write a well-structured AI prompt that asks for a comparison of two generic borrower risk profiles for use in an underwriting decision memo. Your prompt should specify the output format, define the analytical lens, and include a constraint on how the AI should handle uncertainty.",
+    "scenario_text": "You are an Underwriter comparing two potential obligors for a medium-term export financing facility. You have abstracted both profiles: Borrower A is a mid-sized logistics company in West Africa with moderate leverage and a concentrated customer base; Borrower B is a larger diversified freight operator in the same region with higher leverage but stronger cash flow coverage. You want to use an EDC-approved AI tool to produce a side-by-side risk comparison to support your recommendation in the decision memo.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Structured output specification",
+          "description": "The prompt explicitly requests a defined output format such as a side-by-side table, ranked list, or structured sections (e.g., credit strengths, key risks, relative recommendation) rather than leaving format open-ended.",
+          "max": 1
+        },
+        {
+          "name": "Analytical lens relevant to underwriting",
+          "description": "The prompt directs the AI to evaluate the profiles through an underwriting-relevant lens (e.g., repayment capacity, concentration risk, leverage, cash flow coverage, sector exposure) rather than requesting a generic business comparison.",
+          "max": 1
+        },
+        {
+          "name": "Abstracted and policy-safe inputs",
+          "description": "The prompt uses only abstracted borrower descriptions with no real names, exact figures, or internal ratings, consistent with responsible AI use in an underwriting context.",
+          "max": 1
+        },
+        {
+          "name": "Uncertainty handling constraint",
+          "description": "The prompt includes an explicit instruction for how the AI should handle gaps or missing data (e.g., 'flag as UNKNOWN,' 'do not assume,' 'note where additional information would be required').",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_sp6_task",
+    "domain_id": "strategic_prompting",
+    "item_type": "micro_task",
+    "display_order": 6,
+    "question_text": "Review the prompt below, which an Underwriter used to draft a covenant analysis section. Identify at least two specific structural weaknesses that reduce the quality of the AI output, and rewrite the prompt to address those weaknesses.",
+    "scenario_text": "An Underwriter submitted the following prompt to an EDC-approved AI tool:\n\n---\n\"Analyse the covenants for this deal and tell me if they are appropriate.\"\n---\n\nThe AI returned a two-sentence response stating that covenants are generally important for credit risk management and that leverage and interest coverage ratios are commonly used. The Underwriter found this unhelpful. Diagnose the prompt's weaknesses and produce an improved version.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Diagnosis of prompt weaknesses",
+          "description": "Identifies at least two specific structural weaknesses: e.g., no context about the borrower or transaction type, no definition of 'appropriate,' no output format specified, no analytical criteria provided, no role framing, and no abstracted inputs supplied to ground the analysis.",
+          "max": 2
+        },
+        {
+          "name": "Quality of rewritten prompt",
+          "description": "The rewritten prompt includes role framing or context, specifies the type of transaction and borrower profile (abstracted), defines what 'appropriate' means in underwriting terms (e.g., aligned with leverage profile, sector norms), requests a structured output, and includes a constraint on handling missing information.",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ce7_mcq",
+    "domain_id": "critical_eval",
+    "item_type": "mcq",
+    "display_order": 7,
+    "question_text": "An AI tool has generated a financial risk summary for a borrower in the renewable energy sector. Which of the following responses represents the most appropriate underwriter behaviour when reviewing this output before including it in a credit paper?",
+    "scenario_text": "You used an EDC-approved AI tool to draft the 'Financial Risk' section of a credit paper for a solar project developer. The AI output states: 'The borrower's debt service coverage ratio of 1.35x is within acceptable range for project finance transactions in this sector, and the leverage profile is consistent with investment-grade issuers.' You do not recall providing the DSCR figure in your prompt, and you know the borrower's actual leverage is higher than investment-grade norms.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Verify the DSCR figure against the source financial model, correct the leverage characterisation based on your own analysis, and revise the section before including it in the credit paper."
+      },
+      {
+        "label": "B",
+        "text": "Accept the output as a reasonable approximation since AI tools are trained on large datasets and sector benchmarks are likely accurate."
+      },
+      {
+        "label": "C",
+        "text": "Delete only the leverage sentence and keep the DSCR statement, since one error does not invalidate the rest of the AI-generated content."
+      },
+      {
+        "label": "D",
+        "text": "Flag the section as 'AI-generated' in the credit paper so reviewers know to apply their own judgement, without making any changes yourself."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ce8_sandbox",
+    "domain_id": "critical_eval",
+    "item_type": "prompt_sandbox",
+    "display_order": 8,
+    "question_text": "Write an AI prompt that asks the tool to help you critically evaluate a draft 'Repayment Capacity' section of a credit paper. Your prompt should direct the AI to identify logical gaps, unsupported claims, and missing stress-test considerations — not simply to rewrite or improve the prose.",
+    "scenario_text": "You have drafted a 'Repayment Capacity' section for a credit paper covering a mid-market food processing exporter. The section includes a base-case cash flow narrative and a brief mention of commodity price sensitivity. Before submitting the paper for approval, you want to use an EDC-approved AI tool to stress-test the quality of your own analysis — identifying what is missing or weakly supported, rather than generating new content.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Evaluation framing, not generation framing",
+          "description": "The prompt explicitly asks the AI to critique, identify gaps, or flag weaknesses in the provided draft — not to rewrite, improve, or expand the section.",
+          "max": 1
+        },
+        {
+          "name": "Specific analytical criteria for evaluation",
+          "description": "The prompt specifies what dimensions to evaluate against, such as logical consistency, unsupported claims, missing stress scenarios (e.g., commodity price shock, FX sensitivity, customer concentration), or alignment with standard underwriting expectations.",
+          "max": 1
+        },
+        {
+          "name": "Abstracted draft content or representative placeholder",
+          "description": "The prompt includes an abstracted version of the draft section or a clear description of its contents (without non-public identifiers) to give the AI something concrete to evaluate.",
+          "max": 1
+        },
+        {
+          "name": "Constraint on AI behaviour",
+          "description": "The prompt includes a constraint directing the AI not to invent figures, not to assume information not provided, and to clearly distinguish between identified gaps and confirmed weaknesses.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ce9_task",
+    "domain_id": "critical_eval",
+    "item_type": "micro_task",
+    "display_order": 9,
+    "question_text": "Read the AI-generated paragraph below, which was produced for the 'Country and Political Risk' section of a credit paper. Identify all factual claims that require independent verification before the paragraph can be used, and explain what source or method an Underwriter should use to verify each.",
+    "scenario_text": "An EDC-approved AI tool produced the following paragraph in response to a prompt about country risk for a transaction in a fictional emerging market:\n\n---\n\"Nordavia has maintained a stable sovereign credit rating of BB+ from major rating agencies over the past three years, reflecting consistent fiscal management and low external debt levels. The country's political risk environment is considered moderate, with no significant expropriation events recorded since 2010. Foreign exchange controls were lifted in 2019, and the central bank maintains a managed float regime. EDC's country risk classification for Nordavia is Category 3.\"\n---\n\nFor each claim that requires verification, name the claim, explain the verification risk, and identify the appropriate source.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of claims requiring verification",
+          "description": "Identifies at least three distinct claims requiring verification: the sovereign credit rating and its stability, the absence of expropriation events since 2010, the FX control status and exchange rate regime, and the EDC country risk category. Partial credit for identifying two claims.",
+          "max": 2
+        },
+        {
+          "name": "Appropriate verification sources",
+          "description": "For each identified claim, names a plausible and appropriate verification source: e.g., rating agency published reports for the sovereign rating; MIGA, Oxford Analytica, or EDC country risk databases for political risk history; central bank publications or IMF Article IV for FX regime; EDC's internal country risk classification system for the EDC category.",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ri10_mcq",
+    "domain_id": "relationship_intel",
+    "item_type": "mcq",
+    "display_order": 10,
+    "question_text": "An Underwriter is preparing for a first meeting with a new financial institution partner to discuss a potential risk-sharing arrangement. Which use of AI is most appropriate for building relationship intelligence ahead of this meeting?",
+    "scenario_text": "You are an Underwriter preparing for an introductory meeting with Meridian Trade Finance Bank, a regional bank seeking to co-insure a portfolio of export receivables. You have access to the bank's publicly available annual report, a press release about their recent trade finance expansion, and an internal briefing note from the deal team. You want to use AI to help you prepare.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Use an EDC-approved AI tool to synthesise publicly available information about the bank's trade finance strategy, recent announcements, and regional focus to prepare informed questions and identify potential alignment with EDC's mandate."
+      },
+      {
+        "label": "B",
+        "text": "Paste the internal deal team briefing note into a general AI chatbot to generate a relationship summary, since the note contains the most relevant context for the meeting."
+      },
+      {
+        "label": "C",
+        "text": "Ask the AI to predict the bank's risk appetite and likely negotiating positions based on their public profile, and treat the output as a reliable basis for your meeting strategy."
+      },
+      {
+        "label": "D",
+        "text": "Use AI to draft a relationship history summary by asking it to recall previous EDC interactions with Meridian Trade Finance Bank from its training data."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ri11_sandbox",
+    "domain_id": "relationship_intel",
+    "item_type": "prompt_sandbox",
+    "display_order": 11,
+    "question_text": "Write an AI prompt that helps you prepare a structured briefing for a relationship review meeting with a financial institution partner. The prompt should use only publicly available or abstracted information and should produce output useful for an underwriting relationship context.",
+    "scenario_text": "You are an Underwriter preparing for an annual relationship review with Castlegate Development Bank, a multilateral lender with whom EDC has co-financed several infrastructure transactions. You have access to the bank's published annual report, their publicly available project pipeline, and a generic description of the co-financing relationship (no deal-specific terms). You want to use an EDC-approved AI tool to help structure your preparation.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Policy-safe inputs",
+          "description": "The prompt uses only publicly available or appropriately abstracted information. No internal deal terms, confidential co-financing arrangements, or non-public EDC relationship data are included.",
+          "max": 1
+        },
+        {
+          "name": "Relevant relationship intelligence framing",
+          "description": "The prompt asks for output that is genuinely useful for an underwriting relationship review, such as the partner's strategic priorities, recent portfolio trends, areas of mandate alignment, or potential topics for discussion.",
+          "max": 1
+        },
+        {
+          "name": "Structured output request",
+          "description": "The prompt specifies a structured output format appropriate for a briefing document, such as key themes, talking points, questions to raise, or a summary of the partner's current focus areas.",
+          "max": 1
+        },
+        {
+          "name": "Appropriate scope constraint",
+          "description": "The prompt includes a constraint that limits the AI to what is known or provided (e.g., 'based only on the information I have described,' 'do not speculate about internal EDC history with this institution').",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ri12_task",
+    "domain_id": "relationship_intel",
+    "item_type": "micro_task",
+    "display_order": 12,
+    "question_text": "An Underwriter used AI to generate the relationship summary below before a meeting with a borrower's bank. Review the summary and identify: (1) any claims that are likely AI-hallucinated or unverifiable, and (2) any information that should not have been included based on responsible AI use principles. Explain your reasoning for each.",
+    "scenario_text": "An Underwriter submitted a prompt asking an AI tool to summarise the relationship between EDC and Harlow Commercial Bank. The AI produced the following:\n\n---\n\"EDC and Harlow Commercial Bank have maintained a co-financing relationship since 2014, with joint participation in at least six infrastructure transactions across Sub-Saharan Africa. In 2021, EDC provided a USD 120 million guarantee on a Harlow-led syndication for a port expansion project in the region. Harlow's current risk appetite for African infrastructure is rated 'moderate-high' by their internal credit committee. The relationship is managed by EDC's Financial Institutions team and is considered strategically important.\"\n---",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of hallucinated or unverifiable claims",
+          "description": "Correctly identifies at least two claims that are likely hallucinated or unverifiable from public sources: e.g., the specific co-financing history since 2014, the number of joint transactions, the USD 120 million guarantee figure and deal details, and Harlow's internal credit committee risk appetite rating.",
+          "max": 2
+        },
+        {
+          "name": "Identification of responsible AI use concerns",
+          "description": "Identifies that the prompt likely caused the AI to generate or reproduce non-public EDC relationship data (deal history, guarantee amounts) that should not be in an AI-generated output, and notes that internal risk appetite characterisations of a third party should not be treated as factual without verification.",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_dd13_mcq",
+    "domain_id": "data_decision",
+    "item_type": "mcq",
+    "display_order": 13,
+    "question_text": "When using an AI tool to support a credit decision on a mid-market borrower, which approach best reflects sound data and decision-making practice for an Underwriter?",
+    "scenario_text": "You are an Underwriter assessing a USD 20 million medium-term loan for Pelican Freight Solutions, a logistics company with three years of audited financials. You have used an EDC-approved AI tool to analyse an abstracted version of the financial profile. The AI output suggests the borrower's leverage is 'within acceptable range' and recommends proceeding to approval. You are aware that the most recent year showed a significant revenue decline that the AI may not have weighted appropriately.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Use the AI output as a starting point, apply your own analytical judgement to the revenue trend, document your independent assessment, and ensure the final recommendation reflects your underwriting analysis rather than the AI's conclusion."
+      },
+      {
+        "label": "B",
+        "text": "Accept the AI recommendation since it is based on a structured analysis of the financial profile and is less susceptible to cognitive bias than human judgement."
+      },
+      {
+        "label": "C",
+        "text": "Reject the AI output entirely and redo the analysis manually, since AI tools are not reliable for quantitative financial assessments."
+      },
+      {
+        "label": "D",
+        "text": "Include the AI's recommendation verbatim in the credit paper to demonstrate that a structured analytical process was followed."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_dd14_sandbox",
+    "domain_id": "data_decision",
+    "item_type": "prompt_sandbox",
+    "display_order": 14,
+    "question_text": "Write an AI prompt that asks the tool to help you structure a sensitivity analysis framework for a credit decision involving a commodity-exposed borrower. The prompt should specify the analytical dimensions, output format, and how the AI should handle data gaps.",
+    "scenario_text": "You are an Underwriter assessing a medium-term facility for an abstracted agricultural commodity exporter with significant exposure to cocoa price volatility and USD/local currency exchange rate movements. You want to use an EDC-approved AI tool to help you build a sensitivity analysis framework — not to run the numbers, but to identify the key variables, stress scenarios, and decision thresholds you should test in your own financial model.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Clear analytical task definition",
+          "description": "The prompt clearly asks for a sensitivity analysis framework (variables, scenarios, thresholds) rather than asking the AI to perform calculations or produce a financial model output.",
+          "max": 1
+        },
+        {
+          "name": "Relevant risk dimensions specified",
+          "description": "The prompt identifies or asks the AI to address the key risk dimensions relevant to a commodity-exposed borrower, such as commodity price scenarios, FX stress, volume/offtake risk, or margin compression.",
+          "max": 1
+        },
+        {
+          "name": "Structured output format requested",
+          "description": "The prompt requests a structured output such as a table of variables and stress ranges, a tiered scenario framework (base/downside/severe), or a checklist of decision thresholds — not a narrative paragraph.",
+          "max": 1
+        },
+        {
+          "name": "Data gap and uncertainty handling",
+          "description": "The prompt instructs the AI to flag where additional borrower-specific data would be needed to complete the framework, rather than filling gaps with generic assumptions.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_dd15_task",
+    "domain_id": "data_decision",
+    "item_type": "micro_task",
+    "display_order": 15,
+    "question_text": "Review the AI-generated analysis excerpt below, which was produced to support a credit decision. Identify at least two analytical weaknesses or data reasoning errors that an Underwriter should correct before relying on this output, and explain what additional analysis or data would be needed.",
+    "scenario_text": "An Underwriter used an EDC-approved AI tool to analyse an abstracted borrower profile. The AI produced the following excerpt for the 'Financial Assessment' section:\n\n---\n\"The borrower's revenue has grown at an average of 12% per year over the past three years, indicating strong business momentum. The current ratio of 1.8x suggests adequate short-term liquidity. Based on these indicators, the borrower demonstrates a solid financial profile consistent with investment-grade characteristics. The debt service coverage ratio is not provided but is assumed to be sufficient given the revenue growth trend.\"\n---",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of analytical weaknesses",
+          "description": "Identifies at least two specific analytical weaknesses: e.g., revenue growth alone does not indicate creditworthiness without profitability or margin data; 'investment-grade' characterisation is unsupported by the data provided; the DSCR assumption is a hallucinated inference not grounded in any provided figure; the current ratio alone is insufficient to assess liquidity without context on payables, inventory quality, or cash position.",
+          "max": 2
+        },
+        {
+          "name": "Additional analysis or data requirements",
+          "description": "Identifies what additional data or analysis is needed: e.g., actual DSCR from the financial model, EBITDA margin and net income trends, leverage ratio, cash flow from operations, and sector benchmarks to contextualise the current ratio and growth rate before any creditworthiness conclusion can be drawn.",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ac16_mcq",
+    "domain_id": "augmented_comm",
+    "item_type": "mcq",
+    "display_order": 16,
+    "question_text": "An Underwriter has used an AI tool to draft a section of a credit paper. Which of the following practices best reflects responsible and effective use of AI-augmented communication in this context?",
+    "scenario_text": "You have used an EDC-approved AI tool to draft the 'Transaction Overview' section of a credit paper for a structured trade finance deal. The AI-generated draft is well-written and covers the main structural elements. However, you notice it uses generic language about the guarantee structure that does not accurately reflect the specific risk-sharing arrangement in this deal, and it omits the rationale for EDC's involvement.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Edit the draft to correct the guarantee structure description, add the EDC mandate rationale, verify all factual claims, and ensure the final section reflects your professional judgement before submitting."
+      },
+      {
+        "label": "B",
+        "text": "Submit the AI draft as written since it is well-structured and the approval committee will identify any inaccuracies during their review."
+      },
+      {
+        "label": "C",
+        "text": "Add a footnote stating 'drafted with AI assistance' and submit without changes, as disclosure of AI use satisfies the quality assurance requirement."
+      },
+      {
+        "label": "D",
+        "text": "Ask the AI to revise the section by providing the correct guarantee structure details, including the specific deal terms, to get a more accurate draft."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ac17_sandbox",
+    "domain_id": "augmented_comm",
+    "item_type": "prompt_sandbox",
+    "display_order": 17,
+    "question_text": "Write an AI prompt that asks the tool to help you draft an executive summary for a credit paper covering a medium-term export financing transaction. The prompt should specify the audience, tone, required content elements, and length, using only abstracted transaction details.",
+    "scenario_text": "You are an Underwriter finalising a credit paper for a medium-term export financing facility supporting a capital equipment exporter. The transaction involves a partial guarantee structure, a borrower with moderate leverage in a cyclical sector, and a first-time EDC relationship. You want to use an EDC-approved AI tool to draft the executive summary, which will be read by a senior credit committee. You have abstracted all transaction details.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Audience and tone specification",
+          "description": "The prompt explicitly identifies the intended audience (senior credit committee or equivalent) and specifies an appropriate tone (e.g., concise, analytical, decision-focused) rather than leaving these implicit.",
+          "max": 1
+        },
+        {
+          "name": "Required content elements defined",
+          "description": "The prompt specifies the key content elements the executive summary must include, such as transaction purpose, borrower profile, risk summary, guarantee structure rationale, and recommendation — relevant to an underwriting credit paper.",
+          "max": 1
+        },
+        {
+          "name": "Length or format constraint",
+          "description": "The prompt includes a length or format constraint appropriate for an executive summary (e.g., maximum word count, number of paragraphs, or bullet-point structure) to prevent an overly long or unstructured output.",
+          "max": 1
+        },
+        {
+          "name": "Abstracted and policy-safe inputs",
+          "description": "The prompt uses only abstracted transaction details (no client names, exact figures, or deal-identifying terms) and does not include any non-public EDC information.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "uw"
+  },
+  {
+    "item_id": "uw_diag_ac18_task",
+    "domain_id": "augmented_comm",
+    "item_type": "micro_task",
+    "display_order": 18,
+    "question_text": "Review the AI-generated executive summary paragraph below, which was drafted for a credit paper. Identify all communication quality issues — including tone, accuracy risks, missing underwriting content, and structural problems — and rewrite the paragraph to address them.",
+    "scenario_text": "An Underwriter used an EDC-approved AI tool to draft the opening paragraph of an executive summary for a credit paper. The intended audience is a senior credit committee. The AI produced the following:\n\n---\n\"This is an exciting opportunity for EDC to support a dynamic and fast-growing company in the renewable energy space. The borrower has demonstrated impressive revenue growth and is well-positioned to benefit from the global energy transition. EDC's participation will provide meaningful support to the borrower's expansion plans and strengthen the bilateral trade relationship. The transaction is recommended for approval.\"\n---",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of communication quality issues",
+          "description": "Identifies at least three specific issues: inappropriate promotional/marketing tone ('exciting,' 'dynamic,' 'impressive') unsuitable for a credit committee; absence of any risk content or mitigants; unsupported recommendation with no analytical basis stated; vague claims ('meaningful support,' 'well-positioned') that lack underwriting substance; and missing structural elements such as transaction type, borrower profile, and guarantee rationale.",
+          "max": 2
+        },
+        {
+          "name": "Quality of rewritten paragraph",
+          "description": "The rewritten paragraph uses a neutral, analytical tone appropriate for a senior credit committee; includes abstracted but substantive content covering transaction purpose, borrower profile, key risk considerations, and the basis for the recommendation; and avoids promotional language, unsupported claims, and missing structural elements.",
+          "max": 2
+        }
+      ]
+    },
+    "role_id": "uw"
   }
 ]

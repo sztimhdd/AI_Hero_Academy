@@ -1,74 +1,4 @@
 {
-  "uw_c1_responsible_ai": {
-    "course_id": "uw_c1_responsible_ai",
-    "role_id": "uw",
-    "primary_domain": "responsible_ai",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 1
-  },
-  "uw_c2_strategic_prompting": {
-    "course_id": "uw_c2_strategic_prompting",
-    "role_id": "uw",
-    "primary_domain": "strategic_prompting",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 2
-  },
-  "uw_c3_critical_eval": {
-    "course_id": "uw_c3_critical_eval",
-    "role_id": "uw",
-    "primary_domain": "critical_eval",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 3
-  },
-  "uw_c4_relationship_intel": {
-    "course_id": "uw_c4_relationship_intel",
-    "role_id": "uw",
-    "primary_domain": "relationship_intel",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 4
-  },
-  "uw_c5_data_decision": {
-    "course_id": "uw_c5_data_decision",
-    "role_id": "uw",
-    "primary_domain": "data_decision",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 5
-  },
-  "uw_c6_augmented_comm": {
-    "course_id": "uw_c6_augmented_comm",
-    "role_id": "uw",
-    "primary_domain": "augmented_comm",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 6
-  },
-  "uw_c7_capstone": {
-    "course_id": "uw_c7_capstone",
-    "role_id": "uw",
-    "primary_domain": "responsible_ai",
-    "title": "[PLACEHOLDER — regenerate after Prompt C]",
-    "tagline": "[PLACEHOLDER — regenerate after Prompt C]",
-    "description": "[PLACEHOLDER — regenerate after Prompt C]",
-    "real_use_case": "[PLACEHOLDER — regenerate after Prompt C]",
-    "sequence_order": 7
-  },
   "an_c1_responsible_ai": {
     "course_id": "an_c1_responsible_ai",
     "role_id": "an",
@@ -207,6 +137,76 @@
     "tagline": "Run an integrated workflow across all six domains without cutting corners.",
     "description": "A realistic, end-to-end RM scenario: use AI to identify and prioritize a target account, craft outreach, prepare for a meeting using relationship history, validate AI-assisted analysis, and deliver compliant follow-ups and record updates. Learners must demonstrate good judgment, verification, and safe handling of information across the full chain.",
     "real_use_case": "Access to Copilot 365 for Business Development; Customer Interaction Recap; Record governance - Summarizing Meeting notes and actions (with attendees tagged)",
+    "sequence_order": 7
+  },
+  "uw_c1_responsible_ai": {
+    "course_id": "uw_c1_responsible_ai",
+    "role_id": "uw",
+    "primary_domain": "responsible_ai",
+    "title": "Safe AI with Confidential Deal Data",
+    "tagline": "Use the SAFE Abstraction Method to get AI help without leaking non-public underwriting information.",
+    "description": "Underwriters handle highly sensitive financials and internal risk rationale. This course builds practical judgment for what can and cannot go into AI tools, and teaches SAFE Abstraction so learners can still get useful output while staying policy-safe and audit-ready.",
+    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).",
+    "sequence_order": 1
+  },
+  "uw_c2_strategic_prompting": {
+    "course_id": "uw_c2_strategic_prompting",
+    "role_id": "uw",
+    "primary_domain": "strategic_prompting",
+    "title": "Prompting AI for Financial Analysis Write-Ups",
+    "tagline": "Turn messy financial inputs into a clean credit narrative using the CRAF framework.",
+    "description": "Financial analysis write-ups are repetitive but high stakes. This course teaches structured prompting (CRAF) to produce underwriting-ready narratives from Excel tables and statement excerpts—focused on the risk story, not generic finance commentary.",
+    "real_use_case": "Use Generative AI to assist financial statements reporting",
+    "sequence_order": 2
+  },
+  "uw_c3_critical_eval": {
+    "course_id": "uw_c3_critical_eval",
+    "role_id": "uw",
+    "primary_domain": "critical_eval",
+    "title": "Let AI Read the Fine Print (Then Double-Check It)",
+    "tagline": "Use the VERIFY checklist to catch AI mistakes before they enter a credit decision or system-of-record.",
+    "description": "AI can accelerate reading long submissions, reports, and decision histories—but it can also invent details. This course teaches a disciplined verification workflow (VERIFY) so underwriters can benefit from speed without sacrificing accuracy or policy alignment.",
+    "real_use_case": "UW Streamlining",
+    "sequence_order": 3
+  },
+  "uw_c4_relationship_intel": {
+    "course_id": "uw_c4_relationship_intel",
+    "role_id": "uw",
+    "primary_domain": "relationship_intel",
+    "title": "Using AI to Deepen Client Insight and Rapport",
+    "tagline": "Use RELATE to respond to high-friction stakeholders with precision, empathy, and consistency.",
+    "description": "Underwriters regularly communicate declines, reductions, and information requests. This course shows how to use AI to synthesize interaction history and draft responses that protect the relationship—without revealing internal-only rationale or drifting from standard wording.",
+    "real_use_case": "Customer Interaction Recap",
+    "sequence_order": 4
+  },
+  "uw_c5_data_decision": {
+    "course_id": "uw_c5_data_decision",
+    "role_id": "uw",
+    "primary_domain": "data_decision",
+    "title": "Uncovering Financial Trends with AI Insights",
+    "tagline": "Use SIFT to convert variance analysis into a clear underwriting action plan.",
+    "description": "Variance analysis is everywhere in underwriting—yet it often becomes a wall of numbers. This course teaches underwriters to use AI to identify the few variances that matter, explain drivers, forecast implications, and tie insights to a concrete decision or next step.",
+    "real_use_case": "Financial Variance Analyzer",
+    "sequence_order": 5
+  },
+  "uw_c6_augmented_comm": {
+    "course_id": "uw_c6_augmented_comm",
+    "role_id": "uw",
+    "primary_domain": "augmented_comm",
+    "title": "AI as Your Email and Message Drafting Partner",
+    "tagline": "Pick the right Copilot surface and chain it end-to-end: recap → memo → decision email → record update.",
+    "description": "Underwriters work across Outlook, Word, Teams, Excel, and SharePoint/OneNote while also updating underwriting systems. This course teaches the Copilot Surface Selector and multi-step workflows that reduce rework and improve consistency—while keeping records accurate and compliant.",
+    "real_use_case": "Request for Customer Care Team",
+    "sequence_order": 6
+  },
+  "uw_c7_capstone": {
+    "course_id": "uw_c7_capstone",
+    "role_id": "uw",
+    "primary_domain": "responsible_ai",
+    "title": "End-to-End Underwriting with AI (From Analysis to Approval)",
+    "tagline": "Run a complete underwriting workflow using all 6 domains—fast, safe, and verifiable.",
+    "description": "This capstone integrates Responsible AI, Strategic Prompting, Critical Evaluation, Relationship Intelligence, Data-Driven Decision Making, and Augmented Communication in one realistic underwriting case. Learners will move from intake → analysis → recommendation → approval support → stakeholder communication, using AI safely and transparently at each step.",
+    "real_use_case": "Explore Copilot 360 Option for the Credit Insurance Program; Use Gen-AI to help provide company assessments. This is not a net new idea, but an attempt to leverage external tools - either CB Insights or Alphasense - as a search engine (which may themselves leverage AI) to help with investments due diligence",
     "sequence_order": 7
   }
 }

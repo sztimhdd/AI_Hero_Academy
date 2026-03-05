@@ -3,29 +3,36 @@
 role\_prefix: uw
 
 company\_map:
-course\_1: HarborLight Components Ltd.
-course\_2: Solstice Agri-Equipment Inc.
-course\_3: IronPeak Renewables Ltd.
-course\_4: Northstar Marine Furnishings Ltd.
-course\_5: CedarBridge Infrastructure Partners
+course\_1: Bayfield Composites Ltd.
+course\_2: Northshore Windworks Inc.
+course\_3: HarborGate Foods Ltd.
+course\_4: Seabright Equipment Brokers Ltd.
+course\_5: AtlasForge Machinery Ltd.
+course\_6: PrairiePulse Exporters Inc.
+course\_7: Cascadia Marine Systems Ltd.
 
 framework\_names:
-NOTE: These 5 names are standardized across all roles. Confirm which apply; adapt the
-role-specific examples in SECTION E (concept\_text, good\_example, anti\_pattern) accordingly.
-Do NOT invent new framework names unless a standardized name genuinely does not fit.
+NOTE: These names are standardized across all roles where possible. Confirm which apply;
+adapt the role-specific examples in SECTION E (concept\_text, good\_example, anti\_pattern)
+accordingly. Do NOT invent new framework names unless a standardized name genuinely does
+not fit.
 
+*   The SAFE Abstraction Method
 *   CRAF Framework
 *   VERIFY Checklist
-*   The SAFE Abstraction Method
+*   RELATE Framework (Review history, Extract concerns, Label stakeholders, Anticipate objections, Tailor response, Escalate wisely)
+*   SIFT Variance Lens (Select variances, Isolate drivers, Forecast implications, Tie to risk appetite & next action)
 *   Copilot Surface Selector
 *   End-to-End AI Workflow
 
 real\_use\_case:
-course\_1: Explore Copilot 360 Option for the Credit Insurance Program&#x20;
-course\_2: Use Gen-AI to help provide company assessments.&#x20;
-course\_3: The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).&#x20;
-course\_4: Record governance - Summarizing Meeting notes and actions (with attendees tagged)&#x20;
-course\_5: UW Streamlining; Underwriting Knowledge Assistant; Pricing Benchmark Retrieval [\[<File>Comp...lsx</File> \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B20AF7CD2-8D31-4881-BC1B-EF8D6683DE6C%7D&file=Complete-List-Categorized-110.xlsx&action=default&mobileredirect=true)
+course\_1: The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).
+course\_2: Use Generative AI to assist financial statements reporting
+course\_3: UW Streamlining
+course\_4: Customer Interaction Recap
+course\_5: Financial Variance Analyzer
+course\_6: Request for Customer Care Team
+course\_7: Explore Copilot 360 Option for the Credit Insurance Program; Use Gen-AI to help provide company assessments. This is not a net new idea, but an attempt to leverage external tools - either CB Insights or Alphasense - as a search engine (which may themselves leverage AI) to help with investments due diligence
 
 ***
 
@@ -33,564 +40,738 @@ course\_5: UW Streamlining; Underwriting Knowledge Assistant; Pricing Benchmark 
 
 role\_id: uw  
 title: Underwriter  
-description: "Assesses credit risk and makes credit decisions for insurance and financing transactions. Produces and maintains the official credit file (analysis, rationale, conditions, approvals) and communicates decisions to clients, brokers, and internal partners. Works closely with Business Development/Account Managers, Risk Analysts, Legal, ESG, and Financial Crimes teams across the underwriting lifecycle."
+description: "Assesses credit risk and structures financing or insurance decisions by analysing sensitive financial information, internal risk ratings, and policy constraints. Produces credit submissions/credit memos, records decisions in underwriting systems, and coordinates approvals within Delegation of Authority limits. Works closely with Business Development/Account Managers, Risk Management Office analysts, Legal, ESG/E\&S specialists, and Underwriting Operations to move transactions from intake through approval, documentation, and customer communication." [\[m365.cloud.microsoft\]]
 
 ***
 
-# SECTION B — All 4 Domain Specs
+# SECTION B — All 6 Domain Specs
 
-### Domain: prompting
+### Domain: responsible\_ai
 
-domain\_id: prompting  
-title: Prompting for Outcomes  
-description: "Structuring AI prompts so outputs are directly usable in underwriting workflows — decision emails to policyholders/brokers, first-draft credit memos/submissions, covenant and conditions summaries, and concise internal recommendations for approvals — while staying aligned to underwriting standards and approved wording libraries like [Underwriter Communication Email Templates.docx](https://edcanada.sharepoint.com/sites/CreditInsuranceResourceCenter/_layouts/15/Doc.aspx?sourcedoc=%7B7086EBA1-6F1E-43CD-97E3-8A6F5A149D81%7D\&file=Underwriter%20Communication%20Email%20Templates.docx\&action=default\&mobileredirect=true\&DefaultItemOpen=1\&EntityRepresentationId=28ba8c95-982a-405c-b7e3-9ad7d612ea55)." [\[Underwrite...Templates \| Word\]](https://edcanada.sharepoint.com/sites/CreditInsuranceResourceCenter/_layouts/15/Doc.aspx?sourcedoc=%7B7086EBA1-6F1E-43CD-97E3-8A6F5A149D81%7D&file=Underwriter%20Communication%20Email%20Templates.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-
+domain\_id: responsible\_ai  
+title: Responsible AI  
+description: "Applying EDC’s Responsible Use of Generative AI Policy before using AI tools in underwriting work. This includes identifying Non‑Public EDC Information (client financials, internal risk ratings, deal terms), using safe abstraction when prompting, and ensuring AI use aligns with audit/record expectations and tool approvals."   
 level\_0\_label: Unaware  
-level\_0\_descriptor: "Has not used AI for underwriting tasks. Cannot explain how to give context (deal type, audience, decision constraints) to get a useful draft."
-
+level\_0\_descriptor: "Does not distinguish public vs non-public underwriting information. May paste raw borrower financial statements, CIS buyer-file text, or internal ratings into non-approved AI tools or personal accounts."   
 level\_1\_label: Explorer  
-level\_1\_descriptor: "Uses basic prompts (e.g., 'draft an email') with little context. Output is generic, may include inappropriate detail, and requires a full rewrite before it can be sent or filed."
-
+level\_1\_descriptor: "Knows the rule (‘don’t share non-public info’) but struggles with real underwriting edge cases—e.g., whether a risk rating, covenant headroom, or internal rationale counts as non-public. Redaction is inconsistent or removes too much to be useful."   
 level\_2\_label: Practitioner  
-level\_2\_descriptor: "Writes structured prompts with: (1) underwriting context (product, decision type, what’s known/unknown), (2) audience (client vs internal), (3) constraints (no internal model details; plain language), and (4) format (bullet sections, short rationale + next steps). Produces drafts that need only minor edits for accuracy and tone."
-
+level\_2\_descriptor: "Consistently applies safe abstraction: removes names, IDs, exact figures, and deal-identifying details while preserving underwriting logic. Uses EDC-approved tools/surfaces and avoids exposing CIS/MBC/FACT content in unapproved contexts."   
 level\_3\_label: Proficient  
-level\_3\_descriptor: "Adapts prompts for complex cases (partial approvals, exceptions, sensitive wording). Anticipates failure modes (over-disclosure, invented facts) and adds guardrails (cite only provided facts; ask clarifying questions). Iterates quickly to reach a compliant, client-ready message."
-
+level\_3\_descriptor: "Handles borderline cases confidently (e.g., internal risk outlook commentary, ‘confidential’ buyer-file notes, sanctions-related details). Rewrites prompts to preserve utility while removing risk, and adds explicit constraints (no guessing, cite sources, don’t invent figures)."   
 level\_4\_label: Champion  
-level\_4\_descriptor: "Builds reusable prompt templates for common underwriting moments (decline explanation, info request, conditional approval). Coaches peers and contributes improvements to shared drafting standards (e.g., ‘approved phrasing’ playbooks)."
+level\_4\_descriptor: "Proactively identifies new compliance risks in emerging workflows (e.g., summarizing long credit papers, using external research tools) and teaches safe patterns. Creates team-ready prompt templates/checklists that align with policy and audit expectations." [\[m365.cloud.microsoft\]], [\[Responsibl...AI Policy \| PDF\]] [\[m365.cloud.microsoft\]] [\[m365.cloud.microsoft\]], [\[Responsibl...AI Policy \| PDF\]], [\[08b. MBC -...rigination \| PowerPoint\]], [\[Applicatio...Book FACT \| Word\]] [\[m365.cloud.microsoft\]], [\[Credit Doc...ion in CIS \| Word\]], [\[Responsibl...AI Policy \| PDF\]] [\[m365.cloud.microsoft\]], [\[Responsibl...AI Policy \| PDF\]], [\[Re: Inquir...io Rollout \| Outlook\]]
 
 ***
 
-### Domain: verification
+### Domain: strategic\_prompting
 
-domain\_id: verification  
-title: Verification and Judgment  
-description: "Critically reviewing AI-assisted underwriting outputs before acting — validating financial figures, risk flags, policy alignment, and delegated authority. Ensures drafts match source documents and underwriting guidance (e.g., [Credit Insurance Risk Assessment Guideline.pdf](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Credit%20Insurance%20Risk%20Assessment%20Guideline.pdf?web=1\&EntityRepresentationId=3008a9dc-0b2b-41a0-8614-af21acc6f0c8)) and do not substitute for required human judgment." [\[Credit Ins...Guideline \| PDF\]](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Credit%20Insurance%20Risk%20Assessment%20Guideline.pdf?web=1)
-
+domain\_id: strategic\_prompting  
+title: Strategic Prompting  
+description: "Structuring prompts so AI outputs are directly usable in underwriting artifacts—credit memo sections in Word, ratio/variance narratives from Excel, issue lists for approvals, and structured summaries for CIS/MBC notes—without turning into generic finance text."   
 level\_0\_label: Unaware  
-level\_0\_descriptor: "Treats AI output as accurate by default. Might copy AI-generated risk rationale into the file without checking against the financials or credit report."
-
+level\_0\_descriptor: "Has not used prompting for underwriting tasks or can’t explain what makes an effective prompt beyond ‘summarize this’."  
 level\_1\_label: Explorer  
-level\_1\_descriptor: "Skims AI output for obvious errors but does not systematically cross-check numbers, dates, or policy requirements."
-
+level\_1\_descriptor: "Writes basic prompts. Output is often generic, misses underwriting-relevant sections (risk mitigants, conditions, rationale), or is too long/too shallow to paste into a credit submission."   
 level\_2\_label: Practitioner  
-level\_2\_descriptor: "Uses a repeatable verification routine: cross-checks AI summaries against source docs (financial statements, credit reports, emails), confirms policy/DOA alignment, removes unverifiable statements, and documents what was checked before finalizing a decision."
-
+level\_2\_descriptor: "Uses a structured prompt (context + constraints + required sections). Produces a credit analysis narrative that fits the underwriting template with minor edits and includes explicit ‘don’t invent’ and ‘flag uncertainties’ instructions."   
 level\_3\_label: Proficient  
-level\_3\_descriptor: "Catches subtle errors (plausible-but-wrong covenants, swapped entities, invented thresholds). Tightens prompts to reduce hallucinations (e.g., ‘use only the pasted text’). Escalates uncertainty rather than guessing."
-
+level\_3\_descriptor: "Adapts prompts for complex deals (multi-tranche structures, unusual collateral, policy exceptions). Iterates quickly: adds missing risk factors, forces table outputs, and requests traceable reasoning aligned to the credit memo format."   
 level\_4\_label: Champion  
-level\_4\_descriptor: "Creates verification checklists for the team (what must be true before approving). Trains peers on common AI failure modes in credit analysis and on how to document verification in the credit file."
+level\_4\_descriptor: "Builds reusable prompt templates for recurring underwriting workflows (financial statement write-ups, covenant drafting, approval-briefs). Coaches colleagues and documents examples in a shared team space." [\[m365.cloud.microsoft\]] [\[m365.cloud.microsoft\]], [\[08b. MBC -...rigination \| PowerPoint\]]
 
 ***
 
-### Domain: data\_safety
+### Domain: critical\_eval
 
-domain\_id: data\_safety  
-title: Data Safety and Compliance  
-description: "Applying EDC’s rules before using AI with underwriting data — protecting non-public client financials, deal terms, and any personal information. Uses only approved tools and follows policy requirements in [Responsible Use of Generative AI Policy.pdf](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Responsible%20Use%20of%20Generative%20AI%20Policy.pdf?web=1\&EntityRepresentationId=2d3b55d1-ae5f-4dea-b575-9d7a1196c422) (e.g., human review, avoid non-approved tools, avoid unsafe data entry)." [\[Responsibl...AI Policy \| PDF\]](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Responsible%20Use%20of%20Generative%20AI%20Policy.pdf?web=1)
-
+domain\_id: critical\_eval  
+title: Critical Evaluation  
+description: "Critically reviewing AI outputs before using them in credit decisions or records—catching invented figures, wrong ratios, misread covenants, incorrect policy claims, or missing red flags in summaries of financials, risk ratings, and credit submissions."   
 level\_0\_label: Unaware  
-level\_0\_descriptor: "May paste client financial statements, names, or deal terms into public AI tools without considering classification."
-
+level\_0\_descriptor: "Treats AI output as accurate by default. Copies AI text into a credit memo or CIS/MBC notes without checking against source documents."   
 level\_1\_label: Explorer  
-level\_1\_descriptor: "Knows ‘don’t share confidential data’ but struggles with gray areas (market rumors, internal ratings, partial identifiers). Prompts may still include too much detail."
-
+level\_1\_descriptor: "Skims outputs for obvious errors but does not systematically verify. May miss plausible-but-wrong details (e.g., swapped years, misstated leverage, misclassified covenant)."  
 level\_2\_label: Practitioner  
-level\_2\_descriptor: "Consistently applies a ‘public vs non-public’ test, strips identifiers, abstracts numbers into ranges, and chooses the correct approved Copilot surface. Can explain why a prompt is safe."
-
+level\_2\_descriptor: "Routinely verifies AI output against originals (financial statements, model outputs, credit reports, policy excerpts). Removes unverifiable claims and recalculates any key ratios that would influence the recommendation."   
 level\_3\_label: Proficient  
-level\_3\_descriptor: "Handles borderline cases confidently (e.g., combining multiple data points that could re-identify a client). Designs prompts that preserve usefulness while eliminating sensitive content, and adds audit-friendly notes on how AI was used."
-
+level\_3\_descriptor: "Uses a repeatable verification checklist and prompt constraints (cite, quote, ‘unknown if not present’). Detects subtle failure modes like ‘false certainty’ and incomplete risk coverage."  
 level\_4\_label: Champion  
-level\_4\_descriptor: "Spots new risk patterns (e.g., re-identification risk, hidden PII in attachments). Advises the team on safe prompt patterns and contributes examples to training and controls."
+level\_4\_descriptor: "Creates team verification standards for AI-assisted underwriting (what must be recalculated, what must be cross-checked in system-of-record). Teaches peers how to reduce hallucinations through better prompting and sourcing discipline." [\[m365.cloud.microsoft\]]
 
 ***
 
-### Domain: tool\_fluency
+### Domain: relationship\_intel
 
-domain\_id: tool\_fluency  
-title: Tool Fluency (M365 + Copilot)  
-description: "Choosing the right Microsoft 365 Copilot surface for underwriting tasks and chaining outputs across tools — Teams meeting recap → Outlook follow-up email → SharePoint filing → Word memo edits → Excel checks — while keeping the credit file complete and compliant." (Example workflows appear in [Risk Underwriting Demo.pptx](https://edcanada.sharepoint.com/sites/NEXUS/_layouts/15/Doc.aspx?sourcedoc=%7B4AE8CAF9-164B-40C6-A281-8D39A065711D%7D\&file=Risk%20Underwriting%20Demo.pptx\&action=edit\&mobileredirect=true\&DefaultItemOpen=1\&EntityRepresentationId=554e365a-5449-4042-83b7-3d759f534ce2).) [\[Risk Under...iting Demo \| PowerPoint\]](https://edcanada.sharepoint.com/sites/NEXUS/_layouts/15/Doc.aspx?sourcedoc=%7B4AE8CAF9-164B-40C6-A281-8D39A065711D%7D&file=Risk%20Underwriting%20Demo.pptx&action=edit&mobileredirect=true&DefaultItemOpen=1)
-
+domain\_id: relationship\_intel  
+title: Relationship Intelligence  
+description: "Using AI to synthesize stakeholder context and interaction history—policyholder/broker communications, internal deal-team threads, and prior decisions—so responses and follow-ups are specific, empathetic, and consistent with what was previously communicated (without revealing confidential internal rationale)."   
 level\_0\_label: Unaware  
-level\_0\_descriptor: "Has not used Copilot features in Outlook/Teams/Word/Excel. Doesn’t know which tool is best for which task."
-
+level\_0\_descriptor: "Does not use AI to prepare for sensitive customer interactions. Replies reactively, relying on memory and templates without tailoring."   
 level\_1\_label: Explorer  
-level\_1\_descriptor: "Uses one Copilot feature occasionally (e.g., draft an email) but does not connect steps (meeting recap doesn’t flow into record updates)."
-
+level\_1\_descriptor: "Uses AI to draft replies but outputs are generic, overly apologetic, or too technical. Misses the customer’s actual concern and may omit the concrete next step needed to move the case forward."   
 level\_2\_label: Practitioner  
-level\_2\_descriptor: "Uses at least three Copilot surfaces and completes simple chains (Teams recap → Outlook email → save note to SharePoint). Chooses a surface based on input type (transcript vs document vs spreadsheet)."
-
+level\_2\_descriptor: "Uses AI to extract key concerns, summarize the history, and draft a tailored response that balances clarity, empathy, and policy consistency. Ensures the message avoids internal-only details and aligns with approved template language where appropriate."   
 level\_3\_label: Proficient  
-level\_3\_descriptor: "Designs multi-step workflows across 3+ tools, recovers when one step fails (e.g., recap misses decisions), and knows when to switch surfaces (Excel for numbers, Word for narrative)."
-
+level\_3\_descriptor: "Anticipates objections and selects the right level of detail for the audience (policyholder vs broker vs internal AM). Uses AI to propose options/alternatives and to keep tone steady under pressure, then edits for precision and compliance."   
 level\_4\_label: Champion  
-level\_4\_descriptor: "Documents best-practice tool chains for common underwriting cycles (triage day, credit committee week, end-of-week housekeeping). Coaches peers and shares new Copilot features that reduce repetitive work."
+level\_4\_descriptor: "Develops ‘relationship playbooks’ for high-friction scenarios (declines, reductions, sanctions-related constraints) and shares prompt patterns for consistent stakeholder management across the team." [\[m365.cloud.microsoft\]], [\[Underwrite...Templates \| Word\]] [\[Underwrite...Templates \| Word\]] [\[Underwrite...Templates \| Word\]], [\[Responsibl...AI Policy \| PDF\]] [\[Underwrite...Templates \| Word\]], [\[Russia - S...uideline_e \| Word\]]
 
 ***
 
-# SECTION C — All 5 Course Specs
+### Domain: data\_decision
 
-### Course 1 — Write Client-Ready Credit Decisions with AI
+domain\_id: data\_decision  
+title: Data-Driven Decision Making  
+description: "Using AI to interpret financial and portfolio signals (variance analysis, early-warning dashboards, risk-rating outputs) to support underwriting decisions—while understanding data gaps, model limits, and when to escalate or request more information."   
+level\_0\_label: Unaware  
+level\_0\_descriptor: "Does not use AI to support analysis or prioritization. Relies on manual review and intuition without structuring the decision logic."  
+level\_1\_label: Explorer  
+level\_1\_descriptor: "Uses AI for summaries but doesn’t connect outputs to a decision (approve/decline/conditions). May accept AI’s prioritization without validating inputs or understanding assumptions."   
+level\_2\_label: Practitioner  
+level\_2\_descriptor: "Uses AI to identify key drivers (YoY variances, leverage changes, working capital shifts) and ties them to concrete underwriting actions (ask for clarifications, adjust terms, escalate). Validates against source data and policy limits."   
+level\_3\_label: Proficient  
+level\_3\_descriptor: "Designs multi-factor queries (sector + country risk + exposure concentration + covenant trajectory). Uses AI to stress-test assumptions and propose mitigants, then confirms with system-of-record data and specialist input."   
+level\_4\_label: Champion  
+level\_4\_descriptor: "Builds team templates for portfolio reviews and variance narratives. Shares decision heuristics that clarify when AI signals are ‘noise’ vs ‘actionable’ and helps peers avoid overconfidence in model-driven output." [\[m365.cloud.microsoft\]]
 
-course\_id: uw\_c1\_prompting  
+***
+
+### Domain: augmented\_comm
+
+domain\_id: augmented\_comm  
+title: Augmented Communication  
+description: "Choosing the right M365 Copilot surface (Outlook, Teams, Word, Excel, SharePoint/OneNote) and linking them into underwriting workflows—e.g., Teams recap → credit memo section in Word → decision email in Outlook → record update in CIS/MBC—while keeping the audit trail clean."   
+level\_0\_label: Unaware  
+level\_0\_descriptor: "Has not used Copilot features across M365 tools or does not know which surfaces are best for which underwriting tasks."   
+level\_1\_label: Explorer  
+level\_1\_descriptor: "Uses a single Copilot feature (often email drafting) but doesn’t connect outputs across tools. Re-enters the same info manually in multiple places."   
+level\_2\_label: Practitioner  
+level\_2\_descriptor: "Uses at least three surfaces for underwriting communications and documentation (e.g., Excel → Word → Outlook). Builds a simple chain workflow and retains traceability (what came from where, what was verified)."   
+level\_3\_label: Proficient  
+level\_3\_descriptor: "Designs multi-step workflows across 3+ surfaces, choosing the best entry point based on input type (tables vs long text vs threads). Recovers gracefully when a step produces weak output and knows when to stop using AI and switch to manual."   
+level\_4\_label: Champion  
+level\_4\_descriptor: "Documents and shares ‘standard chains’ for common underwriting scenarios (urgent decision, committee pack, customer-care request). Helps the team reduce duplicate work and improve consistency without compromising confidentiality." [\[m365.cloud.microsoft\]], [\[08b. MBC -...rigination \| PowerPoint\]] [\[m365.cloud.microsoft\]] [\[m365.cloud.microsoft\]], [\[Underwrite...Templates \| Word\]]
+
+***
+
+# SECTION C — All 7 Course Specs
+
+### Course 1 — Safe AI with Confidential Deal Data
+
+course\_id: uw\_c1\_responsible\_ai  
 role\_id: uw  
-primary\_domain: prompting  
+primary\_domain: responsible\_ai  
 sequence\_order: 1  
-title: "Write Client-Ready Credit Decisions with AI"  
-tagline: "Turn a complex credit decision into a clear, compliant email using the CRAF Framework."  
-description: "Underwriters write high-volume customer communications (approvals, declines, info requests) where wording matters. This course teaches the CRAF Framework (Context, Role, Action, Format) to generate usable first drafts in Outlook/Word while staying consistent with approved wording patterns (e.g., [Underwriter Communication Email Templates.docx](https://edcanada.sharepoint.com/sites/CreditInsuranceResourceCenter/_layouts/15/Doc.aspx?sourcedoc=%7B7086EBA1-6F1E-43CD-97E3-8A6F5A149D81%7D\&file=Underwriter%20Communication%20Email%20Templates.docx\&action=default\&mobileredirect=true\&DefaultItemOpen=1\&EntityRepresentationId=28ba8c95-982a-405c-b7e3-9ad7d612ea55)) and avoiding over-disclosure of internal credit models."   
-real\_use\_case: "Explore Copilot 360 Option for the Credit Insurance Program" [\[Underwrite...Templates \| Word\]](https://edcanada.sharepoint.com/sites/CreditInsuranceResourceCenter/_layouts/15/Doc.aspx?sourcedoc=%7B7086EBA1-6F1E-43CD-97E3-8A6F5A149D81%7D&file=Underwriter%20Communication%20Email%20Templates.docx&action=default&mobileredirect=true&DefaultItemOpen=1) [\[<File>Comp...lsx</File> \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B20AF7CD2-8D31-4881-BC1B-EF8D6683DE6C%7D&file=Complete-List-Categorized-110.xlsx&action=default&mobileredirect=true)
+title: "Safe AI with Confidential Deal Data"  
+tagline: "Use the SAFE Abstraction Method to get AI help without leaking non-public underwriting information."  
+description: "Underwriters handle highly sensitive financials and internal risk rationale. This course builds practical judgment for what can and cannot go into AI tools, and teaches SAFE Abstraction so learners can still get useful output while staying policy-safe and audit-ready."   
+real\_use\_case: "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada)." [\[m365.cloud.microsoft\]], [\[Responsibl...AI Policy \| PDF\]] [\[m365.cloud.microsoft\]]
 
-***
+### Course 2 — Prompting AI for Financial Analysis Write‑Ups
 
-### Course 2 — Trust but Verify: Validating AI’s Credit Analysis
-
-course\_id: uw\_c2\_verification  
+course\_id: uw\_c2\_strategic\_prompting  
 role\_id: uw  
-primary\_domain: verification  
+primary\_domain: strategic\_prompting  
 sequence\_order: 2  
-title: "Trust but Verify: Validating AI’s Credit Analysis"  
-tagline: "Use the VERIFY Checklist to catch errors before they reach the credit file or the client."  
-description: "AI can speed up due diligence summaries and risk flag extraction, but underwriting requires disciplined verification. This course teaches a practical verification workflow (VERIFY Checklist) for checking AI-generated company assessments against source documents and underwriting guidance such as [Credit Insurance Risk Assessment Guideline.pdf](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Credit%20Insurance%20Risk%20Assessment%20Guideline.pdf?web=1\&EntityRepresentationId=3008a9dc-0b2b-41a0-8614-af21acc6f0c8), and documenting what was verified."   
-real\_use\_case: "Use Gen-AI to help provide company assessments." [\[Credit Ins...Guideline \| PDF\]](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Credit%20Insurance%20Risk%20Assessment%20Guideline.pdf?web=1) [\[<File>Comp...lsx</File> \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B20AF7CD2-8D31-4881-BC1B-EF8D6683DE6C%7D&file=Complete-List-Categorized-110.xlsx&action=default&mobileredirect=true)
+title: "Prompting AI for Financial Analysis Write‑Ups"  
+tagline: "Turn messy financial inputs into a clean credit narrative using the CRAF framework."  
+description: "Financial analysis write-ups are repetitive but high stakes. This course teaches structured prompting (CRAF) to produce underwriting-ready narratives from Excel tables and statement excerpts—focused on the risk story, not generic finance commentary."   
+real\_use\_case: "Use Generative AI to assist financial statements reporting" [\[m365.cloud.microsoft\]]
 
-***
+### Course 3 — Let AI Read the Fine Print (Then Double‑Check It)
 
-### Course 3 — Safely Harnessing AI with Confidential Data
-
-course\_id: uw\_c3\_data\_safety  
+course\_id: uw\_c3\_critical\_eval  
 role\_id: uw  
-primary\_domain: data\_safety  
+primary\_domain: critical\_eval  
 sequence\_order: 3  
-title: "Safely Harnessing AI with Confidential Data"  
-tagline: "Use the SAFE Abstraction Method to get AI help without leaking non-public client data."  
-description: "Underwriters handle sensitive financial and personal data, so tool choice and prompt content must follow policy. This course teaches how to screen for sensitive data, abstract/anonymize safely, and use approved tools consistent with [Responsible Use of Generative AI Policy.pdf](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Responsible%20Use%20of%20Generative%20AI%20Policy.pdf?web=1\&EntityRepresentationId=2d3b55d1-ae5f-4dea-b575-9d7a1196c422)—especially under time pressure."   
-real\_use\_case: "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada)." [\[Responsibl...AI Policy \| PDF\]](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Responsible%20Use%20of%20Generative%20AI%20Policy.pdf?web=1) [\[<File>Comp...lsx</File> \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B20AF7CD2-8D31-4881-BC1B-EF8D6683DE6C%7D&file=Complete-List-Categorized-110.xlsx&action=default&mobileredirect=true)
+title: "Let AI Read the Fine Print (Then Double‑Check It)"  
+tagline: "Use the VERIFY checklist to catch AI mistakes before they enter a credit decision or system-of-record."  
+description: "AI can accelerate reading long submissions, reports, and decision histories—but it can also invent details. This course teaches a disciplined verification workflow (VERIFY) so underwriters can benefit from speed without sacrificing accuracy or policy alignment."   
+real\_use\_case: "UW Streamlining" [\[m365.cloud.microsoft\]]
 
-***
+### Course 4 — Using AI to Deepen Client Insight and Rapport
 
-### Course 4 — Mastering Copilot for Meetings and Follow-Ups
-
-course\_id: uw\_c4\_tool\_fluency  
+course\_id: uw\_c4\_relationship\_intel  
 role\_id: uw  
-primary\_domain: tool\_fluency  
+primary\_domain: relationship\_intel  
 sequence\_order: 4  
-title: "Mastering Copilot for Meetings and Follow-Ups"  
-tagline: "Use the Copilot Surface Selector to turn meetings into accurate actions and records."  
-description: "Underwriters attend frequent huddles, deal forums, and pipeline reviews where decisions and actions must be captured and stored. This course trains learners to use Copilot across Teams, Outlook, and SharePoint to produce a meeting recap, validate it, send follow-ups, and file the record properly."  
-real\_use\_case: "Record governance - Summarizing Meeting notes and actions (with attendees tagged)" [\[<File>Comp...lsx</File> \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B20AF7CD2-8D31-4881-BC1B-EF8D6683DE6C%7D&file=Complete-List-Categorized-110.xlsx&action=default&mobileredirect=true)
+title: "Using AI to Deepen Client Insight and Rapport"  
+tagline: "Use RELATE to respond to high-friction stakeholders with precision, empathy, and consistency."  
+description: "Underwriters regularly communicate declines, reductions, and information requests. This course shows how to use AI to synthesize interaction history and draft responses that protect the relationship—without revealing internal-only rationale or drifting from standard wording."   
+real\_use\_case: "Customer Interaction Recap" [\[Underwrite...Templates \| Word\]], [\[Responsibl...AI Policy \| PDF\]] [\[m365.cloud.microsoft\]]
 
-***
+### Course 5 — Uncovering Financial Trends with AI Insights
 
-### Course 5 — AI in Action: End-to-End Underwriting Simulation
-
-course\_id: uw\_c5\_capstone  
+course\_id: uw\_c5\_data\_decision  
 role\_id: uw  
-primary\_domain: prompting  
+primary\_domain: data\_decision  
 sequence\_order: 5  
-title: "AI in Action: End-to-End Underwriting Simulation"  
-tagline: "Run an end-to-end AI-assisted workflow across documents, knowledge search, and pricing—without sacrificing judgment or compliance."  
-description: "This capstone integrates all four domains in one realistic underwriting sprint: summarize a long third-party submission, pull internal guidance through an underwriting knowledge assistant, draft a recommendation and client note, retrieve pricing benchmarks, and validate everything before finalizing. Learners must demonstrate prompting skill, verification discipline, safe abstraction, and tool chaining."  
-real\_use\_case: "UW Streamlining; Underwriting Knowledge Assistant; Pricing Benchmark Retrieval" [\[<File>Comp...lsx</File> \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B20AF7CD2-8D31-4881-BC1B-EF8D6683DE6C%7D&file=Complete-List-Categorized-110.xlsx&action=default&mobileredirect=true)
+title: "Uncovering Financial Trends with AI Insights"  
+tagline: "Use SIFT to convert variance analysis into a clear underwriting action plan."  
+description: "Variance analysis is everywhere in underwriting—yet it often becomes a wall of numbers. This course teaches underwriters to use AI to identify the few variances that matter, explain drivers, forecast implications, and tie insights to a concrete decision or next step."   
+real\_use\_case: "Financial Variance Analyzer" [\[m365.cloud.microsoft\]]
+
+### Course 6 — AI as Your Email and Message Drafting Partner
+
+course\_id: uw\_c6\_augmented\_comm  
+role\_id: uw  
+primary\_domain: augmented\_comm  
+sequence\_order: 6  
+title: "AI as Your Email and Message Drafting Partner"  
+tagline: "Pick the right Copilot surface and chain it end-to-end: recap → memo → decision email → record update."  
+description: "Underwriters work across Outlook, Word, Teams, Excel, and SharePoint/OneNote while also updating underwriting systems. This course teaches the Copilot Surface Selector and multi-step workflows that reduce rework and improve consistency—while keeping records accurate and compliant."   
+real\_use\_case: "Request for Customer Care Team" [\[m365.cloud.microsoft\]], [\[08b. MBC -...rigination \| PowerPoint\]] [\[m365.cloud.microsoft\]]
+
+### Course 7 — End‑to‑End Underwriting with AI (From Analysis to Approval)
+
+course\_id: uw\_c7\_capstone  
+role\_id: uw  
+primary\_domain: augmented\_comm  
+sequence\_order: 7  
+title: "End‑to‑End Underwriting with AI (From Analysis to Approval)"  
+tagline: "Run a complete underwriting workflow using all 6 domains—fast, safe, and verifiable."  
+description: "This capstone integrates Responsible AI, Strategic Prompting, Critical Evaluation, Relationship Intelligence, Data-Driven Decision Making, and Augmented Communication in one realistic underwriting case. Learners will move from intake → analysis → recommendation → approval support → stakeholder communication, using AI safely and transparently at each step."   
+real\_use\_case: "Explore Copilot 360 Option for the Credit Insurance Program; Use Gen-AI to help provide company assessments. This is not a net new idea, but an attempt to leverage external tools - either CB Insights or Alphasense - as a search engine (which may themselves leverage AI) to help with investments due diligence" [\[m365.cloud.microsoft\]]
 
 ***
 
-# SECTION D — All 5 Scenario Seeds
+# SECTION D — All 7 Scenario Seeds
 
 ### Course 1 Scenario
 
-scenario\_text: "You are underwriting a credit insurance limit decision for <Company>HarborLight Components Ltd.</Company>, a Canadian exporter selling industrial parts to a foreign buyer. The exporter is upset because their requested limit was partially approved with conditions. You need to respond today with a clear, courteous explanation and next steps. You want AI to help draft the email, but the first draft must be client-ready and must not reveal internal rating methods or confidential details."  
-task\_1\_text: "Write a CRAF prompt that asks Copilot (Outlook) to draft a 180–220 word decision email explaining a partial approval with conditions, in plain language, with a short bullet list of next steps."  
-task\_2\_text: "Your draft is too generic. Revise the Context and Action so the email includes: (a) a clear reason category (e.g., ‘limited recent financial information’), (b) what additional information would support reconsideration, and (c) an appeal/review path—without adding any internal model details."  
-task\_3\_text: "The email tone is coming across as defensive. Add Role and Format instructions so the output is empathetic, factual, and structured as: ‘Decision’, ‘Why’, ‘What you can do next’."  
-task\_4\_text: "The output includes a sentence that sounds like it references EDC’s internal risk rating model. Add a constraint to prevent any mention of internal scores, internal thresholds, or non-public sources, and force the AI to use only ‘information provided by the client’ phrasing."  
-coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters. The learner is practicing the CRAF Framework for client decision emails. Do not write the prompt for them. Ask guiding questions about missing CRAF elements and where the prompt is under-specified. Watch for red flags: real client names, deal amounts, internal ratings, or copying text from confidential files. If sensitive details appear, instruct the learner to abstract them before proceeding."
-
-***
+scenario\_text: "You receive an urgent request to assess a new transaction for <Company>Bayfield Composites Ltd.</Company>. The package includes a confidential financial model, internal risk notes, and draft terms. The deal team wants a quick risk summary to decide whether to escalate for approval today. You want AI help—but the fastest path (pasting the whole package into a general AI chat) could violate policy and create an audit problem."  
+task\_1\_text: "Write a SAFE Abstraction plan: list the exact elements you must remove or generalize before using AI (names, identifiers, exact figures, deal terms), and what safe placeholders you will use instead."  
+task\_2\_text: "Draft a policy-safe prompt that asks for a risk summary and key mitigants using only your abstracted inputs (no client identifiers, no exact numbers). Include an explicit constraint: ‘If a detail is not provided, say UNKNOWN.’"  
+task\_3\_text: "Your draft prompt still contains one ‘deal fingerprint’ (a detail that would let someone infer the client or transaction). Identify what it is and rewrite that part to preserve usefulness while removing traceability."  
+task\_4\_text: "You need to share the AI output with an internal approver. Add a final instruction to your workflow that ensures the output is (a) verified, (b) appropriately attributed, and (c) safe to paste into a credit memo draft."  
+coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters. The learner is practicing Responsible AI using the SAFE Abstraction Method. Guide them by asking questions and prompting reflection—do not write the plan or prompt for them. Watch for red flags: real company names, exact financial figures, internal system IDs (CIS buyer IDs, MBC transaction numbers), internal ratings, covenant details, or copied text from confidential documents. If sensitive content appears, instruct the learner to remove/abstract it and explain why."
 
 ### Course 2 Scenario
 
-scenario\_text: "You are evaluating a financing request from <Company>Solstice Agri-Equipment Inc.</Company>. You used AI to generate a one-page ‘company assessment’ summary from a mix of notes and a third-party report. The AI output looks polished but you know underwriting requires verification before relying on it in a credit submission or a risk decision."  
-task\_1\_text: "List the first 4 checks you would do using the VERIFY Checklist before trusting the AI summary (focus on sources, numbers, and claims)."  
-task\_2\_text: "Write a prompt that asks Copilot to produce a ‘verification plan’ table with columns: Claim, Source to check, How to confirm, Pass/Fail note—based only on the text you provide."  
-task\_3\_text: "You discover one AI claim: ‘Revenue grew 18% YoY’ but your notes don’t show that. Write a short instruction you would add to the prompt to force the AI to mark any unsupported claims as ‘Unverified’ and to never invent numbers."  
-task\_4\_text: "The AI summary recommends ‘approve with standard covenants’ without mentioning delegated authority or policy constraints. Write a prompt revision that requires: (a) DOA alignment check, (b) policy alignment check, and (c) a ‘what would make me escalate’ section."  
-coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters practicing Verification and Judgment. Do not provide the learner’s final answers. Guide them to identify what must be verified and how. Flag any hallucination risk: invented figures, invented policy rules, invented approvals. If the learner includes real client identifiers or deal terms, instruct them to replace with placeholders or ranges."
-
-***
+scenario\_text: "You are drafting the financial analysis section for <Company>Northshore Windworks Inc.</Company> using an Excel table of key metrics (revenue, EBITDA, leverage, liquidity) and brief notes from the deal team. You want Copilot to generate a tight underwriting narrative that fits your credit memo structure. The temptation is to write ‘write the financial section’ and accept a generic answer that misses the real risks."  
+task\_1\_text: "Write a CRAF prompt to produce a 250-word financial analysis narrative with three headings: Performance, Liquidity, Leverage. Include constraints: no invented numbers, highlight only the top 3 risks."  
+task\_2\_text: "Your output is accurate but reads like a textbook. Revise the Role and Action so the narrative is written in an underwriter voice and explicitly ties changes to underwriting implications (e.g., covenants, conditions, mitigants)."  
+task\_3\_text: "The deal team cares most about liquidity runway and working capital volatility. Revise the Format instruction so the output starts with a 3-bullet ‘So what?’ section before the headings."  
+task\_4\_text: "The AI included a recommendation (‘approve’) even though you only asked for analysis. Add a constraint that prevents decision recommendations and forces the AI to separate facts from interpretations."  
+coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters practicing the CRAF Framework. Guide the learner with questions—do not write the prompt. Look for missing CRAF elements, vague instructions, or prompts that invite hallucinations. Flag any sensitive info (client identifiers, exact figures, internal ratings). Encourage constraints like ‘use only provided data’ and ‘say UNKNOWN if missing.’"
 
 ### Course 3 Scenario
 
-scenario\_text: "You received an email from <Company>IronPeak Renewables Ltd.</Company> with attached financial forecasts and a draft term sheet. You are under time pressure and tempted to paste the full documents into an external AI tool to get a quick risk summary. You must still get AI help, but you must do it safely and in line with [Responsible Use of Generative AI Policy.pdf](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Responsible%20Use%20of%20Generative%20AI%20Policy.pdf?web=1\&EntityRepresentationId=2d3b55d1-ae5f-4dea-b575-9d7a1196c422)."   
-task\_1\_text: "Identify 5 types of information in this package that should be treated as non-public or sensitive in underwriting (write them as categories, not specifics)."  
-task\_2\_text: "Use the SAFE Abstraction Method to rewrite the situation into a ‘safe prompt input’ (no names, no exact numbers, no identifiers). Write the abstracted context you would paste into Copilot."  
-task\_3\_text: "Draft a prompt that asks Copilot to generate a risk-questions checklist (not a risk decision) based on your abstracted context, and includes a warning: ‘Do not provide final underwriting approval guidance’."  
-task\_4\_text: "You need a paragraph for an internal memo, but you’re unsure whether a Copilot surface is approved for the content. Write the decision rule you will apply to choose: (a) internal M365 Copilot on a stored document, (b) a generic prompt with abstracted info, or (c) no AI use at all."  
-coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters practicing Data Safety and Compliance. Do not write the learner’s final prompt. Guide them to remove sensitive details and choose safe tool patterns. Watch for: client names, exact amounts, term sheet clauses, personal information, internal risk ratings. If any appear, stop and require abstraction." [\[Responsibl...AI Policy \| PDF\]](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Responsible%20Use%20of%20Generative%20AI%20Policy.pdf?web=1)
-
-***
+scenario\_text: "An internal AI tool generates a summary of a third-party submission for <Company>HarborGate Foods Ltd.</Company>, including key risks, ratios, and suggested mitigants. The summary looks polished, and you’re under time pressure to send an update to the approving authority. The temptation is to forward it as-is—even if it contains subtle errors that could mislead the decision."  
+task\_1\_text: "Apply the VERIFY checklist: list the minimum source items you must check (financial statements, covenant definitions, ratings output, policy constraint) before using the summary."  
+task\_2\_text: "Identify two statements in the AI summary that are ‘high impact if wrong’ and rewrite them as ‘verified facts’ vs ‘needs confirmation’ (without adding new data)."  
+task\_3\_text: "Your check finds one ratio was miscalculated due to a year mismatch. Write a short instruction you would add to future prompts to reduce this failure mode."  
+task\_4\_text: "Draft a one-paragraph approver update that uses only VERIFIED items and clearly labels anything pending, while maintaining a professional underwriting tone."  
+coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters practicing Critical Evaluation with the VERIFY checklist. Do not fix the work for the learner. Ask what they would verify first and why. Watch for over-trust (‘looks right’), invented figures, and missing sourcing. If they include sensitive or real data, instruct them to abstract it."
 
 ### Course 4 Scenario
 
-scenario\_text: "You just finished a weekly pipeline meeting about <Company>Northstar Marine Furnishings Ltd.</Company>. Decisions were made on what information is still needed and who will contact the customer. You want to use Copilot to create a meeting recap, assign actions, email the right people, and store the record in the deal’s SharePoint folder."  
-task\_1\_text: "Using the Copilot Surface Selector, choose which tool you will start with (Teams, Outlook, Word, or SharePoint) and explain why in one sentence."  
-task\_2\_text: "Write a prompt for Teams Copilot to generate a recap that includes: decisions, action items with owners, and deadlines—formatted as bullets. Include an instruction to label anything uncertain as ‘Needs confirmation’."  
-task\_3\_text: "Now write a prompt for Outlook Copilot to draft a follow-up email that embeds the validated decisions and action list, and asks recipients to correct any ‘Needs confirmation’ items."  
-task\_4\_text: "Write the final step instructions you would follow to store the recap as a formal record (where it goes, what filename pattern you use, and what you avoid including to protect confidentiality)."  
-coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters practicing Tool Fluency. Do not write the prompts for them. Ask them to justify tool choice and to ensure the recap includes decisions and actions. Watch for sensitive deal details and remind them to keep meeting records factual and minimal while still complete."
-
-***
+scenario\_text: "<Company>Seabright Equipment Brokers Ltd.</Company> sends an angry email claiming EDC ‘declined without reading the file’ after a credit limit reduction. Internally, you also have a Teams thread showing previous back-and-forth and the exact info that was missing. The temptation is to paste the whole thread into AI and send a generic apology. The skill test is to synthesize the history, keep tone calm, and give a precise next step—without leaking internal-only rationale."  
+task\_1\_text: "Write a prompt that asks AI to summarize the interaction history into three parts: Customer concern, What we communicated, What we still need. Use only abstracted content (no internal names, no sensitive buyer-file text)."  
+task\_2\_text: "Using the RELATE framework, write a prompt instruction that forces the AI to acknowledge emotion without admitting fault, and to propose 2 specific next-step options (information request vs alternative structure)."  
+task\_3\_text: "The draft response is too technical. Revise the prompt so the response is written for a time-pressed customer, using plain language and one short paragraph + bullet list."  
+task\_4\_text: "Add a guardrail to prevent the AI from referencing internal systems, internal risk codes, or internal committees in the customer-facing draft."  
+coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters practicing Relationship Intelligence using RELATE. Guide with questions—do not write the email. Watch for: blaming language, over-disclosure of internal rationale, mention of internal codes (e.g., reason codes, risk levels), or sharing non-public data. Encourage empathy + clarity + next steps, and strict separation of internal vs external content."
 
 ### Course 5 Scenario
 
-scenario\_text: "You are assigned an urgent underwriting package for <Company>CedarBridge Infrastructure Partners</Company>. A partner bank sent a long credit submission. You must: (1) extract key risk flags quickly, (2) find internal guidance on how similar cases were handled, (3) draft a short internal recommendation and a client-facing update, and (4) sanity-check a proposed pricing range using benchmarks—all before end of day. You will use Copilot, but you must verify outputs and keep data safe."  
-task\_1\_text: "Write a prompt (CRAF-style) to summarize the bank submission into: Key risks, missing information, and questions to resolve—using only the text you provide. Specify a 12-bullet maximum."  
-task\_2\_text: "Use tool fluency: describe a 3-step Copilot chain (surface → output → next surface) to retrieve internal guidance (policy, templates, prior cases) without leaving M365."  
-task\_3\_text: "Apply SAFE Abstraction: rewrite the pricing question so you can ask for benchmark ranges without sharing the client name, exact exposure, or confidential terms."  
-task\_4\_text: "Apply VERIFY: list the exact verification steps you will take before you (a) paste any summary into the credit file and (b) send any client update."  
-coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters in a capstone simulation. Do not solve the tasks. Help the learner integrate prompting, verification, data safety, and tool chaining. Stop them if they include real identifiers, exact numbers, or internal model outputs. Push them to be specific about formats, constraints, and verification evidence."
+scenario\_text: "You are reviewing <Company>AtlasForge Machinery Ltd.</Company> and notice large year-over-year swings in margin and working capital in the financials. You want AI to help explain variances quickly, but the temptation is to accept the first explanation (which might be generic or wrong) and let it drive your decision. The skill test is to use AI to surface hypotheses, then validate and tie to a concrete underwriting action."  
+task\_1\_text: "Write a prompt that applies SIFT: ask AI to select the top 5 variances, isolate likely drivers (as hypotheses), and list what evidence you’d need to confirm each driver."  
+task\_2\_text: "Revise the prompt so AI must output: (a) variance table, (b) driver hypotheses, (c) underwriting implications, (d) next info request—each clearly separated."  
+task\_3\_text: "The AI suggests a driver that is not supported by the provided numbers. Write the micro-instruction you would add to force ‘evidence-backed only’ reasoning."  
+task\_4\_text: "Produce an action plan: 3 questions to the deal team, 2 mitigants to consider, and 1 escalation trigger—based only on verified variances."  
+coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters practicing Data-Driven Decision Making with SIFT. Do not produce the analysis for the learner. Push them to separate hypotheses from facts, and to identify what data would confirm each claim. Flag any prompt content that includes exact client identifiers or confidential figures."
+
+### Course 6 Scenario
+
+scenario\_text: "A Customer Care Team request comes in for <Company>PrairiePulse Exporters Inc.</Company>. You need to (1) confirm the latest decision context, (2) draft a customer response using standard wording where appropriate, (3) update the record in the system-of-record, and (4) notify internal stakeholders. The temptation is to draft everything in one place and forget traceability. The skill test is to choose the right Copilot surface at each step and chain outputs safely."  
+task\_1\_text: "Use the Copilot Surface Selector: decide which surface you’ll use for each step (Teams/Outlook/Word/Excel/SharePoint) and why, given the input types (thread, template language, tables, record notes)."  
+task\_2\_text: "Draft a Copilot prompt for Outlook that generates a customer email using a ‘calm + clear + next steps’ structure, and explicitly avoids internal-only details."  
+task\_3\_text: "Draft a Copilot prompt for Word that turns the verified facts into a short ‘decision rationale’ paragraph suitable for internal documentation (not customer-facing)."  
+task\_4\_text: "Design a final ‘handoff’ step: write the checklist you will follow before copying AI text into the system-of-record (verification, confidentiality check, consistency with prior communications)."  
+coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters practicing Augmented Communication and tool chaining. Do not write the emails or paragraphs. Watch for mixing internal and external messaging, missing verification, and any inclusion of non-public identifiers. Encourage explicit ‘source-of-truth’ steps and safe abstractions."
+
+### Course 7 Scenario
+
+scenario\_text: "You are leading an end-to-end underwriting case for <Company>Cascadia Marine Systems Ltd.</Company>. You must quickly build a company assessment (including external context), analyze financials and variances, validate risk signals, prepare an approval-ready recommendation, and communicate the decision to stakeholders. The temptation is to let AI ‘run the case’ end-to-end, including pulling in external data without checking quality or permissions. The skill test is to integrate all six domains into one controlled workflow with clear human checkpoints."  
+task\_1\_text: "Design the End-to-End AI Workflow: list the 6 domain checkpoints (SAFE, CRAF, VERIFY, RELATE, SIFT, Surface Selector) and what artifact each checkpoint produces."  
+task\_2\_text: "Write a prompt sequence (3 prompts) that: (1) creates an abstracted case brief, (2) generates a financial variance narrative, (3) drafts an internal recommendation section—each with constraints preventing invented facts."  
+task\_3\_text: "You receive an external ‘company assessment’ summary from a tool. Apply VERIFY: list what you must confirm before using it (sources, recency, contradictions), and write the language you’ll add to your memo to properly qualify it."  
+task\_4\_text: "Produce the final stakeholder pack outline: internal approver brief + customer message + record update note. Specify which parts are AI-assisted, what you verified, and what remains assumptions."  
+coach\_system\_prompt: "You are an AI skills coach for EDC Underwriters guiding a capstone. Do not write the workflow or prompts for the learner—ask questions that force them to identify checkpoints, constraints, and verification steps. Watch for policy violations (non-public data in prompts, unapproved tool use), over-reliance on external summaries, and unclear separation between facts, assumptions, and recommendations."
 
 ***
 
-# SECTION E — All 5 Reading Concept Specs
+# SECTION E — All 7 Reading Concept Specs
 
 ### Course 1 Reading
 
-framework\_name: "CRAF Framework"  
-concept\_text: "Underwriters don’t need ‘nice writing’—they need usable drafts that survive compliance and reduce rework. The CRAF Framework helps you control AI output so it matches underwriting reality. **Context** gives the situation (product, decision type, what’s known, what’s missing). **Role** tells the AI who it is (an underwriter writing a client email, not a sales pitch). **Action** defines the deliverable (e.g., a 200-word partial approval email with conditions and next steps). **Format** forces structure (headings + bullets) so you can review quickly and reduce accidental over-disclosure. In practice, CRAF is your guardrail against two common failures: (1) the AI invents rationale or numbers because you didn’t specify ‘use only provided facts,’ and (2) the AI includes internal underwriting language because you didn’t constrain tone and forbidden content. Pair CRAF with approved wording patterns from [Underwriter Communication Email Templates.docx](https://edcanada.sharepoint.com/sites/CreditInsuranceResourceCenter/_layouts/15/Doc.aspx?sourcedoc=%7B7086EBA1-6F1E-43CD-97E3-8A6F5A149D81%7D\&file=Underwriter%20Communication%20Email%20Templates.docx\&action=default\&mobileredirect=true\&DefaultItemOpen=1\&EntityRepresentationId=28ba8c95-982a-405c-b7e3-9ad7d612ea55) so the draft starts close to what your team already uses."   
-good\_example: "Prompt: 'Context: Credit insurance limit decision email. Outcome is partial approval with conditions due to limited recent financial info. Do NOT mention internal risk ratings, thresholds, or non-public sources. Role: You are an EDC underwriter writing a client-facing email using plain language. Action: Draft a 180–220 word email that explains the decision, lists the conditions, and explains what information could support reconsideration. Format: Headings (Decision / Why / What you can do next), with bullet points under ‘What you can do next’.' Why it works: It constrains content, prevents internal leakage, and produces a reviewable structure."  
-anti\_pattern: "Prompt: 'Write an email telling the client why we declined.' Why it fails: No context, no constraints, and no format. The AI may invent reasons, include internal model language, or produce a long generic template that wastes time and creates compliance risk."  
-takeaway: "CRAF turns AI from ‘generic drafter’ into a controlled drafting assistant that produces underwriting-ready text you can validate and send." [\[Underwrite...Templates \| Word\]](https://edcanada.sharepoint.com/sites/CreditInsuranceResourceCenter/_layouts/15/Doc.aspx?sourcedoc=%7B7086EBA1-6F1E-43CD-97E3-8A6F5A149D81%7D&file=Underwriter%20Communication%20Email%20Templates.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
-
-***
+framework\_name: "The SAFE Abstraction Method"  
+concept\_text: "Underwriting work is packed with non-public information—financial statements, internal risk ratings, covenant headroom, and decision rationale. AI can save time, but only if you keep sensitive data out of prompts and outputs that don’t belong in the record. SAFE is a practical, repeatable method you run before every AI-assisted underwriting task: **S**trip identifiers (names, IDs, deal fingerprints), **A**bstract numbers (replace exact figures with ranges or ratios), **F**ocus the ask (what you need the AI to do, not ‘analyze everything’), and **E**nforce constraints (no guessing, label unknowns, produce a safe format). SAFE is not about making prompts vague—it’s about removing what creates confidentiality risk while preserving what makes underwriting logic useful. If you can’t SAFE the input without losing meaning, that’s a signal to stop and use a different approach (manual analysis or an approved internal workflow)."   
+good\_example: "Before: ‘Here is <Company>Bayfield Composites Ltd.</Company>’s full model and internal notes—summarize risk and recommend approval.’ After (SAFE): ‘Context: mid-market manufacturer; recent margin compression; liquidity tight but improving; exposure is material vs peer deals. Action: list top 5 risk themes + 5 mitigants. Constraints: no invented numbers; if missing, say UNKNOWN; output as bullets for an internal draft.’"  
+anti\_pattern: "Pasting the full confidential model, internal ratings, and system notes into a general AI chat ‘for speed.’ Consequence: policy breach risk + accidental disclosure + unreliable audit trail."   
+takeaway: "SAFE lets you keep AI benefits while protecting confidentiality. If you can’t abstract safely, don’t prompt—change the approach." [\[Responsibl...AI Policy \| PDF\]], [\[m365.cloud.microsoft\]]
 
 ### Course 2 Reading
 
-framework\_name: "VERIFY Checklist"  
-concept\_text: "AI can summarize and sound confident even when it’s wrong. Underwriting is high-stakes, so your default stance is: **use AI to accelerate reading, not to replace judgment**. The VERIFY Checklist is a simple routine you apply before any AI output becomes (a) a credit file record or (b) client communication. **V — Validate sources:** Is each claim traceable to a document you actually have? **E — Evaluate numbers:** Recalculate or cross-check key figures and ratios. **R — Review policy/authority:** Ensure the recommendation aligns with policy and delegated authority (don’t let AI suggest approvals you can’t sign). **I — Identify missing info:** What evidence is still needed to support the conclusion? **F — Flag uncertainty:** Mark anything unverified and remove it from decision text. **Y — Yield to escalation when unsure:** If uncertainty touches compliance, sanctions/KYC, or material exposure, escalate instead of guessing. Use [Credit Insurance Risk Assessment Guideline.pdf](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Credit%20Insurance%20Risk%20Assessment%20Guideline.pdf?web=1\&EntityRepresentationId=3008a9dc-0b2b-41a0-8614-af21acc6f0c8) as an anchor for what ‘must be true’ in credit insurance decisions."   
-good\_example: "Before: AI output says ‘Revenue grew 18% YoY’ and ‘standard covenants apply.’ After applying VERIFY: you mark the revenue claim ‘Unverified—no source,’ you confirm covenants against the term sheet template, and you add a ‘Policy/DOA check’ section that states whether the decision must be escalated."  
-anti\_pattern: "Copying an AI-generated company assessment into the credit memo because it ‘looks professional.’ Consequence: wrong numbers or invented claims enter the credit file, increasing audit and decision risk."  
-takeaway: "If you can’t point to the source, it doesn’t belong in the credit file—VERIFY is how you keep AI helpful and safe." [\[Credit Ins...Guideline \| PDF\]](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Credit%20Insurance%20Risk%20Assessment%20Guideline.pdf?web=1)
-
-***
+framework\_name: "CRAF Framework"  
+concept\_text: "Great underwriting output starts with a prompt that behaves like a mini-brief. CRAF gives you four elements that consistently produce usable drafts: **C—Context** (what case this is, what inputs matter), **R—Role** (who the AI is ‘being’ so tone and vocabulary fit underwriting), **A—Action** (the exact deliverable: a 250-word narrative, a table, a list of risks), **F—Format** (headings, bullets, order, length). In underwriting, missing Action or Format is the most common reason AI produces generic finance text. A good CRAF prompt also includes underwriting guardrails: ‘use only provided data,’ ‘don’t recommend approval,’ ‘label unknowns,’ and ‘separate facts from interpretation.’ This keeps your draft aligned to the credit memo structure and reduces rework."  
+good\_example: "Prompt (CRAF): ‘Context: You are drafting the Financial Analysis section for an underwriting memo. Inputs: pasted table of metrics + brief notes. Role: Senior credit underwriter. Action: Write a 250-word narrative focusing on liquidity, leverage, and volatility drivers; highlight top 3 risks. Format: Start with 3 bullets “So what?”, then headings Performance / Liquidity / Leverage. Constraints: do not invent figures; say UNKNOWN if missing; no approval recommendation.’"  
+anti\_pattern: "‘Write my credit memo.’ Consequence: generic output that misses the real risk story and wastes time editing."  
+takeaway: "In underwriting, CRAF turns AI from a ‘writer’ into a controlled drafting assistant."
 
 ### Course 3 Reading
 
-framework\_name: "The SAFE Abstraction Method"  
-concept\_text: "Time pressure is when data leaks happen. The SAFE Abstraction Method lets you use AI without exposing non-public client information. **S — Scan for sensitive content:** names, identifiers, deal terms, financial statements, personal data, internal ratings. **A — Abstract and anonymize:** replace names with roles (Exporter, Buyer, Bank), convert numbers to ranges (e.g., ‘mid seven figures’), remove unique facts that could identify the client. **F — Frame the question safely:** ask for checklists, questions, or structure—not final decisions or risk ratings. **E — Execute in approved environments + Evaluate:** use approved M365 Copilot surfaces on stored documents when allowed; otherwise use abstracted prompts; always do human review. This aligns with expectations in [Responsible Use of Generative AI Policy.pdf](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Responsible%20Use%20of%20Generative%20AI%20Policy.pdf?web=1\&EntityRepresentationId=2d3b55d1-ae5f-4dea-b575-9d7a1196c422), including that AI output must be reviewed and that non-public info must be protected."   
-good\_example: "Before (unsafe): ‘Here’s the full term sheet for IronPeak Renewables… summarize and tell me if we should approve.’ After (SAFE): ‘Exporter in renewable energy seeking a guarantee; draft term sheet includes restrictive covenants and tight deadlines. Provide a checklist of questions to validate cash-flow assumptions and covenant feasibility. Do not recommend approval/decline.’"  
-anti\_pattern: "Pasting full client financial forecasts into an external AI tool ‘just to save time.’ Consequence: policy breach and potential disclosure of protected information."  
-takeaway: "SAFE keeps AI useful by changing *what you share* and *what you ask for*—so you get help without creating a data incident." [\[Responsibl...AI Policy \| PDF\]](https://edcanada.sharepoint.com/sites/EDCsGovernanceInstruments/Governance%20Instruments/Responsible%20Use%20of%20Generative%20AI%20Policy.pdf?web=1)
-
-***
+framework\_name: "VERIFY Checklist"  
+concept\_text: "Underwriters can’t outsource judgment. AI summaries can be fast—and wrong in ways that look believable. VERIFY is a short checklist you run before any AI text enters a memo, an email, or a system-of-record: **V**alue at risk (what statements would change the decision if wrong?), **E**vidence match (does each key claim map to a source line/table?), **R**ecompute (recalculate critical ratios/variances from source), **I**nconsistencies (scan for contradictions vs other documents or prior decisions), **F**lags missing (what major risk categories are absent?), **Y**our conclusion (what you accept, reject, or mark pending). VERIFY forces you to label uncertainty and prevents ‘false certainty’ from creeping into underwriting decisions."  
+good\_example: "After an AI summary flags ‘no liquidity concerns,’ you VERIFY: check the liquidity table, recompute runway months, and if missing, rewrite: ‘Liquidity runway needs confirmation; latest cash + facility availability not provided in the source excerpt.’"  
+anti\_pattern: "Forwarding an AI-generated risk review to an approver without checking ratios or covenant definitions. Consequence: approver decisions based on incorrect facts."  
+takeaway: "VERIFY is the difference between AI-assisted speed and AI-driven error."
 
 ### Course 4 Reading
 
-framework\_name: "Copilot Surface Selector"  
-concept\_text: "Underwriters lose time when meeting outcomes don’t turn into actions and records. The Copilot Surface Selector helps you pick the right tool first, based on the input and the output you need. Start with **Teams Copilot** when your input is a meeting transcript/notes and you need a recap with decisions and actions. Use **Outlook Copilot** when the next step is a follow-up email that assigns actions and confirms deadlines. Use **Word Copilot** when you need a memo-style artifact (credit submission section, committee note). Use **Excel Copilot** when numbers or lists need checking (ratios, variance explanations). Finish in **SharePoint** by filing the approved record in the right location. The workflow mirrors the kind of multi-tool chains described in [Risk Underwriting Demo.pptx](https://edcanada.sharepoint.com/sites/NEXUS/_layouts/15/Doc.aspx?sourcedoc=%7B4AE8CAF9-164B-40C6-A281-8D39A065711D%7D\&file=Risk%20Underwriting%20Demo.pptx\&action=edit\&mobileredirect=true\&DefaultItemOpen=1\&EntityRepresentationId=554e365a-5449-4042-83b7-3d759f534ce2) (meeting recap → email → record)."   
-good\_example: "A pipeline meeting ends → Teams Copilot creates a recap with ‘Decisions’ and ‘Actions’ → you edit and validate → Outlook Copilot drafts a follow-up email → you save the final recap to SharePoint under the deal folder with a consistent filename."  
-anti\_pattern: "Starting in Word with ‘write meeting notes’ when the transcript is in Teams. Consequence: missing decisions, duplicated work, and weak recordkeeping."  
-takeaway: "Pick the surface that matches the input. Chain outputs forward. Validate before you file or send." [\[Risk Under...iting Demo \| PowerPoint\]](https://edcanada.sharepoint.com/sites/NEXUS/_layouts/15/Doc.aspx?sourcedoc=%7B4AE8CAF9-164B-40C6-A281-8D39A065711D%7D&file=Risk%20Underwriting%20Demo.pptx&action=edit&mobileredirect=true&DefaultItemOpen=1)
-
-***
+framework\_name: "RELATE Framework"  
+concept\_text: "Relationship intelligence in underwriting is not ‘being friendly’—it’s being precise, consistent, and calm when decisions are sensitive. RELATE helps you use AI without damaging trust: **R**eview history (what was asked, answered, promised), **E**xtract concerns (what the stakeholder is really upset about), **L**abel stakeholders (policyholder, broker, internal AM—each needs different detail), **A**nticipate objections (what they will push back on), **T**ailor response (plain language + specific next step), **E**scalate wisely (when to bring in manager/legal/other specialists). AI can help synthesize threads and propose wording, but you control disclosure: customer-facing messages must avoid internal codes, internal committee language, and non-public rationale."   
+good\_example: "Before: ‘Sorry for the inconvenience. We can’t help.’ After (RELATE): ‘We understand this is urgent. Based on the information provided so far, we can’t confirm coverage at the level requested. If you share (1) latest payment experience details and (2) updated buyer financials, we can reassess within X business days. If timing is critical, we can discuss a temporary limit option.’"   
+anti\_pattern: "Sending a generic apology drafted by AI that doesn’t answer the actual question or provide the next step. Consequence: escalations, rework, and relationship damage."  
+takeaway: "RELATE turns AI drafting into stakeholder trust-building—without over-disclosure." [\[Underwrite...Templates \| Word\]], [\[Responsibl...AI Policy \| PDF\]] [\[Underwrite...Templates \| Word\]]
 
 ### Course 5 Reading
 
+framework\_name: "SIFT Variance Lens"  
+concept\_text: "Variance analysis becomes valuable only when it drives action. SIFT helps you use AI to move from numbers → drivers → underwriting implications. **S—Select** the few variances that matter (not every line item). **I—Isolate** likely drivers as hypotheses (pricing, volume, FX, one-time events, working capital shifts). **F—Forecast** implications (runway, covenant pressure, refinancing risk). **T—Tie** to risk appetite and the next action (ask for evidence, adjust structure, add conditions, escalate). AI is best at proposing driver hypotheses and structuring the narrative; you are responsible for confirming drivers with evidence and linking them to underwriting decisions."  
+good\_example: "Prompt: ‘Given this table, select top 5 variances, propose 2 evidence-based driver hypotheses for each, list what evidence would confirm, and map each to an underwriting implication (covenant risk, liquidity risk, mitigant). Output: variance table + drivers + evidence needed + action.’"  
+anti\_pattern: "Accepting the AI’s first driver explanation (‘margin fell due to competition’) without any evidence in the numbers. Consequence: wrong risk story and wrong conditions."  
+takeaway: "SIFT keeps AI in the hypothesis lane—and keeps you in the decision lane."
+
+### Course 6 Reading
+
+framework\_name: "Copilot Surface Selector"  
+concept\_text: "Underwriting work crosses tools: threads, documents, tables, and formal messages. The Copilot Surface Selector is a simple rule set: start where your **best input** lives, and end where your **official output** must land. Use Outlook Copilot for customer-ready drafts; Word Copilot for memo sections; Excel Copilot for interpreting tables; Teams Copilot for meeting/thread summaries; SharePoint/OneNote Copilot for retrieving prior artifacts. Then chain outputs with a verification step between every hop. The goal is not ‘more AI’—it’s less re-entry, cleaner audit trails, and fewer inconsistent messages."   
+good\_example: "Teams recap → Word: draft ‘Risk & Mitigants’ section → Excel: validate ratios → Outlook: draft customer email using approved tone → final human check → record update in system-of-record."   
+anti\_pattern: "Drafting the customer email from an internal credit memo paragraph without stripping internal language. Consequence: over-disclosure and confusion."  
+takeaway: "Pick the surface that matches the input, then chain deliberately with verification gates." [\[m365.cloud.microsoft\]], [\[08b. MBC -...rigination \| PowerPoint\]] [\[m365.cloud.microsoft\]]
+
+### Course 7 Reading
+
 framework\_name: "End-to-End AI Workflow"  
-concept\_text: "The capstone skill is not ‘using AI’—it’s orchestrating AI safely across a full underwriting sprint. The End-to-End AI Workflow has four stages: **(1) Intake & Triage:** summarize long submissions into risks, missing info, and questions (prompting). **(2) Knowledge & Policy Pull:** retrieve internal guidance (policy, templates, past cases) using approved M365 search and Copilot surfaces (tool fluency). **(3) Drafting & Options:** draft internal recommendation + client update using constrained prompts (prompting + safety). **(4) Verify & Finalize:** apply VERIFY to ensure everything is sourced, accurate, and policy/authority-aligned (verification). This mirrors the intent of automation supports like [UCM - Credit Automation for Underwriters.docx](https://edcanada.sharepoint.com/sites/CreditInsuranceResourceCenter/_layouts/15/Doc.aspx?sourcedoc=%7B9CF76E2B-8514-4CBB-A179-AB6AC9D0BD32%7D\&file=UCM%20-%20Credit%20Automation%20for%20Underwriters.docx\&action=default\&mobileredirect=true\&DefaultItemOpen=1\&EntityRepresentationId=68683777-929e-4013-b65b-1ed8ed3a7115): faster turnaround while keeping the underwriter accountable for review and decision quality."   
-good\_example: "You extract risk flags from a bank submission, pull relevant internal guidance, draft a short recommendation, ask for benchmark ranges using abstracted inputs, and then verify every claim before filing/sending."  
-anti\_pattern: "One-shot prompting: ‘Summarize, decide, draft everything.’ Consequence: hallucinations, policy misalignment, and potential data exposure."  
-takeaway: "The winning pattern is: **prompt → pull guidance → draft → verify**. Speed comes from the workflow, not from skipping judgment." [\[UCM - Cred...derwriters \| Word\]](https://edcanada.sharepoint.com/sites/CreditInsuranceResourceCenter/_layouts/15/Doc.aspx?sourcedoc=%7B9CF76E2B-8514-4CBB-A179-AB6AC9D0BD32%7D&file=UCM%20-%20Credit%20Automation%20for%20Underwriters.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
+concept\_text: "In the capstone, AI is not a single prompt—it’s a controlled workflow with checkpoints. Your end-to-end workflow should have (1) SAFE gating before any prompt, (2) CRAF prompting to generate draft artifacts, (3) VERIFY checks before anything becomes ‘official,’ (4) RELATE-driven communication shaping, (5) SIFT-driven decision logic, and (6) Surface Selection to move work across tools without losing traceability. The workflow is successful when every AI-assisted artifact is (a) policy-safe, (b) evidence-linked, and (c) clearly marked as draft vs verified. Your job is to decide where AI accelerates and where human judgment must dominate."  
+good\_example: "A 6-step checklist with a ‘stop’ rule: if you can’t verify a critical claim, you either find the source or label it as pending—never let AI fill the gap."  
+anti\_pattern: "Letting AI produce a full recommendation, then using it as the decision. Consequence: unmanaged risk and weak defensibility."  
+takeaway: "End-to-end value comes from checkpoints, not from bigger prompts."
 
 ***
 
-# SECTION F — Diagnostic Item Seeds (12 items: 3 per domain)
+# SECTION F — Diagnostic Item Seeds (18 items: 3 per domain × 6 domains)
 
-### Diagnostic: prompting
-
-Item 1 — type: mcq  
-Tests: identifying the most important missing CRAF element for underwriting emails  
-question\_text: "An underwriter writes: ‘Draft an email explaining my credit decision.’ What is the most important missing element for a usable output?"  
-options: A) Context about the decision, audience, and constraints | B) A friendly tone request | C) A longer word count | D) A request for emojis  
-correct\_option: A  
-scoring: correct = 4, incorrect = 0
-
-Item 2 — type: prompt\_sandbox  
-Tests: writing a complete CRAF prompt for an underwriting email  
-scenario\_text: "You need to request more information from a policyholder. Situation: export buyer limit request is missing recent financial statements and payment experience details. You must keep the email concise and plain language."  
-question\_text: "Write a prompt using the CRAF Framework to draft a 150–180 word ‘request for information’ email with a bullet list of exactly 5 items needed."  
-scoring rubric criteria:
-
-*   "Context includes what is missing and why it matters (without internal model talk)": max 1
-*   "Role sets the AI as an underwriter writing to a client in plain language": max 1
-*   "Action defines the deliverable (info request email) with length + exactly 5 items": max 1
-*   "Format requires headings or bullet structure for quick scanning": max 1
-
-Item 3 — type: micro\_task  
-Tests: diagnosing why AI output became generic  
-scenario\_text: "AI output: ‘Please provide additional information so we can proceed. Thank you.’ Prompt used: ‘Write an email asking for more info.’"  
-question\_text: "In one sentence, explain why the output is unhelpful and name two CRAF elements that are missing."  
-scoring rubric criteria:
-
-*   "Correctly identifies missing Context": max 1
-*   "Correctly identifies missing Action specificity": max 1
-*   "Correctly identifies missing Format constraints": max 1
-*   "Explains consequence (generic, no actionable list)": max 1
-
-***
-
-### Diagnostic: verification
+### Diagnostic: responsible\_ai
 
 Item 1 — type: mcq  
-Tests: recognizing the highest-risk verification failure  
-question\_text: "Which is the riskiest behavior when using AI for a company assessment?"  
-options: A) Using AI to summarize a report | B) Copying AI claims into a credit memo without checking sources | C) Asking for a shorter summary | D) Reformatting the summary into bullets  
-correct\_option: B  
-scoring: correct = 4, incorrect = 0
-
-Item 2 — type: prompt\_sandbox  
-Tests: prompting for a verification plan (not a decision)  
-scenario\_text: "You have an AI-generated paragraph claiming: ‘Liquidity improved, leverage decreased, and the outlook is stable.’ You have the financial statements and a credit report, but you haven’t checked them yet."  
-question\_text: "Write a prompt that asks Copilot to produce a verification table: Claim | Source to check | How to confirm | Notes. Instruct it to label anything unsupported as ‘Unverified’."  
-scoring rubric criteria:
-
-*   "Requires use of a table with the specified columns": max 1
-*   "Explicitly forbids inventing numbers or sources": max 1
-*   "Includes ‘Unverified’ labeling rule for unsupported claims": max 1
-*   "Keeps output focused on verification steps, not approval advice": max 1
-
-Item 3 — type: micro\_task  
-Tests: correcting an AI hallucination safely  
-scenario\_text: "AI wrote: ‘The borrower has no covenant breaches in the last 12 months.’ You do not have covenant compliance evidence in your notes."  
-question\_text: "Write the exact edit you would make to the sentence to keep it truthful and underwriting-appropriate."  
-scoring rubric criteria:
-
-*   "Removes the unsupported factual claim": max 1
-*   "Replaces with a conditional/unknown statement (e.g., ‘not yet confirmed’)": max 1
-*   "Adds a verification action (what evidence is needed)": max 1
-*   "Maintains neutral, factual tone": max 1
-
-***
-
-### Diagnostic: data\_safety
-
-Item 1 — type: mcq  
-Tests: identifying unsafe data handling  
-question\_text: "Which prompt is most likely to violate safe AI use rules for underwriters?"  
-options: A) ‘Summarize the key questions I should ask about a generic term sheet structure’ | B) ‘Here is the full client financial statement PDF—summarize and recommend approve/decline’ | C) ‘Rewrite this email to be clearer, using placeholders for names’ | D) ‘Create a checklist for reviewing a credit report’  
-correct\_option: B  
-scoring: correct = 4, incorrect = 0
-
-Item 2 — type: prompt\_sandbox  
-Tests: applying SAFE abstraction  
-scenario\_text: "You have a draft term sheet with client name, exact amounts, and counterparties. You want AI help to generate a list of risk questions."  
-question\_text: "Write a SAFE-abstraction version of the prompt input (2–4 sentences) that removes identifiers and exact numbers but keeps enough context to get useful risk questions."  
-scoring rubric criteria:
-
-*   "Removes names/unique identifiers": max 1
-*   "Removes or ranges exact amounts/terms": max 1
-*   "Keeps enough business context to be useful (product + general situation)": max 1
-*   "Asks for questions/checklist (not a final credit decision)": max 1
-
-Item 3 — type: micro\_task  
-Tests: spotting hidden sensitive data  
-scenario\_text: "A learner says: ‘I didn’t paste any names, just the borrower’s ownership structure and the bank account number is in the appendix.’"  
-question\_text: "In one sentence, explain why this is still sensitive and what should be removed or abstracted."  
-scoring rubric criteria:
-
-*   "Identifies that ownership structure can be identifying/sensitive": max 1
-*   "Identifies bank account number as sensitive": max 1
-*   "States to remove/abstract these elements": max 1
-*   "Mentions safe replacement (roles/placeholders/ranges)": max 1
-
-***
-
-### Diagnostic: tool\_fluency
-
-Item 1 — type: mcq  
-Tests: selecting the right Copilot surface  
-question\_text: "You need a recap of decisions and action items from a Teams meeting. Where should you start?"  
-options: A) Excel Copilot | B) Word Copilot | C) Teams Copilot | D) PowerPoint Copilot  
+Tests: identifying Non-Public EDC Information in underwriting prompts  
+question\_text: "Which input is most clearly NOT safe to paste into a general AI chat when seeking help drafting an underwriting summary?"  
+options: A) Public news article link about the borrower’s sector | B) A de-identified description of the deal (industry + size band + risk themes) | C) Copy/paste of internal risk rating commentary and exact covenant headroom | D) A generic question about how to structure a credit memo section  
 correct\_option: C  
 scoring: correct = 4, incorrect = 0
 
 Item 2 — type: prompt\_sandbox  
-Tests: chaining tools (Teams → Outlook)  
-scenario\_text: "A deal huddle ends with 3 action items and one decision. You need to send a follow-up email and store the recap."  
-question\_text: "Write a Teams Copilot prompt that outputs: Decisions (bold), Actions (bulleted with owner + due date), and ‘Needs confirmation’ items."  
+Tests: writing a SAFE-abstraction prompt  
+scenario\_text: "You have a confidential borrower package and need AI help identifying key risk themes. You cannot include client name, exact figures, or internal system notes."  
+question\_text: "Write a prompt that uses SAFE Abstraction to request: top 5 risk themes + 5 mitigants, with ‘UNKNOWN if missing’ guardrail."  
 scoring rubric criteria:
 
-*   "Requests explicit sections: Decisions, Actions, Needs confirmation": max 1
-*   "Requires owner + due date fields for each action": max 1
-*   "Adds uncertainty labeling rule": max 1
-*   "Uses concise bullet formatting": max 1
+*   "Strips identifiers and avoids deal fingerprints": max 1
+*   "Abstracts numbers (ranges/ratios) instead of exact figures": max 1
+*   "Clear Action deliverable (risk themes + mitigants)": max 1
+*   "Includes explicit constraints (no guessing / UNKNOWN)": max 1
 
 Item 3 — type: micro\_task  
-Tests: fixing a broken workflow step  
-scenario\_text: "A Teams recap missed the main decision, but included lots of discussion. The learner wants to forward it as-is."  
-question\_text: "In one sentence, state what they should do next (tool + instruction) to correct the recap before emailing."  
+Tests: spotting a policy-unsafe detail  
+scenario\_text: "Prompt excerpt: ‘Client: Bayfield Composites Ltd. Facility amount: $18.7M CAD. Covenant headroom: 1.2x. Please draft my approval note.’"  
+question\_text: "In one sentence, identify the two most sensitive elements and how you would abstract them."  
 scoring rubric criteria:
 
-*   "Says not to send as-is": max 1
-*   "Selects the right next action (re-prompt Teams Copilot or edit manually)": max 1
-*   "Specifies adding the missing decision explicitly": max 1
-*   "Mentions validating against personal notes/agenda": max 1
+*   "Identifies client name as sensitive": max 1
+*   "Identifies exact amount or covenant headroom as sensitive": max 1
+*   "Proposes abstraction (industry/size band; ranges/ratios)": max 1
+*   "Mentions using approved tools / policy-safe approach": max 1
 
 ***
 
-# SECTION G — Evaluation Item Seeds (20 items: 4 per course)
+### Diagnostic: strategic\_prompting
+
+Item 1 — type: mcq  
+Tests: knowing which CRAF element prevents generic output  
+question\_text: "An underwriter’s prompt produces a long generic explanation of financial ratios. Which missing element most likely caused this?"  
+options: A) Context | B) Role | C) Action | D) Format  
+correct\_option: C  
+scoring: correct = 4, incorrect = 0
+
+Item 2 — type: prompt\_sandbox  
+Tests: writing a complete CRAF prompt  
+scenario\_text: "Inputs: a pasted Excel table of revenue, EBITDA, leverage, liquidity; brief notes: ‘margin down, WC volatile, liquidity improving.’"  
+question\_text: "Write a CRAF prompt to produce a 250-word underwriting financial narrative with headings Performance/Liquidity/Leverage and a 3-bullet ‘So what?’ lead."  
+scoring rubric criteria:
+
+*   "Context states the underwriting artifact and what inputs are provided": max 1
+*   "Role sets an underwriter voice": max 1
+*   "Action specifies deliverable + word count + focus": max 1
+*   "Format specifies lead bullets + headings + constraints": max 1
+
+Item 3 — type: micro\_task  
+Tests: diagnosing why output is generic  
+scenario\_text: "Prompt: ‘Summarize these financials.’ Output: ‘Revenue changes can be caused by many factors…’"  
+question\_text: "In one sentence, name two CRAF elements that were under-specified and what should be added."  
+scoring rubric criteria:
+
+*   "Correctly flags missing/weak Action": max 1
+*   "Correctly flags missing/weak Format": max 1
+*   "Suggests concrete additions (word count, headings, top risks)": max 1
+*   "Mentions constraints (use only provided data / no guessing)": max 1
+
+***
+
+### Diagnostic: critical\_eval
+
+Item 1 — type: mcq  
+Tests: recognizing the highest-risk AI failure mode in underwriting  
+question\_text: "Which AI mistake is most dangerous to copy into a credit recommendation?"  
+options: A) Slightly formal tone | B) Invented covenant value that seems plausible | C) Minor grammar issues | D) Extra background sentence about the sector  
+correct\_option: B  
+scoring: correct = 4, incorrect = 0
+
+Item 2 — type: prompt\_sandbox  
+Tests: writing a verification-oriented prompt  
+scenario\_text: "You received an AI summary of a long submission. You must ensure it doesn’t invent ratios or omit key risks."  
+question\_text: "Write a prompt that asks AI to produce a summary with citations/quotes from provided excerpts and to label any missing info as UNKNOWN."  
+scoring rubric criteria:
+
+*   "Explicitly requests evidence/quotes tied to claims": max 1
+*   "Includes UNKNOWN / no guessing constraint": max 1
+*   "Separates facts vs interpretation": max 1
+*   "Defines a structured output for verification (table/checklist)": max 1
+
+Item 3 — type: micro\_task  
+Tests: applying VERIFY  
+scenario\_text: "AI output says: ‘Liquidity is strong and improving.’ Source excerpt provided includes only income statement lines."  
+question\_text: "In one sentence, explain why this claim fails VERIFY and what you would do next."  
+scoring rubric criteria:
+
+*   "Flags missing evidence (no liquidity data in source)": max 1
+*   "States the correct next source needed (cash/availability/CF)": max 1
+*   "Mentions rewriting claim as pending/UNKNOWN": max 1
+*   "Shows skeptical review stance": max 1
+
+***
+
+### Diagnostic: relationship\_intel
+
+Item 1 — type: mcq  
+Tests: avoiding over-disclosure in customer communications  
+question\_text: "Which detail should NOT be included in a customer-facing decline email draft?"  
+options: A) What information is missing and how to submit it | B) A calm acknowledgement of urgency | C) Internal risk level label and internal reason code | D) A clear next step and timeline  
+correct\_option: C  
+scoring: correct = 4, incorrect = 0
+
+Item 2 — type: prompt\_sandbox  
+Tests: using RELATE to draft a response  
+scenario\_text: "Customer email is angry about a reduction, claims they ‘provided everything.’ You also have internal notes about missing items."  
+question\_text: "Write a prompt that asks AI to draft a response using RELATE: acknowledge concern, explain decision at a high level, request specific missing info, offer an alternative option—without internal-only details."  
+scoring rubric criteria:
+
+*   "Summarizes concern + history (Review/Extract)": max 1
+*   "Tailors to audience (plain language, calm tone)": max 1
+*   "Avoids internal-only rationale/codes/systems": max 1
+*   "Includes specific next steps/options": max 1
+
+Item 3 — type: micro\_task  
+Tests: tone + specificity correction  
+scenario\_text: "Draft AI reply: ‘We apologize for any inconvenience. Your request has been denied due to policy.’"  
+question\_text: "Rewrite the sentence to be more specific and helpful while staying non-disclosive (one sentence)."  
+scoring rubric criteria:
+
+*   "Acknowledges concern without admitting fault": max 1
+*   "Adds a concrete next step (what info is needed / option)": max 1
+*   "Keeps plain language and concise tone": max 1
+*   "Avoids internal policy jargon/codes": max 1
+
+***
+
+### Diagnostic: data\_decision
+
+Item 1 — type: mcq  
+Tests: distinguishing hypothesis vs verified driver  
+question\_text: "AI says ‘margin fell due to competitive pressure.’ What is the best underwriter response?"  
+options: A) Accept it and add to the memo | B) Treat as hypothesis and request evidence | C) Ignore all AI outputs | D) Escalate immediately without review  
+correct\_option: B  
+scoring: correct = 4, incorrect = 0
+
+Item 2 — type: prompt\_sandbox  
+Tests: SIFT prompt creation  
+scenario\_text: "You have a 3-year income statement and balance sheet summary with large YoY swings."  
+question\_text: "Write a prompt that applies SIFT to output: top variances, evidence-backed hypotheses, implications, and next info requests."  
+scoring rubric criteria:
+
+*   "Selects limited ‘top’ variances (not everything)": max 1
+*   "Separates hypotheses from verified facts": max 1
+*   "Maps implications to underwriting actions": max 1
+*   "Includes evidence requirement / UNKNOWN constraint": max 1
+
+Item 3 — type: micro\_task  
+Tests: spotting an unsupported inference  
+scenario\_text: "Provided data: revenue flat, EBITDA down, AR up sharply. AI claim: ‘The company lost a major customer.’"  
+question\_text: "In one sentence, explain why the claim is not supported and what a supported inference would look like."  
+scoring rubric criteria:
+
+*   "States claim is unsupported by provided data": max 1
+*   "Suggests a supported inference (profitability pressure / WC build)": max 1
+*   "Mentions evidence needed to confirm customer loss": max 1
+*   "Keeps reasoning tied to numbers": max 1
+
+***
+
+### Diagnostic: augmented\_comm
+
+Item 1 — type: mcq  
+Tests: selecting the right Copilot surface  
+question\_text: "You need to interpret an Excel variance table and turn it into a memo paragraph. Best starting surface?"  
+options: A) Outlook | B) Excel | C) Teams | D) PowerPoint  
+correct\_option: B  
+scoring: correct = 4, incorrect = 0
+
+Item 2 — type: prompt\_sandbox  
+Tests: designing a tool chain  
+scenario\_text: "Inputs include: a Teams thread, an email template library, an Excel table, and a Word memo draft."  
+question\_text: "Write a short plan (as a prompt to Copilot) that chains at least 3 surfaces in the right order, with a verification step before the final external email."  
+scoring rubric criteria:
+
+*   "Chooses appropriate surfaces for each input type": max 1
+*   "Orders steps logically (summarize → draft → polish)": max 1
+*   "Includes a verification gate": max 1
+*   "Keeps internal vs external outputs separated": max 1
+
+Item 3 — type: micro\_task  
+Tests: identifying a chain failure  
+scenario\_text: "A learner drafts a customer email directly from an internal memo paragraph that mentions ‘internal risk committee.’"  
+question\_text: "In one sentence, identify the chain mistake and how to fix it using the Surface Selector."  
+scoring rubric criteria:
+
+*   "Flags internal-to-external leakage": max 1
+*   "Recommends separating internal memo vs customer email": max 1
+*   "Suggests correct surfaces (Word internal, Outlook external)": max 1
+*   "Mentions final human check/verification": max 1
+
+***
+
+# SECTION G — Evaluation Item Seeds (28 items: 4 per course × 7 courses)
 
 ### Evaluation: Course 1
 
 Item 1 — type: mcq, sequence: 1  
-question\_text: "In the CRAF Framework, which element most directly prevents an AI from mentioning internal risk ratings or thresholds?"  
-options: A) Context | B) Role | C) Action | D) Format  
-correct\_option: A  
-explanation: "Context is where you state constraints like ‘do not mention internal models/thresholds’ and define what sources may be used."
+question\_text: "In SAFE Abstraction, what does ‘A’ primarily mean?"  
+options: A) Add more detail | B) Abstract exact figures into ranges/ratios | C) Approve the AI output | D) Ask the AI to decide  
+correct\_option: B  
+explanation: "Abstracting reduces confidentiality risk while keeping analytical usefulness."
 
 Item 2 — type: mcq, sequence: 2  
-question\_text: "Your AI-drafted client email is too long and includes generic export finance explanations. What prompt change fixes this fastest?"  
-options: A) Add a friendlier tone request | B) Specify word count and required headings | C) Remove the Role instruction | D) Ask for more background paragraphs  
-correct\_option: B  
-explanation: "A concrete length limit and structure constraint reduces scope and forces relevance."
+question\_text: "Which is the best ‘UNKNOWN’ guardrail instruction?"  
+options: A) “Use your best guess if data is missing.” | B) “If a detail is missing, invent a plausible estimate.” | C) “If a detail is not provided, write UNKNOWN and list what would be needed.” | D) “Skip missing details silently.”  
+correct\_option: C  
+explanation: "It prevents hallucinations and creates a clear follow-up list."
 
 Item 3 — type: mcq, sequence: 3  
-question\_text: "Which instruction best reduces hallucination risk in a decision email draft?"  
-options: A) 'Be persuasive' | B) 'Use professional language' | C) 'Use only the facts provided below; do not invent details' | D) 'Make it longer'  
-correct\_option: C  
-explanation: "Forcing use of provided facts reduces invented rationales and numbers."
+question\_text: "What is a ‘deal fingerprint’?"  
+options: A) A typo in a memo | B) A detail that can identify the deal even without the client name | C) A standard template heading | D) A public market statistic  
+correct\_option: B  
+explanation: "Fingerprints (unique amounts, locations, counterparties) can re-identify the case."
 
 Item 4 — type: performance\_task, sequence: 4  
-question\_text: "Scenario: You must send a partial approval email to a policyholder. You can mention general reasons (e.g., incomplete information) but must not mention internal rating methods or non-public sources. Write a complete CRAF prompt to generate a 200-word email with headings: Decision / Why / What you can do next."  
+question\_text: "Scenario: You have confidential inputs for <Company>Bayfield Composites Ltd.</Company> and need AI help summarizing top risks and mitigants. Write (1) a SAFE Abstraction plan and (2) a policy-safe prompt that requests a bullet summary and labels missing info as UNKNOWN."  
 scoring rubric:
-key1: "Context includes decision type, audience, and forbidden content (no internal models/ratings/thresholds)"
-key2: "Role positions AI as an underwriter writing in plain language and neutral tone"
-key3: "Action specifies deliverable, length, and required content (conditions + reconsideration path)"
-key4: "Format requires the exact headings and bullet list for next steps"
+key1: "Plan strips identifiers and removes deal fingerprints (names/IDs/unique details)"
+key2: "Plan abstracts exact figures into ranges/ratios while preserving risk meaning"
+key3: "Prompt has a clear deliverable (top risks + mitigants) with constraints (no guessing/UNKNOWN)"
+key4: "Prompt output format is specified (bullets/sections) and remains internal-safe"
 
 ***
 
 ### Evaluation: Course 2
 
 Item 1 — type: mcq, sequence: 1  
-question\_text: "In VERIFY, which step ensures AI claims are traceable to evidence you actually have?"  
-options: A) Evaluate numbers | B) Validate sources | C) Flag uncertainty | D) Yield to escalation  
-correct\_option: B  
-explanation: "Validate sources asks: ‘Where did this come from, and do I have it?’"
+question\_text: "Which CRAF element most directly controls length and structure?"  
+options: A) Context | B) Role | C) Action | D) Format  
+correct\_option: D  
+explanation: "Format defines headings, bullets, and ordering."
 
 Item 2 — type: mcq, sequence: 2  
-question\_text: "AI says: ‘No covenant breaches.’ You don’t have compliance reporting. What should you do?"  
-options: A) Keep it because it sounds reasonable | B) Remove it or mark it unverified and request evidence | C) Replace with a stronger claim | D) Ask AI to restate it more confidently  
+question\_text: "Your AI output recommends ‘approve’ even though you asked only for analysis. Best fix?"  
+options: A) Remove Role instruction | B) Add constraint: ‘Do not recommend approval/decline’ | C) Make the prompt shorter | D) Ask for a friendlier tone  
 correct\_option: B  
-explanation: "Underwriting requires evidence; unsupported claims must not enter the credit file."
+explanation: "A constraint prevents scope creep into decisions."
 
 Item 3 — type: mcq, sequence: 3  
-question\_text: "Which prompt instruction best prevents AI from inventing financial ratios?"  
-options: A) 'Use bullets' | B) 'Use only numbers explicitly provided; otherwise write “Not provided”' | C) 'Be concise' | D) 'Write like an expert'  
+question\_text: "Why is a Role instruction helpful in underwriting prompts?"  
+options: A) It guarantees accuracy | B) It calibrates voice, assumptions, and relevance | C) It sets word count | D) It prevents confidentiality risk  
 correct\_option: B  
-explanation: "It forces the model to stop rather than fill gaps."
+explanation: "Role sets the perspective and vocabulary; it doesn’t replace verification."
 
 Item 4 — type: performance\_task, sequence: 4  
-question\_text: "Scenario: You have an AI-generated company assessment summary. Create a verification plan using VERIFY. Write a prompt that outputs a table with Claim / Source / How to confirm / Notes, and includes policy/DOA checks."  
+question\_text: "Scenario: You have an Excel table of metrics for <Company>Northshore Windworks Inc.</Company>. Write a complete CRAF prompt that produces a 250-word underwriting financial narrative with a 3-bullet ‘So what?’ lead and headings Performance/Liquidity/Leverage. Include ‘use only provided data’ and ‘UNKNOWN if missing’ constraints."  
 scoring rubric:
-key1: "Requires a structured verification table with the specified columns"
-key2: "Includes instructions to label unsupported claims ‘Unverified’ and not invent data"
-key3: "Includes policy and delegated authority alignment checks"
-key4: "Includes an escalation trigger section for unresolved high-risk uncertainty"
+key1: "Context clearly states underwriting artifact and inputs"
+key2: "Role sets an underwriter voice and audience"
+key3: "Action specifies deliverable, length, and focus (top risks/implications)"
+key4: "Format defines lead bullets + headings + constraints (no guessing/UNKNOWN)"
 
 ***
 
 ### Evaluation: Course 3
 
 Item 1 — type: mcq, sequence: 1  
-question\_text: "In SAFE, which step is specifically about changing *what you ask* AI to do so it doesn’t act like an approver?"  
-options: A) Scan | B) Abstract | C) Frame | D) Execute & Evaluate  
-correct\_option: C  
-explanation: "Frame shifts the request toward checklists/questions instead of approval decisions."
+question\_text: "In VERIFY, what does ‘R’ stand for?"  
+options: A) Rewrite | B) Recompute | C) Reassure | D) Reduce  
+correct\_option: B  
+explanation: "Recompute critical ratios from sources."
 
 Item 2 — type: mcq, sequence: 2  
-question\_text: "Which is the safest AI request when you only have abstracted deal context?"  
-options: A) 'Approve or decline this deal' | B) 'Generate a checklist of questions and missing evidence to validate assumptions' | C) 'Predict default probability' | D) 'Rewrite the term sheet with client name included'  
+question\_text: "Which claim should you verify first?"  
+options: A) Tone sounds formal | B) A ratio that affects covenant compliance | C) Spelling of headings | D) Background sector definition  
 correct\_option: B  
-explanation: "A checklist supports judgment without requiring sensitive detail or substituting for approval."
+explanation: "High-impact claims must be checked first."
 
 Item 3 — type: mcq, sequence: 3  
-question\_text: "A prompt includes ‘mid seven figures’ and ‘exporter in manufacturing’ but also includes a unique project codename used internally. What should you do?"  
-options: A) Keep the codename; it’s not a name | B) Remove/replace the codename; it can re-identify the case | C) Add more detail to compensate | D) Ask AI to ignore it  
+question\_text: "Best way to reduce ‘false certainty’ in AI summaries?"  
+options: A) Ask AI to be confident | B) Ask AI to cite/quote sources and label UNKNOWN | C) Ask for longer output | D) Remove constraints  
 correct\_option: B  
-explanation: "Unique identifiers can re-identify a case even without names."
+explanation: "Evidence-linking and UNKNOWN labeling reduce hallucinations."
 
 Item 4 — type: performance\_task, sequence: 4  
-question\_text: "Scenario: You’re tempted to paste a full client forecast workbook into an external AI tool. Write a SAFE-compliant plan: (1) what you will remove/abstract, (2) what you will ask AI to produce, (3) where you will run it (approved surface), and (4) what human review you will do."  
+question\_text: "Scenario: You received an AI summary of <Company>HarborGate Foods Ltd.</Company>’s submission. Draft an approver update that includes only VERIFIED facts, labels pending items, and lists what you will check next using VERIFY."  
 scoring rubric:
-key1: "Identifies sensitive elements to remove (names, exact numbers, identifiers, personal data)"
-key2: "Uses abstraction (ranges/placeholders) while preserving context"
-key3: "Requests safe outputs (questions/checklists/structure) rather than approval decisions"
-key4: "Includes human review and verification before filing or sending"
+key1: "Identifies high-impact items and verifies against sources"
+key2: "Clearly labels pending/UNKNOWN items without inventing details"
+key3: "Separates facts from interpretations/recommendations"
+key4: "Provides a next-step verification plan aligned to VERIFY"
 
 ***
 
 ### Evaluation: Course 4
 
 Item 1 — type: mcq, sequence: 1  
-question\_text: "You need to generate a meeting recap with decisions and action items. Which sequence best matches strong tool fluency?"  
-options: A) Excel → Word → Teams → Outlook | B) Teams → Outlook → SharePoint | C) Outlook → Teams → SharePoint | D) PowerPoint → Word → Excel  
+question\_text: "In RELATE, what is the goal of ‘Label stakeholders’?"  
+options: A) Assign blame | B) Decide what level of detail and tone fits each audience | C) Add internal codes | D) Make the email longer  
 correct\_option: B  
-explanation: "Start where the meeting content lives (Teams), then communicate (Outlook), then store the record (SharePoint)."
+explanation: "Different audiences need different framing and detail."
 
 Item 2 — type: mcq, sequence: 2  
-question\_text: "A Teams recap includes action items but no owners. What’s the best next step?"  
-options: A) Send it anyway | B) Re-prompt Teams Copilot to add owner + due date fields | C) Move to Excel immediately | D) Delete it and take manual notes only  
-correct\_option: B  
-explanation: "Owners and dates are required for usable follow-up and recordkeeping."
+question\_text: "Which sentence is safest for a customer email?"  
+options: A) “We reduced your limit because our internal risk score worsened.” | B) “We can’t cover because committee said no.” | C) “Based on the information provided so far, we’re unable to confirm coverage at the requested level; here’s what we need to reassess.” | D) “Our system CIS flagged you.”  
+correct\_option: C  
+explanation: "It’s clear, non-disclosive, and action-oriented."
 
 Item 3 — type: mcq, sequence: 3  
-question\_text: "What instruction best improves recap reliability?"  
-options: A) 'Make it longer' | B) 'Include every conversation detail' | C) 'Label uncertain items as Needs confirmation' | D) 'Use emojis for clarity'  
+question\_text: "Best AI prompt guardrail for customer-facing drafts?"  
+options: A) “Include internal rationale for transparency.” | B) “Reference internal systems for clarity.” | C) “Avoid internal codes/systems/committees; use plain language; provide next steps.” | D) “Use legal language wherever possible.”  
 correct\_option: C  
-explanation: "It prevents false certainty and prompts human confirmation."
+explanation: "It prevents internal leakage and improves clarity."
 
 Item 4 — type: performance\_task, sequence: 4  
-question\_text: "Scenario: After a deal huddle, you must produce a recap, send follow-ups, and store the record. Write: (a) a Teams Copilot prompt for recap + actions, and (b) an Outlook Copilot prompt for a follow-up email that requests corrections to ‘Needs confirmation’ items."  
+question\_text: "Scenario: <Company>Seabright Equipment Brokers Ltd.</Company> is angry about a reduction. Write a RELATE-based prompt that generates a calm, specific response: acknowledge concern, explain at a high level, request missing info, and offer an alternative option—without internal-only details."  
 scoring rubric:
-key1: "Teams prompt requests Decisions + Actions with owner + due date + Needs confirmation"
-key2: "Includes instruction to avoid inventing details and to flag uncertainty"
-key3: "Outlook prompt produces concise follow-up email with embedded validated actions"
-key4: "Includes a step to store the final record in the correct repository (SharePoint/deal folder) without sensitive excess detail"
+key1: "Prompt summarizes history and extracts the real concern"
+key2: "Tailors tone and format to the audience (plain language, concise)"
+key3: "Includes specific next steps/options and timelines"
+key4: "Adds guardrails preventing internal disclosures (codes/systems/committees)"
 
 ***
 
 ### Evaluation: Course 5
 
 Item 1 — type: mcq, sequence: 1  
-question\_text: "In an end-to-end underwriting sprint, what should happen immediately after an AI summary of a long bank submission?"  
-options: A) Send the summary to the client | B) Verify key claims against the source and identify missing info | C) Ask AI to decide approve/decline | D) Skip to pricing benchmarks  
+question\_text: "In SIFT, what does ‘T’ stand for?"  
+options: A) Talk | B) Tie to risk appetite & next action | C) Translate | D) Track  
 correct\_option: B  
-explanation: "Verification and missing-info identification prevents downstream errors."
+explanation: "SIFT ends in a decision-relevant action."
 
 Item 2 — type: mcq, sequence: 2  
-question\_text: "Which action best demonstrates tool fluency when you need internal guidance on a policy rule?"  
-options: A) Use a public web search with the client name | B) Use M365/SharePoint-based search and Copilot to locate the internal guidance | C) Ask AI to guess the policy | D) Ask a friend in chat to decide for you  
+question\_text: "AI proposes a driver not supported by the numbers. Best response?"  
+options: A) Paste it anyway | B) Mark it as hypothesis and request evidence | C) Remove all variance discussion | D) Escalate immediately  
 correct\_option: B  
-explanation: "Internal guidance should be retrieved from approved internal repositories."
+explanation: "Underwriters must separate hypotheses from verified facts."
 
 Item 3 — type: mcq, sequence: 3  
-question\_text: "You want pricing benchmarks but have sensitive deal terms. What is the best SAFE approach?"  
-options: A) Share the full term sheet | B) Abstract to ranges and ask for benchmark ranges and factors, not a final price | C) Ask for the exact rate you should charge | D) Don’t verify anything if AI seems confident  
+question\_text: "What output structure best supports decision-making?"  
+options: A) One long paragraph | B) Variance table + drivers + evidence needed + implications + actions | C) Only bullet points with no numbers | D) A persuasive approval recommendation  
 correct\_option: B  
-explanation: "Abstraction preserves confidentiality while still getting useful guidance."
+explanation: "It creates traceability from data → action."
 
 Item 4 — type: performance\_task, sequence: 4  
-question\_text: "Scenario: You must summarize a long submission, retrieve internal guidance, draft an internal recommendation and a client update, and check pricing benchmarks—fast. Write a step-by-step End-to-End AI Workflow plan (4 stages) that shows: prompts, tools/surfaces, SAFE constraints, and VERIFY steps before finalizing."  
+question\_text: "Scenario: You see large YoY swings for <Company>AtlasForge Machinery Ltd.</Company>. Write a SIFT prompt that outputs top 5 variances, evidence-backed hypotheses, underwriting implications, and an action plan (questions, mitigants, escalation trigger)."  
 scoring rubric:
-key1: "Includes an intake/triage summary prompt with strict ‘use only provided text’ constraints"
-key2: "Includes internal guidance retrieval step using appropriate M365 surfaces"
-key3: "Includes SAFE abstraction for any benchmark/pricing question and client communications"
-key4: "Includes explicit VERIFY steps (sources, numbers, policy/DOA, uncertainty, escalation triggers) before filing/sending"
+key1: "Selects a limited set of material variances"
+key2: "Separates hypotheses from verified facts and demands evidence"
+key3: "Maps implications to underwriting terms/conditions or info requests"
+key4: "Produces a concrete action plan and avoids invented details"
 
 ***
 
-**Source note (use case library):** All referenced use case titles above come from [Complete-List-Categorized-110.xlsx](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B20AF7CD2-8D31-4881-BC1B-EF8D6683DE6C%7D\&file=Complete-List-Categorized-110.xlsx\&action=default\&mobileredirect=true\&EntityRepresentationId=218615c5-1774-48f6-b245-11684d68e1e5). [\[<File>Comp...lsx</File> \| Excel\]](https://edcanada-my.sharepoint.com/personal/hhu_edc_ca/_layouts/15/Doc.aspx?sourcedoc=%7B20AF7CD2-8D31-4881-BC1B-EF8D6683DE6C%7D&file=Complete-List-Categorized-110.xlsx&action=default&mobileredirect=true)
+### Evaluation: Course 6
+
+Item 1 — type: mcq, sequence: 1  
+question\_text: "Best surface to draft a customer-ready email with tone control?"  
+options: A) Excel | B) Outlook | C) Teams | D) PowerPoint  
+correct\_option: B  
+explanation: "Outlook Copilot is designed for email drafting and tone refinement."
+
+Item 2 — type: mcq, sequence: 2  
+question\_text: "What is the most important ‘gate’ between tools in a chain workflow?"  
+options: A) Adding emojis | B) Verification against source-of-truth | C) Making output longer | D) Asking AI to be confident  
+correct\_option: B  
+explanation: "Verification prevents errors and over-disclosure."
+
+Item 3 — type: mcq, sequence: 3  
+question\_text: "Which chain is most appropriate?"  
+options: A) Customer email → internal memo → verification | B) Teams recap → Word memo draft → verification → Outlook email | C) PowerPoint slides → customer email | D) Outlook email → Excel analysis  
+correct\_option: B  
+explanation: "It starts with the right input source and inserts a verification gate."
+
+Item 4 — type: performance\_task, sequence: 4  
+question\_text: "Scenario: A Customer Care request arrives for <Company>PrairiePulse Exporters Inc.</Company>. Create a Copilot Surface Selector plan that chains 3+ tools and includes a final checklist before updating the system-of-record and sending the customer email."  
+scoring rubric:
+key1: "Selects appropriate surfaces based on input types (thread, template, table, memo)"
+key2: "Orders steps logically and includes handoff outputs"
+key3: "Includes verification and confidentiality checks before external send"
+key4: "Separates internal documentation vs customer-facing messaging"
+
+***
+
+### Evaluation: Course 7
+
+Item 1 — type: mcq, sequence: 1  
+question\_text: "In the capstone workflow, when should you apply SAFE?"  
+options: A) Only at the end | B) Before every prompt that uses case content | C) Only for customer emails | D) Only if the deal is large  
+correct\_option: B  
+explanation: "SAFE is a pre-prompt gate to prevent leakage."
+
+Item 2 — type: mcq, sequence: 2  
+question\_text: "What is the correct way to use an external ‘company assessment’ summary?"  
+options: A) Copy it into the memo as fact | B) Use it as hypothesis input and VERIFY sources before using | C) Ignore it completely | D) Ask AI to rewrite it to sound confident  
+correct\_option: B  
+explanation: "External summaries must be verified for sourcing and recency."
+
+Item 3 — type: mcq, sequence: 3  
+question\_text: "What must be true before AI-assisted text becomes part of an approval recommendation?"  
+options: A) It sounds professional | B) It is VERIFIED against sources and clearly labels assumptions | C) It is long and detailed | D) It includes a strong opinion  
+correct\_option: B  
+explanation: "Approval content needs evidence, traceability, and clear uncertainty labeling."
+
+Item 4 — type: performance\_task, sequence: 4  
+question\_text: "Scenario: End-to-end case for <Company>Cascadia Marine Systems Ltd.</Company>. Produce (1) a 6-checkpoint workflow plan using SAFE/CRAF/VERIFY/RELATE/SIFT/Surface Selector, and (2) a 3-prompt sequence that generates a case brief, variance narrative, and internal recommendation—each with ‘no guessing/UNKNOWN’ constraints and explicit verification steps."  
+scoring rubric:
+key1: "Workflow includes all 6 domains with clear artifacts and stop/verify gates"
+key2: "Prompts are structured (CRAF-like) and policy-safe (SAFE applied)"
+key3: "Verification steps are explicit and separate facts vs assumptions"
+key4: "Outputs are mapped to stakeholder needs (internal brief, customer message, record note) without internal-to-external leakage"
+
+***
+
+If you want, I can also generate a compact “course-build checklist” for Claude Code that lists every required field per section (so nothing gets missed during content generation).
