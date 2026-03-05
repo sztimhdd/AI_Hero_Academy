@@ -257,18 +257,21 @@ elif active_sub == "reading":
             st.rerun()
         st.stop()
 
-    SECTION_TOTAL = 4
-    section_idx = st.session_state.reading_section_idx
+    _SECTION_LABELS = ["Concept", "Example", "Pitfall", "Takeaway"]
 
-    section_steps = [
-        {"label": lbl, "state": ("done" if i < section_idx else ("current" if i == section_idx else "pending"))}
-        for i, lbl in enumerate(["Concept", "Example", "Pitfall", "Takeaway"])
-    ]
-    step_progress_strip(section_steps)
+    if "reading_section_ctrl" not in st.session_state:
+        st.session_state["reading_section_ctrl"] = _SECTION_LABELS[0]
+
+    selected_section = st.segmented_control(
+        "Reading section",
+        options=_SECTION_LABELS,
+        key="reading_section_ctrl",
+        label_visibility="collapsed",
+    )
+    section_idx = _SECTION_LABELS.index(selected_section) if selected_section else 0
 
     _, content_col, _ = st.columns([1, 4, 1])
     with content_col:
-        st.caption(f"SECTION {section_idx + 1} OF {SECTION_TOTAL}")
         if section_idx == 0:
             concept_text = reading.get("concept_text", "")
             if concept_text:
@@ -283,25 +286,7 @@ elif active_sub == "reading":
         elif section_idx == 3:
             if reading.get("takeaway"):
                 st.info(f"**Key takeaway** — {reading['takeaway']}")
-
-    def _section_next():
-        st.session_state.reading_section_idx = min(st.session_state.reading_section_idx + 1, SECTION_TOTAL - 1)
-
-    def _section_prev():
-        st.session_state.reading_section_idx = max(st.session_state.reading_section_idx - 1, 0)
-
-    nav_l, _, nav_r = st.columns([1, 6, 1])
-    with nav_l:
-        st.button(
-            "← Back",
-            on_click=_section_prev,
-            disabled=(section_idx == 0),
-            use_container_width=True,
-        )
-    with nav_r:
-        if section_idx < SECTION_TOTAL - 1:
-            st.button("Next →", on_click=_section_next, type="primary", use_container_width=True)
-        else:
+            st.divider()
             if st.button("Mark Reading Complete →", key="r_complete", type="primary", use_container_width=True):
                 try:
                     execute(
@@ -313,7 +298,8 @@ elif active_sub == "reading":
                 except Exception as e:
                     st.error(f"Could not save progress.\n\n_{e}_")
                     st.stop()
-                st.session_state.pop("reading_section_idx", None)
+                for k in ("reading_section_idx", "reading_section_ctrl"):
+                    st.session_state.pop(k, None)
                 st.session_state.update({
                     "coach_messages": [],
                     "practice_task_idx": 0,
