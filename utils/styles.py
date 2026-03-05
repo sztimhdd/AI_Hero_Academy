@@ -676,6 +676,22 @@ tr:last-child td {{ border-bottom: none; }}
 """, unsafe_allow_html=True)
 
     if os.environ.get("LOCAL_UAT") == "true":
+        # Detect ?demo=true on ANY page URL and initialize demo mode session state
+        if (
+            st.query_params.get("demo") == "true"
+            and not st.session_state.get("demo_mode")
+        ):
+            from utils.demo import DEMO_PROFILES, DEFAULT_PROFILE, ensure_demo_seeded
+            profile_id = st.query_params.get("profile", DEFAULT_PROFILE)
+            if profile_id not in DEMO_PROFILES:
+                profile_id = DEFAULT_PROFILE
+            st.session_state["demo_mode"] = True
+            st.session_state["demo_profile_id"] = profile_id
+            ensure_demo_seeded(profile_id)
+            for key in ["user_email", "user_state", "role_id"]:
+                st.session_state.pop(key, None)
+            st.rerun()
+
         _uat_email = os.environ.get("DEV_USER_EMAIL", "dev@example.com")
         st.sidebar.markdown(
             f"""<div style="background:rgba(245,166,35,0.10);border:1px solid #F5A623;"""

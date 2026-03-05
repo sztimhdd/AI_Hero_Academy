@@ -23,26 +23,8 @@ st.set_page_config(
 inject_global_css()
 
 CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
-LOCAL_UAT = os.environ.get("LOCAL_UAT", "").lower() == "true"
-
-# ── Demo Mode detection ───────────────────────────────────────────────────────
-if LOCAL_UAT:
-    from utils.demo import DEMO_PROFILES, DEFAULT_PROFILE, ensure_demo_seeded
-    params = st.query_params
-    if params.get("demo") == "true":
-        # First load: initialize demo mode session state and seed fixture data
-        if "demo_mode" not in st.session_state:
-            profile_id = params.get("profile", DEFAULT_PROFILE)
-            if profile_id not in DEMO_PROFILES:
-                profile_id = DEFAULT_PROFILE
-            st.session_state["demo_mode"] = True
-            st.session_state["demo_profile_id"] = profile_id
-            ensure_demo_seeded(profile_id)
-            # Clear routing state so app re-derives from seeded data
-            for key in ["user_email", "user_state", "role_id"]:
-                st.session_state.pop(key, None)
-            st.rerun()
-        # Sidebar demo dropdown is rendered by inject_global_css() on every page
+# Note: demo mode detection + sidebar dropdown are handled by inject_global_css()
+# (called above), which runs on every page and detects ?demo=true from any URL.
 
 
 def get_user_state(user_email: str) -> tuple[str, str | None]:
