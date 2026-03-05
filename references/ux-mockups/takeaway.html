@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Takeaway: The STAKE Method</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons for enterprise-grade iconography -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Tailwind Configuration for 2026 UX/UI trends -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans:['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            100: 'rgba(255, 255, 255, 0.05)',
+                            200: 'rgba(255, 255, 255, 0.08)',
+                            border: 'rgba(255, 255, 255, 0.12)'
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { background-color: #020617; /* Slate 950 */ }
+        .stagger-1 { animation-delay: 100ms; }
+        .stagger-2 { animation-delay: 200ms; }
+        .stagger-3 { animation-delay: 400ms; }
+    </style>
+</head>
+<body class="text-slate-300 font-sans antialiased min-h-screen p-4 md:p-12 lg:p-16 flex justify-center items-center">
+
+    <!-- Slightly narrower max-width for focused, concluding content -->
+    <main class="max-w-3xl w-full">
+
+        <!-- The Focal Summary Card -->
+        <section class="relative opacity-0 animate-fade-in-up stagger-1">
+            
+            <!-- Ambient Background Glow -->
+            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-3xl blur-2xl opacity-20 animate-pulse-slow pointer-events-none"></div>
+            
+            <div class="relative bg-slate-900/80 backdrop-blur-xl border border-indigo-500/30 rounded-3xl p-8 md:p-12 overflow-hidden shadow-[0_0_40px_rgba(99,102,241,0.1)]">
+                
+                <!-- Corner accent -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-bl-full border-b border-l border-cyan-500/20 -mt-2 -mr-2"></div>
+
+                <!-- Header Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-xs font-bold tracking-widest uppercase mb-8 shadow-inner">
+                    <i data-lucide="flag" class="w-4 h-4"></i> Module Takeaway
+                </div>
+
+                <!-- Primary Statement -->
+                <h2 class="text-2xl md:text-3xl font-medium text-white leading-relaxed mb-10 z-10 relative">
+                    Apply <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 font-bold">all five STAKE steps</span> — not just a tone change — each time you adapt an analytical deliverable for a new audience.
+                </h2>
+
+                <!-- Actionable Breakdown (Chunking the final instruction) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
+                    
+                    <!-- Core Rule -->
+                    <div class="bg-glass-100 border border-glass-border rounded-2xl p-5 hover:bg-glass-200 transition-colors group">
+                        <div class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4 border border-indigo-500/30 group-hover:scale-110 transition-transform">
+                            <i data-lucide="layers" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-white font-semibold mb-2">Complete the Framework</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            Resist the urge to just ask the AI to "make it sound professional." A true adaptation requires addressing every layer of the STAKE framework.
+                        </p>
+                    </div>
+
+                    <!-- AI Strategy -->
+                    <div class="bg-cyan-950/30 border border-cyan-500/20 rounded-2xl p-5 hover:bg-cyan-900/40 transition-colors group">
+                        <div class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4 border border-cyan-500/30 group-hover:scale-110 transition-transform">
+                            <i data-lucide="bot" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-white font-semibold mb-2">Pre-Draft Research</h3>
+                        <p class="text-sm text-cyan-100/70 leading-relaxed">
+                            Use Copilot to <strong class="text-cyan-300 font-medium">research the audience's decision context</strong> <em>before</em> you start rewriting the deliverable.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Completion / Next Step Button -->
+        <div class="mt-8 flex justify-center opacity-0 animate-fade-in-up stagger-3">
+            <button class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 font-semibold text-slate-900 bg-cyan-400 rounded-full overflow-hidden transition-all hover:scale-105 hover:bg-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_rgba(34,211,238,0.6)]">
+                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                <span>Complete Module</span>
+                <div class="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-white/20 z-10"></div>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

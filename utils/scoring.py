@@ -77,8 +77,13 @@ def parse_options(options_json: str) -> list[dict]:
     """Parse MCQ options JSON string into list of {label, text} dicts."""
     if isinstance(options_json, list):
         return options_json
+    if isinstance(options_json, dict):
+        return [{"label": k, "text": v} for k, v in options_json.items()]
     try:
-        return json.loads(options_json) if options_json else []
+        parsed = json.loads(options_json) if options_json else []
+        if isinstance(parsed, dict):
+            return [{"label": k, "text": v} for k, v in parsed.items()]
+        return parsed
     except (json.JSONDecodeError, TypeError):
         return []
 

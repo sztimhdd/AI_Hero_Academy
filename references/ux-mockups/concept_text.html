@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The CRAF Framework for Underwriting</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons for enterprise-grade iconography -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Tailwind Configuration for 2026 UX/UI trends -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans:['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            100: 'rgba(255, 255, 255, 0.05)',
+                            200: 'rgba(255, 255, 255, 0.08)',
+                            border: 'rgba(255, 255, 255, 0.12)'
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base typography & glassmorphic utilities */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { background-color: #020617; /* Slate 950 */ }
+        .stagger-1 { animation-delay: 100ms; }
+        .stagger-2 { animation-delay: 200ms; }
+        .stagger-3 { animation-delay: 300ms; }
+        .stagger-4 { animation-delay: 400ms; }
+        .stagger-5 { animation-delay: 500ms; }
+    </style>
+</head>
+<body class="text-slate-300 font-sans antialiased min-h-screen p-4 md:p-12 lg:p-16 flex justify-center">
+
+    <!-- Max-width container to restrict line-length to 60-80 chars (Cognitive UX best practice) -->
+    <main class="max-w-4xl w-full">
+
+        <!-- Module Header -->
+        <header class="mb-12 opacity-0 animate-fade-in-up">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold tracking-wide uppercase mb-6">
+                <i data-lucide="book-open" class="w-4 h-4"></i> Prompt Engineering Core
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                Structuring AI Requests: <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">The CRAF Framework</span>
+            </h1>
+            <p class="text-lg leading-relaxed text-slate-400 max-w-3xl">
+                Financial analysis write-ups are high-stakes but repetitive — making them ideal for AI assistance, provided you give the model a structured brief. The CRAF Framework turns a vague request into a controlled drafting instruction by supplying four elements every underwriting prompt needs.
+            </p>
+        </header>
+
+        <!-- CRAF Grid: Chunking information into digestible cards -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            
+            <!-- C: Context -->
+            <div class="bg-glass-100 backdrop-blur-md border border-glass-border rounded-2xl p-6 hover:bg-glass-200 transition-all duration-300 opacity-0 animate-fade-in-up stagger-1 group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-2xl border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                        C
+                    </div>
+                    <h2 class="text-xl font-semibold text-white">Context</h2>
+                </div>
+                <p class="leading-relaxed text-sm">
+                    Tells the AI what case it's working on and which inputs are in scope <span class="text-slate-500">(e.g., a pasted metrics table, deal team notes)</span>. Without context, the model invents plausible-sounding but irrelevant detail.
+                </p>
+            </div>
+
+            <!-- R: Role -->
+            <div class="bg-glass-100 backdrop-blur-md border border-glass-border rounded-2xl p-6 hover:bg-glass-200 transition-all duration-300 opacity-0 animate-fade-in-up stagger-2 group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-2xl border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
+                        R
+                    </div>
+                    <h2 class="text-xl font-semibold text-white">Role</h2>
+                </div>
+                <p class="leading-relaxed text-sm">
+                    Assigns a professional identity so tone and vocabulary match your credit memo. Specifying <em class="text-slate-200">Senior Credit Underwriter</em> shifts the output from generic finance commentary to expected risk-focused language.
+                </p>
+            </div>
+
+            <!-- A: Action -->
+            <div class="bg-glass-100 backdrop-blur-md border border-glass-border rounded-2xl p-6 hover:bg-glass-200 transition-all duration-300 opacity-0 animate-fade-in-up stagger-3 group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center font-bold text-2xl border border-rose-500/20 group-hover:bg-rose-500/20 transition-colors">
+                        A
+                    </div>
+                    <h2 class="text-xl font-semibold text-white">Action</h2>
+                </div>
+                <p class="leading-relaxed text-sm">
+                    Defines the exact deliverable: a 250-word narrative, a ranked risk list, a covenant summary. Vague actions like <span class="bg-rose-500/20 text-rose-300 px-1 rounded">"write the financial section"</span> are the single biggest source of unusable AI output.
+                </p>
+            </div>
+
+            <!-- F: Format -->
+            <div class="bg-glass-100 backdrop-blur-md border border-glass-border rounded-2xl p-6 hover:bg-glass-200 transition-all duration-300 opacity-0 animate-fade-in-up stagger-4 group">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-2xl border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
+                        F
+                    </div>
+                    <h2 class="text-xl font-semibold text-white">Format</h2>
+                </div>
+                <p class="leading-relaxed text-sm">
+                    Controls structure: headings, bullet order, word count, and section sequence. Specifying <em class="text-slate-200">Performance / Liquidity / Leverage</em> headings means the draft maps directly onto your memo template.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- Guardrails: Visual deviation to imply rules/constraints -->
+        <section class="mb-12 border-l-4 border-amber-500 bg-amber-500/5 p-6 rounded-r-2xl opacity-0 animate-fade-in-up stagger-5">
+            <h3 class="text-lg font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                <i data-lucide="shield-alert" class="w-5 h-5"></i> Beyond CRAF: Essential Guardrails
+            </h3>
+            <p class="leading-relaxed mb-4 text-sm">
+                Effective underwriting prompts require strict boundaries to keep the draft audit-ready and prevent the model from drifting into advisory territory:
+            </p>
+            <ul class="space-y-2 text-sm text-slate-300">
+                <li class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-amber-500/70 shrink-0 mt-0.5"></i>
+                    <span>Use <strong>only</strong> provided data.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-amber-500/70 shrink-0 mt-0.5"></i>
+                    <span>Label any missing figures as <code class="bg-slate-800 text-amber-300 px-1.5 py-0.5 rounded text-xs">UNKNOWN</code>.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-amber-500/70 shrink-0 mt-0.5"></i>
+                    <span><strong>Do not</strong> recommend approval or decline.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-amber-500/70 shrink-0 mt-0.5"></i>
+                    <span>Strictly separate facts from interpretation.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Key Takeaway: Semantic anchor to close the learning loop -->
+        <footer class="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 border border-cyan-500/30 p-6 rounded-2xl flex flex-col md:flex-row items-start md:items-center gap-5 opacity-0 animate-fade-in-up stagger-5 shadow-[0_0_30px_rgba(6,182,212,0.05)]">
+            <div class="bg-cyan-500 text-slate-900 p-3 rounded-full shrink-0">
+                <i data-lucide="lightbulb" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold text-lg mb-1">Key Takeaway</h4>
+                <p class="text-cyan-100/80 text-sm leading-relaxed">
+                    Mastering CRAF means Copilot or any generative AI tool becomes a disciplined drafting assistant — not a free-form writer you have to heavily correct.
+                </p>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
