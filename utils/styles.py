@@ -687,6 +687,32 @@ tr:last-child td {{ border-bottom: none; }}
             unsafe_allow_html=True,
         )
 
+    if os.environ.get("LOCAL_UAT") == "true" and st.session_state.get("demo_mode"):
+        from utils.demo import DEMO_PROFILES, DEFAULT_PROFILE, ensure_demo_seeded
+        with st.sidebar:
+            st.markdown("**🎭 Demo Mode**")
+            profile_labels = {pid: p["label"] for pid, p in DEMO_PROFILES.items()}
+            current_id = st.session_state.get("demo_profile_id", DEFAULT_PROFILE)
+            selected_label = st.selectbox(
+                "Demo profile",
+                options=list(profile_labels.values()),
+                index=list(profile_labels.keys()).index(current_id),
+                key="demo_profile_select",
+                label_visibility="collapsed",
+            )
+            selected_id = next(k for k, v in profile_labels.items() if v == selected_label)
+            if selected_id != current_id:
+                ensure_demo_seeded(selected_id)
+                keys_to_clear = [
+                    k for k in st.session_state
+                    if k not in ("demo_mode", "demo_profile_id", "demo_profile_select")
+                ]
+                for k in keys_to_clear:
+                    del st.session_state[k]
+                st.session_state["demo_profile_id"] = selected_id
+                st.rerun()
+            st.divider()
+
 
 def section_header(label: str):
     """Render a divider with a centred label."""
