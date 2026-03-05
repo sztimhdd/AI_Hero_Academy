@@ -83,7 +83,7 @@ def parse_options(options_json: str) -> list[dict]:
         return []
 
 
-_DIAG_ITEMS_PER_DOMAIN = 3
+_DIAG_ITEMS_PER_DOMAIN = 1
 _EVAL_ITEMS_PER_MODULE = 4
 
 
@@ -94,7 +94,7 @@ def compute_current_domain_scores(
     """
     Equal-weight domain score calculation (TDD §8).
 
-    diag_domain_scores: {"domain_id": float}  — mean of 3 diagnostic items per domain
+    diag_domain_scores: {"domain_id": float}  — mean of 1 diagnostic item per domain
     eval_domain_scores: [{"domain_id": float}] — one entry per completed evaluation;
                          value is domain_score_after (mean of 4 eval items)
 

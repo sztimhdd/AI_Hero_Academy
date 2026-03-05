@@ -71,7 +71,8 @@ def get_domain_descriptions(role_id: str = "rm") -> dict:
 
 def get_diagnostic_items(role_id: str = "rm") -> list:
     """Returns diagnostic items for the given role, ordered by display_order."""
-    return [i for i in DIAGNOSTIC_ITEMS if i.get("role_id") == role_id]
+    items = [i for i in DIAGNOSTIC_ITEMS if i.get("role_id") == role_id]
+    return sorted(items, key=lambda x: x.get("display_order", 99))
 
 
 def get_course(course_id: str) -> dict:

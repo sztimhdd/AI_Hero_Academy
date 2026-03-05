@@ -1,597 +1,5 @@
 [
   {
-    "item_id": "an_diag_ra1_mcq",
-    "domain_id": "responsible_ai",
-    "item_type": "mcq",
-    "display_order": 1,
-    "question_text": "Which of the following inputs is safe to include verbatim in a Copilot prompt without any abstraction or modification?",
-    "scenario_text": "You are an Analyst preparing a sector overview for a client briefing. You have several documents on your desk: an internal credit risk rating memo for a corporate client, a published annual report from a publicly listed company, a draft strategy document from your team, and a third-party embargoed research report. You need to use Copilot to help synthesise background information.",
-    "options": [
-      {
-        "label": "A",
-        "text": "The published annual report of the publicly listed company, sourced from its investor relations website."
-      },
-      {
-        "label": "B",
-        "text": "The internal credit risk rating memo, because it is already stored in your organisation's secure drive."
-      },
-      {
-        "label": "C",
-        "text": "The embargoed third-party research report, because it contains sector-level data rather than client-specific data."
-      },
-      {
-        "label": "D",
-        "text": "The draft strategy document, because it has not yet been formally classified as confidential."
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ra2_sandbox",
-    "domain_id": "responsible_ai",
-    "item_type": "prompt_sandbox",
-    "display_order": 2,
-    "question_text": "Write a Copilot prompt to help you summarise the key ownership structure and business activities of a corporate client for a KYC intake file. You must follow responsible AI data-handling practices: do not include the client's real name, registration numbers, individual names, or any non-public financial figures. Use abstraction techniques to preserve analytical utility while keeping the prompt safe.",
-    "scenario_text": "You are an Analyst in the Company Information Management team. You have just received a KYC onboarding file for a new corporate client, Meridian Logistics Group. The file includes a certificate of incorporation, a corporate ownership chart showing three beneficial owners, and an internal note with the client's projected credit exposure of $47 million. You want to use Copilot to draft a structured summary of the ownership structure and business activities for the intake record.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Sensitive data excluded",
-          "description": "The prompt does not include the real client name, individual names, registration numbers, or specific non-public financial figures (e.g., the $47M exposure).",
-          "max": 1
-        },
-        {
-          "name": "Abstraction technique applied",
-          "description": "The prompt uses generic descriptors (e.g., 'Client A', 'a logistics company', 'a mid-sized exposure') to replace identifiable or confidential details while preserving analytical intent.",
-          "max": 1
-        },
-        {
-          "name": "Clear analytical task specified",
-          "description": "The prompt clearly instructs Copilot on what to produce (e.g., a structured summary of ownership structure and business activities for a KYC intake record).",
-          "max": 1
-        },
-        {
-          "name": "Output review awareness",
-          "description": "The prompt includes an instruction or the learner notes the need to review Copilot's output for any accidentally surfaced sensitive details before sharing or filing.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ra3_task",
-    "domain_id": "responsible_ai",
-    "item_type": "micro_task",
-    "display_order": 3,
-    "question_text": "Review the Copilot prompt below. Identify ALL responsible AI violations present, then rewrite the prompt so it is safe to use while preserving its analytical purpose.",
-    "scenario_text": "An Analyst on your team submitted the following Copilot prompt:\n\n---\n\"Summarise the financial health of Vantara Construction Ltd based on the following: their internal credit rating is BB-, their unaudited Q3 net revenue is $83.4 million, their CFO is Jean-Pierre Moreau, and our internal risk committee flagged elevated exposure concerns last week. Produce a one-page briefing note I can share with the deal team.\"\n---\n\nYour task: (1) List every responsible AI violation in this prompt. (2) Rewrite the prompt so it is compliant with responsible AI data-handling practices while still enabling the analyst to get a useful briefing note.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Violation identification — confidential data types",
-          "description": "Correctly identifies at least three of the four violations: real client name (Vantara Construction Ltd), internal credit rating (BB-), unaudited financial figure ($83.4M), named individual (Jean-Pierre Moreau), and/or internal risk committee finding.",
-          "max": 2
-        },
-        {
-          "name": "Rewritten prompt — abstraction applied",
-          "description": "The rewritten prompt replaces all identified sensitive elements with generic descriptors (e.g., 'Client A', 'a construction company', 'a senior finance executive', 'a below-investment-grade internal rating', 'revenue in the low-to-mid double-digit millions') without losing the analytical intent.",
-          "max": 1
-        },
-        {
-          "name": "Rewritten prompt — analytical utility preserved",
-          "description": "The rewritten prompt still clearly instructs Copilot to produce a useful briefing note on financial health for a deal team audience, demonstrating that safety and utility are not mutually exclusive.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_sp4_mcq",
-    "domain_id": "strategic_prompting",
-    "item_type": "mcq",
-    "display_order": 4,
-    "question_text": "Which prompting technique would most effectively help an Analyst get a structured, role-appropriate output from Copilot when drafting a sector risk summary?",
-    "scenario_text": "You are an Analyst preparing a two-page sector risk summary on the agri-food processing industry for a portfolio review. You want to use Copilot to accelerate the first draft. You have access to publicly available trade data, published industry reports, and news sources. You are deciding how to structure your prompt to get the most useful output.",
-    "options": [
-      {
-        "label": "A",
-        "text": "Specify the role Copilot should adopt (e.g., 'Act as a sector analyst'), define the output format (e.g., structured headings), state the audience (e.g., portfolio review committee), and provide the key themes to cover."
-      },
-      {
-        "label": "B",
-        "text": "Ask Copilot a broad open question such as 'What are the risks in agri-food processing?' and then manually restructure the output."
-      },
-      {
-        "label": "C",
-        "text": "Paste the full text of three industry reports into the prompt and ask Copilot to combine them into a summary."
-      },
-      {
-        "label": "D",
-        "text": "Use a single-sentence prompt and iterate by asking follow-up questions until the output matches your needs, without specifying format or audience upfront."
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_sp5_sandbox",
-    "domain_id": "strategic_prompting",
-    "item_type": "prompt_sandbox",
-    "display_order": 5,
-    "question_text": "Write a high-quality Copilot prompt to produce a structured first draft of a two-page sector risk summary for the renewable energy equipment manufacturing sector. Your prompt should be strategic: define the role, audience, format, scope, and key analytical dimensions Copilot should address.",
-    "scenario_text": "You are an Analyst supporting a portfolio review at Crestfield Capital Partners. Your director has asked you to prepare a two-page sector risk summary on renewable energy equipment manufacturing. The summary will be presented to a credit committee that needs to understand demand drivers, supply chain vulnerabilities, regulatory tailwinds and headwinds, and key financial risk indicators for companies in this sector. You plan to use Copilot with publicly available information to draft the document.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Role and audience defined",
-          "description": "The prompt specifies a role for Copilot (e.g., 'Act as a sector analyst') and identifies the intended audience (e.g., credit committee) so the tone and depth are calibrated appropriately.",
-          "max": 1
-        },
-        {
-          "name": "Output format specified",
-          "description": "The prompt requests a specific structure (e.g., named sections or headings such as demand drivers, supply chain risks, regulatory environment, financial risk indicators) and approximate length or format (e.g., two pages, bullet points under each heading).",
-          "max": 1
-        },
-        {
-          "name": "Analytical scope and key dimensions covered",
-          "description": "The prompt explicitly instructs Copilot to address the relevant analytical dimensions for the sector (at least three of: demand drivers, supply chain vulnerabilities, regulatory environment, financial risk indicators, competitive dynamics).",
-          "max": 1
-        },
-        {
-          "name": "Prompt clarity and actionability",
-          "description": "The prompt is specific, unambiguous, and actionable — it provides enough context that Copilot could produce a useful first draft without requiring significant clarification or restructuring by the analyst.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_sp6_task",
-    "domain_id": "strategic_prompting",
-    "item_type": "micro_task",
-    "display_order": 6,
-    "question_text": "Review the Copilot prompt below. Identify its weaknesses as a strategic prompt, then rewrite it to be significantly more effective for the analyst's stated purpose.",
-    "scenario_text": "An Analyst at Northgate Advisory submitted this Copilot prompt to help prepare for a client meeting:\n\n---\n\"Tell me about the mining sector.\"\n---\n\nThe analyst's actual goal was to prepare a five-minute verbal briefing for a relationship manager who is meeting a mid-sized copper mining company to discuss potential export financing. The briefing should cover current commodity price trends, key operational risks, and one or two talking points relevant to export financing conversations.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Weakness diagnosis",
-          "description": "Correctly identifies at least two weaknesses in the original prompt: it is too broad/vague, specifies no audience or purpose, defines no output format, and provides no analytical focus or scope.",
-          "max": 1
-        },
-        {
-          "name": "Role and context added",
-          "description": "The rewritten prompt specifies a role for Copilot and provides relevant context (e.g., preparing a verbal briefing for a relationship manager meeting a copper mining company to discuss export financing).",
-          "max": 1
-        },
-        {
-          "name": "Format and scope defined",
-          "description": "The rewritten prompt specifies the output format (e.g., a concise verbal briefing outline or bullet points) and scope (e.g., commodity price trends, operational risks, export financing talking points).",
-          "max": 1
-        },
-        {
-          "name": "Overall improvement in strategic quality",
-          "description": "The rewritten prompt is substantially more likely to produce a useful, targeted output than the original — it is specific, purposeful, and calibrated to the analyst's actual workflow need.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ce7_mcq",
-    "domain_id": "critical_eval",
-    "item_type": "mcq",
-    "display_order": 7,
-    "question_text": "An Analyst uses Copilot to generate a summary of financial risk indicators for a sector report. Which action best reflects critical evaluation of the AI output before it is used in a client-facing document?",
-    "scenario_text": "You are an Analyst at Harlow Financial Group. You used Copilot to generate a paragraph summarising key financial risk indicators for the commercial real estate sector. The output reads fluently and cites what appear to be specific statistics (e.g., 'vacancy rates rose to 18.4% in Q2' and 'debt-service coverage ratios fell below 1.2x for 34% of loans'). You are about to paste this paragraph into a sector briefing note that will be shared with clients.",
-    "options": [
-      {
-        "label": "A",
-        "text": "Verify the specific statistics against the original source documents or authoritative databases before including them, and flag any figures that cannot be confirmed."
-      },
-      {
-        "label": "B",
-        "text": "Accept the output as accurate because Copilot is connected to organisational data and would not fabricate statistics."
-      },
-      {
-        "label": "C",
-        "text": "Lightly edit the paragraph for tone and include it, since the figures are plausible and consistent with general market knowledge."
-      },
-      {
-        "label": "D",
-        "text": "Ask Copilot to regenerate the paragraph twice more and use the version that appears most consistent across the three outputs."
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ce8_sandbox",
-    "domain_id": "critical_eval",
-    "item_type": "prompt_sandbox",
-    "display_order": 8,
-    "question_text": "Write a Copilot prompt that asks it to help you critically evaluate a draft sector analysis paragraph for factual reliability, logical consistency, and unsupported claims — so you can decide what needs to be verified before the document is shared externally.",
-    "scenario_text": "You are an Analyst at Crestfield Capital Partners. A junior colleague has drafted the following paragraph for a sector briefing note on the cold-chain logistics industry:\n\n'Cold-chain logistics is experiencing rapid growth globally, driven by e-commerce and pharmaceutical demand. Margins in the sector have consistently improved over the past five years, and most operators have successfully passed rising fuel costs on to customers. The sector is considered low-risk by most institutional lenders, and default rates remain negligible.'\n\nYou want to use Copilot to help you identify which claims in this paragraph are well-supported, which are overly broad or potentially inaccurate, and what a reviewer should verify before the note goes to clients.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Evaluation task clearly framed",
-          "description": "The prompt clearly instructs Copilot to evaluate the paragraph for reliability, not just summarise or rewrite it — e.g., asking it to identify unsupported claims, overgeneralisations, or statements that require source verification.",
-          "max": 1
-        },
-        {
-          "name": "Paragraph provided as input",
-          "description": "The prompt includes the draft paragraph (or a clear reference to it) so Copilot has the specific content to evaluate, rather than asking a generic question about cold-chain logistics.",
-          "max": 1
-        },
-        {
-          "name": "Specific evaluation dimensions requested",
-          "description": "The prompt asks Copilot to assess at least two of the following: factual accuracy, logical consistency, overly broad claims, missing caveats, or what should be verified before external distribution.",
-          "max": 1
-        },
-        {
-          "name": "Output structured for analyst action",
-          "description": "The prompt requests an output format that is actionable for the analyst — e.g., a list of flagged claims with reasoning, or a table distinguishing supported vs. unsupported statements.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ce9_task",
-    "domain_id": "critical_eval",
-    "item_type": "micro_task",
-    "display_order": 9,
-    "question_text": "Read the AI-generated paragraph below. Identify every claim that should be verified before this content is used in a client-facing document, and briefly explain why each claim is problematic.",
-    "scenario_text": "A Copilot-generated paragraph has been drafted for inclusion in a sector briefing note on the Canadian forestry and lumber industry:\n\n---\n'The Canadian lumber sector has seen consistent revenue growth of approximately 12% annually over the past decade, driven by strong US housing starts and export demand from Asia. Lumber prices stabilised in 2023 after the volatility of the pandemic years, and most major producers have returned to pre-pandemic profitability levels. Environmental regulations have had minimal impact on production volumes, and the sector is broadly regarded as low-credit-risk by Canadian institutional lenders. Supply chain disruptions are no longer a material concern for the industry.'\n---\n\nYour task: List each claim that requires verification before this paragraph is used externally, and for each one, explain what makes it unreliable or potentially inaccurate as written.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Volume of problematic claims identified",
-          "description": "Identifies at least four distinct claims requiring verification (e.g., the 12% annual growth figure, price stabilisation in 2023, return to pre-pandemic profitability, minimal regulatory impact, low-credit-risk characterisation, supply chain claim).",
-          "max": 2
-        },
-        {
-          "name": "Quality of reasoning for each flagged claim",
-          "description": "For at least three flagged claims, provides a clear and accurate explanation of why the claim is unreliable — e.g., it is an unsourced specific statistic, an overgeneralisation, a contested characterisation, or a claim that may be outdated.",
-          "max": 1
-        },
-        {
-          "name": "Analyst judgment demonstrated",
-          "description": "The response demonstrates analyst-level judgment — distinguishing between claims that are plausible but unverified vs. claims that are likely inaccurate or misleading, rather than flagging everything indiscriminately.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ri10_mcq",
-    "domain_id": "relationship_intel",
-    "item_type": "mcq",
-    "display_order": 10,
-    "question_text": "An Analyst is asked to use AI to help prepare a relationship intelligence briefing ahead of a client meeting. Which approach best demonstrates responsible and effective use of AI for this task?",
-    "scenario_text": "You are an Analyst at Harlow Financial Group supporting a relationship manager who has a first meeting next week with Solaris Packaging Inc., a mid-sized manufacturer. The relationship manager wants a briefing note covering the company's recent business developments, key decision-makers, and any publicly known strategic priorities. You have access to Copilot and a range of public sources.",
-    "options": [
-      {
-        "label": "A",
-        "text": "Use Copilot to synthesise publicly available information (press releases, news articles, published financials) into a structured briefing note, then verify key facts and add analyst commentary before sharing with the relationship manager."
-      },
-      {
-        "label": "B",
-        "text": "Export the client's CRM interaction history and financial exposure data into Copilot to generate a comprehensive briefing that includes internal relationship notes."
-      },
-      {
-        "label": "C",
-        "text": "Ask Copilot to generate a full briefing note from memory without providing any source documents, since it has broad knowledge of business and industry."
-      },
-      {
-        "label": "D",
-        "text": "Use Copilot only to format and proofread a briefing note you have already written manually, since AI should not be involved in relationship intelligence tasks."
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ri11_sandbox",
-    "domain_id": "relationship_intel",
-    "item_type": "prompt_sandbox",
-    "display_order": 11,
-    "question_text": "Write a Copilot prompt to help you prepare a relationship intelligence briefing note for a relationship manager ahead of a first meeting with a prospective client in the industrial packaging sector. The briefing should draw only on publicly available information and be structured to support a productive business conversation.",
-    "scenario_text": "You are an Analyst at Northgate Advisory. Your relationship manager, Priya Sharma, has a first meeting in four days with the CFO of Solaris Packaging Inc., a mid-sized industrial packaging manufacturer. Priya wants a two-page briefing note covering: recent company news and strategic announcements, key financial highlights from their most recent published annual report, industry trends relevant to their business, and two or three potential conversation starters or areas of strategic interest she could raise in the meeting. All information must come from public sources only.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Public sources constraint respected",
-          "description": "The prompt explicitly instructs Copilot to draw only on publicly available information (e.g., press releases, published annual reports, news articles, industry publications) and does not request or imply use of internal CRM data or non-public client information.",
-          "max": 1
-        },
-        {
-          "name": "Structured output requested",
-          "description": "The prompt requests a structured briefing note with clearly defined sections (e.g., recent news, financial highlights, industry trends, conversation starters) rather than a generic summary.",
-          "max": 1
-        },
-        {
-          "name": "Audience and purpose specified",
-          "description": "The prompt identifies the audience (relationship manager preparing for a first client meeting with a CFO) and the purpose (supporting a productive business conversation), so Copilot can calibrate tone and depth appropriately.",
-          "max": 1
-        },
-        {
-          "name": "Actionable conversation intelligence included",
-          "description": "The prompt specifically asks for elements that support relationship-building — such as potential talking points, strategic questions, or areas of interest — not just a factual company summary.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ri12_task",
-    "domain_id": "relationship_intel",
-    "item_type": "micro_task",
-    "display_order": 12,
-    "question_text": "Review the AI-generated relationship intelligence briefing excerpt below. Identify any problems with the content from a responsible use and analytical quality perspective, and suggest specific improvements.",
-    "scenario_text": "A Copilot-generated excerpt from a relationship intelligence briefing note reads as follows:\n\n---\n'Solaris Packaging Inc. is a strong candidate for export financing. Based on our internal records, their current credit exposure with Northgate Advisory is $12.4 million, and their last relationship review flagged moderate risk. The CFO, David Okonkwo, has been in the role for 18 months and previously worked at a competitor. The company is likely facing margin pressure given rising input costs across the sector, and they will probably be receptive to refinancing conversations. Their Q3 results have not yet been published but are expected to show a decline.'\n---\n\nYour task: Identify all problems in this excerpt — including responsible AI violations, unsupported claims, and analytical quality issues — and for each problem, suggest a specific correction or improvement.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Responsible AI violations identified",
-          "description": "Correctly identifies that the excerpt contains non-public internal data (credit exposure figure, internal risk rating, unpublished Q3 results) that should not have been included in a Copilot-generated output or prompt, and explains why this is a responsible AI violation.",
-          "max": 2
-        },
-        {
-          "name": "Unsupported or speculative claims flagged",
-          "description": "Identifies at least two speculative or unsupported claims (e.g., 'likely facing margin pressure', 'will probably be receptive to refinancing', 'expected to show a decline') and notes that these should be either removed or grounded in verifiable public evidence.",
-          "max": 1
-        },
-        {
-          "name": "Specific improvements suggested",
-          "description": "Provides at least two concrete, actionable suggestions for improving the excerpt — e.g., replacing internal data with publicly available financial highlights, removing speculative language, or sourcing claims to published reports.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_dd13_mcq",
-    "domain_id": "data_decision",
-    "item_type": "mcq",
-    "display_order": 13,
-    "question_text": "An Analyst is using Copilot to help interpret a dataset of sector-level financial ratios. Which approach best demonstrates sound data-informed decision-making when using AI assistance?",
-    "scenario_text": "You are an Analyst at Crestfield Capital Partners. You have a spreadsheet containing five years of published financial ratios (debt-to-equity, interest coverage, and EBITDA margins) for 40 companies in the industrial manufacturing sector. You want to use Copilot to help identify trends and flag outliers that may warrant further investigation in a portfolio review.",
-    "options": [
-      {
-        "label": "A",
-        "text": "Ask Copilot to identify trends and outliers in the dataset, then independently verify the flagged patterns against the underlying data before drawing conclusions or making recommendations."
-      },
-      {
-        "label": "B",
-        "text": "Accept Copilot's trend analysis as the final output and present its findings directly in the portfolio review without further review, since the data was publicly sourced."
-      },
-      {
-        "label": "C",
-        "text": "Avoid using Copilot for any quantitative analysis, since AI tools are unreliable when working with numerical data."
-      },
-      {
-        "label": "D",
-        "text": "Ask Copilot to make a final recommendation on which companies represent the highest credit risk, and use that recommendation as the basis for the portfolio review conclusions."
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_dd14_sandbox",
-    "domain_id": "data_decision",
-    "item_type": "prompt_sandbox",
-    "display_order": 14,
-    "question_text": "Write a Copilot prompt to help you analyse a dataset of sector-level financial ratios and identify patterns, outliers, and potential areas of concern for a portfolio review. Your prompt should be specific about what analysis you need and how the output should be structured to support analyst decision-making.",
-    "scenario_text": "You are an Analyst at Harlow Financial Group preparing for a quarterly portfolio review of the industrial manufacturing sector. You have a dataset (which you will paste into Copilot) containing five years of published financial ratios — debt-to-equity, interest coverage ratio, and EBITDA margin — for 40 companies. You want Copilot to help you identify sector-wide trends, flag companies that appear to be outliers on any of the three metrics, and highlight any patterns that might indicate emerging credit risk. The output will be used to prioritise which companies to investigate further.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Analytical task clearly specified",
-          "description": "The prompt clearly instructs Copilot on the specific analytical tasks required — at minimum, identifying trends, flagging outliers, and highlighting patterns relevant to credit risk — rather than asking a vague question about the data.",
-          "max": 1
-        },
-        {
-          "name": "Metrics and scope defined",
-          "description": "The prompt references the specific financial metrics (debt-to-equity, interest coverage, EBITDA margin) and the scope of the dataset (five years, 40 companies, industrial manufacturing sector) so Copilot can perform targeted analysis.",
-          "max": 1
-        },
-        {
-          "name": "Output structured for decision support",
-          "description": "The prompt requests an output format that supports analyst decision-making — e.g., a ranked list of outliers, a summary table of trends, or a prioritised list of companies for further investigation — rather than a narrative summary.",
-          "max": 1
-        },
-        {
-          "name": "Analyst judgment preserved",
-          "description": "The prompt frames Copilot's role as supporting analysis (e.g., flagging patterns for the analyst to investigate) rather than making final credit risk decisions, preserving the analyst's role in interpreting and acting on the output.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_dd15_task",
-    "domain_id": "data_decision",
-    "item_type": "micro_task",
-    "display_order": 15,
-    "question_text": "Review the AI-generated data interpretation below. Identify any analytical errors, unsupported conclusions, or data reasoning problems, and explain what the analyst should do before using this output in a portfolio review.",
-    "scenario_text": "An Analyst asked Copilot to analyse five years of EBITDA margin data for 40 industrial manufacturers. Copilot returned the following interpretation:\n\n---\n'Analysis of the dataset shows that EBITDA margins across the sector have improved steadily by an average of 2.3 percentage points per year over the five-year period. This confirms that the industrial manufacturing sector is in a strong growth phase and presents low credit risk overall. Three companies — Ferrotek Industries, Caldwell Precision, and Morrow Components — show margins significantly below the sector average and should be immediately flagged as high credit risk and removed from the portfolio. The trend is consistent and unlikely to reverse given current macroeconomic conditions.'\n---\n\nYour task: Identify all analytical and reasoning problems in this output, and specify what steps the analyst should take before acting on these findings.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Analytical errors identified",
-          "description": "Identifies at least two analytical errors: (1) conflating EBITDA margin improvement with 'low credit risk overall' — margin is one indicator, not a complete credit assessment; (2) the conclusion that below-average margin alone justifies 'high credit risk' and immediate portfolio removal is an unsupported leap; (3) the forward-looking claim about macroeconomic conditions is speculative and unsourced.",
-          "max": 2
-        },
-        {
-          "name": "Reasoning problems flagged",
-          "description": "Flags that Copilot has made a definitive recommendation (remove companies from portfolio) that exceeds its appropriate role — AI should surface patterns for analyst review, not make portfolio decisions — and that the output presents speculation as certainty.",
-          "max": 1
-        },
-        {
-          "name": "Corrective analyst steps specified",
-          "description": "Specifies at least two concrete steps the analyst should take before acting: e.g., verify the 2.3pp average figure against the raw data, conduct a fuller credit assessment of the three flagged companies using multiple indicators, and treat the macroeconomic claim as unverified.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ac16_mcq",
-    "domain_id": "augmented_comm",
-    "item_type": "mcq",
-    "display_order": 16,
-    "question_text": "An Analyst uses Copilot to draft a client-facing briefing note. Which approach best reflects responsible and effective use of AI for professional communication?",
-    "scenario_text": "You are an Analyst at Northgate Advisory. Your director has asked you to produce a two-page briefing note for a corporate client summarising recent developments in the global shipping and logistics sector. You use Copilot to generate a first draft based on publicly available sources. The draft is well-structured and reads fluently, but you have not yet reviewed it in detail.",
-    "options": [
-      {
-        "label": "A",
-        "text": "Review the draft carefully for factual accuracy, tone appropriateness, and any claims that need verification or caveating, then edit and personalise it before sending to the client."
-      },
-      {
-        "label": "B",
-        "text": "Send the Copilot draft directly to the client, since it is based on public sources and reads professionally."
-      },
-      {
-        "label": "C",
-        "text": "Ask Copilot to review its own draft for errors and send the revised version without further analyst review."
-      },
-      {
-        "label": "D",
-        "text": "Discard the Copilot draft and write the briefing note entirely from scratch to ensure full ownership of the content."
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ac17_sandbox",
-    "domain_id": "augmented_comm",
-    "item_type": "prompt_sandbox",
-    "display_order": 17,
-    "question_text": "Write a Copilot prompt to help you draft a concise executive summary email to a relationship manager, summarising the key findings from a sector risk analysis you have completed. The email should be professional, clearly structured, and highlight the two or three most important points the relationship manager needs to know before a client meeting.",
-    "scenario_text": "You are an Analyst at Crestfield Capital Partners. You have just completed a sector risk analysis on the cold-chain logistics industry. Your key findings are: (1) demand growth is strong but concentrated among a small number of large e-commerce and pharmaceutical clients, creating customer concentration risk; (2) rising fuel and refrigerant costs are compressing margins for mid-sized operators; (3) regulatory changes to refrigerant standards in 2025 will require significant capital expenditure for many operators. You need to send a brief, professional email to relationship manager Marcus Tran summarising these findings before his client meeting tomorrow.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Communication purpose and audience specified",
-          "description": "The prompt identifies the communication type (executive summary email), the recipient (relationship manager), and the purpose (preparing for a client meeting) so Copilot can calibrate tone, length, and level of detail appropriately.",
-          "max": 1
-        },
-        {
-          "name": "Key findings provided as input",
-          "description": "The prompt includes the three key findings (or a clear reference to them) so Copilot is drafting from the analyst's actual conclusions rather than generating generic sector content.",
-          "max": 1
-        },
-        {
-          "name": "Format and length specified",
-          "description": "The prompt requests a specific format (e.g., concise email, bullet points or short paragraphs, professional tone) and indicates the appropriate length or level of brevity for an executive summary communication.",
-          "max": 1
-        },
-        {
-          "name": "Action-oriented framing",
-          "description": "The prompt asks Copilot to frame the findings in a way that is actionable or relevant for the relationship manager's meeting context — not just a neutral summary, but content that helps the RM understand what matters and why.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
-    "item_id": "an_diag_ac18_task",
-    "domain_id": "augmented_comm",
-    "item_type": "micro_task",
-    "display_order": 18,
-    "question_text": "Review the AI-generated email draft below. Identify all communication quality problems — including tone, structure, clarity, and professional appropriateness — and rewrite the email so it is suitable to send to a senior client.",
-    "scenario_text": "An Analyst used Copilot to draft an email to a senior client contact at Ferrotek Industries summarising the outcome of a recent sector analysis. The draft reads:\n\n---\nSubject: Stuff from our analysis\n\nHi,\n\nSo we did the analysis you asked for on the metals and mining sector. Basically things are pretty mixed right now. Prices are up but costs are also up so it kind of cancels out. There are some risks you should probably know about but nothing too crazy. We think the sector is okay for now but could get worse. Let me know if you want more details or whatever.\n\nThanks\n---\n\nYour task: (1) List all communication quality problems in this draft. (2) Rewrite the email so it is professional, clearly structured, and appropriate for a senior client contact.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Problem identification — volume and accuracy",
-          "description": "Correctly identifies at least four communication problems: unprofessional subject line, overly casual tone ('Stuff', 'Hi', 'kind of', 'whatever'), vague and uninformative content, lack of structure, absence of specific findings, and no clear call to action.",
-          "max": 1
-        },
-        {
-          "name": "Rewritten email — professional tone and register",
-          "description": "The rewritten email uses a professional tone and register appropriate for a senior client contact — formal greeting, clear subject line, and language free of colloquialisms or hedging phrases.",
-          "max": 1
-        },
-        {
-          "name": "Rewritten email — structure and clarity",
-          "description": "The rewritten email is clearly structured with a professional subject line, a brief context-setting opening, a concise summary of key findings (even if illustrative), and a clear closing with a specific next step or offer.",
-          "max": 1
-        },
-        {
-          "name": "Rewritten email — substantive improvement",
-          "description": "The rewritten email is substantively more informative and useful than the original — it replaces vague statements ('things are pretty mixed') with specific, structured observations and demonstrates analyst credibility.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "an"
-  },
-  {
     "item_id": "rm_diag_ra1_mcq",
     "domain_id": "responsible_ai",
     "item_type": "mcq",
@@ -624,147 +32,10 @@
     "role_id": "rm"
   },
   {
-    "item_id": "rm_diag_ra2_sandbox",
-    "domain_id": "responsible_ai",
-    "item_type": "prompt_sandbox",
-    "display_order": 2,
-    "question_text": "Write a SAFE AI prompt to help you prepare an internal briefing note for a credit review meeting. Your prompt must not include any non-public client information, but must still give the AI enough context to produce a useful output.",
-    "scenario_text": "You are an RM preparing for a credit review meeting on Friday. Your client is a mid-sized manufacturing company that exports to North America and Europe. Their latest financials show revenue growth of 18% but tightening EBITDA margins. They have an existing trade finance facility and are requesting an increase. You have internal CRM notes flagging some concentration risk in their customer base. You need a structured 1-page internal briefing note with key talking points for the credit team.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Sanitization of client identity",
-          "description": "The prompt contains no real or fictional client name, specific financial figures, or CRM-sourced identifiers — uses abstracted descriptors only (e.g., 'mid-sized manufacturer exporting to North America and Europe').",
-          "max": 1
-        },
-        {
-          "name": "Sufficient context for useful output",
-          "description": "The prompt includes enough abstracted context (industry, facility type, growth profile, risk theme) that the AI can generate a genuinely useful briefing structure rather than a generic template.",
-          "max": 1
-        },
-        {
-          "name": "Clear output format instruction",
-          "description": "The prompt specifies the desired output format — e.g., 1-page internal note, headings, bullet points, audience (credit team).",
-          "max": 1
-        },
-        {
-          "name": "Appropriate tone and purpose framing",
-          "description": "The prompt frames the output as internal (not client-facing) and specifies the purpose (credit review preparation), reducing risk of generating inappropriate client-facing language.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_ra3_task",
-    "domain_id": "responsible_ai",
-    "item_type": "micro_task",
-    "display_order": 3,
-    "question_text": "Review the AI prompt below that a colleague drafted to get help with a client follow-up email. Identify ALL responsible AI problems in the prompt and rewrite it as a SAFE version that still produces a useful output.",
-    "scenario_text": "A colleague shares this prompt they are about to submit to an external AI chatbot:\n\n'Draft a follow-up email to Pinnacle Steel Works after our meeting on 14 March. They have a $4.2M trade finance facility with us, currently rated B2 internally. Their CFO, Marcus Holt, mentioned cash flow pressure due to a delayed shipment from their Vietnamese supplier. Remind them we can restructure the facility and ask for updated financials by end of month.'\n\nYour task: (1) List the specific responsible AI violations in this prompt. (2) Rewrite the prompt in a SAFE version suitable for a non-approved external tool.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Identification of client identity disclosure",
-          "description": "Learner correctly identifies that the client name ('Pinnacle Steel Works') and named individual ('Marcus Holt, CFO') are non-public identifiers that must not be entered into a non-approved tool.",
-          "max": 1
-        },
-        {
-          "name": "Identification of non-public financial and risk data",
-          "description": "Learner correctly flags the facility size ($4.2M), internal risk rating (B2), and the cash flow/supplier detail as non-public confidential information that violates safe AI-use boundaries.",
-          "max": 1
-        },
-        {
-          "name": "Quality of SAFE rewrite — sanitization",
-          "description": "The rewritten prompt removes all client names, individual names, specific dollar amounts, internal ratings, and operationally specific details (e.g., Vietnamese supplier, delayed shipment).",
-          "max": 1
-        },
-        {
-          "name": "Quality of SAFE rewrite — preserved usefulness",
-          "description": "The rewritten prompt retains enough abstracted context (e.g., 'mid-market industrial client, trade finance facility, cash flow discussion, request for updated financials') that the AI can still draft a useful follow-up email structure.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_sp4_mcq",
-    "domain_id": "strategic_prompting",
-    "item_type": "mcq",
-    "display_order": 4,
-    "question_text": "Which prompt structure is most likely to produce a high-quality first draft of a client needs analysis summary for an RM's pre-call preparation?",
-    "scenario_text": "You have a discovery call tomorrow with the CFO of a mid-market food processing company that is expanding into Southeast Asia. You want to use an approved AI tool to draft a structured needs analysis summary to guide your conversation. You have 10 minutes to write the prompt.",
-    "options": [
-      {
-        "label": "A",
-        "text": "'Act as an experienced Relationship Manager preparing for a discovery call with the CFO of a mid-market food processor expanding into Southeast Asia. Draft a structured needs analysis summary covering: likely business objectives, potential financing needs (trade, working capital, FX), key risks to probe, and 3 open-ended discovery questions. Format as a 1-page brief with headings.'"
-      },
-      {
-        "label": "B",
-        "text": "'Write a needs analysis for a food company going to Asia.'"
-      },
-      {
-        "label": "C",
-        "text": "'List all the questions I should ask a CFO in a sales meeting about their business needs and expansion plans.'"
-      },
-      {
-        "label": "D",
-        "text": "'Summarise what a food processing company expanding to Southeast Asia might need from a bank, and give me a template I can use for any client meeting.'"
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_sp5_sandbox",
-    "domain_id": "strategic_prompting",
-    "item_type": "prompt_sandbox",
-    "display_order": 5,
-    "question_text": "Write an AI prompt to generate a tailored relationship deepening plan for a client segment. Your prompt should be specific enough to produce an actionable output, not a generic template.",
-    "scenario_text": "You manage a portfolio of 12 mid-market clients in the agribusiness sector. Your bank has recently launched a new supply chain finance product. You want to use an approved AI tool to help you draft a 90-day relationship deepening plan that identifies which client interactions, touchpoints, and product conversations could help you introduce the new product to the right clients at the right time. You do not want a generic plan — you want one shaped around agribusiness seasonality and typical cash conversion cycles.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Role and context framing",
-          "description": "The prompt establishes a clear role (e.g., 'Act as a Relationship Manager') and provides relevant sector context (agribusiness, mid-market, supply chain finance product launch) rather than leaving the AI to guess the scenario.",
-          "max": 1
-        },
-        {
-          "name": "Specificity of task instruction",
-          "description": "The prompt requests a 90-day plan with specific components (e.g., touchpoints, product conversation triggers, client interaction cadence) rather than asking for a generic relationship plan.",
-          "max": 1
-        },
-        {
-          "name": "Sector-relevant constraints included",
-          "description": "The prompt incorporates agribusiness-specific factors such as seasonality, harvest cycles, or cash conversion cycle timing to shape the plan's recommendations.",
-          "max": 1
-        },
-        {
-          "name": "Output format specified",
-          "description": "The prompt specifies a usable output format (e.g., table, timeline, phased plan with headings) so the result is immediately actionable rather than a narrative essay.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "rm"
-  },
-  {
     "item_id": "rm_diag_sp6_task",
     "domain_id": "strategic_prompting",
     "item_type": "micro_task",
-    "display_order": 6,
+    "display_order": 2,
     "question_text": "The prompt below was used to prepare for a client renewal conversation but produced a vague, unhelpful response. Diagnose the prompting weaknesses and rewrite it as a stronger prompt that would generate a more useful output for an RM.",
     "scenario_text": "An RM used this prompt before a facility renewal meeting:\n\n'Help me prepare for a meeting with a client about renewing their loan.'\n\nThe AI returned a generic list of 'tips for client meetings' that was not useful for the RM's specific situation. The client is a mid-market construction company with a $3M working capital facility up for annual review. The RM wants to anticipate objections, identify upsell opportunities, and prepare 3 tailored talking points about the value the bank has delivered over the past year.",
     "options": null,
@@ -789,7 +60,7 @@
     "item_id": "rm_diag_ce7_mcq",
     "domain_id": "critical_eval",
     "item_type": "mcq",
-    "display_order": 7,
+    "display_order": 3,
     "question_text": "An AI tool drafts the following sentence for inclusion in a credit memo: 'Vantara Foods has consistently demonstrated strong liquidity management, with a current ratio well above industry benchmarks.' What is the most important critical evaluation step before including this in the memo?",
     "scenario_text": "You used an approved AI tool to help draft sections of a credit memo for Vantara Foods (a fictional client). The AI generated the sentence above based on your abstracted prompt describing the client as a 'food manufacturer with stable working capital.' You are about to paste it into the memo for submission to the credit committee.",
     "options": [
@@ -818,70 +89,25 @@
     "role_id": "rm"
   },
   {
-    "item_id": "rm_diag_ce8_sandbox",
-    "domain_id": "critical_eval",
-    "item_type": "prompt_sandbox",
-    "display_order": 8,
-    "question_text": "Write an AI prompt that asks the AI to help you critically stress-test a client proposal summary before you present it to your credit team. Your prompt should instruct the AI to identify weaknesses, assumptions, and gaps — not just validate the proposal.",
-    "scenario_text": "You have drafted a 1-page proposal summary recommending that your bank increase the working capital facility for a mid-market retail distribution client from $2M to $3.5M. The summary cites revenue growth, a new supply contract, and improved debtor days as justification. Before presenting to the credit team, you want to use an approved AI tool to pressure-test your own reasoning and identify anything the credit team is likely to challenge.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Adversarial framing instruction",
-          "description": "The prompt explicitly instructs the AI to take a critical or sceptical stance (e.g., 'identify weaknesses', 'challenge assumptions', 'act as a credit analyst stress-testing this proposal') rather than asking it to improve or validate the proposal.",
-          "max": 1
-        },
-        {
-          "name": "Relevant risk dimensions specified",
-          "description": "The prompt asks the AI to evaluate specific risk dimensions relevant to an RM's credit proposal — e.g., revenue sustainability, concentration risk, assumption validity, repayment capacity — not just generic 'risks'.",
-          "max": 1
-        },
-        {
-          "name": "Context provided without non-public data",
-          "description": "The prompt provides enough abstracted context (facility type, growth rationale, sector) for the AI to give meaningful feedback, without including real client names or specific confidential figures.",
-          "max": 1
-        },
-        {
-          "name": "Actionable output format requested",
-          "description": "The prompt requests a structured output (e.g., list of challenges, questions the credit team will ask, gaps to address) that the RM can directly use to strengthen the proposal.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_ce9_task",
-    "domain_id": "critical_eval",
+    "item_id": "rm_diag_dd15_task",
+    "domain_id": "data_decision",
     "item_type": "micro_task",
-    "display_order": 9,
-    "question_text": "Read the AI-generated paragraph below, which was drafted for inclusion in a client-facing market update email. Identify all critical evaluation issues and annotate each problem with a brief explanation of why it is problematic for an RM to send this without review.",
-    "scenario_text": "An RM used an AI tool to draft this paragraph for a client market update email:\n\n'Interest rates are expected to fall significantly over the next 12 months, which will reduce your borrowing costs and improve your cash flow position. We recommend locking in a fixed rate now before the cuts arrive. The RBA has signalled multiple rate reductions are imminent, and most economists agree that the easing cycle will be aggressive. This is an excellent time to expand your facilities.'\n\nYour task: Identify and annotate at least 3 distinct critical evaluation problems with this paragraph before it is sent to a client.",
+    "display_order": 4,
+    "question_text": "An AI tool produced the portfolio insight summary below. Evaluate the quality of the data reasoning and identify any decisions an RM should NOT make based solely on this output, explaining why.",
+    "scenario_text": "AI-generated portfolio insight summary:\n\n'Analysis of your portfolio indicates that clients in the retail sector are your lowest-performing segment by revenue contribution. These clients have the highest average cost-to-serve and the lowest product cross-sell ratio. Based on this, it is recommended that you deprioritise retail clients in your outreach plan and focus resources on manufacturing and logistics clients, who show stronger revenue metrics and higher facility utilisation.'\n\nYour task: (1) Identify at least two data reasoning problems or missing considerations in this analysis. (2) Explain what decisions an RM should not make based solely on this AI output, and why.",
     "options": null,
     "correct_option": null,
     "scoring_rubric": {
       "criteria": [
         {
-          "name": "Identification of unverified factual claims",
-          "description": "Learner flags that specific claims (e.g., 'RBA has signalled multiple rate reductions are imminent', 'most economists agree') are presented as fact but may be AI hallucinations or outdated, and must be verified against current sources before client distribution.",
-          "max": 1
+          "name": "Identification of data reasoning gaps",
+          "description": "Learner identifies at least two specific gaps: e.g., the analysis ignores strategic value of retail relationships (referrals, tenure, growth potential), does not account for individual client variation within the segment, and may be based on incomplete or point-in-time data.",
+          "max": 2
         },
         {
-          "name": "Identification of inappropriate financial advice language",
-          "description": "Learner identifies that phrases like 'We recommend locking in a fixed rate now' and 'This is an excellent time to expand your facilities' constitute financial advice that requires compliance review and cannot be sent as a general client email without appropriate disclaimers or authorisation.",
-          "max": 1
-        },
-        {
-          "name": "Identification of overconfident or absolute language",
-          "description": "Learner flags that language such as 'will reduce', 'are imminent', and 'aggressive easing cycle' presents uncertain forecasts as certainties, which is misleading and creates reputational and regulatory risk for the RM and the bank.",
-          "max": 1
-        },
-        {
-          "name": "Overall evaluation quality",
-          "description": "Learner's annotations are specific, clearly explained, and demonstrate understanding of why each issue matters in the context of an RM's client communication responsibilities — not just generic 'AI can be wrong' observations.",
-          "max": 1
+          "name": "Decisions the RM should not make solely on this output",
+          "description": "Learner correctly identifies that the RM should not deprioritise or reduce service to retail clients, reallocate portfolio resources, or make any client-facing decisions based solely on this AI summary — and explains that such decisions require human judgement, relationship context, and management input.",
+          "max": 2
         }
       ]
     },
@@ -891,7 +117,7 @@
     "item_id": "rm_diag_ri10_mcq",
     "domain_id": "relationship_intel",
     "item_type": "mcq",
-    "display_order": 10,
+    "display_order": 5,
     "question_text": "An RM wants to use AI to prepare a client intelligence summary before an annual review meeting. Which approach best demonstrates effective use of AI for relationship intelligence while staying within responsible AI boundaries?",
     "scenario_text": "You have an annual review meeting next week with the CEO of Driftwood Packaging Co., a long-standing client. You want to walk in with a sharp understanding of their business context, recent industry developments, and potential needs. You have access to publicly available news, the company's published annual report, and your own (sanitised) notes from previous meetings.",
     "options": [
@@ -920,172 +146,10 @@
     "role_id": "rm"
   },
   {
-    "item_id": "rm_diag_ri11_sandbox",
-    "domain_id": "relationship_intel",
-    "item_type": "prompt_sandbox",
-    "display_order": 11,
-    "question_text": "Write an AI prompt to help you build a pre-meeting intelligence brief for a client in a sector you are less familiar with. Your prompt should help you quickly get up to speed on the sector context and identify smart questions to ask the client.",
-    "scenario_text": "You have been assigned a new client — a mid-market company in the cold chain logistics sector (temperature-controlled warehousing and transport). You have a first meeting with their CFO in three days. You are not deeply familiar with this sector's economics, typical financing needs, or current pressures. You want to use an approved AI tool to help you prepare a sharp, credible pre-meeting brief so you can have an informed conversation.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Sector intelligence framing",
-          "description": "The prompt asks the AI to explain the cold chain logistics sector's key economics, business model drivers, and current industry pressures — not just generic logistics information.",
-          "max": 1
-        },
-        {
-          "name": "RM-relevant financing angle",
-          "description": "The prompt asks the AI to identify typical financing needs or banking product relevance for this sector (e.g., asset finance for refrigerated vehicles/warehouses, working capital cycles, trade finance) to help the RM spot opportunities.",
-          "max": 1
-        },
-        {
-          "name": "Discovery question generation",
-          "description": "The prompt requests tailored discovery questions the RM can use with the CFO — questions that demonstrate sector knowledge and probe for genuine client needs, not generic 'tell me about your business' questions.",
-          "max": 1
-        },
-        {
-          "name": "Output structure and usability",
-          "description": "The prompt specifies a structured, scannable output format (e.g., sections for sector overview, financing themes, and suggested questions) that the RM can use directly in meeting preparation.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_ri12_task",
-    "domain_id": "relationship_intel",
-    "item_type": "micro_task",
-    "display_order": 12,
-    "question_text": "Below is an AI-generated client intelligence summary prepared by a colleague before a relationship review meeting. Review it critically and identify: (1) what is useful and why, and (2) what is missing or potentially unreliable, and what the RM should do before using it.",
-    "scenario_text": "AI-generated summary (prepared using only a company name and sector as inputs):\n\n'Meridian Timber Holdings operates in the Australian hardwood timber industry. The sector is currently experiencing strong export demand from Asian markets, particularly Japan and South Korea. Meridian likely has significant capital tied up in inventory and may benefit from working capital solutions. The company's CEO is focused on sustainability credentials to access premium markets. Key risks include currency exposure on export revenues and potential regulatory changes around native timber harvesting. Recommended talking points: working capital facility, FX hedging products, and green finance options.'\n\nYour task: Annotate the summary — mark what is genuinely useful for meeting prep, and flag what needs verification or is potentially unreliable before the RM relies on it.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Identification of useful elements",
-          "description": "Learner correctly identifies genuinely useful elements: sector-level context (export demand, currency risk, regulatory risk) and the logical product angle suggestions (working capital, FX, green finance) as reasonable starting hypotheses for conversation.",
-          "max": 1
-        },
-        {
-          "name": "Identification of unverified client-specific claims",
-          "description": "Learner flags that claims about Meridian specifically (e.g., 'CEO is focused on sustainability', 'significant capital tied up in inventory') are AI inferences with no cited source and could be inaccurate or hallucinated — these must be verified before the meeting.",
-          "max": 1
-        },
-        {
-          "name": "Identification of currency/timeliness risk",
-          "description": "Learner notes that sector claims (e.g., 'strong export demand from Asian markets') may be outdated or based on the AI's training data cutoff, and should be cross-checked against current industry sources or recent news before being relied upon.",
-          "max": 1
-        },
-        {
-          "name": "Recommended remediation actions",
-          "description": "Learner provides at least two specific, practical steps the RM should take before using this summary (e.g., verify CEO priorities via LinkedIn/news, check current timber export data, confirm product relevance against actual client financials or CRM history).",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_dd13_mcq",
-    "domain_id": "data_decision",
-    "item_type": "mcq",
-    "display_order": 13,
-    "question_text": "An RM uses an AI tool to analyse portfolio data and receives the output: 'Clients in the manufacturing sector in your portfolio have a 34% higher likelihood of facility utilisation increase in Q3 based on historical patterns.' How should the RM best use this insight?",
-    "scenario_text": "You manage a portfolio of 18 mid-market clients across manufacturing, retail, and logistics. You asked an approved AI tool to analyse anonymised portfolio utilisation patterns and flag any segments showing seasonal trends. The AI returned the insight above. You are deciding how to act on it ahead of Q3 planning.",
-    "options": [
-      {
-        "label": "A",
-        "text": "Use the insight as a prompt to proactively reach out to manufacturing clients before Q3 to discuss facility headroom, while verifying the pattern against your own portfolio data and checking whether individual client circumstances support the trend."
-      },
-      {
-        "label": "B",
-        "text": "Immediately increase facility limits for all manufacturing clients in the portfolio based on the AI's prediction, to get ahead of demand."
-      },
-      {
-        "label": "C",
-        "text": "Disregard the insight because AI-generated portfolio analysis is not reliable enough to inform any RM decisions."
-      },
-      {
-        "label": "D",
-        "text": "Share the AI output directly with clients as evidence that they should increase their facilities before Q3."
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_dd14_sandbox",
-    "domain_id": "data_decision",
-    "item_type": "prompt_sandbox",
-    "display_order": 14,
-    "question_text": "Write an AI prompt to help you interpret a set of anonymised portfolio metrics and identify which client segments may need proactive outreach in the next 90 days. Your prompt should produce a prioritised, actionable output — not just a data summary.",
-    "scenario_text": "You have just received a quarterly portfolio health report. The anonymised data shows: 4 clients with facility utilisation above 85%, 3 clients with overdue annual reviews, 2 clients whose sector (commercial construction) has recently been flagged in industry news for margin pressure, and 1 client with a significant upcoming debt maturity. You want to use an approved AI tool to help you turn this data into a prioritised outreach plan for the next 90 days.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Data inputs clearly described",
-          "description": "The prompt accurately describes the anonymised portfolio data points (utilisation levels, overdue reviews, sector risk flags, debt maturity) without including any real client names or confidential identifiers.",
-          "max": 1
-        },
-        {
-          "name": "Prioritisation logic requested",
-          "description": "The prompt asks the AI to apply a prioritisation framework or logic (e.g., urgency, risk level, opportunity size) to rank outreach actions — not just list all clients equally.",
-          "max": 1
-        },
-        {
-          "name": "Action-oriented output specified",
-          "description": "The prompt requests specific recommended actions for each priority segment (e.g., type of conversation, timing, product angle) rather than a descriptive summary of the data.",
-          "max": 1
-        },
-        {
-          "name": "90-day timeframe and RM workflow context",
-          "description": "The prompt anchors the output to a 90-day planning horizon and frames it within an RM's workflow (proactive outreach, relationship review, risk management) so the output is directly usable.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_dd15_task",
-    "domain_id": "data_decision",
-    "item_type": "micro_task",
-    "display_order": 15,
-    "question_text": "An AI tool produced the portfolio insight summary below. Evaluate the quality of the data reasoning and identify any decisions an RM should NOT make based solely on this output, explaining why.",
-    "scenario_text": "AI-generated portfolio insight summary:\n\n'Analysis of your portfolio indicates that clients in the retail sector are your lowest-performing segment by revenue contribution. These clients have the highest average cost-to-serve and the lowest product cross-sell ratio. Based on this, it is recommended that you deprioritise retail clients in your outreach plan and focus resources on manufacturing and logistics clients, who show stronger revenue metrics and higher facility utilisation.'\n\nYour task: (1) Identify at least two data reasoning problems or missing considerations in this analysis. (2) Explain what decisions an RM should not make based solely on this AI output, and why.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Identification of data reasoning gaps",
-          "description": "Learner identifies at least two specific gaps: e.g., the analysis ignores strategic value of retail relationships (referrals, tenure, growth potential), does not account for individual client variation within the segment, and may be based on incomplete or point-in-time data.",
-          "max": 2
-        },
-        {
-          "name": "Decisions the RM should not make solely on this output",
-          "description": "Learner correctly identifies that the RM should not deprioritise or reduce service to retail clients, reallocate portfolio resources, or make any client-facing decisions based solely on this AI summary — and explains that such decisions require human judgement, relationship context, and management input.",
-          "max": 2
-        }
-      ]
-    },
-    "role_id": "rm"
-  },
-  {
     "item_id": "rm_diag_ac16_mcq",
     "domain_id": "augmented_comm",
     "item_type": "mcq",
-    "display_order": 16,
+    "display_order": 6,
     "question_text": "An RM uses AI to draft a follow-up email to a client after a difficult conversation about a declined credit application. Which of the following best describes the correct approach to using the AI draft?",
     "scenario_text": "You had a tense call with the CFO of Irongate Civil Pty Ltd after their facility increase request was declined by the credit committee. You want to send a professional, empathetic follow-up email that acknowledges their disappointment, explains the next steps, and keeps the relationship intact. You use an approved AI tool to draft the email.",
     "options": [
@@ -1110,76 +174,6 @@
     "scoring_rubric": {
       "correct": 4,
       "incorrect": 0
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_ac17_sandbox",
-    "domain_id": "augmented_comm",
-    "item_type": "prompt_sandbox",
-    "display_order": 17,
-    "question_text": "Write an AI prompt to help you draft a client-facing proposal summary email for a new product recommendation. Your prompt must produce a draft that is professional, tailored to the client's context, and ready for your review — not a generic template.",
-    "scenario_text": "You want to introduce a supply chain finance solution to a long-standing client in the food manufacturing sector. The client has previously expressed interest in improving payment terms with their suppliers. You have had a strong relationship with their CFO for three years. You want to send a concise, professional email that introduces the product concept, connects it to their stated interest, and proposes a 30-minute call to explore further. You will use an approved AI tool to draft the email.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Client context and relationship tone",
-          "description": "The prompt provides enough abstracted client context (sector, relationship tenure, stated interest in supplier payment terms) and instructs the AI to adopt a warm, established-relationship tone — not a cold outreach style.",
-          "max": 1
-        },
-        {
-          "name": "Product-to-need connection instruction",
-          "description": "The prompt explicitly asks the AI to connect the supply chain finance product to the client's previously expressed interest in improving supplier payment terms, rather than describing the product in isolation.",
-          "max": 1
-        },
-        {
-          "name": "Clear call to action specified",
-          "description": "The prompt instructs the AI to include a specific, low-friction call to action (e.g., a 30-minute exploratory call) and specifies that the email should be concise — not a lengthy product brochure.",
-          "max": 1
-        },
-        {
-          "name": "Review-ready framing",
-          "description": "The prompt acknowledges that the output is a draft for RM review (e.g., 'draft for my review', 'I will personalise before sending') and does not include any real client names or confidential details.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "rm"
-  },
-  {
-    "item_id": "rm_diag_ac18_task",
-    "domain_id": "augmented_comm",
-    "item_type": "micro_task",
-    "display_order": 18,
-    "question_text": "Review the AI-drafted client email below. Identify all issues that an RM must fix before sending, and rewrite the most problematic paragraph to demonstrate the correct standard.",
-    "scenario_text": "An RM used an AI tool to draft this email to a client after a quarterly review meeting:\n\nSubject: Follow-Up from Our Meeting\n\nDear Valued Client,\n\nThank you for taking the time to meet with us today. We appreciate your continued business and look forward to supporting your financial needs going forward.\n\nAs discussed, your current facility is performing well and we are confident that your business will continue to grow strongly over the next 12 months. We recommend that you consider increasing your facility limit to take advantage of upcoming growth opportunities in your sector.\n\nPlease do not hesitate to contact us if you have any questions. We value your relationship and are committed to your success.\n\nKind regards,\n[RM Name]\n\nYour task: (1) List all issues with this email that an RM must address before sending. (2) Rewrite the second paragraph to a higher professional standard.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Identification of generic and impersonal language",
-          "description": "Learner identifies that 'Dear Valued Client', 'your financial needs', and 'your continued business' are generic placeholders that must be personalised with the client's name, specific meeting topics discussed, and relevant context before sending.",
-          "max": 1
-        },
-        {
-          "name": "Identification of unsubstantiated claims and advice risk",
-          "description": "Learner flags that 'your business will continue to grow strongly over the next 12 months' is an unverified forward-looking statement, and 'we recommend that you consider increasing your facility limit' is a product recommendation that requires a factual basis and may need compliance review.",
-          "max": 1
-        },
-        {
-          "name": "Quality of rewritten paragraph — accuracy and specificity",
-          "description": "The rewritten second paragraph removes unsubstantiated growth claims, grounds any product suggestion in a specific client need or discussion point from the meeting, and avoids making unsupported recommendations.",
-          "max": 1
-        },
-        {
-          "name": "Quality of rewritten paragraph — professional tone and personalisation",
-          "description": "The rewritten paragraph uses a professional, relationship-appropriate tone, references something specific to the client's situation (even if abstracted), and reads as a genuine RM communication rather than a generic AI draft.",
-          "max": 1
-        }
-      ]
     },
     "role_id": "rm"
   },
@@ -1216,137 +210,10 @@
     "role_id": "uw"
   },
   {
-    "item_id": "uw_diag_ra2_sandbox",
-    "domain_id": "responsible_ai",
-    "item_type": "prompt_sandbox",
-    "display_order": 2,
-    "question_text": "Write a policy-safe AI prompt that asks for a structured risk summary of a mid-market manufacturing borrower, using only abstracted inputs. Your prompt must not include any client identifiers, exact financial figures, or deal-specific terms. Include an explicit instruction that the AI should flag any gaps rather than invent details.",
-    "scenario_text": "You are an Underwriter working on a transaction for a mid-market manufacturer in Southeast Asia. The deal package includes confidential financial statements, internal covenant headroom calculations, and a draft guarantee structure. You want to use an EDC-approved AI tool to help draft a risk summary section for the credit paper. Before prompting, you have abstracted the inputs: the borrower is referred to as 'the Company,' revenue is described as 'mid-range for the sector,' and the guarantee structure is described generically. You now need to write the actual prompt.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "No identifying or non-public information",
-          "description": "The prompt contains no client names, deal identifiers, exact financial figures, internal ratings, or covenant-specific terms that could identify the transaction.",
-          "max": 1
-        },
-        {
-          "name": "Clear task instruction for underwriting output",
-          "description": "The prompt clearly requests a structured risk summary relevant to underwriting (e.g., key risks, mitigants, financial profile) using only the abstracted inputs provided.",
-          "max": 1
-        },
-        {
-          "name": "Explicit gap-handling constraint",
-          "description": "The prompt includes an explicit instruction directing the AI to flag missing or unknown information rather than assume, estimate, or invent details.",
-          "max": 1
-        },
-        {
-          "name": "Appropriate role or context framing",
-          "description": "The prompt provides sufficient context about the type of borrower, sector, or transaction structure (in abstracted form) to make the AI output useful for an underwriting audience.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "uw"
-  },
-  {
-    "item_id": "uw_diag_ra3_task",
-    "domain_id": "responsible_ai",
-    "item_type": "micro_task",
-    "display_order": 3,
-    "question_text": "Review the prompt excerpt below. Identify ALL elements that violate EDC's Responsible Use of Generative AI Policy and explain why each is a problem. Then rewrite the prompt so it is policy-safe while preserving its analytical usefulness.",
-    "scenario_text": "An Underwriter has drafted the following prompt to paste into a general-purpose AI chatbot (not an EDC-approved tool):\n\n---\n\"Summarise the key credit risks for Vantara Steel Holdings Ltd (VSH), a steel manufacturer in Vietnam. Their 2023 audited revenue was USD 412 million, EBITDA margin was 8.2%, and net debt-to-EBITDA was 4.1x. EDC's internal risk rating is BB- with a negative outlook. The proposed facility is a USD 35 million revolving credit with a 3.5x leverage covenant. Identify the top three risks and suggest mitigants.\"\n---\n\nList each policy violation and provide a rewritten, policy-safe version of the prompt.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Identification of non-public information violations",
-          "description": "Correctly identifies at least three distinct policy violations: use of a non-approved tool/platform, inclusion of the client's full name and identifier, inclusion of exact confidential financial figures (revenue, EBITDA margin, leverage ratio), and inclusion of the internal risk rating and outlook.",
-          "max": 2
-        },
-        {
-          "name": "Quality of rewritten prompt",
-          "description": "The rewritten prompt removes all identifying and non-public details, uses safe abstractions (e.g., 'a mid-market steel manufacturer in Southeast Asia,' 'leverage above sector median'), targets an EDC-approved tool context, and preserves the analytical intent of the original request.",
-          "max": 2
-        }
-      ]
-    },
-    "role_id": "uw"
-  },
-  {
-    "item_id": "uw_diag_sp4_mcq",
-    "domain_id": "strategic_prompting",
-    "item_type": "mcq",
-    "display_order": 4,
-    "question_text": "Which prompting technique would most improve the usefulness of AI-generated output when drafting the 'Key Risks and Mitigants' section of a credit paper for a first-loss guarantee transaction?",
-    "scenario_text": "You are an Underwriter drafting a credit paper for a first-loss guarantee transaction supporting an agri-processing exporter. You have used an EDC-approved AI tool and submitted the following prompt: 'Write the key risks and mitigants for an agri-processing exporter.' The output is generic, lists common risks without prioritisation, and does not reflect the guarantee structure or the borrower's specific profile. You want to revise your prompting approach.",
-    "options": [
-      {
-        "label": "A",
-        "text": "Add role framing, specify the transaction structure (first-loss guarantee), define the output format (e.g., top three risks ranked by severity), and provide abstracted borrower context such as sector, geography, and leverage profile."
-      },
-      {
-        "label": "B",
-        "text": "Ask the AI to 'be more specific' in a follow-up message, since iterative refinement always produces better results than restructuring the original prompt."
-      },
-      {
-        "label": "C",
-        "text": "Include the full credit paper template so the AI understands the required format, even if it contains internal EDC section headings and deal-specific placeholders."
-      },
-      {
-        "label": "D",
-        "text": "Switch to a more powerful AI model, because output quality is primarily determined by model capability rather than prompt structure."
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "uw"
-  },
-  {
-    "item_id": "uw_diag_sp5_sandbox",
-    "domain_id": "strategic_prompting",
-    "item_type": "prompt_sandbox",
-    "display_order": 5,
-    "question_text": "Write a well-structured AI prompt that asks for a comparison of two generic borrower risk profiles for use in an underwriting decision memo. Your prompt should specify the output format, define the analytical lens, and include a constraint on how the AI should handle uncertainty.",
-    "scenario_text": "You are an Underwriter comparing two potential obligors for a medium-term export financing facility. You have abstracted both profiles: Borrower A is a mid-sized logistics company in West Africa with moderate leverage and a concentrated customer base; Borrower B is a larger diversified freight operator in the same region with higher leverage but stronger cash flow coverage. You want to use an EDC-approved AI tool to produce a side-by-side risk comparison to support your recommendation in the decision memo.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Structured output specification",
-          "description": "The prompt explicitly requests a defined output format such as a side-by-side table, ranked list, or structured sections (e.g., credit strengths, key risks, relative recommendation) rather than leaving format open-ended.",
-          "max": 1
-        },
-        {
-          "name": "Analytical lens relevant to underwriting",
-          "description": "The prompt directs the AI to evaluate the profiles through an underwriting-relevant lens (e.g., repayment capacity, concentration risk, leverage, cash flow coverage, sector exposure) rather than requesting a generic business comparison.",
-          "max": 1
-        },
-        {
-          "name": "Abstracted and policy-safe inputs",
-          "description": "The prompt uses only abstracted borrower descriptions with no real names, exact figures, or internal ratings, consistent with responsible AI use in an underwriting context.",
-          "max": 1
-        },
-        {
-          "name": "Uncertainty handling constraint",
-          "description": "The prompt includes an explicit instruction for how the AI should handle gaps or missing data (e.g., 'flag as UNKNOWN,' 'do not assume,' 'note where additional information would be required').",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "uw"
-  },
-  {
     "item_id": "uw_diag_sp6_task",
     "domain_id": "strategic_prompting",
     "item_type": "micro_task",
-    "display_order": 6,
+    "display_order": 2,
     "question_text": "Review the prompt below, which an Underwriter used to draft a covenant analysis section. Identify at least two specific structural weaknesses that reduce the quality of the AI output, and rewrite the prompt to address those weaknesses.",
     "scenario_text": "An Underwriter submitted the following prompt to an EDC-approved AI tool:\n\n---\n\"Analyse the covenants for this deal and tell me if they are appropriate.\"\n---\n\nThe AI returned a two-sentence response stating that covenants are generally important for credit risk management and that leverage and interest coverage ratios are commonly used. The Underwriter found this unhelpful. Diagnose the prompt's weaknesses and produce an improved version.",
     "options": null,
@@ -1371,7 +238,7 @@
     "item_id": "uw_diag_ce7_mcq",
     "domain_id": "critical_eval",
     "item_type": "mcq",
-    "display_order": 7,
+    "display_order": 3,
     "question_text": "An AI tool has generated a financial risk summary for a borrower in the renewable energy sector. Which of the following responses represents the most appropriate underwriter behaviour when reviewing this output before including it in a credit paper?",
     "scenario_text": "You used an EDC-approved AI tool to draft the 'Financial Risk' section of a credit paper for a solar project developer. The AI output states: 'The borrower's debt service coverage ratio of 1.35x is within acceptable range for project finance transactions in this sector, and the leverage profile is consistent with investment-grade issuers.' You do not recall providing the DSCR figure in your prompt, and you know the borrower's actual leverage is higher than investment-grade norms.",
     "options": [
@@ -1400,59 +267,24 @@
     "role_id": "uw"
   },
   {
-    "item_id": "uw_diag_ce8_sandbox",
-    "domain_id": "critical_eval",
-    "item_type": "prompt_sandbox",
-    "display_order": 8,
-    "question_text": "Write an AI prompt that asks the tool to help you critically evaluate a draft 'Repayment Capacity' section of a credit paper. Your prompt should direct the AI to identify logical gaps, unsupported claims, and missing stress-test considerations — not simply to rewrite or improve the prose.",
-    "scenario_text": "You have drafted a 'Repayment Capacity' section for a credit paper covering a mid-market food processing exporter. The section includes a base-case cash flow narrative and a brief mention of commodity price sensitivity. Before submitting the paper for approval, you want to use an EDC-approved AI tool to stress-test the quality of your own analysis — identifying what is missing or weakly supported, rather than generating new content.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Evaluation framing, not generation framing",
-          "description": "The prompt explicitly asks the AI to critique, identify gaps, or flag weaknesses in the provided draft — not to rewrite, improve, or expand the section.",
-          "max": 1
-        },
-        {
-          "name": "Specific analytical criteria for evaluation",
-          "description": "The prompt specifies what dimensions to evaluate against, such as logical consistency, unsupported claims, missing stress scenarios (e.g., commodity price shock, FX sensitivity, customer concentration), or alignment with standard underwriting expectations.",
-          "max": 1
-        },
-        {
-          "name": "Abstracted draft content or representative placeholder",
-          "description": "The prompt includes an abstracted version of the draft section or a clear description of its contents (without non-public identifiers) to give the AI something concrete to evaluate.",
-          "max": 1
-        },
-        {
-          "name": "Constraint on AI behaviour",
-          "description": "The prompt includes a constraint directing the AI not to invent figures, not to assume information not provided, and to clearly distinguish between identified gaps and confirmed weaknesses.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "uw"
-  },
-  {
-    "item_id": "uw_diag_ce9_task",
-    "domain_id": "critical_eval",
+    "item_id": "uw_diag_dd15_task",
+    "domain_id": "data_decision",
     "item_type": "micro_task",
-    "display_order": 9,
-    "question_text": "Read the AI-generated paragraph below, which was produced for the 'Country and Political Risk' section of a credit paper. Identify all factual claims that require independent verification before the paragraph can be used, and explain what source or method an Underwriter should use to verify each.",
-    "scenario_text": "An EDC-approved AI tool produced the following paragraph in response to a prompt about country risk for a transaction in a fictional emerging market:\n\n---\n\"Nordavia has maintained a stable sovereign credit rating of BB+ from major rating agencies over the past three years, reflecting consistent fiscal management and low external debt levels. The country's political risk environment is considered moderate, with no significant expropriation events recorded since 2010. Foreign exchange controls were lifted in 2019, and the central bank maintains a managed float regime. EDC's country risk classification for Nordavia is Category 3.\"\n---\n\nFor each claim that requires verification, name the claim, explain the verification risk, and identify the appropriate source.",
+    "display_order": 4,
+    "question_text": "Review the AI-generated analysis excerpt below, which was produced to support a credit decision. Identify at least two analytical weaknesses or data reasoning errors that an Underwriter should correct before relying on this output, and explain what additional analysis or data would be needed.",
+    "scenario_text": "An Underwriter used an EDC-approved AI tool to analyse an abstracted borrower profile. The AI produced the following excerpt for the 'Financial Assessment' section:\n\n---\n\"The borrower's revenue has grown at an average of 12% per year over the past three years, indicating strong business momentum. The current ratio of 1.8x suggests adequate short-term liquidity. Based on these indicators, the borrower demonstrates a solid financial profile consistent with investment-grade characteristics. The debt service coverage ratio is not provided but is assumed to be sufficient given the revenue growth trend.\"\n---",
     "options": null,
     "correct_option": null,
     "scoring_rubric": {
       "criteria": [
         {
-          "name": "Identification of claims requiring verification",
-          "description": "Identifies at least three distinct claims requiring verification: the sovereign credit rating and its stability, the absence of expropriation events since 2010, the FX control status and exchange rate regime, and the EDC country risk category. Partial credit for identifying two claims.",
+          "name": "Identification of analytical weaknesses",
+          "description": "Identifies at least two specific analytical weaknesses: e.g., revenue growth alone does not indicate creditworthiness without profitability or margin data; 'investment-grade' characterisation is unsupported by the data provided; the DSCR assumption is a hallucinated inference not grounded in any provided figure; the current ratio alone is insufficient to assess liquidity without context on payables, inventory quality, or cash position.",
           "max": 2
         },
         {
-          "name": "Appropriate verification sources",
-          "description": "For each identified claim, names a plausible and appropriate verification source: e.g., rating agency published reports for the sovereign rating; MIGA, Oxford Analytica, or EDC country risk databases for political risk history; central bank publications or IMF Article IV for FX regime; EDC's internal country risk classification system for the EDC category.",
+          "name": "Additional analysis or data requirements",
+          "description": "Identifies what additional data or analysis is needed: e.g., actual DSCR from the financial model, EBITDA margin and net income trends, leverage ratio, cash flow from operations, and sector benchmarks to contextualise the current ratio and growth rate before any creditworthiness conclusion can be drawn.",
           "max": 2
         }
       ]
@@ -1463,7 +295,7 @@
     "item_id": "uw_diag_ri10_mcq",
     "domain_id": "relationship_intel",
     "item_type": "mcq",
-    "display_order": 10,
+    "display_order": 5,
     "question_text": "An Underwriter is preparing for a first meeting with a new financial institution partner to discuss a potential risk-sharing arrangement. Which use of AI is most appropriate for building relationship intelligence ahead of this meeting?",
     "scenario_text": "You are an Underwriter preparing for an introductory meeting with Meridian Trade Finance Bank, a regional bank seeking to co-insure a portfolio of export receivables. You have access to the bank's publicly available annual report, a press release about their recent trade finance expansion, and an internal briefing note from the deal team. You want to use AI to help you prepare.",
     "options": [
@@ -1492,162 +324,10 @@
     "role_id": "uw"
   },
   {
-    "item_id": "uw_diag_ri11_sandbox",
-    "domain_id": "relationship_intel",
-    "item_type": "prompt_sandbox",
-    "display_order": 11,
-    "question_text": "Write an AI prompt that helps you prepare a structured briefing for a relationship review meeting with a financial institution partner. The prompt should use only publicly available or abstracted information and should produce output useful for an underwriting relationship context.",
-    "scenario_text": "You are an Underwriter preparing for an annual relationship review with Castlegate Development Bank, a multilateral lender with whom EDC has co-financed several infrastructure transactions. You have access to the bank's published annual report, their publicly available project pipeline, and a generic description of the co-financing relationship (no deal-specific terms). You want to use an EDC-approved AI tool to help structure your preparation.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Policy-safe inputs",
-          "description": "The prompt uses only publicly available or appropriately abstracted information. No internal deal terms, confidential co-financing arrangements, or non-public EDC relationship data are included.",
-          "max": 1
-        },
-        {
-          "name": "Relevant relationship intelligence framing",
-          "description": "The prompt asks for output that is genuinely useful for an underwriting relationship review, such as the partner's strategic priorities, recent portfolio trends, areas of mandate alignment, or potential topics for discussion.",
-          "max": 1
-        },
-        {
-          "name": "Structured output request",
-          "description": "The prompt specifies a structured output format appropriate for a briefing document, such as key themes, talking points, questions to raise, or a summary of the partner's current focus areas.",
-          "max": 1
-        },
-        {
-          "name": "Appropriate scope constraint",
-          "description": "The prompt includes a constraint that limits the AI to what is known or provided (e.g., 'based only on the information I have described,' 'do not speculate about internal EDC history with this institution').",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "uw"
-  },
-  {
-    "item_id": "uw_diag_ri12_task",
-    "domain_id": "relationship_intel",
-    "item_type": "micro_task",
-    "display_order": 12,
-    "question_text": "An Underwriter used AI to generate the relationship summary below before a meeting with a borrower's bank. Review the summary and identify: (1) any claims that are likely AI-hallucinated or unverifiable, and (2) any information that should not have been included based on responsible AI use principles. Explain your reasoning for each.",
-    "scenario_text": "An Underwriter submitted a prompt asking an AI tool to summarise the relationship between EDC and Harlow Commercial Bank. The AI produced the following:\n\n---\n\"EDC and Harlow Commercial Bank have maintained a co-financing relationship since 2014, with joint participation in at least six infrastructure transactions across Sub-Saharan Africa. In 2021, EDC provided a USD 120 million guarantee on a Harlow-led syndication for a port expansion project in the region. Harlow's current risk appetite for African infrastructure is rated 'moderate-high' by their internal credit committee. The relationship is managed by EDC's Financial Institutions team and is considered strategically important.\"\n---",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Identification of hallucinated or unverifiable claims",
-          "description": "Correctly identifies at least two claims that are likely hallucinated or unverifiable from public sources: e.g., the specific co-financing history since 2014, the number of joint transactions, the USD 120 million guarantee figure and deal details, and Harlow's internal credit committee risk appetite rating.",
-          "max": 2
-        },
-        {
-          "name": "Identification of responsible AI use concerns",
-          "description": "Identifies that the prompt likely caused the AI to generate or reproduce non-public EDC relationship data (deal history, guarantee amounts) that should not be in an AI-generated output, and notes that internal risk appetite characterisations of a third party should not be treated as factual without verification.",
-          "max": 2
-        }
-      ]
-    },
-    "role_id": "uw"
-  },
-  {
-    "item_id": "uw_diag_dd13_mcq",
-    "domain_id": "data_decision",
-    "item_type": "mcq",
-    "display_order": 13,
-    "question_text": "When using an AI tool to support a credit decision on a mid-market borrower, which approach best reflects sound data and decision-making practice for an Underwriter?",
-    "scenario_text": "You are an Underwriter assessing a USD 20 million medium-term loan for Pelican Freight Solutions, a logistics company with three years of audited financials. You have used an EDC-approved AI tool to analyse an abstracted version of the financial profile. The AI output suggests the borrower's leverage is 'within acceptable range' and recommends proceeding to approval. You are aware that the most recent year showed a significant revenue decline that the AI may not have weighted appropriately.",
-    "options": [
-      {
-        "label": "A",
-        "text": "Use the AI output as a starting point, apply your own analytical judgement to the revenue trend, document your independent assessment, and ensure the final recommendation reflects your underwriting analysis rather than the AI's conclusion."
-      },
-      {
-        "label": "B",
-        "text": "Accept the AI recommendation since it is based on a structured analysis of the financial profile and is less susceptible to cognitive bias than human judgement."
-      },
-      {
-        "label": "C",
-        "text": "Reject the AI output entirely and redo the analysis manually, since AI tools are not reliable for quantitative financial assessments."
-      },
-      {
-        "label": "D",
-        "text": "Include the AI's recommendation verbatim in the credit paper to demonstrate that a structured analytical process was followed."
-      }
-    ],
-    "correct_option": "A",
-    "scoring_rubric": {
-      "correct": 4,
-      "incorrect": 0
-    },
-    "role_id": "uw"
-  },
-  {
-    "item_id": "uw_diag_dd14_sandbox",
-    "domain_id": "data_decision",
-    "item_type": "prompt_sandbox",
-    "display_order": 14,
-    "question_text": "Write an AI prompt that asks the tool to help you structure a sensitivity analysis framework for a credit decision involving a commodity-exposed borrower. The prompt should specify the analytical dimensions, output format, and how the AI should handle data gaps.",
-    "scenario_text": "You are an Underwriter assessing a medium-term facility for an abstracted agricultural commodity exporter with significant exposure to cocoa price volatility and USD/local currency exchange rate movements. You want to use an EDC-approved AI tool to help you build a sensitivity analysis framework — not to run the numbers, but to identify the key variables, stress scenarios, and decision thresholds you should test in your own financial model.",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Clear analytical task definition",
-          "description": "The prompt clearly asks for a sensitivity analysis framework (variables, scenarios, thresholds) rather than asking the AI to perform calculations or produce a financial model output.",
-          "max": 1
-        },
-        {
-          "name": "Relevant risk dimensions specified",
-          "description": "The prompt identifies or asks the AI to address the key risk dimensions relevant to a commodity-exposed borrower, such as commodity price scenarios, FX stress, volume/offtake risk, or margin compression.",
-          "max": 1
-        },
-        {
-          "name": "Structured output format requested",
-          "description": "The prompt requests a structured output such as a table of variables and stress ranges, a tiered scenario framework (base/downside/severe), or a checklist of decision thresholds — not a narrative paragraph.",
-          "max": 1
-        },
-        {
-          "name": "Data gap and uncertainty handling",
-          "description": "The prompt instructs the AI to flag where additional borrower-specific data would be needed to complete the framework, rather than filling gaps with generic assumptions.",
-          "max": 1
-        }
-      ]
-    },
-    "role_id": "uw"
-  },
-  {
-    "item_id": "uw_diag_dd15_task",
-    "domain_id": "data_decision",
-    "item_type": "micro_task",
-    "display_order": 15,
-    "question_text": "Review the AI-generated analysis excerpt below, which was produced to support a credit decision. Identify at least two analytical weaknesses or data reasoning errors that an Underwriter should correct before relying on this output, and explain what additional analysis or data would be needed.",
-    "scenario_text": "An Underwriter used an EDC-approved AI tool to analyse an abstracted borrower profile. The AI produced the following excerpt for the 'Financial Assessment' section:\n\n---\n\"The borrower's revenue has grown at an average of 12% per year over the past three years, indicating strong business momentum. The current ratio of 1.8x suggests adequate short-term liquidity. Based on these indicators, the borrower demonstrates a solid financial profile consistent with investment-grade characteristics. The debt service coverage ratio is not provided but is assumed to be sufficient given the revenue growth trend.\"\n---",
-    "options": null,
-    "correct_option": null,
-    "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Identification of analytical weaknesses",
-          "description": "Identifies at least two specific analytical weaknesses: e.g., revenue growth alone does not indicate creditworthiness without profitability or margin data; 'investment-grade' characterisation is unsupported by the data provided; the DSCR assumption is a hallucinated inference not grounded in any provided figure; the current ratio alone is insufficient to assess liquidity without context on payables, inventory quality, or cash position.",
-          "max": 2
-        },
-        {
-          "name": "Additional analysis or data requirements",
-          "description": "Identifies what additional data or analysis is needed: e.g., actual DSCR from the financial model, EBITDA margin and net income trends, leverage ratio, cash flow from operations, and sector benchmarks to contextualise the current ratio and growth rate before any creditworthiness conclusion can be drawn.",
-          "max": 2
-        }
-      ]
-    },
-    "role_id": "uw"
-  },
-  {
     "item_id": "uw_diag_ac16_mcq",
     "domain_id": "augmented_comm",
     "item_type": "mcq",
-    "display_order": 16,
+    "display_order": 6,
     "question_text": "An Underwriter has used an AI tool to draft a section of a credit paper. Which of the following practices best reflects responsible and effective use of AI-augmented communication in this context?",
     "scenario_text": "You have used an EDC-approved AI tool to draft the 'Transaction Overview' section of a credit paper for a structured trade finance deal. The AI-generated draft is well-written and covers the main structural elements. However, you notice it uses generic language about the guarantee structure that does not accurately reflect the specific risk-sharing arrangement in this deal, and it omits the rationale for EDC's involvement.",
     "options": [
@@ -1676,63 +356,196 @@
     "role_id": "uw"
   },
   {
-    "item_id": "uw_diag_ac17_sandbox",
-    "domain_id": "augmented_comm",
-    "item_type": "prompt_sandbox",
-    "display_order": 17,
-    "question_text": "Write an AI prompt that asks the tool to help you draft an executive summary for a credit paper covering a medium-term export financing transaction. The prompt should specify the audience, tone, required content elements, and length, using only abstracted transaction details.",
-    "scenario_text": "You are an Underwriter finalising a credit paper for a medium-term export financing facility supporting a capital equipment exporter. The transaction involves a partial guarantee structure, a borrower with moderate leverage in a cyclical sector, and a first-time EDC relationship. You want to use an EDC-approved AI tool to draft the executive summary, which will be read by a senior credit committee. You have abstracted all transaction details.",
-    "options": null,
-    "correct_option": null,
+    "item_id": "an_diag_ra1_mcq",
+    "domain_id": "responsible_ai",
+    "item_type": "mcq",
+    "display_order": 1,
+    "question_text": "Which of the following inputs is safe to include verbatim in a Copilot prompt without any abstraction or modification?",
+    "scenario_text": "You are an Analyst preparing a sector overview for a client briefing. You have several documents on your desk: an internal credit risk rating memo for a corporate client, a published annual report from a publicly listed company, a draft strategy document from your team, and a third-party embargoed research report. You need to use Copilot to help synthesise background information.",
+    "options": [
+      {
+        "label": "A",
+        "text": "The published annual report of the publicly listed company, sourced from its investor relations website."
+      },
+      {
+        "label": "B",
+        "text": "The internal credit risk rating memo, because it is already stored in your organisation's secure drive."
+      },
+      {
+        "label": "C",
+        "text": "The embargoed third-party research report, because it contains sector-level data rather than client-specific data."
+      },
+      {
+        "label": "D",
+        "text": "The draft strategy document, because it has not yet been formally classified as confidential."
+      }
+    ],
+    "correct_option": "A",
     "scoring_rubric": {
-      "criteria": [
-        {
-          "name": "Audience and tone specification",
-          "description": "The prompt explicitly identifies the intended audience (senior credit committee or equivalent) and specifies an appropriate tone (e.g., concise, analytical, decision-focused) rather than leaving these implicit.",
-          "max": 1
-        },
-        {
-          "name": "Required content elements defined",
-          "description": "The prompt specifies the key content elements the executive summary must include, such as transaction purpose, borrower profile, risk summary, guarantee structure rationale, and recommendation — relevant to an underwriting credit paper.",
-          "max": 1
-        },
-        {
-          "name": "Length or format constraint",
-          "description": "The prompt includes a length or format constraint appropriate for an executive summary (e.g., maximum word count, number of paragraphs, or bullet-point structure) to prevent an overly long or unstructured output.",
-          "max": 1
-        },
-        {
-          "name": "Abstracted and policy-safe inputs",
-          "description": "The prompt uses only abstracted transaction details (no client names, exact figures, or deal-identifying terms) and does not include any non-public EDC information.",
-          "max": 1
-        }
-      ]
+      "correct": 4,
+      "incorrect": 0
     },
-    "role_id": "uw"
+    "role_id": "an"
   },
   {
-    "item_id": "uw_diag_ac18_task",
-    "domain_id": "augmented_comm",
+    "item_id": "an_diag_sp6_task",
+    "domain_id": "strategic_prompting",
     "item_type": "micro_task",
-    "display_order": 18,
-    "question_text": "Review the AI-generated executive summary paragraph below, which was drafted for a credit paper. Identify all communication quality issues — including tone, accuracy risks, missing underwriting content, and structural problems — and rewrite the paragraph to address them.",
-    "scenario_text": "An Underwriter used an EDC-approved AI tool to draft the opening paragraph of an executive summary for a credit paper. The intended audience is a senior credit committee. The AI produced the following:\n\n---\n\"This is an exciting opportunity for EDC to support a dynamic and fast-growing company in the renewable energy space. The borrower has demonstrated impressive revenue growth and is well-positioned to benefit from the global energy transition. EDC's participation will provide meaningful support to the borrower's expansion plans and strengthen the bilateral trade relationship. The transaction is recommended for approval.\"\n---",
+    "display_order": 2,
+    "question_text": "Review the Copilot prompt below. Identify its weaknesses as a strategic prompt, then rewrite it to be significantly more effective for the analyst's stated purpose.",
+    "scenario_text": "An Analyst at Northgate Advisory submitted this Copilot prompt to help prepare for a client meeting:\n\n---\n\"Tell me about the mining sector.\"\n---\n\nThe analyst's actual goal was to prepare a five-minute verbal briefing for a relationship manager who is meeting a mid-sized copper mining company to discuss potential export financing. The briefing should cover current commodity price trends, key operational risks, and one or two talking points relevant to export financing conversations.",
     "options": null,
     "correct_option": null,
     "scoring_rubric": {
       "criteria": [
         {
-          "name": "Identification of communication quality issues",
-          "description": "Identifies at least three specific issues: inappropriate promotional/marketing tone ('exciting,' 'dynamic,' 'impressive') unsuitable for a credit committee; absence of any risk content or mitigants; unsupported recommendation with no analytical basis stated; vague claims ('meaningful support,' 'well-positioned') that lack underwriting substance; and missing structural elements such as transaction type, borrower profile, and guarantee rationale.",
-          "max": 2
+          "name": "Weakness diagnosis",
+          "description": "Correctly identifies at least two weaknesses in the original prompt: it is too broad/vague, specifies no audience or purpose, defines no output format, and provides no analytical focus or scope.",
+          "max": 1
         },
         {
-          "name": "Quality of rewritten paragraph",
-          "description": "The rewritten paragraph uses a neutral, analytical tone appropriate for a senior credit committee; includes abstracted but substantive content covering transaction purpose, borrower profile, key risk considerations, and the basis for the recommendation; and avoids promotional language, unsupported claims, and missing structural elements.",
-          "max": 2
+          "name": "Role and context added",
+          "description": "The rewritten prompt specifies a role for Copilot and provides relevant context (e.g., preparing a verbal briefing for a relationship manager meeting a copper mining company to discuss export financing).",
+          "max": 1
+        },
+        {
+          "name": "Format and scope defined",
+          "description": "The rewritten prompt specifies the output format (e.g., a concise verbal briefing outline or bullet points) and scope (e.g., commodity price trends, operational risks, export financing talking points).",
+          "max": 1
+        },
+        {
+          "name": "Overall improvement in strategic quality",
+          "description": "The rewritten prompt is substantially more likely to produce a useful, targeted output than the original — it is specific, purposeful, and calibrated to the analyst's actual workflow need.",
+          "max": 1
         }
       ]
     },
-    "role_id": "uw"
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ce7_mcq",
+    "domain_id": "critical_eval",
+    "item_type": "mcq",
+    "display_order": 3,
+    "question_text": "An Analyst uses Copilot to generate a summary of financial risk indicators for a sector report. Which action best reflects critical evaluation of the AI output before it is used in a client-facing document?",
+    "scenario_text": "You are an Analyst at Harlow Financial Group. You used Copilot to generate a paragraph summarising key financial risk indicators for the commercial real estate sector. The output reads fluently and cites what appear to be specific statistics (e.g., 'vacancy rates rose to 18.4% in Q2' and 'debt-service coverage ratios fell below 1.2x for 34% of loans'). You are about to paste this paragraph into a sector briefing note that will be shared with clients.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Verify the specific statistics against the original source documents or authoritative databases before including them, and flag any figures that cannot be confirmed."
+      },
+      {
+        "label": "B",
+        "text": "Accept the output as accurate because Copilot is connected to organisational data and would not fabricate statistics."
+      },
+      {
+        "label": "C",
+        "text": "Lightly edit the paragraph for tone and include it, since the figures are plausible and consistent with general market knowledge."
+      },
+      {
+        "label": "D",
+        "text": "Ask Copilot to regenerate the paragraph twice more and use the version that appears most consistent across the three outputs."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_dd15_task",
+    "domain_id": "data_decision",
+    "item_type": "micro_task",
+    "display_order": 4,
+    "question_text": "Review the AI-generated data interpretation below. Identify any analytical errors, unsupported conclusions, or data reasoning problems, and explain what the analyst should do before using this output in a portfolio review.",
+    "scenario_text": "An Analyst asked Copilot to analyse five years of EBITDA margin data for 40 industrial manufacturers. Copilot returned the following interpretation:\n\n---\n'Analysis of the dataset shows that EBITDA margins across the sector have improved steadily by an average of 2.3 percentage points per year over the five-year period. This confirms that the industrial manufacturing sector is in a strong growth phase and presents low credit risk overall. Three companies — Ferrotek Industries, Caldwell Precision, and Morrow Components — show margins significantly below the sector average and should be immediately flagged as high credit risk and removed from the portfolio. The trend is consistent and unlikely to reverse given current macroeconomic conditions.'\n---\n\nYour task: Identify all analytical and reasoning problems in this output, and specify what steps the analyst should take before acting on these findings.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Analytical errors identified",
+          "description": "Identifies at least two analytical errors: (1) conflating EBITDA margin improvement with 'low credit risk overall' — margin is one indicator, not a complete credit assessment; (2) the conclusion that below-average margin alone justifies 'high credit risk' and immediate portfolio removal is an unsupported leap; (3) the forward-looking claim about macroeconomic conditions is speculative and unsourced.",
+          "max": 2
+        },
+        {
+          "name": "Reasoning problems flagged",
+          "description": "Flags that Copilot has made a definitive recommendation (remove companies from portfolio) that exceeds its appropriate role — AI should surface patterns for analyst review, not make portfolio decisions — and that the output presents speculation as certainty.",
+          "max": 1
+        },
+        {
+          "name": "Corrective analyst steps specified",
+          "description": "Specifies at least two concrete steps the analyst should take before acting: e.g., verify the 2.3pp average figure against the raw data, conduct a fuller credit assessment of the three flagged companies using multiple indicators, and treat the macroeconomic claim as unverified.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ri10_mcq",
+    "domain_id": "relationship_intel",
+    "item_type": "mcq",
+    "display_order": 5,
+    "question_text": "An Analyst is asked to use AI to help prepare a relationship intelligence briefing ahead of a client meeting. Which approach best demonstrates responsible and effective use of AI for this task?",
+    "scenario_text": "You are an Analyst at Harlow Financial Group supporting a relationship manager who has a first meeting next week with Solaris Packaging Inc., a mid-sized manufacturer. The relationship manager wants a briefing note covering the company's recent business developments, key decision-makers, and any publicly known strategic priorities. You have access to Copilot and a range of public sources.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Use Copilot to synthesise publicly available information (press releases, news articles, published financials) into a structured briefing note, then verify key facts and add analyst commentary before sharing with the relationship manager."
+      },
+      {
+        "label": "B",
+        "text": "Export the client's CRM interaction history and financial exposure data into Copilot to generate a comprehensive briefing that includes internal relationship notes."
+      },
+      {
+        "label": "C",
+        "text": "Ask Copilot to generate a full briefing note from memory without providing any source documents, since it has broad knowledge of business and industry."
+      },
+      {
+        "label": "D",
+        "text": "Use Copilot only to format and proofread a briefing note you have already written manually, since AI should not be involved in relationship intelligence tasks."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "an"
+  },
+  {
+    "item_id": "an_diag_ac16_mcq",
+    "domain_id": "augmented_comm",
+    "item_type": "mcq",
+    "display_order": 6,
+    "question_text": "An Analyst uses Copilot to draft a client-facing briefing note. Which approach best reflects responsible and effective use of AI for professional communication?",
+    "scenario_text": "You are an Analyst at Northgate Advisory. Your director has asked you to produce a two-page briefing note for a corporate client summarising recent developments in the global shipping and logistics sector. You use Copilot to generate a first draft based on publicly available sources. The draft is well-structured and reads fluently, but you have not yet reviewed it in detail.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Review the draft carefully for factual accuracy, tone appropriateness, and any claims that need verification or caveating, then edit and personalise it before sending to the client."
+      },
+      {
+        "label": "B",
+        "text": "Send the Copilot draft directly to the client, since it is based on public sources and reads professionally."
+      },
+      {
+        "label": "C",
+        "text": "Ask Copilot to review its own draft for errors and send the revised version without further analyst review."
+      },
+      {
+        "label": "D",
+        "text": "Discard the Copilot draft and write the briefing note entirely from scratch to ensure full ownership of the content."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "an"
   }
 ]

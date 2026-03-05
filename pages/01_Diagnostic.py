@@ -1,6 +1,6 @@
 """
-Diagnostic page — 18-question assessment (3 per domain × 6 domains).
-Supports MCQ, prompt_sandbox, and micro_task item types.
+Diagnostic page — 6-question assessment (1 per domain × 6 domains).
+Supports MCQ and micro_task item types.
 No partial saves. On completion, triggers AI scoring + gap map generation.
 """
 
