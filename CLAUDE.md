@@ -55,7 +55,7 @@ databricks auth login --profile dev
 
 **AI Hero Academy** is an internal Databricks App that evaluates, trains, and benchmarks employees on AI skills through real-life, job-specific scenarios and AI coaching powered by Mosaic AI Foundation Models.
 
-The app implements a four-stage learning loop: Diagnose → Map Gaps → Train → Score & Track. **Relationship Manager (RM)** is fully live. **Underwriter (UW)** content is generated and loaded; the Welcome page role selector (Task 9.4) is the remaining blocker before UW users can onboard.
+The app implements a four-stage learning loop: Diagnose → Map Gaps → Train → Score & Track. Three roles are fully generated and live: **Relationship Manager (RM)**, **Underwriter (UW)**, and **Analyst (AN)**. All three use the **6-domain hexagon model** (`responsible_ai`, `strategic_prompting`, `critical_eval`, `relationship_intel`, `data_decision`, `augmented_comm`) with 7 courses and 18 diagnostic items per role (3 per domain).
 
 ## Technology Stack
 
@@ -119,7 +119,7 @@ Two Unity Catalog schemas:
 
 - `content/roles.json` — role definitions (rm, uw)
 - `content/domains.json` — skill domains with level descriptors; top-level keys are role-scoped (e.g. `rm_prompting`, `uw_prompting`)
-- `content/diagnostic_items.json` — 24 items (12 RM + 12 UW); 3 per domain per role
+- `content/diagnostic_items.json` — 54 items (18 RM + 18 UW + 18 AN); 3 per domain per role (1 MCQ + 1 prompt_sandbox + 1 micro_task)
 - `content/courses.json` — 10 courses (5 RM + 5 UW); mapped to domains via `primary_domain`
 - `content/reading_content.json` — reading material per course
 - `content/practice_scenarios.json` — scenario text, 4 tasks, and coach system prompt per course
@@ -239,3 +239,4 @@ Example: hiding auto-generated sidebar navigation is done via `.streamlit/config
 
 - **2026-02** — Attempted to query `mdlg_ai_shared.content.*` tables after they were retired; app errored at runtime. **Rule**: always use `utils/content.py` getters for static content; never write raw SQL against `content.*`.
 - **2026-02** — UI/UX fixes fought internal `data-testid` CSS selectors that broke across Streamlit versions. **Rule**: always look up the current Streamlit API via Context7 before any UI change.
+- **2026-03** — UW design doc (85KB) caused Stage 1 JSON parse failure in `generate_course_content.py` due to 19KB of embedded Copilot/SharePoint URLs that produced malformed LLM-generated JSON. **Rule**: always strip URLs from design docs before running the pipeline. Use `re.sub(r'\]\(https?://[^)]+\)', ']', text)` — strips the URL while keeping the display text. Target size is ~60–65KB.

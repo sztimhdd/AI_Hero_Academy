@@ -292,17 +292,17 @@ All content lives in `content/` at the project root and is loaded by `utils/cont
 
 | File | Key structure | Counts |
 |------|---------------|--------|
-| `content/roles.json` | `{role_id: {...}}` | 2 roles (rm, uw) |
-| `content/domains.json` | `{rm_prompting: {...}, uw_prompting: {...}, ...}` | 8 entries (4 per role); role-scoped top-level keys |
-| `content/diagnostic_items.json` | `[{item_id, role_id, domain_id, ...}]` | 24 items (12 RM + 12 UW); ordered by `display_order` |
-| `content/courses.json` | `{course_id: {...}}` | 10 courses (5 RM + 5 UW); keyed by `course_id` |
-| `content/reading_content.json` | `{course_id: {...}}` | 10 entries (1 per course) |
-| `content/practice_scenarios.json` | `{course_id: {...}}` | 10 entries; includes `task_1_text`–`task_4_text` + `coach_system_prompt` |
-| `content/evaluation_items.json` | `{course_id: [{...}]}` | 10 × 4 = 40 items |
+| `content/roles.json` | `{role_id: {...}}` | 3 roles (rm, uw, an) |
+| `content/domains.json` | `{rm_responsible_ai: {...}, uw_responsible_ai: {...}, ...}` | 18 entries (6 per role); role-scoped top-level keys |
+| `content/diagnostic_items.json` | `[{item_id, role_id, domain_id, ...}]` | 54 items (18 RM + 18 UW + 18 AN); 3 per domain (MCQ + prompt_sandbox + micro_task); ordered by `display_order` |
+| `content/courses.json` | `{course_id: {...}}` | 21 courses (7 RM + 7 UW + 7 AN); keyed by `course_id` |
+| `content/reading_content.json` | `{course_id: {...}}` | 21 entries (1 per course) |
+| `content/practice_scenarios.json` | `{course_id: {...}}` | 21 entries; includes `task_1_text`–`task_4_text` + `coach_system_prompt` |
+| `content/evaluation_items.json` | `{course_id: [{...}]}` | 21 × 4 = 84 items |
 
-**`domains.json` key format**: top-level keys are role-scoped (`rm_prompting`, `uw_prompting`, etc.); each entry has a `domain_id` field with the flat key (`prompting`). `utils/content.py` exposes `get_domain(domain_id, role_id)` and `get_domain_descriptions(role_id)` that filter by `role_id` field value.
+**`domains.json` key format**: top-level keys are role-scoped (`rm_responsible_ai`, `uw_responsible_ai`, `an_responsible_ai`, etc.); each entry has a `domain_id` field with the flat key (`responsible_ai`). `utils/content.py` exposes `get_domain(domain_id, role_id)` and `get_domain_descriptions(role_id)` that filter by `role_id` field value.
 
-> **Phase 12 (March 2026):** The content pipeline has been extended to a 6-domain platform architecture for new role content generation. New roles will use domain IDs: `responsible_ai`, `strategic_prompting`, `critical_eval`, `relationship_intel`, `data_decision`, `augmented_comm`. The existing RM and UW JSON files above remain unchanged (4-domain model) and are fully backward compatible.
+> **Phase 12 (March 2026):** All three roles (RM, UW, AN) use the 6-domain hexagon architecture: `responsible_ai`, `strategic_prompting`, `critical_eval`, `relationship_intel`, `data_decision`, `augmented_comm`. The legacy 4-domain model (`prompting`, `verification`, `data_safety`, `tool_fluency`) is no longer in active use.
 
 ### 4.2 Content Loader (`utils/content.py`)
 
@@ -342,10 +342,10 @@ After deploying the app, verify content loaded correctly by checking:
 
 ```python
 from utils.content import DIAGNOSTIC_ITEMS, COURSES, EVAL_ITEMS, ROLES
-assert len(ROLES) == 2                             # rm + uw
-assert len(DIAGNOSTIC_ITEMS) == 24                 # 12 RM + 12 UW
-assert len(COURSES) == 10                          # 5 RM + 5 UW
-assert len(EVAL_ITEMS["rm_c1_prompting"]) == 4     # 4 items per course
+assert len(ROLES) == 3                             # rm + uw + an
+assert len(DIAGNOSTIC_ITEMS) == 54                 # 18 RM + 18 UW + 18 AN
+assert len(COURSES) == 21                          # 7 RM + 7 UW + 7 AN
+assert len(EVAL_ITEMS["rm_c1_responsible_ai"]) == 4  # 4 items per course
 ```
 
 ---
@@ -669,28 +669,43 @@ Run once after the user clicks "Build My Training Course". Creates 5 rows in `le
 
 ```python
 DOMAIN_TO_COURSE = {
+    # All roles use the 6-domain hexagon model (Phase 12, March 2026).
+    # Course IDs follow the pattern {role}_c{N}_{domain_slug}.
     "rm": {
-        "prompting":    "rm_c1_prompting",
-        "verification": "rm_c2_verification",
-        "data_safety":  "rm_c3_data_safety",
-        "tool_fluency": "rm_c4_tool_fluency",
+        "responsible_ai":      "rm_c1_responsible_ai",
+        "strategic_prompting": "rm_c2_strategic_prompting",
+        "critical_eval":       "rm_c3_critical_eval",
+        "relationship_intel":  "rm_c4_relationship_intel",
+        "data_decision":       "rm_c5_data_decision",
+        "augmented_comm":      "rm_c6_augmented_comm",
     },
     "uw": {
-        "prompting":    "uw_c1_prompting",
-        "verification": "uw_c2_verification",
-        "data_safety":  "uw_c3_data_safety",
-        "tool_fluency": "uw_c4_tool_fluency",
+        "responsible_ai":      "uw_c1_responsible_ai",
+        "strategic_prompting": "uw_c2_strategic_prompting",
+        "critical_eval":       "uw_c3_critical_eval",
+        "relationship_intel":  "uw_c4_relationship_intel",
+        "data_decision":       "uw_c5_data_decision",
+        "augmented_comm":      "uw_c6_augmented_comm",
+    },
+    "an": {
+        "responsible_ai":      "an_c1_responsible_ai",
+        "strategic_prompting": "an_c2_strategic_prompting",
+        "critical_eval":       "an_c3_critical_eval",
+        "relationship_intel":  "an_c4_relationship_intel",
+        "data_decision":       "an_c5_data_decision",
+        "augmented_comm":      "an_c6_augmented_comm",
     },
 }
-CAPSTONE_COURSE_ID = {"rm": "rm_c5_capstone", "uw": "uw_c5_capstone"}
-# Phase 12: new roles generated via 6-domain pipeline will extend DOMAIN_TO_COURSE with
-# keys: responsible_ai, strategic_prompting, critical_eval, relationship_intel,
-# data_decision, augmented_comm — all following the same course_id naming convention.
+CAPSTONE_COURSE_ID = {
+    "rm": "rm_c7_capstone",
+    "uw": "uw_c7_capstone",
+    "an": "an_c7_capstone",
+}
 
 def compute_module_sequence(domain_scores: dict, role_id: str = "rm") -> list[str]:
     """
-    domain_scores: {"prompting": 2.0, "verification": 0.8, ...}
-    role_id: "rm" or "uw"
+    domain_scores: {"responsible_ai": 2.0, "strategic_prompting": 0.8, ...}
+    role_id: "rm", "uw", or "an"
     Returns: list of course_ids in personalised order (index 0 = module 1).
     """
     domain_to_course = DOMAIN_TO_COURSE.get(role_id, DOMAIN_TO_COURSE["rm"])

@@ -528,12 +528,50 @@ WHERE user_email = 'uat-test@edc.ca'
 
 ---
 
+### UAT-14: AN Role Smoke Test — Welcome and Diagnostic Start
+
+**Purpose:** Verify that the Analyst role is selectable from the Welcome page and that an AN user can begin the diagnostic flow.
+
+**Pre-conditions:** Run `python scripts/reset_uat_user.py` to wipe the test user before this scenario.
+
+> **Note on test user email:** Reset the user between UAT-13 and UAT-14. The AN smoke test will overwrite the UW user data for the same email.
+
+**Steps:**
+
+1. Run `python scripts/reset_uat_user.py` to reset test user data
+2. Navigate to `http://localhost:8501`
+3. Assert: The Welcome page loads (no redirect to another page)
+4. Assert: "AI Hero Academy" text is visible
+5. Locate the role selector dropdown and open it (click or snapshot to reveal options)
+6. Assert: **"Analyst"** is present as a selectable option in the dropdown
+7. Select "Analyst" from the dropdown
+8. Assert: The CTA button ("Start My Diagnostic") becomes enabled
+9. Clear the display name field and type: `UAT Tester AN`
+10. Click "Start My Diagnostic"
+11. Assert: The Diagnostic page loads (question counter or orientation screen visible)
+12. If on an orientation screen, click through to begin
+13. Assert: Question 1 is visible with a domain label/tag
+14. Note the domain label — it should reflect an AN domain (same 6 domain IDs as RM and UW)
+15. Answer Question 1 (select any radio option or type a short response)
+16. Assert: Question 2 loads successfully (confirms AN diagnostic flow is functional)
+
+**Delta Check — Verify AN profile was created:**
+```sql
+SELECT user_email, role_id, display_name
+FROM mdlg_ai_shared.learner.user_profiles
+WHERE user_email = 'uat-test@edc.ca'
+```
+✅ Expected: 1 row with `role_id = 'an'` and `display_name = 'UAT Tester AN'`
+
+---
+
 ## 4. Pass/Fail Criteria
 
 ### PASS — All of the following must be true:
 
 - [ ] UAT-01 through UAT-12 completed without unhandled Python exceptions or error messages on the happy path
 - [ ] UAT-13 UW smoke test confirms "Underwriter" is in the role selector
+- [ ] UAT-14 AN smoke test confirms "Analyst" is in the role selector
 - [ ] All Delta checks returned the expected row counts and non-null timestamps
 - [ ] Module 2 `is_locked = false` after Module 1 evaluation completes (UAT-08 Delta check)
 - [ ] No Streamlit error box (red `st.error`) appeared for a system-level error during normal usage
@@ -545,6 +583,7 @@ WHERE user_email = 'uat-test@edc.ca'
 - [ ] A loading state (Analyzing / Scoring / Building) does not resolve within the stated timeout
 - [ ] Module 2 remains locked (`is_locked = true`) after Module 1 evaluation completes
 - [ ] "Underwriter" is missing from the Welcome page role selector dropdown
+- [ ] "Analyst" is missing from the Welcome page role selector dropdown
 - [ ] Navigating away from a partial retake diagnostic wipes completed module progress
 
 ---
@@ -601,7 +640,7 @@ Confirm your testing environment:
 
 EXECUTION RULES:
 - Read UAT.md Section 1 (Agent Instructions) carefully before touching the browser
-- Execute scenarios UAT-01 through UAT-13 in order
+- Execute scenarios UAT-01 through UAT-14 in order
 - For every browser interaction: snapshot first → get ref → click/type using ref → wait for rerender
 - After every click that triggers a page change or AI call, call browser_wait_for before proceeding
 - Run every Delta Check SQL query listed after each scenario using execute_sql
@@ -609,6 +648,8 @@ EXECUTION RULES:
   then continue to the next scenario unless it is a hard dependency (noted in pre-conditions)
 - Do NOT assert specific AI-generated text — only assert UI state transitions and structural elements
 - UAT-13 requires resetting the test user first — run python scripts/reset_uat_user.py via Bash
+  before navigating to the Welcome page for that scenario
+- UAT-14 also requires resetting the test user first — run python scripts/reset_uat_user.py via Bash
   before navigating to the Welcome page for that scenario
 - Put all screenshots and logs in the previously created folder under /tests folder in the project root folder.
 
@@ -645,6 +686,7 @@ UAT-10: PASS / FAIL — notes
 UAT-11: PASS / FAIL — notes
 UAT-12: PASS / FAIL — notes
 UAT-13: PASS / FAIL — notes
+UAT-14: PASS / FAIL — notes
 
 OVERALL RESULT: PASS / FAIL
 

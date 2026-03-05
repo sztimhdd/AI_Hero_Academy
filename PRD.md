@@ -150,10 +150,11 @@ Key characteristics relevant to training design:
 
 3.2.1 UNDERWRITER (UW) — COMPLETE (March 2026)
 
-  All UW content has been generated and is loaded into the app:
-  12 diagnostic items (3 per domain), 5 training courses with
-  reading content, practice scenarios, and evaluation items.
-  The diagnostic and course module flows are fully multi-role aware.
+  All UW content has been generated via the 6-domain hexagon pipeline
+  and is loaded into the app: 18 diagnostic items (3 per domain across
+  6 domains), 7 training courses with reading content, practice
+  scenarios, and evaluation items. The diagnostic and course module
+  flows are fully multi-role aware.
 
   Welcome page role selection is fully wired (Task 9.4 complete).
   UW users can now onboard — the role selector displays both
@@ -162,12 +163,22 @@ Key characteristics relevant to training design:
   Full end-to-end UW learner journey validated in UAT-13 (2026-03-04,
   commit a311052). All 13/13 UAT scenarios passed.
 
-3.2.2 OTHER ROLES (Post-MVP)
+3.2.2 ANALYST (AN) — COMPLETE (March 2026)
+
+  All AN content has been generated via the 6-domain hexagon pipeline
+  and is loaded into the app: 18 diagnostic items (3 per domain across
+  6 domains), 7 training courses with reading content, practice
+  scenarios, and evaluation items.
+
+  Uses the same 6-domain model as UW: responsible_ai,
+  strategic_prompting, critical_eval, relationship_intel,
+  data_decision, augmented_comm.
+
+3.2.3 OTHER ROLES (Post-MVP)
 
   The following roles are planned for future versions but remain
-  explicitly out of scope until after the UW role is validated:
+  explicitly out of scope:
 
-  - Finance Analysts
   - Customer Care Team
   - IT / DevOps
   - Legal / Compliance
@@ -194,13 +205,15 @@ the organization's actual use cases and policies.
 
   DIMENSION              MVP SCOPE
   ---------------------  ------------------------------------------------
-  Roles supported        2 (Relationship Manager, Underwriter)
-  Skill domains          4 (Prompting, Verification, Data Safety,
-                         Tool Fluency)
+  Roles supported        3 (Relationship Manager, Underwriter, Analyst)
+  Skill domains          6 per role (responsible_ai, strategic_prompting,
+                         critical_eval, relationship_intel, data_decision,
+                         augmented_comm)
   Skill levels           0-4 scale per domain
   Skill tiers            1 (Foundations only)
-  Diagnostic             12 items (3 per domain, mixed item types)
-  Training courses       5 (mapped to top RM use cases)
+  Diagnostic             18 items per role (3 per domain, mixed item
+                         types: MCQ + prompt_sandbox + micro_task)
+  Training courses       7 per role (6 domain courses + 1 capstone)
   Course structure       Reading then Hands-on Practice with AI Coach
                          then Post-module Evaluation
   Modules per course     3 sub-modules (reading, practice, evaluation)
@@ -737,12 +750,41 @@ sub-module the user is in.
 8.1 DOMAINS
 -------------
 
-  NOTE (March 2026): The platform has been extended to a 6-domain
-  architecture for new role content generation (Phase 12 — Hexagon
-  Domain Refactor). New roles use: responsible_ai, strategic_prompting,
+  NOTE (March 2026): The platform uses a 6-domain hexagon architecture
+  for all role content (Phase 12 — Hexagon Domain Refactor). All three
+  roles (RM, UW, AN) use: responsible_ai, strategic_prompting,
   critical_eval, relationship_intel, data_decision, augmented_comm.
-  Existing RM and UW content retains the original 4-domain model below
-  and remains fully functional.
+  The legacy 4-domain model below (Prompting, Verification, Data Safety,
+  Tool Fluency) is documented for historical reference only; active
+  content uses the 6-domain model exclusively.
+
+  6-DOMAIN HEXAGON MODEL (active):
+
+  DOMAIN 1: RESPONSIBLE AI
+    Recognising safe and unsafe AI use patterns, applying GenAI policy,
+    understanding guardrails and compliance boundaries.
+
+  DOMAIN 2: STRATEGIC PROMPTING
+    Writing and improving prompts with context, constraints, format, and
+    audience specifications to produce high-quality work outputs.
+
+  DOMAIN 3: CRITICAL EVALUATION
+    Evaluating AI outputs for accuracy, detecting hallucinations,
+    identifying unsupported claims, applying human review discipline.
+
+  DOMAIN 4: RELATIONSHIP INTELLIGENCE
+    AI-assisted client or stakeholder preparation, decision support,
+    and relationship management workflows.
+
+  DOMAIN 5: DATA DECISION
+    Interpreting AI-generated data insights, validating outputs against
+    source data, and acting on findings appropriately.
+
+  DOMAIN 6: AUGMENTED COMMUNICATION
+    Selecting the right AI tool for the task, executing AI-assisted
+    communication workflows, and record governance.
+
+  LEGACY 4-DOMAIN MODEL (historical reference):
 
   DOMAIN 1: PROMPTING FOR OUTCOMES
     Structuring AI prompts with context, constraints, format, and
@@ -843,14 +885,14 @@ sub-module the user is in.
 ---------------------------------------------------
 
   - Domain definitions and level descriptors
-  - Role profile (RM)
-  - Use case library (47 use cases, 5 mapped to RM)
-  - Diagnostic items (12 items)
-  - Training courses (5 courses):
+  - Role profiles (RM, UW, AN)
+  - Use case library mapped per role
+  - Diagnostic items (54 total: 18 per role × 3 roles; 3 per domain)
+  - Training courses (21 total: 7 per role × 3 roles):
     - Reading content (1 per course)
     - Practice scenarios with tasks (1 scenario with 4 tasks per course)
     - Practice coach system prompts (1 per course)
-    - Evaluation items (4 per course, 20 total)
+    - Evaluation items (4 per course, 28 per role, 84 total)
     - Scoring rubrics (per evaluation item)
 
 9.2 DYNAMIC CONTENT (personalized per employee, AI-generated)
