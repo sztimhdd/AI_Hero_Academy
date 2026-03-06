@@ -348,13 +348,8 @@ elif active_sub == "reading":
     elif "reading_section_ctrl" not in st.session_state:
         st.session_state["reading_section_ctrl"] = _SECTION_LABELS[0]
 
-    selected_section = st.segmented_control(
-        "Reading section",
-        options=_SECTION_LABELS,
-        key="reading_section_ctrl",
-        label_visibility="collapsed",
-    )
-    section_idx = _SECTION_LABELS.index(selected_section) if selected_section else 0
+    current_section = st.session_state["reading_section_ctrl"]
+    section_idx = _SECTION_LABELS.index(current_section) if current_section in _SECTION_LABELS else 0
 
     reading_s = get_reading_structured(course_id)
 
@@ -392,9 +387,16 @@ elif active_sub == "reading":
                 st.session_state[_celebrate_key] = True
             st.success("You've covered all the reading material for this module. Ready to practice?")
 
-    # ── Section navigation: Previous / Next / Complete Reading ─────────────────
+    # ── Section navigation: Previous / pill selector / Next / Complete Reading ──
     st.divider()
-    _rn_prev, _, _rn_next = st.columns([1, 4, 1])
+    _rn_prev, _rn_ctrl, _rn_next = st.columns([1, 4, 1])
+    with _rn_ctrl:
+        st.segmented_control(
+            "Reading section",
+            options=_SECTION_LABELS,
+            key="reading_section_ctrl",
+            label_visibility="collapsed",
+        )
     with _rn_prev:
         if section_idx > 0:
             if st.button(f"← {_SECTION_LABELS[section_idx - 1]}", use_container_width=True):
