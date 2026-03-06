@@ -1672,6 +1672,66 @@ RM journey (UAT-01 → UAT-12): all passing. UW role selector + UW Diagnostic (U
 
 ---
 
+### Phase 14 — Reading Content Templates ✅ COMPLETE (March 2026)
+
+Replace flat-text rendering in the Reading sub-view with 4 distinct visual templates (Concept card grid, Good Example Before/After, Anti-Pattern cascade, Takeaway focal statement), driven by AI-extracted structured JSON data.
+
+---
+
+#### Architecture
+
+```text
+content/reading_content.json
+        ↓  scripts/enrich_reading_content.py  (Haiku, 4 workers)
+content/reading_content_structured.json
+        ↓  utils/content.get_reading_structured(course_id)
+pages/04_Course_Module.py → _render_concept / _render_good_example
+                          → _render_anti_pattern / _render_takeaway
+```
+
+Fallback: if `reading_content_structured.json` is absent, the page renders flat text — no errors, no code changes required.
+
+---
+
+#### Phase 14 Tasks (all ✅ COMPLETE)
+
+| Task | Description | Files Changed |
+| ---- | ----------- | ------------- |
+| 14.1 | Streamlit docs research via Context7 | (research only) |
+| 14.2 | Build `scripts/enrich_reading_content.py` | `scripts/enrich_reading_content.py` (new) |
+| 14.3 | Add `get_reading_structured()` to `utils/content.py` | `utils/content.py` |
+| 14.4 | Run enrichment for all 21 courses | `content/reading_content_structured.json` (new) |
+| 14.5 | Add 4 template renderers + wiring to Course Module page | `pages/04_Course_Module.py` |
+| 14.6 | Visual verification via Playwright | (verification) |
+
+---
+
+#### Template Schemas
+
+| Section | Renderer | Key sub-fields |
+| ------- | -------- | -------------- |
+| Concept | `_render_concept()` | `framework_acronym`, `intro`, `cards: [{letter, title, body}]`, `guardrails` |
+| Good Example | `_render_good_example()` | `scenario`, `before_prompt`, `before_issue`, `after_prompt`, `after_benefit`, `outcome` |
+| Anti-Pattern | `_render_anti_pattern()` | `headline`, `failure_scenario`, `chain: [str]`, `root_lesson` |
+| Takeaway | `_render_takeaway()` | `statement`, `action_1: {title, body}`, `action_2: {title, body}` |
+
+---
+
+#### Phase 14 UAT Results (2026-03-06)
+
+All 4 reading sections verified via Playwright for RM course `rm_c1_responsible_ai`:
+
+- **Concept**: 2×2 SAFE card grid with colored emoji badges, guardrails in `st.info()`
+- **Example**: Scenario card + Before/After `st.code()` columns + `st.success()` outcome
+- **Pitfall**: "What went wrong" bordered card + numbered cascade + `st.error()` root lesson
+- **Takeaway**: `###` focal statement + 2-column action cards + "Mark Reading Complete →"
+
+Flat-text fallback path: code review confirmed correct — `reading_s = None` when file absent.
+
+Commit: `ee09af2` — 4 files changed, 1804 insertions.
+
+---
+
 ## Execution Order (all phases)
 
 ```text
