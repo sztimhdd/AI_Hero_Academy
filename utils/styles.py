@@ -86,11 +86,15 @@ section.stSidebar span {{
 [data-testid="stSidebarCollapseButton"] {{ display: none !important; }}
 
 /* ─── MAIN CONTENT AREA ────────────────────────────────────── */
-/* Leave Streamlit's native max-width (readable-content width) alone.
-   Only adjust vertical padding. */
+/* Streamlit 1.54 sets max-width: none on .block-container by default
+   (also exposed as [data-testid="stMainBlockContainer"]). Without an
+   explicit cap, the content area expands edge-to-edge on wide displays.
+   1400px kicks in at viewports wider than ~1710px (1400 + 310px sidebar),
+   leaving all laptop / standard-desktop layouts unchanged. */
 .block-container {{
   padding-top: 2rem !important;
   padding-bottom: 4rem !important;
+  max-width: 1400px !important;
 }}
 
 /* ─── TYPOGRAPHY ───────────────────────────────────────────── */
@@ -286,13 +290,17 @@ div[data-testid="stError"] {{
 }}
 
 /* ─── EXPANDER ─────────────────────────────────────────────── */
-.streamlit-expanderHeader {{
+/* Streamlit 1.40+ renders expanders as <details data-testid="stExpander">.
+   The old .streamlit-expanderHeader / .streamlit-expanderContent class
+   selectors are gone as of Streamlit 1.40 and have no effect.
+   E2E confirmed: container = [data-testid="stExpander"], header = summary. */
+[data-testid="stExpander"] summary {{
   background-color: var(--bg-elevated) !important;
   border: 1px solid var(--border) !important;
   border-radius: 6px !important;
   color: var(--text) !important;
 }}
-.streamlit-expanderContent {{
+[data-testid="stExpander"] > div {{
   background-color: var(--bg-surface) !important;
   border: 1px solid var(--border) !important;
   border-top: none !important;
@@ -660,13 +668,13 @@ tr:last-child td {{ border-bottom: none; }}
 }}
 
 /* ─── CODE BLOCK WRAPPING ──────────────────────────────────── */
-/* st.code() renders inside .stCode > pre; force wrapping so long
-   prompt examples don't overflow the reading pane horizontally. */
+/* st.code() renders inside .stCode > pre; override pre's default
+   white-space:pre so long prompt examples wrap in the reading pane.
+   word-break / overflow-wrap are omitted — Streamlit 1.50+ applies
+   these at the container level natively. */
 .stCode pre,
 .stCode code {{
   white-space: pre-wrap !important;
-  word-break: break-word !important;
-  overflow-wrap: break-word !important;
 }}
 </style>
 """, unsafe_allow_html=True)
