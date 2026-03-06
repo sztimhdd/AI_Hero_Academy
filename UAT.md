@@ -1,6 +1,6 @@
 # UAT.md — AI Hero Academy MVP
 ## End-to-End User Acceptance Testing Specification
-**Version**: 1.0 | March 2026
+**Version**: 2.0 | March 2026
 
 ---
 
@@ -96,13 +96,10 @@ browser_resize(width=1280, height=800)
 
 ## 2. Pre-Test Setup
 
-Run these commands in the project directory before starting the test suite:
+### 2.1 Start the App
 
 ```bash
-# Step 1: Reset test user (wipes all Delta data for DEV_USER_EMAIL)
-python scripts/reset_uat_user.py
-
-# Step 2: Start the app (sources .env, starts Streamlit on port 8501)
+# Start the app (sources .env, starts Streamlit on port 8501)
 bash run_uat.sh
 ```
 
@@ -112,26 +109,52 @@ Wait for the Streamlit server to print "You can now view your Streamlit app in y
 ```
 browser_navigate(url="http://localhost:8501")
 ```
-Expected: Welcome page loads (no redirect to login).
+Expected: A page loads (Welcome, Home, or Skills Profile depending on seeded state).
 
-**Verify test user is clean (Delta check):**
+### 2.2 Reset Command Reference
+
+Each test group has its own independent pre-condition. Run the matching reset command before starting that group — **you do not need to run prior groups**.
+
+| Group | Reset Command | Starting State | Scenarios |
+|-------|--------------|----------------|-----------|
+| **A** | `python scripts/reset_uat_user.py` | No profile; Welcome page | UAT-01 |
+| **B** | `python scripts/reset_uat_user.py --role rm` | RM profile seeded; Diagnostic page | UAT-02, UAT-03 |
+| **C** | `python scripts/reset_uat_user.py --profile course-built` | RM + diagnostic + course built, Module 1 not started; Home page | UAT-04 through UAT-12 |
+| **D** | See each scenario's pre-conditions | Various | UAT-13 through UAT-16 |
+
+**Verify seeded state (Delta check):**
 ```sql
-SELECT COUNT(*) AS row_count FROM mdlg_ai_shared.learner.user_profiles
+SELECT role_id,
+       (SELECT COUNT(*) FROM mdlg_ai_shared.learner.diagnostic_sessions d
+        WHERE d.user_email = p.user_email) AS diag_count,
+       (SELECT COUNT(*) FROM mdlg_ai_shared.learner.training_progress t
+        WHERE t.user_email = p.user_email) AS module_count
+FROM mdlg_ai_shared.learner.user_profiles p
 WHERE user_email = 'uat-test@edc.ca'
 ```
-Expected: `row_count = 0`
 
 ---
 
 ## 3. Test Scenarios
 
+> **Independent groups**: Each group has its own reset command. A UAT runner can start
+> at any group without running prior groups. Within a group, scenarios run in order.
+
 ---
 
-### UAT-01: Welcome Page — New RM User Onboarding
+### Group A — Onboarding
+
+**Reset before this group:** `python scripts/reset_uat_user.py`
+
+**Starting state:** No rows in `learner.user_profiles` for the test user. App opens on Welcome page.
+
+---
+
+#### UAT-01: Welcome Page — New RM User Onboarding
 
 **Purpose:** Verify a brand-new user can land on the Welcome page, select the Relationship Manager role, set a display name, and navigate to the Diagnostic.
 
-**Pre-conditions:** Test user has no row in `learner.user_profiles` (confirmed by pre-test setup).
+**Pre-conditions:** Test user has no row in `learner.user_profiles` (confirmed by Group A reset).
 
 **Steps:**
 
@@ -156,11 +179,19 @@ WHERE user_email = 'uat-test@edc.ca'
 
 ---
 
-### UAT-02: Diagnostic — Complete RM 18-Question Assessment
+### Group B — Diagnostic Journey
+
+**Reset before this group:** `python scripts/reset_uat_user.py --role rm`
+
+**Starting state:** `learner.user_profiles` row exists (role=rm). App opens on Diagnostic page. Skips UAT-01 onboarding.
+
+---
+
+#### UAT-02: Diagnostic — Complete RM 18-Question Assessment
 
 **Purpose:** Complete all 18 diagnostic questions across 6 domains and verify that AI scoring runs and produces a completed session with a gap map.
 
-**Pre-conditions:** Follows UAT-01. User is on the Diagnostic page.
+**Pre-conditions:** Group B reset complete. User is on the Diagnostic page.
 
 **Steps:**
 
@@ -202,7 +233,7 @@ ORDER BY generated_at DESC LIMIT 1
 
 ---
 
-### UAT-03: Skills Profile — Scores, Gap Map, Build Course
+#### UAT-03: Skills Profile — Scores, Gap Map, Build Course
 
 **Purpose:** Verify the Skills Profile page renders domain scores, a gap map narrative, and assessment history; then confirm the "Build My Training Course" action creates 7 training progress records and navigates to Home.
 
@@ -235,15 +266,25 @@ ORDER BY module_sequence_order
 
 ---
 
-### UAT-04: Home Dashboard — Module List and Lock State
+### Group C — Full Module Journey
+
+**Reset before this group:** `python scripts/reset_uat_user.py --profile course-built`
+
+**Starting state:** RM profile + completed diagnostic + gap map + 7 `training_progress` rows seeded (Module 1 unlocked, Modules 2–7 locked). App opens on Home dashboard. Skips UAT-01 through UAT-03.
+
+> **Write verification**: All DB writes in UAT-04 through UAT-12 are from live app interactions against `uat-test@edc.ca`. DML suppression is NOT active. All Delta checks verify real writes.
+
+---
+
+#### UAT-04: Home Dashboard — Module List and Lock State
 
 **Purpose:** Verify the Home dashboard displays the personalized module list, with Module 1 unlocked and Modules 2–7 locked, and the summary card shows the user's score.
 
-**Pre-conditions:** Follows UAT-03. User is on the Home page.
+**Pre-conditions:** Group C reset complete. User is on the Home page.
 
 **Steps:**
 
-1. Assert: A greeting with text "Welcome back" and the name "UAT Tester RM" is visible
+1. Assert: A greeting with the name "UAT Tester RM" is visible (or "Welcome back" text)
 2. Assert: A summary card shows a numeric overall score and a level label
 3. Assert: Exactly **7 module cards** are listed (numbered 01 through 07)
 4. Assert: Module 1 has an actionable CTA button (e.g., "Start Module", "Start Reading", or similar — not a lock icon or disabled state)
@@ -252,7 +293,7 @@ ORDER BY module_sequence_order
 
 ---
 
-### UAT-05: Module 1 — Overview Sub-view
+#### UAT-05: Module 1 — Overview Sub-view
 
 **Purpose:** Verify the Course Module overview sub-view renders the module title, step progress strip, and context-aware CTA before any sub-modules are completed.
 
@@ -268,23 +309,27 @@ ORDER BY module_sequence_order
 
 ---
 
-### UAT-06: Module 1 — Reading Sub-view
+#### UAT-06: Module 1 — Reading Sub-view
 
-**Purpose:** Verify the reading content renders all required sections (concept, good example, common mistake, key takeaway) and marks reading complete on CTA click.
+**Purpose:** Verify the reading content renders correctly with segmented pill tab navigation, all 4 section tabs are accessible, and completing reading on the Takeaway tab advances to Practice.
 
 **Pre-conditions:** Follows UAT-05. User is on the Module 1 overview.
 
 **Steps:**
 
 1. Click the "Start Reading" CTA button
-2. Assert: A reading content area is visible (at least one paragraph of text is present)
-3. Assert: A "Good Example" section is visible — this will appear as a green/success styled box (`st.success`)
-4. Assert: A "Common Mistake" section is visible — this will appear as a red/error styled box (`st.error`)
-5. Assert: A "Key Takeaway" section is visible — this will appear as an info styled box (`st.info`) or a distinct callout
-6. Scroll down to the bottom of the reading content
-7. Assert: A CTA button with text resembling "I've read this" or "Start Practice" is visible at the bottom
-8. Click the reading completion CTA button
-9. Assert: The UI transitions to the Practice sub-view — a "Scenario" label or "Task 1 of 4" text becomes visible
+2. Assert: A segmented pill tab control is visible with 4 tabs: "Concept", "Example", "Pitfall", "Takeaway"
+3. Assert: The "Concept" tab is selected by default and concept text is visible in the content area
+4. Click the "Example" tab
+5. Assert: Example content is visible (a green/success styled box with "Good example" label)
+6. Click the "Pitfall" tab
+7. Assert: Pitfall content is visible (a yellow/warning styled box with "Common mistake" label)
+8. Click the "Takeaway" tab
+9. Assert: Takeaway content is visible (an info styled box with "Key takeaway" label)
+10. Assert: A "Mark Reading Complete →" button is visible on the Takeaway tab
+11. Assert: No "Mark Reading Complete" button appears when on the Concept tab (click back to Concept to verify)
+12. Return to "Takeaway" tab and click "Mark Reading Complete →"
+13. Assert: The UI transitions to the Practice sub-view — a "Scenario" label or "Task 1 of 4" text becomes visible
 
 **Delta Check — Verify reading completion was recorded:**
 ```sql
@@ -296,7 +341,7 @@ WHERE user_email = 'uat-test@edc.ca' AND module_sequence_order = 1
 
 ---
 
-### UAT-07: Module 1 — Practice Sub-view (AI Coach)
+#### UAT-07: Module 1 — Practice Sub-view (AI Coach)
 
 **Purpose:** Verify the AI coach practice flow: the scenario panel renders, tasks advance sequentially, the coach responds to user input, and completing all 4 tasks enables the "Complete Practice" action.
 
@@ -350,7 +395,7 @@ WHERE user_email = 'uat-test@edc.ca' AND module_sequence_order = 1
 
 ---
 
-### UAT-08: Module 1 — Evaluation Quiz
+#### UAT-08: Module 1 — Evaluation Quiz
 
 **Purpose:** Verify the 4-question quiz (3 MCQ + 1 performance task) renders correctly, AI scoring runs after final submission, and the results sub-view is reached.
 
@@ -409,7 +454,7 @@ ORDER BY generated_at DESC LIMIT 1
 
 ---
 
-### UAT-09: Module 1 — Results Sub-view
+#### UAT-09: Module 1 — Results Sub-view
 
 **Purpose:** Verify the results page shows the module score, an AI-generated coach note, and navigation CTAs for proceeding to Module 2.
 
@@ -425,7 +470,7 @@ ORDER BY generated_at DESC LIMIT 1
 
 ---
 
-### UAT-10: Module 2 — Unlock and Reading Start Verification
+#### UAT-10: Module 2 — Unlock and Reading Start Verification
 
 **Purpose:** Confirm Module 2 is properly unlocked, has distinct content from Module 1, and navigating back to Home correctly reflects Module 1 as completed.
 
@@ -437,7 +482,7 @@ ORDER BY generated_at DESC LIMIT 1
 2. Assert: The step progress strip shows Reading, Practice, and Quiz all as "not started" or "pending" (none completed yet)
 3. Assert: The primary CTA button says "Start Reading" (or equivalent)
 4. Click "Start Reading"
-5. Assert: Reading content loads — concept text is visible (at least one paragraph)
+5. Assert: Reading content loads — segmented control is visible with 4 tabs; concept text visible on Concept tab
 6. Assert: The reading content text is visually different from Module 1's reading content (distinct topic)
 7. Navigate back to the Home dashboard (use the sidebar navigation or "Back to Dashboard" link)
 8. Assert: Module 1's card on the Home page shows a completed state — a score value is displayed next to or within the Module 1 card
@@ -446,7 +491,7 @@ ORDER BY generated_at DESC LIMIT 1
 
 ---
 
-### UAT-11: Skills Profile — Post-Training Score Update
+#### UAT-11: Skills Profile — Post-Training Score Update
 
 **Purpose:** Verify that the Skills Profile page reflects updated domain scores after Module 1 evaluation, with the assessment history showing at least the initial diagnostic and the post-evaluation update.
 
@@ -457,14 +502,14 @@ ORDER BY generated_at DESC LIMIT 1
 1. Navigate to the Skills Profile page (use sidebar link "Skills Profile" or the "View Full Skills Profile" link from Home)
 2. Assert: "Your AI Skills Profile" heading is visible
 3. Assert: The overall score value is visible
-4. Assert: The assessment history section or table shows at least **2 rows** (the initial diagnostic row plus any subsequent update), OR — if the history only shows diagnostic rows — the domain scores reflect non-zero values consistent with prior evaluation updates
+4. Assert: The assessment history section or table shows at least **2 rows** (the initial diagnostic row plus any subsequent update), OR the domain scores reflect non-zero values consistent with the prior evaluation updates
 5. Assert: The gap map section still has bullets (at least 3 visible)
 
 ---
 
-### UAT-12: Retake Diagnostic — Progress Preservation
+#### UAT-12: Retake Diagnostic — Progress Preservation
 
-**Purpose:** Verify that starting a diagnostic retake from the Skills Profile works correctly, and that navigating away without completing it does NOT wipe prior training progress.
+**Purpose:** Verify that starting a diagnostic retake works correctly, and that navigating away without completing it does NOT wipe prior training progress.
 
 **Pre-conditions:** Follows UAT-11. User is on the Skills Profile page.
 
@@ -491,22 +536,26 @@ WHERE user_email = 'uat-test@edc.ca' AND module_sequence_order = 1
 
 ---
 
-### UAT-13: UW Role Smoke Test — Welcome and Diagnostic Start
+### Group D — State Variants and New Coverage
+
+Each scenario in this group has its own independent reset command in its pre-conditions.
+
+---
+
+#### UAT-13: UW Role Smoke Test — Welcome and Diagnostic Start
 
 **Purpose:** Verify that the Underwriter role is selectable from the Welcome page and that a UW user can begin the diagnostic flow.
 
 **Pre-conditions:** Run `python scripts/reset_uat_user.py` to wipe the test user before this scenario.
 
-> **Note on test user email:** If only one `DEV_USER_EMAIL` is configured, reset the user between UAT-12 and UAT-13. The UW smoke test will overwrite the RM user data for the same email.
-
 **Steps:**
 
-1. Run `python scripts/reset_uat_user.py` to reset test user data
+1. Run `python scripts/reset_uat_user.py`
 2. Navigate to `http://localhost:8501`
-3. Assert: The Welcome page loads (no redirect to another page)
+3. Assert: The Welcome page loads
 4. Assert: "AI Hero Academy" text is visible
-5. Locate the role selector dropdown and open it (click or snapshot to reveal options)
-6. Assert: **"Underwriter"** is present as a selectable option in the dropdown
+5. Locate the role selector dropdown and open it
+6. Assert: **"Underwriter"** is present as a selectable option
 7. Select "Underwriter" from the dropdown
 8. Assert: The CTA button ("Start My Diagnostic") becomes enabled
 9. Clear the display name field and type: `UAT Tester UW`
@@ -514,9 +563,8 @@ WHERE user_email = 'uat-test@edc.ca' AND module_sequence_order = 1
 11. Assert: The Diagnostic page loads (question counter or orientation screen visible)
 12. If on an orientation screen, click through to begin
 13. Assert: Question 1 is visible with a domain label/tag
-14. Note the domain label — it should reflect a UW domain (may be the same domain names as RM; the key check is that content loads without errors)
-15. Answer Question 1 (select any radio option or type a short response)
-16. Assert: Question 2 loads successfully (confirms UW diagnostic flow is functional)
+14. Answer Question 1 (select any radio option or type a short response)
+15. Assert: Question 2 loads successfully (confirms UW diagnostic flow is functional)
 
 **Delta Check — Verify UW profile was created:**
 ```sql
@@ -528,32 +576,29 @@ WHERE user_email = 'uat-test@edc.ca'
 
 ---
 
-### UAT-14: AN Role Smoke Test — Welcome and Diagnostic Start
+#### UAT-14: AN Role Smoke Test — Welcome and Diagnostic Start
 
 **Purpose:** Verify that the Analyst role is selectable from the Welcome page and that an AN user can begin the diagnostic flow.
 
 **Pre-conditions:** Run `python scripts/reset_uat_user.py` to wipe the test user before this scenario.
 
-> **Note on test user email:** Reset the user between UAT-13 and UAT-14. The AN smoke test will overwrite the UW user data for the same email.
-
 **Steps:**
 
-1. Run `python scripts/reset_uat_user.py` to reset test user data
+1. Run `python scripts/reset_uat_user.py`
 2. Navigate to `http://localhost:8501`
-3. Assert: The Welcome page loads (no redirect to another page)
+3. Assert: The Welcome page loads
 4. Assert: "AI Hero Academy" text is visible
-5. Locate the role selector dropdown and open it (click or snapshot to reveal options)
-6. Assert: **"Analyst"** is present as a selectable option in the dropdown
+5. Locate the role selector dropdown and open it
+6. Assert: **"Analyst"** is present as a selectable option
 7. Select "Analyst" from the dropdown
 8. Assert: The CTA button ("Start My Diagnostic") becomes enabled
 9. Clear the display name field and type: `UAT Tester AN`
 10. Click "Start My Diagnostic"
-11. Assert: The Diagnostic page loads (question counter or orientation screen visible)
+11. Assert: The Diagnostic page loads
 12. If on an orientation screen, click through to begin
 13. Assert: Question 1 is visible with a domain label/tag
-14. Note the domain label — it should reflect an AN domain (same 6 domain IDs as RM and UW)
-15. Answer Question 1 (select any radio option or type a short response)
-16. Assert: Question 2 loads successfully (confirms AN diagnostic flow is functional)
+14. Answer Question 1 (select any radio option or type a short response)
+15. Assert: Question 2 loads successfully (confirms AN diagnostic flow is functional)
 
 **Delta Check — Verify AN profile was created:**
 ```sql
@@ -565,6 +610,84 @@ WHERE user_email = 'uat-test@edc.ca'
 
 ---
 
+#### UAT-15: Home Dashboard — All Modules Complete
+
+**Purpose:** Verify the Home dashboard and Skills Profile render correctly when all 7 modules are complete — an app state previously untestable without running the full 7-module journey (~3 hours).
+
+**Pre-conditions:** Run `python scripts/reset_uat_user.py --profile all-done` before this scenario.
+
+**Steps:**
+
+1. Run `python scripts/reset_uat_user.py --profile all-done`
+2. Navigate to `http://localhost:8501`
+3. Assert: The Home dashboard loads (not Welcome or Diagnostic)
+4. Assert: **All 7 module cards** are visible
+5. Assert: Each module card shows a completed state — a score value is displayed on or near each card, OR a checkmark / "Complete" label is visible
+6. Assert: **No module cards show a locked state** (no lock icons, no "locked" text on any of the 7 cards)
+7. Assert: None of the 7 module CTAs say "Start Module" — CTAs should reflect already-completed state (e.g., "Review", "View Results", or similar)
+8. Navigate to the Skills Profile page
+9. Assert: "Your AI Skills Profile" heading is visible
+10. Assert: The overall score value is ≥ 3.0 (seeded evaluation scores produce Proficient-level average)
+11. Assert: At least one domain label shows "Proficient" or "Champion"
+12. Assert: Gap map bullets are present (at least 3 visible — seeded from fixture data)
+13. Assert: Assessment history section shows at least 1 row
+14. Navigate back to Home and click on any completed module card
+15. Assert: The module overview loads without error; step progress strip shows all 3 sub-modules as completed
+
+**Delta Check — Verify all 7 modules are complete:**
+```sql
+SELECT COUNT(*) AS incomplete_count
+FROM mdlg_ai_shared.learner.training_progress
+WHERE user_email = 'uat-test@edc.ca'
+  AND evaluation_completed_at IS NULL
+```
+✅ Expected: `incomplete_count = 0`
+
+**Delta Check — Verify no locked modules:**
+```sql
+SELECT COUNT(*) AS locked_count
+FROM mdlg_ai_shared.learner.training_progress
+WHERE user_email = 'uat-test@edc.ca' AND is_locked = true
+```
+✅ Expected: `locked_count = 0`
+
+---
+
+#### UAT-16: Completed Module — Direct Results Navigation
+
+**Purpose:** Verify that navigating to a module completed in a prior session (not immediately after evaluation) shows the correct context-aware CTA and renders the Results sub-view with coach note and score loaded instantly from DB — without re-triggering AI scoring.
+
+**Pre-conditions:** Run `python scripts/reset_uat_user.py --profile m1-done` before this scenario.
+
+**Steps:**
+
+1. Run `python scripts/reset_uat_user.py --profile m1-done`
+2. Navigate to `http://localhost:8501`
+3. Assert: The Home dashboard loads
+4. Assert: Module 1 shows a completed state (score visible, or "Complete" label)
+5. Assert: Module 2 shows an active/unlocked state (CTA is enabled, not locked)
+6. Click on the Module 1 card
+7. Assert: The Module 1 overview sub-view loads
+8. Assert: The step progress strip shows all 3 sub-modules (Reading, Practice, Quiz) as **completed**
+9. Assert: The primary CTA does **NOT** say "Start Reading" — it should reflect completion (e.g., "View Results", "Review", or "Go to Results")
+10. Click the CTA to navigate to the Results sub-view
+11. Assert: The Results sub-view loads
+12. Assert: A module score value is visible (a decimal number between 0.0 and 4.0; should be near 2.8 from seeded data)
+13. Assert: A coach note text block is visible and non-empty
+14. Assert: **No loading spinner appeared** during navigation to Results (results load instantly from DB, no AI call re-triggered)
+15. Navigate back to Home via the sidebar or link
+16. Assert: Module 2 still shows as unlocked (state undisturbed by visiting Module 1)
+
+**Delta Check — Confirm seeded evaluation data is intact:**
+```sql
+SELECT evaluation_score, evaluation_completed_at, domain_score_after
+FROM mdlg_ai_shared.learner.training_progress
+WHERE user_email = 'uat-test@edc.ca' AND module_sequence_order = 1
+```
+✅ Expected: `evaluation_score = 2.8`; `evaluation_completed_at` is not null; `domain_score_after = 2.1`
+
+---
+
 ## 4. Pass/Fail Criteria
 
 ### PASS — All of the following must be true:
@@ -572,6 +695,8 @@ WHERE user_email = 'uat-test@edc.ca'
 - [ ] UAT-01 through UAT-12 completed without unhandled Python exceptions or error messages on the happy path
 - [ ] UAT-13 UW smoke test confirms "Underwriter" is in the role selector
 - [ ] UAT-14 AN smoke test confirms "Analyst" is in the role selector
+- [ ] UAT-15: Home shows all 7 module cards as complete with no locked state; Skills Profile shows Proficient-level score (≥ 3.0)
+- [ ] UAT-16: Module 1 overview CTA reflects completion (not "Start Reading"); Results load without spinner
 - [ ] All Delta checks returned the expected row counts and non-null timestamps
 - [ ] Module 2 `is_locked = false` after Module 1 evaluation completes (UAT-08 Delta check)
 - [ ] No Streamlit error box (red `st.error`) appeared for a system-level error during normal usage
@@ -585,6 +710,9 @@ WHERE user_email = 'uat-test@edc.ca'
 - [ ] "Underwriter" is missing from the Welcome page role selector dropdown
 - [ ] "Analyst" is missing from the Welcome page role selector dropdown
 - [ ] Navigating away from a partial retake diagnostic wipes completed module progress
+- [ ] UAT-15: Any module card shows a locked state or "Start Module" CTA with `--profile all-done` seeded
+- [ ] UAT-16: Module 1 overview shows "Start Reading" CTA after `--profile m1-done` seed (context-aware CTA not working)
+- [ ] UAT-16: A loading spinner appears when navigating to Results of an already-completed module (AI scoring re-triggered)
 
 ---
 
@@ -593,21 +721,20 @@ WHERE user_email = 'uat-test@edc.ca'
 | Limitation | Reason |
 |-----------|--------|
 | AI coach text content is NOT asserted | LLM outputs vary per call |
-| Modules 3–7 are not fully tested | Structurally identical to Module 1; covered by pattern |
+| Modules 3–7 are not fully tested end-to-end | Structurally identical to Module 1; covered by pattern |
 | Exact gap map bullet text is not asserted | AI-generated; varies per call |
 | Mobile / responsive layout not tested | Desktop-first MVP (1280×800) |
 | Manager dashboard not tested | Does not exist in MVP scope |
-| UW full course completion not tested | UW content loaded; smoke test confirms onboarding works |
+| UW/AN full module journey not tested | Smoke tests confirm onboarding; RM module journey covers the pattern |
 | Error/failure path scenarios not tested | Graceful error messages tested only by inspection |
 
 ---
 
 ## 6. UAT Agent Kickoff Prompt
 
-Copy and paste the following prompt into a **new Claude Code session** to start a UAT run. The agent will read this document and execute all scenarios autonomously.
+### Full Suite (all groups A–D)
 
-
----
+Copy and paste into a **new Claude Code session** to run all 16 scenarios:
 
 ```
 You are a UAT testing agent for the AI Hero Academy MVP — a Streamlit-based Databricks App
@@ -622,50 +749,42 @@ TOOLS AVAILABLE TO YOU:
   Warehouse ID: eaa098820703bf5f
 
 BEFORE YOU BEGIN:
-
-Confirm your testing environment:
-
-> 1. The app is running locally: `bash run_uat.sh` (port 8501)
-> 2. The test user has been reset: `python scripts/reset_uat_user.py`
-> 3. Your `.env` has `DEV_USER_EMAIL=uat-test@edc.ca` set
-> 4. Playwright MCP is connected and functional
-
-1. Set the viewport: browser_resize(width=1280, height=800)
-2. Confirm the app is running by navigating to http://localhost:8501
-3. Run the pre-test Delta check in UAT.md Section 2 to confirm the test user is clean
-   Test user email: uat-test@edc.ca
-4. Create a folder under /tests under the root project folder with date and commit ID to store all screenshots and logs.
-
-
+1. Read UAT.md in full — pay attention to Section 2.2 (Reset Command Reference).
+2. Set the viewport: browser_resize(width=1280, height=800)
+3. Create folder /tests/<YYYY-MM-DD>-<git-short-sha>/ for screenshots and logs.
 
 EXECUTION RULES:
-- Read UAT.md Section 1 (Agent Instructions) carefully before touching the browser
-- Execute scenarios UAT-01 through UAT-14 in order
+- Each group (A, B, C, D) has its own reset command in Section 2.2 — run it before starting
+  that group. You do NOT need to run prior groups to test a later group.
 - For every browser interaction: snapshot first → get ref → click/type using ref → wait for rerender
 - After every click that triggers a page change or AI call, call browser_wait_for before proceeding
 - Run every Delta Check SQL query listed after each scenario using execute_sql
-- If a step fails: take a screenshot immediately, log [FAIL] UAT-NN: Step N — expected X, got Y,
-  then continue to the next scenario unless it is a hard dependency (noted in pre-conditions)
+- If a step fails: screenshot immediately, log [FAIL] UAT-NN: Step N — expected X, got Y,
+  then continue unless there is a hard dependency noted in pre-conditions
 - Do NOT assert specific AI-generated text — only assert UI state transitions and structural elements
-- UAT-13 requires resetting the test user first — run python scripts/reset_uat_user.py via Bash
-  before navigating to the Welcome page for that scenario
-- UAT-14 also requires resetting the test user first — run python scripts/reset_uat_user.py via Bash
-  before navigating to the Welcome page for that scenario
-- Put all screenshots and logs in the previously created folder under /tests folder in the project root folder.
+- UAT-13, UAT-14: run python scripts/reset_uat_user.py before navigating (per pre-conditions)
+- UAT-15: run python scripts/reset_uat_user.py --profile all-done before navigating
+- UAT-16: run python scripts/reset_uat_user.py --profile m1-done before navigating
+- Store all screenshots and logs in the folder created above
 
 OUTPUT FORMAT:
-After completing all scenarios, print the Test Execution Summary using the template in
-UAT.md Section 6. List every scenario result (PASS/FAIL), note any failures with screenshot
-filenames, and state the overall PASS/FAIL verdict.
+Print the Test Execution Summary from Section 7 after all scenarios complete.
 
-Begin now: read UAT.md, then start UAT-01.
+Begin now: read UAT.md, then start Group A (UAT-01).
+```
+
+### Single Group (targeted run)
+
+To run only one group, change the final line of the kickoff prompt:
+
+```
+Begin now: read UAT.md, then run only Group C (UAT-04 through UAT-12).
+Use this reset first: python scripts/reset_uat_user.py --profile course-built
 ```
 
 ---
 
 ## 7. Test Execution Summary Template
-
-After completing the UAT run, fill in this summary:
 
 ```
 UAT Execution Date: ___________
@@ -673,9 +792,14 @@ App version / Git commit: ___________
 Test user email: uat-test@edc.ca
 
 SCENARIO RESULTS:
+-- Group A: Onboarding --
 UAT-01: PASS / FAIL — notes
+
+-- Group B: Diagnostic Journey --
 UAT-02: PASS / FAIL — notes
 UAT-03: PASS / FAIL — notes
+
+-- Group C: Full Module Journey --
 UAT-04: PASS / FAIL — notes
 UAT-05: PASS / FAIL — notes
 UAT-06: PASS / FAIL — notes
@@ -685,8 +809,12 @@ UAT-09: PASS / FAIL — notes
 UAT-10: PASS / FAIL — notes
 UAT-11: PASS / FAIL — notes
 UAT-12: PASS / FAIL — notes
+
+-- Group D: State Variants --
 UAT-13: PASS / FAIL — notes
 UAT-14: PASS / FAIL — notes
+UAT-15: PASS / FAIL — notes
+UAT-16: PASS / FAIL — notes
 
 OVERALL RESULT: PASS / FAIL
 
