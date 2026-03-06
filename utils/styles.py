@@ -650,6 +650,16 @@ tr:last-child td {{ border-bottom: none; }}
 }}
 
 /* Chat bubbles removed — replaced with st.chat_message() (NX1 resolved) */
+
+/* ─── CODE BLOCK WRAPPING ──────────────────────────────────── */
+/* st.code() renders inside .stCode > pre; force wrapping so long
+   prompt examples don't overflow the reading pane horizontally. */
+.stCode pre,
+.stCode code {{
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+}}
 </style>
 """, unsafe_allow_html=True)
 

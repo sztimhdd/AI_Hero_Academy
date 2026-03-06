@@ -170,16 +170,14 @@ render_sidebar(
 
 
 # ── Breadcrumb ────────────────────────────────────────────────────────────────
-_sub_labels = {"reading": "Reading", "practice": "Practice", "evaluation": "Quiz", "results": "Results"}
 _bc_home_col, _bc_info_col = st.columns([2, 10])
 with _bc_home_col:
     if st.button("← My Training", key="bc_home", use_container_width=True):
         st.switch_page("pages/03_Home.py")
 with _bc_info_col:
-    _sub_text = f" / {_sub_labels[active_sub]}" if active_sub in _sub_labels else ""
     st.markdown(
         f'<div style="font-family:\'Inter\',sans-serif; font-size:0.75rem; color:#8990A8; padding-top:0.65rem">'
-        f'Module {seq_order}: {course_title}{_sub_text}'
+        f'Module {seq_order}: {course_title}'
         f'</div>',
         unsafe_allow_html=True,
     )
@@ -254,7 +252,7 @@ def _render_anti_pattern(rs: dict) -> None:
 def _render_takeaway(rs: dict) -> None:
     """Renders takeaway_structured as a focal card with two action points."""
     if rs.get("statement"):
-        st.markdown(f"### {rs['statement']}")
+        st.markdown(f"## {rs['statement']}")
         st.divider()
 
     a1 = rs.get("action_1", {})
@@ -328,7 +326,6 @@ elif active_sub == "reading":
     if "reading_section_idx" not in st.session_state:
         st.session_state.reading_section_idx = 0
 
-    st.markdown(f'<div class="question-counter">Module {seq_order} · Reading</div>', unsafe_allow_html=True)
     st.title(course_title)
     step_progress_strip([
         {"label": "Read", "state": "current"},
@@ -345,7 +342,10 @@ elif active_sub == "reading":
 
     _SECTION_LABELS = ["Concept", "Example", "Pitfall", "Takeaway"]
 
-    if "reading_section_ctrl" not in st.session_state:
+    # Apply pending navigation from Prev/Next buttons BEFORE the widget renders
+    if "_reading_nav_target" in st.session_state:
+        st.session_state["reading_section_ctrl"] = st.session_state.pop("_reading_nav_target")
+    elif "reading_section_ctrl" not in st.session_state:
         st.session_state["reading_section_ctrl"] = _SECTION_LABELS[0]
 
     selected_section = st.segmented_control(
@@ -385,8 +385,28 @@ elif active_sub == "reading":
                 _render_takeaway(rs)
             elif reading.get("takeaway"):
                 st.info(f"**Key takeaway** — {reading['takeaway']}")
-            st.divider()
-            if st.button("Mark Reading Complete →", key="r_complete", type="primary", use_container_width=True):
+            # Milestone flair — balloons fire once per reading session
+            _celebrate_key = f"reading_takeaway_celebrated_{course_id}"
+            if not st.session_state.get(_celebrate_key):
+                st.balloons()
+                st.session_state[_celebrate_key] = True
+            st.success("You've covered all the reading material for this module. Ready to practice?")
+
+    # ── Section navigation: Previous / Next / Complete Reading ─────────────────
+    st.divider()
+    _rn_prev, _, _rn_next = st.columns([1, 4, 1])
+    with _rn_prev:
+        if section_idx > 0:
+            if st.button(f"← {_SECTION_LABELS[section_idx - 1]}", use_container_width=True):
+                st.session_state["_reading_nav_target"] = _SECTION_LABELS[section_idx - 1]
+                st.rerun()
+    with _rn_next:
+        if section_idx < len(_SECTION_LABELS) - 1:
+            if st.button(f"{_SECTION_LABELS[section_idx + 1]} →", type="primary", use_container_width=True):
+                st.session_state["_reading_nav_target"] = _SECTION_LABELS[section_idx + 1]
+                st.rerun()
+        else:
+            if st.button("Complete Reading →", key="r_complete", type="primary", use_container_width=True):
                 try:
                     execute(
                         f"UPDATE {CATALOG}.learner.training_progress "
@@ -397,7 +417,8 @@ elif active_sub == "reading":
                 except Exception as e:
                     st.error(f"Could not save progress.\n\n_{e}_")
                     st.stop()
-                for k in ("reading_section_idx", "reading_section_ctrl"):
+                for k in ("reading_section_idx", "reading_section_ctrl",
+                          f"reading_takeaway_celebrated_{course_id}"):
                     st.session_state.pop(k, None)
                 st.session_state.update({
                     "coach_messages": [],
@@ -443,7 +464,6 @@ elif active_sub == "practice":
     ]
     coach_prompt = scenario.get("coach_system_prompt", "")
 
-    st.markdown(f'<div class="question-counter">Module {seq_order} · Practice</div>', unsafe_allow_html=True)
     st.title(course_title)
     step_progress_strip([
         {"label": "Read", "state": "done"},
@@ -693,8 +713,8 @@ elif active_sub == "evaluation":
             st.session_state.pop(k, None)
         st.rerun()
 
-    st.caption(f"MODULE {seq_order}  ·  QUIZ  ·  QUESTION {min(eval_idx + 1, EVAL_TOTAL)} OF {EVAL_TOTAL}")
     st.title(f"Quiz: {course_title}")
+    st.caption(f"Question {min(eval_idx + 1, EVAL_TOTAL)} of {EVAL_TOTAL}")
     step_progress_strip([
         {"label": "Read", "state": "done"},
         {"label": "Practice", "state": "done"},
@@ -805,7 +825,6 @@ elif active_sub == "results":
             st.session_state["module_result_diag_baseline"] = None
     diag_baseline = st.session_state["module_result_diag_baseline"]
 
-    st.markdown(f'<div class="question-counter">Module {seq_order} · Complete</div>', unsafe_allow_html=True)
     st.title("Module Complete!")
     step_progress_strip([
         {"label": "Read", "state": "done"},
