@@ -651,6 +651,14 @@ tr:last-child td {{ border-bottom: none; }}
 
 /* Chat bubbles removed — replaced with st.chat_message() (NX1 resolved) */
 
+/* ─── SEGMENTED CONTROL CENTERING ──────────────────────────── */
+/* stVerticalBlock is a column-flex; stElementContainer children
+   default to align-self: flex-start (shrink-wrap width).
+   Target the specific widget via its session-state key class. */
+.st-key-reading_section_ctrl {{
+  align-self: center;
+}}
+
 /* ─── CODE BLOCK WRAPPING ──────────────────────────────────── */
 /* st.code() renders inside .stCode > pre; force wrapping so long
    prompt examples don't overflow the reading pane horizontally. */
