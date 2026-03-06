@@ -86,15 +86,19 @@ section.stSidebar span {{
 [data-testid="stSidebarCollapseButton"] {{ display: none !important; }}
 
 /* ─── MAIN CONTENT AREA ────────────────────────────────────── */
-/* Streamlit 1.54 sets max-width: none on .block-container by default
-   (also exposed as [data-testid="stMainBlockContainer"]). Without an
-   explicit cap, the content area expands edge-to-edge on wide displays.
-   1400px kicks in at viewports wider than ~1710px (1400 + 310px sidebar),
-   leaving all laptop / standard-desktop layouts unchanged. */
+/* Streamlit 1.54 wraps .block-container in [data-testid="stMain"], a
+   column-flex with align-items: center. Without a width override, a
+   max-width cap causes the container to be CENTERED in the main area,
+   producing a large gap between the sidebar and content on wide displays.
+   Fix: width: 100% fills the available space on narrow screens; on wide
+   screens max-width kicks in and align-self: flex-start pins it to the
+   left edge of stMain (no centering gap). */
 .block-container {{
   padding-top: 2rem !important;
   padding-bottom: 4rem !important;
   max-width: 1400px !important;
+  width: 100% !important;
+  align-self: flex-start !important;
 }}
 
 /* ─── TYPOGRAPHY ───────────────────────────────────────────── */
