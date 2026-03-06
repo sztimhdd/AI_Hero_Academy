@@ -623,32 +623,48 @@ sub-module the user is in.
 
   Trigger: User clicks "Start Reading" or navigates to reading
 
+  Navigation: Segmented control with 4 sections — Concept / Example / Pitfall /
+  Takeaway. User advances section by section; "Mark Reading Complete →" CTA
+  appears only on the Takeaway section.
+
+  NOTE (March 2026): Each section renders as a structured visual template
+  (not flat prose) when reading_content_structured.json is present. The
+  structured data is AI-extracted at content generation time via
+  scripts/enrich_reading_content.py. Flat-text fallback is used automatically
+  if the structured file is absent.
+
   Elements:
     - Header: "Reading: [Module Title]"
-    - Content sections rendered as clean formatted text:
+    - Segmented section navigation (4 tabs): Concept / Example / Pitfall / Takeaway
 
-      CONCEPT SECTION:
-        - 2-4 paragraphs explaining the key concept
-        - Specific to the RM role and the use case being taught
+      CONCEPT SECTION (Template: Acronym Card Grid):
+        - Framework acronym label (e.g. SAFE, CRAF, VERIFY)
+        - 1-2 sentence intro explaining why the framework matters
+        - 2-column card grid — one bordered card per acronym letter, each
+          showing: colored emoji badge + letter + one-word title + 1-2 sentence
+          body
+        - Essential guardrails in a highlighted info callout (if any)
 
-      GOOD EXAMPLE SECTION:
-        - Boxed/highlighted area with label "Good Example"
-        - Shows a realistic example of the skill done well
-        - Annotation explaining why it is good
+      GOOD EXAMPLE SECTION (Template: Before / After):
+        - Scenario card describing the practitioner task
+        - Two-column layout: "Before" (unsafe/incorrect prompt in a code block,
+          caption explaining the problem) vs "After" (corrected prompt in a code
+          block, caption explaining the improvement)
+        - Outcome sentence in a success callout
 
-      ANTI-PATTERN SECTION:
-        - Boxed/highlighted area with label "Common Mistake"
-        - Shows a realistic example of the skill done poorly
-        - Annotation explaining what went wrong
+      ANTI-PATTERN SECTION (Template: Failure Cascade):
+        - Headline label (3-6 word name for the failure pattern)
+        - "What went wrong" bordered card with 2-3 sentence failure scenario
+        - Numbered cascade list (2-4 domino-effect consequences)
+        - Root lesson in an error callout (what to always do instead)
 
-      KEY TAKEAWAY SECTION:
-        - Callout box with distinct styling
-        - 2-3 sentences summarizing the most important point
-
-    - CTA at bottom: "I have read this — Start Practice"
+      TAKEAWAY SECTION (Template: Focal Statement + Action Cards):
+        - Large heading with the key takeaway sentence
+        - Two-column action cards: title (imperative) + 1-2 sentence elaboration
+        - "Mark Reading Complete →" CTA button (appears only on this section)
 
   Behavior:
-    - On CTA click:
+    - On "Mark Reading Complete →" click:
       1. Write reading_completed_at to learner.training_progress
       2. Navigate to Practice sub-view
 

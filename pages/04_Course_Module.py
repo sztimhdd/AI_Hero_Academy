@@ -14,7 +14,7 @@ import streamlit as st
 
 from utils.auth import get_user_email
 from utils.db import execute, query_one
-from utils.content import get_course, get_reading, get_scenario, get_eval_items, get_domain_descriptions
+from utils.content import get_course, get_reading, get_scenario, get_eval_items, get_domain_descriptions, get_reading_structured
 from utils.ai import (
     coach_response,
     score_evaluation,
@@ -185,6 +185,92 @@ with _bc_info_col:
     )
 
 
+# ── Reading section template renderers ────────────────────────────────────────
+
+def _render_concept(rs: dict) -> None:
+    """Renders concept_text_structured as an acronym card grid."""
+    st.caption(rs.get("framework_acronym", ""))
+    if rs.get("intro"):
+        st.markdown(rs["intro"])
+
+    cards = rs.get("cards", [])
+    LETTER_ICONS = ["🔵", "🟣", "🔴", "🟢", "🟡", "🟠"]
+    if cards:
+        cols = st.columns(2)
+        for i, card in enumerate(cards):
+            with cols[i % 2]:
+                with st.container(border=True):
+                    icon = LETTER_ICONS[i % len(LETTER_ICONS)]
+                    st.markdown(f"**{icon} {card['letter']} — {card['title']}**")
+                    st.markdown(card["body"])
+
+    if rs.get("guardrails"):
+        items = "\n".join(f"- {g}" for g in rs["guardrails"])
+        st.info(f"**Essential guardrails**\n\n{items}")
+
+
+def _render_good_example(rs: dict) -> None:
+    """Renders good_example_structured as a Before/After comparison."""
+    if rs.get("scenario"):
+        with st.container(border=True):
+            st.caption("📋 Scenario")
+            st.markdown(rs["scenario"])
+
+    col_b, col_a = st.columns(2)
+    with col_b:
+        st.caption("❌ Before")
+        with st.container(border=True):
+            st.code(rs.get("before_prompt", ""), language=None)
+            if rs.get("before_issue"):
+                st.caption(f"⚠️ {rs['before_issue']}")
+    with col_a:
+        st.caption("✅ After")
+        with st.container(border=True):
+            st.code(rs.get("after_prompt", ""), language=None)
+            if rs.get("after_benefit"):
+                st.caption(f"✓ {rs['after_benefit']}")
+
+    if rs.get("outcome"):
+        st.success(rs["outcome"])
+
+
+def _render_anti_pattern(rs: dict) -> None:
+    """Renders anti_pattern_structured as an incident report with cascade chain."""
+    if rs.get("failure_scenario"):
+        with st.container(border=True):
+            st.caption("⚠️ What went wrong")
+            st.markdown(rs["failure_scenario"])
+
+    chain = rs.get("chain", [])
+    if chain:
+        st.markdown("**The cascade:**")
+        for i, step in enumerate(chain, 1):
+            st.markdown(f"{i}. {step}")
+
+    if rs.get("root_lesson"):
+        st.error(f"**Root lesson:** {rs['root_lesson']}")
+
+
+def _render_takeaway(rs: dict) -> None:
+    """Renders takeaway_structured as a focal card with two action points."""
+    if rs.get("statement"):
+        st.markdown(f"### {rs['statement']}")
+        st.divider()
+
+    a1 = rs.get("action_1", {})
+    a2 = rs.get("action_2", {})
+    if a1 or a2:
+        col1, col2 = st.columns(2)
+        with col1:
+            with st.container(border=True):
+                st.markdown(f"**{a1.get('title', '')}**")
+                st.markdown(a1.get("body", ""))
+        with col2:
+            with st.container(border=True):
+                st.markdown(f"**{a2.get('title', '')}**")
+                st.markdown(a2.get("body", ""))
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # OVERVIEW
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -270,21 +356,34 @@ elif active_sub == "reading":
     )
     section_idx = _SECTION_LABELS.index(selected_section) if selected_section else 0
 
+    reading_s = get_reading_structured(course_id)
+
     _, content_col, _ = st.columns([1, 4, 1])
     with content_col:
         if section_idx == 0:
-            concept_text = reading.get("concept_text", "")
-            if concept_text:
+            rs = reading_s.get("concept_text_structured") if reading_s else None
+            if rs:
+                _render_concept(rs)
+            elif reading.get("concept_text"):
                 with st.container(border=True):
-                    st.markdown(concept_text)
+                    st.markdown(reading["concept_text"])
         elif section_idx == 1:
-            if reading.get("good_example"):
+            rs = reading_s.get("good_example_structured") if reading_s else None
+            if rs:
+                _render_good_example(rs)
+            elif reading.get("good_example"):
                 st.success(f"**Good example** — {reading['good_example']}")
         elif section_idx == 2:
-            if reading.get("anti_pattern"):
+            rs = reading_s.get("anti_pattern_structured") if reading_s else None
+            if rs:
+                _render_anti_pattern(rs)
+            elif reading.get("anti_pattern"):
                 st.warning(f"**Common mistake** — {reading['anti_pattern']}")
         elif section_idx == 3:
-            if reading.get("takeaway"):
+            rs = reading_s.get("takeaway_structured") if reading_s else None
+            if rs:
+                _render_takeaway(rs)
+            elif reading.get("takeaway"):
                 st.info(f"**Key takeaway** — {reading['takeaway']}")
             st.divider()
             if st.button("Mark Reading Complete →", key="r_complete", type="primary", use_container_width=True):

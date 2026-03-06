@@ -98,3 +98,21 @@ def get_courses(role_id: str) -> list[dict]:
 def get_eval_items(course_id: str) -> list:
     """Returns list of 4 evaluation items for the given course, ordered by sequence."""
     return EVAL_ITEMS[course_id]
+
+
+_READING_STRUCTURED: dict | None = None
+
+
+def get_reading_structured(course_id: str) -> dict | None:
+    """
+    Returns the structured sub-fields dict for a course's reading content, or None
+    if reading_content_structured.json has not been generated yet.
+    """
+    global _READING_STRUCTURED
+    if _READING_STRUCTURED is None:
+        p = _CONTENT_DIR / "reading_content_structured.json"
+        if p.exists():
+            _READING_STRUCTURED = json.loads(p.read_text(encoding="utf-8"))
+        else:
+            _READING_STRUCTURED = {}
+    return _READING_STRUCTURED.get(course_id)
