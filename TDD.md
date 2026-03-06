@@ -11,7 +11,9 @@
 
 AI Hero Academy is a Streamlit-based Databricks App that delivers personalized AI skills training to employees. It implements a four-stage learning loop: **Diagnose → Map Gaps → Train → Score & Track**.
 
-The MVP launched with Relationship Manager (RM) and expanded in v1 to include Underwriter (UW). Both roles are fully live — end-to-end UW journey validated in UAT-13 (2026-03-04, all 13/13 scenarios passed). Each role has 12 diagnostic questions across 4 skill domains and 5 training courses. Phase 12 (March 2026) extended the platform to a 6-domain architecture for future role content generation. All AI scoring, coaching, and gap analysis is powered by Databricks Foundation Model serving endpoints. All learner state is persisted in Delta tables via Unity Catalog (`mdlg_ai_shared`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no Delta queries needed for content.
+The MVP launched with Relationship Manager (RM) and expanded to include Underwriter (UW) and Analyst (AN). All three roles are fully live. Each role has 18 diagnostic questions across 6 skill domains and 7 training courses (6 domain + 1 capstone).
+
+UAT v2.0 (2026-03-06): 16 scenarios across 4 independent groups (A–D). Groups B/C/D can run standalone via `python scripts/reset_uat_user.py --profile {course-built|m1-done|all-done}` without running prior groups. Phase 12 (March 2026) extended the platform to a 6-domain architecture for future role content generation. All AI scoring, coaching, and gap analysis is powered by Databricks Foundation Model serving endpoints. All learner state is persisted in Delta tables via Unity Catalog (`mdlg_ai_shared`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no Delta queries needed for content.
 
 ---
 
@@ -245,7 +247,7 @@ evaluation_completed_at  TIMESTAMP,
 domain_score_after       DOUBLE             -- domain score after this module's evaluation
 ```
 
-Five rows created per user when they click "Build My Training Course". Module 1 is immediately unlocked (`is_locked = false`). Modules 2–5 are unlocked sequentially as the prior module's evaluation is completed.
+Seven rows created per user when they click "Build My Training Course" (6 domain courses + 1 capstone). Module 1 is immediately unlocked (`is_locked = false`). Modules 2–7 are unlocked sequentially as the prior module's evaluation is completed.
 
 **Lock state derivation**: A module is considered complete when `evaluation_completed_at IS NOT NULL`. Reading is complete when `reading_completed_at IS NOT NULL`. Practice is complete when `practice_completed_at IS NOT NULL`.
 
@@ -293,7 +295,7 @@ All content lives in `content/` at the project root and is loaded by `utils/cont
 | File | Key structure | Counts |
 |------|---------------|--------|
 | `content/roles.json` | `{role_id: {...}}` | 3 roles (rm, uw, an) |
-| `content/domains.json` | `{rm_responsible_ai: {...}, uw_responsible_ai: {...}, ...}` | 18 entries (6 per role); role-scoped top-level keys |
+| `content/domains.json` | `{rm_responsible_ai: {...}, uw_responsible_ai: {...}, an_responsible_ai: {...}, ...}` | 18 entries (6 per role × 3 roles); role-scoped top-level keys |
 | `content/diagnostic_items.json` | `[{item_id, role_id, domain_id, ...}]` | 54 items (18 RM + 18 UW + 18 AN); 3 per domain (MCQ + prompt_sandbox + micro_task); ordered by `display_order` |
 | `content/courses.json` | `{course_id: {...}}` | 21 courses (7 RM + 7 UW + 7 AN); keyed by `course_id` |
 | `content/reading_content.json` | `{course_id: {...}}` | 21 entries (1 per course) |
@@ -393,16 +395,16 @@ utils/
   sequencing.py               # module sequence algorithm
   styles.py                   # inject_global_css(); section_header()
 content/
-  roles.json                  # {role_id: {...}} — rm + uw
-  domains.json                # role-scoped keys (rm_prompting, uw_prompting, ...)
-  diagnostic_items.json       # list of 24 items (12 RM + 12 UW)
-  courses.json                # {course_id: {...}} — 10 courses
-  reading_content.json        # {course_id: {...}} — 10 entries
-  practice_scenarios.json     # {course_id: {...}} — 10 entries
-  evaluation_items.json       # {course_id: [{...}]} — 40 items
+  roles.json                  # {role_id: {...}} — rm + uw + an
+  domains.json                # role-scoped keys (rm_responsible_ai, uw_responsible_ai, an_responsible_ai, ...)
+  diagnostic_items.json       # list of 54 items (18 RM + 18 UW + 18 AN)
+  courses.json                # {course_id: {...}} — 21 courses (7 per role)
+  reading_content.json        # {course_id: {...}} — 21 entries
+  practice_scenarios.json     # {course_id: {...}} — 21 entries
+  evaluation_items.json       # {course_id: [{...}]} — 84 items (21 courses × 4)
 scripts/
   generate_course_content.py  # multi-agent LLM pipeline for new role content
-  reset_uat_user.py           # clears UAT test user data for re-testing
+  reset_uat_user.py           # reset UAT user; --profile {course-built|m1-done|all-done} for mid-journey states
 notebooks/
   00_create_schemas.py        # creates learner.* + system.* Delta schemas
 requirements.txt              # streamlit, databricks-sdk, plotly, tenacity, ...
@@ -686,7 +688,7 @@ Same pattern as diagnostic scoring (§6.2). Uses `content.evaluation_items` rubr
 
 ## 7. Module Sequencing Algorithm
 
-Run once after the user clicks "Build My Training Course". Creates 5 rows in `learner.training_progress`.
+Run once after the user clicks "Build My Training Course". Creates 7 rows in `learner.training_progress` (6 domain courses + 1 capstone).
 
 ```python
 DOMAIN_TO_COURSE = {
@@ -752,7 +754,7 @@ def compute_module_sequence(domain_scores: dict, role_id: str = "rm") -> list[st
     ordered_domains = [d for d, _ in quick_wins + gaps + remaining + strong]
     sequence = [domain_to_course[d] for d in ordered_domains if d in domain_to_course]
     sequence.append(capstone)
-    return sequence[:5]
+    return sequence[:7]
 ```
 
 ---

@@ -161,7 +161,13 @@ Key characteristics relevant to training design:
   Relationship Manager and Underwriter as options.
 
   Full end-to-end UW learner journey validated in UAT-13 (2026-03-04,
-  commit a311052). All 13/13 UAT scenarios passed.
+  commit a311052).
+
+  UAT restructured to v2.0 (2026-03-06): 16 scenarios across 4 independent
+  groups (A–D). Groups B/C/D can run standalone via `reset_uat_user.py
+  --profile {course-built|m1-done|all-done}` — no sequential setup required.
+  New UAT-15 (all-modules-complete view) and UAT-16 (revisit completed
+  module Results) added as Group D fixtures.
 
 3.2.2 ANALYST (AN) — COMPLETE (March 2026)
 
