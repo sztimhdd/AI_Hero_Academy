@@ -16,6 +16,7 @@ __pycache__/
 # Debug / test artifacts
 _setup_result.json
 *.png
+!assets/screenshots/*.png
 content_test/
 console-warnings.log
 
