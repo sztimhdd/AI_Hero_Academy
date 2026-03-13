@@ -432,11 +432,11 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 _BASE = _os.path.join(_os.path.dirname(__file__), "..", "assets", "screenshots")
 
 _screenshots = {
-    tab1: ("demo_01_diagnostic.png",     None,                            "A 12-item adaptive assessment. Questions mix multiple choice, prompt sandbox tasks, and micro-scenarios. Takes ~5 minutes. Scores all 6 AI skill domains simultaneously."),
-    tab2: ("demo_02_skills_profile.png", "demo_02_skills_animated.gif",   "Your hexagon radar shows exactly where you stand. The AI-generated gap map turns raw scores into plain-language priorities you can act on today."),
-    tab3: ("demo_03_course_module.png",  "read.gif",                      "Each module opens with a reading section that explains the core framework — then immediately asks you to apply it to a realistic work scenario."),
-    tab4: ("demo_04_ai_coach.png",       "coach.gif",                     "The AI coach responds to what you actually wrote — not a scripted flow. It asks follow-up questions, flags weak reasoning, and models better approaches in real time."),
-    tab5: ("demo_05_results.png",        None,                            "After each module, you get a score breakdown by rubric criterion and a personalized coach note. Your hexagon radar updates immediately."),
+    tab1: ("demo_01_diagnostic.png",     "demo_01_diagnostic.gif",     "A 12-item adaptive assessment. Questions mix multiple choice, prompt sandbox tasks, and micro-scenarios. Takes ~5 minutes. Scores all 6 AI skill domains simultaneously."),
+    tab2: ("demo_02_skills_profile.png", "demo_02_skills_profile.gif", "Your hexagon radar shows exactly where you stand. The AI-generated gap map turns raw scores into plain-language priorities you can act on today."),
+    tab3: ("demo_03_course_module.png",  "demo_03_course_module.gif",  "Each module opens with a reading section that explains the core framework — then immediately asks you to apply it to a realistic work scenario."),
+    tab4: ("demo_04_ai_coach.png",       "demo_04_ai_coach.gif",       "The AI coach responds to what you actually wrote — not a scripted flow. It asks follow-up questions, flags weak reasoning, and models better approaches in real time."),
+    tab5: ("demo_05_results.png",        "demo_05_results.gif",        "After each module, you get a score breakdown by rubric criterion and a personalized coach note. Your hexagon radar updates immediately."),
 }
 
 for tab, (png_name, gif_name, caption) in _screenshots.items():
