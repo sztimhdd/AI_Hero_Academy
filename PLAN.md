@@ -28,7 +28,7 @@ Complete inventory of every PRD/TDD requirement and its current implementation s
 | Page guards on each page | §6.3 | ✅ | All pages guard-redirect to correct prior state |
 | Welcome guard routes to correct state | §6.3 | ✅ | Fixed L6: full state detection (needs_diagnostic / needs_course / in_training) |
 | Dark theme design system | §7 | ✅ | Colors/font moved to `.streamlit/config.toml [theme]`; CSS injection now only for custom HTML components |
-| Responsive layout (desktop-first) | §5.2 | ✅ | Streamlit's native 900px readable-content width accepted; CSS `max-width` override removed |
+| Responsive layout (desktop-first) | §5.2 | ✅ | `layout="wide"` with CSS: `max-width: 1400px` + `width: 100%` + `align-self: flex-start` on `.block-container` — caps edge-to-edge spread on ultra-wide displays while eliminating centering gap (commits 068a2e1, 0d39593) |
 
 ---
 
