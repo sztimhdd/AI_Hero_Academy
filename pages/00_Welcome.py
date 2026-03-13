@@ -442,16 +442,27 @@ _screenshots = {
 for tab, (png_name, gif_name, caption) in _screenshots.items():
     with tab:
         asset_path = None
+        is_gif = False
         if gif_name:
             gif_path = _os.path.join(_BASE, gif_name)
             if _os.path.exists(gif_path):
                 asset_path = gif_path
+                is_gif = True
         if asset_path is None:
             png_path = _os.path.join(_BASE, png_name)
             if _os.path.exists(png_path):
                 asset_path = png_path
         if asset_path:
-            st.image(asset_path, use_container_width=True)
+            if is_gif:
+                import base64 as _b64
+                with open(asset_path, "rb") as _f:
+                    _data = _b64.b64encode(_f.read()).decode()
+                st.markdown(
+                    f'<img src="data:image/gif;base64,{_data}" style="width:100%;border-radius:8px;">',
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.image(asset_path, use_container_width=True)
         else:
             st.info(f"Screenshot not yet captured: `{png_name}`")
         st.markdown(f'<div class="demo-screenshot-caption">{caption}</div>', unsafe_allow_html=True)
