@@ -688,6 +688,40 @@ WHERE user_email = 'uat-test@edc.ca' AND module_sequence_order = 1
 
 ---
 
+#### UAT-17: MK Role Smoke Test — Welcome and Diagnostic Start
+
+**Purpose:** Verify that the Marketing/Comms Advisor role is selectable from the Welcome page and that an MK user can begin the diagnostic flow.
+
+**Pre-conditions:** Run `python scripts/reset_uat_user.py` to wipe the test user before this scenario.
+
+**Steps:**
+
+1. Run `python scripts/reset_uat_user.py`
+2. Navigate to `http://localhost:8501`
+3. Assert: The Welcome page loads
+4. Assert: "AI Hero Academy" text is visible
+5. Locate the role selector dropdown and open it
+6. Assert: **"Marketing/Comms Advisor"** is present as a selectable option
+7. Select "Marketing/Comms Advisor" from the dropdown
+8. Assert: The CTA button ("Start My Diagnostic") becomes enabled
+9. Clear the display name field and type: `UAT Tester MK`
+10. Click "Start My Diagnostic"
+11. Assert: The Diagnostic page loads (question counter or orientation screen visible)
+12. If on an orientation screen, click through to begin
+13. Assert: Question 1 is visible with a domain label/tag
+14. Answer Question 1 (select any radio option or type a short response)
+15. Assert: Question 2 loads successfully (confirms MK diagnostic flow is functional)
+
+**Delta Check — Verify MK profile was created:**
+```sql
+SELECT user_email, role_id, display_name
+FROM mdlg_ai_shared.learner.user_profiles
+WHERE user_email = 'uat-test@edc.ca'
+```
+✅ Expected: 1 row with `role_id = 'mk'` and `display_name = 'UAT Tester MK'`
+
+---
+
 ## 4. Pass/Fail Criteria
 
 ### PASS — All of the following must be true:
@@ -695,6 +729,7 @@ WHERE user_email = 'uat-test@edc.ca' AND module_sequence_order = 1
 - [ ] UAT-01 through UAT-12 completed without unhandled Python exceptions or error messages on the happy path
 - [ ] UAT-13 UW smoke test confirms "Underwriter" is in the role selector
 - [ ] UAT-14 AN smoke test confirms "Analyst" is in the role selector
+- [ ] UAT-17 MK smoke test confirms "Marketing/Comms Advisor" is in the role selector
 - [ ] UAT-15: Home shows all 7 module cards as complete with no locked state; Skills Profile shows Proficient-level score (≥ 3.0)
 - [ ] UAT-16: Module 1 overview CTA reflects completion (not "Start Reading"); Results load without spinner
 - [ ] All Delta checks returned the expected row counts and non-null timestamps
@@ -709,6 +744,7 @@ WHERE user_email = 'uat-test@edc.ca' AND module_sequence_order = 1
 - [ ] Module 2 remains locked (`is_locked = true`) after Module 1 evaluation completes
 - [ ] "Underwriter" is missing from the Welcome page role selector dropdown
 - [ ] "Analyst" is missing from the Welcome page role selector dropdown
+- [ ] "Marketing/Comms Advisor" is missing from the Welcome page role selector dropdown
 - [ ] Navigating away from a partial retake diagnostic wipes completed module progress
 - [ ] UAT-15: Any module card shows a locked state or "Start Module" CTA with `--profile all-done` seeded
 - [ ] UAT-16: Module 1 overview shows "Start Reading" CTA after `--profile m1-done` seed (context-aware CTA not working)
@@ -815,6 +851,7 @@ UAT-13: PASS / FAIL — notes
 UAT-14: PASS / FAIL — notes
 UAT-15: PASS / FAIL — notes
 UAT-16: PASS / FAIL — notes
+UAT-17: PASS / FAIL — notes
 
 OVERALL RESULT: PASS / FAIL
 
