@@ -29,10 +29,19 @@ DOMAIN_TO_COURSE: dict[str, dict[str, str]] = {
         "data_decision":       "uw_c5_data_decision",
         "augmented_comm":      "uw_c6_augmented_comm",
     },
+    "mk": {
+        "responsible_ai":      "mk_c1_responsible_ai",
+        "strategic_prompting": "mk_c2_strategic_prompting",
+        "critical_eval":       "mk_c3_critical_eval",
+        "relationship_intel":  "mk_c4_relationship_intel",
+        "data_decision":       "mk_c5_data_decision",
+        "augmented_comm":      "mk_c6_augmented_comm",
+    },
 }
 CAPSTONE_COURSE_ID: dict[str, str] = {
     "rm": "rm_c7_capstone",
     "uw": "uw_c7_capstone",
+    "mk": "mk_c7_capstone",
 }
 
 
