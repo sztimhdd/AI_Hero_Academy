@@ -16,5 +16,11 @@
     "title": "Underwriter",
     "description": "Underwriters evaluate credit risk, analyze financial statements and borrower data, and make approval/decline/condition decisions on loans and credit insurance. They synthesize financial analysis, policy compliance, and stakeholder context to deliver sound credit decisions supported by clear documentation and audit-ready records. They use AI to accelerate analysis, improve consistency, and maintain compliance with EDC's Responsible AI policy.",
     "department": "Credit & Risk"
+  },
+  "mk": {
+    "role_id": "mk",
+    "title": "Marketing & Communications (Business Partner/Manager Roles)",
+    "description": "Marketing and Communications professionals at EDC develop and execute campaigns, create compelling content, manage stakeholder communications, and drive brand awareness. They synthesize market insights, customer data, and internal strategy to craft targeted messaging across channels. This role requires balancing creative excellence with data-driven decision-making, ensuring all communications are compliant, accurate, and resonate with diverse audiences—often in both English and French.",
+    "department": "Marketing & Communications"
   }
 }

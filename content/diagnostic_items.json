@@ -547,5 +547,607 @@
       "incorrect": 0
     },
     "role_id": "an"
+  },
+  {
+    "item_id": "mk_diag_ra1_mcq",
+    "domain_id": "responsible_ai",
+    "item_type": "mcq",
+    "display_order": 1,
+    "question_text": "Which of the following inputs is SAFE to paste directly into a non-approved external AI tool when drafting a follow-up email campaign?",
+    "scenario_text": "You attended the Northgate Exporters Summit on behalf of your organisation and collected a spreadsheet of 200 leads including names, emails, job titles, company names, and conversation notes. You want to use an AI writing tool to help draft a personalised follow-up email series. You also have access to an internal campaign performance report, a publicly available industry outlook on clean energy exports, and your organisation's approved brand messaging guide (marked 'Internal Use Only').",
+    "options": [
+      {
+        "label": "A",
+        "text": "The publicly available industry outlook on clean energy exports, referenced only for sector context with no lead details included."
+      },
+      {
+        "label": "B",
+        "text": "The full lead spreadsheet, because the contacts gave their business cards voluntarily at the event."
+      },
+      {
+        "label": "C",
+        "text": "The internal campaign performance report, because it contains no client financial data."
+      },
+      {
+        "label": "D",
+        "text": "The brand messaging guide marked 'Internal Use Only', because it will help the AI match your tone."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ra2_sandbox",
+    "domain_id": "responsible_ai",
+    "item_type": "prompt_sandbox",
+    "display_order": 2,
+    "question_text": "Write a prompt you would use in an approved AI tool to draft a follow-up email for trade show leads — without exposing any personally identifiable or non-public information.",
+    "scenario_text": "You collected 200 leads at the Westport Composites trade show. The spreadsheet includes names, emails, job titles, company names, and brief conversation notes. You want to use your organisation's approved AI writing assistant to draft a follow-up email that highlights export financing support for manufacturers. You must not include any personal details, real company names, or unpublished internal data in your prompt.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "PII Exclusion",
+          "description": "The prompt contains no real names, email addresses, company names, or other personally identifiable information from the lead list.",
+          "max": 1
+        },
+        {
+          "name": "Contextual Utility",
+          "description": "The prompt provides enough context (audience type, purpose, key message) for the AI to generate a useful and relevant draft email.",
+          "max": 1
+        },
+        {
+          "name": "Role and Audience Framing",
+          "description": "The prompt clearly specifies the intended audience (e.g. manufacturers exploring export financing) and the desired tone or format.",
+          "max": 1
+        },
+        {
+          "name": "Policy Awareness",
+          "description": "The prompt includes or implies a constraint that keeps the output appropriate for external use (e.g. no confidential claims, no specific financial promises, or a note to flag for review).",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ra3_task",
+    "domain_id": "responsible_ai",
+    "item_type": "micro_task",
+    "display_order": 3,
+    "question_text": "Review the AI prompt below and identify all responsible AI problems. Then rewrite the prompt so it is safe to use in a non-approved external AI tool.",
+    "scenario_text": "A colleague on your marketing team drafted the following prompt to generate a nurture email:\n\n---\n\"Here is our lead list from the Harborview Agri-Tech Expo. Key contacts include Sandra Okonkwo (VP Procurement, Greenfield Grains Ltd, sandra.o@greenfield.ca) and Marcus Tieu (Export Manager, Tieu Family Farms, m.tieu@tieufarms.com). Our internal campaign code is AGRI-Q3-2025 and our target conversion rate is 12% (not yet public). Please write a personalised follow-up email for each contact referencing their conversation notes and encouraging them to book a call with our trade advisor.\"\n---\n\nTask: (1) List every responsible AI problem in this prompt. (2) Rewrite the prompt so it is safe to use while still producing a useful email draft.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification — PII",
+          "description": "Correctly identifies that real names, email addresses, and company names are personally identifiable information that should not be entered into a non-approved external AI tool.",
+          "max": 1
+        },
+        {
+          "name": "Problem Identification — Non-Public Internal Data",
+          "description": "Correctly identifies that the internal campaign code and unpublished conversion rate target are non-public organisational data that must not be shared externally.",
+          "max": 1
+        },
+        {
+          "name": "Rewrite — PII Removed",
+          "description": "The rewritten prompt replaces all real names, emails, and company names with generic descriptors (e.g. 'a VP of Procurement at a mid-sized grain exporter') and removes the internal campaign code and conversion figure.",
+          "max": 1
+        },
+        {
+          "name": "Rewrite — Utility Preserved",
+          "description": "The rewritten prompt still provides sufficient context (audience role, industry, purpose, desired action) for the AI to generate a useful and relevant follow-up email draft.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_sp4_mcq",
+    "domain_id": "strategic_prompting",
+    "item_type": "mcq",
+    "display_order": 4,
+    "question_text": "Which prompting technique would MOST improve the relevance and quality of AI-generated copy for a niche B2B audience?",
+    "scenario_text": "You are developing a content series targeting CFOs at mid-sized Canadian agri-food exporters. You want to use an approved AI writing tool to draft LinkedIn posts that speak directly to this audience's pain points around currency risk and export financing. Your first draft prompt produced generic financial content that did not resonate with the agri-food sector.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Add audience persona details, industry-specific pain points, and a sample tone or example post to the prompt so the AI has richer context to work from."
+      },
+      {
+        "label": "B",
+        "text": "Ask the AI to make the post 'more professional and detailed' without changing any other part of the prompt."
+      },
+      {
+        "label": "C",
+        "text": "Run the same prompt multiple times and select whichever output sounds best."
+      },
+      {
+        "label": "D",
+        "text": "Switch to a different AI tool, since the current one is not capable of producing sector-specific content."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_sp5_sandbox",
+    "domain_id": "strategic_prompting",
+    "item_type": "prompt_sandbox",
+    "display_order": 5,
+    "question_text": "Write a strategic prompt to generate a LinkedIn post targeting a specific B2B audience segment for a trade finance awareness campaign.",
+    "scenario_text": "Your organisation is running a campaign to raise awareness of export credit solutions among operations directors at small and medium-sized Canadian tech hardware manufacturers. You want to use an approved AI tool to draft a LinkedIn post (150–200 words) that speaks to their concern about getting paid on time when selling to international buyers. The post should be informative, not salesy, and end with a soft call to action.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Audience Specificity",
+          "description": "The prompt clearly defines the target audience including their role, industry, and a relevant pain point or concern (e.g. payment risk on international sales).",
+          "max": 1
+        },
+        {
+          "name": "Output Constraints",
+          "description": "The prompt specifies format requirements such as word count, platform (LinkedIn), tone (informative, not salesy), and the desired call to action.",
+          "max": 1
+        },
+        {
+          "name": "Strategic Framing",
+          "description": "The prompt frames the content goal strategically — e.g. building awareness or trust rather than direct selling — and communicates this intent to the AI.",
+          "max": 1
+        },
+        {
+          "name": "Prompt Clarity and Structure",
+          "description": "The prompt is clearly structured, unambiguous, and provides enough context for the AI to produce a relevant first draft without requiring significant follow-up clarification.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_sp6_task",
+    "domain_id": "strategic_prompting",
+    "item_type": "micro_task",
+    "display_order": 6,
+    "question_text": "Analyse the weak prompt below and rewrite it as a high-quality strategic prompt that would produce better marketing copy for the described scenario.",
+    "scenario_text": "A marketing coordinator submitted the following prompt to generate an email for a campaign:\n\n---\n\"Write a marketing email about our services.\"\n---\n\nContext you have available: The email is for a re-engagement campaign targeting lapsed newsletter subscribers who are export managers at Canadian forestry companies. The goal is to remind them of trade risk advisory resources and encourage them to re-subscribe. The tone should be warm and professional, and the email should be under 200 words with a clear CTA button label.\n\nTask: (1) Identify at least three specific weaknesses in the original prompt. (2) Rewrite it as a strategic prompt using the context provided.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Weakness Identification",
+          "description": "Identifies at least three specific weaknesses in the original prompt (e.g. no audience defined, no goal stated, no tone specified, no format constraints, no subject matter context).",
+          "max": 1
+        },
+        {
+          "name": "Audience and Goal in Rewrite",
+          "description": "The rewritten prompt explicitly names the target audience (lapsed subscribers, export managers, forestry sector) and the campaign goal (re-engagement, re-subscription).",
+          "max": 1
+        },
+        {
+          "name": "Tone, Format, and CTA in Rewrite",
+          "description": "The rewritten prompt specifies tone (warm, professional), word limit (under 200 words), and requests a clear CTA button label.",
+          "max": 1
+        },
+        {
+          "name": "Content Direction in Rewrite",
+          "description": "The rewritten prompt directs the AI toward the relevant subject matter — trade risk advisory resources — giving the AI enough substance to produce a relevant and useful draft.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ce7_mcq",
+    "domain_id": "critical_eval",
+    "item_type": "mcq",
+    "display_order": 7,
+    "question_text": "An AI tool has generated a statistic for use in a thought leadership article. What is the MOST appropriate next step before publishing?",
+    "scenario_text": "You asked an approved AI writing assistant to help draft a thought leadership article on supply chain resilience for Canadian exporters. The AI produced the following sentence: 'According to recent industry research, 67% of Canadian SME exporters experienced at least one critical supply chain disruption in the past 18 months.' You do not recognise this statistic from any source you provided, and the AI did not cite a reference.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Verify the statistic against a credible, traceable source before including it; if no source can be confirmed, remove or replace it with a verified figure."
+      },
+      {
+        "label": "B",
+        "text": "Keep the statistic because it sounds plausible and aligns with the article's argument."
+      },
+      {
+        "label": "C",
+        "text": "Add a footnote saying 'Source: AI-generated' so readers know where it came from."
+      },
+      {
+        "label": "D",
+        "text": "Ask the AI to provide its source, and publish the article once the AI confirms the figure."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ce8_sandbox",
+    "domain_id": "critical_eval",
+    "item_type": "prompt_sandbox",
+    "display_order": 8,
+    "question_text": "Write a prompt that instructs an AI tool to help you critically review a draft marketing article for factual accuracy, brand alignment, and potential bias — before it is published.",
+    "scenario_text": "Your team has drafted a 600-word article on the benefits of export credit insurance for Canadian women-owned businesses entering new markets. Before publishing, you want to use an approved AI tool to help you identify any unsupported claims, language that may unintentionally stereotype or exclude, and messaging that may not align with your organisation's inclusive and balanced brand voice. You will still do a final human review, but want AI to flag issues first.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Factual Accuracy Check",
+          "description": "The prompt explicitly asks the AI to flag unsupported claims, unverified statistics, or assertions that would require a cited source.",
+          "max": 1
+        },
+        {
+          "name": "Bias and Inclusivity Check",
+          "description": "The prompt asks the AI to identify language that may stereotype, exclude, or unintentionally marginalise any group, particularly given the article's focus on women-owned businesses.",
+          "max": 1
+        },
+        {
+          "name": "Brand Voice Alignment",
+          "description": "The prompt asks the AI to assess whether the tone and messaging align with a defined brand standard (e.g. inclusive, balanced, professional) rather than just asking for general editing.",
+          "max": 1
+        },
+        {
+          "name": "Human Review Framing",
+          "description": "The prompt frames the AI's role as a first-pass reviewer and either explicitly notes that a human will make final decisions or asks the AI to present findings as suggestions rather than corrections.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ce9_task",
+    "domain_id": "critical_eval",
+    "item_type": "micro_task",
+    "display_order": 9,
+    "question_text": "Review the AI-generated marketing copy excerpt below. Identify all critical evaluation concerns and explain what action should be taken for each.",
+    "scenario_text": "Your AI writing tool produced the following excerpt for a campaign landing page targeting Canadian cleantech exporters:\n\n---\n\"Veridia Trade Solutions has helped over 10,000 Canadian exporters unlock $4.2 billion in new international revenue since 2018. Our AI-powered platform is trusted by virtually every major cleantech firm in Canada. Studies show that companies using trade finance tools grow 3x faster than those that don't. Don't get left behind — join the exporters who are already winning.\"\n---\n\nTask: Identify every critical evaluation concern in this excerpt (e.g. unverified claims, vague language, potentially misleading statements, tone issues) and state what action should be taken for each concern.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Unverified Quantitative Claims",
+          "description": "Identifies that '10,000 exporters', '$4.2 billion', and '3x faster growth' are specific figures with no cited source, and recommends verifying against traceable data or removing/qualifying them.",
+          "max": 2
+        },
+        {
+          "name": "Vague or Misleading Language",
+          "description": "Identifies 'virtually every major cleantech firm' as an unsubstantiated superlative and 'studies show' as a vague attribution, and recommends replacing with specific, verifiable references or removing the claims.",
+          "max": 1
+        },
+        {
+          "name": "Tone and Brand Alignment",
+          "description": "Flags 'Don't get left behind' and 'already winning' as fear-based or competitive language that may not align with a professional, inclusive brand voice, and recommends revising to a more empowering or informative tone.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ri10_mcq",
+    "domain_id": "relationship_intel",
+    "item_type": "mcq",
+    "display_order": 10,
+    "question_text": "How should a marketing manager BEST use AI to prepare for a stakeholder briefing with a key regional partner, while respecting information boundaries?",
+    "scenario_text": "You are preparing for a quarterly briefing with Meridian Trade Alliance, a regional industry association that co-promotes your organisation's export programs to its 500+ member companies. You want to use AI to help you prepare talking points, anticipate their questions, and identify opportunities to deepen the partnership. You have access to publicly available information about Meridian, your organisation's internal partnership notes (marked confidential), and past co-branded campaign results.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Use AI to synthesise publicly available information about Meridian and draft talking points and anticipated questions, keeping internal confidential notes out of any non-approved AI tool."
+      },
+      {
+        "label": "B",
+        "text": "Paste the full internal partnership notes into the AI tool so it can generate the most personalised and accurate briefing preparation possible."
+      },
+      {
+        "label": "C",
+        "text": "Skip AI preparation entirely for stakeholder briefings, as relationship intelligence is too sensitive for AI involvement."
+      },
+      {
+        "label": "D",
+        "text": "Use AI to draft a script for the entire meeting and read from it verbatim to ensure consistency."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ri11_sandbox",
+    "domain_id": "relationship_intel",
+    "item_type": "prompt_sandbox",
+    "display_order": 11,
+    "question_text": "Write a prompt to help you use AI to prepare personalised outreach messaging for a key industry partner, based only on publicly available information.",
+    "scenario_text": "You are preparing outreach to Cascadia Exporters Network, a regional trade association whose members are primarily small and medium-sized manufacturers in the Pacific region. You want to invite them to co-host a webinar on accessing international markets. You have reviewed their public website, recent press releases, and their published annual priorities. You want AI to help you draft a personalised outreach email that references their known priorities and frames the webinar as mutually beneficial — without using any internal CRM notes or confidential relationship history.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Public Information Grounding",
+          "description": "The prompt explicitly states that the AI should base its output only on publicly available information provided in the prompt (e.g. website priorities, press releases) and does not reference or request use of internal CRM or confidential data.",
+          "max": 1
+        },
+        {
+          "name": "Partner Personalisation",
+          "description": "The prompt includes specific details about the partner's known public priorities or audience so the AI can tailor the outreach meaningfully rather than producing a generic invitation.",
+          "max": 1
+        },
+        {
+          "name": "Mutual Benefit Framing",
+          "description": "The prompt instructs the AI to frame the webinar invitation in terms of value for both parties, not just as a promotional ask.",
+          "max": 1
+        },
+        {
+          "name": "Tone and Format Guidance",
+          "description": "The prompt specifies the desired tone (e.g. collegial, professional) and format (e.g. email, approximate length, key sections) to guide the AI toward a usable output.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ri12_task",
+    "domain_id": "relationship_intel",
+    "item_type": "micro_task",
+    "display_order": 12,
+    "question_text": "Review the AI-assisted partner briefing note below. Identify any relationship intelligence concerns and suggest specific improvements.",
+    "scenario_text": "A colleague used an AI tool to draft the following briefing note ahead of a meeting with Pinnacle Agri-Export Council, a key industry association partner:\n\n---\n**Partner Briefing: Pinnacle Agri-Export Council**\nPinnacle represents approximately 300 agri-food exporters. They are probably interested in trade finance because most small exporters struggle with cash flow. Their leadership likely wants more visibility for their association. We should offer them a co-branding deal and mention that our last partner, Harborview Growers Alliance, was very happy with the arrangement. Use this to pressure them into agreeing quickly.\n---\n\nTask: Identify all relationship intelligence concerns in this briefing note (e.g. assumptions presented as facts, inappropriate references, problematic tactics) and recommend specific corrections for each.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Assumption vs. Evidence",
+          "description": "Identifies that 'probably interested' and 'likely wants' are unverified assumptions presented as intelligence, and recommends grounding claims in confirmed public information or flagging them as hypotheses to be validated.",
+          "max": 1
+        },
+        {
+          "name": "Inappropriate Partner Reference",
+          "description": "Identifies that referencing Harborview Growers Alliance's satisfaction without their consent may breach confidentiality or relationship trust, and recommends removing or obtaining permission before referencing other partners.",
+          "max": 1
+        },
+        {
+          "name": "Problematic Negotiation Tactic",
+          "description": "Identifies 'pressure them into agreeing quickly' as an inappropriate and potentially relationship-damaging tactic, and recommends replacing it with a collaborative, value-based engagement approach.",
+          "max": 1
+        },
+        {
+          "name": "Overall Briefing Quality",
+          "description": "Recommends that the briefing note be revised to reflect verified public information, a respectful partnership framing, and a clear mutual-value proposition before the meeting.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_dd13_mcq",
+    "domain_id": "data_decision",
+    "item_type": "mcq",
+    "display_order": 13,
+    "question_text": "A marketing manager wants to use AI to analyse campaign performance data and recommend budget reallocation. Which approach BEST reflects sound data-informed decision-making?",
+    "scenario_text": "Your team ran a multi-channel awareness campaign last quarter across email, LinkedIn, and webinars. You have a dashboard showing open rates, click-through rates, registration numbers, and cost-per-lead for each channel. You want to use an approved AI tool to help interpret the data and recommend where to shift budget for the next quarter. The AI produces a recommendation to cut the webinar budget by 40% and double LinkedIn spend.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Use the AI recommendation as a starting point, but cross-check it against your strategic priorities, audience quality data, and any contextual factors the AI may not have had access to before making a final decision."
+      },
+      {
+        "label": "B",
+        "text": "Implement the AI recommendation immediately, since it is based on the full dataset and is therefore more objective than human judgement."
+      },
+      {
+        "label": "C",
+        "text": "Reject the AI recommendation entirely, because budget decisions should never involve AI analysis."
+      },
+      {
+        "label": "D",
+        "text": "Ask the AI to run the analysis again with a different prompt until it recommends keeping the current budget allocation."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_dd14_sandbox",
+    "domain_id": "data_decision",
+    "item_type": "prompt_sandbox",
+    "display_order": 14,
+    "question_text": "Write a prompt to help you use AI to interpret campaign performance data and surface insights to inform a budget recommendation — without uploading raw data files.",
+    "scenario_text": "You have just completed a quarter-long lead generation campaign targeting Canadian agri-food exporters across three channels: email newsletter (2,400 sends, 18% open rate, 3.2% CTR, 42 leads, $28 cost-per-lead), LinkedIn sponsored posts (budget $4,000, 310 clicks, 18 leads, $222 cost-per-lead), and a virtual roundtable event (80 registrants, 54 attendees, 12 qualified leads, $167 cost-per-lead). You want to use an approved AI tool to help you interpret these results and draft a data-informed recommendation for next quarter's budget split. You will type the data directly into the prompt rather than uploading any files.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Data Inclusion in Prompt",
+          "description": "The prompt includes the key performance figures typed directly (not as a file upload), giving the AI sufficient data to perform a meaningful comparison across channels.",
+          "max": 1
+        },
+        {
+          "name": "Analytical Task Clarity",
+          "description": "The prompt clearly asks the AI to compare channel efficiency (e.g. cost-per-lead, lead quality indicators) and identify which channels performed best relative to the campaign goal.",
+          "max": 1
+        },
+        {
+          "name": "Decision Support Framing",
+          "description": "The prompt asks the AI to produce a recommendation or options for budget reallocation, framed as input for human decision-making rather than a final directive.",
+          "max": 1
+        },
+        {
+          "name": "Contextual Constraints",
+          "description": "The prompt includes at least one contextual constraint or consideration for the AI to factor in (e.g. audience quality, strategic priorities, channel fit for the target segment).",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_dd15_task",
+    "domain_id": "data_decision",
+    "item_type": "micro_task",
+    "display_order": 15,
+    "question_text": "Review the AI-generated campaign insight summary below. Identify any data interpretation problems and explain what a more rigorous analysis would consider.",
+    "scenario_text": "A marketing analyst used an AI tool to summarise campaign results and produced the following insight note:\n\n---\n**Q2 Campaign Insight Summary**\nThe email channel was the clear winner this quarter with the highest number of leads (42). LinkedIn underperformed with only 18 leads and should be cut from next quarter's plan. The virtual roundtable was average. Overall, the campaign was a success because we exceeded our lead volume target of 60 leads (actual: 72 leads total).\n---\n\nTask: Identify all data interpretation problems in this summary and explain what a more rigorous, data-informed analysis would need to consider.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Cost Efficiency Omission",
+          "description": "Identifies that the summary judges channel performance by lead volume alone without considering cost-per-lead (email: $28, LinkedIn: $222, roundtable: $167), which significantly changes the relative performance picture.",
+          "max": 1
+        },
+        {
+          "name": "Lead Quality Not Considered",
+          "description": "Identifies that raw lead counts do not reflect lead quality or conversion potential, and that the roundtable's 12 'qualified leads' may represent higher value than the email channel's 42 unqualified leads.",
+          "max": 1
+        },
+        {
+          "name": "Premature Channel Elimination",
+          "description": "Identifies that recommending LinkedIn be cut based on one quarter of volume data is premature without considering audience reach, brand awareness value, or longer-term pipeline contribution.",
+          "max": 1
+        },
+        {
+          "name": "Success Metric Limitation",
+          "description": "Identifies that declaring the campaign 'a success' solely because total lead volume exceeded target ignores other dimensions such as cost efficiency, lead quality, and channel mix effectiveness.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ac16_mcq",
+    "domain_id": "augmented_comm",
+    "item_type": "mcq",
+    "display_order": 16,
+    "question_text": "Which approach BEST describes how AI should be used to enhance — rather than replace — a marketing manager's communication of a complex policy message to an external audience?",
+    "scenario_text": "Your organisation is launching a new export guarantee program with several eligibility conditions and application steps. You need to communicate this to a broad audience of Canadian SME exporters through a blog post, a social media series, and an FAQ document. You have a detailed internal policy brief that explains the program accurately but is written in technical language. You want to use AI to help produce the external-facing communications.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Use AI to translate the technical policy brief into plain-language drafts for each format, then review and edit each output to ensure accuracy, appropriate tone, and alignment with approved messaging before publishing."
+      },
+      {
+        "label": "B",
+        "text": "Publish the AI-generated drafts directly without review, since the AI was given the accurate source document."
+      },
+      {
+        "label": "C",
+        "text": "Use AI only to check spelling and grammar, and write all substantive content manually to avoid any risk of inaccuracy."
+      },
+      {
+        "label": "D",
+        "text": "Ask the AI to simplify the policy brief into one universal message and use that single message across all three formats without adaptation."
+      }
+    ],
+    "correct_option": "A",
+    "scoring_rubric": {
+      "correct": 4,
+      "incorrect": 0
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ac17_sandbox",
+    "domain_id": "augmented_comm",
+    "item_type": "prompt_sandbox",
+    "display_order": 17,
+    "question_text": "Write a prompt to use AI to adapt a technical program description into an engaging, plain-language social media post for a specific audience.",
+    "scenario_text": "Your organisation has just launched the Accelerate Export Guarantee Program, which provides up to $2M in credit guarantees for eligible Canadian SMEs exporting to emerging markets. The internal program description is written in policy language and includes terms like 'obligor risk threshold', 'indemnification ceiling', and 'drawdown conditions'. You want to use an approved AI tool to adapt this into a LinkedIn post (under 150 words) for an audience of first-time exporters who are unfamiliar with trade finance terminology. The post should be encouraging, jargon-free, and end with a clear call to action to learn more.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Plain Language Instruction",
+          "description": "The prompt explicitly instructs the AI to avoid jargon or technical trade finance terms and to use plain, accessible language appropriate for first-time exporters.",
+          "max": 1
+        },
+        {
+          "name": "Audience and Platform Fit",
+          "description": "The prompt specifies the target audience (first-time exporters, unfamiliar with trade finance) and the platform (LinkedIn), enabling the AI to calibrate tone and format appropriately.",
+          "max": 1
+        },
+        {
+          "name": "Key Message Preservation",
+          "description": "The prompt includes the core program details (credit guarantee, up to $2M, Canadian SMEs, emerging markets) so the AI can produce an accurate and informative post rather than a vague one.",
+          "max": 1
+        },
+        {
+          "name": "Format and CTA Requirements",
+          "description": "The prompt specifies the word limit (under 150 words), desired tone (encouraging), and the requirement for a clear call to action at the end.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
+  },
+  {
+    "item_id": "mk_diag_ac18_task",
+    "domain_id": "augmented_comm",
+    "item_type": "micro_task",
+    "display_order": 18,
+    "question_text": "Review the AI-generated communications excerpt below. Identify all augmented communication problems and rewrite the excerpt to address them.",
+    "scenario_text": "A marketing coordinator used an AI tool to draft the following LinkedIn post to announce a new export advisory service:\n\n---\n\"Attention exporters. Our new service will solve all your international trade problems. Whether you're dealing with currency issues, buyer defaults, or regulatory nightmares, we have the answer. Every exporter who has used our advisory services has seen significant improvements. Book a call today and transform your export business forever.\"\n---\n\nTask: (1) Identify all augmented communication problems in this post (e.g. overclaiming, vague language, tone issues, unverifiable assertions). (2) Rewrite the post as a concise, credible, and audience-appropriate LinkedIn announcement of approximately 80–100 words.",
+    "options": null,
+    "correct_option": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Identifies at least three specific problems: overclaiming ('solve all your problems', 'transform your export business forever'), unverifiable universal assertion ('every exporter has seen significant improvements'), vague benefit language, and/or an alarmist tone ('regulatory nightmares') inconsistent with a professional brand voice.",
+          "max": 2
+        },
+        {
+          "name": "Rewrite — Credibility and Accuracy",
+          "description": "The rewritten post removes overclaims and unverifiable assertions, replacing them with specific, honest, and credible language about what the advisory service offers.",
+          "max": 1
+        },
+        {
+          "name": "Rewrite — Tone, Format, and CTA",
+          "description": "The rewritten post uses a professional and encouraging tone appropriate for LinkedIn, stays within approximately 80–100 words, and includes a clear and proportionate call to action.",
+          "max": 1
+        }
+      ]
+    },
+    "role_id": "mk"
   }
 ]

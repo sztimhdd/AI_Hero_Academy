@@ -1909,5 +1909,558 @@
         "key4": "The response correctly applies RELATE at Stage 4 (CFO communication) and the surface-matching principle across all stages — for RELATE, demonstrating that the AI prompt for the information request letter includes constraints preventing internal logic from leaking and is designed to manage the CFO's known tendency to push back; for surface-matching, identifying the appropriate Copilot surface for each stage and describing the handoff verification check that ensures internal-only content does not migrate into the external-facing CFO communication or the final credit recommendation."
       }
     }
+  ],
+  "mk_c1_responsible_ai": [
+    {
+      "item_id": "ev_mk_c1_responsible_ai_q1",
+      "course_id": "mk_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the SAFE Abstraction Method, what is the correct first step a marketer should take before entering campaign data into a generative AI tool?",
+      "scenario_text": null,
+      "options": {
+        "A": "Feed the data directly into Copilot to save time",
+        "B": "Spot the sensitive or identifying information in the data",
+        "C": "Examine the AI output for accuracy before sharing",
+        "D": "Abstract all numerical figures into rounded estimates"
+      },
+      "correct_option": "B",
+      "explanation": "The SAFE method begins with 'S' — Spot — meaning the marketer must first identify any sensitive or identifying information in the data before taking any further action. This is the foundational step that makes the rest of the method possible.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c1_responsible_ai_q2",
+      "course_id": "mk_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "A marketer wants to use Copilot to draft a follow-up email sequence using a trade show lead list that includes real names, email addresses, and company details. According to the SAFE Abstraction Method, what should the marketer do with this list before prompting Copilot?",
+      "scenario_text": null,
+      "options": {
+        "A": "Paste the full list into the prompt to give Copilot maximum context",
+        "B": "Only include the company names and remove personal emails",
+        "C": "Abstract the real identifiers by replacing them with generic placeholders",
+        "D": "Ask a colleague to review the list before submitting it to Copilot"
+      },
+      "correct_option": "C",
+      "explanation": "The 'A' step in SAFE stands for Abstract — replacing real names, emails, and other identifying details with generic placeholders before feeding the data into the AI tool. This protects personal information while still allowing Copilot to generate useful content.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c1_responsible_ai_q3",
+      "course_id": "mk_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "Which of the following types of data does the reading explicitly identify as information that must never leave an organization's secure environment when using generative AI tools?",
+      "scenario_text": null,
+      "options": {
+        "A": "Publicly available competitor pricing and industry benchmarks",
+        "B": "Unreleased product details, customer contact records, and private campaign metrics",
+        "C": "General marketing best practices and channel strategy frameworks",
+        "D": "Approved brand guidelines and published case studies"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly lists unreleased product details, customer contact records, trade show lead lists, and private campaign metrics as examples of data that must never leave the organization's secure environment when using generative AI tools.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c1_responsible_ai_q4",
+      "course_id": "mk_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the SAFE Abstraction Method to the scenario below. Write a response that demonstrates each step of the method and explains what you would do at each stage.",
+      "scenario_text": "You are a Marketing Manager at Westport Composites Ltd. Your team has just completed a customer satisfaction survey. The results file contains customer names, email addresses, Net Promoter Scores, and verbatim comments — some of which reference confidential product quality issues that have not yet been publicly disclosed. Your director has asked you to use Copilot to draft a summary report and a customer communication based on these survey results.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response correctly identifies the Spot step — explicitly naming the sensitive elements in the scenario (customer names, email addresses, NPS scores, and confidential product quality comments) as information that must be flagged before proceeding.",
+        "key2": "The response correctly describes the Abstract step — explaining how real customer names, emails, and identifying details would be replaced with generic placeholders (e.g., 'Customer A', 'respondent') and how confidential product issues would be removed or generalized before prompting Copilot.",
+        "key3": "The response correctly describes the Feed step — demonstrating how the abstracted, de-identified data would be entered into Copilot to generate the summary report and customer communication draft.",
+        "key4": "The response correctly describes the Examine step — explaining that the AI output must be reviewed to ensure no real identifiers or confidential details have re-appeared, and that the content is accurate and appropriate before it is shared with any audience."
+      }
+    }
+  ],
+  "mk_c2_strategic_prompting": [
+    {
+      "item_id": "ev_mk_c2_strategic_prompting_q1",
+      "course_id": "mk_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the CRAF framework, what does the 'R' component require a marketer to specify in a prompt to Copilot?",
+      "scenario_text": null,
+      "options": {
+        "A": "The required word count and formatting rules for the output",
+        "B": "The role or persona Copilot should adopt when generating the content",
+        "C": "The research sources Copilot should reference for accuracy",
+        "D": "The review process the content will go through after generation"
+      },
+      "correct_option": "B",
+      "explanation": "In the CRAF framework, 'R' stands for Role — the marketer instructs Copilot to adopt a specific persona or professional role (e.g., 'act as a B2B content strategist') so the tone and expertise of the output match the intended purpose.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c2_strategic_prompting_q2",
+      "course_id": "mk_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "A marketer writes the following prompt: 'Write something about our new product launch.' According to the CRAF framework, what is the PRIMARY problem with this prompt?",
+      "scenario_text": null,
+      "options": {
+        "A": "It does not specify a word count or character limit",
+        "B": "It is missing Context, Role, Action, and Format — all four CRAF components",
+        "C": "It uses informal language that Copilot cannot interpret",
+        "D": "It should be submitted in bullet-point form rather than as a sentence"
+      },
+      "correct_option": "B",
+      "explanation": "The CRAF framework requires all four components — Context, Role, Action, and Format — to be present for Copilot to produce targeted, on-brand, channel-ready copy. The example prompt provides none of these elements, leaving Copilot without the information it needs to generate a usable output.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c2_strategic_prompting_q3",
+      "course_id": "mk_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading, what is the intended outcome of using the CRAF framework when prompting Copilot for marketing content?",
+      "scenario_text": null,
+      "options": {
+        "A": "To eliminate the need for any human editing or review of AI-generated content",
+        "B": "To produce targeted, on-brand, channel-ready copy that the marketer polishes rather than rebuilds",
+        "C": "To ensure Copilot searches the internet for the most current marketing trends",
+        "D": "To reduce the number of prompts needed by automating the briefing process"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states that CRAF is designed to deliver 'targeted, on-brand, channel-ready copy that you polish — not rebuild,' meaning the framework aims to get a usable first draft that requires refinement rather than a complete redo.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c2_strategic_prompting_q4",
+      "course_id": "mk_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Using the CRAF framework, write a complete, well-structured prompt for the scenario below. Then briefly explain how each of the four CRAF components is represented in your prompt.",
+      "scenario_text": "You are a Marketing Communications Manager at BrightWave Electronics Inc., a B2B manufacturer of smart building sensors. BrightWave is launching a new energy-monitoring sensor aimed at facilities managers in the commercial real estate sector. You need Copilot to draft a LinkedIn post announcing the product launch that highlights energy savings, is professional in tone, and drives traffic to the product landing page.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The prompt includes a clear Context component — setting the scene by identifying BrightWave Electronics Inc., the product (energy-monitoring sensor), and the target audience (facilities managers in commercial real estate).",
+        "key2": "The prompt includes a clear Role component — instructing Copilot to adopt a specific persona appropriate to the task (e.g., 'act as a B2B LinkedIn content specialist' or similar professional role).",
+        "key3": "The prompt includes a clear Action component — specifying what Copilot must do (e.g., 'write a LinkedIn post announcing the product launch that highlights energy savings and includes a call to action linking to the product landing page').",
+        "key4": "The prompt includes a clear Format component — specifying the output format appropriate for LinkedIn (e.g., character or word count, use of emojis or hashtags, paragraph structure) and the learner's explanation correctly maps all four CRAF elements to their prompt."
+      }
+    }
+  ],
+  "mk_c3_critical_eval": [
+    {
+      "item_id": "ev_mk_c3_critical_eval_q1",
+      "course_id": "mk_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, why is speed without scrutiny described as a 'liability' for Marketing & Communications professionals using AI tools?",
+      "scenario_text": null,
+      "options": {
+        "A": "Because AI tools are too slow to meet real marketing deadlines without human acceleration",
+        "B": "Because inaccurate statistics, invented quotes, or confidential details in public content can damage credibility and cause harm",
+        "C": "Because AI-generated content always requires complete rewriting before it can be used",
+        "D": "Because Copilot cannot process marketing briefs longer than ten pages"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that 'a single inaccurate statistic, an invented quote, or a confidential detail slipping into a public post can damage credibility,' which is why speed without scrutiny is a liability — the risk is reputational and organizational harm from unreviewed AI output.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c3_critical_eval_q2",
+      "course_id": "mk_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "The VERIFY Checklist is designed to be applied at what point in the content creation process, according to the reading?",
+      "scenario_text": null,
+      "options": {
+        "A": "Before writing the prompt, to ensure the brief is complete",
+        "B": "During the AI generation process, to guide Copilot's output in real time",
+        "C": "After AI generates a recap or draft, before any word reaches the audience",
+        "D": "Only when the content contains statistical data or financial figures"
+      },
+      "correct_option": "C",
+      "explanation": "The reading's takeaway states that every AI-generated recap or draft must be run through the VERIFY Checklist 'before a single word reaches your audience,' making it a post-generation, pre-publication review step.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c3_critical_eval_q3",
+      "course_id": "mk_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading, which of the following is explicitly listed as one of the elements the VERIFY Checklist requires marketers to check in AI-generated content?",
+      "scenario_text": null,
+      "options": {
+        "A": "SEO keyword density and meta description accuracy",
+        "B": "Facts, tone, accuracy, missing elements, and confidential details",
+        "C": "Word count compliance and brand font usage",
+        "D": "Social media platform algorithm compatibility"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that the VERIFY Checklist covers 'facts, tone, accuracy, missing elements, and confidential details' — these are the five dimensions a marketer must review in every AI-generated draft before publication.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c3_critical_eval_q4",
+      "course_id": "mk_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the VERIFY Checklist to the AI-generated content described in the scenario below. Write a structured evaluation that addresses each element of the checklist and identifies any issues that must be resolved before the content is published.",
+      "scenario_text": "You are a Communications Manager at Lakeview Foods Inc. Copilot has generated a press release announcing a new line of plant-based snacks. The draft includes a statistic claiming '78% of consumers prefer plant-based snacks over traditional options' — you cannot find the original source for this figure. The draft also quotes your CEO saying 'This is the most significant product launch in our company's 30-year history' — but you have no record of the CEO making this statement. Additionally, the draft mentions that Lakeview Foods is currently in merger discussions with a regional distributor, which is confidential and has not been publicly disclosed. The tone throughout is enthusiastic but borders on hyperbolic.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response identifies the facts issue — flagging the unsourced '78%' statistic as unverified and explaining that it must be traced to a credible, citable source or removed from the draft before publication.",
+        "key2": "The response identifies the accuracy issue — flagging the unverified CEO quote as a potential invented or hallucinated attribution and explaining that it must be confirmed directly with the CEO or removed.",
+        "key3": "The response identifies the confidential details issue — flagging the mention of merger discussions as confidential, non-public information that must be removed entirely from the press release before it is distributed.",
+        "key4": "The response identifies the tone issue — noting that the hyperbolic language poses a credibility risk and recommending specific revisions to bring the tone in line with professional, factual communications standards, demonstrating application of the full VERIFY Checklist."
+      }
+    }
+  ],
+  "mk_c4_relationship_intel": [
+    {
+      "item_id": "ev_mk_c4_relationship_intel_q1",
+      "course_id": "mk_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what is the core challenge the TAILOR Approach is designed to solve for account-based marketers?",
+      "scenario_text": null,
+      "options": {
+        "A": "Reducing the time it takes to design visual assets for personalized campaigns",
+        "B": "Achieving personalized outreach at scale without leaking confidential information into AI tools",
+        "C": "Automating the full outreach process so marketers can focus on strategy",
+        "D": "Ensuring AI-generated emails comply with data privacy regulations in each market"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that the challenge TAILOR addresses is 'doing this at scale without leaking confidential information into AI tools' — the framework balances the need for personalization with the requirement to keep sensitive data out of AI systems.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c4_relationship_intel_q2",
+      "course_id": "mk_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "According to the TAILOR Approach, what type of information should be used when prompting AI to research and draft personalized outreach content?",
+      "scenario_text": null,
+      "options": {
+        "A": "Internal CRM notes and private account history to maximize personalization",
+        "B": "Only publicly available information, with human relationship context added afterward",
+        "C": "A combination of public and confidential data, clearly labeled in the prompt",
+        "D": "Anonymized versions of all account data, including internal deal stages"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states: 'Use AI to research and draft with public information only, then layer in your human knowledge and relationship context afterward.' This sequencing is the defining principle of the TAILOR Approach.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c4_relationship_intel_q3",
+      "course_id": "mk_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading, why is generic outreach described as 'noise' in account-based marketing?",
+      "scenario_text": null,
+      "options": {
+        "A": "Because it is too expensive to produce at scale compared to personalized content",
+        "B": "Because AI tools cannot generate generic content as effectively as personalized content",
+        "C": "Because personalized outreach grounded in real insight about a prospect's world is what earns attention",
+        "D": "Because generic outreach violates most B2B email marketing compliance standards"
+      },
+      "correct_option": "C",
+      "explanation": "The reading contrasts generic outreach (described as 'noise') with 'personalized outreach — grounded in real insight about a prospect's world — which is what earns attention,' establishing that relevance and insight are what differentiate effective ABM outreach.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c4_relationship_intel_q4",
+      "course_id": "mk_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the TAILOR Approach to the scenario below. Write a response that demonstrates how you would use AI to build personalized outreach for this account while keeping confidential information protected.",
+      "scenario_text": "You are an Account-Based Marketing Manager at Montane Aerospace Corp. You are preparing a personalized outreach campaign targeting a key prospect: a large regional airline that has recently announced a fleet modernization program (this was covered in aviation trade press). Your internal CRM shows that Montane had an unsuccessful sales conversation with this airline 18 months ago due to pricing concerns, and your sales director has a personal relationship with the airline's VP of Procurement. You need to use Copilot to research the prospect and draft an initial outreach email.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response correctly identifies what information is safe to feed into Copilot — specifically the publicly available fleet modernization announcement from trade press — and explains why this public information can be used in AI prompts without risk.",
+        "key2": "The response correctly identifies what information must NOT be entered into Copilot — the internal CRM notes about the failed sales conversation, pricing concerns, and the sales director's personal relationship — and explains that this confidential relationship context must be kept out of AI tools.",
+        "key3": "The response demonstrates how Copilot would be prompted using only public information to research the prospect and generate a draft outreach email (e.g., referencing the fleet modernization program and Montane's relevant capabilities).",
+        "key4": "The response explains how the human relationship context (prior conversation history, pricing sensitivity, personal connection to the VP of Procurement) would be layered into the final email by the marketer after Copilot produces the draft — demonstrating the TAILOR principle of AI-first drafting followed by human personalization."
+      }
+    }
+  ],
+  "mk_c5_data_decision": [
+    {
+      "item_id": "ev_mk_c5_data_decision_q1",
+      "course_id": "mk_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what problem does the DECIDE Framework solve for marketers using AI tools like Copilot in Excel and Power BI?",
+      "scenario_text": null,
+      "options": {
+        "A": "It automates the creation of campaign dashboards so marketers can focus on creative work",
+        "B": "It ensures AI-generated marketing insights are defined, verified, and contextualised before driving budget or strategy decisions",
+        "C": "It replaces the need for a data analyst by allowing marketers to interpret raw data independently",
+        "D": "It standardizes the visual format of marketing reports across all business units"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states that the DECIDE Framework ensures 'every AI-generated marketing insight is defined, verified, and contextualised before it drives a budget or strategy decision' — addressing the risk of speed without structure leading to bad decisions.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c5_data_decision_q2",
+      "course_id": "mk_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "According to the reading, what recurring pressure does the DECIDE Framework help marketers address each quarter?",
+      "scenario_text": null,
+      "options": {
+        "A": "Producing enough creative content variations to satisfy A/B testing requirements",
+        "B": "Turning a spreadsheet full of campaign metrics into a clear story and a smarter plan",
+        "C": "Reducing the cost per lead across all digital marketing channels simultaneously",
+        "D": "Aligning marketing KPIs with finance department reporting cycles"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly describes the quarterly pressure as needing to 'turn a spreadsheet full of campaign metrics into a clear story and a smarter plan' — this is the specific challenge the DECIDE Framework is designed to address.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c5_data_decision_q3",
+      "course_id": "mk_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading, what is the risk of using AI tools like Copilot in Excel and Power BI without a structured framework like DECIDE?",
+      "scenario_text": null,
+      "options": {
+        "A": "The AI will generate visualizations that are incompatible with standard presentation software",
+        "B": "Speed without structure leads to bad decisions",
+        "C": "The AI will surface only historical trends and miss forward-looking projections",
+        "D": "Marketers will over-rely on AI and lose their analytical skills over time"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly warns that 'speed without structure leads to bad decisions' when using AI tools to analyze campaign metrics — this is the core risk the DECIDE Framework is designed to mitigate.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c5_data_decision_q4",
+      "course_id": "mk_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the DECIDE Framework to the scenario below. Write a structured response that demonstrates how you would use the framework to move from raw AI-generated data insights to a sound marketing decision.",
+      "scenario_text": "You are a Marketing Manager at Atlas Marine Equipment Co. At the end of Q3, you ask Copilot in Excel to analyze your campaign performance data. Copilot surfaces the following insight: 'Email campaigns targeting port operations managers generated a 42% higher click-through rate than campaigns targeting procurement managers this quarter.' Your director wants to reallocate 30% of the Q4 digital budget away from procurement-focused campaigns and toward port operations audiences based on this finding alone. You need to apply the DECIDE Framework before recommending whether to proceed with this budget shift.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response demonstrates the Define step — clearly articulating the specific decision to be made (whether to reallocate 30% of Q4 digital budget to port operations audiences) and the question the data must answer to support that decision.",
+        "key2": "The response demonstrates the verify step — questioning whether the AI-generated 42% CTR difference is statistically meaningful, checking the sample size, time period, and whether the data is complete and accurate before treating it as a reliable signal.",
+        "key3": "The response demonstrates the contextualise step — considering factors beyond the raw metric that could explain the difference (e.g., seasonal buying cycles, campaign creative differences, list quality) and whether those factors affect the validity of the insight for Q4 planning.",
+        "key4": "The response arrives at a structured recommendation — either supporting, modifying, or rejecting the proposed budget reallocation — with clear reasoning that shows the decision is grounded in the verified and contextualised insight rather than the raw AI output alone, demonstrating the full DECIDE process."
+      }
+    }
+  ],
+  "mk_c6_augmented_comm": [
+    {
+      "item_id": "ev_mk_c6_augmented_comm_q1",
+      "course_id": "mk_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what is the key principle a marketer should apply before writing any prompt when using M365 Copilot across multiple tools?",
+      "scenario_text": null,
+      "options": {
+        "A": "Always start in Microsoft Word before moving to any other M365 application",
+        "B": "Pause and ask which M365 Copilot surface is optimised for the specific step being performed",
+        "C": "Use the same prompt across all M365 tools to ensure consistency of output",
+        "D": "Prioritize speed by selecting whichever tool is already open on your desktop"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states: 'Before you prompt, pause and ask which M365 Copilot surface is optimised for this specific step — research, drafting, translation, or distribution.' Matching the tool to the task is the central principle of the course.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c6_augmented_comm_q2",
+      "course_id": "mk_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "According to the reading, which of the following best illustrates the complexity of a single marketing deliverable that requires multiple M365 Copilot surfaces?",
+      "scenario_text": null,
+      "options": {
+        "A": "A social media calendar built entirely within Microsoft Excel",
+        "B": "A bilingual client email about a market disruption requiring intelligence gathering, drafting, translation, and formatting for distribution",
+        "C": "A product brochure designed in PowerPoint using Copilot's image generation feature",
+        "D": "A weekly internal newsletter drafted in Microsoft Word and distributed via SharePoint"
+      },
+      "correct_option": "B",
+      "explanation": "The reading uses the specific example of 'a bilingual client email about a market disruption' that requires gathering intelligence, drafting copy, translating it, and formatting it for distribution — explicitly illustrating how a single deliverable can span multiple M365 Copilot surfaces.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c6_augmented_comm_q3",
+      "course_id": "mk_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading, what is the result of matching the right M365 Copilot tool to the right task in a communications workflow?",
+      "scenario_text": null,
+      "options": {
+        "A": "It eliminates the need for human review before the communication is sent",
+        "B": "It turns a generic AI output into a polished, bilingual communication ready to send",
+        "C": "It allows the marketer to complete the entire workflow within a single M365 application",
+        "D": "It ensures the communication automatically complies with regional language regulations"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway states that matching the tool to the task 'is what turns a generic AI output into a polished, bilingual communication ready to send' — the quality improvement comes specifically from deliberate tool selection at each workflow stage.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c6_augmented_comm_q4",
+      "course_id": "mk_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Apply the M365 Copilot multi-surface workflow principle to the scenario below. Write a response that maps each stage of the communication task to the most appropriate M365 Copilot surface and explains why each tool is the right choice for that step.",
+      "scenario_text": "You are a Marketing Communications Manager at NovaTech Innovations Inc., a technology solutions provider. A major supply chain disruption has affected one of NovaTech's key product lines, and you need to communicate proactively with your top 50 enterprise clients in both English and French. The communication must: (1) summarize the disruption and its likely impact on delivery timelines, (2) reassure clients with a clear mitigation plan, (3) be translated accurately into French, and (4) be distributed to the correct client contacts via email. You are working under a tight two-hour deadline.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response identifies an appropriate M365 Copilot surface for the intelligence-gathering or research step (e.g., Copilot in Teams or Copilot in Bing/Edge to gather information about the disruption and its scope) and explains why this tool is suited to that task.",
+        "key2": "The response identifies an appropriate M365 Copilot surface for the drafting step (e.g., Copilot in Word or Outlook to draft the client communication covering the disruption summary and mitigation plan) and explains why this tool is suited to drafting structured, professional communications.",
+        "key3": "The response identifies an appropriate M365 Copilot surface or feature for the translation step (e.g., Copilot in Word with translation capability, or a designated translation tool within M365) and explains why accurate translation requires a deliberate tool choice rather than a generic prompt.",
+        "key4": "The response identifies an appropriate M365 Copilot surface for the distribution step (e.g., Copilot in Outlook to personalize and send the email to the correct client contacts from the list) and explains how matching the distribution tool to this final step ensures the communication reaches the right audience efficiently — demonstrating the full multi-surface workflow principle."
+      }
+    }
+  ],
+  "mk_c7_capstone": [
+    {
+      "item_id": "ev_mk_c7_capstone_q1",
+      "course_id": "mk_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "According to the reading, what distinguishes an End-to-End AI Workflow from simply using AI for isolated tasks?",
+      "scenario_text": null,
+      "options": {
+        "A": "An End-to-End AI Workflow uses only one AI tool throughout the entire project to ensure consistency",
+        "B": "An End-to-End AI Workflow deliberately integrates AI assistance at every stage of a marketing project as a connected chain",
+        "C": "An End-to-End AI Workflow automates all stages of a project without requiring human input at any point",
+        "D": "An End-to-End AI Workflow is only applicable to large-scale campaigns with dedicated data science support"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly defines an End-to-End AI Workflow as 'deliberately integrating AI assistance at every stage of a marketing project — not just reaching for it when you're stuck on a single task,' emphasizing the connected, intentional nature of the approach.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c7_capstone_q2",
+      "course_id": "mk_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "According to the reading, what does an End-to-End AI Workflow look like for Marketing & Communications professionals in terms of the stages where AI provides assistance?",
+      "scenario_text": null,
+      "options": {
+        "A": "AI assists only with content creation and social media scheduling",
+        "B": "AI assists with profiling and prioritizing prospects during planning, through execution, evaluation, and reporting",
+        "C": "AI assists primarily with post-campaign analysis and budget forecasting",
+        "D": "AI assists with compliance checking and legal review of all marketing materials"
+      },
+      "correct_option": "B",
+      "explanation": "The reading describes the End-to-End AI Workflow as 'a connected chain: AI helps you profile and prioritize prospects during planning' and continues through execution, evaluation, and reporting — covering all stages of a marketing project.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c7_capstone_q3",
+      "course_id": "mk_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "According to the reading, what safeguard must be maintained at every stage of an End-to-End AI Workflow, regardless of how much AI assistance is used?",
+      "scenario_text": null,
+      "options": {
+        "A": "A secondary AI tool must verify all outputs from the primary AI tool before they are used",
+        "B": "All AI-generated content must be submitted to the legal department for approval",
+        "C": "A human review gate must be maintained at every output before data, content, or insights move forward",
+        "D": "The workflow must be documented and approved by senior leadership before execution begins"
+      },
+      "correct_option": "C",
+      "explanation": "The reading's takeaway explicitly states: 'keep a human review gate at every output before data, content, or insights move forward' — this is the non-negotiable safeguard that applies at every stage of the End-to-End AI Workflow.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c7_capstone_q4",
+      "course_id": "mk_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Design an End-to-End AI Workflow for the scenario below. Your response should map AI assistance across all major stages of the project, identify which frameworks or tools from the course apply at each stage, and specify where human review gates must be placed.",
+      "scenario_text": "You are the Head of Marketing at ExportBoost Program, a government-backed initiative that helps small and medium-sized businesses enter new export markets. ExportBoost is launching a six-week campaign to recruit 200 new SME participants for its next export readiness cohort. The campaign will include: targeted outreach to pre-qualified SME prospects, a content series (blog posts, LinkedIn posts, and an email nurture sequence), performance tracking against a weekly enrollment target, and a post-campaign report for the program's executive board. You have a small team of two and a modest budget. Design your End-to-End AI Workflow for this campaign.",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "The response maps AI assistance to the planning and prospecting stage — describing how AI (e.g., using the TAILOR Approach) would be used to profile and prioritize SME prospects using public information, with a human review gate before any outreach list is finalized.",
+        "key2": "The response maps AI assistance to the content creation and execution stage — describing how AI (e.g., using the CRAF framework) would be used to draft blog posts, LinkedIn posts, and email sequences, with a human review gate (e.g., VERIFY Checklist) applied to every piece of content before it is published or sent.",
+        "key3": "The response maps AI assistance to the performance tracking and evaluation stage — describing how AI (e.g., using the DECIDE Framework in Excel or Power BI) would be used to analyze weekly enrollment data and surface insights, with a human review gate before any insights are used to adjust campaign tactics or budget.",
+        "key4": "The response maps AI assistance to the reporting stage — describing how AI would be used to synthesize campaign results into a draft executive board report, and specifies a final human review gate to verify accuracy, tone, and completeness before the report is presented — demonstrating a fully connected End-to-End AI Workflow with human oversight at every stage."
+      }
+    }
   ]
 }
