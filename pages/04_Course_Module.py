@@ -573,17 +573,23 @@ elif active_sub == "practice":
     # Native chat input pinned to page bottom (only rendered when waiting for user)
     if waiting_for_user:
         if user_input := st.chat_input("Your response...", key=f"p_input_{task_idx}_{current_task_turns}"):
-            with st.spinner("Coach is thinking..."):
-                try:
-                    reply = coach_response(
-                        system_prompt=coach_prompt,
-                        conversation=messages,
-                        user_input=user_input.strip(),
-                        user_email=user_email,
-                    )
-                except Exception as e:
-                    st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
-                    st.stop()
+            # Immediately show the user message — don't wait for AI to reply
+            with st.chat_message("user"):
+                st.markdown(user_input.strip())
+
+            try:
+                with st.chat_message("assistant", avatar="🤖"):
+                    with st.spinner("Coach is thinking..."):
+                        reply = coach_response(
+                            system_prompt=coach_prompt,
+                            conversation=messages,
+                            user_input=user_input.strip(),
+                            user_email=user_email,
+                        )
+                    st.markdown(reply)
+            except Exception as e:
+                st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
+                st.stop()
 
             new_tt = dict(task_turns)
             new_tt[task_idx] = current_task_turns + 1

@@ -1283,6 +1283,50 @@ DATABRICKS_CONFIG_PROFILE=dev .venv/Scripts/python scripts/generate_course_conte
 
 ---
 
+### Phase 15 — MK Role Content Generation ✅ COMPLETE (March 2026)
+
+Generate full content for the **Marketing/Comms Advisor (MK)** role using the same multi-agent pipeline (`scripts/generate_course_content.py`) and the same 6-domain hexagon model as RM, UW, and AN.
+
+#### Task 15.1 — Prepare MK design document ✅ COMPLETE
+
+- ✅ `references/marketing-advisor-role-doc.md` — Marketing/Comms Advisor Course Design Brief authored
+- ✅ `references/marketing--course-design.md` — supplementary course design reference
+- ✅ `references/marketing-advisor-use-case-mapping.md` — use-case mapping for pipeline context
+- ✅ URL cleanup applied before pipeline ingestion
+
+#### Task 15.2 — Run content generation pipeline ✅ COMPLETE
+
+```bash
+DATABRICKS_CONFIG_PROFILE=dev .venv/Scripts/python scripts/generate_course_content.py \
+  --role mk \
+  --design-doc references/marketing-advisor-role-doc.md
+```
+
+- ✅ All 8 pipeline stages completed successfully
+- ✅ MK entries merged atomically into all `content/*.json` files
+
+#### Task 15.3 — Validate generated MK content ✅ COMPLETE
+
+- [x] `len(get_diagnostic_items("mk")) == 18` — 18 MK items in `diagnostic_items.json` (72 total)
+- [x] `len(COURSES)` includes 7 MK courses — `mk_c1_*` through `mk_c7_*` in `courses.json` (28 total)
+- [x] All 7 MK reading entries present in `reading_content.json`
+- [x] All 7 MK scenarios with 4 tasks + `coach_system_prompt` in `practice_scenarios.json`
+- [x] All 28 MK eval items in `evaluation_items.json` (4 items per course × 7 courses)
+- [x] Welcome page shows "Marketing/Comms Advisor" in the role selector (dynamic lookup)
+- [x] MK smoke test passed (UAT-17) — Welcome → role selection → diagnostic start → Q1 → Q2 confirmed
+- [x] Delta Check confirmed: `role_id='mk'`, `display_name='UAT Tester MK'` in `learner.user_profiles`
+
+#### Phase 15 Execution Order
+
+```text
+15.1 ✅ DONE     Prepare MK design docs (references/marketing-advisor-role-doc.md + companions)
+15.2 ✅ DONE     Run generate_course_content.py --role mk
+15.3 ✅ DONE     MK content validation (72 diag items, 28 courses, 112 eval items total)
+UAT-17 ✅ DONE   MK smoke test passed (March 2026)
+```
+
+---
+
 ## Execution Order
 
 ```text
@@ -1305,15 +1349,16 @@ UAT Regression Fixes       9.1 ✅ Multi-role app support          10.1 ✅ rese
 8.3 BUG-1 gap_maps fix     9.4 ✅ Wire Welcome page for UW
                            9.5 ✅ UW journey smoke test (UAT-13)
 
-Phase 13 ✅ DONE (March 2026)
-AN Role Content Generation
-13.1 ✅ Prepare analyst-role-doc.md
-13.2 ✅ Run pipeline (--role an)
-13.3 ✅ AN content validation (54 items, 21 courses)
-UAT-14 ✅ AN smoke test passed
+Phase 13 ✅ DONE (March 2026)          Phase 15 ✅ DONE (March 2026)
+AN Role Content Generation             MK Role Content Generation
+13.1 ✅ Prepare analyst-role-doc.md    15.1 ✅ Prepare marketing-advisor-role-doc.md
+13.2 ✅ Run pipeline (--role an)       15.2 ✅ Run pipeline (--role mk)
+13.3 ✅ AN validation (54→72 items,    15.3 ✅ MK validation (72 diag items,
+      21→28 courses, 84→112 eval)             28 courses, 112 eval items)
+UAT-14 ✅ AN smoke test passed         UAT-17 ✅ MK smoke test passed
 ```
 
-**Phases 0–13 complete. All three roles (RM, UW, AN) are fully generated and live on the 6-domain hexagon model.**
+**Phases 0–15 complete. All four roles (RM, UW, AN, MK) are fully generated and live on the 6-domain hexagon model.**
 
 ---
 

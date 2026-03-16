@@ -29,8 +29,9 @@ AI Hero Academy is an internal Databricks App that evaluates, trains, and
 benchmarks employees on AI skills through real-life, job-specific use cases
 and AI coaching powered by Mosaic AI Foundation Models.
 
-The MVP launched with Relationship Manager (RM) and expanded in v1 to include
-Underwriter (UW). Both roles deliver a complete learning loop:
+The MVP launched with Relationship Manager (RM) and expanded to include
+Underwriter (UW), Analyst (AN), and Marketing/Comms Advisor (MK). All four
+roles deliver a complete learning loop:
 
   1. DIAGNOSE the employee's AI skill level through a role-specific assessment
   2. MAP GAPS using AI-generated personalized gap analysis
@@ -180,7 +181,24 @@ Key characteristics relevant to training design:
   strategic_prompting, critical_eval, relationship_intel,
   data_decision, augmented_comm.
 
-3.2.3 OTHER ROLES (Post-MVP)
+3.2.3 MARKETING/COMMS ADVISOR (MK) — COMPLETE (March 2026)
+
+  All MK content has been generated via the 6-domain hexagon pipeline
+  and is loaded into the app: 18 diagnostic items (3 per domain across
+  6 domains), 7 training courses with reading content, practice
+  scenarios, and evaluation items. Structured reading content enriched
+  for all 7 MK courses (28 total entries in reading_content_structured.json).
+
+  Uses the same 6-domain model as RM, UW, and AN: responsible_ai,
+  strategic_prompting, critical_eval, relationship_intel,
+  data_decision, augmented_comm.
+
+  Welcome page displays as "Marketing/Comms Advisor". UAT-17 smoke
+  test passed (2026-03-16, commit feature/mk-role-integration merged
+  to main): Welcome → role select → diagnostic Q1 + Q2 load confirmed;
+  Delta Check: role_id='mk', display_name='UAT Tester MK' verified.
+
+3.2.4 OTHER ROLES (Post-MVP)
 
   The following roles are planned for future versions but remain
   explicitly out of scope:
@@ -190,7 +208,6 @@ Key characteristics relevant to training design:
   - Legal / Compliance
   - Program Managers
   - Internal Audit
-  - Corporate Communications
   - Economics (Office of Chief Economist)
 
 
@@ -211,7 +228,8 @@ the organization's actual use cases and policies.
 
   DIMENSION              MVP SCOPE
   ---------------------  ------------------------------------------------
-  Roles supported        3 (Relationship Manager, Underwriter, Analyst)
+  Roles supported        4 (Relationship Manager, Underwriter, Analyst,
+                         Marketing/Comms Advisor)
   Skill domains          6 per role (responsible_ai, strategic_prompting,
                          critical_eval, relationship_intel, data_decision,
                          augmented_comm)
@@ -909,12 +927,12 @@ sub-module the user is in.
   - Domain definitions and level descriptors
   - Role profiles (RM, UW, AN)
   - Use case library mapped per role
-  - Diagnostic items (54 total: 18 per role × 3 roles; 3 per domain)
-  - Training courses (21 total: 7 per role × 3 roles):
+  - Diagnostic items (72 total: 18 per role × 4 roles; 3 per domain)
+  - Training courses (28 total: 7 per role × 4 roles):
     - Reading content (1 per course)
     - Practice scenarios with tasks (1 scenario with 4 tasks per course)
     - Practice coach system prompts (1 per course)
-    - Evaluation items (4 per course, 28 per role, 84 total)
+    - Evaluation items (4 per course, 28 per role, 112 total)
     - Scoring rubrics (per evaluation item)
 
 9.2 DYNAMIC CONTENT (personalized per employee, AI-generated)
