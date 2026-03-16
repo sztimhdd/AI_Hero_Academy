@@ -1,4 +1,67 @@
 {
+  "mk_c7_capstone": {
+    "concept_text_structured": {
+      "framework_acronym": "PEER",
+      "intro": "An End-to-End AI Workflow means deliberately integrating AI assistance at every stage of a marketing project, creating a connected chain where each AI-assisted stage feeds cleaner, richer inputs into the next. For Marketing & Communications professionals, this compounding approach ensures no stage becomes a bottleneck and no AI output goes unreviewed.",
+      "cards": [
+        {
+          "letter": "P",
+          "title": "Plan",
+          "body": "Use AI to analyze and segment data safely. AI helps you profile and prioritize prospects during the planning phase, laying the foundation for targeted outreach."
+        },
+        {
+          "letter": "E",
+          "title": "Execute",
+          "body": "Use AI to draft, personalize, and schedule content. AI assists in creating and tailoring outreach during execution, ensuring consistent and relevant messaging at scale."
+        },
+        {
+          "letter": "E",
+          "title": "Evaluate",
+          "body": "Use AI to summarize results, then critically verify those summaries. AI recaps and verifies campaign interactions during follow-up, with human judgment applied to validate accuracy."
+        },
+        {
+          "letter": "R",
+          "title": "Report",
+          "body": "Use AI to assemble narratives, visuals, and translations for stakeholders. AI structures polished bilingual reports for leadership, transforming raw insights into executive-ready deliverables."
+        }
+      ],
+      "guardrails": [
+        "Responsible data handling: anonymize or abstract sensitive inputs before prompting",
+        "Human judgment at every output gate: review, verify, and refine before anything goes to a client or executive",
+        "Orchestrate tools as a coherent system to avoid bottlenecks and ensure all AI output is reviewed"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "A marketing manager needs to create a campaign brief with prospect data, translations, and metrics for executive review.",
+      "before_prompt": "Manually pull open-rate data from Excel, write a French summary from scratch, and compile everything into PowerPoint without structured review.",
+      "before_issue": "Manual data transfer and unreviewed AI outputs create errors, inconsistency, and consume two full days.",
+      "after_prompt": "Use Copilot in Excel to generate a prioritized prospect tier list, paste tier logic into Word to draft a tailored brief, use Copilot in Outlook to personalize emails, summarize metrics in Excel, assemble results in PowerPoint, and generate a bilingual version — reviewing each output before use.",
+      "after_benefit": "Structured AI workflows with human review gates ensure accuracy, consistency, and reduce execution time to half a day.",
+      "outcome": "A polished, bilingual campaign deck with validated data and personalized outreach, delivered in half the time with quality assurance at each step."
+    },
+    "anti_pattern_structured": {
+      "headline": "Unvetted Data Sharing and Skipped Verification",
+      "failure_scenario": "A marketing manager pasted sensitive client data directly into a public AI chat tool without checking data retention policies, then skipped verification of the AI-generated output by assuming the tool had already validated it. This led to both potential data exposure and acceptance of hallucinated metrics without scrutiny.",
+      "chain": [
+        "Sensitive client data (names, revenue, notes) uploaded to public AI platform without privacy assessment",
+        "AI output accepted without verification of underlying logic or data handling",
+        "Hallucinated open-rate figure embedded in executive report due to skipped review gate",
+        "Data privacy breach and credibility damage to leadership reporting"
+      ],
+      "root_lesson": "Always implement human review gates at critical workflow junctures—especially before sharing sensitive data with any tool and before finalizing outputs for stakeholders. Never assume an AI system has validated its own work; verification is your responsibility."
+    },
+    "takeaway_structured": {
+      "statement": "Treat your AI tools as a connected workflow — plan, execute, evaluate, and report with AI assistance at each stage — but keep a human review gate at every output before data, content, or insights move forward.",
+      "action_1": {
+        "title": "Map AI across all four phases",
+        "body": "Identify where AI can assist in your current marketing projects: prospect analysis in Plan, content drafting in Execute, result summarization in Evaluate, and stakeholder reporting in Report. Chain these stages together so each AI output feeds into the next phase rather than treating AI as a one-off problem-solver."
+      },
+      "action_2": {
+        "title": "Establish review checkpoints before handoff",
+        "body": "Before any AI-generated data, content, or insight reaches a client or executive, build in a personal verification step where you review, fact-check, and refine the output. This ensures responsible data handling and maintains your credibility as the human decision-maker."
+      }
+    }
+  },
   "an_c1_responsible_ai": {
     "concept_text_structured": {
       "framework_acronym": "SAFE",
@@ -61,70 +124,6 @@
       "action_2": {
         "title": "Review and edit all outputs",
         "body": "Read every Copilot response before sharing or acting on it, and immediately remove any echoed-back names, numbers, or sensitive details. Only use EDC-approved tools like M365 Copilot within the EDC tenant—never external chatbots or translators."
-      }
-    }
-  },
-  "an_c4_relationship_intel": {
-    "concept_text_structured": {
-      "framework_acronym": "STAKE",
-      "intro": "The STAKE framework gives you a repeatable method for tailoring any analytical deliverable to a specific audience without rebuilding it from scratch. Sending the same document to multiple readers with different priorities is a missed opportunity at best and a credibility risk at worst.",
-      "cards": [
-        {
-          "letter": "S",
-          "title": "Surface",
-          "body": "Surface their priority question. What is the one thing this audience needs answered before they can act?"
-        },
-        {
-          "letter": "T",
-          "title": "Tailor",
-          "body": "Tailor the framing. Lead with what they care about: risk exposure, revenue potential, or strategic fit."
-        },
-        {
-          "letter": "A",
-          "title": "Anchor",
-          "body": "Anchor data to their known concerns. Choose the figures and scenarios that map directly to their mandate."
-        },
-        {
-          "letter": "K",
-          "title": "Keep",
-          "body": "Keep out what they do not need. Remove methodology detail, caveats, and data that dilutes the signal for this reader."
-        },
-        {
-          "letter": "E",
-          "title": "Enable",
-          "body": "Enable their next decision. Close with a clear implication or recommended action framed in their language."
-        }
-      ],
-      "guardrails": []
-    },
-    "good_example_structured": {
-      "scenario": "An analyst needs to communicate a Clean Energy sector report to multiple audiences with different priorities and decision-making mandates.",
-      "before_prompt": "Paste the same executive summary into both the Underwriting Committee deck and the BD Leadership slide pack",
-      "before_issue": "Generic, methodology-first summaries fail to address each audience's distinct priorities, reducing decision-making clarity and relevance.",
-      "after_prompt": "For Underwriting Committee: 'I am briefing a risk committee on Clean Energy sector exposure. Based on a typical underwriting committee mandate, what are the top three questions they are likely to bring to this review? Use these to help me reframe my executive summary so it leads with concentration risk and default scenario implications.' For BD Leadership: 'Convert this risk-framed executive summary for a growth-focused BD leadership audience. Lead with sector opportunity size and competitive whitespace, not risk findings. Format for a single intro slide.'",
-      "after_benefit": "Audience-specific prompts ensure each summary directly addresses the decision-maker's mandate and priorities, maximizing relevance and clarity.",
-      "outcome": "Two tailored, high-impact outputs derived from one underlying analysis, each optimized for its audience's decision-making context."
-    },
-    "anti_pattern_structured": {
-      "headline": "Tone Softening Without Reframing",
-      "failure_scenario": "The analyst reworded a risk committee report to sound more positive for business development without restructuring the analysis or reframing the decision question. The content remained technically identical—same structure, lead data, and conclusions—only adjectives changed.",
-      "chain": [
-        "BD leader recognizes the summary doesn't answer their actual question",
-        "Leader disengages because the framing remains risk-focused rather than opportunity-focused",
-        "Work is dismissed as 'too technical' or 'not commercially relevant'",
-        "Analyst loses credibility and influence over the growth decision"
-      ],
-      "root_lesson": "Adapting for a different audience requires restructuring the entire analysis—not just softening language. Apply all STAKE steps (Structure, Tone, Audience framing, Keep detail, Evidence selection) together, or the reframing fails. Changing only tone without reframing the decision question wastes the adaptation effort."
-    },
-    "takeaway_structured": {
-      "statement": "Apply all five STAKE steps — not just a tone change — each time you adapt an analytical deliverable for a new audience, and use Copilot to research the audience's decision context before you start rewriting.",
-      "action_1": {
-        "title": "Map audience mandate before drafting",
-        "body": "Use Copilot to research what your specific audience prioritizes (risk exposure, growth, strategic fit) and their decision constraints. Document their priority question and known concerns before you begin any reframing work."
-      },
-      "action_2": {
-        "title": "Rebuild data selection, not just tone",
-        "body": "For each audience version, actively choose which figures, scenarios, and details to include or remove based on STAKE—don't just adjust language. Lead with their priority, anchor evidence to their mandate, and close with an action in their language."
       }
     }
   },
@@ -201,6 +200,70 @@
       }
     }
   },
+  "an_c4_relationship_intel": {
+    "concept_text_structured": {
+      "framework_acronym": "STAKE",
+      "intro": "The STAKE framework gives you a repeatable method for tailoring any analytical deliverable to a specific audience without rebuilding it from scratch. Sending the same document to multiple readers with different priorities is a missed opportunity at best and a credibility risk at worst.",
+      "cards": [
+        {
+          "letter": "S",
+          "title": "Surface",
+          "body": "Surface their priority question. What is the one thing this audience needs answered before they can act?"
+        },
+        {
+          "letter": "T",
+          "title": "Tailor",
+          "body": "Tailor the framing. Lead with what they care about: risk exposure, revenue potential, or strategic fit."
+        },
+        {
+          "letter": "A",
+          "title": "Anchor",
+          "body": "Anchor data to their known concerns. Choose the figures and scenarios that map directly to their mandate."
+        },
+        {
+          "letter": "K",
+          "title": "Keep",
+          "body": "Keep out what they do not need. Remove methodology detail, caveats, and data that dilutes the signal for this reader."
+        },
+        {
+          "letter": "E",
+          "title": "Enable",
+          "body": "Enable their next decision. Close with a clear implication or recommended action framed in their language."
+        }
+      ],
+      "guardrails": []
+    },
+    "good_example_structured": {
+      "scenario": "An analyst needs to communicate a Clean Energy sector report to multiple audiences with different priorities and decision-making mandates.",
+      "before_prompt": "Paste the same executive summary into both the Underwriting Committee deck and the BD Leadership slide pack",
+      "before_issue": "Generic, methodology-first summaries fail to address each audience's distinct priorities, reducing decision-making clarity and relevance.",
+      "after_prompt": "For Underwriting Committee: 'I am briefing a risk committee on Clean Energy sector exposure. Based on a typical underwriting committee mandate, what are the top three questions they are likely to bring to this review? Use these to help me reframe my executive summary so it leads with concentration risk and default scenario implications.' For BD Leadership: 'Convert this risk-framed executive summary for a growth-focused BD leadership audience. Lead with sector opportunity size and competitive whitespace, not risk findings. Format for a single intro slide.'",
+      "after_benefit": "Audience-specific prompts ensure each summary directly addresses the decision-maker's mandate and priorities, maximizing relevance and clarity.",
+      "outcome": "Two tailored, high-impact outputs derived from one underlying analysis, each optimized for its audience's decision-making context."
+    },
+    "anti_pattern_structured": {
+      "headline": "Tone Softening Without Reframing",
+      "failure_scenario": "The analyst reworded a risk committee report to sound more positive for business development without restructuring the analysis or reframing the decision question. The content remained technically identical—same structure, lead data, and conclusions—only adjectives changed.",
+      "chain": [
+        "BD leader recognizes the summary doesn't answer their actual question",
+        "Leader disengages because the framing remains risk-focused rather than opportunity-focused",
+        "Work is dismissed as 'too technical' or 'not commercially relevant'",
+        "Analyst loses credibility and influence over the growth decision"
+      ],
+      "root_lesson": "Adapting for a different audience requires restructuring the entire analysis—not just softening language. Apply all STAKE steps (Structure, Tone, Audience framing, Keep detail, Evidence selection) together, or the reframing fails. Changing only tone without reframing the decision question wastes the adaptation effort."
+    },
+    "takeaway_structured": {
+      "statement": "Apply all five STAKE steps — not just a tone change — each time you adapt an analytical deliverable for a new audience, and use Copilot to research the audience's decision context before you start rewriting.",
+      "action_1": {
+        "title": "Map audience mandate before drafting",
+        "body": "Use Copilot to research what your specific audience prioritizes (risk exposure, growth, strategic fit) and their decision constraints. Document their priority question and known concerns before you begin any reframing work."
+      },
+      "action_2": {
+        "title": "Rebuild data selection, not just tone",
+        "body": "For each audience version, actively choose which figures, scenarios, and details to include or remove based on STAKE—don't just adjust language. Lead with their priority, anchor evidence to their mandate, and close with an action in their language."
+      }
+    }
+  },
   "an_c2_strategic_prompting": {
     "concept_text_structured": {
       "framework_acronym": "CRAF",
@@ -263,64 +326,6 @@
       "action_2": {
         "title": "Replace vague requests with constraints",
         "body": "Instead of asking Copilot to 'help with this report,' specify exact outputs like 'Draft a one-page executive summary with five bullets on Key Highlights and five on Issues, each under 30 words.' Concrete constraints produce presentation-ready results on the first attempt."
-      }
-    }
-  },
-  "an_c6_augmented_comm": {
-    "concept_text_structured": {
-      "framework_acronym": "CSS",
-      "intro": "The Copilot Surface Selector is a decision habit that matches tasks to the right M365 tool before writing a prompt. Selecting the right surface ensures Copilot has access to the correct context and produces immediately usable output.",
-      "cards": [
-        {
-          "letter": "C",
-          "title": "Context",
-          "body": "Each M365 Copilot surface is purpose-built for the tool it lives in—Teams understands transcripts, Word handles long-form documents, Excel interrogates data, Outlook composes communications, and PowerPoint builds narratives. When you select the right surface, Copilot has access to the right context."
-        },
-        {
-          "letter": "S",
-          "title": "Selector",
-          "body": "Before you write a single prompt, ask yourself: which tool owns this task? This intentional handoff prevents forcing one tool to do another tool's job and keeps your workflow sequential and clean."
-        },
-        {
-          "letter": "S",
-          "title": "Secure",
-          "body": "Matching task to surface keeps your outputs accurate and your content inside EDC's secure M365 environment—no copy-pasting into external tools, no version fragmentation, and no re-work."
-        }
-      ],
-      "guardrails": [
-        "Do not ask Word Copilot to summarize a meeting without pasting the transcript—this produces hallucinated summaries",
-        "Do not ask Outlook Copilot to analyze KPI trends—this produces vague prose, not insight",
-        "Keep all work within M365 to avoid version fragmentation and maintain security"
-      ]
-    },
-    "good_example_structured": {
-      "scenario": "An analyst needs to create a programme brief that combines meeting decisions with KPI data.",
-      "before_prompt": "Summarise today's meeting and write a brief with the KPI data.",
-      "before_issue": "The prompt provides no source material, forcing the AI to generate generic placeholder content that requires complete rewriting.",
-      "after_prompt": "Using the meeting recap and KPI table above, draft a one-page programme brief for the programme sponsor. Include: status summary, key decisions, KPI highlights, and next steps. Tone: executive, concise.",
-      "after_benefit": "The prompt grounds the AI in real, pasted source materials and specifies exact structure and tone, ensuring accurate and actionable output.",
-      "outcome": "The AI produces an accurate, executive-ready brief that requires only one light edit pass before sending."
-    },
-    "anti_pattern_structured": {
-      "headline": "Wrong tool for analytical synthesis",
-      "failure_scenario": "An analyst bypassed Teams Copilot and pasted an unformatted transcript directly into Outlook, asking Copilot to convert it into a brief. Outlook Copilot, optimised for email composition rather than document structuring, produced an overlong, poorly organised email that buried key decisions and omitted KPI context.",
-      "chain": [
-        "Email lacks clear structure and buries critical decisions in prose",
-        "Steering committee receives unclear ask and incomplete context",
-        "Analyst must manually rewrite the brief in Word, duplicating effort",
-        "Version confusion between emailed and filed documents creates compliance and decision-tracking risk"
-      ],
-      "root_lesson": "Match the tool to the task: use Teams Copilot for analytical synthesis and document structuring before composition, then use Outlook Copilot only for final email formatting. Never ask a composition tool to perform structural analysis."
-    },
-    "takeaway_structured": {
-      "statement": "Always ask 'which Copilot surface owns this task?' before prompting — matching tool to task means each output is immediately usable as the input for the next step, eliminating rework and keeping your analytical workflow clean.",
-      "action_1": {
-        "title": "Map your workflow to surfaces",
-        "body": "Before starting a multi-step project, identify which M365 tool owns each task (Teams for meetings, Word for drafts, Excel for data, Outlook for communications, PowerPoint for presentations). This intentional sequencing ensures each Copilot output feeds naturally into the next step without rework."
-      },
-      "action_2": {
-        "title": "Verify context before prompting",
-        "body": "Confirm the relevant source material (transcript, document, spreadsheet, email thread) is accessible within the selected Copilot surface before writing your prompt. This prevents hallucinated outputs and ensures accurate, immediately usable results."
       }
     }
   },
@@ -394,69 +399,6 @@
       }
     }
   },
-  "rm_c2_strategic_prompting": {
-    "concept_text_structured": {
-      "framework_acronym": "CRAF",
-      "intro": "The CRAF Framework turns thin lead data into informed, specific outreach by structuring AI prompts around context, role, action, and format. It ensures AI-generated content remains honest, compliant, and relationship-ready while keeping you in control of truth and judgment.",
-      "cards": [
-        {
-          "letter": "C",
-          "title": "Context",
-          "body": "Feed the AI what you actually know — sector, region, likely export markets, common business pressures for that industry — without inventing company-specific facts. Grounding the prompt in real sector knowledge keeps the output honest."
-        },
-        {
-          "letter": "R",
-          "title": "Role",
-          "body": "Specify the voice by telling Copilot you are a Relationship Manager at a Canadian export finance institution. This shapes tone, vocabulary, and the kinds of solutions referenced."
-        },
-        {
-          "letter": "A",
-          "title": "Action",
-          "body": "Name the exact deliverable. A 120-word intro email is a different task than a call agenda or discovery questions. Be precise so the AI does the right work."
-        },
-        {
-          "letter": "F",
-          "title": "Format",
-          "body": "Describe the structure — subject line, paragraph count, bullet style, word limit, or bilingual layout. Format is what separates a usable draft from a wall of text you have to rewrite entirely."
-        }
-      ],
-      "guardrails": [
-        "No invented facts",
-        "No approval promises",
-        "Conservative product claims"
-      ]
-    },
-    "good_example_structured": {
-      "scenario": "A practitioner needs to generate a sales discovery email for a prospect company using an AI assistant.",
-      "before_prompt": "Write a sales email for Northfield Grain Co., an agri-food exporter.",
-      "before_issue": "The prompt lacks context, role definition, and output specifications, resulting in generic content that requires substantial revision before use.",
-      "after_prompt": "Context: Northfield Grain Co. — agri-food exporter, Western Canada, exploring new export markets; confirmed data: sector and exporter status only. Common pressures in this segment include working-capital gaps between shipment and payment, and currency exposure on USD-denominated contracts. Role: You are a Relationship Manager at a Canadian export finance institution. Action: Draft (1) a 120-word intro email proposing a 20-minute discovery call and (2) five discovery questions focused on export growth barriers and risk management. Format: Email first — subject line, two short paragraphs, three bullet points summarising why we should connect — then questions as a numbered list. Constraints: Do not invent company-specific facts; do not promise financing approvals; keep all product references general and accurate.",
-      "after_benefit": "The CRAF structure provides specific context, role clarity, structured output format, and guardrails that ensure the AI generates credible, actionable content ready for immediate use.",
-      "outcome": "A ready-to-personalise email with a credible hook and structured discovery questions that can be used in the same session without requiring a full rewrite."
-    },
-    "anti_pattern_structured": {
-      "headline": "Vague Prompt Produces Unusable Output",
-      "failure_scenario": "The practitioner submitted a minimal one-line prompt to generate a sales email without providing context, role definition, or format constraints. Copilot filled the gaps with generic assumptions, producing boilerplate language and invented details.",
-      "chain": [
-        "Output contains generic language, invented company details, and unsubstantiated claims",
-        "RM sends draft with overconfident statements about financing or guarantees that cannot be backed",
-        "Prospect receives inauthentic, non-credible message that damages relationship trust",
-        "Compliance risk materializes and lead opportunity is permanently lost"
-      ],
-      "root_lesson": "Always structure prompts with explicit context (company/product details), role clarity (your position), specific action requirements, and output constraints (tone, claims boundaries, format). Never rely on the model to infer business-critical details."
-    },
-    "takeaway_structured": {
-      "statement": "CRAF turns thin lead data into send-ready outreach by being precisely specific about context, deliverable, structure, and the guardrails that keep every AI-generated draft accurate and RM-authentic.",
-      "action_1": {
-        "title": "Build CRAF into every prompt",
-        "body": "Before asking Copilot for outreach, explicitly state the Context (what you know about their sector), Role (your title and institution), Action (exact deliverable type), and Format (structure and constraints). This discipline transforms vague outputs into credible, usable drafts."
-      },
-      "action_2": {
-        "title": "Set compliance guardrails upfront",
-        "body": "Include constraints in your prompt—no invented facts, no approval promises, conservative product claims—so the AI stays within your role's boundaries. This lets you own the truth and relationship judgment while the AI handles structure and speed."
-      }
-    }
-  },
   "an_c7_capstone": {
     "concept_text_structured": {
       "framework_acronym": "CRAF",
@@ -522,66 +464,124 @@
       }
     }
   },
-  "rm_c1_responsible_ai": {
+  "rm_c2_strategic_prompting": {
     "concept_text_structured": {
-      "framework_acronym": "SAFE",
-      "intro": "The SAFE Abstraction Method gives Relationship Managers a practical four-step filter to strip risk while keeping usefulness before writing any AI prompt. It protects confidential client information while enabling AI tools to accelerate work like drafting briefing notes and structuring follow-ups.",
+      "framework_acronym": "CRAF",
+      "intro": "The CRAF Framework turns thin lead data into informed, specific outreach by structuring AI prompts around context, role, action, and format. It ensures AI-generated content remains honest, compliant, and relationship-ready while keeping you in control of truth and judgment.",
       "cards": [
         {
-          "letter": "S",
-          "title": "Substitute",
-          "body": "Replace the client name and any named individuals with generic descriptors (e.g., 'Harbourline Fabrication Ltd.' → 'mid-market Canadian manufacturer')."
+          "letter": "C",
+          "title": "Context",
+          "body": "Feed the AI what you actually know — sector, region, likely export markets, common business pressures for that industry — without inventing company-specific facts. Grounding the prompt in real sector knowledge keeps the output honest."
+        },
+        {
+          "letter": "R",
+          "title": "Role",
+          "body": "Specify the voice by telling Copilot you are a Relationship Manager at a Canadian export finance institution. This shapes tone, vocabulary, and the kinds of solutions referenced."
         },
         {
           "letter": "A",
-          "title": "Abstain",
-          "body": "Swap precise revenue, debt ratios, or credit limits for directional ranges (e.g., 'revenue declined ~15% YoY' → 'profitability under pressure last year')."
+          "title": "Action",
+          "body": "Name the exact deliverable. A 120-word intro email is a different task than a call agenda or discovery questions. Be precise so the AI does the right work."
         },
         {
           "letter": "F",
-          "title": "Focus",
-          "body": "Tell the AI what you need to decide or prepare, not what the document says. This keeps the prompt purposeful and avoids data-dumping."
-        },
-        {
-          "letter": "E",
-          "title": "Ensure",
-          "body": "Sensitive work stays in approved environments (e.g., Microsoft Copilot within your organization's tenant). Never paste full documents into consumer-facing or non-approved AI tools."
+          "title": "Format",
+          "body": "Describe the structure — subject line, paragraph count, bullet style, word limit, or bilingual layout. Format is what separates a usable draft from a wall of text you have to rewrite entirely."
         }
       ],
       "guardrails": [
-        "Even after removing a name, a unique project, niche geography, or unusual deal structure can still re-identify a client.",
-        "SAFE prompts should be generic enough that the output could apply to any similar client — not just yours.",
-        "Pasting raw client documents into a non-approved tool is a confidentiality breach waiting to happen."
+        "No invented facts",
+        "No approval promises",
+        "Conservative product claims"
       ]
     },
     "good_example_structured": {
-      "scenario": "A relationship manager seeks AI assistance to analyze a client's financial statements and loan request.",
-      "before_prompt": "Here are the full financial statements and expansion plan for Northgate Metals Inc. Revenue is $42M, EBITDA margin dropped to 4%, and they want a $9M term loan for a new smelting facility in northern Ontario. Summarize the risks and suggest loan terms.",
-      "before_issue": "Pasting confidential client data into a free public chatbot creates a data breach risk and may produce invented numbers the RM cannot defend.",
-      "after_prompt": "Context (abstracted): Mid-market Canadian metals manufacturer. Seeking growth financing; profitability declined significantly last year; liquidity is tight but trending upward. Expansion into a capital-intensive new production line. Task: Draft a 1-page internal briefing note with three sections — (1) Key risk themes to investigate, (2) Questions to ask the client before credit review, (3) Next-step checklist. Format: Headings + bullets. Constraint: Do not invent figures, ratios, or proposed terms. Label any unknown as 'needs confirmation.'",
-      "after_benefit": "Uses an approved internal tool, abstracts sensitive data, and constrains the AI to avoid fabricating financial figures or terms.",
-      "outcome": "Produces a defensible, structured internal draft that guides further investigation without exposing confidential information or relying on invented data."
+      "scenario": "A practitioner needs to generate a sales discovery email for a prospect company using an AI assistant.",
+      "before_prompt": "Write a sales email for Northfield Grain Co., an agri-food exporter.",
+      "before_issue": "The prompt lacks context, role definition, and output specifications, resulting in generic content that requires substantial revision before use.",
+      "after_prompt": "Context: Northfield Grain Co. — agri-food exporter, Western Canada, exploring new export markets; confirmed data: sector and exporter status only. Common pressures in this segment include working-capital gaps between shipment and payment, and currency exposure on USD-denominated contracts. Role: You are a Relationship Manager at a Canadian export finance institution. Action: Draft (1) a 120-word intro email proposing a 20-minute discovery call and (2) five discovery questions focused on export growth barriers and risk management. Format: Email first — subject line, two short paragraphs, three bullet points summarising why we should connect — then questions as a numbered list. Constraints: Do not invent company-specific facts; do not promise financing approvals; keep all product references general and accurate.",
+      "after_benefit": "The CRAF structure provides specific context, role clarity, structured output format, and guardrails that ensure the AI generates credible, actionable content ready for immediate use.",
+      "outcome": "A ready-to-personalise email with a credible hook and structured discovery questions that can be used in the same session without requiring a full rewrite."
     },
     "anti_pattern_structured": {
-      "headline": "Pasting Confidential Data Into Consumer AI",
-      "failure_scenario": "A relationship manager copied a client's full financial statements, CRM record, or business plan into a consumer-facing or non-approved AI tool to quickly generate a summary. The practitioner bypassed data governance controls to save time.",
+      "headline": "Vague Prompt Produces Unusable Output",
+      "failure_scenario": "The practitioner submitted a minimal one-line prompt to generate a sales email without providing context, role definition, or format constraints. Copilot filled the gaps with generic assumptions, producing boilerplate language and invented details.",
       "chain": [
-        "Client confidential data is transmitted to external AI service and may be stored, logged, or used for model training",
-        "Confidentiality breach violates policy, regulatory requirements, and client trust agreements",
-        "AI generates plausible-sounding but fabricated figures and terms that appear authoritative",
-        "Relationship manager cannot defend the output in credit review or client conversation, creating compliance and reputational risk"
+        "Output contains generic language, invented company details, and unsubstantiated claims",
+        "RM sends draft with overconfident statements about financing or guarantees that cannot be backed",
+        "Prospect receives inauthentic, non-credible message that damages relationship trust",
+        "Compliance risk materializes and lead opportunity is permanently lost"
       ],
-      "root_lesson": "Always verify that any tool handling client data is approved by compliance and contractually bound to confidentiality before sharing any information. Never use consumer AI tools for sensitive client work—use only internal, approved platforms with proper data governance controls."
+      "root_lesson": "Always structure prompts with explicit context (company/product details), role clarity (your position), specific action requirements, and output constraints (tone, claims boundaries, format). Never rely on the model to infer business-critical details."
     },
     "takeaway_structured": {
-      "statement": "Apply SAFE before every AI prompt: substitute identifiers, abstain from exact figures, focus on the decision you need to make, and ensure you are working inside an approved tool — so you get a useful draft without ever exposing non-public client data.",
+      "statement": "CRAF turns thin lead data into send-ready outreach by being precisely specific about context, deliverable, structure, and the guardrails that keep every AI-generated draft accurate and RM-authentic.",
       "action_1": {
-        "title": "Strip identifiers before prompting",
-        "body": "Replace client names, individuals, and unique project details with generic descriptors (e.g., 'mid-market manufacturer' instead of 'Harbourline Fabrication Ltd.') and use directional ranges instead of exact figures. This prevents re-identification while keeping your prompt useful."
+        "title": "Build CRAF into every prompt",
+        "body": "Before asking Copilot for outreach, explicitly state the Context (what you know about their sector), Role (your title and institution), Action (exact deliverable type), and Format (structure and constraints). This discipline transforms vague outputs into credible, usable drafts."
       },
       "action_2": {
-        "title": "Verify tool approval first",
-        "body": "Confirm you are using an approved, organization-controlled AI environment (such as Microsoft Copilot within your tenant) before drafting any prompt. Never paste client documents into consumer-facing or non-approved tools, regardless of how abstracted they seem."
+        "title": "Set compliance guardrails upfront",
+        "body": "Include constraints in your prompt—no invented facts, no approval promises, conservative product claims—so the AI stays within your role's boundaries. This lets you own the truth and relationship judgment while the AI handles structure and speed."
+      }
+    }
+  },
+  "an_c6_augmented_comm": {
+    "concept_text_structured": {
+      "framework_acronym": "CSS",
+      "intro": "The Copilot Surface Selector is a decision habit that matches tasks to the right M365 tool before writing a prompt. Selecting the right surface ensures Copilot has access to the correct context and produces immediately usable output.",
+      "cards": [
+        {
+          "letter": "C",
+          "title": "Context",
+          "body": "Each M365 Copilot surface is purpose-built for the tool it lives in—Teams understands transcripts, Word handles long-form documents, Excel interrogates data, Outlook composes communications, and PowerPoint builds narratives. When you select the right surface, Copilot has access to the right context."
+        },
+        {
+          "letter": "S",
+          "title": "Selector",
+          "body": "Before you write a single prompt, ask yourself: which tool owns this task? This intentional handoff prevents forcing one tool to do another tool's job and keeps your workflow sequential and clean."
+        },
+        {
+          "letter": "S",
+          "title": "Secure",
+          "body": "Matching task to surface keeps your outputs accurate and your content inside EDC's secure M365 environment—no copy-pasting into external tools, no version fragmentation, and no re-work."
+        }
+      ],
+      "guardrails": [
+        "Do not ask Word Copilot to summarize a meeting without pasting the transcript—this produces hallucinated summaries",
+        "Do not ask Outlook Copilot to analyze KPI trends—this produces vague prose, not insight",
+        "Keep all work within M365 to avoid version fragmentation and maintain security"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "An analyst needs to create a programme brief that combines meeting decisions with KPI data.",
+      "before_prompt": "Summarise today's meeting and write a brief with the KPI data.",
+      "before_issue": "The prompt provides no source material, forcing the AI to generate generic placeholder content that requires complete rewriting.",
+      "after_prompt": "Using the meeting recap and KPI table above, draft a one-page programme brief for the programme sponsor. Include: status summary, key decisions, KPI highlights, and next steps. Tone: executive, concise.",
+      "after_benefit": "The prompt grounds the AI in real, pasted source materials and specifies exact structure and tone, ensuring accurate and actionable output.",
+      "outcome": "The AI produces an accurate, executive-ready brief that requires only one light edit pass before sending."
+    },
+    "anti_pattern_structured": {
+      "headline": "Wrong tool for analytical synthesis",
+      "failure_scenario": "An analyst bypassed Teams Copilot and pasted an unformatted transcript directly into Outlook, asking Copilot to convert it into a brief. Outlook Copilot, optimised for email composition rather than document structuring, produced an overlong, poorly organised email that buried key decisions and omitted KPI context.",
+      "chain": [
+        "Email lacks clear structure and buries critical decisions in prose",
+        "Steering committee receives unclear ask and incomplete context",
+        "Analyst must manually rewrite the brief in Word, duplicating effort",
+        "Version confusion between emailed and filed documents creates compliance and decision-tracking risk"
+      ],
+      "root_lesson": "Match the tool to the task: use Teams Copilot for analytical synthesis and document structuring before composition, then use Outlook Copilot only for final email formatting. Never ask a composition tool to perform structural analysis."
+    },
+    "takeaway_structured": {
+      "statement": "Always ask 'which Copilot surface owns this task?' before prompting — matching tool to task means each output is immediately usable as the input for the next step, eliminating rework and keeping your analytical workflow clean.",
+      "action_1": {
+        "title": "Map your workflow to surfaces",
+        "body": "Before starting a multi-step project, identify which M365 tool owns each task (Teams for meetings, Word for drafts, Excel for data, Outlook for communications, PowerPoint for presentations). This intentional sequencing ensures each Copilot output feeds naturally into the next step without rework."
+      },
+      "action_2": {
+        "title": "Verify context before prompting",
+        "body": "Confirm the relevant source material (transcript, document, spreadsheet, email thread) is accessible within the selected Copilot surface before writing your prompt. This prevents hallucinated outputs and ensures accurate, immediately usable results."
       }
     }
   },
@@ -654,6 +654,143 @@
       "action_2": {
         "title": "Label unverified claims explicitly",
         "body": "Any commentary element you cannot personally trace to a verified source cell must be flagged as 'needs client confirmation' before it reaches underwriting, CRM notes, or the client. This prevents credibility damage and rework."
+      }
+    }
+  },
+  "rm_c4_relationship_intel": {
+    "concept_text_structured": {
+      "framework_acronym": "RELATE",
+      "intro": "The RELATE Framework gives you a structured way to generate relationship briefs with AI while keeping them honest and actionable. It transforms raw interactions into a living story of commitments, outcomes, and stakeholder priorities.",
+      "cards": [
+        {
+          "letter": "R",
+          "title": "Recall",
+          "body": "Surface the last three to five touchpoints and their outcomes. What happened, and what changed?"
+        },
+        {
+          "letter": "E",
+          "title": "Extract",
+          "body": "Identify unresolved asks, promised follow-ups, and pending approvals that must be addressed before trust erodes."
+        },
+        {
+          "letter": "L",
+          "title": "List",
+          "body": "Name who will be in the room, what they care about, and how they prefer to receive information—but only if your notes actually support those claims."
+        },
+        {
+          "letter": "A",
+          "title": "Align",
+          "body": "Define the one decision or concrete progress you need from this specific meeting."
+        },
+        {
+          "letter": "T",
+          "title": "Tailor",
+          "body": "Sequence topics for the audience. A new executive needs a clean status recap before you move to open issues."
+        },
+        {
+          "letter": "E",
+          "title": "Evidence",
+          "body": "Label every brief item as Confirmed (directly supported by your notes, emails, or CRM records) or Needs Confirmation (inferred or unsupported)."
+        }
+      ],
+      "guardrails": [
+        "Evidence-tag every item to separate supported claims from inferences",
+        "Only include stakeholder preferences if notes actually support those claims",
+        "Validate AI outputs to prevent hallucinated client concerns from damaging credibility",
+        "Keep the brief actionable and focused on the specific meeting goal"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "An RM prepares a relationship brief for an upcoming client review meeting.",
+      "before_prompt": "Summarise my relationship with Northfield Industrial for the upcoming review.",
+      "before_issue": "The vague prompt causes the AI to generate generic talking points, invent unsupported claims, and omit critical pending items.",
+      "after_prompt": "Using the RELATE framework, draft a 1-page relationship brief. Sections: Relationship Timeline (last 90 days), Open Threads (unresolved asks and promised follow-ups), Stakeholder Map (roles and stated priorities only), Suggested Agenda (ordered for a mixed audience including a new CFO). Add an Evidence Tag—Confirmed or Needs Confirmation—to every bullet. Do not invent issues, commitments, or stakeholder preferences not present in the inputs provided.",
+      "after_benefit": "The structured prompt with source documents and explicit guardrails ensures every claim is grounded in evidence and flagged for validation.",
+      "outcome": "The RM arrives at the meeting prepared with accurate, verified information and clear visibility into what still needs confirmation."
+    },
+    "anti_pattern_structured": {
+      "headline": "Treating AI Summaries as Verified Facts",
+      "failure_scenario": "The practitioner asked an AI tool to recap a relationship and accepted the fluent output as ground truth without cross-checking against actual notes, CRM records, or emails. The AI fabricated plausible-sounding details like stakeholder concerns or commitments that never occurred.",
+      "chain": [
+        "Fabricated claims enter the practitioner's mental model as facts",
+        "Practitioner raises phantom issues in a client meeting",
+        "Client perceives inattention or dishonesty",
+        "Immediate erosion of trust requiring months to repair"
+      ],
+      "root_lesson": "Always cross-check AI-generated claims against your source materials before using them. Flag any claim not grounded in your actual inputs before it reaches external communication."
+    },
+    "takeaway_structured": {
+      "statement": "RELATE helps you walk into every client meeting prepared like you remember everything—while keeping AI honest about what it actually knows versus what it invented.",
+      "action_1": {
+        "title": "Tag every brief item for evidence",
+        "body": "Before your next client meeting, mark each point in your AI-generated brief as either Confirmed (backed by notes/emails/CRM) or Needs Confirmation (inferred). This prevents you from raising phantom problems that damage credibility."
+      },
+      "action_2": {
+        "title": "Structure your pre-meeting prep with RELATE",
+        "body": "Use the six-step framework to generate your relationship brief: recall recent touchpoints, extract open threads, list stakeholders and their preferences, align to your meeting goal, tailor the agenda sequence, and validate evidence. This transforms scattered notes into an actionable, honest brief."
+      }
+    }
+  },
+  "rm_c1_responsible_ai": {
+    "concept_text_structured": {
+      "framework_acronym": "SAFE",
+      "intro": "The SAFE Abstraction Method gives Relationship Managers a practical four-step filter to strip risk while keeping usefulness before writing any AI prompt. It protects confidential client information while enabling AI tools to accelerate work like drafting briefing notes and structuring follow-ups.",
+      "cards": [
+        {
+          "letter": "S",
+          "title": "Substitute",
+          "body": "Replace the client name and any named individuals with generic descriptors (e.g., 'Harbourline Fabrication Ltd.' → 'mid-market Canadian manufacturer')."
+        },
+        {
+          "letter": "A",
+          "title": "Abstain",
+          "body": "Swap precise revenue, debt ratios, or credit limits for directional ranges (e.g., 'revenue declined ~15% YoY' → 'profitability under pressure last year')."
+        },
+        {
+          "letter": "F",
+          "title": "Focus",
+          "body": "Tell the AI what you need to decide or prepare, not what the document says. This keeps the prompt purposeful and avoids data-dumping."
+        },
+        {
+          "letter": "E",
+          "title": "Ensure",
+          "body": "Sensitive work stays in approved environments (e.g., Microsoft Copilot within your organization's tenant). Never paste full documents into consumer-facing or non-approved AI tools."
+        }
+      ],
+      "guardrails": [
+        "Even after removing a name, a unique project, niche geography, or unusual deal structure can still re-identify a client.",
+        "SAFE prompts should be generic enough that the output could apply to any similar client — not just yours.",
+        "Pasting raw client documents into a non-approved tool is a confidentiality breach waiting to happen."
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "A relationship manager seeks AI assistance to analyze a client's financial statements and loan request.",
+      "before_prompt": "Here are the full financial statements and expansion plan for Northgate Metals Inc. Revenue is $42M, EBITDA margin dropped to 4%, and they want a $9M term loan for a new smelting facility in northern Ontario. Summarize the risks and suggest loan terms.",
+      "before_issue": "Pasting confidential client data into a free public chatbot creates a data breach risk and may produce invented numbers the RM cannot defend.",
+      "after_prompt": "Context (abstracted): Mid-market Canadian metals manufacturer. Seeking growth financing; profitability declined significantly last year; liquidity is tight but trending upward. Expansion into a capital-intensive new production line. Task: Draft a 1-page internal briefing note with three sections — (1) Key risk themes to investigate, (2) Questions to ask the client before credit review, (3) Next-step checklist. Format: Headings + bullets. Constraint: Do not invent figures, ratios, or proposed terms. Label any unknown as 'needs confirmation.'",
+      "after_benefit": "Uses an approved internal tool, abstracts sensitive data, and constrains the AI to avoid fabricating financial figures or terms.",
+      "outcome": "Produces a defensible, structured internal draft that guides further investigation without exposing confidential information or relying on invented data."
+    },
+    "anti_pattern_structured": {
+      "headline": "Pasting Confidential Data Into Consumer AI",
+      "failure_scenario": "A relationship manager copied a client's full financial statements, CRM record, or business plan into a consumer-facing or non-approved AI tool to quickly generate a summary. The practitioner bypassed data governance controls to save time.",
+      "chain": [
+        "Client confidential data is transmitted to external AI service and may be stored, logged, or used for model training",
+        "Confidentiality breach violates policy, regulatory requirements, and client trust agreements",
+        "AI generates plausible-sounding but fabricated figures and terms that appear authoritative",
+        "Relationship manager cannot defend the output in credit review or client conversation, creating compliance and reputational risk"
+      ],
+      "root_lesson": "Always verify that any tool handling client data is approved by compliance and contractually bound to confidentiality before sharing any information. Never use consumer AI tools for sensitive client work—use only internal, approved platforms with proper data governance controls."
+    },
+    "takeaway_structured": {
+      "statement": "Apply SAFE before every AI prompt: substitute identifiers, abstain from exact figures, focus on the decision you need to make, and ensure you are working inside an approved tool — so you get a useful draft without ever exposing non-public client data.",
+      "action_1": {
+        "title": "Strip identifiers before prompting",
+        "body": "Replace client names, individuals, and unique project details with generic descriptors (e.g., 'mid-market manufacturer' instead of 'Harbourline Fabrication Ltd.') and use directional ranges instead of exact figures. This prevents re-identification while keeping your prompt useful."
+      },
+      "action_2": {
+        "title": "Verify tool approval first",
+        "body": "Confirm you are using an approved, organization-controlled AI environment (such as Microsoft Copilot within your tenant) before drafting any prompt. Never paste client documents into consumer-facing or non-approved tools, regardless of how abstracted they seem."
       }
     }
   },
@@ -732,80 +869,6 @@
       "action_2": {
         "title": "Verify before sending",
         "body": "Insert a mandatory check before any output leaves your hands: confirm decisions are accurate, owners are named, due dates are real, and no claims were invented. Separate internal risk flags from client-facing content to prevent costly forwarding errors."
-      }
-    }
-  },
-  "rm_c4_relationship_intel": {
-    "concept_text_structured": {
-      "framework_acronym": "RELATE",
-      "intro": "The RELATE Framework gives you a structured way to generate relationship briefs with AI while keeping them honest and actionable. It transforms raw interactions into a living story of commitments, outcomes, and stakeholder priorities.",
-      "cards": [
-        {
-          "letter": "R",
-          "title": "Recall",
-          "body": "Surface the last three to five touchpoints and their outcomes. What happened, and what changed?"
-        },
-        {
-          "letter": "E",
-          "title": "Extract",
-          "body": "Identify unresolved asks, promised follow-ups, and pending approvals that must be addressed before trust erodes."
-        },
-        {
-          "letter": "L",
-          "title": "List",
-          "body": "Name who will be in the room, what they care about, and how they prefer to receive information—but only if your notes actually support those claims."
-        },
-        {
-          "letter": "A",
-          "title": "Align",
-          "body": "Define the one decision or concrete progress you need from this specific meeting."
-        },
-        {
-          "letter": "T",
-          "title": "Tailor",
-          "body": "Sequence topics for the audience. A new executive needs a clean status recap before you move to open issues."
-        },
-        {
-          "letter": "E",
-          "title": "Evidence",
-          "body": "Label every brief item as Confirmed (directly supported by your notes, emails, or CRM records) or Needs Confirmation (inferred or unsupported)."
-        }
-      ],
-      "guardrails": [
-        "Evidence-tag every item to separate supported claims from inferences",
-        "Only include stakeholder preferences if notes actually support those claims",
-        "Validate AI outputs to prevent hallucinated client concerns from damaging credibility",
-        "Keep the brief actionable and focused on the specific meeting goal"
-      ]
-    },
-    "good_example_structured": {
-      "scenario": "An RM prepares a relationship brief for an upcoming client review meeting.",
-      "before_prompt": "Summarise my relationship with Northfield Industrial for the upcoming review.",
-      "before_issue": "The vague prompt causes the AI to generate generic talking points, invent unsupported claims, and omit critical pending items.",
-      "after_prompt": "Using the RELATE framework, draft a 1-page relationship brief. Sections: Relationship Timeline (last 90 days), Open Threads (unresolved asks and promised follow-ups), Stakeholder Map (roles and stated priorities only), Suggested Agenda (ordered for a mixed audience including a new CFO). Add an Evidence Tag—Confirmed or Needs Confirmation—to every bullet. Do not invent issues, commitments, or stakeholder preferences not present in the inputs provided.",
-      "after_benefit": "The structured prompt with source documents and explicit guardrails ensures every claim is grounded in evidence and flagged for validation.",
-      "outcome": "The RM arrives at the meeting prepared with accurate, verified information and clear visibility into what still needs confirmation."
-    },
-    "anti_pattern_structured": {
-      "headline": "Treating AI Summaries as Verified Facts",
-      "failure_scenario": "The practitioner asked an AI tool to recap a relationship and accepted the fluent output as ground truth without cross-checking against actual notes, CRM records, or emails. The AI fabricated plausible-sounding details like stakeholder concerns or commitments that never occurred.",
-      "chain": [
-        "Fabricated claims enter the practitioner's mental model as facts",
-        "Practitioner raises phantom issues in a client meeting",
-        "Client perceives inattention or dishonesty",
-        "Immediate erosion of trust requiring months to repair"
-      ],
-      "root_lesson": "Always cross-check AI-generated claims against your source materials before using them. Flag any claim not grounded in your actual inputs before it reaches external communication."
-    },
-    "takeaway_structured": {
-      "statement": "RELATE helps you walk into every client meeting prepared like you remember everything—while keeping AI honest about what it actually knows versus what it invented.",
-      "action_1": {
-        "title": "Tag every brief item for evidence",
-        "body": "Before your next client meeting, mark each point in your AI-generated brief as either Confirmed (backed by notes/emails/CRM) or Needs Confirmation (inferred). This prevents you from raising phantom problems that damage credibility."
-      },
-      "action_2": {
-        "title": "Structure your pre-meeting prep with RELATE",
-        "body": "Use the six-step framework to generate your relationship brief: recall recent touchpoints, extract open threads, list stakeholders and their preferences, align to your meeting goal, tailor the agenda sequence, and validate evidence. This transforms scattered notes into an actionable, honest brief."
       }
     }
   },
@@ -944,6 +1007,79 @@
       }
     }
   },
+  "uw_c3_critical_eval": {
+    "concept_text_structured": {
+      "framework_acronym": "VERIFY",
+      "intro": "The VERIFY Checklist is a six-step discipline that underwriters run before any AI-generated text enters a credit memo, approver email, or system-of-record entry. It ensures AI-assisted underwriting remains reliable and audit-ready by catching errors that may look entirely convincing.",
+      "cards": [
+        {
+          "letter": "V",
+          "title": "Value at risk",
+          "body": "Identify which statements would materially change the credit decision if they turned out to be wrong, and flag those first."
+        },
+        {
+          "letter": "E",
+          "title": "Evidence match",
+          "body": "Verify that each key claim traces back to a named source — audited financials, a covenant schedule, a ratings report. If you can't point to the source, the claim is unverified."
+        },
+        {
+          "letter": "R",
+          "title": "Recency",
+          "body": "Confirm the data is current. AI tools can silently pull from an older filing or a superseded policy version."
+        },
+        {
+          "letter": "I",
+          "title": "Internal consistency",
+          "body": "Check that numbers and narrative agree. A leverage ratio that contradicts the EBITDA figure nearby is a red flag."
+        },
+        {
+          "letter": "F",
+          "title": "Facts vs. interpretation",
+          "body": "Clearly separate conclusions from data. 'Leverage improved to 3.2x' is a fact (if verified); 'the company is on a strong deleveraging path' is an interpretation and must be labelled as such."
+        },
+        {
+          "letter": "Y",
+          "title": "Your judgment",
+          "body": "Apply your underwriting sense-check. If something feels off, it probably is."
+        }
+      ],
+      "guardrails": [
+        "Do not skip the checklist because the output looks right",
+        "In underwriting, 'looks right' is never enough",
+        "VERIFY is not about distrusting AI — it is about professional discipline that keeps AI-assisted underwriting reliable and audit-ready"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "A practitioner is reviewing an AI-generated memo statement about a company's leverage ratio and needs to verify its accuracy before finalizing the document.",
+      "before_prompt": "Leverage improved to 3.2x, reflecting strong EBITDA growth over the prior year.",
+      "before_issue": "The statement mixes unverified facts with unsupported interpretation and lacks source documentation or covenant context.",
+      "after_prompt": "Leverage stood at 3.2x as at FY2024 year-end (Total Debt $48.6M / EBITDA $15.2M — per audited financials), within the 3.5x covenant limit. EBITDA trend commentary is pending confirmation against prior-year comparatives.",
+      "after_benefit": "The revised statement separates verified facts from pending interpretations, cites audited sources, includes the calculation, and flags covenant risk.",
+      "outcome": "A defensible, audit-ready memo statement that distinguishes fact from interpretation and alerts the reader to covenant proximity and outstanding validation needs."
+    },
+    "anti_pattern_structured": {
+      "headline": "Skipped Verification of AI Summary Data",
+      "failure_scenario": "An underwriter accepted an AI-generated borrower summary at face value without running a verification check, despite time pressure. The AI had silently used outdated FY2022 figures instead of current FY2024 data, causing the leverage ratio to appear artificially favorable.",
+      "chain": [
+        "Stale financial data was forwarded to the approving authority without detection",
+        "Conditional approval was granted based on an inaccurate leverage ratio",
+        "Error surfaced during annual review with no audit trail of source data validation",
+        "Underwriter credibility damaged, decision questioned, and file amendment required"
+      ],
+      "root_lesson": "Always run a verification check on AI-generated summaries before forwarding them, especially for critical metrics like leverage ratios. A two-minute VERIFY pass catches silent data staleness and creates an audit trail that protects both the decision and the decision-maker."
+    },
+    "takeaway_structured": {
+      "statement": "Run VERIFY on every piece of AI output before it leaves your desk — because a number that looks right and a number that *is* right are not the same thing, and only one of them belongs in a credit decision.",
+      "action_1": {
+        "title": "Apply VERIFY checklist systematically",
+        "body": "Before any AI-generated text enters a credit memo or system record, work through all six steps: flag high-risk statements, trace claims to named sources, check data recency, test internal consistency, separate facts from interpretations, and apply your judgment. Treat this as non-negotiable discipline, not optional review."
+      },
+      "action_2": {
+        "title": "Distinguish facts from AI interpretations",
+        "body": "Explicitly verify which statements are data-backed facts versus confident-sounding conclusions. Label interpretations as such and demand evidence for any claim that would materially change your credit decision if it proved wrong."
+      }
+    }
+  },
   "rm_c7_capstone": {
     "concept_text_structured": {
       "framework_acronym": "SAFE, CRAF, VERIFY, RELATE, SIGNAL, Surface Selector",
@@ -1015,79 +1151,6 @@
       "action_2": {
         "title": "Apply SAFE-CRAF-VERIFY-RELATE-SIGNAL systematically",
         "body": "Run the full six-discipline workflow consistently for every pipeline review, stakeholder onboarding, and key client call—abstracting sensitive data, constraining output format, adding relationship context, documenting your rationale, and routing to the correct Copilot surface. Repeatable discipline separates using AI well from using it fast."
-      }
-    }
-  },
-  "uw_c3_critical_eval": {
-    "concept_text_structured": {
-      "framework_acronym": "VERIFY",
-      "intro": "The VERIFY Checklist is a six-step discipline that underwriters run before any AI-generated text enters a credit memo, approver email, or system-of-record entry. It ensures AI-assisted underwriting remains reliable and audit-ready by catching errors that may look entirely convincing.",
-      "cards": [
-        {
-          "letter": "V",
-          "title": "Value at risk",
-          "body": "Identify which statements would materially change the credit decision if they turned out to be wrong, and flag those first."
-        },
-        {
-          "letter": "E",
-          "title": "Evidence match",
-          "body": "Verify that each key claim traces back to a named source — audited financials, a covenant schedule, a ratings report. If you can't point to the source, the claim is unverified."
-        },
-        {
-          "letter": "R",
-          "title": "Recency",
-          "body": "Confirm the data is current. AI tools can silently pull from an older filing or a superseded policy version."
-        },
-        {
-          "letter": "I",
-          "title": "Internal consistency",
-          "body": "Check that numbers and narrative agree. A leverage ratio that contradicts the EBITDA figure nearby is a red flag."
-        },
-        {
-          "letter": "F",
-          "title": "Facts vs. interpretation",
-          "body": "Clearly separate conclusions from data. 'Leverage improved to 3.2x' is a fact (if verified); 'the company is on a strong deleveraging path' is an interpretation and must be labelled as such."
-        },
-        {
-          "letter": "Y",
-          "title": "Your judgment",
-          "body": "Apply your underwriting sense-check. If something feels off, it probably is."
-        }
-      ],
-      "guardrails": [
-        "Do not skip the checklist because the output looks right",
-        "In underwriting, 'looks right' is never enough",
-        "VERIFY is not about distrusting AI — it is about professional discipline that keeps AI-assisted underwriting reliable and audit-ready"
-      ]
-    },
-    "good_example_structured": {
-      "scenario": "A practitioner is reviewing an AI-generated memo statement about a company's leverage ratio and needs to verify its accuracy before finalizing the document.",
-      "before_prompt": "Leverage improved to 3.2x, reflecting strong EBITDA growth over the prior year.",
-      "before_issue": "The statement mixes unverified facts with unsupported interpretation and lacks source documentation or covenant context.",
-      "after_prompt": "Leverage stood at 3.2x as at FY2024 year-end (Total Debt $48.6M / EBITDA $15.2M — per audited financials), within the 3.5x covenant limit. EBITDA trend commentary is pending confirmation against prior-year comparatives.",
-      "after_benefit": "The revised statement separates verified facts from pending interpretations, cites audited sources, includes the calculation, and flags covenant risk.",
-      "outcome": "A defensible, audit-ready memo statement that distinguishes fact from interpretation and alerts the reader to covenant proximity and outstanding validation needs."
-    },
-    "anti_pattern_structured": {
-      "headline": "Skipped Verification of AI Summary Data",
-      "failure_scenario": "An underwriter accepted an AI-generated borrower summary at face value without running a verification check, despite time pressure. The AI had silently used outdated FY2022 figures instead of current FY2024 data, causing the leverage ratio to appear artificially favorable.",
-      "chain": [
-        "Stale financial data was forwarded to the approving authority without detection",
-        "Conditional approval was granted based on an inaccurate leverage ratio",
-        "Error surfaced during annual review with no audit trail of source data validation",
-        "Underwriter credibility damaged, decision questioned, and file amendment required"
-      ],
-      "root_lesson": "Always run a verification check on AI-generated summaries before forwarding them, especially for critical metrics like leverage ratios. A two-minute VERIFY pass catches silent data staleness and creates an audit trail that protects both the decision and the decision-maker."
-    },
-    "takeaway_structured": {
-      "statement": "Run VERIFY on every piece of AI output before it leaves your desk — because a number that looks right and a number that *is* right are not the same thing, and only one of them belongs in a credit decision.",
-      "action_1": {
-        "title": "Apply VERIFY checklist systematically",
-        "body": "Before any AI-generated text enters a credit memo or system record, work through all six steps: flag high-risk statements, trace claims to named sources, check data recency, test internal consistency, separate facts from interpretations, and apply your judgment. Treat this as non-negotiable discipline, not optional review."
-      },
-      "action_2": {
-        "title": "Distinguish facts from AI interpretations",
-        "body": "Explicitly verify which statements are data-backed facts versus confident-sounding conclusions. Label interpretations as such and demand evidence for any claim that would materially change your credit decision if it proved wrong."
       }
     }
   },
@@ -1229,6 +1292,70 @@
       }
     }
   },
+  "uw_c5_data_decision": {
+    "concept_text_structured": {
+      "framework_acronym": "SIFT",
+      "intro": "The SIFT Variance Lens is a four-step discipline that keeps AI in the role of hypothesis generator and keeps you in the role of validator when analyzing financial variances. It prevents the most costly analytical error in underwriting: accepting the first plausible story.",
+      "cards": [
+        {
+          "letter": "S",
+          "title": "Select",
+          "body": "From the full variance output, identify the 3–5 swings that carry the most underwriting weight. Focus on variances that affect debt service capacity, covenant headroom, or collateral quality."
+        },
+        {
+          "letter": "I",
+          "title": "Isolate",
+          "body": "For each selected variance, generate 2–3 plausible drivers and treat these as competing hypotheses, not facts. AI is excellent at producing this list quickly—but it cannot know which hypothesis is true without evidence."
+        },
+        {
+          "letter": "F",
+          "title": "Find",
+          "body": "For each hypothesis, specify the exact data that would confirm or rule it out, such as price-versus-volume splits, input cost schedules, aged receivables detail, or management commentary. If the evidence isn't in the file, that becomes your next information request."
+        },
+        {
+          "letter": "T",
+          "title": "Tie",
+          "body": "Once a driver is confirmed by evidence, map it to a concrete underwriting response—covenant adjustment, cash flow stress test, collateral review, or escalation."
+        }
+      ],
+      "guardrails": [
+        "Separate what changed from why it changed from what you do about it—every time",
+        "Treat AI-generated hypotheses as competing possibilities, not conclusions",
+        "Require evidence before accepting any variance explanation",
+        "Focus only on variances with material underwriting impact"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "An underwriter analyzes financial variances in a credit facility to determine appropriate covenant structures.",
+      "before_prompt": "The analyzer flags EBITDA margin down 180 bps and DSO up 22 days for Meridian Industrial Co. The underwriter notes 'margin pressure and slower collections' and drafts a tighter covenant package.",
+      "before_issue": "The response treats symptoms as root causes without isolating hypotheses or gathering evidence, leading to overly restrictive covenants that may not address the actual drivers.",
+      "after_prompt": "Select top variances (EBITDA margin −180 bps, DSO +22 days). Isolate hypotheses for each. Find evidence via cost-of-goods detail, one-time schedules, aged receivables, and customer contracts. Tie findings to targeted actions.",
+      "after_benefit": "The structured approach isolates root causes, gathers supporting evidence, and links findings directly to proportionate covenant design rather than blanket restrictions.",
+      "outcome": "A targeted, evidence-backed covenant structure (e.g., normalization for one-time charges and concentration covenants) instead of a blunt response to misread variances."
+    },
+    "anti_pattern_structured": {
+      "headline": "Accepting AI Summary Without Source Validation",
+      "failure_scenario": "The underwriter accepted the AI's margin compression explanation (rising steel costs) at face value without validating the underlying data or investigating alternative causes. The actual driver was a one-time inventory write-down, not commodity costs, making the AI hypothesis fundamentally incorrect.",
+      "chain": [
+        "Irrelevant covenant added based on misdiagnosed risk driver",
+        "Normalized margin appears weaker than reality; deal pricing and terms misaligned with true credit quality",
+        "Underwriter forced to re-present corrected analysis to credit committee",
+        "Lost credibility, delayed approval, and undermined confidence in AI-assisted underwriting"
+      ],
+      "root_lesson": "Always validate AI summaries by tracing back to source data and investigating root causes independently before embedding conclusions into credit decisions. Never treat an AI hypothesis as confirmed fact without corroborating evidence from the underlying financials or borrower disclosures."
+    },
+    "takeaway_structured": {
+      "statement": "SIFT turns AI-generated variance hypotheses into validated, evidence-backed underwriting decisions by forcing you to confirm the 'why' before you act on the 'what.'",
+      "action_1": {
+        "title": "Prioritize variances by underwriting weight",
+        "body": "When reviewing AI variance output, immediately filter to the 3–5 swings that materially affect debt service capacity, covenant headroom, or collateral quality. Ignore line items that don't move the needle on credit risk."
+      },
+      "action_2": {
+        "title": "Demand evidence before accepting hypotheses",
+        "body": "For each plausible driver AI generates, specify the exact data needed to confirm or rule it out—then verify that evidence exists in your file before taking any underwriting action. If evidence is missing, make it your next information request."
+      }
+    }
+  },
   "uw_c6_augmented_comm": {
     "concept_text_structured": {
       "framework_acronym": "CRAF",
@@ -1291,70 +1418,6 @@
       "action_2": {
         "title": "Audit content at each handoff",
         "body": "When moving output between surfaces—such as from a Teams recap into a Word memo or final Outlook email—pause and verify that internal-only identifiers, figures, and rationale have not migrated into external documents. This verification step prevents audit gaps and confidentiality breaches."
-      }
-    }
-  },
-  "uw_c5_data_decision": {
-    "concept_text_structured": {
-      "framework_acronym": "SIFT",
-      "intro": "The SIFT Variance Lens is a four-step discipline that keeps AI in the role of hypothesis generator and keeps you in the role of validator when analyzing financial variances. It prevents the most costly analytical error in underwriting: accepting the first plausible story.",
-      "cards": [
-        {
-          "letter": "S",
-          "title": "Select",
-          "body": "From the full variance output, identify the 3–5 swings that carry the most underwriting weight. Focus on variances that affect debt service capacity, covenant headroom, or collateral quality."
-        },
-        {
-          "letter": "I",
-          "title": "Isolate",
-          "body": "For each selected variance, generate 2–3 plausible drivers and treat these as competing hypotheses, not facts. AI is excellent at producing this list quickly—but it cannot know which hypothesis is true without evidence."
-        },
-        {
-          "letter": "F",
-          "title": "Find",
-          "body": "For each hypothesis, specify the exact data that would confirm or rule it out, such as price-versus-volume splits, input cost schedules, aged receivables detail, or management commentary. If the evidence isn't in the file, that becomes your next information request."
-        },
-        {
-          "letter": "T",
-          "title": "Tie",
-          "body": "Once a driver is confirmed by evidence, map it to a concrete underwriting response—covenant adjustment, cash flow stress test, collateral review, or escalation."
-        }
-      ],
-      "guardrails": [
-        "Separate what changed from why it changed from what you do about it—every time",
-        "Treat AI-generated hypotheses as competing possibilities, not conclusions",
-        "Require evidence before accepting any variance explanation",
-        "Focus only on variances with material underwriting impact"
-      ]
-    },
-    "good_example_structured": {
-      "scenario": "An underwriter analyzes financial variances in a credit facility to determine appropriate covenant structures.",
-      "before_prompt": "The analyzer flags EBITDA margin down 180 bps and DSO up 22 days for Meridian Industrial Co. The underwriter notes 'margin pressure and slower collections' and drafts a tighter covenant package.",
-      "before_issue": "The response treats symptoms as root causes without isolating hypotheses or gathering evidence, leading to overly restrictive covenants that may not address the actual drivers.",
-      "after_prompt": "Select top variances (EBITDA margin −180 bps, DSO +22 days). Isolate hypotheses for each. Find evidence via cost-of-goods detail, one-time schedules, aged receivables, and customer contracts. Tie findings to targeted actions.",
-      "after_benefit": "The structured approach isolates root causes, gathers supporting evidence, and links findings directly to proportionate covenant design rather than blanket restrictions.",
-      "outcome": "A targeted, evidence-backed covenant structure (e.g., normalization for one-time charges and concentration covenants) instead of a blunt response to misread variances."
-    },
-    "anti_pattern_structured": {
-      "headline": "Accepting AI Summary Without Source Validation",
-      "failure_scenario": "The underwriter accepted the AI's margin compression explanation (rising steel costs) at face value without validating the underlying data or investigating alternative causes. The actual driver was a one-time inventory write-down, not commodity costs, making the AI hypothesis fundamentally incorrect.",
-      "chain": [
-        "Irrelevant covenant added based on misdiagnosed risk driver",
-        "Normalized margin appears weaker than reality; deal pricing and terms misaligned with true credit quality",
-        "Underwriter forced to re-present corrected analysis to credit committee",
-        "Lost credibility, delayed approval, and undermined confidence in AI-assisted underwriting"
-      ],
-      "root_lesson": "Always validate AI summaries by tracing back to source data and investigating root causes independently before embedding conclusions into credit decisions. Never treat an AI hypothesis as confirmed fact without corroborating evidence from the underlying financials or borrower disclosures."
-    },
-    "takeaway_structured": {
-      "statement": "SIFT turns AI-generated variance hypotheses into validated, evidence-backed underwriting decisions by forcing you to confirm the 'why' before you act on the 'what.'",
-      "action_1": {
-        "title": "Prioritize variances by underwriting weight",
-        "body": "When reviewing AI variance output, immediately filter to the 3–5 swings that materially affect debt service capacity, covenant headroom, or collateral quality. Ignore line items that don't move the needle on credit risk."
-      },
-      "action_2": {
-        "title": "Demand evidence before accepting hypotheses",
-        "body": "For each plausible driver AI generates, specify the exact data needed to confirm or rule it out—then verify that evidence exists in your file before taking any underwriting action. If evidence is missing, make it your next information request."
       }
     }
   },
@@ -1429,6 +1492,408 @@
       "action_2": {
         "title": "Label and file with disclosure",
         "body": "When finalizing underwriting communications or storing outputs in SharePoint, explicitly mark which sections received AI assistance and maintain a clear audit trail of assumptions and human judgments. This preserves accountability and supports future review."
+      }
+    }
+  },
+  "mk_c2_strategic_prompting": {
+    "concept_text_structured": {
+      "framework_acronym": "CRAF",
+      "intro": "The CRAF framework gives Microsoft Copilot everything it needs to produce usable content on the first try. Great marketing outputs from AI start with great prompts.",
+      "cards": [
+        {
+          "letter": "C",
+          "title": "Context",
+          "body": "Set the scene by identifying who the audience is, what product or campaign is involved, and include specific relevant details. The more detail you provide, the less Copilot has to guess."
+        },
+        {
+          "letter": "R",
+          "title": "Role",
+          "body": "Assign Copilot a persona to anchor tone and expertise. Specifying a role like 'senior marketing copywriter specialising in B2B technology content' produces sharper, more professional language than leaving the voice undefined."
+        },
+        {
+          "letter": "A",
+          "title": "Action",
+          "body": "State exactly what you want produced with clear, actionable instructions. For example, 'Draft a 3-paragraph blog post announcing the partnership' is actionable, whereas 'Write something about the partnership' is not."
+        },
+        {
+          "letter": "F",
+          "title": "Format",
+          "body": "Specify structure so the output is immediately usable. Include details like 'headline, two body paragraphs, a pull quote, and a call-to-action' to prevent mismatched formatting or walls of text."
+        }
+      ],
+      "guardrails": [
+        "All four elements must be present to generate targeted, on-brand, publish-ready content",
+        "Dropping even one element risks output that is too generic, wrongly toned, or structurally mismatched"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "A practitioner needs to generate a blog post announcement for a clean-energy startup's export financing milestone.",
+      "before_prompt": "Write a blog post about our company's financing news.",
+      "before_issue": "The prompt lacks context, audience definition, tone guidance, and structural requirements, resulting in generic or off-brand output requiring extensive revision.",
+      "after_prompt": "Context: NovaSpark Solutions, a Vancouver-based clean-energy startup, just secured export financing to expand into Southeast Asia. Audience: small and mid-sized Canadian businesses reading our company blog. Role: You are a B2B marketing copywriter with a clear, optimistic, and professional tone. Action: Write a 3-paragraph blog post announcing the financing milestone and explaining how similar companies can access the same support. Format: Open with a compelling headline, follow with an intro paragraph, a client-benefit paragraph, and close with a call-to-action linking to our financing page.",
+      "after_benefit": "The prompt specifies who, what, audience, voice, deliverable format, and exact structure, enabling the AI to produce channel-ready output requiring only light editing.",
+      "outcome": "The AI generates a professional, on-brand blog post with the correct tone, structure, and messaging that aligns with business goals and requires minimal revision."
+    },
+    "anti_pattern_structured": {
+      "headline": "Vague Prompt Without CRAF Framework",
+      "failure_scenario": "The marketer wrote a prompt with no Context, Role, Action, or Format specification, asking the AI to \"write something\" about a client partnership. The AI generated generic, boilerplate-quality output that didn't match the brand voice or business needs.",
+      "chain": [
+        "AI defaults to generic tone and structure without guidance, producing press-release filler",
+        "Marketer must heavily rewrite the output from scratch to meet actual requirements",
+        "Time spent editing exceeds time saved by using AI, defeating the purpose of automation"
+      ],
+      "root_lesson": "Always structure prompts using CRAF: specify Context (background details), Role (desired voice/perspective), Action (specific task), and Format (output structure). This prevents generic outputs and reduces revision cycles."
+    },
+    "takeaway_structured": {
+      "statement": "Use CRAF as your creative brief to Copilot: pack every prompt with Context, Role, Action, and Format so the AI delivers targeted, on-brand, channel-ready copy that you polish — not rebuild.",
+      "action_1": {
+        "title": "Build CRAF into every prompt",
+        "body": "Before submitting any request to Copilot, audit your prompt against all four elements: Context (audience and specifics), Role (persona and expertise), Action (exact deliverable), and Format (structure). Omitting even one element risks generic or misaligned output that requires extensive rework."
+      },
+      "action_2": {
+        "title": "Add specific details upfront",
+        "body": "Replace vague briefs with concrete information—name the audience segment, product details, campaign goals, and desired tone in your initial prompt. This reduces back-and-forth iterations and moves you closer to publish-ready content on the first generation."
+      }
+    }
+  },
+  "mk_c3_critical_eval": {
+    "concept_text_structured": {
+      "framework_acronym": "VERIFY",
+      "intro": "AI tools like Copilot can generate polished content in seconds, but speed without scrutiny creates liability. The VERIFY Checklist is a structured habit that ensures every AI-generated recap or summary is accurate, on-brand, and safe before publication.",
+      "cards": [
+        {
+          "letter": "V",
+          "title": "Verify",
+          "body": "Confirm every number, date, and claim against your source document or an authoritative internal report. AI can hallucinate plausible-sounding figures."
+        },
+        {
+          "letter": "E",
+          "title": "Evaluate",
+          "body": "Does the language match your organisation's voice — professional, helpful, and accurate? Watch for over-promises or off-brand phrasing."
+        },
+        {
+          "letter": "R",
+          "title": "Remove",
+          "body": "If you can't support a statement with evidence, cut it or rewrite it. Never publish what you can't defend."
+        },
+        {
+          "letter": "I",
+          "title": "Identify",
+          "body": "AI often omits disclaimers, bilingual requirements, or key caveats. Add anything compliance-critical that's absent."
+        },
+        {
+          "letter": "F",
+          "title": "Flag",
+          "body": "AI may surface internal code names, unpublished deal details, or personal data from your prompt context. Catch and remove these before sharing."
+        },
+        {
+          "letter": "Y",
+          "title": "Yield",
+          "body": "You are the gatekeeper. No AI draft ships without your explicit sign-off on every element."
+        }
+      ],
+      "guardrails": [
+        "Every AI-generated recap or summary must pass the VERIFY Checklist before publication",
+        "Think of AI as a fast first drafter, not a final author",
+        "No AI draft ships without explicit human sign-off on every element"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "A marketer uses Copilot to convert a product brief into a customer-facing blog post for a food distributor.",
+      "before_prompt": "Harvest Bridge's new logistics platform cut delivery costs by 22% for all pilot customers. Every participant called it a breakthrough. The platform — codenamed Project Maple internally — launches next quarter.",
+      "before_issue": "The draft overstates results as universal, uses hyperbolic language, omits important caveats, and exposes confidential internal code names.",
+      "after_prompt": "Apply VERIFY checks: confirm 22% applies only to pilot sites (not all customers), soften 'every participant' to 'participants reported', remove internal code name 'Project Maple', add results-may-vary disclaimer, and include French-language link.",
+      "after_benefit": "The revised version accurately represents pilot results, removes overstatement and confidential information, and includes appropriate disclaimers and accessibility features.",
+      "outcome": "Published version accurately states average 22% cost reduction across pilot sites, uses measured language, protects confidential information, and provides multilingual access."
+    },
+    "anti_pattern_structured": {
+      "headline": "Copy-Paste and Post Mistake",
+      "failure_scenario": "A communications manager used AI-generated content without verification and published it directly to 8,000 subscribers under deadline pressure. The content contained three critical errors: inflated attendance figures, a fabricated customer quote, and a reference to an unannounced NDA-protected product feature.",
+      "chain": [
+        "Journalist publicly flags inflated attendance number on social media",
+        "Customer complains about misattributed quote they never gave",
+        "Legal team escalates NDA breach violation",
+        "Public correction, formal apology, and internal review damage credibility and trust"
+      ],
+      "root_lesson": "Always perform a verification pass on AI-generated content before publishing, especially for external communications. Check factual claims against source data, validate quotes directly with sources, and confirm compliance with legal and confidentiality requirements — speed cannot override accuracy."
+    },
+    "takeaway_structured": {
+      "statement": "Always run every AI-generated recap or draft through the VERIFY Checklist — checking facts, tone, accuracy, missing elements, and confidential details — before a single word reaches your audience.",
+      "action_1": {
+        "title": "Create VERIFY Checklist template",
+        "body": "Build a reusable checklist document or form your team uses for every AI-generated piece, with checkboxes for each step (Verify Facts, Evaluate Tone, Remove Inaccuracies, Identify Missing Elements, Flag Confidential Info, Yield Final Judgment). Share it across your Marketing & Communications workflows so verification becomes a standard gate before publication."
+      },
+      "action_2": {
+        "title": "Audit recent AI drafts now",
+        "body": "Review 3–5 pieces your team published recently using AI tools and apply the VERIFY Checklist retroactively to identify any gaps, inaccuracies, or compliance risks. Use findings to brief your team on what to watch for and establish this as non-negotiable practice going forward."
+      }
+    }
+  },
+  "mk_c1_responsible_ai": {
+    "concept_text_structured": {
+      "framework_acronym": "SAFE",
+      "intro": "The SAFE Abstraction Method is a four-step discipline that lets marketers get real value from generative AI tools without exposing non-public data. It turns a potential compliance risk into a routine creative workflow while keeping clients, organizations, and privacy laws protected.",
+      "cards": [
+        {
+          "letter": "S",
+          "title": "Spot",
+          "body": "Before writing any prompt, scan your materials and flag sensitive information. Identify names, emails, phone numbers, company financials, internal campaign results, and any detail not already in the public domain."
+        },
+        {
+          "letter": "A",
+          "title": "Abstract",
+          "body": "Replace or generalize every flagged item. A named contact becomes a role description, and a precise revenue figure becomes a generalized range. The AI still understands the context while identity stays protected."
+        },
+        {
+          "letter": "F",
+          "title": "Feed",
+          "body": "Craft your prompt using only the abstracted, public-safe version of your information. Provide industry, role, objective, and tone — enough for the AI to produce a polished, relevant draft — but zero private specifics."
+        },
+        {
+          "letter": "E",
+          "title": "Examine",
+          "body": "Read every word of the AI's response before using or sharing it. Check that it hasn't hallucinated real-sounding names, invented financial figures, or reintroduced any detail you removed. Edit anything suspicious before the content leaves your hands."
+        }
+      ],
+      "guardrails": [
+        "Never paste sensitive data directly into AI tools",
+        "Flag all non-public information before prompting",
+        "Verify AI output contains no hallucinated specifics or reintroduced private details",
+        "Maintain compliance with privacy laws before sharing content"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "A marketing manager wants to draft a follow-up email to 150 leads from a trade show using AI assistance.",
+      "before_prompt": "Here are my notes from the show: Apex Grains Ltd., contact Jane Doe, jane.doe@apexgrains.ca, revenue ~$30M, interested in buyer financing.",
+      "before_issue": "The prompt includes personally identifiable information (names, emails, revenue figures) that violates privacy policy and CASL regulations.",
+      "after_prompt": "Role: You are a B2B marketing copywriter for a Canadian export finance organization. Action: Draft a 3-paragraph follow-up email to leads I met at a trade show. Context: Attendees were decision-makers (e.g., CFOs, export managers) at small-to-mid-sized Canadian agri-food companies exploring export financing options for new international markets. Tone: Professional, warm, solution-focused. Include a call-to-action inviting them to a 20-minute discovery call. Format: Email with subject line.",
+      "after_benefit": "The prompt abstracts sensitive details into role, industry, and need context, giving the AI enough information to generate tailored content without exposing personal data.",
+      "outcome": "A professional, compliant follow-up email template that can be personalized safely for each lead without privacy or regulatory risk."
+    },
+    "anti_pattern_structured": {
+      "headline": "Uploading Personal Data to Web AI",
+      "failure_scenario": "A marketing coordinator attempted to upload a spreadsheet containing 200 rows of personal data (names, emails, company revenue, notes) to Copilot on the Web for email generation. The coordinator exposed sensitive non-public information outside EDC's secure environment by describing the file contents in a web-based prompt.",
+      "chain": [
+        "Personal and financial data of real individuals and companies transmitted outside secure EDC environment",
+        "Violation of EDC's Responsible AI policy and CASL compliance regulations on unsolicited contact data use",
+        "Loss of trust with leads and potential legal/regulatory consequences; reputational damage to organization"
+      ],
+      "root_lesson": "Always verify that any data you reference or attempt to share with external AI tools contains no personal, financial, or confidential information. Use only anonymized, synthetic, or publicly available data with web-based AI services, and route sensitive work through secure, approved internal tools."
+    },
+    "takeaway_structured": {
+      "statement": "Always run your data through the SAFE Abstraction Method — spot, abstract, feed, and examine — so you capture AI's speed and creativity without ever putting a real person's information or your organization's reputation at risk.",
+      "action_1": {
+        "title": "Audit prompts before pasting",
+        "body": "Before entering any data into Copilot or similar tools, scan your source material for names, emails, financials, and internal metrics. Flag anything not already public, then replace it with generalized descriptions (e.g., \"mid-sized Ontario manufacturer\" instead of the actual company name)."
+      },
+      "action_2": {
+        "title": "Review AI output for leaks",
+        "body": "After receiving the AI's response, read it carefully to catch hallucinated names, invented figures, or any private details that may have slipped through. Edit or discard any suspicious content before sharing the output with colleagues or clients."
+      }
+    }
+  },
+  "mk_c5_data_decision": {
+    "concept_text_structured": {
+      "framework_acronym": "DECIDE",
+      "intro": "DECIDE gives marketers a repeatable six-step process for moving from raw data to confident action. Speed without structure leads to bad decisions; this framework ensures AI accelerates analysis while human judgment keeps it honest.",
+      "cards": [
+        {
+          "letter": "D",
+          "title": "Define",
+          "body": "Define the decision you need to make (e.g., 'Which region deserves more Q4 budget?'). Start by clarifying exactly what choice you're trying to resolve."
+        },
+        {
+          "letter": "E",
+          "title": "Establish",
+          "body": "Establish the criteria that matter — conversion rate, cost-per-lead, revenue contribution. Identify the metrics and standards against which you'll evaluate options."
+        },
+        {
+          "letter": "C",
+          "title": "Collect",
+          "body": "Collect relevant data using AI prompts in Excel or Power BI to surface trends quickly. Leverage AI tools to gather and organize the information you need."
+        },
+        {
+          "letter": "I",
+          "title": "Identify",
+          "body": "Identify the best options by comparing AI-generated insights against your criteria. Use AI outputs to surface candidate solutions aligned with your established standards."
+        },
+        {
+          "letter": "D",
+          "title": "Develop",
+          "body": "Develop and evaluate each option, checking AI outputs against source data and business context. Validate AI findings and ensure they align with real-world constraints."
+        },
+        {
+          "letter": "E",
+          "title": "Evaluate",
+          "body": "Evaluate and decide, documenting your reasoning so the recommendation is defensible. Make the final choice and record the logic behind it for accountability."
+        }
+      ],
+      "guardrails": [
+        "Ask why before acting on AI-surfaced trends — investigate root causes rather than reacting to signals alone",
+        "Check AI outputs against source data and business context to validate findings",
+        "Document reasoning to ensure recommendations are defensible"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "A marketing manager needs to decide whether to reallocate paid-media budget between regions based on Q3 performance data.",
+      "before_prompt": "What's interesting here?",
+      "before_issue": "The vague prompt invites unfounded insights that are copied without verification of underlying data.",
+      "after_prompt": "Compare cost-per-lead and conversion rate by region for Q3, highlighting any region where cost-per-lead is below $85 and conversion rate exceeds 4%.",
+      "after_benefit": "The specific prompt with defined criteria ensures Copilot surfaces relevant, measurable insights tied to the actual decision.",
+      "outcome": "A phased reallocation plan backed by verified data, cross-team validation, and clear success metrics for Q4."
+    },
+    "anti_pattern_structured": {
+      "headline": "Copy-Paste Insight Trap",
+      "failure_scenario": "A manager accepted Copilot's confident summary that Central region had the highest lead volume and pasted it directly into an executive report without verifying the metric was appropriate, checking the underlying numbers, or investigating whether volume was driven by campaign frequency rather than quality. The AI's statement was technically accurate but answered the wrong question for decision-making.",
+      "chain": [
+        "Budget allocation decision made based on unvalidated metric (lead volume vs. conversion quality)",
+        "Q4 budget shifted to Central region despite superior East region performance",
+        "Opportunity cost in high-performing East region and misallocated resources to lower-converting Central region",
+        "Leadership credibility damaged when performance gap discovered post-decision"
+      ],
+      "root_lesson": "Always validate that AI-generated insights answer the right business question, verify numbers against source data, and investigate the drivers behind the metric before using it for decisions. AI confidence is not a substitute for critical interpretation of what the data actually means for your context."
+    },
+    "takeaway_structured": {
+      "statement": "Use the DECIDE Framework to ensure every AI-generated marketing insight is defined, verified, and contextualised before it drives a budget or strategy decision.",
+      "action_1": {
+        "title": "Map criteria before analyzing data",
+        "body": "Before running AI queries in Excel or Power BI, explicitly list the decision you're making and the 2–3 criteria that matter (conversion rate, cost-per-lead, revenue). This prevents AI from surfacing irrelevant trends and keeps your analysis focused."
+      },
+      "action_2": {
+        "title": "Validate AI insights against context",
+        "body": "When AI flags a metric change (e.g., 12% email open rate drop), pause and investigate the *why* by cross-checking source data and business events before reallocating budget. This step separates signal from noise and protects against reactive decisions."
+      }
+    }
+  },
+  "mk_c4_relationship_intel": {
+    "concept_text_structured": {
+      "framework_acronym": "TAILOR",
+      "intro": "The TAILOR Approach gives you a repeatable framework for building prospect intelligence responsibly in account-based marketing. It enables personalized outreach at scale without leaking confidential information into AI tools.",
+      "cards": [
+        {
+          "letter": "T",
+          "title": "Target",
+          "body": "Use AI to surface recent news, earnings calls, press releases, and industry trends about your prospect. These are safe inputs."
+        },
+        {
+          "letter": "A",
+          "title": "Anchor",
+          "body": "When drafting outreach with AI, include only information you could find on Google. Never paste internal CRM notes, RM meeting summaries, or non-public financials into the prompt."
+        },
+        {
+          "letter": "I",
+          "title": "Integrate",
+          "body": "Your sales team's private insights (expansion plans, pain points, relationship history) are layered in by you, after the AI draft, using your own judgment."
+        },
+        {
+          "letter": "L",
+          "title": "Look",
+          "body": "AI tools sometimes invent plausible-sounding details — figures, dates, quotes — that weren't in your prompt. Verify every specific claim before sending."
+        },
+        {
+          "letter": "O",
+          "title": "Optimize",
+          "body": "AI drafts are starting points. Adjust for your brand voice, the recipient's seniority, and the relationship stage."
+        },
+        {
+          "letter": "R",
+          "title": "Review",
+          "body": "Do a final pass: does anything in the email reveal non-public information? If yes, rephrase or remove it."
+        }
+      ],
+      "guardrails": [
+        "Never paste internal CRM notes, RM meeting summaries, or non-public financials into AI prompts",
+        "Only include information that could be found on Google in AI prompts",
+        "Verify every specific claim (figures, dates, quotes) before sending",
+        "Layer internal knowledge separately after AI draft using human judgment",
+        "Conduct final confidentiality review before sending outreach"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "A marketing manager needs to draft an introductory email to a CFO at a logistics company to pitch trade finance solutions.",
+      "before_prompt": "Paste the full RM briefing note — including Apex's projected revenue targets and a private comment about their banking frustrations — directly into ChatGPT and ask it to write an email.",
+      "before_issue": "Sharing confidential internal information and private comments with an AI model risks data leakage and produces generic, uninformed outreach.",
+      "after_prompt": "Draft a 150-word introductory email to a CFO of a freight company that recently announced a Southeast Asia expansion. Highlight how our trade finance solutions can support cross-border growth. Tone: professional, concise, forward-looking.",
+      "after_benefit": "Using only public information in a focused, specific prompt ensures data safety while enabling personalized, credible outreach.",
+      "outcome": "A verified, personalized email that combines AI efficiency with human judgment and public research, avoiding hallucinations and confidentiality breaches."
+    },
+    "anti_pattern_structured": {
+      "headline": "Pasting Confidential Data Into AI Tools",
+      "failure_scenario": "A marketing manager under deadline pressure pasted a full internal account briefing containing confidential client information directly into an AI chat tool to quickly generate an email. The manager then sent the AI-generated draft without careful review, incorporating the sensitive details into the outbound message.",
+      "chain": [
+        "Confidential data submitted to external AI system, creating data governance risk",
+        "Email sent referencing prospect's private strategic plans, signaling non-public information access",
+        "Prospect alarmed and trust damaged; legal and compliance teams alerted",
+        "Campaign paused and shortcut consumed far more time than proper process would have"
+      ],
+      "root_lesson": "Always sanitize and remove confidential, proprietary, or non-public information before submitting any content to external AI tools. Establish a data classification check as a mandatory step before using AI assistance, and never skip careful review of AI outputs when client-facing communications are involved."
+    },
+    "takeaway_structured": {
+      "statement": "Use AI to research and draft with public information only, then layer in your human knowledge and relationship context afterward — the TAILOR Approach keeps your outreach both personalized and confidential.",
+      "action_1": {
+        "title": "Feed AI only public signals",
+        "body": "When using AI to research prospects or draft outreach, input only information available through Google, press releases, earnings calls, and industry news. Never paste CRM notes, internal meeting summaries, or non-public data into your prompts."
+      },
+      "action_2": {
+        "title": "Add human insight after drafting",
+        "body": "Take the AI-generated draft and manually integrate your team's private knowledge about expansion plans, pain points, and relationship history using your own judgment. Then verify all specific claims for accuracy and review for any confidential information before sending."
+      }
+    }
+  },
+  "mk_c6_augmented_comm": {
+    "concept_text_structured": {
+      "framework_acronym": "CSS",
+      "intro": "The Copilot Surface Selector is the mental framework that helps you match the right AI capability to the right M365 tool at each step of your workflow. For communications professionals, this discipline means fewer revision cycles, stronger first drafts, and on-tone, accurate outputs.",
+      "cards": [
+        {
+          "letter": "C",
+          "title": "Chat",
+          "body": "Microsoft Copilot (the web/chat surface) can synthesise external information, help you research a topic, or serve as a translation and refinement layer when you paste in a draft."
+        },
+        {
+          "letter": "S",
+          "title": "Surfaces",
+          "body": "Every M365 surface where Copilot appears is optimised for a different job: Teams for summarising transcripts and chat threads, Word for drafting and long-form editing, Outlook for email tone and reply suggestions, and PowerPoint for converting narrative into slide-ready talking points."
+        },
+        {
+          "letter": "S",
+          "title": "Select",
+          "body": "Pause before prompting and ask: Which surface gives me the best output for this specific step? Selecting the right surface first means fewer revision cycles and communications that are on-tone, accurate, and ready for review."
+        }
+      ],
+      "guardrails": [
+        "Match the right AI capability to the right tool at each step of the workflow",
+        "Avoid jumping straight to one tool when another offers richer capability for that specific task",
+        "Pause and evaluate which surface optimises output quality before prompting"
+      ]
+    },
+    "good_example_structured": {
+      "scenario": "A communications manager needs to send a bilingual reassurance email to logistics partners after a supply-chain news story breaks.",
+      "before_prompt": "Write an email to partners about the supply chain news",
+      "before_issue": "The vague prompt produces generic, non-specific output with no consideration for audience, tone, or multilingual requirements.",
+      "after_prompt": "Draft a 200-word reassurance email to logistics partners. Audience: senior procurement managers. Tone: calm, authoritative. Include these three concerns [specific bullets] and explain how Apex's dedicated account support and flexible contract terms address each one. Then translate into professional Canadian French, preserving the formal tone.",
+      "after_benefit": "Structured prompts with explicit context, audience, tone, and constraints produce targeted, professional output across multiple surfaces and languages.",
+      "outcome": "A specific, bilingual, on-brand email produced in under 45 minutes, ready to send."
+    },
+    "anti_pattern_structured": {
+      "headline": "Single-Surface Tool Misalignment",
+      "failure_scenario": "A communications advisor used Outlook's Copilot to draft a bilingual email about industry news without doing prior research or planning. The tool produced vague, awkwardly mixed-language output unsuitable for the task's complexity.",
+      "chain": [
+        "Vague and poorly structured bilingual output required manual rewriting",
+        "One hour spent correcting in Outlook instead of using a structured workflow",
+        "Email sent late, failing to reassure clients and undermining communications leadership credibility"
+      ],
+      "root_lesson": "Match the tool surface to the task complexity: use capable surfaces (research tools, document editors) for deep work before finalizing in specialized surfaces. Never skip research and planning steps just because a tool is convenient."
+    },
+    "takeaway_structured": {
+      "statement": "Before you prompt, pause and ask which M365 Copilot surface is optimised for this specific step — research, drafting, translation, or distribution — because matching the tool to the task is what turns a generic AI output into a polished, bilingual communication ready to send.",
+      "action_1": {
+        "title": "Map your workflow to surfaces",
+        "body": "For your next multi-step deliverable, break it into stages (research, draft, refine, translate, format) and assign the right Copilot surface to each: web Copilot for research, Word for drafting, Outlook for tone calibration, PowerPoint for presentation conversion. This prevents tool-hopping and revision cycles."
+      },
+      "action_2": {
+        "title": "Pause before you prompt",
+        "body": "Before opening any Copilot, ask yourself which surface is optimised for your current task. If you're drafting complex copy, start in Word, not Outlook. If you need external research or translation, use web Copilot first. This discipline ensures stronger first drafts and fewer revisions."
       }
     }
   }
