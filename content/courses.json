@@ -208,5 +208,75 @@
     "description": "This capstone integrates Responsible AI, Strategic Prompting, Critical Evaluation, Relationship Intelligence, Data-Driven Decision Making, and Augmented Communication in one realistic underwriting case. Learners will move from intake → analysis → recommendation → approval support → stakeholder communication, using AI safely and transparently at each step.",
     "real_use_case": "Explore Copilot 360 Option for the Credit Insurance Program; Use Gen-AI to help provide company assessments. This is not a net new idea, but an attempt to leverage external tools - either CB Insights or Alphasense - as a search engine (which may themselves leverage AI) to help with investments due diligence",
     "sequence_order": 7
+  },
+  "mk_c1_responsible_ai": {
+    "course_id": "mk_c1_responsible_ai",
+    "role_id": "mk",
+    "primary_domain": "responsible_ai",
+    "title": "Protect Non-Public Marketing Data in AI",
+    "tagline": "Learn how to harness AI tools without leaking leads or confidential marketing info.",
+    "description": "This course teaches marketing professionals how to apply EDC's Responsible AI guidelines day-to-day. You'll learn to identify what counts as non-public data in marketing (e.g., customer lists, private campaign results, unreleased materials, internal strategy) and practice transforming it or abstracting it before using generative AI. Through real-world scenarios—like summarizing trade show leads, drafting content from internal data, or researching prospects—you'll master safe prompting techniques so you can still get AI's help without ever compromising customer privacy, Canada's Anti-Spam (CASL) compliance, or EDC's reputation.",
+    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).",
+    "sequence_order": 1
+  },
+  "mk_c2_strategic_prompting": {
+    "course_id": "mk_c2_strategic_prompting",
+    "role_id": "mk",
+    "primary_domain": "strategic_prompting",
+    "title": "Prompt Better Marketing Drafts Faster",
+    "tagline": "Turn a blank page into on-brand campaign content by mastering AI prompt strategy.",
+    "description": "Marketers often face tight deadlines to create engaging content. In this course, you'll adopt the CRAF prompting framework to produce quality first drafts of marketing materials in minutes. Learn how to feed Copilot the right context—from target audience and product value props to desired tone and format—so it can generate emails, social media posts, and blog outlines that hit the mark. We'll transform vague prompts that yield generic fluff into strategic prompts that deliver usable copy tailored to your needs, reducing writing time while maintaining EDC's voice and brand standards.",
+    "real_use_case": "Content Creation & Lifecycle",
+    "sequence_order": 2
+  },
+  "mk_c3_critical_eval": {
+    "course_id": "mk_c3_critical_eval",
+    "role_id": "mk",
+    "primary_domain": "critical_eval",
+    "title": "Review AI Recaps Before You Act",
+    "tagline": "Never trust an AI summary blindly—learn to verify facts and filter outputs.",
+    "description": "Marketing moves fast, but AI-generated recaps and content must be handled with care. This course builds your critical eye for evaluating AI outputs. You'll practice with scenarios like getting a summary of a 10-page product brief or a webinar transcript and catching subtle errors or overstatements before they spread. We'll cover the VERIFY checklist to double-check names, numbers, claims, translations, and tone. By course end, you'll be able to confidently use AI to lighten your workload while ensuring any output that goes public (or to the team) is 100% accurate and compliant.",
+    "real_use_case": "Customer Interaction Recap",
+    "sequence_order": 3
+  },
+  "mk_c4_relationship_intel": {
+    "course_id": "mk_c4_relationship_intel",
+    "role_id": "mk",
+    "primary_domain": "relationship_intel",
+    "title": "Build Stronger Outreach With Prospect Insight",
+    "tagline": "Combine AI research with your inside knowledge to personalize marketing like never before.",
+    "description": "In account-based marketing, one-size-fits-all approaches fall flat. This course shows how to use AI for quick insight into industries and companies, then fuse those insights with your internal intel about customers. You'll use the TAILOR approach to maintain confidentiality (never leaking non-public facts) while still crafting highly personalized emails and social posts. Scenarios include prepping for a campaign targeting a key account—using AI to gather recent news and sector trends, adding your sales team's private insights separately, and shaping messaging that speaks directly to the prospect's situation.",
+    "real_use_case": "Prospect Intelligence",
+    "sequence_order": 4
+  },
+  "mk_c5_data_decision": {
+    "course_id": "mk_c5_data_decision",
+    "role_id": "mk",
+    "primary_domain": "data_decision",
+    "title": "Turn Campaign Data Into Better Decisions",
+    "tagline": "Unlock hidden insights in marketing data using AI—and learn when to trust them.",
+    "description": "Modern marketers rely on data, from email open rates to lead conversion metrics. In this course, you'll learn how to use Copilot in tools like Excel and Power BI to analyze performance data quickly, and the DECIDE framework to validate AI-driven insights. We'll practice on scenarios such as a quarterly marketing review: asking Copilot for trends and key takeaways, then verifying them against source data and business context. By the end, you'll be able to leverage AI to make informed decisions about budget allocations, target segments, and strategy adjustments—with confidence that the insights are sound.",
+    "real_use_case": "Streamline production of Quarterly analysis and reporting",
+    "sequence_order": 5
+  },
+  "mk_c6_augmented_comm": {
+    "course_id": "mk_c6_augmented_comm",
+    "role_id": "mk",
+    "primary_domain": "augmented_comm",
+    "title": "Draft Clear Bilingual Marketing Communications",
+    "tagline": "Use AI across Office apps to draft, translate, and polish communications that resonate.",
+    "description": "Marketing and Communications roles juggle internal memos, press releases, client emails, and more—often in both English and French. This course shows how to use the Copilot Surface Selector to streamline creating and repurposing content across Outlook, Word, Teams, and PowerPoint. You'll practice multi-step workflows: for example, summarizing a Teams meeting into key points, expanding those in Word for an intranet article, and having Copilot help translate and format that content for a French version. We'll also tackle an urgent external comms scenario, using AI to draft a message and then refining it to ensure it's on-tone, accurate, and fully bilingual.",
+    "real_use_case": "Corporate Communications (translation, messaging)",
+    "sequence_order": 6
+  },
+  "mk_c7_capstone": {
+    "course_id": "mk_c7_capstone",
+    "role_id": "mk",
+    "primary_domain": "responsible_ai",
+    "title": "Run an AI-Assisted Marketing Workflow End-to-End",
+    "tagline": "Integrate all six AI skill areas as you plan and execute a full campaign with AI support.",
+    "description": "The capstone brings together everything you've learned in a realistic project. You'll step into the shoes of a marketing lead running the ExportBoost Program, an initiative to improve the customer journey for exporters. Over this course, you will use AI to assist at each stage: safely analyzing customer data (Responsible AI), drafting content and strategic plans (Strategic Prompting), generating and verifying summaries of client interactions (Critical Evaluation), researching and tailoring outreach to key prospects (Relationship Intelligence), analyzing campaign performance (Data-Driven Decisions), and creating bilingual communications for stakeholders (Augmented Communication). By completing this project, you'll demonstrate your ability to orchestrate AI tools throughout a marketing campaign while upholding EDC's standards.",
+    "real_use_case": "Exporter Journey Optimization Agent; Automating Prospect Profiling; Customer Interaction Recap; Streamline production of Quarterly analysis and reporting; Corporate Communications (translation, messaging)",
+    "sequence_order": 7
   }
 }

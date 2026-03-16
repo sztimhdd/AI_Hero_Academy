@@ -64,7 +64,7 @@ parser = argparse.ArgumentParser(description="Reset UAT user data")
 _mode = parser.add_mutually_exclusive_group()
 _mode.add_argument(
     "--role",
-    choices=["rm", "uw"],
+    choices=["rm", "uw", "mk"],
     help="Seed a user_profiles row for this role after wiping (app lands on Diagnostic)",
 )
 _mode.add_argument(
@@ -113,7 +113,8 @@ for table in TABLES:
 # ── Seed: --role ─────────────────────────────────────────────────────────────
 
 if args.role:
-    display_name = "RM Tester" if args.role == "rm" else "UW Tester"
+    _name_map = {"rm": "RM Tester", "uw": "UW Tester", "mk": "MK Tester"}
+    display_name = _name_map.get(args.role, f"{args.role.upper()} Tester")
     execute(
         f"INSERT INTO {CATALOG}.learner.user_profiles "
         f"(user_email, display_name, role_id, created_at) "
