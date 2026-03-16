@@ -296,9 +296,51 @@ _role_map = {v["title"]: k for k, v in ROLES.items()}
 _available_roles = list(_role_map.keys())
 _derived_name = user_email.split("@")[0].replace(".", " ").title()
 
-# Primary CTA — anchors to the Get Started section via the form below
-if st.button("Start My Diagnostic →", type="primary", key="hero_cta"):
-    st.markdown('<script>document.getElementById("get-started-anchor").scrollIntoView({behavior:"smooth"});</script>', unsafe_allow_html=True)
+# ── Inline role/name form in the hero ─────────────────────────────────────────
+_col_sel, _col_btn = st.columns([2, 1], gap="medium")
+
+with _col_sel:
+    if len(_available_roles) == 1:
+        st.info(f"Your role: **{_available_roles[0]}**")
+        _selected_role = _available_roles[0]
+    else:
+        _selected_role = st.selectbox(
+            "Select your role",
+            options=["— Select your role —"] + _available_roles,
+            label_visibility="collapsed",
+            key="welcome_role",
+        )
+    _display_name_val = st.text_input(
+        "Display name",
+        value=_derived_name,
+        key="welcome_display_name",
+        help="This is how you will be greeted throughout the app. Edit if needed.",
+    )
+
+_role_selected = _selected_role not in ("— Select your role —",)
+
+with _col_btn:
+    if st.button(
+        "Start My Diagnostic →",
+        disabled=not _role_selected,
+        use_container_width=True,
+        type="primary",
+        key="hero_cta",
+    ):
+        with st.spinner("Setting up your profile..."):
+            try:
+                _display_name = _display_name_val.strip() if _display_name_val.strip() else _derived_name
+                _role_id = _role_map.get(_selected_role, "rm")
+                execute(f"""
+                    INSERT INTO {CATALOG}.learner.user_profiles
+                      (user_email, display_name, role_id, created_at)
+                    VALUES ('{escape(user_email)}', '{escape(_display_name)}', '{_role_id}', current_timestamp())
+                """)
+                st.session_state["user_email"] = user_email
+                st.session_state["user_state"] = "needs_diagnostic"
+                st.switch_page("pages/01_Diagnostic.py")
+            except Exception as err:
+                st.error(f"Could not create your profile. Please refresh and try again.\n\n_{err}_")
 
 st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
 
@@ -567,102 +609,6 @@ st.markdown("""
   <span class="demo-mastery-pill">Champion</span>
 </div>
 <div class="demo-mastery-note">Every domain is scored independently. The diagnostic tells you exactly where you sit on each axis.</div>
-""", unsafe_allow_html=True)
-
-st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
-
-
-# ── Section 7 — Get Started ───────────────────────────────────────────────────
-st.markdown("""
-<div id="get-started-anchor"></div>
-<div class="demo-cta-header">
-  <div class="demo-cta-headline">Choose your role and begin.</div>
-  <div class="demo-cta-sub">
-    Your 5-minute diagnostic is waiting.<br>
-    Results are visible only to you — no manager dashboard, no rankings.
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div style="max-width:480px">
-  <div style="font-family:'Inter',sans-serif; font-size:0.8rem; font-weight:600;
-              text-transform:uppercase; letter-spacing:0.08em; color:#8990A8;
-              margin-bottom:0.6rem">
-    Your Role
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
-# Build role options from content — {title: role_id}, ordered by roles.json insertion order
-_role_map = {v["title"]: k for k, v in ROLES.items()}
-_available_roles = list(_role_map.keys())
-_derived_name = user_email.split("@")[0].replace(".", " ").title()
-
-col_sel, col_btn = st.columns([2, 1], gap="medium")
-
-with col_sel:
-    # CX8: show a role card when there is only one role; use selectbox when multiple roles exist
-    if len(_available_roles) == 1:
-        st.info(f"Your role: **{_available_roles[0]}**")
-        selected_role = _available_roles[0]
-    else:
-        selected_role = st.selectbox(
-            "Select your role",
-            options=["— Select your role —"] + _available_roles,
-            label_visibility="collapsed",
-            key="welcome_role",
-        )
-
-    # CX7: show derived display name with an editable override
-    display_name_val = st.text_input(
-        "Display name",
-        value=_derived_name,
-        key="welcome_display_name",
-        help="This is how you will be greeted throughout the app. Edit if needed.",
-    )
-
-role_selected = selected_role not in ("— Select your role —",)
-
-with col_btn:
-    if st.button(
-        "Start My Diagnostic →",
-        disabled=not role_selected,
-        use_container_width=True,
-        type="primary",
-    ):
-        with st.spinner("Setting up your profile..."):
-            try:
-                display_name = display_name_val.strip() if display_name_val.strip() else _derived_name
-                role_id = _role_map.get(selected_role, "rm")
-                e_email = escape(user_email)
-                e_name = escape(display_name)
-                execute(f"""
-                    INSERT INTO {CATALOG}.learner.user_profiles
-                      (user_email, display_name, role_id, created_at)
-                    VALUES ('{e_email}', '{e_name}', '{role_id}', current_timestamp())
-                """)
-                st.session_state["user_email"] = user_email
-                st.session_state["user_state"] = "needs_diagnostic"
-                st.switch_page("pages/01_Diagnostic.py")
-            except Exception as err:
-                st.error(f"Could not create your profile. Please refresh and try again.\n\n_{err}_")
-
-# Pilot note
-st.markdown("""
-<div class="demo-pilot-note">
-  Piloting with a team? Every employee takes the same diagnostic independently
-  and gets their own personalized path. No shared account. No group score.
-</div>
-""", unsafe_allow_html=True)
-
-# Privacy footer note
-st.markdown("""
-<div style="font-family:'Inter',sans-serif; font-size:0.78rem; color:#8990A8;
-            border-top:1px solid #2A2F3E; padding-top:1.2rem; max-width:540px; margin-top:1.4rem">
-  Your scores and practice conversations are visible only to you.
-  No manager dashboard. No rankings. Just your growth.
-</div>
 """, unsafe_allow_html=True)
 
 st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)

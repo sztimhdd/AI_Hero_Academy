@@ -39,6 +39,12 @@ DEMO_PROFILES = {
         "role_id": "an",
         "display_name": "Taylor Kim (Demo)",
     },
+    "3e": {
+        "label": "3e — MK, Module 3 in progress",
+        "email": "demo-mk-m3@demo.local",
+        "role_id": "mk",
+        "display_name": "Morgan Patel (Demo)",
+    },
 }
 
 DEFAULT_PROFILE = "3a"
@@ -110,6 +116,42 @@ _AN_COURSES = [
 _AN_MODULE_EVAL_SCORES = [3.2, 3.0, 2.8, 3.1, 2.9, 3.4, 3.1]
 _AN_MODULE_DOMAIN_SCORES = [3.1, 3.0, 2.9, 3.2, 2.8, 3.5, 3.3]
 
+# MK — modules 1 & 2 complete, module 3 reading done (halfway through)
+_DIAG_DOMAIN_SCORES_3E = {
+    "responsible_ai": 1.4,
+    "strategic_prompting": 1.7,
+    "critical_eval": 1.1,
+    "relationship_intel": 1.6,
+    "data_decision": 1.3,
+    "augmented_comm": 2.0,
+}
+
+_GAP_BULLETS_3E = [
+    "Your diagnostic revealed gaps in evaluating AI-generated content for accuracy and "
+    "bias — the Critical Evaluation module is your highest priority and unlocks first.",
+    "Responsible AI responses showed uncertainty around disclosure obligations in "
+    "marketing communications — this module will help you apply the right guardrails "
+    "before campaigns go live.",
+    "Strategic Prompting showed strong instincts but inconsistent structure — "
+    "Module 2 builds the repeatable frameworks that will make your AI-assisted "
+    "content workflows more predictable.",
+    "Augmented Communication is your strongest domain — continue leveraging this "
+    "by applying AI tools to stakeholder briefs and executive summaries.",
+]
+
+_MK_COURSES = [
+    "mk_c1_responsible_ai",
+    "mk_c2_strategic_prompting",
+    "mk_c3_critical_eval",
+    "mk_c4_relationship_intel",
+    "mk_c5_data_decision",
+    "mk_c6_augmented_comm",
+    "mk_c7_capstone",
+]
+
+_MK_MODULE_EVAL_SCORES = [3.1, 2.9]
+_MK_MODULE_DOMAIN_SCORES = [2.2, 2.5]
+
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -155,8 +197,9 @@ def ensure_demo_seeded(profile_id: str) -> None:
     if profile_id == "3b":
         return  # RM at diagnostic start — only profile row needed
 
-    # diagnostic_sessions (3c and 3d)
-    domain_scores = _DIAG_DOMAIN_SCORES_3C if profile_id == "3c" else _DIAG_DOMAIN_SCORES_3D
+    # diagnostic_sessions (3c, 3d, 3e)
+    _score_map = {"3c": _DIAG_DOMAIN_SCORES_3C, "3d": _DIAG_DOMAIN_SCORES_3D, "3e": _DIAG_DOMAIN_SCORES_3E}
+    domain_scores = _score_map.get(profile_id, _DIAG_DOMAIN_SCORES_3D)
     overall = round(sum(domain_scores.values()) / len(domain_scores), 2)
     session_id = str(uuid.uuid4())
     _raw_execute(
@@ -170,7 +213,8 @@ def ensure_demo_seeded(profile_id: str) -> None:
     )
 
     # gap_maps (source_type='diagnostic', source_id=session_id)
-    bullets = _GAP_BULLETS_3C if profile_id == "3c" else _GAP_BULLETS_3D
+    _bullets_map = {"3c": _GAP_BULLETS_3C, "3d": _GAP_BULLETS_3D, "3e": _GAP_BULLETS_3E}
+    bullets = _bullets_map.get(profile_id, _GAP_BULLETS_3D)
     _raw_execute(
         f"INSERT INTO {CATALOG}.learner.gap_maps "
         f"(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
@@ -221,3 +265,40 @@ def ensure_demo_seeded(profile_id: str) -> None:
                     str(_AN_MODULE_DOMAIN_SCORES[i]),
                 ],
             )
+
+    elif profile_id == "3e":
+        # MK: modules 1 & 2 fully complete; module 3 reading done only; 4-7 locked
+        for i, course_id in enumerate(_MK_COURSES):
+            seq = i + 1
+            if seq <= 2:
+                # fully complete
+                _raw_execute(
+                    f"INSERT INTO {CATALOG}.learner.training_progress "
+                    f"(progress_id, user_email, course_id, module_sequence_order, "
+                    f"is_locked, reading_completed_at, practice_completed_at, "
+                    f"evaluation_completed_at, evaluation_score, domain_score_after) "
+                    f"VALUES (?, ?, ?, ?, false, ?, ?, ?, ?, ?)",
+                    [
+                        str(uuid.uuid4()), email, course_id, str(seq),
+                        _now_iso(), _now_iso(), _now_iso(),
+                        str(_MK_MODULE_EVAL_SCORES[i]),
+                        str(_MK_MODULE_DOMAIN_SCORES[i]),
+                    ],
+                )
+            elif seq == 3:
+                # reading done, practice & evaluation not yet started
+                _raw_execute(
+                    f"INSERT INTO {CATALOG}.learner.training_progress "
+                    f"(progress_id, user_email, course_id, module_sequence_order, "
+                    f"is_locked, reading_completed_at) "
+                    f"VALUES (?, ?, ?, ?, false, ?)",
+                    [str(uuid.uuid4()), email, course_id, str(seq), _now_iso()],
+                )
+            else:
+                # locked
+                _raw_execute(
+                    f"INSERT INTO {CATALOG}.learner.training_progress "
+                    f"(progress_id, user_email, course_id, module_sequence_order, is_locked) "
+                    f"VALUES (?, ?, ?, ?, true)",
+                    [str(uuid.uuid4()), email, course_id, str(seq)],
+                )
