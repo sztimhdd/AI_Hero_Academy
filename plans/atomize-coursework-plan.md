@@ -9,7 +9,7 @@
 
 ## Purpose
 
-Phase 0.5 converts the 21 existing RM/UW/AN modules into role-agnostic **atomic** modules
+Phase 0.5 converts the 28 existing RM/UW/AN/MK modules into role-agnostic **atomic** modules
 stored in `content/atomic_modules.json`. The app DOES NOT change — it keeps reading from
 the original JSON files throughout. The output is a parallel data store ready for Phase 1
 (PM + Engineer atoms) and Phase 3 (path assembler activation).
@@ -32,6 +32,19 @@ content/courses.json                    ─┐
 content/practice_scenarios.json         ─┤
 content/reading_content_structured.json ─┤──→ scripts/atomize_coursework.py ──→ content/atomic_modules.json
 content/reading_content.json (fallback) ─┘   (6 Sonnet calls per course)        content/atomic_overlap_report.json
+                                              28 courses: 7 RM + 7 UW + 7 AN + 7 MK
+```
+
+**Capstone handling**: all 4 capstone courses (`rm_c7_capstone`, `uw_c7_capstone`, `an_c7_capstone`,
+`mk_c7_capstone`) have `primary_domain = "responsible_ai"` in `courses.json`. They must be processed
+by the pipeline but **excluded from overlap detection** — capstones are integrative courses, not
+domain-specific, and will produce false-positive clusters with `*_c1_responsible_ai` domain courses.
+The script must filter them out before computing Jaccard groups:
+
+```python
+CAPSTONE_IDS = {"rm_c7_capstone", "uw_c7_capstone", "an_c7_capstone", "mk_c7_capstone"}
+domain_atoms = [a for a in atoms if a["source_course_ids"][0] not in CAPSTONE_IDS]
+# overlap detection runs on domain_atoms only (24 atoms)
 ```
 
 **Source file structure (all dicts keyed by `course_id`):**
@@ -424,8 +437,8 @@ python scripts/atomize_coursework.py --course-id an_c1_responsible_ai  # single 
 **Dry-run output format** (human-readable, per atom):
 
 ```text
-─── an_c1_responsible_ai ──────────────────────────────────────────
-atom_id         : responsible_ai__an_c1_responsible_ai
+─── rm_c1_responsible_ai ──────────────────────────────────────────
+atom_id         : responsible_ai__rm_c1_responsible_ai
 domain          : responsible_ai
 capability_tags : ["SAFE_framework", "data_classification", "prompt_abstraction", "data_privacy"]
 intro (derolled): As a professional working with confidential client files...
@@ -549,10 +562,11 @@ def _detect_overlap(atoms: list[dict]) -> dict:
     }
 ```
 
-**Expected output (21 modules, 6 domains, 3 roles per domain):**
+**Expected output (28 modules: 24 domain atoms + 4 capstone atoms; capstones excluded from overlap):**
 
-- 6 merge candidate groups (one per domain: RM + UW + AN versions of same framework)
-- Each group: 3 atoms, all pairwise Jaccard ≥ 0.70
+- 6 merge candidate groups (one per domain: RM + UW + AN + MK versions of same framework)
+- Each group: 4 atoms, all pairwise Jaccard ≥ 0.70
+- Capstone atoms present in `atomic_modules.json` but absent from overlap report (filtered by `CAPSTONE_IDS`)
 - 0 chaining artifacts
 
 ---
@@ -560,19 +574,21 @@ def _detect_overlap(atoms: list[dict]) -> dict:
 ## Validation
 
 ```bash
-# Step 1: test single item (dry run)
-python scripts/atomize_coursework.py --dry-run --course-id an_c1_responsible_ai
+# Step 1: test single item (dry run) — use rm_c1 as canonical test case
+python scripts/atomize_coursework.py --dry-run --course-id rm_c1_responsible_ai
 
 # Spot-check dry-run output:
 # - capability_tags: 3–6 items, includes framework name (e.g. "SAFE_framework")
 # - intro (derolled): no "As an analyst" or "As a Relationship Manager"
 # - cards: 4 items with letter/title/body
 # - scenario_template: contains {role} and {org_type}
+# - task_modes: ["open", "mcq", "mcq", "mcq"]
 # - task_templates: 4 items with text_template + skill_focus
+# - mcq_options: T2–T4 show 3 options each with exactly 1 is_best
 # - coach_tmpl: no hardcoded "EDC", "analyst", "Meridian Infrastructure Briefing"
 # - role_hint: mentions 2 role types
 
-# Step 2: if single item looks good, run all 21
+# Step 2: if single item looks good, run all 28
 python scripts/atomize_coursework.py
 
 # Step 3: verify atomic_modules.json
@@ -609,7 +625,7 @@ print(f'{len(report[\"review_flags\"])} review flags (0.40-0.69 overlap)')
 
 ## Acceptance Criteria
 
-- [ ] `content/atomic_modules.json` has exactly 21 entries
+- [ ] `content/atomic_modules.json` has exactly 28 entries (7 RM + 7 UW + 7 AN + 7 MK)
 - [ ] Every atom has `capability_tags` (3–6 items, no nulls)
 - [ ] Every atom's `practice.scenario_template` contains `{role}` and `{org_type}`
 - [ ] Every atom's `practice.coach_system_prompt_template` has no hardcoded "EDC", "analyst", "Meridian Infrastructure", "Aurora Initiative", "Cascade Portfolio", "Enterprise Intelligence Program"
@@ -617,9 +633,10 @@ print(f'{len(report[\"review_flags\"])} review flags (0.40-0.69 overlap)')
 - [ ] Every atom's `practice.task_modes` == `["open", "mcq", "mcq", "mcq"]`
 - [ ] Every atom's `practice.task_mcq_options` is a 4-item list: `[null, [...], [...], [...]]`
 - [ ] Every MCQ option set (T2–T4) has exactly 3 options, exactly 1 with `is_best: true`
-- [ ] `content/atomic_overlap_report.json` has exactly 6 merge candidate groups (one per domain)
+- [ ] `content/atomic_overlap_report.json` has exactly 6 merge candidate groups (5 non-`responsible_ai` domains × 4 atoms + 1 `responsible_ai` domain × 4 non-capstone atoms)
+- [ ] 4 capstone atoms are in `atomic_modules.json` but absent from `atomic_overlap_report.json`
 - [ ] No chaining artifacts: every pair within a merge group has pairwise Jaccard ≥ 0.70
-- [ ] Human spot-check: 3 atoms (`responsible_ai__rm_course_1`, `strategic_prompting__uw_course_2`, `data_decision__an_c4_data_decision`) read as role-agnostic with no loss of instructional intent
+- [ ] Human spot-check: 3 atoms (`responsible_ai__rm_c1_responsible_ai`, `strategic_prompting__uw_c2_strategic_prompting`, `data_decision__an_c5_data_decision`) read as role-agnostic with no loss of instructional intent
 - [ ] App still runs on original JSON files — no regression
 - [ ] `bash run_uat.sh` passes
 
