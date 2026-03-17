@@ -1362,6 +1362,69 @@ UAT-14 ✅ AN smoke test passed         UAT-17 ✅ MK smoke test passed
 
 ---
 
+### Phase 16 — Practice Module Rework (MCQ Quality + Systemic Fixes) 🔲 PENDING
+
+**Issues addressed**: PR-SYS, PR-RM, PR-UW, PR-AN, PR-MK (see `Issues.md`)
+
+**Context**: All 28 scenarios already have `task_modes: ["open", "mcq", "mcq", "mcq"]` and `task_mcq_options` fields. Phase 16 is a content quality rework — not a structural change. The MCQ hybrid model is already live; this phase fixes systemic code issues and rewrites MCQ options to meet the quality standard defined in `Issues.md`.
+
+#### MCQ Quality Standard (3 checks, must pass for every T2–T4 option set)
+
+1. **Label length** ≤10 words (current pass rates: AN 67%, MK 86%, RM 59%, UW 63%)
+2. **Distractor realism** — each wrong option must be a plausible shortcut with a nameable flaw; not a strawman
+3. **Task alignment** — the best answer must address the specific situation in that task, not a general principle
+
+#### Phase 16 Tasks
+
+```
+16.1  PR-SYS — Code/prompt fixes (pages/04_Course_Module.py)
+      a. Hallucination guard: add "Do not invent specific numbers, client names,
+         or revenue figures" to MCQ FEEDBACK MODE addendum (both branches)
+      b. Visual correctness signal: prefix button labels with ✅ / ❌ after selection
+         (or use st.success / st.error callouts)
+      c. Navigation warning contrast: change st.warning() → st.error() for
+         "you will lose your progress" banner
+
+16.2  PR-RM — Rewrite RM MCQ options (7 courses × 3 tasks = 21 option sets)
+      All labels ≤10 words; distractors realistic; options task-specific
+
+16.3  PR-UW — Rewrite UW MCQ options (7 courses × 3 tasks = 21 option sets)
+
+16.4  PR-AN — Rewrite AN MCQ options (7 courses × 3 tasks = 21 option sets)
+
+16.5  PR-MK — Rewrite MK MCQ options (7 courses × 3 tasks = 21 option sets)
+```
+
+#### Execution approach
+
+- 16.1: Direct code edit to `pages/04_Course_Module.py`
+- 16.2–16.5: Script-driven via `scripts/rewrite_mcq_options_<role>.py` (one per role)
+  - Define `MCQ_DATA` dict with rewritten options for all 7 courses
+  - Load `content/practice_scenarios.json`, overwrite `task_mcq_options` for the role's scenarios, save
+  - Run the 3-check audit after each script to confirm all labels pass
+
+#### Acceptance checks
+
+```
+□ No label exceeds 10 words in any of the 4 roles (112 option sets × 3 options = 336 labels)
+□ Each distractor has a clearly nameable flaw (manual review)
+□ Each best answer addresses the task's specific scenario (manual review)
+□ MCQ feedback contains no fabricated numbers or client names (Playwright smoke test)
+□ Visual correctness signal renders after MCQ selection (Playwright)
+□ Navigation warning uses st.error() red banner (Playwright)
+□ practice_turns written correctly to coach_sessions on completion (SQL verify)
+```
+
+#### Phase 16 Execution Order
+
+```
+16.1 (code) → 16.2 (RM) → 16.3 (UW) → 16.4 (AN) → 16.5 (MK)
+```
+
+Kickstarter prompt for this phase: `docs/kickstarter-practice-rework.md`
+
+---
+
 ## Acceptance Test Checklist (post-Phase 2)
 
 After completing Phases 1 and 2, verify all TDD acceptance criteria:

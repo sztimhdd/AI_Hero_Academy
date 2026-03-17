@@ -16,10 +16,30 @@ Last validated: February 2026
 
 ---
 
+## MCQ Quality Standard (applies to PR-RM through PR-MK)
+
+Trainer review (2026-03-17) of three sampled RM scenarios surfaced two defect categories beyond word length. **All four role rewrites (Phases 2–5) must satisfy all three checks before a scenario is considered fixed:**
+
+**Check 1 — Label length**: every option label ≤ 10 words. Verifiable by script.
+
+**Check 2 — Distractor realism**: each wrong option must represent a shortcut or misconception a busy, well-intentioned professional would genuinely consider under time pressure. "Plausible-but-sloppy" is the target, not "obviously wrong." The coach must be able to name the distractor's flaw in one sentence.
+
+**Check 3 — Task alignment (most commonly violated)**: the best answer must directly address the specific situation described in *that task's text* — not re-state a general framework principle that belongs to an earlier task. Re-read the task text before writing any option. Ask: "Does selecting the best answer here prove the learner understood *this* task's objective?" If no, the options must be rewritten from scratch.
+
+**Confirmed broken instance (already corrected in RM rewrite)**: `rm_c4_relationship_intel` Task 2 — the task asks the learner to add a source-citation verification requirement after an unverifiable hallucination appeared in the AI draft brief. The auto-generated best answer was "Structure prompt with relationship context and clear deliverable" — a general Task 1 principle that teaches nothing about catching hallucinations. Corrected to "Add a citation requirement: every claim must name its source." The same drift pattern may exist in UW/AN/MK and must be actively caught during those phases.
+
+---
+
 ## Open Issues
 
-_No open issues._
-
+| ID | Severity | Area | Description |
+| --- | --- | --- | --- |
+| LG-1 | 🟡 MEDIUM | Practice — Logic | The AI coach has no mechanism to signal mastery to the backend. Task advancement is 100% manual (user must click "Next Task →"). **Code-confirmed**: `utils/ai.py` `coach_response()` returns a plain `str`; the caller in `pages/04_Course_Module.py:589` passes it directly to `st.markdown()` with no JSON parsing. No structured signal (action key, completion flag, or otherwise) is emitted by the coach or parsed by the practice orchestrator. **Suggested fix**: define a JSON envelope the coach can emit (e.g. `{"message": "...", "action": "advance_task"}`); parse in `pages/04_Course_Module.py` after each coach turn; auto-trigger the "Next Task →" state when `action == "advance_task"`. |
+| PR-SYS | 🟡 MEDIUM | Practice — Prompt / UX (Systemic) | Three systemic issues confirmed via Playwright live evaluation (2026-03-17) affecting all 28 scenarios. **(1) Coach hallucination risk in MCQ FEEDBACK MODE**: coach fabricated revenue figures ($50M / $47.3M) not in the scenario text in a live RM Responsible AI session. **Fix**: append "Do NOT cite specific numbers, percentages, or statistics unless they appear verbatim in the scenario text." to both MCQ FEEDBACK MODE addenda in `pages/04_Course_Module.py`. **(2) No visual correctness signal on MCQ buttons**: after selection, all three buttons look identical. **Fix**: re-render post-answer options as disabled `st.button()` with ✅ prefix on the best answer and ❌ prefix on the selected wrong answer — no CSS needed, label string only. **(3) Navigation warning is low-contrast**: `st.warning()` banner is yellow-on-yellow on the current theme. **Fix**: replace with `st.error()` (red banner). |
+| PR-RM | 🟡 MEDIUM | Practice — Content (RM, 7 scenarios) | Script audit (2026-03-17) found **37 of 63 labels (59%) exceed 10 words**. Trainer review of 3 sampled scenarios confirmed two additional defect types: **(a) distractor realism gap** — some wrong options are implausible rather than genuinely tempting (Check 2 fail); **(b) task-alignment drift** — confirmed in `rm_c4_relationship_intel` T2: best answer stated a general prompting principle rather than the specific action the task demanded (Check 3 fail). **Fix standard (apply to all 7 RM scenarios)**: for each task, re-read the task text; write a best answer naming the specific action for that task's concrete situation; write distractors representing real professional shortcuts with a one-sentence nameable flaw; trim all labels to ≤10 words. Pass all three MCQ Quality Checks above. Update `content/practice_scenarios.json`. |
+| PR-UW | 🟡 MEDIUM | Practice — Content (UW, 7 scenarios) | Script audit found **40 of 63 UW labels (63%) exceed 10 words**. UW scenarios cover underwriting judgment calls; options were generated with clause-heavy language suited to written analysis but not 5-second scan-and-click MCQ. Task-alignment drift (Check 3) is likely given the same generation pipeline used for RM. **Fix standard (apply to all 7 UW scenarios)**: for each task, re-read the task text and confirm the best answer addresses the specific underwriting decision presented — not a generic SAFE or responsible-AI principle. Distractors must reflect actual temptations an underwriter faces under credit-file time pressure (e.g. "upload the financials directly", "accept output that matches your preliminary view"). Pass all three MCQ Quality Checks. Update `content/practice_scenarios.json`. |
+| PR-AN | 🟡 MEDIUM | Practice — Content (AN, 7 scenarios) | Script audit found **42 of 63 AN labels (67%) exceed 10 words** — the highest raw count among RM/UW/AN. AN scenarios cover data analysis and model interpretation; options tend toward technical clause constructions. Task-alignment drift is a high-risk defect here because analytical tasks escalate in specificity across T2→T4 (Apply→Analyse→Evaluate) and a generic verification principle is especially tempting as a T4 best answer. **Fix standard (apply to all 7 AN scenarios)**: T4 Evaluate-level best answers must require the learner to exercise judgment about *this specific analysis context*, not just recall a principle. Distractors at T4 must embody the "looks rigorous but skips the key step" error type. Pass all three MCQ Quality Checks. Update `content/practice_scenarios.json`. |
+| PR-MK | 🟡 MEDIUM | Practice — Content (MK, 7 scenarios) | Script audit found **54 of 63 MK labels (86%) exceed 10 words** — the worst-affected role; MK was the most recently generated and has the longest auto-generated labels. MK scenarios cover marketing and communications; the domain-specific distractor risk is options that sound like good comms practice but violate AI responsible-use or accuracy principles. **Fix standard (apply to all 7 MK scenarios)**: distractor realism (Check 2) is especially critical — a MK professional under deadline pressure will genuinely consider "use the AI draft as-is" or "add a disclaimer and send" as acceptable shortcuts; those are the distractors that teach. Vague wrong answers like "ask a colleague to review" that merely shift responsibility without naming an AI-specific flaw must be replaced with scenario-grounded alternatives. Pass all three MCQ Quality Checks. Update `content/practice_scenarios.json`. |
 ---
 
 ## UAT Execution Log
@@ -27,9 +47,13 @@ _No open issues._
 | Date | Commit | Tester | Result |
 | ---- | ------ | ------ | ------ |
 | 2026-03-04 | `a311052` | `uat-test@edc.ca` | ✅ PASS — 13/13 scenarios |
+| 2026-03-17 | `6780c91` | `uat-test@edc.ca` | ✅ PASS — Practice sub-view BUG-3, UX-P1, UX-P2, UI-1, LG-2 all verified via Playwright |
 
 **Scenarios covered (2026-03-04):**
 UAT-01 Welcome (RM) · UAT-02 Diagnostic (RM, 12q) · UAT-03 Skills Profile + gap map · UAT-04 Home Dashboard + 5 modules · UAT-05 Module Overview · UAT-06 Reading sub-view · UAT-07 AI Coach practice (4 turns) · UAT-08 Evaluation quiz (3 MCQ + 1 text) · UAT-09 Module Results + Delta writes · UAT-10 Module 2 unlock + Home refresh · UAT-11 Skills Profile post-evaluation · UAT-12 Retake Diagnostic (progress preserved) · UAT-13 UW role selector + UW Diagnostic Q1/Q2
+
+**Scenarios covered (2026-03-17):**
+Practice-01 Coach discipline (BUG-3): Task 1 open mode — coach reply ends with probing question, no wrap-up · Practice-02 Per-task isolation (UX-P1): Task 2 starts with clean empty chat after Task 1 skip · Practice-03 Turn-limit CTA position (UX-P2): CTA renders above chat history (code-verified) · Practice-04 Turn-limit label (UI-1): Task 4 turn-limit block shows "Complete Practice →" (code-verified) · Practice-05 MCQ mode (LG-2): Tasks 2–4 render 3 `st.button()` MCQ choices with no chat input; coach feedback appears after selection; "Next Task →" shown on Tasks 2–3; "Complete Practice →" shown on Task 4
 
 ---
 
@@ -37,6 +61,11 @@ UAT-01 Welcome (RM) · UAT-02 Diagnostic (RM, 12q) · UAT-03 Skills Profile + ga
 
 | ID | Severity | Description | Resolution |
 | --- | --- | --- | --- |
+| BUG-3 | 🔴 HIGH | Coach declares session complete before turn limit fires | Fixed (2026-03-17) — appended "Do not wrap up, summarize, or offer to end the session. Always end your response with a probing follow-up question until the turn limit is reached." to CONVERSATION DISCIPLINE block in all 28 `coach_system_prompt` fields in `content/practice_scenarios.json`. Playwright-verified: coach ends Task 1 turn with a probing question. |
+| UX-P1 | 🔴 HIGH | All task chat histories accumulate on screen — no per-task isolation | Fixed (2026-03-17) — replaced flat `coach_messages` list with `coach_messages_by_task` dict keyed by `task_idx`; per-task sub-list fetched on each render; `mcq_answered_by_task` dict added in parallel. Playwright-verified: Task 2 starts with empty chat after Task 1 skip. |
+| UX-P2 | 🔴 HIGH | Turn-limit CTA buried below full accumulated chat history | Fixed (2026-03-17) — turn-limit warning + Continue/Next buttons now rendered **before** the chat history loop in the open-task branch of `pages/04_Course_Module.py`. Code-verified. |
+| UI-1 | 🟢 LOW | "Next Task →" shown on Task 4 turn-limit block instead of "Complete Practice →" | Fixed (2026-03-17) — turn-limit block now checks `task_idx >= 3` and uses correct label; mirrors the post-reply CTA logic. Code-verified. |
+| LG-2 | 🔴 HIGH | All 4 practice tasks required open-ended typing — no MCQ option | Fixed (2026-03-17) — `task_modes` and `task_mcq_options` fields added to all 28 scenario entries via `scripts/add_mcq_options.py`; `pages/04_Course_Module.py` branches on `current_task_mode == "mcq"` to render 3 `st.button()` choices instead of `st.chat_input()` for Tasks 2–4; MCQ feedback mode addendum injected into coach system prompt at call time. Playwright-verified: Task 1 open, Tasks 2–4 MCQ buttons; coach feedback appears; correct CTA labels on all tasks. |
 | H1 | 🔴 HIGH | Domain scores: average-of-averages not equal-weight per item | Fixed — `compute_current_domain_scores()` now called in both Skills Profile and Home pages |
 | H2 | 🔴 HIGH | MCQ items sent to LLM; `score_mcq()` never called | Fixed — `_score_batch()` now scores MCQ locally via `score_mcq()`; LLM only receives open-ended items |
 | H3 | 🔴 HIGH | `score_evaluation` asked LLM for aggregates; inconsistent with `score_diagnostic` | Fixed — `score_evaluation()` now mirrors `score_diagnostic()`: uses `_score_batch()` per domain, aggregates computed in Python |

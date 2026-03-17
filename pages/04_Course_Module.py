@@ -119,7 +119,7 @@ def do_complete_practice(progress_id: str, messages: list, total_turns: int):
             st.error(f"Could not save practice session. Please try again.\n\n_{e}_")
             st.stop()
 
-    for k in ["coach_messages", "practice_task_idx", "practice_turns", "task_turn_counts"]:
+    for k in ["coach_messages_by_task", "mcq_answered_by_task", "practice_task_idx", "practice_turns", "task_turn_counts"]:
         st.session_state.pop(k, None)
     st.session_state["eval_item_index"] = 0
     st.session_state["eval_responses"] = []
@@ -423,7 +423,8 @@ elif active_sub == "reading":
                           f"reading_takeaway_celebrated_{course_id}"):
                     st.session_state.pop(k, None)
                 st.session_state.update({
-                    "coach_messages": [],
+                    "coach_messages_by_task": {0: [], 1: [], 2: [], 3: []},
+                    "mcq_answered_by_task": {},
                     "practice_task_idx": 0,
                     "practice_turns": 0,
                     "task_turn_counts": {0: 0, 1: 0, 2: 0, 3: 0},
@@ -437,8 +438,10 @@ elif active_sub == "reading":
 # PRACTICE
 # ═══════════════════════════════════════════════════════════════════════════════
 elif active_sub == "practice":
-    if "coach_messages" not in st.session_state:
-        st.session_state["coach_messages"] = []
+    if "coach_messages_by_task" not in st.session_state:
+        st.session_state["coach_messages_by_task"] = {0: [], 1: [], 2: [], 3: []}
+    if "mcq_answered_by_task" not in st.session_state:
+        st.session_state["mcq_answered_by_task"] = {}
     if "practice_task_idx" not in st.session_state:
         st.session_state["practice_task_idx"] = 0
     if "practice_turns" not in st.session_state:
@@ -449,7 +452,15 @@ elif active_sub == "practice":
     task_idx: int = st.session_state["practice_task_idx"]
     total_turns: int = st.session_state["practice_turns"]
     task_turns: dict = st.session_state["task_turn_counts"]
-    messages: list = st.session_state["coach_messages"]
+    msgs_by_task: dict = st.session_state["coach_messages_by_task"]
+    messages: list = msgs_by_task.get(task_idx, [])
+
+    def _all_messages() -> list:
+        """Flatten all per-task message lists in order for persistence."""
+        result = []
+        for i in range(4):
+            result.extend(msgs_by_task.get(i, []))
+        return result
 
     if not scenario:
         st.warning("Practice scenario not available.")
@@ -465,6 +476,8 @@ elif active_sub == "practice":
         scenario.get("task_4_text", ""),
     ]
     coach_prompt = scenario.get("coach_system_prompt", "")
+    task_modes = scenario.get("task_modes", ["open", "open", "open", "open"])
+    task_mcq_options = scenario.get("task_mcq_options", [None, None, None, None])
 
     st.title(course_title)
     step_progress_strip([
@@ -473,7 +486,7 @@ elif active_sub == "practice":
         {"label": "Quiz", "state": "pending"},
     ])
 
-    st.caption("ℹ️ Navigating away will end this practice session. Use **Complete Practice →** to save your progress.")
+    st.error("⚠️ Navigating away will end this practice session. Use **Complete Practice →** to save your progress.")
 
     scenario_html = (scenario.get("scenario_text") or "").replace("\n", "<br>")
     with st.expander("📋 Scenario", expanded=(len(messages) == 0)):
@@ -490,18 +503,20 @@ elif active_sub == "practice":
 </div>
 """, unsafe_allow_html=True)
         if st.button("Go to Quiz →", type="primary"):
-            do_complete_practice(progress_id, messages, total_turns)
+            do_complete_practice(progress_id, _all_messages(), total_turns)
         st.stop()
 
     # All 4 tasks done
     if task_idx >= 4:
         st.success("You've completed all 4 practice tasks!")
         if st.button("Complete Practice →", type="primary"):
-            do_complete_practice(progress_id, messages, total_turns)
+            do_complete_practice(progress_id, _all_messages(), total_turns)
         st.stop()
 
     current_task_text = tasks[task_idx]
     current_task_turns = int(task_turns.get(task_idx, 0))
+    current_task_mode = task_modes[task_idx] if task_idx < len(task_modes) else "open"
+    current_mcq_options = task_mcq_options[task_idx] if task_idx < len(task_mcq_options) else None
 
     task_steps = [
         {"label": f"Task {t + 1}", "state": ("done" if t < task_idx else ("current" if t == task_idx else "pending"))}
@@ -512,14 +527,6 @@ elif active_sub == "practice":
     section_header(f"TASK {task_idx + 1} OF 4")
     st.markdown(f'<div class="question-text">{current_task_text}</div>', unsafe_allow_html=True)
 
-    # Chat history — native Streamlit chat components (NX1)
-    for msg in messages:
-        with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
-            st.markdown(msg["content"])
-
-    st.caption(f"Turn {total_turns} of {MAX_TOTAL_TURNS}")
-
-    # Task turn limit — offer Continue or advance (P1)
     def _advance_task():
         new_tt = dict(task_turns)
         new_tt[task_idx + 1] = 0
@@ -527,79 +534,185 @@ elif active_sub == "practice":
         st.session_state["task_turn_counts"] = new_tt
         st.rerun()
 
-    effective_limit = MAX_TASK_TURNS + st.session_state.get(f"task_extra_{task_idx}", 0) * 3
-    if current_task_turns >= effective_limit:
-        st.info("You've reached the turn limit for this task.")
-        col_cont, col_next = st.columns(2)
-        with col_cont:
-            if st.button("Continue (3 more turns) →", key=f"cont_{task_idx}"):
-                st.session_state[f"task_extra_{task_idx}"] = st.session_state.get(f"task_extra_{task_idx}", 0) + 1
-                st.rerun()
-        with col_next:
-            if st.button("Next Task →", key=f"next_{task_idx}", type="primary"):
-                _advance_task()
-        st.stop()
+    # ── MCQ TASK (Tasks 2–4 when task_mode = "mcq") ─────────────────────────────
+    if current_task_mode == "mcq" and current_mcq_options:
+        mcq_answered = st.session_state["mcq_answered_by_task"].get(task_idx)
 
-    # Determine if we're waiting for user input
-    last_role = messages[-1]["role"] if messages else None
-    waiting_for_user = last_role != "user"
-
-    if not waiting_for_user:
-        # Coach just replied — show primary CTA
-        if task_idx < 3:
-            if st.button("Next Task →", key="p_next", type="primary"):
-                new_tt = dict(task_turns)
-                new_tt[task_idx + 1] = 0
-                st.session_state["practice_task_idx"] = task_idx + 1
-                st.session_state["task_turn_counts"] = new_tt
-                st.rerun()
-        else:
-            if st.button("Complete Practice →", key="p_complete_final", type="primary"):
-                do_complete_practice(progress_id, messages, total_turns)
-
-    # Secondary actions — always accessible via popover
-    with st.popover("⋯ More options"):
-        if waiting_for_user and task_idx < 3:
-            if st.button("Skip this task", key="p_skip_pop"):
-                new_tt = dict(task_turns)
-                new_tt[task_idx + 1] = 0
-                st.session_state["practice_task_idx"] = task_idx + 1
-                st.session_state["task_turn_counts"] = new_tt
-                st.rerun()
-        if task_idx < 3:
-            if st.button("Complete Practice Early", key="p_early_pop"):
-                do_complete_practice(progress_id, messages, total_turns)
-
-    # Native chat input pinned to page bottom (only rendered when waiting for user)
-    if waiting_for_user:
-        if user_input := st.chat_input("Your response...", key=f"p_input_{task_idx}_{current_task_turns}"):
-            # Immediately show the user message — don't wait for AI to reply
-            with st.chat_message("user"):
-                st.markdown(user_input.strip())
-
-            try:
-                with st.chat_message("assistant", avatar="🤖"):
-                    with st.spinner("Coach is thinking..."):
-                        reply = coach_response(
-                            system_prompt=coach_prompt,
-                            conversation=messages,
-                            user_input=user_input.strip(),
-                            user_email=user_email,
+        if not mcq_answered:
+            # Show option buttons in columns — no chat input
+            cols = st.columns(len(current_mcq_options))
+            for i, opt in enumerate(current_mcq_options):
+                with cols[i]:
+                    if st.button(opt["label"], key=f"mcq_{task_idx}_{i}"):
+                        chosen = opt["label"]
+                        is_best = opt.get("is_best", False)
+                        best_label = next((o["label"] for o in current_mcq_options if o.get("is_best")), chosen)
+                        correctness_note = (
+                            "Their choice is the best answer."
+                            if is_best
+                            else f"Their choice is not the strongest answer. The best answer is: \"{best_label}\"."
                         )
-                    st.markdown(reply)
-            except Exception as e:
-                st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
-                st.stop()
+                        if task_idx >= 3:
+                            mcq_addendum = (
+                                "\n\n## MCQ FEEDBACK MODE — FINAL TASK\n"
+                                f"The learner selected: \"{chosen}\". {correctness_note} "
+                                "This is the LAST task of this practice session. "
+                                "Respond in 2–3 sentences: briefly affirm what they got right (or correct the key misconception), "
+                                "then close with an encouraging statement acknowledging they have completed the practice. "
+                                "Do NOT ask a follow-up question. Do NOT invite further discussion. "
+                                "Do NOT cite specific numbers, percentages, or statistics unless they appear verbatim in the scenario text."
+                            )
+                        else:
+                            mcq_addendum = (
+                                "\n\n## MCQ FEEDBACK MODE\n"
+                                f"The learner selected: \"{chosen}\". {correctness_note} "
+                                "Respond in 2 sentences maximum: acknowledge what their choice gets right (or where it falls short), "
+                                "and state the single most important insight they should take away. "
+                                "Do NOT ask a follow-up question. "
+                                "Do NOT cite specific numbers, percentages, or statistics unless they appear verbatim in the scenario text."
+                            )
+                        mcq_coach_prompt = coach_prompt + mcq_addendum
+                        try:
+                            with st.spinner("Coach is thinking..."):
+                                feedback = coach_response(
+                                    system_prompt=mcq_coach_prompt,
+                                    conversation=[],
+                                    user_input=chosen,
+                                    user_email=user_email,
+                                )
+                        except Exception as e:
+                            st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
+                            st.stop()
+                        updated_by_task = dict(msgs_by_task)
+                        updated_by_task[task_idx] = [
+                            {"role": "user", "content": chosen},
+                            {"role": "assistant", "content": feedback},
+                        ]
+                        st.session_state["coach_messages_by_task"] = updated_by_task
+                        answered = dict(st.session_state["mcq_answered_by_task"])
+                        answered[task_idx] = chosen
+                        st.session_state["mcq_answered_by_task"] = answered
+                        st.session_state["practice_turns"] = total_turns + 1
+                        st.rerun()
+        else:
+            # Show disabled MCQ buttons with ✅/❌ correctness signal
+            answered_label = mcq_answered
+            cols = st.columns(len(current_mcq_options))
+            for i, opt in enumerate(current_mcq_options):
+                with cols[i]:
+                    if opt.get("is_best"):
+                        display_label = f"✅ {opt['label']}"
+                    elif opt["label"] == answered_label:
+                        display_label = f"❌ {opt['label']}"
+                    else:
+                        display_label = opt["label"]
+                    st.button(display_label, key=f"mcq_done_{task_idx}_{i}", disabled=True)
+            # Show the recorded exchange then the advance CTA
+            for msg in messages:
+                with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
+                    st.markdown(msg["content"])
+            if task_idx < 3:
+                if st.button("Next Task →", key=f"mcq_next_{task_idx}", type="primary"):
+                    _advance_task()
+            else:
+                if st.button("Complete Practice →", key="mcq_complete", type="primary"):
+                    do_complete_practice(progress_id, _all_messages(), total_turns)
 
-            new_tt = dict(task_turns)
-            new_tt[task_idx] = current_task_turns + 1
-            st.session_state["coach_messages"] = messages + [
-                {"role": "user", "content": user_input.strip()},
-                {"role": "assistant", "content": reply},
-            ]
-            st.session_state["practice_turns"] = total_turns + 1
-            st.session_state["task_turn_counts"] = new_tt
-            st.rerun()
+    # ── OPEN TASK (Task 1, or fallback for tasks missing mcq_options) ────────────
+    else:
+        # Task turn limit — render ABOVE chat history so CTA is always visible (UX-P2)
+        effective_limit = MAX_TASK_TURNS + st.session_state.get(f"task_extra_{task_idx}", 0) * 3
+        if current_task_turns >= effective_limit:
+            st.warning("You've reached the turn limit for this task.")
+            col_cont, col_next = st.columns(2)
+            with col_cont:
+                if st.button("Continue (3 more turns) →", key=f"cont_{task_idx}"):
+                    st.session_state[f"task_extra_{task_idx}"] = st.session_state.get(f"task_extra_{task_idx}", 0) + 1
+                    st.rerun()
+            with col_next:
+                # UI-1: correct label on last task
+                next_label = "Complete Practice →" if task_idx >= 3 else "Next Task →"
+                if st.button(next_label, key=f"next_{task_idx}", type="primary"):
+                    if task_idx >= 3:
+                        do_complete_practice(progress_id, _all_messages(), total_turns)
+                    else:
+                        _advance_task()
+            # Chat history rendered below CTA so learner can review context
+            for msg in messages:
+                with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
+                    st.markdown(msg["content"])
+            st.stop()
+
+        # Chat history — current task only (UX-P1)
+        for msg in messages:
+            with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
+                st.markdown(msg["content"])
+
+        st.caption(f"Turn {total_turns} of {MAX_TOTAL_TURNS}")
+
+        # Determine if we're waiting for user input
+        last_role = messages[-1]["role"] if messages else None
+        waiting_for_user = last_role != "user"
+
+        if not waiting_for_user:
+            # Coach just replied — show primary CTA
+            if task_idx < 3:
+                if st.button("Next Task →", key="p_next", type="primary"):
+                    new_tt = dict(task_turns)
+                    new_tt[task_idx + 1] = 0
+                    st.session_state["practice_task_idx"] = task_idx + 1
+                    st.session_state["task_turn_counts"] = new_tt
+                    st.rerun()
+            else:
+                if st.button("Complete Practice →", key="p_complete_final", type="primary"):
+                    do_complete_practice(progress_id, _all_messages(), total_turns)
+
+        # Secondary actions — always accessible via popover
+        with st.popover("⋯ More options"):
+            if waiting_for_user and task_idx < 3:
+                if st.button("Skip this task", key="p_skip_pop"):
+                    new_tt = dict(task_turns)
+                    new_tt[task_idx + 1] = 0
+                    st.session_state["practice_task_idx"] = task_idx + 1
+                    st.session_state["task_turn_counts"] = new_tt
+                    st.rerun()
+            if task_idx < 3:
+                if st.button("Complete Practice Early", key="p_early_pop"):
+                    do_complete_practice(progress_id, _all_messages(), total_turns)
+
+        # Native chat input pinned to page bottom (only rendered when waiting for user)
+        if waiting_for_user:
+            if user_input := st.chat_input("Your response...", key=f"p_input_{task_idx}_{current_task_turns}"):
+                # Immediately show the user message — don't wait for AI to reply
+                with st.chat_message("user"):
+                    st.markdown(user_input.strip())
+
+                try:
+                    with st.chat_message("assistant", avatar="🤖"):
+                        with st.spinner("Coach is thinking..."):
+                            reply = coach_response(
+                                system_prompt=coach_prompt,
+                                conversation=messages,
+                                user_input=user_input.strip(),
+                                user_email=user_email,
+                            )
+                        st.markdown(reply)
+                except Exception as e:
+                    st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
+                    st.stop()
+
+                new_tt = dict(task_turns)
+                new_tt[task_idx] = current_task_turns + 1
+                updated_task_msgs = messages + [
+                    {"role": "user", "content": user_input.strip()},
+                    {"role": "assistant", "content": reply},
+                ]
+                updated_by_task = dict(msgs_by_task)
+                updated_by_task[task_idx] = updated_task_msgs
+                st.session_state["coach_messages_by_task"] = updated_by_task
+                st.session_state["practice_turns"] = total_turns + 1
+                st.session_state["task_turn_counts"] = new_tt
+                st.rerun()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════

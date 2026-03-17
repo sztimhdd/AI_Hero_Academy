@@ -696,6 +696,15 @@ sub-module the user is in.
 
   Trigger: User clicks "Start Practice" or "Continue Practice"
 
+  NOTE (March 2026): Practice uses a hybrid task model. Task 1 is
+  open-ended Socratic coaching (free-text input + multi-turn dialogue).
+  Tasks 2–4 are single-exchange MCQ (3 labelled buttons → coach
+  gives brief feedback → next-task CTA). This maps to Bloom's
+  Taxonomy: T1 = Remember/Understand, T2 = Apply, T3 = Analyse,
+  T4 = Evaluate. Task mode is driven by `task_modes` in
+  `content/practice_scenarios.json`; the app branches on
+  `current_task_mode == "mcq"` vs `"open"`.
+
   Elements:
 
     SCENARIO PANEL (top, always visible):
@@ -707,36 +716,51 @@ sub-module the user is in.
     TASK PANEL (middle):
       - Task indicator: "Task X of 4"
       - Task instruction text
-      - Text input area for user response
-      - "Submit" button
 
-    COACH PANEL (below task, appears after submission):
-      - Label: "AI Coach" with a robot/coach icon
-      - Coach response text
-      - Follow-up text input for user reply
-      - "Reply" button
+    OPEN TASK INPUT (Task 1):
+      - st.chat_input() for free-text response
+      - Coach reply via st.chat_message("assistant")
       - Turn counter: "Turn X of 15"
+      - After 3 turns: two-button prompt:
+          "Continue (3 more turns) →" | "Next Task →" (primary)
+
+    MCQ TASK INPUT (Tasks 2–4):
+      - 3 st.button() option labels (≤10 words each); no chat input
+      - On click: coach gives 2-sentence feedback (2–3 sentences on
+        Task 4 with an explicit session-close statement)
+      - Re-rendered post-answer: selected option gets ✅ or ❌ prefix;
+        best answer gets ✅ prefix; all buttons disabled
+      - "Next Task →" (Tasks 2–3) or "Complete Practice →" (Task 4)
+        appears immediately after feedback
 
     NAVIGATION:
-      - After completing coach exchange for a task (or after 3 turns
-        on a single task), "Next Task" button appears
-      - After all 4 tasks: "Complete Practice" button appears
+      - Per-task chat history is isolated (cleared between tasks)
+      - After Task 4 MCQ or after all open-task turns: "Complete
+        Practice →" triggers session write and navigation
+
+    NAVIGATION WARNING:
+      - st.error() banner at top of sub-view warns that navigating
+        away via sidebar or breadcrumb ends the session without saving
 
   Behavior:
-    - Each task allows up to 3 coach exchanges (user submit + coach
-      reply = 1 exchange) before auto-advancing to next task
-    - Total session capped at 15 turns across all tasks
-    - If 15 turns reached before all tasks done:
-      Show message: "You have reached the practice limit for this
-      session. Let us move to the quiz to check your understanding."
-      Show "Go to Quiz" button
-    - On "Complete Practice" click:
+    - Task 1: up to 3 turns (extensible by "Continue" option)
+    - Tasks 2–4: exactly 1 exchange each (no turn limit applies)
+    - Total session turn counter increments for all task types
+    - On "Complete Practice →" click:
       1. Write coach_session to learner.coach_sessions
       2. Write practice_completed_at to learner.training_progress
       3. Navigate to Evaluation sub-view
     - If user refreshes during practice:
       Coach conversation is lost (acceptable — practice is exploratory)
       User can restart practice from Task 1
+
+  MCQ QUALITY STANDARD (applies to all 28 scenarios):
+    - Every option label ≤ 10 words
+    - Distractors must represent plausible professional shortcuts
+      with a clear, one-sentence nameable flaw
+    - Best answer must address the specific action required by that
+      task's concrete situation — not a generic framework principle
+    See Issues.md § MCQ Quality Standard for enforcement details.
 
 7.5.4 EVALUATION SUB-VIEW (Mandatory Quiz)
 
