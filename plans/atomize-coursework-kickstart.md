@@ -45,6 +45,8 @@ git checkout -b feature/atomize-coursework
 The full spec is in `plans/atomize-coursework-plan.md`. Key points:
 
 - Source files are all **dicts keyed by `course_id`** — join is direct
+- `practice_scenarios.json` already contains `task_modes` and `task_mcq_options` — **copy both
+  fields as-is** into the atom's `practice` block (no LLM call needed; labels are already role-agnostic)
 - For each of 21 courses: run 6 sequential LLM calls (`databricks-claude-sonnet-4-6`, `temperature=0`)
   to produce one complete atom dict
 - Reading source: `reading_content_structured.json` (primary) → `reading_content.json` (fallback)
@@ -81,7 +83,9 @@ Spot-check the pretty-printed output:
 - `intro (derolled)`: no "As an analyst" or "As a Relationship Manager"
 - `cards`: 4 items with letter / title / body
 - `scenario_template`: contains `{role}` and `{org_type}`
+- `task_modes`: `["open", "mcq", "mcq", "mcq"]`
 - `task_templates`: 4 items, each with `text_template` + `skill_focus`
+- `mcq_options`: T2–T4 each show 3 options; exactly 1 `is_best: true` per set
 - `coach_tmpl`: no hardcoded "EDC", "analyst", or programme names
 - `role_hint`: mentions 2 role types
 
@@ -136,6 +140,8 @@ Then ask the user whether to merge to main or keep the branch for review.
 - [ ] All 21 atoms have non-null `capability_tags` (3–6 items)
 - [ ] All 21 atoms' `practice.scenario_template` contains `{role}` and `{org_type}`
 - [ ] All 21 atoms' `practice.coach_system_prompt_template` has no hardcoded org/role/programme names
+- [ ] All 21 atoms' `practice.task_modes` == `["open", "mcq", "mcq", "mcq"]`
+- [ ] All 21 atoms' `practice.task_mcq_options` is `[null, [3 opts], [3 opts], [3 opts]]` with exactly 1 `is_best: true` per set
 - [ ] Atoms from structured-reading courses have `reading.concept.cards` with ≥ 2 items
 - [ ] `content/atomic_overlap_report.json` has exactly 6 merge candidate groups
 - [ ] All pairwise scores within each merge group ≥ 0.70 (shown in validation output)

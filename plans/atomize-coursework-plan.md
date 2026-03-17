@@ -38,13 +38,19 @@ content/reading_content.json (fallback) ─┘   (6 Sonnet calls per course)    
 
 ```python
 courses            = {course_id: {role_id, primary_domain, title, description, real_use_case, ...}}
-practice_scenarios = {course_id: {scenario_text, task_1_text...task_4_text, coach_system_prompt}}
+practice_scenarios = {course_id: {scenario_text, task_1_text...task_4_text, coach_system_prompt,
+                                   task_modes,          # ["open", "mcq", "mcq", "mcq"]
+                                   task_mcq_options}}   # [null, [{label, is_best}, ...], ...]
 reading_structured = {course_id: {concept_text_structured: {framework_acronym, intro, cards[], guardrails[]},
                                    good_example_structured: {...}, ...}}
 reading_flat       = {course_id: {concept_text, good_example, anti_pattern, takeaway}}
 ```
 
 Join is direct: `reading_structured.get(course_id)` — fall back to `reading_flat[course_id]` if absent.
+
+**`task_mcq_options` is a 4-element list**: index 0 = `null` (Task 1 is open mode),
+indices 1–3 = list of 3 `{label: str, is_best: bool}` objects. Copy as-is into atom — labels are
+already role-agnostic action phrases (no job-title references).
 
 ---
 
@@ -78,11 +84,25 @@ Each atom is a COMPLETE, self-contained object — no lookups into original file
   },
   "practice": {
     "scenario_template": "You are a {role} at {org_type}. ...",
+    "task_modes": ["open", "mcq", "mcq", "mcq"],
     "task_templates": [
       {
         "task_id": 1,
+        "task_mode": "open",
         "text_template": "...",
-        "skill_focus": "Apply SAFE Step 1: Scrutinize sensitive elements"
+        "skill_focus": "Apply SAFE Step 1: Scrutinize sensitive elements",
+        "mcq_options": null
+      },
+      {
+        "task_id": 2,
+        "task_mode": "mcq",
+        "text_template": "...",
+        "skill_focus": "...",
+        "mcq_options": [
+          {"label": "...", "is_best": true},
+          {"label": "...", "is_best": false},
+          {"label": "...", "is_best": false}
+        ]
       }
     ],
     "coach_system_prompt_template": "..."
@@ -378,7 +398,9 @@ def _assemble_atom(course_id, course, scenario, reading_s, reading_f,
         },
         "practice": {
             "scenario_template": scenario_template,
-            "task_templates": task_templates,
+            "task_modes": scenario.get("task_modes", ["open", "mcq", "mcq", "mcq"]),
+            "task_templates": task_templates,   # text_template + skill_focus per task (Call 3)
+            "task_mcq_options": scenario.get("task_mcq_options"),  # copied as-is; labels are role-agnostic
             "coach_system_prompt_template": coach_template,
         },
         "eval": {
@@ -410,7 +432,11 @@ intro (derolled): As a professional working with confidential client files...
 cards           : 4 items (S, A, F, E)
 guardrails      : 5 items
 scenario_tmpl   : You are a {role} at {org_type}. A {case_type} has been opened...
+task_modes      : ["open", "mcq", "mcq", "mcq"]
 tasks           : 4 items — skill_focus: [Apply SAFE Step 1, ...]
+mcq_options     : T2: 3 options (best: "Replace all client-specific figures with directional ranges")
+                  T3: 3 options (best: "Rewrite using only sector-level descriptors...")
+                  T4: 3 options (best: "Apply all four SAFE steps and add explicit output constraints")
 coach_tmpl      : (no "EDC" ✓) (no "analyst" ✓) (no "Meridian" ✓)
 role_hint       : For financial services: ... For engineering: ...
 null_fields     : []
@@ -559,9 +585,13 @@ for a in atoms:
     has_role = '{role}' in (a.get('practice', {}).get('scenario_template') or '')
     has_org = '{org_type}' in (a.get('practice', {}).get('scenario_template') or '')
     has_cards = len((a.get('reading', {}).get('concept') or {}).get('cards') or [])
+    mcq_opts = a.get('practice', {}).get('task_mcq_options') or []
+    mcq_ok = (len(mcq_opts) == 4 and mcq_opts[0] is None
+              and all(len(o) == 3 and sum(x['is_best'] for x in o) == 1
+                      for o in mcq_opts[1:] if o))
     null_fields = [k for k in ['capability_tags','role_variants_hint'] if not a.get(k)]
-    ok = '✓' if (has_role and has_org and tags >= 3) else '✗'
-    print(f'  {ok} {a[\"atom_id\"]}: {tags} tags, {has_cards} cards, nulls={null_fields}')
+    ok = '✓' if (has_role and has_org and tags >= 3 and mcq_ok) else '✗'
+    print(f'  {ok} {a[\"atom_id\"]}: {tags} tags, {has_cards} cards, mcq={mcq_ok}, nulls={null_fields}')
 "
 
 # Step 4: verify overlap report
@@ -584,6 +614,9 @@ print(f'{len(report[\"review_flags\"])} review flags (0.40-0.69 overlap)')
 - [ ] Every atom's `practice.scenario_template` contains `{role}` and `{org_type}`
 - [ ] Every atom's `practice.coach_system_prompt_template` has no hardcoded "EDC", "analyst", "Meridian Infrastructure", "Aurora Initiative", "Cascade Portfolio", "Enterprise Intelligence Program"
 - [ ] Every atom from a structured-reading course has `reading.concept.cards` with ≥ 2 items
+- [ ] Every atom's `practice.task_modes` == `["open", "mcq", "mcq", "mcq"]`
+- [ ] Every atom's `practice.task_mcq_options` is a 4-item list: `[null, [...], [...], [...]]`
+- [ ] Every MCQ option set (T2–T4) has exactly 3 options, exactly 1 with `is_best: true`
 - [ ] `content/atomic_overlap_report.json` has exactly 6 merge candidate groups (one per domain)
 - [ ] No chaining artifacts: every pair within a merge group has pairwise Jaccard ≥ 0.70
 - [ ] Human spot-check: 3 atoms (`responsible_ai__rm_course_1`, `strategic_prompting__uw_course_2`, `data_decision__an_c4_data_decision`) read as role-agnostic with no loss of instructional intent
