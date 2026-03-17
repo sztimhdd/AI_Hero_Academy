@@ -42,6 +42,18 @@ CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 MAX_TASK_TURNS = 3
 MAX_TOTAL_TURNS = 15
 
+# Appended to the coach system prompt for open-ended tasks.
+# Instructs the coach to emit [ADVANCE] at the end of its reply when
+# the learner has clearly demonstrated mastery of the task objective.
+_OPEN_TASK_MASTERY_ADDENDUM = (
+    "\n\n## MASTERY SIGNAL\n"
+    "If the learner's last response clearly and completely addresses the task objective, "
+    "append [ADVANCE] on a new line at the very end of your reply — after all other text. "
+    "Do NOT mention, explain, or reference [ADVANCE] to the learner. "
+    "Only emit [ADVANCE] when mastery is genuinely demonstrated; "
+    "if the answer is partial or vague, continue with a follow-up question instead."
+)
+
 user_email = get_user_email()
 
 # ── Guards ────────────────────────────────────────────────────────────────────
@@ -691,12 +703,15 @@ elif active_sub == "practice":
                     with st.chat_message("assistant", avatar="🤖"):
                         with st.spinner("Coach is thinking..."):
                             reply = coach_response(
-                                system_prompt=coach_prompt,
+                                system_prompt=coach_prompt + _OPEN_TASK_MASTERY_ADDENDUM,
                                 conversation=messages,
                                 user_input=user_input.strip(),
                                 user_email=user_email,
                             )
-                        st.markdown(reply)
+                        # Strip the mastery signal before displaying
+                        auto_advance = "[ADVANCE]" in reply
+                        reply_clean = reply.replace("[ADVANCE]", "").strip()
+                        st.markdown(reply_clean)
                 except Exception as e:
                     st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
                     st.stop()
@@ -705,14 +720,22 @@ elif active_sub == "practice":
                 new_tt[task_idx] = current_task_turns + 1
                 updated_task_msgs = messages + [
                     {"role": "user", "content": user_input.strip()},
-                    {"role": "assistant", "content": reply},
+                    {"role": "assistant", "content": reply_clean},
                 ]
                 updated_by_task = dict(msgs_by_task)
                 updated_by_task[task_idx] = updated_task_msgs
                 st.session_state["coach_messages_by_task"] = updated_by_task
                 st.session_state["practice_turns"] = total_turns + 1
                 st.session_state["task_turn_counts"] = new_tt
-                st.rerun()
+
+                # LG-1: auto-advance when coach signals mastery
+                if auto_advance:
+                    if task_idx >= 3:
+                        do_complete_practice(progress_id, _all_messages(), total_turns + 1)
+                    else:
+                        _advance_task()
+                else:
+                    st.rerun()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
