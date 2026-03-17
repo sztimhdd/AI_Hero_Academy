@@ -18,35 +18,35 @@
       null,
       [
         {
-          "label": "Include role, abstracted context, specific deliverable, and output constraints",
+          "label": "Specify the missing issues explicitly in the Action element",
           "is_best": true
         },
         {
-          "label": "Let the AI choose the analysis format based on its training",
+          "label": "Let AI choose the analysis format from its training",
           "is_best": false
         },
         {
-          "label": "Send several narrow prompts and stitch the outputs together manually",
+          "label": "Send several narrow prompts and stitch outputs together",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Add explicit constraints to prevent the AI from inventing benchmarks or figures",
+          "label": "Add length and format constraints to get a one-page brief",
           "is_best": true
         },
         {
-          "label": "Trust the AI to stay factual when you describe the analytical goal clearly",
+          "label": "Trust AI to stay factual given a clear goal",
           "is_best": false
         },
         {
-          "label": "Ask the AI to flag its assumptions; approve flagged items as reviewed",
+          "label": "Ask AI to flag assumptions; approve flagged items",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Iterate the prompt by tightening constraints each time an issue is discovered",
+          "label": "Add plain-language and no-jargon constraints for the executive audience",
           "is_best": true
         },
         {
@@ -54,7 +54,7 @@
           "is_best": false
         },
         {
-          "label": "Ask the AI to critique and rewrite its own response",
+          "label": "Ask AI to critique and rewrite its own response",
           "is_best": false
         }
       ]
@@ -79,25 +79,25 @@
       null,
       [
         {
-          "label": "Abstract all client-specific identifiers and use approved AI environments only",
+          "label": "Abstract all client-specific identifiers and use approved AI environments",
           "is_best": true
         },
         {
-          "label": "Remove the client name; retain financial figures to preserve analytical accuracy",
+          "label": "Remove the client name; keep figures for analytical accuracy",
           "is_best": false
         },
         {
-          "label": "Use consumer AI for quick analyses but avoid saving or sharing the outputs",
+          "label": "Use consumer AI; keep the outputs off the credit file",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Strip all re-identification signals — company, location, niche deal terms — before prompting",
+          "label": "Replace specific scores, balances, and history with abstracted ranges",
           "is_best": true
         },
         {
-          "label": "Keep sector benchmarks in the prompt since they are publicly available",
+          "label": "Keep sector benchmarks; they are publicly available data",
           "is_best": false
         },
         {
@@ -107,15 +107,15 @@
       ],
       [
         {
-          "label": "Apply all four SAFE steps and add output constraints to prevent AI from fabricating data",
+          "label": "Replace specific figures with abstracted ranges before prompting",
           "is_best": true
         },
         {
-          "label": "Retain the client's sub-sector since it is less specific than the company name",
+          "label": "Keep the client sub-sector; it is less specific",
           "is_best": false
         },
         {
-          "label": "Route the prompt through a manager before using the AI output",
+          "label": "Route the prompt through a manager before using AI output",
           "is_best": false
         }
       ]
@@ -140,43 +140,43 @@
       null,
       [
         {
-          "label": "Trace every AI-generated figure back to its source before using it in analysis",
+          "label": "Trace every AI figure back to its source before using",
           "is_best": true
         },
         {
-          "label": "Flag only figures that differ significantly from your independent estimate",
+          "label": "Flag only figures that differ from your own estimate",
           "is_best": false
         },
         {
-          "label": "Accept AI output that uses hedging language like 'approximately' or 'estimated'",
+          "label": "Accept AI output with hedging phrases like \"approximately\"",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Treat unverifiable AI claims as hallucinations until independently confirmed",
+          "label": "Replace the unsupported travel cost claim with verified data",
           "is_best": true
         },
         {
-          "label": "Ask the AI to name its source; use the output if the source name is plausible",
+          "label": "Ask AI to cite its source; trust any named document",
           "is_best": false
         },
         {
-          "label": "Remove only the claims most likely to be challenged in a presentation",
+          "label": "Remove only claims likely to be challenged in a presentation",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Replace all fabricated content with your own verified language and document the substitution",
+          "label": "Document each claim checked, source found, and substitution made",
           "is_best": true
         },
         {
-          "label": "Publish AI output with a note that figures are preliminary and subject to change",
+          "label": "Publish AI output noting figures are preliminary and may change",
           "is_best": false
         },
         {
-          "label": "Re-prompt with stricter instructions and publish the next output as verified",
+          "label": "Re-prompt with stricter instructions; publish the next output",
           "is_best": false
         }
       ]
@@ -201,43 +201,43 @@
       null,
       [
         {
-          "label": "Provide abstracted client context and a specific relationship intelligence deliverable",
+          "label": "Apply STAKE to tailor the summary for the Underwriting Committee",
           "is_best": true
         },
         {
-          "label": "Feed all CRM interaction logs to the AI and ask for a relationship summary",
+          "label": "Feed all CRM logs; ask AI for a relationship summary",
           "is_best": false
         },
         {
-          "label": "Ask the AI to infer client priorities from publicly available filings only",
+          "label": "Ask AI to infer client priorities from public filings only",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Provide only the strategic context needed; exclude personally identifiable details",
+          "label": "Write a CRAF prompt for BD Leadership analytical priorities",
           "is_best": true
         },
         {
-          "label": "Include names of client contacts to get more targeted recommendations",
+          "label": "Include contact names to get more targeted recommendations",
           "is_best": false
         },
         {
-          "label": "Let the AI infer sentiment from financial results without qualitative context",
+          "label": "Let AI infer sentiment from financial results without context",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Abstract relationship data, apply SAFE steps, then verify all AI-generated insights",
+          "label": "Add BD audience constraints; verify output before the meeting",
           "is_best": true
         },
         {
-          "label": "Share meeting notes verbatim because they are marked internal-only",
+          "label": "Share meeting notes verbatim because they are internal-only",
           "is_best": false
         },
         {
-          "label": "Generate relationship insights without providing context to keep the prompt simple",
+          "label": "Generate relationship insights with no context to save time",
           "is_best": false
         }
       ]
@@ -262,43 +262,43 @@
       null,
       [
         {
-          "label": "Provide abstracted data context, a specific analytical question, and an output format",
+          "label": "Verify the claimed driver against your early repayment data",
           "is_best": true
         },
         {
-          "label": "Share a screenshot of the dashboard and ask the AI to interpret it",
+          "label": "Share a dashboard screenshot and ask AI to interpret it",
           "is_best": false
         },
         {
-          "label": "Ask for a strategic recommendation without providing any underlying data",
+          "label": "Ask AI for a recommendation without providing any data",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Cross-check every AI-generated insight against the source data before presenting",
+          "label": "Draft the conclusion using only cross-verified findings",
           "is_best": true
         },
         {
-          "label": "Use AI insights directly if they align with your overall view of the data",
+          "label": "Use AI insights if they match your data view",
           "is_best": false
         },
         {
-          "label": "Ask the AI to self-flag uncertain insights; use the rest without review",
+          "label": "Ask AI to self-flag uncertain insights; accept the rest",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Treat all AI outputs as hypotheses requiring independent validation before presentation",
+          "label": "Replace the client name and exact figure with abstracted values",
           "is_best": true
         },
         {
-          "label": "Include AI analysis in client-facing slides with an 'AI-generated' label",
+          "label": "Include AI analysis in client slides with an \"AI-generated\" label",
           "is_best": false
         },
         {
-          "label": "Accept outputs that fall within widely published industry benchmarks",
+          "label": "Accept output that falls within standard industry benchmarks",
           "is_best": false
         }
       ]
@@ -323,25 +323,25 @@
       null,
       [
         {
-          "label": "Specify audience, tone, deliverable, and explicit confidentiality guardrails in the prompt",
+          "label": "Specify audience, tone, deliverable, and confidentiality in the prompt",
           "is_best": true
         },
         {
-          "label": "Ask the AI to draft the report and refine the tone yourself afterwards",
+          "label": "Ask AI to draft the report; refine tone afterwards",
           "is_best": false
         },
         {
-          "label": "Use the AI draft if it follows the standard report structure",
+          "label": "Accept AI draft if it matches the standard report structure",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Review AI-drafted communications for accuracy, tone, and confidentiality before sending",
+          "label": "Write the Copilot email prompt with tone and audience constraints",
           "is_best": true
         },
         {
-          "label": "Send the draft if no critical factual errors are visible on first read",
+          "label": "Send the draft if no critical errors are visible",
           "is_best": false
         },
         {
@@ -351,11 +351,11 @@
       ],
       [
         {
-          "label": "Constrain the prompt to prevent fabrication, then verify every factual claim",
+          "label": "Justify each surface choice and identify its key AI risk",
           "is_best": true
         },
         {
-          "label": "Mark the report as AI-drafted to signal that readers should verify claims themselves",
+          "label": "Mark the report as AI-drafted so readers can verify claims",
           "is_best": false
         },
         {
@@ -384,43 +384,43 @@
       null,
       [
         {
-          "label": "Apply SAFE abstractions, define deliverable and constraints, verify all AI outputs",
+          "label": "Cross-check the flagged decline against the scheduling adjustment",
           "is_best": true
         },
         {
-          "label": "Use a more capable model to reduce the need for manual output verification",
+          "label": "Use a capable model to reduce manual verification effort",
           "is_best": false
         },
         {
-          "label": "Skip abstraction for internal analysis to accelerate delivery timelines",
+          "label": "Skip abstraction for internal analysis to speed up delivery",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Flag any AI content that cannot be traced to an authoritative source document",
+          "label": "Apply STAKE to draft the summary for the risk subcommittee",
           "is_best": true
         },
         {
-          "label": "Accept hedged AI language as evidence of appropriate analytical caution",
+          "label": "Use AI outputs matching your initial data reading",
           "is_best": false
         },
         {
-          "label": "Use AI outputs that match your own initial reading of the data",
+          "label": "Accept AI output that matches your data recollection",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Treat AI as a drafting aid requiring complete human validation before any client use",
+          "label": "Remove the named client, exact figure, and scope-creep conclusions",
           "is_best": true
         },
         {
-          "label": "Assign AI output verification to the most junior analyst on the team",
+          "label": "Assign AI output verification to the most junior analyst",
           "is_best": false
         },
         {
-          "label": "Apply full review to client deliverables; accept AI output for internal documents",
+          "label": "Apply full review externally; skip it for internal AI outputs",
           "is_best": false
         }
       ]
@@ -445,29 +445,29 @@
       null,
       [
         {
-          "label": "Specify role, context, format, and constraints in one structured prompt",
+          "label": "Add sector, deal stage, and specific context to the prompt",
           "is_best": true
         },
         {
-          "label": "Let AI choose the best output format",
+          "label": "Extend the Format instruction to request more detail",
           "is_best": false
         },
         {
-          "label": "Send multiple short prompts and combine the best parts manually",
+          "label": "Re-prompt asking AI to avoid generic language",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Add output constraints to prevent AI-invented figures",
+          "label": "Add bilingual format requirement and no-fabrication constraint",
           "is_best": true
         },
         {
-          "label": "Ask for professional tone; trust AI judgment on facts",
+          "label": "Translate the English output afterwards using a separate prompt",
           "is_best": false
         },
         {
-          "label": "Review tone only; treat accuracy as AI responsibility",
+          "label": "Request professional French; trust AI on factual accuracy",
           "is_best": false
         }
       ],
@@ -506,15 +506,15 @@
       null,
       [
         {
-          "label": "Replace all client-specific figures with directional ranges before prompting",
+          "label": "Use abstracted ranges and sector context in the prompt",
           "is_best": true
         },
         {
-          "label": "Remove the client name only; keep financial figures for accuracy",
+          "label": "Include real figures so AI can produce accurate output",
           "is_best": false
         },
         {
-          "label": "Use consumer AI; delete chat history afterwards",
+          "label": "Ask AI to anonymize the client data before generating",
           "is_best": false
         }
       ],
@@ -534,15 +534,15 @@
       ],
       [
         {
-          "label": "Apply all SAFE steps with explicit output constraints",
+          "label": "Add constraints limiting AI to confirmed facts only",
           "is_best": true
         },
         {
-          "label": "Use ranges but keep the client industry niche",
+          "label": "Use AI draft as-is if it sounds professional",
           "is_best": false
         },
         {
-          "label": "Send to IT for review before client-facing use",
+          "label": "Add a compliance disclaimer to the AI-generated email",
           "is_best": false
         }
       ]
@@ -567,29 +567,29 @@
       null,
       [
         {
-          "label": "Verify each AI claim against source documents before using",
+          "label": "Add citation requirement: each claim must name its source",
           "is_best": true
         },
         {
-          "label": "Flag only figures that differ from your recollection",
+          "label": "Ask AI to flag uncertain items with a confidence score",
           "is_best": false
         },
         {
-          "label": "Accept AI output that uses hedging language like approximately",
+          "label": "Trust AI for financial ratios; verify narrative only",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Treat any unverifiable AI claim as hallucination until confirmed",
+          "label": "Replace the unsupported claim with verified source language",
           "is_best": true
         },
         {
-          "label": "Ask AI for source; accept if it names a document",
+          "label": "Add a caveat that the claim is AI-generated",
           "is_best": false
         },
         {
-          "label": "Remove only claims the client is likely to question",
+          "label": "Re-prompt with stricter instructions; trust the revised output",
           "is_best": false
         }
       ],
@@ -628,20 +628,6 @@
       null,
       [
         {
-          "label": "Structure prompt with relationship context and clear deliverable",
-          "is_best": true
-        },
-        {
-          "label": "Describe client broadly and ask AI for strategies",
-          "is_best": false
-        },
-        {
-          "label": "Feed all CRM notes; ask AI to summarise the relationship",
-          "is_best": false
-        }
-      ],
-      [
-        {
           "label": "Require AI to label each item Confirmed or Needs Confirmation",
           "is_best": true
         },
@@ -651,6 +637,20 @@
         },
         {
           "label": "Ask AI to rewrite the bullet using hedging language",
+          "is_best": false
+        }
+      ],
+      [
+        {
+          "label": "Add guardrail: include only verified prior interactions for CFO",
+          "is_best": true
+        },
+        {
+          "label": "Describe the full relationship history for maximum CFO context",
+          "is_best": false
+        },
+        {
+          "label": "Ask AI to infer CFO tone from the title alone",
           "is_best": false
         }
       ],
@@ -703,15 +703,15 @@
       ],
       [
         {
-          "label": "Review AI-drafted comms for accuracy, tone, and confidentiality",
+          "label": "Write separate client-facing and internal prompts with different constraints",
           "is_best": true
         },
         {
-          "label": "Send the draft if it passes a spell-check",
+          "label": "Use one prompt; manually edit the output for each audience",
           "is_best": false
         },
         {
-          "label": "Delegate AI output review to a colleague instead",
+          "label": "Ask AI to label the same draft for internal use",
           "is_best": false
         }
       ],
@@ -764,15 +764,15 @@
       ],
       [
         {
-          "label": "Verify AI-generated insights against the underlying data source",
+          "label": "Override AI ranking based on relationship context AI lacked",
           "is_best": true
         },
         {
-          "label": "Use AI output directly if it aligns with your intuition",
+          "label": "Accept the AI ranking; it processed more data signals",
           "is_best": false
         },
         {
-          "label": "Use only AI items that flagged their own uncertainty",
+          "label": "Re-prompt with different weights to get a different ranking",
           "is_best": false
         }
       ],
@@ -839,15 +839,15 @@
       ],
       [
         {
-          "label": "Treat AI as draft assistant; require full human review",
+          "label": "Chain surfaces in sequence; review output before each handoff",
           "is_best": true
         },
         {
-          "label": "Delegate fact-checking to a junior team member",
+          "label": "Paste all notes at once; let AI produce all outputs",
           "is_best": false
         },
         {
-          "label": "Use AI outputs directly for internal documents only",
+          "label": "Use the most automated surface to save time",
           "is_best": false
         }
       ]
@@ -872,43 +872,43 @@
       null,
       [
         {
-          "label": "Replace client-specific data with sector-level abstractions before prompting",
+          "label": "Write the SAFE prompt using abstracted sector-level inputs",
           "is_best": true
         },
         {
-          "label": "Remove the borrower name only; keep financial ratios for accuracy",
+          "label": "Include real figures so AI analysis is accurate",
           "is_best": false
         },
         {
-          "label": "Use consumer AI tools for analysis but keep outputs off the credit file",
+          "label": "Use consumer AI; keep the outputs off the credit file",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Abstract all re-identification signals including geography, deal size, and structure",
+          "label": "Remove geography, deal size, and structure from the prompt",
           "is_best": true
         },
         {
-          "label": "Keep covenants in the prompt since they are standard industry terms",
+          "label": "Keep covenants; they are standard industry terms",
           "is_best": false
         },
         {
-          "label": "Add a prompt instruction telling the AI not to share the data externally",
+          "label": "Add an instruction prohibiting AI from sharing data externally",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Apply all SAFE steps and add output constraints to prevent AI from inventing figures",
+          "label": "Verify each AI claim before copying into the credit memo",
           "is_best": true
         },
         {
-          "label": "Retain the borrower's industry niche since it is not personally identifiable",
+          "label": "Keep the industry niche; it is not personally identifiable",
           "is_best": false
         },
         {
-          "label": "Send the abstracted prompt to compliance for pre-approval before use",
+          "label": "Send the abstracted prompt to compliance for pre-approval",
           "is_best": false
         }
       ]
@@ -933,29 +933,29 @@
       null,
       [
         {
-          "label": "Cross-reference every AI-generated figure against the source credit application",
+          "label": "Cross-reference every AI figure against the source credit application",
           "is_best": true
         },
         {
-          "label": "Flag only figures that differ by more than 10% from your own estimate",
+          "label": "Flag only figures that differ from your own estimate",
           "is_best": false
         },
         {
-          "label": "Accept AI output that includes phrases like 'based on available data'",
+          "label": "Accept AI output using phrases like \"based on available data\"",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Treat any AI claim that lacks a traceable source as a potential hallucination",
+          "label": "Add year-specific citation requirement to the prompt guard",
           "is_best": true
         },
         {
-          "label": "Ask the AI to cite its source; use the output if a plausible source is named",
+          "label": "Ask AI for its source; trust any named document",
           "is_best": false
         },
         {
-          "label": "Remove only the claims most likely to affect the credit decision",
+          "label": "Remove only claims most likely to affect the credit decision",
           "is_best": false
         }
       ],
@@ -965,7 +965,7 @@
           "is_best": true
         },
         {
-          "label": "Attach the AI output as a supporting exhibit with a caveat note",
+          "label": "Attach AI output as supporting exhibit with a caveat note",
           "is_best": false
         },
         {
@@ -994,43 +994,43 @@
       null,
       [
         {
-          "label": "Structure the prompt with role, abstracted context, deliverable, and constraints",
+          "label": "Add deal-specific context explaining why these ratios matter",
           "is_best": true
         },
         {
-          "label": "Ask the AI to decide the analysis approach based on available data",
+          "label": "Ask AI to decide the analysis approach from available data",
           "is_best": false
         },
         {
-          "label": "Submit multiple short prompts and merge the outputs",
+          "label": "Submit multiple short prompts and merge the best outputs",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Add explicit constraints preventing the AI from generating fictional ratios or covenants",
+          "label": "Add constraints focusing AI on liquidity and working capital",
           "is_best": true
         },
         {
-          "label": "Trust the AI to stay within the credit context you have described",
+          "label": "Trust AI to stay within the credit context you described",
           "is_best": false
         },
         {
-          "label": "Instruct the AI to flag any assumptions; accept the flagged output as reviewed",
+          "label": "Instruct AI to flag assumptions; accept flagged output as reviewed",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Refine the prompt iteratively, adding constraints each time an issue is found",
+          "label": "Add a constraint prohibiting AI from making credit recommendations",
           "is_best": true
         },
         {
-          "label": "Accept the first plausible output to keep the review process efficient",
+          "label": "Accept the first plausible output to stay efficient",
           "is_best": false
         },
         {
-          "label": "Ask the AI to self-assess its output quality before finalising",
+          "label": "Ask AI to self-assess its output quality before finalising",
           "is_best": false
         }
       ]
@@ -1055,43 +1055,43 @@
       null,
       [
         {
-          "label": "Provide abstracted borrower context and a clear analytical deliverable",
+          "label": "Apply RELATE: acknowledge frustration without conceding an error",
           "is_best": true
         },
         {
-          "label": "Include all covenant details to give the AI full context",
+          "label": "Include all covenant details to give AI full context",
           "is_best": false
         },
         {
-          "label": "Ask the AI to infer borrower risk profile from industry benchmarks alone",
+          "label": "Ask AI to infer risk from industry benchmarks alone",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Limit the prompt to strategic context; exclude personally identifiable borrower details",
+          "label": "Add format constraints: short paragraphs, plain language, clear next step",
           "is_best": true
         },
         {
-          "label": "Include the borrower's location since it is publicly registered information",
+          "label": "Include borrower location since it is publicly registered",
           "is_best": false
         },
         {
-          "label": "Provide the AI with the credit officer's internal risk assessment for context",
+          "label": "Give AI the credit officer's internal risk assessment for context",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Abstract relationship details, prompt with constraints, then verify every AI output claim",
+          "label": "Add explicit prohibitions against internal codes and system references",
           "is_best": true
         },
         {
-          "label": "Share internal credit memos since they are not client-facing documents",
+          "label": "Share internal credit memos since they are not client-facing",
           "is_best": false
         },
         {
-          "label": "Ask the AI to generate a risk summary without providing any borrower background",
+          "label": "Ask AI for a risk summary without providing borrower background",
           "is_best": false
         }
       ]
@@ -1116,43 +1116,43 @@
       null,
       [
         {
-          "label": "Frame the prompt with abstracted financial context and a specific analytical question",
+          "label": "Structure the prompt to request a four-part SIFT analysis",
           "is_best": true
         },
         {
-          "label": "Upload the financial statements directly for the AI to analyse",
+          "label": "Upload the financial statements directly for AI to analyse",
           "is_best": false
         },
         {
-          "label": "Ask the AI for a credit recommendation without providing any supporting data",
+          "label": "Ask AI for a credit recommendation without supporting data",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Validate AI-generated ratio interpretations against the source financial statements",
+          "label": "Flag the unsupported claim; replace with source-verified language",
           "is_best": true
         },
         {
-          "label": "Accept AI ratio analysis if it aligns with your preliminary assessment",
+          "label": "Accept AI analysis if it aligns with your preliminary assessment",
           "is_best": false
         },
         {
-          "label": "Ask the AI to highlight its own errors; use the corrected version directly",
+          "label": "Ask AI to self-correct; trust the revised version",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Treat AI output as a hypothesis that requires independent verification before the credit memo",
+          "label": "Build the action plan from validated SIFT outputs only",
           "is_best": true
         },
         {
-          "label": "Use AI analysis directly in the credit memo with an AI-generated caveat",
+          "label": "Use AI analysis in the credit memo with a caveat",
           "is_best": false
         },
         {
-          "label": "Accept the output if it falls within standard industry benchmarks",
+          "label": "Accept output if it falls within standard industry benchmarks",
           "is_best": false
         }
       ]
@@ -1177,21 +1177,21 @@
       null,
       [
         {
-          "label": "Specify audience, tone, purpose, and explicit confidentiality constraints in the prompt",
+          "label": "Specify tone, audience, and confidentiality constraints in the prompt",
           "is_best": true
         },
         {
-          "label": "Ask the AI to write the memo and apply compliance language afterwards",
+          "label": "Ask AI to write the email; add compliance language afterwards",
           "is_best": false
         },
         {
-          "label": "Use the AI draft if it matches the standard memo template structure",
+          "label": "Accept AI draft if it matches the standard memo template",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Review every AI-drafted communication for accuracy, tone, and confidentiality before issuing",
+          "label": "Write prompt with constraints: no borrower details, no credit decisions",
           "is_best": true
         },
         {
@@ -1199,21 +1199,21 @@
           "is_best": false
         },
         {
-          "label": "Have a junior analyst spot-check the AI output before distribution",
+          "label": "Have a junior analyst spot-check the AI output instead",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Constrain the prompt to prevent fabricated terms, then verify every factual statement",
+          "label": "Design a checklist: accuracy, tone, confidentiality, no fabrications, attribution",
           "is_best": true
         },
         {
-          "label": "Inform the AI the memo is confidential; rely on it to avoid sensitive disclosures",
+          "label": "Inform AI the memo is confidential; trust it to self-censor",
           "is_best": false
         },
         {
-          "label": "Only verify sections of the memo that will be seen by external parties",
+          "label": "Only verify sections visible to external parties",
           "is_best": false
         }
       ]
@@ -1238,7 +1238,7 @@
       null,
       [
         {
-          "label": "Apply SAFE steps, define deliverable and constraints, then verify all AI outputs",
+          "label": "Design a three-prompt CRAF sequence for brief, narrative, and flags",
           "is_best": true
         },
         {
@@ -1246,27 +1246,27 @@
           "is_best": false
         },
         {
-          "label": "Skip abstraction for internal-only documents to speed up the workflow",
+          "label": "Skip abstraction for internal documents to speed up the workflow",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Flag any AI-generated content that cannot be traced to a source document",
+          "label": "Flag any claim not traceable to a named source document",
           "is_best": true
         },
         {
-          "label": "Accept hedged AI language as sufficient evidence of appropriate caution",
+          "label": "Accept hedged AI language as evidence of appropriate caution",
           "is_best": false
         },
         {
-          "label": "Use AI summaries that match your own recollection of the credit file",
+          "label": "Use AI summaries that match your credit file recollection",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Position AI as a drafting assistant requiring full human review before any credit use",
+          "label": "Outline the three stakeholder pack components with AI governance notes",
           "is_best": true
         },
         {
@@ -1274,7 +1274,7 @@
           "is_best": false
         },
         {
-          "label": "Apply full review to external documents; use AI output directly for internal ones",
+          "label": "Apply full review externally; skip it for internal AI outputs",
           "is_best": false
         }
       ]
@@ -1299,43 +1299,43 @@
       null,
       [
         {
-          "label": "Include audience, objective, format, tone, and explicit output constraints in the prompt",
+          "label": "Add tone, audience, and plain-language constraints to the prompt",
           "is_best": true
         },
         {
-          "label": "Let the AI decide the best content strategy based on the product description",
+          "label": "Let AI decide the best content strategy for the product",
           "is_best": false
         },
         {
-          "label": "Use multiple prompts for different content sections and combine them manually",
+          "label": "Use multiple prompts per section and combine outputs manually",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Add constraints preventing the AI from generating claims you cannot verify",
+          "label": "Specify LinkedIn format, character limits, and brand voice constraints",
           "is_best": true
         },
         {
-          "label": "Trust the AI to stay on-brand when you describe the product accurately",
+          "label": "Trust AI to stay on-brand with a clear product description",
           "is_best": false
         },
         {
-          "label": "Ask the AI to flag its own uncertain claims; accept the rest as verified",
+          "label": "Ask AI to flag uncertain claims; accept the rest",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Refine the prompt iteratively, tightening constraints each time an issue appears",
+          "label": "Add tone constraints prohibiting capitals, emojis, and superlatives",
           "is_best": true
         },
         {
-          "label": "Accept the first output that matches the word count and tone requirements",
+          "label": "Accept output that meets word count and tone requirements",
           "is_best": false
         },
         {
-          "label": "Ask the AI to improve its own draft based on brand guidelines you provide",
+          "label": "Ask AI to improve its draft given your brand guidelines",
           "is_best": false
         }
       ]
@@ -1360,43 +1360,43 @@
       null,
       [
         {
-          "label": "Cross-reference the AI statistic against the original brief and external sources",
+          "label": "Cross-reference the statistic against the brief and external sources",
           "is_best": true
         },
         {
-          "label": "Accept the statistic since it appears with a plausible source name in the AI output",
+          "label": "Accept it since a plausible source name is present",
           "is_best": false
         },
         {
-          "label": "Flag the statistic internally but publish to meet the deadline; correct in a follow-up",
+          "label": "Flag it internally; publish now and correct in a follow-up",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Remove the fabricated quote and replace with verified content from the approved brief",
+          "label": "Remove the fabricated quote; replace with verified brief content",
           "is_best": true
         },
         {
-          "label": "Keep the quote but change the attribution to a fictional spokesperson",
+          "label": "Keep the quote but change it to a fictional spokesperson",
           "is_best": false
         },
         {
-          "label": "Ask the AI to generate a replacement quote that is less likely to be challenged",
+          "label": "Ask AI for a quote less likely to be questioned",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Remove all confidential project references and add prompt guardrails to prevent recurrence",
+          "label": "Remove the code name and pilot reference; add prompt guardrails",
           "is_best": true
         },
         {
-          "label": "Replace the project code name only; retain the pilot client reference for credibility",
+          "label": "Replace the code name only; keep the pilot reference",
           "is_best": false
         },
         {
-          "label": "Publish the content with the pilot reference since it has not been formally announced yet",
+          "label": "Publish it since the pilot has not been announced yet",
           "is_best": false
         }
       ]
@@ -1421,25 +1421,25 @@
       null,
       [
         {
-          "label": "Specify audience, plain language requirement, length, and a no-fabrication constraint",
+          "label": "Specify audience, plain language, length, and no-fabrication constraint",
           "is_best": true
         },
         {
-          "label": "Ask the AI to choose the best format and length for the content type",
+          "label": "Let AI choose the format and length for the content",
           "is_best": false
         },
         {
-          "label": "Generate a first draft and refine the constraint later based on the output",
+          "label": "Draft first; refine the constraint based on the output",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Treat any unverifiable AI statistic as a potential hallucination until confirmed",
+          "label": "Write prompt with a no-fabrication constraint and verified inputs",
           "is_best": true
         },
         {
-          "label": "Accept statistics the AI presents with a citation, even if unverified",
+          "label": "Accept statistics AI presents with a citation, even if unverified",
           "is_best": false
         },
         {
@@ -1449,15 +1449,15 @@
       ],
       [
         {
-          "label": "Replace fabricated content with verified language and add guardrails to the prompt",
+          "label": "Personalize AI output manually; verify each use of company name",
           "is_best": true
         },
         {
-          "label": "Publish the content with a note that statistics are AI-generated and may vary",
+          "label": "Publish with a note that statistics may vary",
           "is_best": false
         },
         {
-          "label": "Re-prompt with the instruction to avoid statistics and publish the next version",
+          "label": "Re-prompt to avoid statistics; publish the next version",
           "is_best": false
         }
       ]
@@ -1482,43 +1482,43 @@
       null,
       [
         {
-          "label": "Frame the prompt with abstracted campaign metrics, a specific question, and output format",
+          "label": "Verify the claimed 38% increase against your source analytics data",
           "is_best": true
         },
         {
-          "label": "Share the raw analytics export for the AI to identify patterns",
+          "label": "Share the raw analytics export for AI to identify patterns",
           "is_best": false
         },
         {
-          "label": "Ask for content recommendations without providing any performance data",
+          "label": "Ask AI for content recommendations without performance data",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Verify every AI-generated performance insight against the source analytics before presenting",
+          "label": "Override the AI interpretation using the CEO viral moment context",
           "is_best": true
         },
         {
-          "label": "Use AI insights directly if they support the narrative you had already planned",
+          "label": "Use AI insights if they support your planned narrative",
           "is_best": false
         },
         {
-          "label": "Ask the AI to self-flag uncertain insights; use the rest without further review",
+          "label": "Ask AI to self-flag uncertain insights; accept the rest",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Treat AI outputs as first-pass hypotheses requiring independent validation before use",
+          "label": "Base Q4 recommendation on validated data, including the LinkedIn nuance",
           "is_best": true
         },
         {
-          "label": "Include AI analysis in client reports with an 'AI-generated' attribution label",
+          "label": "Include AI analysis in client reports with an AI-generated label",
           "is_best": false
         },
         {
-          "label": "Accept outputs that fall within industry benchmark ranges without further verification",
+          "label": "Accept outputs within industry benchmark ranges without verification",
           "is_best": false
         }
       ]
@@ -1543,43 +1543,43 @@
       null,
       [
         {
-          "label": "Provide abstracted audience insights and a specific messaging deliverable with guardrails",
+          "label": "Provide abstracted audience insights and a messaging deliverable",
           "is_best": true
         },
         {
-          "label": "Share the full customer research report for the AI to analyse and summarise",
+          "label": "Share the full customer research report for AI to summarise",
           "is_best": false
         },
         {
-          "label": "Ask the AI to infer audience preferences from publicly available competitor content",
+          "label": "Ask AI to infer audience preferences from competitor content",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Include only aggregate audience signals; exclude personally identifiable respondent details",
+          "label": "Remove the unverifiable $47M figure before sending the email",
           "is_best": true
         },
         {
-          "label": "Include named customer quotes from research since they add authenticity",
+          "label": "Include named customer quotes from research for authenticity",
           "is_best": false
         },
         {
-          "label": "Let the AI generate audience personas using its own training data as the base",
+          "label": "Let AI generate audience personas from its own training data",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Abstract all audience data, apply SAFE steps, then verify AI messaging against brand guidelines",
+          "label": "Add relationship-specific context that AI cannot generate alone",
           "is_best": true
         },
         {
-          "label": "Share verbatim survey responses since they are anonymised at collection",
+          "label": "Share verbatim survey responses since they are anonymised",
           "is_best": false
         },
         {
-          "label": "Generate messaging without audience context to keep the prompt simple",
+          "label": "Generate messaging without audience context to keep it simple",
           "is_best": false
         }
       ]
@@ -1604,25 +1604,25 @@
       null,
       [
         {
-          "label": "Apply SAFE steps, specify deliverable and constraints, verify all AI outputs against sources",
+          "label": "Apply SAFE, specify GlobeTech context and constraints, verify output",
           "is_best": true
         },
         {
-          "label": "Use the most capable model available to reduce the need for manual verification",
+          "label": "Use the most capable model to reduce manual verification",
           "is_best": false
         },
         {
-          "label": "Skip confidentiality checks for internal campaign briefs to hit the deadline",
+          "label": "Skip confidentiality checks for internal briefs to hit the deadline",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Flag any AI-generated content that cannot be traced to an approved source or brief",
+          "label": "Flag any claim not traceable to an approved source",
           "is_best": true
         },
         {
-          "label": "Accept AI language that hedges with phrases like 'research suggests' without further review",
+          "label": "Accept AI language hedging with \"research suggests\"",
           "is_best": false
         },
         {
@@ -1632,15 +1632,15 @@
       ],
       [
         {
-          "label": "Position AI as a drafting assistant requiring full human review before any public use",
+          "label": "Draft bilingually with Copilot; apply full human review before presenting",
           "is_best": true
         },
         {
-          "label": "Delegate AI output verification to the content coordinator to save senior time",
+          "label": "Delegate AI output verification to the content coordinator",
           "is_best": false
         },
         {
-          "label": "Apply full review to media-facing content; accept AI output for internal briefs",
+          "label": "Apply full review externally; skip for internal briefs",
           "is_best": false
         }
       ]
@@ -1665,43 +1665,43 @@
       null,
       [
         {
-          "label": "Specify channel, audience, tone, objective, and explicit brand and accuracy constraints",
+          "label": "Specify channel, audience, tone, and brand accuracy constraints",
           "is_best": true
         },
         {
-          "label": "Ask the AI to generate the content and adjust the brand voice yourself afterwards",
+          "label": "Ask AI to draft the content; adjust brand voice afterwards",
           "is_best": false
         },
         {
-          "label": "Use the AI draft if it meets the word count and matches the channel format",
+          "label": "Accept AI draft if it meets word count and format",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Review every AI-drafted communication for accuracy, tone, and compliance before publishing",
+          "label": "Add specific CTA and brand-differentiator constraints to the prompt",
           "is_best": true
         },
         {
-          "label": "Publish the draft if it passes a grammar check and no obvious errors are present",
+          "label": "Publish if the draft passes a grammar check",
           "is_best": false
         },
         {
-          "label": "Ask a junior team member to spot-check the AI output before it goes live",
+          "label": "Ask a junior team member to spot-check before publishing",
           "is_best": false
         }
       ],
       [
         {
-          "label": "Constrain the prompt to prevent fabricated claims, then verify every factual statement",
+          "label": "Translate with Copilot, verify accuracy, then apply bilingual QA",
           "is_best": true
         },
         {
-          "label": "Mark the content as AI-generated so audiences understand it may contain inaccuracies",
+          "label": "Mark the content as AI-generated so audiences can verify claims",
           "is_best": false
         },
         {
-          "label": "Only verify sections that include statistics or named third parties",
+          "label": "Only verify sections containing statistics or named third parties",
           "is_best": false
         }
       ]
