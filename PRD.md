@@ -25,9 +25,9 @@ TABLE OF CONTENTS
 1. EXECUTIVE SUMMARY
 ================================================================================
 
-AI Hero Academy is an internal Databricks App that evaluates, trains, and
+AI Hero Academy is an internal Streamlit app (GCP Cloud Run) that evaluates, trains, and
 benchmarks employees on AI skills through real-life, job-specific use cases
-and AI coaching powered by Mosaic AI Foundation Models.
+and AI coaching powered by Google Gemini API.
 
 The MVP launched with Relationship Manager (RM) and expanded to include
 Underwriter (UW), Analyst (AN), and Marketing/Comms Advisor (MK). All four
@@ -242,10 +242,10 @@ the organization's actual use cases and policies.
                          then Post-module Evaluation
   Modules per course     3 sub-modules (reading, practice, evaluation)
   Dashboard              Employee-only (personal progress view)
-  AI models              Mosaic AI Foundation Model APIs (single endpoint)
-  Hosting                Databricks App (Streamlit)
-  Authentication         Databricks workspace SSO
-  Persistence            Delta tables in Unity Catalog
+  AI models              Google Gemini API (gemini-2.0-flash via google-genai SDK)
+  Hosting                Streamlit (local); Phase C target: GCP Cloud Run
+  Authentication         GCP_USER_EMAIL env var; Phase C: Google IAP
+  Persistence            Google Cloud Firestore (GCP project banded-totality-485901)
   Language               English only
 
 
@@ -266,7 +266,7 @@ the organization's actual use cases and policies.
   - Employee home page with progress tracking
   - Permanent skills profile and results page
   - Retake diagnostic capability
-  - Full state persistence in Delta tables (cross-device, cross-session)
+  - Full state persistence in Google Cloud Firestore (cross-device, cross-session)
   - Personalized module sequencing based on gap priorities
   - Module locking (sequential unlock after completing prior module)
 
@@ -1189,14 +1189,12 @@ Deep linking:
 13.4 ACCESS CONTROL
 ---------------------
 
-  - Authentication via Databricks workspace SSO (no custom auth)
-  - Each user can only see their own data
-  - No admin role in MVP (content is seeded via notebooks)
-  - Delta tables use Unity Catalog permissions:
-    - content schema: read-only for the app service principal
-    - learner schema: read-write for the app service principal,
-      filtered by user_email in all queries
-    - system schema: write for the app, read for administrators
+  - Authentication via GCP_USER_EMAIL env var; Phase C: Google Identity-Aware Proxy
+  - Each user can only see their own data (all Firestore queries filtered by user_email)
+  - No admin role in MVP (content is seeded via JSON files bundled with the app)
+  - Firestore access via GCP service account key (local) or Workload Identity (Cloud Run)
+  - Static content (JSON files) is read-only; no database writes for content access
+  - ai_call_log collection: write-only path for app; readable by GCP project admins
 
 
 ================================================================================

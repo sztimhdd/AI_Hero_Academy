@@ -266,7 +266,7 @@ st.markdown(DEMO_CSS, unsafe_allow_html=True)
 # ── Section 1 — Hero ──────────────────────────────────────────────────────────
 st.markdown("""
 <div class="demo-hero">
-  <div class="demo-eyebrow">Databricks Internal · AI Skills Platform</div>
+  <div class="demo-eyebrow">EDC Internal · AI Skills Platform</div>
   <div class="demo-headline">
     Turn every employee into an<br><em>AI-powered</em> professional.
   </div>
@@ -535,7 +535,7 @@ with dc4:
 <div class="demo-diff-card">
   <div class="demo-diff-icon">🔒</div>
   <div class="demo-diff-headline">Your data never leaves your workspace.</div>
-  <div class="demo-diff-body">Built as a Databricks App and served from your EDC environment. No data sent to third-party training platforms. No external user accounts.</div>
+  <div class="demo-diff-body">Hosted on GCP Cloud Run and served from your EDC environment. No data sent to third-party training platforms. No external user accounts.</div>
 </div>
 """, unsafe_allow_html=True)
 

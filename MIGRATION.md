@@ -1,5 +1,16 @@
 # Migration: Databricks App → GCP Cloud Run
 
+## Migration Status
+
+| Phase | Description | Status | Commit |
+|-------|-------------|--------|--------|
+| A | LLM Layer — Gemini replaces Databricks Foundation Models | ✅ COMPLETE | (merged into Phase B commit) |
+| B | Data Layer — Firestore replaces Unity Catalog Delta tables | ✅ COMPLETE | `4a00b68` (2026-03-18) |
+| C | Cloud Run Packaging — Dockerfile, Cloud Build | ✅ COMPLETE | `8830512` (2026-03-18) |
+| D | GitHub Remote + Cleanup — remove Databricks artifacts | ✅ COMPLETE | (this session, 2026-03-18) |
+
+---
+
 ## Target Architecture
 
 | Layer | From | To |
@@ -26,83 +37,87 @@
 
 ## Phased Migration Plan
 
-### Phase A — LLM Layer (do first, testable locally)
+### Phase A — LLM Layer ✅ COMPLETE
 
 **Goal**: replace `utils/ai.py` so all LLM calls go through Gemini instead of Databricks.
 
-Files to change:
-- `utils/ai.py` — replace `WorkspaceClient` + `ChatMessage` with `google-genai` SDK
-- `requirements.txt` — remove `databricks-sdk`; add `google-genai`
-- `.env.example` — replace `DATABRICKS_TOKEN` / `DATABRICKS_WAREHOUSE_ID` / `SERVING_ENDPOINT_NAME` with `GEMINI_API_KEY`
+Files changed:
+- `utils/ai.py` — replaced `WorkspaceClient` + `ChatMessage` with `google-genai` SDK; Gemini `gemini-2.0-flash` as default model
+- `requirements.txt` — removed `databricks-sdk`; added `google-genai>=1.0.0`
+- `.env` — replaced `DATABRICKS_TOKEN` / `DATABRICKS_WAREHOUSE_ID` / `SERVING_ENDPOINT_NAME` with `GEMINI_API_KEY`
 
-Gemini model to use: `gemini-2.0-flash` (fast, cheap, production-grade).
+The `call_llm()` function signature and return type remain identical — all callers (`score_diagnostic`, `coach_response`, `generate_gap_map`, `score_evaluation`, `generate_module_coach_note`) unchanged.
 
-The `call_llm()` function signature and return type must remain identical — all callers (`score_diagnostic`, `coach_response`, `generate_gap_map`, `score_evaluation`, `generate_module_coach_note`) must not need changes.
+`_log_call()` writes to Firestore `ai_call_log` collection (Phase B completes the Firestore setup).
 
-For `_log_call()`: in Phase A, write to Firestore `ai_call_log` collection instead of Delta SQL. If Firestore is not yet set up, write to a local JSON file as a temporary fallback (never break the main flow — match the existing try/except pattern).
-
-**Done when**: `streamlit run app.py` works locally with `GEMINI_API_KEY` set; all LLM calls succeed.
+**Completed**: `streamlit run app.py` works locally with `GEMINI_API_KEY` set; all LLM calls route through Gemini.
 
 ---
 
-### Phase B — Data Layer (Firestore replaces Delta tables)
+### Phase B — Data Layer ✅ COMPLETE (2026-03-18, commit `4a00b68`)
 
 **Goal**: replace `utils/db.py` so all learner reads/writes go to Firestore instead of Databricks SQL.
 
-Files to change:
-- `utils/db.py` — replace `WorkspaceClient` + `statement_execution` with `google-cloud-firestore`
-- `utils/auth.py` — replace `DATABRICKS_USER_EMAIL` with `GCP_USER_EMAIL` (or Cloud Run IAP header `X-Goog-Authenticated-User-Email`)
-- `requirements.txt` — add `google-cloud-firestore`
-- `app.py` — replace `UC_CATALOG` env var with nothing (Firestore collection paths are hardcoded by schema name)
+Files changed:
+- `utils/db.py` — complete rewrite; replaced `WorkspaceClient` + `statement_execution` with `google-cloud-firestore`; domain-specific functions replace `execute()` / `query_one()`; `load_dotenv` self-loading added so env vars work regardless of app start method; relative `GOOGLE_APPLICATION_CREDENTIALS` path resolved to absolute at runtime; all `order_by` removed from compound Firestore queries (sorted in Python to avoid composite index requirement)
+- `utils/auth.py` — added `GCP_USER_EMAIL` fallback before `DATABRICKS_USER_EMAIL`
+- `requirements.txt` — added `google-cloud-firestore>=2.16.0`
+- `app.py` — replaced `UC_CATALOG` env var; uses `get_profile()`, `get_latest_diagnostic()`, `get_any_progress()` from new db API
+- `pages/00_Welcome.py` — uses `create_profile()`, `get_profile()`, `get_latest_diagnostic()`, `get_any_progress()`
+- `pages/01_Diagnostic.py` — uses `get_profile()`, `get_latest_diagnostic()`, `save_diagnostic()`, `save_gap_map()`
+- `pages/02_Skills_Profile.py` — uses `get_all_diagnostics()`, `get_latest_gap_map()`, `get_all_progress()`, `get_any_progress()`
+- `pages/03_Home.py` — uses `get_profile()`, `get_latest_diagnostic()`, `get_all_progress()`
+- `pages/04_Course_Module.py` — uses `get_progress()`, `get_all_progress()`, `get_progress_by_seq()`, `save_coach_session()`, `update_progress()`, `unlock_progress()`, `get_latest_diagnostic()`, `save_gap_map()`
+- `utils/demo.py` — rewritten to use domain functions; `_wipe_demo_user()` deletes Firestore docs by querying `user_email`; `ensure_demo_seeded()` replaces all `_raw_execute()` calls with `create_profile()`, `save_diagnostic()`, `save_gap_map()`, `create_progress()`, `update_progress()`
+- `scripts/reset_uat_user.py` — rewritten to use Firestore batch-delete and domain create functions
+- `.env` — added `GCP_PROJECT_ID=banded-totality-485901`, `GOOGLE_APPLICATION_CREDENTIALS=.gcp/banded-totality-485901-eb494951ebf7.json`; removed all Databricks variables
 
-Firestore collection layout (mirrors Delta schema exactly):
+Firestore collection layout (flat top-level, mirrors former Delta schema):
 
 ```
-learner/
-  user_profiles/{user_email}           → {role_id, display_name, created_at}
-  diagnostic_sessions/{session_id}     → {user_email, completed_at, responses, item_scores, domain_scores, overall_score}
-  gap_maps/{gap_map_id}                → {user_email, session_id, source_type, bullets, created_at}
-  training_progress/{user_email}_{course_id} → {user_email, course_id, ...all progress fields}
-  coach_sessions/{session_id}          → {user_email, course_id, transcript, turn_count, created_at}
-
-system/
-  ai_call_log/{log_id}                 → {user_email, call_type, model_endpoint, latency_ms, success, ...}
+user_profiles/{user_email}               → {role_id, display_name, created_at}
+diagnostic_sessions/{session_id}         → {user_email, started_at, completed_at, responses, item_scores, domain_scores, overall_score}
+gap_maps/{gap_map_id}                    → {user_email, source_type, source_id, bullets, generated_at}
+training_progress/{user_email}_{course_id} → {user_email, course_id, module_sequence_order, is_locked, reading_completed_at, practice_completed_at, evaluation_completed_at, evaluation_score, domain_score_after}
+coach_sessions/{session_id}              → {user_email, course_id, started_at, completed_at, turn_count, conversation_json}
+ai_call_log/{log_id}                     → {user_email, call_type, model_endpoint, latency_ms, success, error_message, prompt_tokens, completion_tokens}
 ```
 
-The `execute()` and `query_one()` function signatures must remain identical where used by pages — or pages must be updated consistently.
+GCP project: `banded-totality-485901`. Authentication via service account key in `.gcp/`.
 
-**Done when**: full app flow works locally (Welcome → Diagnostic → Skills Profile → Home → Module) against Firestore emulator or real Firestore project.
+**Key implementation decisions**:
+- All compound Firestore queries use single `where("user_email", "==", ...)` + Python-side sort/filter to avoid composite index requirements
+- `load_dotenv()` at the top of `utils/db.py` ensures `.env` is loaded regardless of how Streamlit is started
+- `GOOGLE_APPLICATION_CREDENTIALS` relative path is resolved to absolute in `_get_db()` at first call
+- `escape()` kept as a no-op shim for backward compatibility
+
+**Completed**: full app flow verified locally (Welcome → Diagnostic → Skills Profile → Home → Module) against real GCP Firestore project; HTTP 200 on port 8502; Firestore reads/writes confirmed.
 
 ---
 
-### Phase C — Cloud Run Packaging
+### Phase C — Cloud Run Packaging ✅ COMPLETE (2026-03-18, commit `8830512`)
 
 **Goal**: containerise the app and deploy to Cloud Run.
 
-Files to create:
+Files created:
 - `Dockerfile` — Python 3.11-slim, install requirements, run Streamlit on port 8080
-- `.dockerignore` — exclude `.venv/`, `__pycache__/`, `.env`, `*.pyc`
-- `cloudbuild.yaml` (optional) — for automated GCP deployment
+- `.dockerignore` — excludes `.gcp/`, `.env`, `.venv/`, `__pycache__/`, tests, docs
 
-Files to remove:
-- `app.yml` (Databricks App config — no longer needed)
-- `databricks.yml` (bundle config — no longer needed)
+Deployment:
 
-Environment variables for Cloud Run:
-- `GEMINI_API_KEY`
-- `GCP_PROJECT_ID` (for Firestore)
-- `GCP_USER_EMAIL` (or rely on IAP header — TBD)
+- `.github/workflows/deploy.yml` — builds Docker image, pushes to Artifact Registry (`northamerica-northeast1`), deploys to Cloud Run service `ai-hero-academy` (1 GiB, 0–3 instances)
+- Cloud Run env vars: `GEMINI_API_KEY`, `GCP_PROJECT_ID`
 
-**Done when**: `docker build` succeeds locally; `docker run -p 8501:8080` serves the app; `gcloud run deploy` succeeds.
+Previously removed: `app.yml` (Databricks App config)
 
 ---
 
-### Phase D — GitHub Remote + Cleanup
+### Phase D — GitHub Remote + Cleanup ✅ COMPLETE (2026-03-18)
 
-- Point repo remote to new GitHub repo
-- Delete Databricks-specific files: `databricks.yml`, `app.yml`, `notebooks/`, `.databricks/`
-- Update `CLAUDE.md` to reflect GCP stack
-- Tag `v1.0.0-gcp`
+- GitHub remote: `https://github.com/sztimhdd/AI_Hero_Academy.git` ✅
+- Deleted: `databricks.yml`, `app.yml`, `notebooks/`, `.databricksignore`
+- Updated `CLAUDE.md` to reflect GCP stack
+- Tag `v1.0.0-gcp` applied
 
 ---
 
@@ -119,7 +134,7 @@ Environment variables for Cloud Run:
 ## Key Constraints
 
 1. **`utils/ai.py` `call_llm()` signature is frozen** — `(messages, temperature, user_email, call_type) → str`. All callers depend on it.
-2. **`utils/db.py` `query_one()` and `execute()` signatures are frozen** — pages call these directly.
+2. **`utils/db.py` domain functions are the new stable API** — pages call `get_profile()`, `get_latest_diagnostic()`, etc. directly; `execute()` and `query_one()` are gone.
 3. **`content/*.json` files are read-only** — `utils/content.py` getters are unchanged.
-4. **Demo mode** (`utils/demo.py`) depends on `utils/db.py` `_raw_execute()` — must be preserved or re-implemented alongside the db layer.
+4. **Demo mode** (`utils/demo.py`) uses domain functions from `utils/db.py` — `_raw_execute()` is removed; demo seeding uses `create_profile()`, `save_diagnostic()`, etc.
 5. **Never break the main flow on logging failures** — `_log_call()` must always be wrapped in try/except.

@@ -13,7 +13,7 @@ AI Hero Academy is a Streamlit-based Databricks App that delivers personalized A
 
 The MVP launched with Relationship Manager (RM) and expanded to include Underwriter (UW), Analyst (AN), and Marketing/Comms Advisor (MK). All four roles are fully live. Each role has 18 diagnostic questions across 6 skill domains and 7 training courses (6 domain + 1 capstone).
 
-UAT v2.0 (2026-03-06): 16 scenarios across 4 independent groups (A–D). Groups B/C/D can run standalone via `python scripts/reset_uat_user.py --profile {course-built|m1-done|all-done}` without running prior groups. Phase 12 (March 2026) extended the platform to a 6-domain architecture for future role content generation. All AI scoring, coaching, and gap analysis is powered by Databricks Foundation Model serving endpoints. All learner state is persisted in Delta tables via Unity Catalog (`mdlg_ai_shared`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no Delta queries needed for content.
+UAT v2.0 (2026-03-06): 16 scenarios across 4 independent groups (A–D). Groups B/C/D can run standalone via `python scripts/reset_uat_user.py --profile {course-built|m1-done|all-done}` without running prior groups. Phase 12 (March 2026) extended the platform to a 6-domain architecture for future role content generation. All AI scoring, coaching, and gap analysis is powered by **Google Gemini API** (`gemini-2.0-flash`). All learner state is persisted in **Google Cloud Firestore** (GCP project `banded-totality-485901`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no database queries needed for content.
 
 ---
 
@@ -23,12 +23,12 @@ UAT v2.0 (2026-03-06): 16 scenarios across 4 independent groups (A–D). Groups 
 
 | Layer | Technology | Notes |
 |-------|-----------|-------|
-| **Frontend** | Streamlit (multi-page) | Hosted as a Databricks App |
-| **SQL** | Databricks Serverless SQL Warehouse | `eaa098820703bf5f`; all queries via `WorkspaceClient` |
-| **AI** | Databricks Foundation Model APIs | Accessed via `w.serving_endpoints.query()`; endpoint name injected via env var |
-| **State** | Delta tables in Unity Catalog `mdlg_ai_shared` | Three schemas: `content`, `learner`, `system` |
-| **Auth** | Databricks workspace SSO | `user_email` extracted from `SparkContext` or `dbutils` context in App runtime |
-| **Hosting** | Databricks Apps (container-based) | `app.yml` declares command and env vars |
+| **Frontend** | Streamlit (multi-page) | Local: port 8502; Phase C target: GCP Cloud Run |
+| **Database** | Google Cloud Firestore | GCP project `banded-totality-485901`; flat top-level collections; credentials via service account key |
+| **AI** | Google Gemini API (`gemini-2.0-flash`) | `google-genai` SDK; `GEMINI_API_KEY` env var; `call_llm()` signature unchanged |
+| **State** | Firestore collections (flat, top-level) | `user_profiles`, `diagnostic_sessions`, `gap_maps`, `training_progress`, `coach_sessions`, `ai_call_log` |
+| **Auth** | `GCP_USER_EMAIL` / `DEV_USER_EMAIL` env var | Phase C: GCP Identity-Aware Proxy header injection |
+| **Hosting** | Local Streamlit / Phase C: GCP Cloud Run | `Dockerfile` + `cloudbuild.yaml` pending (Phase C) |
 
 ### 2.2 Component Diagram
 
@@ -42,29 +42,31 @@ UAT v2.0 (2026-03-06): 16 scenarios across 4 independent groups (A–D). Groups 
         │              │                   │
  ┌──────▼──────┐ ┌──────▼──────────┐ ┌────▼──────────────┐
  │ utils/db.py  │ │  utils/ai.py    │ │ utils/content.py  │
- │ SQL via SDK  │ │ serving_endpts  │ │ JSON file loader  │
+ │ Firestore    │ │ Gemini API      │ │ JSON file loader  │
+ │ domain fns   │ │ google-genai    │ │                   │
  └──────┬──────┘ └──────┬──────────┘ └────┬──────────────┘
         │               │                  │
- ┌──────▼───────────────▼──┐    ┌──────────▼────────────┐
- │  Unity Catalog           │    │  content/*.json       │
- │  mdlg_ai_shared          │    │  (bundled with app)   │
- │  ├─ learner.* (rw)       │    │  roles, domains,      │
- │  └─ system.*  (wo)       │    │  courses, diagnostic  │
- └──────────────────────────┘    │  items, reading,      │
-                                 │  scenarios, eval items│
-                                 └───────────────────────┘
+ ┌──────▼──────┐  ┌──────▼──────┐  ┌──────▼────────────┐
+ │  Firestore  │  │ Gemini API  │  │  content/*.json   │
+ │  GCP project│  │ gemini-2.0  │  │  (bundled with    │
+ │  user_prof  │  │ -flash      │  │  app) roles,      │
+ │  diag_sess  │  │             │  │  domains, courses │
+ │  gap_maps   │  └─────────────┘  │  diagnostic items │
+ │  train_prog │                   │  reading,         │
+ │  coach_sess │                   │  scenarios,       │
+ │  ai_call_log│                   │  eval items       │
+ └─────────────┘                   └───────────────────┘
 ```
 
-### 2.3 Foundation Model Endpoints
+### 2.3 AI Model
 
-All endpoints support the OpenAI-compatible `llm/v1/chat` interface. The active endpoint is injected via the `SERVING_ENDPOINT_NAME` environment variable.
+All LLM calls go through `utils/ai.py`:`call_llm()`. The active model is Google Gemini via the `google-genai` SDK. The API key is injected via the `GEMINI_API_KEY` environment variable.
 
-| Endpoint | Use case |
-|----------|----------|
-| `databricks-claude-sonnet-4-6` | **Default** — scoring, gap maps, coach responses |
-| `databricks-claude-haiku-4-5` | Low-latency coach turns (optional optimisation) |
-| `databricks-claude-opus-4-6` | Complex capstone evaluation scoring |
-| `databricks-gemini-3-1-pro` | Alternative; same interface |
+| Model | Use case |
+|-------|----------|
+| `gemini-2.0-flash` | **Default** — scoring, gap maps, coach responses, evaluation |
+
+The `call_llm(messages, temperature, user_email, call_type) → str` signature is frozen — all callers (`score_diagnostic`, `coach_response`, `generate_gap_map`, `score_evaluation`, `generate_module_coach_note`) depend on it unchanged.
 
 ---
 
@@ -72,9 +74,9 @@ All endpoints support the OpenAI-compatible `llm/v1/chat` interface. The active 
 
 ### 3.1 Design Principles
 
-- **JSON strings over complex types**: Delta `MAP<>` and `ARRAY<STRUCT<>>` columns are avoided for MVP. Structured data (options, rubrics, responses, scores) is stored as plain JSON strings and parsed in Python. This keeps SQL simple and avoids SDK serialisation friction.
-- **`user_email` as identity key**: `user_email` from Databricks SSO is used directly as the primary key in `learner.user_profiles` and as a filter in all learner queries. No UUID layer needed for MVP.
-- **Idempotent seeding**: Content tables are populated via `DELETE + INSERT` from Databricks notebooks (not the app). The app has read-only access to `content.*`.
+- **JSON strings over complex types**: Structured data (options, rubrics, responses, scores) is stored as plain JSON strings and parsed in Python. This keeps Firestore documents simple and avoids serialisation friction.
+- **`user_email` as identity key**: `user_email` is used directly as the Firestore document ID in `user_profiles` and as the primary filter in all learner queries. No UUID layer needed for MVP.
+- **Flat top-level collections**: All Firestore collections are top-level (not nested). `training_progress` docs use a composite key `{user_email}_{course_id}`. All compound queries use a single `where("user_email", "==", ...)` filter; additional filtering and sorting done in Python to avoid composite index requirements.
 
 ### 3.2 Content Schema
 
@@ -379,7 +381,6 @@ assert len(EVAL_ITEMS["rm_c1_responsible_ai"]) == 4  # 4 items per course
 
 ```
 app.py                        # entry point; handles routing based on user state
-app.yml                       # Databricks App command + env vars
 pages/
   00_Welcome.py               # new user onboarding + role selection
   01_Diagnostic.py            # 12-question diagnostic assessment (multi-role)
@@ -387,9 +388,9 @@ pages/
   03_Home.py                  # course progress dashboard
   04_Course_Module.py         # reading / practice / evaluation sub-views
 utils/
-  db.py                       # SQL execution helper; wraps WorkspaceClient
-  ai.py                       # serving endpoint calls; writes to ai_call_log
-  auth.py                     # extracts user_email from Databricks App context
+  db.py                       # Firestore data layer; domain-specific functions (get_profile, save_diagnostic, etc.)
+  ai.py                       # Gemini API calls via google-genai; writes to ai_call_log Firestore collection
+  auth.py                     # extracts user_email from GCP_USER_EMAIL / DEV_USER_EMAIL env var
   content.py                  # JSON file loader; typed getters for all content
   scoring.py                  # MCQ scoring; rubric parsing; domain score calculation
   sequencing.py               # module sequence algorithm
@@ -405,24 +406,23 @@ content/
 scripts/
   generate_course_content.py  # multi-agent LLM pipeline for new role content
   reset_uat_user.py           # reset UAT user; --profile {course-built|m1-done|all-done} for mid-journey states
-notebooks/
-  00_create_schemas.py        # creates learner.* + system.* Delta schemas
-requirements.txt              # streamlit, databricks-sdk, plotly, tenacity, ...
+requirements.txt              # streamlit, google-genai, google-cloud-firestore, plotly, tenacity, ...
 ```
 
 ### 5.2 Auth: Extracting `user_email`
 
-In Databricks Apps, the authenticated user's email is available via the `DATABRICKS_USER_EMAIL` environment variable injected by the App runtime:
+The user email is resolved from environment variables in priority order:
 
 ```python
 # utils/auth.py
 import os
 
 def get_user_email() -> str:
-    email = os.environ.get("DATABRICKS_USER_EMAIL")
-    if not email:
-        # Fallback for local development
-        email = os.environ.get("DEV_USER_EMAIL", "dev@example.com")
+    email = (
+        os.environ.get("GCP_USER_EMAIL")           # Phase C: injected by Cloud Run / IAP
+        or os.environ.get("DATABRICKS_USER_EMAIL") # legacy path (unused post-migration)
+        or os.environ.get("DEV_USER_EMAIL", "dev@example.com")  # local development
+    )
     return email
 ```
 
@@ -430,33 +430,29 @@ Never use hardcoded emails or require the user to type their email.
 
 ### 5.3 Router Logic (`app.py`)
 
-On every page load, the app reads user state from Delta and routes:
+On every page load, the app reads user state from Firestore and routes:
 
 ```python
 import streamlit as st
 from utils.auth import get_user_email
-from utils.db import query_one
+from utils.db import get_profile, get_latest_diagnostic, get_any_progress
 
 def get_user_state(user_email: str) -> str:
-    profile = query_one(
-        "SELECT role_id FROM mdlg_ai_shared.learner.user_profiles WHERE user_email = ?",
-        [user_email]
-    )
+    profile = get_profile(user_email)
     if not profile:
         return "new_user"
 
-    session = query_one(
-        "SELECT session_id FROM mdlg_ai_shared.learner.diagnostic_sessions "
-        "WHERE user_email = ? AND completed_at IS NOT NULL "
-        "ORDER BY completed_at DESC LIMIT 1",
-        [user_email]
-    )
+    session = get_latest_diagnostic(user_email)
     if not session:
         return "needs_diagnostic"
 
-    progress = query_one(
-        "SELECT progress_id FROM mdlg_ai_shared.learner.training_progress "
-        "WHERE user_email = ? LIMIT 1",
+    progress = get_any_progress(user_email)
+    if not progress:
+        return "needs_course"
+    return "in_training"
+```
+
+> **Note**: `get_latest_diagnostic()` returns only completed sessions (where `completed_at IS NOT NULL`). `get_any_progress()` is an existence check — returns the first `training_progress` doc for the user.
         [user_email]
     )
     if not progress:
@@ -506,96 +502,93 @@ st.session_state["task_extra_{task_idx}"]   # int: number of 3-turn extensions g
 
 ### 5.5 Database Helper (`utils/db.py`)
 
-All SQL runs through this helper. Parameterised queries use `?` placeholders via `disposition` and `parameters` args:
+All learner reads/writes go through domain-specific Firestore functions. There is no generic `execute()` / `query_one()` — each operation is a named function:
 
 ```python
-from databricks.sdk import WorkspaceClient
-import os, json
+# User profiles
+get_profile(user_email) -> dict | None
+create_profile(user_email, display_name, role_id) -> None
 
-_client = None
+# Diagnostic sessions
+get_latest_diagnostic(user_email) -> dict | None   # completed only, newest first
+get_all_diagnostics(user_email) -> list[dict]
+save_diagnostic(session_id, user_email, started_at, responses_json,
+                item_scores_json, domain_scores_json, overall_score) -> None
 
-def _get_client():
-    global _client
-    if _client is None:
-        _client = WorkspaceClient()
-    return _client
+# Gap maps
+get_latest_gap_map(user_email) -> dict | None
+save_gap_map(gap_map_id, user_email, source_type, source_id, bullets_json) -> None
 
-def execute(statement: str, parameters: list = None) -> dict:
-    """Returns {"columns": [...], "rows": [...]}"""
-    w = _get_client()
-    kwargs = dict(
-        warehouse_id=os.environ["DATABRICKS_WAREHOUSE_ID"],
-        statement=statement,
-        wait_timeout="30s",
-    )
-    if parameters:
-        kwargs["parameters"] = [
-            {"name": str(i+1), "value": str(p)} for i, p in enumerate(parameters)
-        ]
-        statement = statement  # placeholders must be ?1, ?2, ... or use named params
-    result = w.statement_execution.execute_statement(**kwargs)
-    if result.status.error:
-        raise RuntimeError(result.status.error.message)
-    cols = [c.name for c in (result.manifest.schema.columns or [])]
-    rows = [dict(zip(cols, r.values)) for r in (result.result.data_array or [])]
-    return rows
+# Training progress
+get_all_progress(user_email) -> list[dict]          # sorted by module_sequence_order
+get_progress(user_email, course_id) -> dict | None
+get_progress_by_seq(user_email, seq) -> dict | None
+get_any_progress(user_email) -> dict | None         # existence check
+create_progress(user_email, course_id, seq, is_locked) -> None
+update_progress(user_email, course_id, **fields) -> None
+unlock_progress(user_email, seq) -> None
 
-def query_one(statement: str, parameters: list = None):
-    rows = execute(statement, parameters)
-    return rows[0] if rows else None
+# Coach sessions
+save_coach_session(session_id, user_email, course_id,
+                   started_at, turn_count, conv_json) -> None
 ```
 
-> **Note on parameters**: The Databricks Statement Execution API supports named parameters (`?` with `StatementParameterListItem`). For MVP simplicity, string interpolation with an `escape()` function is acceptable for read-only content queries. Use parameterised queries for all learner writes.
+The module self-loads `.env` via `load_dotenv()` at import time and resolves `GOOGLE_APPLICATION_CREDENTIALS` from relative to absolute path on first call to `_get_db()`.
 
 ---
 
 ## 6. AI Call Workflows
 
-### 6.1 Serving Endpoint Helper (`utils/ai.py`)
+### 6.1 LLM Helper (`utils/ai.py`)
 
 ```python
-import os, time, json, uuid
-from databricks.sdk import WorkspaceClient
-from databricks.sdk.service.serving import ChatMessage, ChatMessageRole
+import os, time, uuid
+from google import genai
+from google.genai import types
+
+_MODEL = "gemini-2.0-flash"
 
 def call_llm(messages: list[dict], temperature: float = 0.1, user_email: str = None,
              call_type: str = "unknown") -> str:
     """
     messages: [{"role": "system"|"user"|"assistant", "content": "..."}]
     Returns the assistant reply as a string.
-    Writes one row to system.ai_call_log.
+    Writes one row to the Firestore ai_call_log collection.
     """
-    w = WorkspaceClient()
-    endpoint = os.environ["SERVING_ENDPOINT_NAME"]
-    sdk_messages = [
-        ChatMessage(
-            role=ChatMessageRole[m["role"].upper()],
-            content=m["content"]
-        )
-        for m in messages
-    ]
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+    # Convert messages to google-genai Contents format
+    # system message extracted separately; user/assistant messages form the history
     t0 = time.time()
     try:
-        resp = w.serving_endpoints.query(name=endpoint, messages=sdk_messages,
-                                         temperature=temperature)
-        content = resp.choices[0].message.content
+        response = client.models.generate_content(
+            model=_MODEL,
+            contents=_to_contents(messages),
+            config=types.GenerateContentConfig(temperature=temperature),
+        )
+        content = response.text
         latency = int((time.time() - t0) * 1000)
-        _log_call(user_email, call_type, endpoint, latency, success=True)
+        _log_call(user_email, call_type, _MODEL, latency, success=True)
         return content
     except Exception as e:
         latency = int((time.time() - t0) * 1000)
-        _log_call(user_email, call_type, endpoint, latency, success=False, error=str(e))
+        _log_call(user_email, call_type, _MODEL, latency, success=False, error=str(e))
         raise
 
-def _log_call(user_email, call_type, endpoint, latency_ms, success, error=None):
-    from utils.db import execute
-    log_id = str(uuid.uuid4())
-    execute(f"""
-        INSERT INTO mdlg_ai_shared.system.ai_call_log
-          (log_id, user_email, call_type, model_endpoint, latency_ms, success, error_message)
-        VALUES ('{log_id}', '{user_email or ""}', '{call_type}', '{endpoint}',
-                {latency_ms}, {str(success).upper()}, {'NULL' if not error else f"'{error[:500]}'"})
-    """)
+def _log_call(user_email, call_type, model, latency_ms, success, error=None):
+    try:
+        from utils.db import _get_db
+        from google.cloud.firestore import SERVER_TIMESTAMP
+        _get_db().collection("ai_call_log").document(str(uuid.uuid4())).set({
+            "user_email": user_email or "",
+            "call_type": call_type,
+            "model_endpoint": model,
+            "latency_ms": latency_ms,
+            "success": success,
+            "error_message": str(error)[:500] if error else None,
+            "called_at": SERVER_TIMESTAMP,
+        })
+    except Exception:
+        pass  # never break the main flow on logging failures
 ```
 
 ### 6.2 Diagnostic Scoring
@@ -832,51 +825,47 @@ except RuntimeError as e:
 
 ## 10. Deployment & CI/CD
 
-### 10.1 Local development
+### 10.1 Local development (current)
 
 ```bash
 .venv/Scripts/pip install -r requirements.txt
-DEV_USER_EMAIL=you@example.com .venv/Scripts/streamlit run app.py
+# .env must contain GEMINI_API_KEY, GCP_PROJECT_ID, GOOGLE_APPLICATION_CREDENTIALS, DEV_USER_EMAIL
+.venv/Scripts/streamlit run app.py --server.port 8502
 ```
 
-Auth is handled by the Databricks VS Code extension metadata service. No token setup needed when running inside VS Code.
-
-### 10.2 `app.yml`
-
-```yaml
-command: [".venv/bin/streamlit", "run", "app.py", "--server.port", "8080"]
-env:
-  - name: DATABRICKS_WAREHOUSE_ID
-    value: "eaa098820703bf5f"
-  - name: SERVING_ENDPOINT_NAME
-    value: "databricks-claude-sonnet-4-6"
-  - name: UC_CATALOG
-    value: "mdlg_ai_shared"
-```
-
-### 10.3 Deploy
+Or via the UAT helper:
 
 ```bash
-# Sync files to workspace (live iteration)
-databricks sync --watch . /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp
-
-# Deploy the app
-databricks apps deploy my-ai-hero-academy-mvp \
-  --source-code-path /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp
+bash run_uat.sh   # sources .env, starts on port 8502 with LOCAL_UAT=true
 ```
 
-### 10.4 CI/CD (GitHub Actions)
+### 10.2 Environment variables (`.env`)
 
-```yaml
-- uses: databricks/setup-cli@main
-- name: Deploy app
-  run: |
-    databricks apps deploy my-ai-hero-academy-mvp \
-      --source-code-path /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp
-  env:
-    DATABRICKS_HOST: https://adb-2717931942638877.17.azuredatabricks.net
-    DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+```bash
+GEMINI_API_KEY=<your-key>
+GCP_PROJECT_ID=banded-totality-485901
+GOOGLE_APPLICATION_CREDENTIALS=.gcp/banded-totality-485901-eb494951ebf7.json
+LOCAL_UAT=true
+DEV_USER_EMAIL=you@example.com
 ```
+
+### 10.3 Cloud Run packaging (Phase C — pending)
+
+Files to create:
+- `Dockerfile` — Python 3.11-slim, install requirements, run Streamlit on port 8080
+- `.dockerignore` — exclude `.venv/`, `__pycache__/`, `.env`, `*.pyc`
+- `cloudbuild.yaml` — for automated GCP deployment
+
+Files to remove: `app.yml`, `databricks.yml` (Databricks-specific — no longer needed).
+
+Cloud Run environment variables:
+- `GEMINI_API_KEY`
+- `GCP_PROJECT_ID`
+- `GCP_USER_EMAIL` (or rely on IAP header injection)
+
+### 10.4 CI/CD (Phase D — pending)
+
+Will use `gcloud run deploy` via GitHub Actions with `GEMINI_API_KEY` and GCP service account key stored as GitHub secrets.
 
 ---
 
@@ -884,13 +873,13 @@ databricks apps deploy my-ai-hero-academy-mvp \
 
 | Concern | Approach |
 |---------|---------|
-| Authentication | Databricks workspace SSO; `user_email` from App runtime env var |
-| Learner data isolation | Every `learner.*` query includes `WHERE user_email = '<current_user>'` |
-| Content write protection | App service principal has `SELECT` on `content.*` only |
-| AI logs | `system.ai_call_log` is write-only for the app; read by workspace admins |
-| No secrets in code | Warehouse ID, endpoint name, catalog injected via `app.yml` env vars |
+| Authentication | `GCP_USER_EMAIL` env var (Phase C: IAP header); `DEV_USER_EMAIL` for local dev |
+| Learner data isolation | Every Firestore query includes `where("user_email", "==", user_email)` |
 | Content safety | All seeded content uses fictional companies and data only (per PRD §13.2) |
-| App service principal UC grants | The deployed App runs as its own SP — **distinct from the deploying user's identity**. Group membership (e.g. `ai-mlengineer-mdlg`) does not propagate to the App SP. Required grants on `mdlg_ai_shared`: `USE CATALOG`; `USE SCHEMA` on `content`, `learner`, `system`; `SELECT` on all 7 `content.*` tables; `SELECT + MODIFY` on all 5 `learner.*` tables and `system.ai_call_log`. Grant syntax: `` GRANT USE CATALOG ON CATALOG mdlg_ai_shared TO `<app-sp-client-uuid>` `` (SP referenced by its application UUID in backticks, not by display name) |
+| AI logs | `ai_call_log` Firestore collection; write-only path in `_log_call()`; always wrapped in try/except |
+| No secrets in code | `GEMINI_API_KEY`, `GCP_PROJECT_ID`, `GOOGLE_APPLICATION_CREDENTIALS` injected via `.env` or Cloud Run env vars; `.env` in `.gitignore` |
+| GCP credentials (local) | Service account key at `.gcp/` (gitignored); resolved to absolute path at runtime |
+| GCP credentials (Phase C) | Workload Identity or service account key injected as Cloud Run secret |
 
 ---
 
@@ -901,8 +890,8 @@ databricks apps deploy my-ai-hero-academy-mvp \
 | Diagnostic scoring + gap map | < 45s end-to-end | `ai_call_log.latency_ms` |
 | Coach response per turn | < 10s | `ai_call_log.latency_ms` |
 | Evaluation scoring + gap map | < 30s | `ai_call_log.latency_ms` |
-| Page load (Delta reads) | < 3s | Warehouse query history |
-| SQL queries per page load | ≤ 3 | Code review |
+| Page load (Firestore reads) | < 3s | `ai_call_log.latency_ms` / browser timing |
+| Firestore reads per page load | ≤ 3 | Code review |
 
 ---
 

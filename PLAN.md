@@ -1847,4 +1847,9 @@ Phase 0  ✅  Phase 1  ✅  Phase 2  ✅  Phase 3  ✅  Phase 4  ✅  Phase 5  �
 Phase 6  ✅  Phase 7  ✅  Phase 8  ✅  Phase 9  ✅  Phase 10 ✅  Phase 11 ✅
 Phase 12 ✅  Hexagon Domain Refactor — 6-domain/7-course platform architecture
              All tasks complete. UAT PASS 2026-03-04.
+
+Migration Phase A ✅  LLM Layer — Gemini replaces Databricks Foundation Models
+Migration Phase B ✅  Data Layer — Firestore replaces Unity Catalog Delta tables (2026-03-18, commit 4a00b68)
+Migration Phase C 🔲  Cloud Run Packaging — Dockerfile, Cloud Build
+Migration Phase D 🔲  GitHub Remote + Cleanup — remove Databricks artifacts
 ```

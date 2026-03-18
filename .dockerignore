@@ -43,7 +43,4 @@ scripts/
 typings/
 assets/
 
-# Windows artifacts
-=1.0.0
-=2.16.0
-nul
+

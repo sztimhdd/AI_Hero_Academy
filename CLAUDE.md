@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Environment
 
-**Python**: 3.11 via `.venv/` (created by the Databricks VS Code extension)
+**Python**: 3.11 via `.venv/`
 
 ### Install dependencies
 
@@ -18,7 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 bash run_uat.sh
 ```
 
-Sources `.env` (copy from `.env.example`, add `DATABRICKS_TOKEN`), starts Streamlit on port 8501 with `LOCAL_UAT=true`. The Playwright Chromium browser only connects to `localhost:8501` — it has no direct Databricks dependency; all auth is handled by the Python process.
+Sources `.env` (copy from `.env.example`, fill in `GEMINI_API_KEY`, `GCP_PROJECT_ID`, `GOOGLE_APPLICATION_CREDENTIALS`), starts Streamlit on port 8501 with `LOCAL_UAT=true`. The Playwright Chromium browser connects to `localhost:8501`.
 
 To reset the test user's data between runs:
 
@@ -31,119 +31,70 @@ python scripts/reset_uat_user.py --profile m1-done        # RM + module 1 comple
 python scripts/reset_uat_user.py --profile all-done       # RM + all 7 modules done → Home (UAT-15)
 ```
 
-### Sync + deploy to remote (one command)
+### Deploy to Cloud Run
 
-```bash
-bash scripts/sync_deploy.sh
-```
+Deployment is automated via GitHub Actions (`.github/workflows/deploy.yml`). Push to `main` → builds Docker image → pushes to Artifact Registry → deploys to Cloud Run service `ai-hero-academy`.
 
-Syncs local files to the Databricks workspace and redeploys the app using the `dev` CLI profile. This is the standard post-commit deploy step. The `/commit` skill runs this automatically.
-
-**Manual equivalents** (if running CLI directly from Git Bash, prefix with `MSYS_NO_PATHCONV=1`):
-
-```bash
-MSYS_NO_PATHCONV=1 databricks sync . /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp --profile dev
-MSYS_NO_PATHCONV=1 databricks apps deploy my-ai-hero-academy-mvp --source-code-path /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp --profile dev
-```
-
-### Databricks CLI profile
-
-The `dev` profile (`~/.databrickscfg`) uses OAuth via `auth_type = databricks-cli`. It is pre-configured for `https://adb-2717931942638877.17.azuredatabricks.net`. If the token expires, refresh with:
-
-```bash
-databricks auth login --profile dev
-```
+Required GitHub secrets: `GCP_SA_KEY` (service account JSON), `GEMINI_API_KEY`, `GCP_PROJECT_ID`.
 
 ---
 
 ## Project Overview
 
-**AI Hero Academy** is an internal Databricks App that evaluates, trains, and benchmarks employees on AI skills through real-life, job-specific scenarios and AI coaching powered by Mosaic AI Foundation Models.
+**AI Hero Academy** is an internal Streamlit app (GCP Cloud Run) that evaluates, trains, and benchmarks employees on AI skills through real-life, job-specific scenarios and AI coaching powered by Google Gemini API.
 
 The app implements a four-stage learning loop: Diagnose → Map Gaps → Train → Score & Track. Three roles are fully generated and live: **Relationship Manager (RM)**, **Underwriter (UW)**, and **Analyst (AN)**. All three use the **6-domain hexagon model** (`responsible_ai`, `strategic_prompting`, `critical_eval`, `relationship_intel`, `data_decision`, `augmented_comm`) with 7 courses and 18 diagnostic items per role (3 per domain).
 
 ## Technology Stack
 
-- **Frontend/App**: Streamlit (hosted as a Databricks App)
-- **AI models**: Databricks Foundation Model APIs via serving endpoints (OpenAI-compatible, accessed through `databricks-sdk`)
-- **Persistence**: Delta tables in Unity Catalog (`mdlg_ai` catalog)
-- **Authentication**: Databricks workspace SSO (no custom auth layer)
+- **Frontend/App**: Streamlit (deployed on GCP Cloud Run)
+- **AI models**: Google Gemini API (`gemini-2.0-flash`) via `google-genai` SDK
+- **Persistence**: Google Cloud Firestore (GCP project `banded-totality-485901`)
+- **Authentication**: `GCP_USER_EMAIL` env var (Cloud Run) or `DEV_USER_EMAIL` (local dev)
 - **Language**: Python 3.11
 
 ## Remote Environment
 
 | Resource | Value |
 | --- | --- |
-| Workspace | `https://adb-2717931942638877.17.azuredatabricks.net` |
-| Unity Catalog | `mdlg_ai_shared` |
-| SQL Warehouse | `eaa098820703bf5f` (Serverless Starter Warehouse) |
-| App serving endpoint | `databricks-claude-sonnet-4-5` |
-| App name | `my-ai-hero-academy-mvp` |
-| Workspace source path | `/Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp` |
+| GCP Project | `banded-totality-485901` |
+| Cloud Run service | `ai-hero-academy` (region: `northamerica-northeast1`) |
+| Firestore database | default (same GCP project) |
+| Gemini model | `gemini-2.0-flash` |
+| GitHub repo | `https://github.com/sztimhdd/AI_Hero_Academy` |
 
-Other available Foundation Model endpoints (all support `llm/v1/chat`): `databricks-claude-sonnet-4-5`, `databricks-claude-opus-4-5`, `databricks-claude-haiku-4-5`.
+### Local GCP credentials
 
-## Unity Catalog Schema Layout
-
-All tables live under `mdlg_ai_shared`. The three schemas for this app are:
-
-- `mdlg_ai_shared.content` — read-only; pre-seeded static content (now served from `content/*.json` in the app bundle — no SQL queries needed)
-- `mdlg_ai_shared.learner` — read-write; per-user data, always filtered by `user_email`
-- `mdlg_ai_shared.system` — write by app, read by admins; AI call logs
-
-### Accessing Delta tables from app code
-
-```python
-from databricks.sdk import WorkspaceClient
-import os
-
-w = WorkspaceClient()  # auto-authenticates in both local VS Code and deployed App contexts
-result = w.statement_execution.execute_statement(
-    warehouse_id=os.environ["DATABRICKS_WAREHOUSE_ID"],
-    statement="SELECT * FROM mdlg_ai_shared.learner.user_profiles WHERE user_email = :p1",
-    wait_timeout="30s",
-)
+```bash
+# One-time setup for local dev
+gcloud auth application-default login
 ```
 
-### Calling AI serving endpoints
-
-```python
-from databricks.sdk.service.serving import ChatMessage, ChatMessageRole
-
-response = w.serving_endpoints.query(
-    name=os.environ["SERVING_ENDPOINT_NAME"],
-    messages=[ChatMessage(role=ChatMessageRole.USER, content="Hello")],
-)
-```
+Or place service account key at `.gcp/banded-totality-485901-eb494951ebf7.json` and set `GOOGLE_APPLICATION_CREDENTIALS` in `.env`.
 
 ## Data Architecture
 
-Two Unity Catalog schemas:
+**Static content** — all served from `content/*.json` files bundled with the app (no database queries at runtime):
 
-**`content` schema** (retired — all static content now served from `content/*.json` files bundled with the app; no SQL queries at runtime):
-
-- `content/roles.json` — role definitions (rm, uw)
+- `content/roles.json` — role definitions (rm, uw, an, mk)
 - `content/domains.json` — skill domains with level descriptors; top-level keys are role-scoped (e.g. `rm_prompting`, `uw_prompting`)
-- `content/diagnostic_items.json` — 54 items (18 RM + 18 UW + 18 AN); 3 per domain per role (1 MCQ + 1 prompt_sandbox + 1 micro_task)
-- `content/courses.json` — 21 courses (7 RM + 7 UW + 7 AN); mapped to domains via `primary_domain`
+- `content/diagnostic_items.json` — 72 items (18 per role × 4 roles); 3 per domain per role
+- `content/courses.json` — 28 courses (7 per role × 4 roles); mapped to domains via `primary_domain`
 - `content/reading_content.json` — reading material per course
-- `content/reading_content_structured.json` — AI-extracted structured sub-fields for reading templates (generated by `scripts/enrich_reading_content.py`; optional — app falls back to flat text if absent)
+- `content/reading_content_structured.json` — AI-extracted structured sub-fields (optional fallback)
 - `content/practice_scenarios.json` — scenario text, 4 tasks, and coach system prompt per course
 - `content/evaluation_items.json` — 4 questions per course (3 MCQ + 1 performance task) with scoring rubrics
 
-Access content via `utils/content.py` typed getters (e.g. `get_diagnostic_items(role_id)`, `get_domain_descriptions(role_id)`). Never query `mdlg_ai_shared.content.*` from app code.
+Access content via `utils/content.py` typed getters. Never query Firestore for static content.
 
-**`learner` schema** (read-write, all queries filtered by `user_email`):
+**Firestore collections** (top-level, all filtered by `user_email`):
 
-- `user_profiles` — one row per user; stores role, display_name, created_at
-- `diagnostic_sessions` — each diagnostic attempt; stores all 12 responses and item scores
-- `gap_maps` — AI-generated narrative bullets per session; references diagnostic or evaluation
-- `training_progress` — one row per user per course; tracks reading/practice/evaluation completion, scores, module sequence order, lock status
-- `coach_sessions` — full conversation transcript per practice session; stores turn count
-
-**`system` schema** (app writes, admins read):
-
-- `ai_call_log` — every AI API call with prompt, response, latency, and error status
+- `user_profiles/{user_email}` — role, display_name, created_at
+- `diagnostic_sessions/{session_id}` — responses, item_scores, domain_scores, overall_score
+- `gap_maps/{gap_map_id}` — bullets, source_type, generated_at
+- `training_progress/{user_email}_{course_id}` — reading/practice/evaluation completion, scores, lock status
+- `coach_sessions/{session_id}` — full conversation transcript, turn count
+- `ai_call_log/{log_id}` — every AI API call with latency, token counts, error status
 
 ## Application Architecture
 
@@ -151,13 +102,13 @@ The app is a multi-page Streamlit application. Pages map directly to user journe
 
 | Page | Trigger condition |
 | ---- | ----------------- |
-| Welcome | No row in `learner.user_profiles` |
+| Welcome | No doc in Firestore `user_profiles/{email}` |
 | Diagnostic | Profile exists, no completed diagnostic |
 | Skills Profile | Diagnostic complete |
 | Home | Course created; default landing for returning users |
 | Course Module | User navigates into a module |
 
-On every page load, the app reads `user_email` from Databricks SSO context, queries `learner.user_profiles` and `learner.training_progress`, then routes to the appropriate page.
+On every page load, the app reads `user_email` from `GCP_USER_EMAIL` (Cloud Run) or `DEV_USER_EMAIL` (local), queries Firestore `user_profiles` and `training_progress`, then routes to the appropriate page.
 
 **Module sub-views** (within the Course Module page):
 
@@ -176,7 +127,7 @@ There are four distinct AI call types:
 3. **AI Coach responses** — called per user turn during practice; constrained by a per-course system prompt; temperature 0.4; must flag if user appears to input real client data
 4. **Evaluation scoring** — same pattern as diagnostic scoring; temperature 0.1
 
-All AI calls must write to `system.ai_call_log` and display a graceful error message on failure without losing user progress.
+All AI calls write to Firestore `ai_call_log` collection and display a graceful error message on failure without losing user progress.
 
 ## Module Sequencing Algorithm
 
@@ -203,13 +154,11 @@ Courses are mapped to domains via `primary_domain`; Module 1 unlocks immediately
 - **Practice conversation is in-memory only** — refresh loses the coach conversation; user restarts from Task 1
 - **All queries filtered by `user_email`** — no user can access another user's data
 - **Content uses only fictional data** — no real client names, financials, or non-public information anywhere in seeded content (use entities like "Northern Fabrication Ltd.", "Maple Industries Ltd.")
-- **No admin UI in MVP** — content is seeded and updated via notebooks
+- **No admin UI in MVP** — content is updated by editing `content/*.json` and redeploying
 
 ## Content Architecture
 
-Static app content lives in `content/*.json` (committed to the repo, loaded at startup by `utils/content.py`). The `mdlg_ai_shared.content.*` Delta tables are retired and no longer used by the app.
-
-`learner` and `system` schema tables are still created via `notebooks/00_create_schemas.py` (run once via `databricks bundle run`). Any content changes require editing the JSON files directly and redeploying the app.
+Static app content lives in `content/*.json` (committed to the repo, loaded at startup by `utils/content.py`). Any content changes require editing the JSON files directly and redeploying the app.
 
 ## Out of Scope
 
@@ -232,8 +181,8 @@ Example: hiding auto-generated sidebar navigation is done via `.streamlit/config
 > General engineering standards (plan before acting, subagents, elegance, autonomy) are in `~/.claude/CLAUDE.md`. Below are the **project-specific** verification steps for "Verify before marking done":
 
 - Run the app locally (`bash run_uat.sh`) and exercise the changed flow
-- For data changes: query the affected Delta table to confirm the write
-- For AI call changes: check `system.ai_call_log` for correct prompt/response
+- For data changes: check Firestore console (GCP project `banded-totality-485901`) to confirm writes
+- For AI call changes: check Firestore `ai_call_log` collection for correct entries
 - For scoring changes: run `pytest` and confirm expected scores
 - Ask: would a senior engineer approve this diff?
 
@@ -243,7 +192,7 @@ Example: hiding auto-generated sidebar navigation is done via `.streamlit/config
 
 > Append new entries here after any correction or unexpected failure. Format: `date — what went wrong — rule to prevent recurrence.`
 
-- **2026-02** — Attempted to query `mdlg_ai_shared.content.*` tables after they were retired; app errored at runtime. **Rule**: always use `utils/content.py` getters for static content; never write raw SQL against `content.*`.
+- **2026-02** — Attempted to query `mdlg_ai_shared.content.*` tables after they were retired; app errored at runtime. **Rule**: always use `utils/content.py` getters for static content; never query any database for static content.
 - **2026-02** — UI/UX fixes fought internal `data-testid` CSS selectors that broke across Streamlit versions. **Rule**: always look up the current Streamlit API via Context7 before any UI change.
 - **2026-03** — UW design doc (85KB) caused Stage 1 JSON parse failure in `generate_course_content.py` due to 19KB of embedded Copilot/SharePoint URLs that produced malformed LLM-generated JSON. **Rule**: always strip URLs from design docs before running the pipeline. Use `re.sub(r'\]\(https?://[^)]+\)', ']', text)` — strips the URL while keeping the display text. Target size is ~60–65KB.
 - **2026-03** — Adding `max-width` to `.block-container` without `align-self` caused a large centering gap on wide displays. Root cause: `[data-testid="stMain"]` is a column-flex with `align-items: center`; a max-width cap creates a narrower child that the parent centers, producing a 430px+ gap between the sidebar and content. **Rule**: whenever setting `max-width` on `.block-container`, always pair it with `width: 100% !important` and `align-self: flex-start !important` to prevent centering.
