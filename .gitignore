@@ -13,6 +13,9 @@ __pycache__/
 # Playwright browser cache
 .playwright-mcp/
 
+# AI call logs (local fallback for Phase A)
+logs/
+
 # Debug / test artifacts
 _setup_result.json
 *.png

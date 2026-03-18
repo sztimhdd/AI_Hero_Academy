@@ -4,8 +4,8 @@ import time
 import uuid
 import json
 
-from databricks.sdk import WorkspaceClient
-from databricks.sdk.service.serving import ChatMessage, ChatMessageRole
+from google import genai
+from google.genai import types
 
 
 def call_llm(
@@ -15,71 +15,73 @@ def call_llm(
     call_type: str = "unknown",
 ) -> str:
     """
-    Call the configured Foundation Model serving endpoint.
+    Call the Gemini API (gemini-2.0-flash).
 
     messages: list of {"role": "system"|"user"|"assistant", "content": "..."}
     Returns the assistant reply string.
-    Always writes one row to system.ai_call_log.
+    Always writes one entry to logs/ai_call_log.jsonl.
     """
-    w = WorkspaceClient()
-    endpoint = os.environ.get("SERVING_ENDPOINT_NAME", "databricks-claude-sonnet-4-5")
+    api_key = os.environ.get("GEMINI_API_KEY")
+    client = genai.Client(api_key=api_key)
+    model = "gemini-2.0-flash"
 
-    sdk_messages = [
-        ChatMessage(
-            role=ChatMessageRole[m["role"].upper()],
-            content=m["content"],
-        )
-        for m in messages
-    ]
+    # Extract system instruction (first system message, if any)
+    system_instruction = None
+    conversation = []
+    for m in messages:
+        if m["role"] == "system" and system_instruction is None:
+            system_instruction = m["content"]
+        else:
+            # Map "assistant" → "model" for Gemini
+            role = "model" if m["role"] == "assistant" else m["role"]
+            conversation.append(types.Content(role=role, parts=[types.Part(text=m["content"])]))
+
+    config = types.GenerateContentConfig(
+        temperature=temperature,
+        system_instruction=system_instruction,
+    )
 
     t0 = time.time()
     try:
-        resp = w.serving_endpoints.query(
-            name=endpoint,
-            messages=sdk_messages,
-            temperature=temperature,
+        response = client.models.generate_content(
+            model=model,
+            contents=conversation,
+            config=config,
         )
-        content = resp.choices[0].message.content
+        content = response.text
         latency_ms = int((time.time() - t0) * 1000)
-        usage = getattr(resp, "usage", None)
-        prompt_tokens = getattr(usage, "prompt_tokens", None)
-        completion_tokens = getattr(usage, "completion_tokens", None)
-        _log_call(user_email, call_type, endpoint, latency_ms, success=True,
+        usage = getattr(response, "usage_metadata", None)
+        prompt_tokens = getattr(usage, "prompt_token_count", None)
+        completion_tokens = getattr(usage, "candidates_token_count", None)
+        _log_call(user_email, call_type, model, latency_ms, success=True,
                   prompt_tokens=prompt_tokens, completion_tokens=completion_tokens)
         return content
     except Exception as e:
         latency_ms = int((time.time() - t0) * 1000)
-        _log_call(user_email, call_type, endpoint, latency_ms, success=False, error=str(e))
+        _log_call(user_email, call_type, model, latency_ms, success=False, error=str(e))
         raise
 
 
 def _log_call(user_email, call_type, endpoint, latency_ms, success, error=None,
               prompt_tokens=None, completion_tokens=None):
-    """Write one row to system.ai_call_log. Silently ignore log failures."""
+    """Write one entry to logs/ai_call_log.jsonl. Silently ignore log failures."""
     try:
-        from utils.db import execute, escape
-
-        log_id = str(uuid.uuid4())
-        catalog = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
-        error_val = f"'{escape(str(error)[:500])}'" if error else "NULL"
-        pt_val = str(int(prompt_tokens)) if prompt_tokens is not None else "NULL"
-        ct_val = str(int(completion_tokens)) if completion_tokens is not None else "NULL"
-        execute(f"""
-            INSERT INTO {catalog}.system.ai_call_log
-              (log_id, user_email, call_type, model_endpoint,
-               prompt_tokens, completion_tokens, latency_ms, success, error_message)
-            VALUES (
-              '{log_id}',
-              '{escape(user_email or "")}',
-              '{escape(call_type)}',
-              '{escape(endpoint)}',
-              {pt_val},
-              {ct_val},
-              {latency_ms},
-              {str(success).upper()},
-              {error_val}
-            )
-        """)
+        log_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "logs")
+        os.makedirs(log_dir, exist_ok=True)
+        log_path = os.path.join(log_dir, "ai_call_log.jsonl")
+        entry = {
+            "log_id": str(uuid.uuid4()),
+            "user_email": user_email or "",
+            "call_type": call_type,
+            "model_endpoint": endpoint,
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": completion_tokens,
+            "latency_ms": latency_ms,
+            "success": success,
+            "error_message": str(error)[:500] if error else None,
+        }
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
     except Exception:
         pass  # Never let logging failures break the main flow
 
