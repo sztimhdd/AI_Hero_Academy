@@ -42,7 +42,13 @@ def _progress_key(user_email: str, course_id: str) -> str:
     return f"{user_email}_{course_id}"
 
 
+# Set to True by ensure_demo_seeded() so db writes bypass the demo guard during seeding.
+_DEMO_SEED_IN_PROGRESS: bool = False
+
+
 def _is_demo_mode() -> bool:
+    if _DEMO_SEED_IN_PROGRESS:
+        return False
     try:
         import streamlit as st
         return bool(st.session_state.get("demo_mode"))

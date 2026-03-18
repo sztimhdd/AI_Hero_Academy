@@ -180,6 +180,15 @@ def ensure_demo_seeded(profile_id: str) -> None:
     Seed fixture data for a demo profile into Firestore.
     Wipes existing data for this demo email first, then re-inserts.
     """
+    import utils.db as _db_module
+    _db_module._DEMO_SEED_IN_PROGRESS = True
+    try:
+        _ensure_demo_seeded_inner(profile_id)
+    finally:
+        _db_module._DEMO_SEED_IN_PROGRESS = False
+
+
+def _ensure_demo_seeded_inner(profile_id: str) -> None:
     profile = DEMO_PROFILES.get(profile_id)
     if not profile:
         return
