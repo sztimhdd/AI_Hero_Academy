@@ -1,4 +1,4 @@
-name: Deploy to Databricks
+name: Deploy to GCP Cloud Run
 
 on:
   push:
@@ -6,41 +6,62 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  GCP_PROJECT: banded-totality-485901
+  GCP_REGION: northamerica-northeast1
+  SERVICE_NAME: ai-hero-academy
+  AR_REPO: ai-hero-academy
+
 jobs:
   deploy:
-    name: Sync and Deploy App
+    name: Build and deploy
     runs-on: ubuntu-latest
     concurrency:
       group: deploy-production
       cancel-in-progress: true
 
-    env:
-      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Databricks CLI
-        uses: databricks/setup-cli@main
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Verify CLI authentication
-        run: databricks auth env
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT }}
 
-      - name: Sync source files to Databricks workspace
-        run: databricks sync . /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev --quiet
 
-      - name: Deploy Databricks App
+      - name: Build and push Docker image
         run: |
-          for attempt in 1 2 3 4; do
-            databricks apps deploy my-ai-hero-academy-mvp \
-              --source-code-path /Workspace/Users/hhu@edc.ca/my-ai-hero-academy-mvp && break
-            if [ $attempt -lt 4 ]; then
-              echo "Deploy blocked (attempt $attempt/4) — waiting 30s before retry..."
-              sleep 30
-            else
-              echo "Deploy failed after 4 attempts."
-              exit 1
-            fi
-          done
+          IMAGE="${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.AR_REPO }}/app:${{ github.sha }}"
+          docker build -t "$IMAGE" .
+          docker push "$IMAGE"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image "$IMAGE" \
+            --region ${{ env.GCP_REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 8080 \
+            --memory 1Gi \
+            --cpu 1 \
+            --min-instances 0 \
+            --max-instances 3 \
+            --set-env-vars "GCP_PROJECT_ID=${{ env.GCP_PROJECT }},GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }},GCP_USER_EMAIL=${{ secrets.APP_USER_EMAIL }}" \
+            --quiet
+
+      - name: Print service URL
+        run: |
+          gcloud run services describe ${{ env.SERVICE_NAME }} \
+            --region ${{ env.GCP_REGION }} \
+            --format "value(status.url)"

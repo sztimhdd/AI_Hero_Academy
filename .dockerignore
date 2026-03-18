@@ -1,0 +1,49 @@
+# Git / CI
+.git/
+.github/
+.gitignore
+
+# Local dev
+.env
+.env.*
+.gcp/
+.venv/
+.databricks/
+.databricksignore
+.syncignore
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# IDE / editor
+.vscode/
+.claude/
+.playwright-mcp/
+
+# Test artifacts
+tests/
+content_test/
+logs/
+*.png
+!assets/screenshots/*.png
+console-warnings.log
+_setup_result.json
+
+# Docs / plans (not needed at runtime)
+*.md
+plans/
+references/
+prompts/
+notebooks/
+scripts/
+typings/
+assets/
+
+# Windows artifacts
+=1.0.0
+=2.16.0
+nul
