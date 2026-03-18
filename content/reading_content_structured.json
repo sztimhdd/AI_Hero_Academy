@@ -85,12 +85,12 @@
         {
           "letter": "E",
           "title": "Ensure",
-          "body": "Use only EDC-approved tools — M365 Copilot within the EDC tenant. Never paste client documents into free online translators, public chatbots, or any unapproved external application. When uncertain whether a data point is sensitive, consult your manager or leave it out."
+          "body": "Use only organization-approved tools — M365 Copilot within the organization's tenant. Never paste client documents into free online translators, public chatbots, or any unapproved external application. When uncertain whether a data point is sensitive, consult your manager or leave it out."
         }
       ],
       "guardrails": [
         "Do not paste Non-Public Information into prompts",
-        "Use only EDC-approved tools and tenants",
+        "Use only organization-approved tools and tenants",
         "Never use free online translators or public chatbots for client data",
         "Edit out any echoed-back sensitive details from AI responses before sharing",
         "Consult manager when uncertain about data sensitivity"
@@ -108,22 +108,22 @@
       "headline": "Unvetted AI Tool Data Exposure",
       "failure_scenario": "An analyst used a free online AI translation tool found through web search to translate a client's French financial statement containing sensitive data. The document was transmitted to an unapproved external system without any control over data storage, access, or model training usage.",
       "chain": [
-        "Non-Public EDC Information (revenue, net income, loan covenants, signatures) transmitted to external system",
+        "non-public organizational data (revenue, net income, loan covenants, signatures) transmitted to external system",
         "No visibility into data handling, storage location, access controls, or model training implications",
-        "Direct violation of EDC's Responsible AI policy and data classification rules",
+        "Direct violation of your organization's AI use policy and data classification rules",
         "Legal liability, regulatory scrutiny, and reputational harm to the firm"
       ],
-      "root_lesson": "Always use approved internal tools (M365 Copilot within EDC tenant) for handling sensitive data. When using any AI tool, apply SAFE abstraction by describing document structure and purpose in prompts rather than pasting raw classified information."
+      "root_lesson": "Always use approved internal tools (M365 Copilot within organization's tenant) for handling sensitive data. When using any AI tool, apply SAFE abstraction by describing document structure and purpose in prompts rather than pasting raw classified information."
     },
     "takeaway_structured": {
-      "statement": "Before every Copilot prompt, run the SAFE check: scrutinize what is sensitive, abstract identifiers into generic descriptors, filter the output for leaked details, and ensure you are working inside an EDC-approved tool — because protecting client and EDC data is not optional, and SAFE lets you stay compliant without sacrificing analytical value.",
+      "statement": "Before every Copilot prompt, run the SAFE check: scrutinize what is sensitive, abstract identifiers into generic descriptors, filter the output for leaked details, and ensure you are working inside an organization-approved tool — because protecting client and organizational data is not optional, and SAFE lets you stay compliant without sacrificing analytical value.",
       "action_1": {
         "title": "Redact identifiers before prompting",
         "body": "Replace specific names, numbers, and private details with generic descriptors (e.g., 'the company's primary director' instead of an actual name) before pasting any material into Copilot. This preserves analytical context while eliminating exposure of Non-Public Information."
       },
       "action_2": {
         "title": "Review and edit all outputs",
-        "body": "Read every Copilot response before sharing or acting on it, and immediately remove any echoed-back names, numbers, or sensitive details. Only use EDC-approved tools like M365 Copilot within the EDC tenant—never external chatbots or translators."
+        "body": "Read every Copilot response before sharing or acting on it, and immediately remove any echoed-back names, numbers, or sensitive details. Only use organization-approved tools like M365 Copilot within the organization's tenant—never external chatbots or translators."
       }
     }
   },
@@ -545,7 +545,7 @@
         {
           "letter": "S",
           "title": "Secure",
-          "body": "Matching task to surface keeps your outputs accurate and your content inside EDC's secure M365 environment—no copy-pasting into external tools, no version fragmentation, and no re-work."
+          "body": "Matching task to surface keeps your outputs accurate and your content inside Apex Trade Finance's secure M365 environment—no copy-pasting into external tools, no version fragmentation, and no re-work."
         }
       ],
       "guardrails": [
@@ -1672,10 +1672,10 @@
     },
     "anti_pattern_structured": {
       "headline": "Uploading Personal Data to Web AI",
-      "failure_scenario": "A marketing coordinator attempted to upload a spreadsheet containing 200 rows of personal data (names, emails, company revenue, notes) to Copilot on the Web for email generation. The coordinator exposed sensitive non-public information outside EDC's secure environment by describing the file contents in a web-based prompt.",
+      "failure_scenario": "A marketing coordinator attempted to upload a spreadsheet containing 200 rows of personal data (names, emails, company revenue, notes) to Copilot on the Web for email generation. The coordinator exposed sensitive non-public information outside Apex Trade Finance's secure environment by describing the file contents in a web-based prompt.",
       "chain": [
-        "Personal and financial data of real individuals and companies transmitted outside secure EDC environment",
-        "Violation of EDC's Responsible AI policy and CASL compliance regulations on unsolicited contact data use",
+        "Personal and financial data of real individuals and companies transmitted outside secure Apex Trade Finance environment",
+        "Violation of your organization's AI use policy and CASL compliance regulations on unsolicited contact data use",
         "Loss of trust with leads and potential legal/regulatory consequences; reputational damage to organization"
       ],
       "root_lesson": "Always verify that any data you reference or attempt to share with external AI tools contains no personal, financial, or confidential information. Use only anonymized, synthetic, or publicly available data with web-based AI services, and route sensitive work through secure, approved internal tools."

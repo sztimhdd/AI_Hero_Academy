@@ -2,7 +2,7 @@
   "an": {
     "role_id": "an",
     "title": "Analyst (Non-IT)",
-    "description": "Data-driven professionals who conduct financial analysis, portfolio reviews, sector research, and risk assessments to support underwriting, business development, and strategic decision-making across EDC's programmes. Core responsibilities include variance analysis, anomaly detection, stakeholder briefings, data validation, and synthesis of complex information into actionable insights. Supported by AI tools to accelerate research, validate findings, and communicate results effectively while maintaining strict data security and compliance standards.",
+    "description": "Data-driven professionals who conduct financial analysis, portfolio reviews, sector research, and risk assessments to support underwriting, business development, and strategic decision-making across Apex Trade Finance's programmes. Core responsibilities include variance analysis, anomaly detection, stakeholder briefings, data validation, and synthesis of complex information into actionable insights. Supported by AI tools to accelerate research, validate findings, and communicate results effectively while maintaining strict data security and compliance standards.",
     "department": "Analytics & Risk"
   },
   "rm": {
@@ -14,13 +14,13 @@
   "uw": {
     "role_id": "uw",
     "title": "Underwriter",
-    "description": "Underwriters evaluate credit risk, analyze financial statements and borrower data, and make approval/decline/condition decisions on loans and credit insurance. They synthesize financial analysis, policy compliance, and stakeholder context to deliver sound credit decisions supported by clear documentation and audit-ready records. They use AI to accelerate analysis, improve consistency, and maintain compliance with EDC's Responsible AI policy.",
+    "description": "Underwriters evaluate credit risk, analyze financial statements and borrower data, and make approval/decline/condition decisions on loans and credit insurance. They synthesize financial analysis, policy compliance, and stakeholder context to deliver sound credit decisions supported by clear documentation and audit-ready records. They use AI to accelerate analysis, improve consistency, and maintain compliance with your organization's AI use policy.",
     "department": "Credit & Risk"
   },
   "mk": {
     "role_id": "mk",
     "title": "Marketing/Comms Advisor",
-    "description": "Marketing and Communications professionals at EDC develop and execute campaigns, create compelling content, manage stakeholder communications, and drive brand awareness. They synthesize market insights, customer data, and internal strategy to craft targeted messaging across channels. This role requires balancing creative excellence with data-driven decision-making, ensuring all communications are compliant, accurate, and resonate with diverse audiences—often in both English and French.",
+    "description": "Marketing and Communications professionals at Apex Trade Finance develop and execute campaigns, create compelling content, manage stakeholder communications, and drive brand awareness. They synthesize market insights, customer data, and internal strategy to craft targeted messaging across channels. This role requires balancing creative excellence with data-driven decision-making, ensuring all communications are compliant, accurate, and resonate with diverse audiences—often in both English and French.",
     "department": "Marketing & Communications"
   }
 }

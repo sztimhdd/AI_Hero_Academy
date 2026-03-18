@@ -22,11 +22,11 @@
         },
         {
           "label": "D",
-          "text": "To replace the need for EDC-approved tools by sanitizing data before use"
+          "text": "To replace the need for organization-approved tools by sanitizing data before use"
         }
       ],
       "correct_option": "B",
-      "explanation": "The reading explicitly states that SAFE lets analysts stay compliant without sacrificing analytical value, because protecting client and EDC data is not optional. It is a compliance method, not a productivity shortcut or a substitute for approved tools.",
+      "explanation": "The reading explicitly states that SAFE lets analysts stay compliant without sacrificing analytical value, because protecting client and organizational data is not optional. It is a compliance method, not a productivity shortcut or a substitute for approved tools.",
       "scoring_rubric": {
         "correct": 4,
         "incorrect": 0
@@ -110,7 +110,7 @@
         "key1": "The response correctly identifies and explains the 'S' step — scrutinizing what is sensitive — by naming specific sensitive elements from the scenario (e.g., legal name, passport numbers, credit score, internal risk rating).",
         "key2": "The response correctly explains the 'A' step — abstracting identifiers into generic descriptors — by showing how specific client details would be replaced (e.g., replacing the client name with 'a corporate entity,' replacing passport numbers with 'beneficial owner identifiers').",
         "key3": "The response correctly addresses the 'F' step — filtering the output for leaked details — by describing how the analyst would review Copilot's output to ensure no abstracted or sensitive information has re-appeared in the generated text.",
-        "key4": "The response correctly addresses the 'E' step — ensuring the work is done inside an EDC-approved tool — and demonstrates understanding that SAFE does not replace the requirement to use approved tools, but works alongside it."
+        "key4": "The response correctly addresses the 'E' step — ensuring the work is done inside an organization-approved tool — and demonstrates understanding that SAFE does not replace the requirement to use approved tools, but works alongside it."
       }
     }
   ],
@@ -217,7 +217,7 @@
       "item_type": "performance_task",
       "sequence": 4,
       "question_text": "Using the CRAF Framework, write a complete, board-ready Copilot prompt for the scenario below. Your response must explicitly address all four CRAF elements and explain how each element contributes to the quality of the expected output.",
-      "scenario_text": "You are an analyst preparing for the Meridian Infrastructure Briefing. You have a 35-page infrastructure sector risk report that will be reviewed by an executive committee of five senior leaders who have limited time and need to make a go/no-go decision on a new financing facility. You need Copilot to help you produce a concise executive summary that highlights the top three risk factors, any concentration concerns, and a recommended next step. Write a full CRAF-structured prompt and explain each element.",
+      "scenario_text": "You are an analyst preparing for the Meridian Infrastructure Programme. You have a 35-page infrastructure sector risk report that will be reviewed by an executive committee of five senior leaders who have limited time and need to make a go/no-go decision on a new financing facility. You need Copilot to help you produce a concise executive summary that highlights the top three risk factors, any concentration concerns, and a recommended next step. Write a full CRAF-structured prompt and explain each element.",
       "options": [],
       "correct_option": null,
       "explanation": null,

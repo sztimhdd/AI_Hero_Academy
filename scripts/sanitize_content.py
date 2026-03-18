@@ -177,7 +177,7 @@ def apply_replacement_dict(data: dict[str, Any]) -> tuple[dict[str, Any], int]:
             print(f"\n  [{fname}] - {count[0]} substitutions")
             for entry in log:
                 for change in entry["changes"]:
-                    before = entry["before_snippet"][:60]
+                    before = change["before_snippet"][:60]
                     after  = change["after_snippet"][:60]
                     print(f"    {entry['path']}: {before!r} -> {after!r}")
         total += count[0]
@@ -347,9 +347,19 @@ def validate_structure(data_before: dict[str, Any] | None, data_after: dict[str,
             ok = False
 
     for fname in ("diagnostic_items.json", "evaluation_items.json"):
-        items = data_after.get(fname, {})
-        for iid, item in items.items():
-            if not item.get("question_text"):
+        raw = data_after.get(fname, {})
+        # Support both flat list and dict-of-lists structures
+        if isinstance(raw, list):
+            all_items = [(str(i), raw[i]) for i in range(len(raw))]
+        else:
+            all_items = []
+            for key, val in raw.items():
+                if isinstance(val, list):
+                    all_items.extend((f"{key}[{i}]", val[i]) for i in range(len(val)))
+                else:
+                    all_items.append((key, val))
+        for iid, item in all_items:
+            if isinstance(item, dict) and not item.get("question_text"):
                 print(f"  [FAIL] {fname}: {iid}.question_text is empty")
                 ok = False
 

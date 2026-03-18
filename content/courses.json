@@ -4,8 +4,8 @@
     "role_id": "an",
     "primary_domain": "responsible_ai",
     "title": "Protect the Data: Safe AI Usage for Analysts",
-    "tagline": "Leverage AI without compromise — guard confidential data and comply with EDC's policies.",
-    "description": "Working with data comes with great responsibility. This course empowers analysts to use Copilot effectively while strictly adhering to EDC's data security and privacy rules. You will learn the SAFE Abstraction Method for GenAI: a four-step approach to ensure you never expose Non-Public EDC Information when using AI. In a simulated Know-Your-Customer (KYC) onboarding scenario, you'll practice identifying sensitive content (personal identifiers, financial details, internal rankings) and transforming or removing it before prompting Copilot. You'll also learn how to interpret EDC's Responsible AI policy in day-to-day analyst work — so you can confidently use AI for data validation, document review, and research without risking compliance violations.",
+    "tagline": "Leverage AI without compromise — guard confidential data and comply with Apex Trade Finance's policies.",
+    "description": "Working with data comes with great responsibility. This course empowers analysts to use Copilot effectively while strictly adhering to Apex Trade Finance's data security and privacy rules. You will learn the SAFE Abstraction Method for GenAI: a four-step approach to ensure you never expose non-public organizational data when using AI. In a simulated Know-Your-Customer (KYC) onboarding scenario, you'll practice identifying sensitive content (personal identifiers, financial details, internal rankings) and transforming or removing it before prompting Copilot. You'll also learn how to interpret your organization's AI use policy in day-to-day analyst work — so you can confidently use AI for data validation, document review, and research without risking compliance violations.",
     "real_use_case": "KYC / CIM Validation Agent",
     "sequence_order": 1
   },
@@ -55,7 +55,7 @@
     "primary_domain": "augmented_comm",
     "title": "Right Tool, Right Step: M365 Copilot for Analysts",
     "tagline": "Master the Copilot toolkit — Excel, Word, Teams, PowerPoint, Outlook — in sequence.",
-    "description": "Why copy-paste data between apps when Copilot can seamlessly assist you within each tool you use? This course teaches analysts to maximize productivity by choosing the right M365 Copilot surface at each step of an analytical workflow — and to chain those surfaces together so output from one tool becomes the input for the next. Through a multi-step scenario building a programme intelligence brief, you'll practice a sequence from Teams meeting recap to Word briefing draft to Outlook stakeholder communication — eliminating manual transfers, reducing re-work, and keeping content within EDC's secure M365 environment.",
+    "description": "Why copy-paste data between apps when Copilot can seamlessly assist you within each tool you use? This course teaches analysts to maximize productivity by choosing the right M365 Copilot surface at each step of an analytical workflow — and to chain those surfaces together so output from one tool becomes the input for the next. Through a multi-step scenario building a programme intelligence brief, you'll practice a sequence from Teams meeting recap to Word briefing draft to Outlook stakeholder communication — eliminating manual transfers, reducing re-work, and keeping content within the organization's secure M365 environment.",
     "real_use_case": "Streamline production of Quarterly analysis and reporting",
     "sequence_order": 6
   },
@@ -65,7 +65,7 @@
     "primary_domain": "responsible_ai",
     "title": "Analyst in Action: End-to-End AI Workflow (Capstone)",
     "tagline": "Put it all together — responsible, accurate, audience-aware, data-driven AI assistance from raw data to final communication.",
-    "description": "This capstone integrates all six skill domains in a realistic end-to-end workflow. You'll step into the shoes of an EDC analyst preparing an annual programme review for senior leadership. Starting from an Excel portfolio dataset, a Teams meeting transcript, and an internal strategy memo, you'll use AI at each stage: surfacing portfolio insights (Data-Driven Decision Making), verifying AI outputs before they enter the narrative (Critical Evaluation), tailoring the briefing for two different internal audiences (Relationship Intelligence), structuring the brief using CRAF (Strategic Prompting), maintaining data safety throughout (Responsible AI), and chaining Copilot tools across Excel to Word to Outlook (Augmented Communication). By completing this course, you demonstrate the ability to orchestrate AI across a complex, multi-step analytical workflow — just as you would on the job.",
+    "description": "This capstone integrates all six skill domains in a realistic end-to-end workflow. You'll step into the shoes of an Apex Trade Finance analyst preparing an annual programme review for senior leadership. Starting from an Excel portfolio dataset, a Teams meeting transcript, and an internal strategy memo, you'll use AI at each stage: surfacing portfolio insights (Data-Driven Decision Making), verifying AI outputs before they enter the narrative (Critical Evaluation), tailoring the briefing for two different internal audiences (Relationship Intelligence), structuring the brief using CRAF (Strategic Prompting), maintaining data safety throughout (Responsible AI), and chaining Copilot tools across Excel to Word to Outlook (Augmented Communication). By completing this course, you demonstrate the ability to orchestrate AI across a complex, multi-step analytical workflow — just as you would on the job.",
     "real_use_case": "Streamline production of Quarterly analysis and reporting; Financial Variance Analyzer; KYC / CIM Validation Agent",
     "sequence_order": 7
   },
@@ -76,7 +76,7 @@
     "title": "Safeguard Before You Summarize: Client Data and AI",
     "tagline": "Use SAFE abstraction to get AI help without exposing non-public client information.",
     "description": "RMs often feel time pressure to summarize client documents, meeting notes, and deal context quickly. This course builds the habit of sanitizing inputs, choosing safe tools, and rewriting prompts so you keep confidentiality intact while still getting useful drafts for internal work.",
-    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).",
+    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the the development finance team.",
     "sequence_order": 1
   },
   "rm_c2_strategic_prompting": {
@@ -146,7 +146,7 @@
     "title": "Safe AI with Confidential Deal Data",
     "tagline": "Use the SAFE Abstraction Method to get AI help without leaking non-public underwriting information.",
     "description": "Underwriters handle highly sensitive financials and internal risk rationale. This course builds practical judgment for what can and cannot go into AI tools, and teaches SAFE Abstraction so learners can still get useful output while staying policy-safe and audit-ready.",
-    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).",
+    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the the development finance team.",
     "sequence_order": 1
   },
   "uw_c2_strategic_prompting": {
@@ -215,8 +215,8 @@
     "primary_domain": "responsible_ai",
     "title": "Protect Non-Public Marketing Data in AI",
     "tagline": "Learn how to harness AI tools without leaking leads or confidential marketing info.",
-    "description": "This course teaches marketing professionals how to apply EDC's Responsible AI guidelines day-to-day. You'll learn to identify what counts as non-public data in marketing (e.g., customer lists, private campaign results, unreleased materials, internal strategy) and practice transforming it or abstracting it before using generative AI. Through real-world scenarios—like summarizing trade show leads, drafting content from internal data, or researching prospects—you'll master safe prompting techniques so you can still get AI's help without ever compromising customer privacy, Canada's Anti-Spam (CASL) compliance, or EDC's reputation.",
-    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the Impact team (FinDev Canada).",
+    "description": "This course teaches marketing professionals how to apply Apex Trade Finance's Responsible AI guidelines day-to-day. You'll learn to identify what counts as non-public data in marketing (e.g., customer lists, private campaign results, unreleased materials, internal strategy) and practice transforming it or abstracting it before using generative AI. Through real-world scenarios—like summarizing trade show leads, drafting content from internal data, or researching prospects—you'll master safe prompting techniques so you can still get AI's help without ever compromising customer privacy, Canada's Anti-Spam (CASL) compliance, or Apex Trade Finance's reputation.",
+    "real_use_case": "The main objective of this case is to obtain approval to input internal (i.e., non-public) client data into MS Copilot on the Web to increase work efficiency on the the development finance team.",
     "sequence_order": 1
   },
   "mk_c2_strategic_prompting": {
@@ -225,7 +225,7 @@
     "primary_domain": "strategic_prompting",
     "title": "Prompt Better Marketing Drafts Faster",
     "tagline": "Turn a blank page into on-brand campaign content by mastering AI prompt strategy.",
-    "description": "Marketers often face tight deadlines to create engaging content. In this course, you'll adopt the CRAF prompting framework to produce quality first drafts of marketing materials in minutes. Learn how to feed Copilot the right context—from target audience and product value props to desired tone and format—so it can generate emails, social media posts, and blog outlines that hit the mark. We'll transform vague prompts that yield generic fluff into strategic prompts that deliver usable copy tailored to your needs, reducing writing time while maintaining EDC's voice and brand standards.",
+    "description": "Marketers often face tight deadlines to create engaging content. In this course, you'll adopt the CRAF prompting framework to produce quality first drafts of marketing materials in minutes. Learn how to feed Copilot the right context—from target audience and product value props to desired tone and format—so it can generate emails, social media posts, and blog outlines that hit the mark. We'll transform vague prompts that yield generic fluff into strategic prompts that deliver usable copy tailored to your needs, reducing writing time while maintaining Apex Trade Finance's voice and brand standards.",
     "real_use_case": "Content Creation & Lifecycle",
     "sequence_order": 2
   },
@@ -275,7 +275,7 @@
     "primary_domain": "responsible_ai",
     "title": "Run an AI-Assisted Marketing Workflow End-to-End",
     "tagline": "Integrate all six AI skill areas as you plan and execute a full campaign with AI support.",
-    "description": "The capstone brings together everything you've learned in a realistic project. You'll step into the shoes of a marketing lead running the ExportBoost Program, an initiative to improve the customer journey for exporters. Over this course, you will use AI to assist at each stage: safely analyzing customer data (Responsible AI), drafting content and strategic plans (Strategic Prompting), generating and verifying summaries of client interactions (Critical Evaluation), researching and tailoring outreach to key prospects (Relationship Intelligence), analyzing campaign performance (Data-Driven Decisions), and creating bilingual communications for stakeholders (Augmented Communication). By completing this project, you'll demonstrate your ability to orchestrate AI tools throughout a marketing campaign while upholding EDC's standards.",
+    "description": "The capstone brings together everything you've learned in a realistic project. You'll step into the shoes of a marketing lead running the ExportBoost Program, an initiative to improve the customer journey for exporters. Over this course, you will use AI to assist at each stage: safely analyzing customer data (Responsible AI), drafting content and strategic plans (Strategic Prompting), generating and verifying summaries of client interactions (Critical Evaluation), researching and tailoring outreach to key prospects (Relationship Intelligence), analyzing campaign performance (Data-Driven Decisions), and creating bilingual communications for stakeholders (Augmented Communication). By completing this project, you'll demonstrate your ability to orchestrate AI tools throughout a marketing campaign while upholding Apex Trade Finance's standards.",
     "real_use_case": "Exporter Journey Optimization Agent; Automating Prospect Profiling; Customer Interaction Recap; Streamline production of Quarterly analysis and reporting; Corporate Communications (translation, messaging)",
     "sequence_order": 7
   }

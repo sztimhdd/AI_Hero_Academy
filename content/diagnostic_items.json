@@ -182,8 +182,8 @@
     "domain_id": "responsible_ai",
     "item_type": "mcq",
     "display_order": 1,
-    "question_text": "Which of the following inputs is safe to include verbatim in an EDC-approved AI tool prompt without any abstraction or modification?",
-    "scenario_text": "You are an Underwriter preparing a risk summary for a new transaction involving Thornfield Agri-Export Inc. You have four documents available: an internal CIS buyer-file note with payment history and risk commentary, a publicly available trade credit rating report published by a recognised ratings agency, a draft term sheet with proposed covenant thresholds, and an internal memo showing the deal's preliminary risk rating and rationale. You want to use an EDC-approved AI tool to help structure your analysis.",
+    "question_text": "Which of the following inputs is safe to include verbatim in an your organization's approved AI tool prompt without any abstraction or modification?",
+    "scenario_text": "You are an Underwriter preparing a risk summary for a new transaction involving Thornfield Agri-Export Inc. You have four documents available: an internal client file note with payment history and risk commentary, a publicly available trade credit rating report published by a recognised ratings agency, a draft term sheet with proposed covenant thresholds, and an internal memo showing the deal's preliminary risk rating and rationale. You want to use an your organization's approved AI tool to help structure your analysis.",
     "options": [
       {
         "label": "A",
@@ -191,7 +191,7 @@
       },
       {
         "label": "B",
-        "text": "The internal CIS buyer-file note, because it is stored on EDC's secure internal system."
+        "text": "The internal client file note, because it is stored on Apex Trade Finance's secure internal system."
       },
       {
         "label": "C",
@@ -215,7 +215,7 @@
     "item_type": "micro_task",
     "display_order": 2,
     "question_text": "Review the prompt below, which an Underwriter used to draft a covenant analysis section. Identify at least two specific structural weaknesses that reduce the quality of the AI output, and rewrite the prompt to address those weaknesses.",
-    "scenario_text": "An Underwriter submitted the following prompt to an EDC-approved AI tool:\n\n---\n\"Analyse the covenants for this deal and tell me if they are appropriate.\"\n---\n\nThe AI returned a two-sentence response stating that covenants are generally important for credit risk management and that leverage and interest coverage ratios are commonly used. The Underwriter found this unhelpful. Diagnose the prompt's weaknesses and produce an improved version.",
+    "scenario_text": "An Underwriter submitted the following prompt to an your organization's approved AI tool:\n\n---\n\"Analyse the covenants for this deal and tell me if they are appropriate.\"\n---\n\nThe AI returned a two-sentence response stating that covenants are generally important for credit risk management and that leverage and interest coverage ratios are commonly used. The Underwriter found this unhelpful. Diagnose the prompt's weaknesses and produce an improved version.",
     "options": null,
     "correct_option": null,
     "scoring_rubric": {
@@ -240,7 +240,7 @@
     "item_type": "mcq",
     "display_order": 3,
     "question_text": "An AI tool has generated a financial risk summary for a borrower in the renewable energy sector. Which of the following responses represents the most appropriate underwriter behaviour when reviewing this output before including it in a credit paper?",
-    "scenario_text": "You used an EDC-approved AI tool to draft the 'Financial Risk' section of a credit paper for a solar project developer. The AI output states: 'The borrower's debt service coverage ratio of 1.35x is within acceptable range for project finance transactions in this sector, and the leverage profile is consistent with investment-grade issuers.' You do not recall providing the DSCR figure in your prompt, and you know the borrower's actual leverage is higher than investment-grade norms.",
+    "scenario_text": "You used an your organization's approved AI tool to draft the 'Financial Risk' section of a credit paper for a solar project developer. The AI output states: 'The borrower's debt service coverage ratio of 1.35x is within acceptable range for project finance transactions in this sector, and the leverage profile is consistent with investment-grade issuers.' You do not recall providing the DSCR figure in your prompt, and you know the borrower's actual leverage is higher than investment-grade norms.",
     "options": [
       {
         "label": "A",
@@ -272,7 +272,7 @@
     "item_type": "micro_task",
     "display_order": 4,
     "question_text": "Review the AI-generated analysis excerpt below, which was produced to support a credit decision. Identify at least two analytical weaknesses or data reasoning errors that an Underwriter should correct before relying on this output, and explain what additional analysis or data would be needed.",
-    "scenario_text": "An Underwriter used an EDC-approved AI tool to analyse an abstracted borrower profile. The AI produced the following excerpt for the 'Financial Assessment' section:\n\n---\n\"The borrower's revenue has grown at an average of 12% per year over the past three years, indicating strong business momentum. The current ratio of 1.8x suggests adequate short-term liquidity. Based on these indicators, the borrower demonstrates a solid financial profile consistent with investment-grade characteristics. The debt service coverage ratio is not provided but is assumed to be sufficient given the revenue growth trend.\"\n---",
+    "scenario_text": "An Underwriter used an your organization's approved AI tool to analyse an abstracted borrower profile. The AI produced the following excerpt for the 'Financial Assessment' section:\n\n---\n\"The borrower's revenue has grown at an average of 12% per year over the past three years, indicating strong business momentum. The current ratio of 1.8x suggests adequate short-term liquidity. Based on these indicators, the borrower demonstrates a solid financial profile consistent with investment-grade characteristics. The debt service coverage ratio is not provided but is assumed to be sufficient given the revenue growth trend.\"\n---",
     "options": null,
     "correct_option": null,
     "scoring_rubric": {
@@ -301,7 +301,7 @@
     "options": [
       {
         "label": "A",
-        "text": "Use an EDC-approved AI tool to synthesise publicly available information about the bank's trade finance strategy, recent announcements, and regional focus to prepare informed questions and identify potential alignment with EDC's mandate."
+        "text": "Use an your organization's approved AI tool to synthesise publicly available information about the bank's trade finance strategy, recent announcements, and regional focus to prepare informed questions and identify potential alignment with Apex Trade Finance's mandate."
       },
       {
         "label": "B",
@@ -313,7 +313,7 @@
       },
       {
         "label": "D",
-        "text": "Use AI to draft a relationship history summary by asking it to recall previous EDC interactions with Meridian Trade Finance Bank from its training data."
+        "text": "Use AI to draft a relationship history summary by asking it to recall previous Apex Trade Finance interactions with Meridian Trade Finance Bank from its training data."
       }
     ],
     "correct_option": "A",
@@ -329,11 +329,11 @@
     "item_type": "mcq",
     "display_order": 6,
     "question_text": "An Underwriter has used an AI tool to draft a section of a credit paper. Which of the following practices best reflects responsible and effective use of AI-augmented communication in this context?",
-    "scenario_text": "You have used an EDC-approved AI tool to draft the 'Transaction Overview' section of a credit paper for a structured trade finance deal. The AI-generated draft is well-written and covers the main structural elements. However, you notice it uses generic language about the guarantee structure that does not accurately reflect the specific risk-sharing arrangement in this deal, and it omits the rationale for EDC's involvement.",
+    "scenario_text": "You have used an your organization's approved AI tool to draft the 'Transaction Overview' section of a credit paper for a structured trade finance deal. The AI-generated draft is well-written and covers the main structural elements. However, you notice it uses generic language about the guarantee structure that does not accurately reflect the specific risk-sharing arrangement in this deal, and it omits the rationale for Apex Trade Finance's involvement.",
     "options": [
       {
         "label": "A",
-        "text": "Edit the draft to correct the guarantee structure description, add the EDC mandate rationale, verify all factual claims, and ensure the final section reflects your professional judgement before submitting."
+        "text": "Edit the draft to correct the guarantee structure description, add Apex Trade Finance mandate rationale, verify all factual claims, and ensure the final section reflects your professional judgement before submitting."
       },
       {
         "label": "B",
