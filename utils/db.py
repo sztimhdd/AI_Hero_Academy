@@ -1,18 +1,45 @@
+"""
+utils/db.py — Phase B: Firestore data layer.
+
+All learner reads/writes go to Google Cloud Firestore.
+Flat top-level collections mirror the old Delta schema exactly.
+
+Collections:
+  user_profiles/{user_email}
+  diagnostic_sessions/{session_id}
+  gap_maps/{gap_map_id}
+  training_progress/{user_email}_{course_id}
+  coach_sessions/{session_id}
+  ai_call_log/{log_id}
+"""
 import os
-import re
-from databricks.sdk import WorkspaceClient
-from databricks.sdk.service.sql import StatementParameterListItem
+from pathlib import Path
+from datetime import datetime, timezone
+from dotenv import load_dotenv
+from google.cloud import firestore
+from google.cloud.firestore import SERVER_TIMESTAMP
 
-_client = None
+# Load .env from project root so credentials work regardless of how app is started.
+load_dotenv(Path(__file__).parent.parent / ".env")
 
-_DML_RE = re.compile(r"^\s*(INSERT|UPDATE|DELETE|MERGE)\b", re.IGNORECASE)
+_db = None
 
 
-def _get_client() -> WorkspaceClient:
-    global _client
-    if _client is None:
-        _client = WorkspaceClient()
-    return _client
+def _get_db() -> firestore.Client:
+    global _db
+    if _db is None:
+        project_id = os.environ.get("GCP_PROJECT_ID")
+        # Resolve GOOGLE_APPLICATION_CREDENTIALS relative to project root if it's relative.
+        creds = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+        if creds and not os.path.isabs(creds):
+            abs_creds = str(Path(__file__).parent.parent / creds)
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = abs_creds
+        _db = firestore.Client(project=project_id)
+    return _db
+
+
+def _progress_key(user_email: str, course_id: str) -> str:
+    return f"{user_email}_{course_id}"
 
 
 def _is_demo_mode() -> bool:
@@ -23,61 +50,253 @@ def _is_demo_mode() -> bool:
         return False
 
 
-def _raw_execute(statement: str, parameters: list = None) -> list[dict]:
-    """
-    Execute a SQL statement without demo-mode suppression.
-    Used exclusively by demo seeding in utils/demo.py.
-    """
-    w = _get_client()
-    wh_id = os.environ.get("DATABRICKS_WAREHOUSE_ID", "eaa098820703bf5f")
+def _ts_to_str(val) -> str | None:
+    """Normalise Firestore DatetimeWithNanoseconds / datetime / string to ISO string."""
+    if val is None:
+        return None
+    if hasattr(val, "isoformat"):
+        return val.isoformat()
+    return str(val)
 
-    if parameters:
-        for i in range(len(parameters)):
-            statement = statement.replace("?", f":p{i + 1}", 1)
 
-    kwargs = dict(
-        warehouse_id=wh_id,
-        statement=statement,
-        wait_timeout="30s",
+# ── User profiles ────────────────────────────────────────────────────────────
+
+def get_profile(user_email: str) -> dict | None:
+    doc = _get_db().collection("user_profiles").document(user_email).get()
+    if not doc.exists:
+        return None
+    d = doc.to_dict()
+    d["user_email"] = user_email
+    return d
+
+
+def create_profile(user_email: str, display_name: str, role_id: str) -> None:
+    _get_db().collection("user_profiles").document(user_email).set({
+        "role_id": role_id,
+        "display_name": display_name,
+        "created_at": SERVER_TIMESTAMP,
+    })
+
+
+# ── Diagnostic sessions ───────────────────────────────────────────────────────
+
+def get_latest_diagnostic(user_email: str) -> dict | None:
+    # Fetch all sessions for this user, filter + sort in Python to avoid composite index.
+    docs = (
+        _get_db().collection("diagnostic_sessions")
+        .where("user_email", "==", user_email)
+        .stream()
     )
-    if parameters:
-        kwargs["parameters"] = [
-            StatementParameterListItem(name=f"p{i + 1}", value=str(p))
-            for i, p in enumerate(parameters)
-        ]
-
-    result = w.statement_execution.execute_statement(**kwargs)
-    if result.status.error:
-        raise RuntimeError(result.status.error.message)
-
-    schema = result.manifest.schema if result.manifest else None
-    cols = [c.name for c in (schema.columns if schema else [])]
-    data = result.result.data_array if result.result else []
     rows = []
-    for row in (data or []):
-        rows.append(dict(zip(cols, row)))
-    return rows
+    for doc in docs:
+        d = doc.to_dict()
+        if d.get("completed_at") is None:
+            continue
+        d["session_id"] = doc.id
+        d["completed_at"] = _ts_to_str(d.get("completed_at"))
+        rows.append(d)
+    if not rows:
+        return None
+    return sorted(rows, key=lambda r: r.get("completed_at") or "", reverse=True)[0]
 
 
-def execute(statement: str, parameters: list = None) -> list[dict]:
-    """
-    Execute a SQL statement and return rows as list of dicts.
-    parameters: list of values, substituted positionally using ? placeholders.
-    Internally converts ? to :p1, :p2, ... for the Databricks named-parameter API.
+def get_all_diagnostics(user_email: str) -> list[dict]:
+    docs = (
+        _get_db().collection("diagnostic_sessions")
+        .where("user_email", "==", user_email)
+        .stream()
+    )
+    rows = []
+    for doc in docs:
+        d = doc.to_dict()
+        if d.get("completed_at") is None:
+            continue
+        d["session_id"] = doc.id
+        d["completed_at"] = _ts_to_str(d.get("completed_at"))
+        rows.append(d)
+    return sorted(rows, key=lambda r: r.get("completed_at") or "", reverse=True)
 
-    In demo mode, all DML (INSERT/UPDATE/DELETE/MERGE) is suppressed silently.
-    """
-    if _is_demo_mode() and _DML_RE.match(statement):
-        return []
-    return _raw_execute(statement, parameters)
+
+def save_diagnostic(
+    session_id: str,
+    user_email: str,
+    started_at: str,
+    responses_json: str,
+    item_scores_json: str,
+    domain_scores_json: str,
+    overall_score: float,
+) -> None:
+    _get_db().collection("diagnostic_sessions").document(session_id).set({
+        "user_email": user_email,
+        "started_at": started_at,
+        "completed_at": SERVER_TIMESTAMP,
+        "responses": responses_json,
+        "item_scores": item_scores_json,
+        "domain_scores": domain_scores_json,
+        "overall_score": float(overall_score),
+    })
 
 
-def query_one(statement: str, parameters: list = None) -> dict | None:
-    """Execute a statement and return the first row, or None."""
-    rows = execute(statement, parameters)
-    return rows[0] if rows else None
+# ── Gap maps ──────────────────────────────────────────────────────────────────
 
+def get_latest_gap_map(user_email: str) -> dict | None:
+    # Sort in Python to avoid composite index on (user_email, generated_at).
+    docs = (
+        _get_db().collection("gap_maps")
+        .where("user_email", "==", user_email)
+        .stream()
+    )
+    rows = []
+    for doc in docs:
+        d = doc.to_dict()
+        d["gap_map_id"] = doc.id
+        rows.append(d)
+    if not rows:
+        return None
+    return sorted(rows, key=lambda r: str(r.get("generated_at") or ""), reverse=True)[0]
+
+
+def save_gap_map(
+    gap_map_id: str,
+    user_email: str,
+    source_type: str,
+    source_id: str,
+    bullets_json: str,
+) -> None:
+    _get_db().collection("gap_maps").document(gap_map_id).set({
+        "user_email": user_email,
+        "source_type": source_type,
+        "source_id": source_id,
+        "bullets": bullets_json,
+        "generated_at": SERVER_TIMESTAMP,
+    })
+
+
+# ── Training progress ─────────────────────────────────────────────────────────
+
+def get_all_progress(user_email: str) -> list[dict]:
+    # Sort in Python to avoid composite index on (user_email, module_sequence_order).
+    docs = (
+        _get_db().collection("training_progress")
+        .where("user_email", "==", user_email)
+        .stream()
+    )
+    rows = []
+    for doc in docs:
+        d = doc.to_dict()
+        d["progress_id"] = doc.id
+        # Normalise timestamp fields to strings for consistency with old SQL layer
+        for ts_field in ("reading_completed_at", "practice_completed_at", "evaluation_completed_at"):
+            d[ts_field] = _ts_to_str(d.get(ts_field))
+        rows.append(d)
+    return sorted(rows, key=lambda r: r.get("module_sequence_order", 0))
+
+
+def get_progress(user_email: str, course_id: str) -> dict | None:
+    doc = _get_db().collection("training_progress").document(
+        _progress_key(user_email, course_id)
+    ).get()
+    if not doc.exists:
+        return None
+    d = doc.to_dict()
+    d["progress_id"] = doc.id
+    for ts_field in ("reading_completed_at", "practice_completed_at", "evaluation_completed_at"):
+        d[ts_field] = _ts_to_str(d.get(ts_field))
+    return d
+
+
+def get_progress_by_seq(user_email: str, seq: int) -> dict | None:
+    docs = (
+        _get_db().collection("training_progress")
+        .where("user_email", "==", user_email)
+        .where("module_sequence_order", "==", seq)
+        .limit(1)
+        .stream()
+    )
+    for doc in docs:
+        d = doc.to_dict()
+        d["progress_id"] = doc.id
+        return d
+    return None
+
+
+def get_any_progress(user_email: str) -> dict | None:
+    docs = (
+        _get_db().collection("training_progress")
+        .where("user_email", "==", user_email)
+        .limit(1)
+        .stream()
+    )
+    for doc in docs:
+        d = doc.to_dict()
+        d["progress_id"] = doc.id
+        return d
+    return None
+
+
+def create_progress(user_email: str, course_id: str, seq: int, is_locked: bool) -> None:
+    if _is_demo_mode():
+        return
+    _get_db().collection("training_progress").document(
+        _progress_key(user_email, course_id)
+    ).set({
+        "user_email": user_email,
+        "course_id": course_id,
+        "module_sequence_order": seq,
+        "is_locked": is_locked,
+        "reading_completed_at": None,
+        "practice_completed_at": None,
+        "evaluation_completed_at": None,
+        "evaluation_score": None,
+        "domain_score_after": None,
+    })
+
+
+def update_progress(user_email: str, course_id: str, **fields) -> None:
+    if _is_demo_mode():
+        return
+    _get_db().collection("training_progress").document(
+        _progress_key(user_email, course_id)
+    ).update(fields)
+
+
+def unlock_progress(user_email: str, seq: int) -> None:
+    """Set is_locked=False on the progress row with the given sequence order."""
+    if _is_demo_mode():
+        return
+    docs = (
+        _get_db().collection("training_progress")
+        .where("user_email", "==", user_email)
+        .where("module_sequence_order", "==", seq)
+        .limit(1)
+        .stream()
+    )
+    for doc in docs:
+        doc.reference.update({"is_locked": False})
+
+
+# ── Coach sessions ────────────────────────────────────────────────────────────
+
+def save_coach_session(
+    session_id: str,
+    user_email: str,
+    course_id: str,
+    started_at: str,
+    turn_count: int,
+    conv_json: str,
+) -> None:
+    _get_db().collection("coach_sessions").document(session_id).set({
+        "user_email": user_email,
+        "course_id": course_id,
+        "started_at": started_at,
+        "completed_at": SERVER_TIMESTAMP,
+        "turn_count": turn_count,
+        "conversation_json": conv_json,
+    })
+
+
+# ── Backward-compat shim ─────────────────────────────────────────────────────
 
 def escape(s: str) -> str:
-    """Escape single quotes for inline SQL string literals."""
-    return s.replace("'", "''")
+    """No-op shim — kept for callers not yet migrated. Safe to call."""
+    return s

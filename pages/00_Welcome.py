@@ -9,9 +9,8 @@ full executive demo page.
 
 import streamlit as st
 import uuid
-import os
 from utils.auth import get_user_email
-from utils.db import execute, query_one, escape
+from utils.db import get_profile, get_latest_diagnostic, get_any_progress, create_profile
 from utils.styles import inject_global_css
 from utils.content import ROLES
 
@@ -24,30 +23,17 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 user_email = get_user_email()
 
 # Guard: if user already has a profile, route to the correct page for their state
-existing = query_one(
-    f"SELECT role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
-    [user_email],
-)
+existing = get_profile(user_email)
 if existing:
     st.session_state["user_email"] = user_email
-    session = query_one(
-        f"SELECT session_id FROM {CATALOG}.learner.diagnostic_sessions "
-        f"WHERE user_email = ? AND completed_at IS NOT NULL "
-        f"ORDER BY completed_at DESC LIMIT 1",
-        [user_email],
-    )
+    session = get_latest_diagnostic(user_email)
     if not session:
         st.session_state["user_state"] = "needs_diagnostic"
         st.switch_page("pages/01_Diagnostic.py")
-    progress = query_one(
-        f"SELECT progress_id FROM {CATALOG}.learner.training_progress "
-        f"WHERE user_email = ? LIMIT 1",
-        [user_email],
-    )
+    progress = get_any_progress(user_email)
     if not progress:
         st.session_state["user_state"] = "needs_course"
         st.switch_page("pages/02_Skills_Profile.py")
@@ -331,11 +317,7 @@ with _col_btn:
             try:
                 _display_name = _display_name_val.strip() if _display_name_val.strip() else _derived_name
                 _role_id = _role_map.get(_selected_role, "rm")
-                execute(f"""
-                    INSERT INTO {CATALOG}.learner.user_profiles
-                      (user_email, display_name, role_id, created_at)
-                    VALUES ('{escape(user_email)}', '{escape(_display_name)}', '{_role_id}', current_timestamp())
-                """)
+                create_profile(user_email, _display_name, _role_id)
                 st.session_state["user_email"] = user_email
                 st.session_state["user_state"] = "needs_diagnostic"
                 st.switch_page("pages/01_Diagnostic.py")

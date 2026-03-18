@@ -2,16 +2,17 @@
 Demo Mode — fixture profiles for local UAT and stakeholder demos.
 
 Activated via ?demo=true URL param when LOCAL_UAT=true.
-Personas are pre-seeded into the DB lazily on first selection.
+Personas are pre-seeded into Firestore lazily on first selection.
 All DB writes (DML) are suppressed while demo mode is active.
 """
-import os
 import uuid
 import json
 from datetime import datetime, timezone
-from utils.db import _raw_execute  # internal bypass for seeding
-
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
+from utils.db import (
+    _get_db,
+    create_profile, save_diagnostic, save_gap_map, create_progress, update_progress,
+)
+from google.cloud import firestore as _fs
 
 # ── Persona registry ──────────────────────────────────────────────────────────
 DEMO_PROFILES = {
@@ -158,24 +159,26 @@ def _now_iso() -> str:
 
 
 def _wipe_demo_user(email: str) -> None:
-    """Delete all learner rows for a demo email (for clean re-seed)."""
-    tables = [
-        "learner.training_progress",
-        "learner.gap_maps",
-        "learner.diagnostic_sessions",
-        "learner.user_profiles",
+    """Delete all Firestore docs for a demo email (for clean re-seed)."""
+    db = _get_db()
+    collections = [
+        "training_progress",
+        "gap_maps",
+        "diagnostic_sessions",
+        "coach_sessions",
     ]
-    for table in tables:
-        _raw_execute(
-            f"DELETE FROM {CATALOG}.{table} WHERE user_email = ?", [email]
-        )
+    for col in collections:
+        docs = db.collection(col).where("user_email", "==", email).stream()
+        for doc in docs:
+            doc.reference.delete()
+    # user_profiles uses email as doc ID
+    db.collection("user_profiles").document(email).delete()
 
 
 def ensure_demo_seeded(profile_id: str) -> None:
     """
-    Seed fixture data for a demo profile into the DB.
+    Seed fixture data for a demo profile into Firestore.
     Wipes existing data for this demo email first, then re-inserts.
-    Uses _raw_execute() to bypass DML suppression.
     """
     profile = DEMO_PROFILES.get(profile_id)
     if not profile:
@@ -187,12 +190,7 @@ def ensure_demo_seeded(profile_id: str) -> None:
         return  # fresh user — no rows needed
 
     # user_profiles
-    _raw_execute(
-        f"INSERT INTO {CATALOG}.learner.user_profiles "
-        f"(user_email, display_name, role_id, created_at) "
-        f"VALUES (?, ?, ?, ?)",
-        [email, profile["display_name"], profile["role_id"], _now_iso()],
-    )
+    create_profile(email, profile["display_name"], profile["role_id"])
 
     if profile_id == "3b":
         return  # RM at diagnostic start — only profile row needed
@@ -202,103 +200,62 @@ def ensure_demo_seeded(profile_id: str) -> None:
     domain_scores = _score_map.get(profile_id, _DIAG_DOMAIN_SCORES_3D)
     overall = round(sum(domain_scores.values()) / len(domain_scores), 2)
     session_id = str(uuid.uuid4())
-    _raw_execute(
-        f"INSERT INTO {CATALOG}.learner.diagnostic_sessions "
-        f"(session_id, user_email, domain_scores, overall_score, started_at, completed_at) "
-        f"VALUES (?, ?, ?, ?, ?, ?)",
-        [
-            session_id, email, json.dumps(domain_scores), str(overall),
-            _now_iso(), _now_iso(),
-        ],
+    save_diagnostic(
+        session_id, email, _now_iso(),
+        json.dumps({}),
+        json.dumps({}),
+        json.dumps(domain_scores),
+        overall,
     )
 
-    # gap_maps (source_type='diagnostic', source_id=session_id)
+    # gap_maps
     _bullets_map = {"3c": _GAP_BULLETS_3C, "3d": _GAP_BULLETS_3D, "3e": _GAP_BULLETS_3E}
     bullets = _bullets_map.get(profile_id, _GAP_BULLETS_3D)
-    _raw_execute(
-        f"INSERT INTO {CATALOG}.learner.gap_maps "
-        f"(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
-        f"VALUES (?, ?, ?, ?, ?, ?)",
-        [str(uuid.uuid4()), email, "diagnostic", session_id, json.dumps(bullets), _now_iso()],
-    )
+    # Wrap as list of dicts to match the format written by the actual diagnostic flow
+    bullets_list = [{"priority": i + 1, "domain_id": "", "bullet": b} for i, b in enumerate(bullets)]
+    save_gap_map(str(uuid.uuid4()), email, "diagnostic", session_id, json.dumps(bullets_list))
 
     # training_progress
     if profile_id == "3c":
-        courses = _UW_COURSES
-        for i, course_id in enumerate(courses):
+        for i, course_id in enumerate(_UW_COURSES):
             seq = i + 1
-            is_locked_sql = "false" if seq == 1 else "true"
+            create_progress(email, course_id, seq, is_locked=(seq > 1))
             if seq == 1:
-                _raw_execute(
-                    f"INSERT INTO {CATALOG}.learner.training_progress "
-                    f"(progress_id, user_email, course_id, module_sequence_order, "
-                    f"is_locked, reading_completed_at, practice_completed_at, "
-                    f"evaluation_completed_at, evaluation_score, domain_score_after) "
-                    f"VALUES (?, ?, ?, ?, {is_locked_sql}, ?, ?, ?, ?, ?)",
-                    [
-                        str(uuid.uuid4()), email, course_id, str(seq),
-                        _now_iso(), _now_iso(), _now_iso(), "2.8", "2.1",
-                    ],
-                )
-            else:
-                _raw_execute(
-                    f"INSERT INTO {CATALOG}.learner.training_progress "
-                    f"(progress_id, user_email, course_id, module_sequence_order, is_locked) "
-                    f"VALUES (?, ?, ?, ?, {is_locked_sql})",
-                    [str(uuid.uuid4()), email, course_id, str(seq)],
+                update_progress(email, course_id,
+                    reading_completed_at=_now_iso(),
+                    practice_completed_at=_now_iso(),
+                    evaluation_completed_at=_now_iso(),
+                    evaluation_score=2.8,
+                    domain_score_after=2.1,
+                    is_locked=False,
                 )
 
     elif profile_id == "3d":
-        courses = _AN_COURSES
-        for i, course_id in enumerate(courses):
+        for i, course_id in enumerate(_AN_COURSES):
             seq = i + 1
-            _raw_execute(
-                f"INSERT INTO {CATALOG}.learner.training_progress "
-                f"(progress_id, user_email, course_id, module_sequence_order, "
-                f"is_locked, reading_completed_at, practice_completed_at, "
-                f"evaluation_completed_at, evaluation_score, domain_score_after) "
-                f"VALUES (?, ?, ?, ?, false, ?, ?, ?, ?, ?)",
-                [
-                    str(uuid.uuid4()), email, course_id, str(seq),
-                    _now_iso(), _now_iso(), _now_iso(),
-                    str(_AN_MODULE_EVAL_SCORES[i]),
-                    str(_AN_MODULE_DOMAIN_SCORES[i]),
-                ],
+            create_progress(email, course_id, seq, is_locked=False)
+            update_progress(email, course_id,
+                reading_completed_at=_now_iso(),
+                practice_completed_at=_now_iso(),
+                evaluation_completed_at=_now_iso(),
+                evaluation_score=_AN_MODULE_EVAL_SCORES[i],
+                domain_score_after=_AN_MODULE_DOMAIN_SCORES[i],
             )
 
     elif profile_id == "3e":
-        # MK: modules 1 & 2 fully complete; module 3 reading done only; 4-7 locked
         for i, course_id in enumerate(_MK_COURSES):
             seq = i + 1
             if seq <= 2:
-                # fully complete
-                _raw_execute(
-                    f"INSERT INTO {CATALOG}.learner.training_progress "
-                    f"(progress_id, user_email, course_id, module_sequence_order, "
-                    f"is_locked, reading_completed_at, practice_completed_at, "
-                    f"evaluation_completed_at, evaluation_score, domain_score_after) "
-                    f"VALUES (?, ?, ?, ?, false, ?, ?, ?, ?, ?)",
-                    [
-                        str(uuid.uuid4()), email, course_id, str(seq),
-                        _now_iso(), _now_iso(), _now_iso(),
-                        str(_MK_MODULE_EVAL_SCORES[i]),
-                        str(_MK_MODULE_DOMAIN_SCORES[i]),
-                    ],
+                create_progress(email, course_id, seq, is_locked=False)
+                update_progress(email, course_id,
+                    reading_completed_at=_now_iso(),
+                    practice_completed_at=_now_iso(),
+                    evaluation_completed_at=_now_iso(),
+                    evaluation_score=_MK_MODULE_EVAL_SCORES[i],
+                    domain_score_after=_MK_MODULE_DOMAIN_SCORES[i],
                 )
             elif seq == 3:
-                # reading done, practice & evaluation not yet started
-                _raw_execute(
-                    f"INSERT INTO {CATALOG}.learner.training_progress "
-                    f"(progress_id, user_email, course_id, module_sequence_order, "
-                    f"is_locked, reading_completed_at) "
-                    f"VALUES (?, ?, ?, ?, false, ?)",
-                    [str(uuid.uuid4()), email, course_id, str(seq), _now_iso()],
-                )
+                create_progress(email, course_id, seq, is_locked=False)
+                update_progress(email, course_id, reading_completed_at=_now_iso())
             else:
-                # locked
-                _raw_execute(
-                    f"INSERT INTO {CATALOG}.learner.training_progress "
-                    f"(progress_id, user_email, course_id, module_sequence_order, is_locked) "
-                    f"VALUES (?, ?, ?, ?, true)",
-                    [str(uuid.uuid4()), email, course_id, str(seq)],
-                )
+                create_progress(email, course_id, seq, is_locked=True)

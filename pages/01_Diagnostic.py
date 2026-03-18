@@ -7,12 +7,11 @@ No partial saves. On completion, triggers AI scoring + gap map generation.
 import streamlit as st
 import uuid
 import json
-import os
 import sys
 from datetime import datetime
 
 from utils.auth import get_user_email
-from utils.db import execute, query_one
+from utils.db import get_profile, get_latest_diagnostic, save_diagnostic, save_gap_map
 from utils.ai import score_diagnostic, generate_gap_map
 from utils.scoring import DOMAIN_DISPLAY_NAMES
 from utils.styles import inject_global_css
@@ -27,25 +26,17 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 user_email = get_user_email()
 
 # ── Guard: must have a profile ────────────────────────────────────────────────
-profile = query_one(
-    f"SELECT user_email, role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
-    [user_email],
-)
+profile = get_profile(user_email)
 if not profile:
     st.switch_page("pages/00_Welcome.py")
 
 role_id: str = profile["role_id"] if profile else st.session_state.get("role_id", "rm")
 
 # Check for prior completed diagnostic — used to show exit navigation (CX1)
-_prior_diag = query_one(
-    f"SELECT session_id FROM {CATALOG}.learner.diagnostic_sessions "
-    f"WHERE user_email = ? AND completed_at IS NOT NULL LIMIT 1",
-    [user_email],
-)
+_prior_diag = get_latest_diagnostic(user_email)
 _can_exit = bool(_prior_diag)
 
 # ── Load diagnostic items (ordered) ──────────────────────────────────────────
@@ -178,19 +169,16 @@ def complete_diagnostic(responses: list[dict]):
             )
             st.stop()
 
-        # Write diagnostic session to Delta
+        # Write diagnostic session to Firestore
         session_id = st.session_state.get("diag_session_started", str(uuid.uuid4()))
         started_at = st.session_state.get("diag_started_at", datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
         resp_json = json.dumps({r["item_id"]: r["response"] for r in responses}, ensure_ascii=False)
         item_scores_json = json.dumps(item_scores, ensure_ascii=False)
         domain_scores_json = json.dumps(domain_scores, ensure_ascii=False)
         try:
-            execute(
-                f"INSERT INTO {CATALOG}.learner.diagnostic_sessions "
-                f"(session_id, user_email, started_at, completed_at, "
-                f"responses, item_scores, domain_scores, overall_score) "
-                f"VALUES (?, ?, CAST(? AS TIMESTAMP), current_timestamp(), ?, ?, ?, ?)",
-                [session_id, user_email, started_at, resp_json, item_scores_json, domain_scores_json, overall_score],
+            save_diagnostic(
+                session_id, user_email, started_at,
+                resp_json, item_scores_json, domain_scores_json, overall_score,
             )
         except Exception as e:
             st.error(f"Could not save your results. Please try again.\n\n_{e}_")
@@ -212,12 +200,7 @@ def complete_diagnostic(responses: list[dict]):
             try:
                 gap_map_id = str(uuid.uuid4())
                 bullets_json = json.dumps(gap_bullets, ensure_ascii=False)
-                execute(
-                    f"INSERT INTO {CATALOG}.learner.gap_maps "
-                    f"(gap_map_id, user_email, source_type, source_id, bullets, generated_at) "
-                    f"VALUES (?, ?, 'diagnostic', ?, ?, current_timestamp())",
-                    [gap_map_id, user_email, session_id, bullets_json],
-                )
+                save_gap_map(gap_map_id, user_email, "diagnostic", session_id, bullets_json)
             except Exception as _db_err:
                 print(f"[WARNING] gap_map write failed after diagnostic: {_db_err}", file=sys.stderr)
 

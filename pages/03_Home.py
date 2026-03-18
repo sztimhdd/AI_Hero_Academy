@@ -5,11 +5,10 @@ Shown to users who have a course created (in_training or completed state).
 
 import streamlit as st
 import json
-import os
 from datetime import datetime
 
 from utils.auth import get_user_email
-from utils.db import execute, query_one
+from utils.db import get_profile, get_latest_diagnostic, get_all_progress
 from utils.scoring import (
     DOMAIN_DISPLAY_NAMES, get_level_label, get_score_color,
     calculate_overall_score, compute_current_domain_scores,
@@ -26,37 +25,18 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 user_email = get_user_email()
 
 # ── Guards ────────────────────────────────────────────────────────────────────
-profile = query_one(
-    f"SELECT display_name, role_id FROM {CATALOG}.learner.user_profiles "
-    f"WHERE user_email = ?",
-    [user_email],
-)
+profile = get_profile(user_email)
 if not profile:
     st.switch_page("pages/00_Welcome.py")
 
-diag = query_one(
-    f"SELECT session_id, domain_scores, overall_score, completed_at "
-    f"FROM {CATALOG}.learner.diagnostic_sessions "
-    f"WHERE user_email = ? AND completed_at IS NOT NULL "
-    f"ORDER BY completed_at DESC LIMIT 1",
-    [user_email],
-)
+diag = get_latest_diagnostic(user_email)
 if not diag:
     st.switch_page("pages/01_Diagnostic.py")
 
-_raw_progress = execute(
-    f"SELECT progress_id, course_id, module_sequence_order, "
-    f"is_locked, reading_completed_at, practice_completed_at, "
-    f"evaluation_completed_at, evaluation_score, domain_score_after "
-    f"FROM {CATALOG}.learner.training_progress "
-    f"WHERE user_email = ? "
-    f"ORDER BY module_sequence_order",
-    [user_email],
-)
+_raw_progress = get_all_progress(user_email)
 if not _raw_progress:
     st.switch_page("pages/02_Skills_Profile.py")
 
