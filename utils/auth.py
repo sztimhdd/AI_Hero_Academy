@@ -17,7 +17,9 @@ def get_user_email() -> str:
     except Exception:
         pass
 
-    email = os.environ.get("DATABRICKS_USER_EMAIL")
-    if not email:
-        email = os.environ.get("DEV_USER_EMAIL", "dev@example.com")
+    email = (
+        os.environ.get("GCP_USER_EMAIL")           # Cloud Run IAP header injection
+        or os.environ.get("DATABRICKS_USER_EMAIL")  # legacy Databricks path
+        or os.environ.get("DEV_USER_EMAIL", "dev@example.com")
+    )
     return email

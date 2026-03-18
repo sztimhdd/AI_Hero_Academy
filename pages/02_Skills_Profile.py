@@ -6,13 +6,14 @@ Allows retake diagnostic and build/view course.
 
 import streamlit as st
 import json
-import uuid
-import os
 import pandas as pd
 import plotly.graph_objects as go
 
 from utils.auth import get_user_email
-from utils.db import execute, query_one, escape
+from utils.db import (
+    get_profile, get_latest_diagnostic, get_all_diagnostics,
+    get_latest_gap_map, get_all_progress, create_progress,
+)
 from utils.scoring import (
     DOMAIN_DISPLAY_NAMES, DOMAIN_IDS,
     get_level_label, calculate_overall_score,
@@ -31,53 +32,26 @@ st.set_page_config(
 
 inject_global_css()
 
-CATALOG = os.environ.get("UC_CATALOG", "mdlg_ai_shared")
 user_email = get_user_email()
 
 # ── Guard: must have completed diagnostic ─────────────────────────────────────
-profile = query_one(
-    f"SELECT display_name, role_id FROM {CATALOG}.learner.user_profiles WHERE user_email = ?",
-    [user_email],
-)
+profile = get_profile(user_email)
 if not profile:
     st.switch_page("pages/00_Welcome.py")
 
 
 # ── Load data ─────────────────────────────────────────────────────────────────
 def load_latest_diagnostic():
-    return query_one(
-        f"SELECT session_id, completed_at, domain_scores, overall_score "
-        f"FROM {CATALOG}.learner.diagnostic_sessions "
-        f"WHERE user_email = ? AND completed_at IS NOT NULL "
-        f"ORDER BY completed_at DESC LIMIT 1",
-        [user_email],
-    )
+    return get_latest_diagnostic(user_email)
 
 def load_all_diagnostics():
-    return execute(
-        f"SELECT session_id, completed_at, domain_scores, overall_score "
-        f"FROM {CATALOG}.learner.diagnostic_sessions "
-        f"WHERE user_email = ? AND completed_at IS NOT NULL "
-        f"ORDER BY completed_at DESC",
-        [user_email],
-    )
+    return get_all_diagnostics(user_email)
 
 def load_latest_gap_map():
-    return query_one(
-        f"SELECT bullets FROM {CATALOG}.learner.gap_maps "
-        f"WHERE user_email = ? "
-        f"ORDER BY generated_at DESC LIMIT 1",
-        [user_email],
-    )
+    return get_latest_gap_map(user_email)
 
 def load_training_progress():
-    return execute(
-        f"SELECT course_id, module_sequence_order, is_locked, "
-        f"evaluation_completed_at, evaluation_score, domain_score_after "
-        f"FROM {CATALOG}.learner.training_progress "
-        f"WHERE user_email = ? ORDER BY module_sequence_order",
-        [user_email],
-    )
+    return get_all_progress(user_email)
 
 def load_eval_domain_scores(progress_rows):
     """Build a list of {domain_id: score} dicts from completed evaluations."""
@@ -296,20 +270,7 @@ with col_b:
                 try:
                     sequence = compute_module_sequence(current_domain_scores, role_id=profile["role_id"])
                     for i, course_id in enumerate(sequence):
-                        progress_id = str(uuid.uuid4())
-                        is_locked = "true" if i > 0 else "false"
-                        execute(f"""
-                            INSERT INTO {CATALOG}.learner.training_progress
-                              (progress_id, user_email, course_id, module_sequence_order,
-                               is_locked)
-                            VALUES (
-                              '{escape(progress_id)}',
-                              '{escape(user_email)}',
-                              '{escape(course_id)}',
-                              {i + 1},
-                              {is_locked}
-                            )
-                        """)
+                        create_progress(user_email, course_id, i + 1, is_locked=(i > 0))
                     st.session_state["user_state"] = "in_training"
                     st.switch_page("pages/03_Home.py")
                 except Exception as e:
