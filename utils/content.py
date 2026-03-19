@@ -101,6 +101,36 @@ def get_eval_items(course_id: str) -> list:
 
 
 _READING_STRUCTURED: dict | None = None
+_ATOMIC_MODULES: list | None = None
+_ATOMIC_DIAGNOSTIC_ITEMS: dict | None = None
+_DOMAINS_UNIVERSAL: dict | None = None
+
+
+def get_atomic_modules() -> list:
+    """Return all atomic modules from atomic_modules.json (lazy-loaded)."""
+    global _ATOMIC_MODULES
+    if _ATOMIC_MODULES is None:
+        p = _CONTENT_DIR / "atomic_modules.json"
+        _ATOMIC_MODULES = json.loads(p.read_text(encoding="utf-8")) if p.exists() else []
+    return _ATOMIC_MODULES
+
+
+def get_atomic_diagnostic_items() -> dict:
+    """Return all atomic diagnostic items from atomic_diagnostic_items.json (lazy-loaded)."""
+    global _ATOMIC_DIAGNOSTIC_ITEMS
+    if _ATOMIC_DIAGNOSTIC_ITEMS is None:
+        p = _CONTENT_DIR / "atomic_diagnostic_items.json"
+        _ATOMIC_DIAGNOSTIC_ITEMS = json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+    return _ATOMIC_DIAGNOSTIC_ITEMS
+
+
+def get_domains_universal() -> dict:
+    """Return universal domain schema from domains_universal.json (lazy-loaded)."""
+    global _DOMAINS_UNIVERSAL
+    if _DOMAINS_UNIVERSAL is None:
+        p = _CONTENT_DIR / "domains_universal.json"
+        _DOMAINS_UNIVERSAL = json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+    return _DOMAINS_UNIVERSAL
 
 
 def get_reading_structured(course_id: str) -> dict | None:

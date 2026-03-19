@@ -1,0 +1,254 @@
+{
+  "responsible_ai": {
+    "domain_id": "responsible_ai",
+    "title": "Responsible AI Use in Client Relationship Work",
+    "description": "Applying EDC's safe AI-use boundaries before using AI in Relationship Manager workflows—especially when handling non-public client information (financial statements, KYC details, internal risk notes, deal terms). Focus is on sanitizing and abstracting inputs, keeping sensitive content inside approved environments, and avoiding accidental disclosure through AI-generated drafts in Outlook/Teams/Word.",
+    "level_labels": {
+      "0": "Unaware",
+      "1": "Explorer",
+      "2": "Practitioner",
+      "3": "Proficient",
+      "4": "Champion"
+    },
+    "level_descriptors": {
+      "an": {
+        "0": "Unaware of EDC's GenAI data restrictions. May paste confidential content (client financials, internal strategy documents, CRM exports, personal identifiers) into public AI tools or M365 Copilot prompts without consideration.",
+        "1": "Knows in theory that non-public information shouldn't be shared with AI, but struggles to identify what counts as sensitive in practice. May inadvertently include specific client names, deal amounts, or internal credit ratings in prompts, especially under time pressure.",
+        "2": "Consistently applies the public/non-public test before using Copilot. Checks whether data comes from public sources (e.g., published annual reports, press releases) or is confidential (e.g., unpublished financial results, internal risk ratings, personally identifiable information). Uses safe prompting techniques: replaces specific identifiers with generic descriptors, uses ranges instead of exact figures, and reviews AI outputs for accidentally revealed confidential details before sharing.",
+        "3": "Preemptively identifies borderline cases and applies creative abstraction strategies — e.g., summarizing an internal report by providing only high-level trends or anonymized labels ('Client A' instead of the real name) to Copilot. Handles ambiguous cases confidently: errs on the side of caution or seeks guidance rather than guessing. Rewrites prompts to preserve analytical utility while removing compliance risk.",
+        "4": "Serves as a go-to resource on GenAI data compliance for the analyst team. Anticipates novel data-safety challenges (e.g., AI summarisation of embargoed third-party sector reports). Creates team guidelines for anonymizing inputs and documents safe vs. unsafe input patterns. Demonstrates that high-quality analysis can be done with AI without ever exposing confidential information."
+      },
+      "mk": {
+        "0": "Does not distinguish between public and confidential data. May paste raw customer lists, unreleased campaign results, or internal strategy directly into public AI tools, risking privacy and policy breaches.",
+        "1": "Aware of data restrictions but applies them inconsistently. Sometimes shares potentially sensitive marketing info with AI (e.g., uses real client names or internal campaign details in prompts) or fails to consider CASL and privacy implications in AI-assisted content creation.",
+        "2": "Consistently applies the public vs. non-public test. Strips out personal identifiers, proprietary campaign details, and confidential strategy from prompts (e.g., replaces client names with generic descriptors, abstracts internal metrics). Uses AI only in allowed platforms and double-checks outputs for any accidental leaks.",
+        "3": "Proactively handles edge cases of data sensitivity (e.g., anonymizing a small-market client reference that might be identifiable by context). Skillfully rewrites prompts to preserve utility (getting useful copy or insight) while protecting all confidential bits. Ensures AI outputs include required disclaimers (like \"for internal use only\") when needed.",
+        "4": "Advocates and innovates for data-safe AI usage in marketing. Creates team guidelines or templates for sanitizing marketing data before AI use. Identifies new risks (e.g., AI translation of client quotes without consent, or inadvertent disclosure of campaign timing) and advises colleagues on compliant solutions. Serves as the model of protecting customer and company information while leveraging AI for efficiency."
+      },
+      "rm": {
+        "0": "Copies client names, financial figures, or CRM notes directly into non-approved AI tools. Treats AI as a shortcut for analysis without considering confidentiality risks.",
+        "1": "Knows the rule 'don't share non-public info' but struggles in real situations (e.g., what counts as non-public in a term sheet draft, internal risk rating references, or KYC details). Sanitization is inconsistent.",
+        "2": "Consistently applies a public/non-public check before prompting. Rewrites prompts to remove client identifiers and sensitive numbers while keeping enough context to get useful help (e.g., 'mid-market manufacturer exporting to US/EU' instead of full CRM record).",
+        "3": "Handles borderline cases confidently (e.g., internal pipeline notes, inferred financial stress, internal exposure/risk details). Uses SAFE-style abstraction so outputs remain useful for meeting prep, credit memo drafting, and follow-ups without leaking confidential content.",
+        "4": "Spots new risk patterns (e.g., prompts that could re-identify clients through unique descriptors). Shares safe prompt examples with the team, reinforces correct tool boundaries, and models careful review before sending client-facing content."
+      },
+      "uw": {
+        "0": "Does not distinguish public vs non-public underwriting information. May paste raw borrower financial statements, CIS buyer-file text, or internal ratings into non-approved AI tools or personal accounts.",
+        "1": "Knows the rule ('don't share non-public info') but struggles with real underwriting edge cases—e.g., whether a risk rating, covenant headroom, or internal rationale counts as non-public. Redaction is inconsistent or removes too much to be useful.",
+        "2": "Consistently applies safe abstraction: removes names, IDs, exact figures, and deal-identifying details while preserving underwriting logic. Uses EDC-approved tools/surfaces and avoids exposing CIS/MBC/FACT content in unapproved contexts.",
+        "3": "Handles borderline cases confidently (e.g., internal risk outlook commentary, 'confidential' buyer-file notes, sanctions-related details). Rewrites prompts to preserve utility while removing risk, and adds explicit constraints (no guessing, cite sources, don't invent figures).",
+        "4": "Proactively identifies new compliance risks in emerging workflows (e.g., summarizing long credit papers, using external research tools) and teaches safe patterns. Creates team-ready prompt templates/checklists that align with policy and audit expectations."
+      }
+    }
+  },
+  "strategic_prompting": {
+    "domain_id": "strategic_prompting",
+    "title": "Strategic Prompting for RM Workflows",
+    "description": "Structuring prompts so AI outputs are directly usable in RM work—prospect research summaries, tailored outreach drafts, discovery questions, pitch-deck outlines, and internal handoff notes—using the right context, constraints, and format so results don't become generic sales fluff.",
+    "level_labels": {
+      "0": "Unaware",
+      "1": "Explorer",
+      "2": "Practitioner",
+      "3": "Proficient",
+      "4": "Champion"
+    },
+    "level_descriptors": {
+      "an": {
+        "0": "Has not used AI prompting in daily analytical tasks. May try one-word or very vague prompts and cannot describe what makes a prompt effective.",
+        "1": "Writes basic prompts ('Summarize this report') and gets generic or overly long outputs that require significant manual revision. Often unsure how to guide AI to specific insights or formats needed for internal stakeholders.",
+        "2": "Uses structured prompts that provide context (dataset or report background), define the AI's role (financial analyst, risk advisor), specify the task (summary, analysis, draft), and request a clear format (bulleted list, table, executive summary). Output is usually on-point and needs only minor editing to be useful.",
+        "3": "Adapts and refines prompts for complex analytical scenarios. Anticipates when the AI might misinterpret a request and preempts issues with guiding details or constraints (excluding certain sections, targeting specific metrics or time periods). Iterates effectively when initial output misses the mark — producing high-quality drafts for internal reports or presentations.",
+        "4": "Designs and shares effective prompt templates for common analyst tasks (financial analysis, risk memos, data quality summaries, board briefings). Coaches colleagues on the CRAF framework. Identifies new opportunities to use multi-step chained prompts to streamline analytical workflows across the team."
+      },
+      "mk": {
+        "0": "Uses AI without thought to prompt structure. May type trivial commands like \"Write about EDC's export financing\" and get generic, unusable content that misses audience and tone.",
+        "1": "Attempts prompting but misses key elements (e.g., provides product info but no audience context, tone, or format). Outputs often come out off-brand or overly generic, requiring significant editing and rewrites.",
+        "2": "Writes prompts with clear context (target market, audience persona, product specifics), a defined AI role, explicit action, and desired format. For example, prompts Copilot to \"Draft a 2-paragraph invitation email for a trade show, upbeat but professional tone, include event date and EDC value prop.\" Usually gets a solid draft that needs only minor tweaks.",
+        "3": "Tailors prompts for complex marketing scenarios. Dynamically adds constraints (e.g., 'do not mention pricing,' 'use a friendly but authoritative tone,' 'include a call-to-action') and iterates based on output. Anticipates where the AI might misunderstand (like industry jargon or EDC-specific terminology) and includes clarifications in the prompt.",
+        "4": "Develops prompt templates and best practices for marketing use cases (campaign emails, blog posts, social media series, data summaries). Mentors colleagues on being specific and structured in prompts. Pushes the boundaries of AI capabilities by creative prompt design, while consistently achieving on-brand, high-quality results. Shares successful prompt patterns across the team."
+      },
+      "rm": {
+        "0": "Has not used AI prompting in RM tasks. Can't explain what information the AI needs to produce usable outreach or meeting prep.",
+        "1": "Uses simple prompts ('draft an email', 'summarize this company'). Output is generic and requires heavy rewriting; often misses exporter context or EDC positioning.",
+        "2": "Uses structured prompts with clear audience, purpose, and format (e.g., 120-word email + 3 bullet-value points + 2 discovery questions). Outputs are usually usable with minor edits.",
+        "3": "Iterates intelligently when output misses the mark—tightens constraints, adds a competitive/industry angle, and requests specific deliverables (call script, objection handling, next-step options) matched to deal stage.",
+        "4": "Builds reusable prompt templates for common RM flows (new lead → first email → call prep → follow-up). Coaches peers on prompt structure and shares examples that improve response rates while staying compliant."
+      },
+      "uw": {
+        "0": "Has not used prompting for underwriting tasks or can't explain what makes an effective prompt beyond 'summarize this'.",
+        "1": "Writes basic prompts. Output is often generic, misses underwriting-relevant sections (risk mitigants, conditions, rationale), or is too long/too shallow to paste into a credit submission.",
+        "2": "Uses a structured prompt (context + constraints + required sections). Produces a credit analysis narrative that fits the underwriting template with minor edits and includes explicit 'don't invent' and 'flag uncertainties' instructions.",
+        "3": "Adapts prompts for complex deals (multi-tranche structures, unusual collateral, policy exceptions). Iterates quickly: adds missing risk factors, forces table outputs, and requests traceable reasoning aligned to the credit memo format.",
+        "4": "Builds reusable prompt templates for recurring underwriting workflows (financial statement write-ups, covenant drafting, approval-briefs). Coaches colleagues and documents examples in a shared team space."
+      }
+    }
+  },
+  "critical_eval": {
+    "domain_id": "critical_eval",
+    "title": "Critical Evaluation of AI Outputs",
+    "description": "Reviewing AI outputs with a skeptical lens before using them in high-stakes RM work: financial ratio commentary from Excel, summaries of meetings/emails, pipeline insights from dashboards, and client-facing drafts. Focus is on catching incorrect numbers, invented facts, and misapplied interpretations before logging into CRM or sending externally.",
+    "level_labels": {
+      "0": "Unaware",
+      "1": "Explorer",
+      "2": "Practitioner",
+      "3": "Proficient",
+      "4": "Champion"
+    },
+    "level_descriptors": {
+      "an": {
+        "0": "Assumes Copilot's outputs are accurate by default. Tends to copy-paste AI-generated analysis or summaries (variance explanations, credit memo drafts) into deliverables without checking against source data or verifying claims.",
+        "1": "Skims AI outputs and corrects obvious mistakes like typos, but doesn't systematically verify facts or numbers. May overlook subtle errors in financial calculations or misattributed statements when reviewing AI-created content.",
+        "2": "Consistently cross-checks key details from AI outputs against reliable sources. Compares Copilot's summarized financial figures or risk ratings to the original spreadsheet and CRM data, and removes or corrects any discrepancies. Understands that AI can generate plausible-sounding but incorrect explanations — verifies any reasoning (such as causes of a budget variance) by consulting the actual data or documents before presenting results.",
+        "3": "Routinely identifies subtle inaccuracies or implausible reasoning in AI outputs. Flags statements that don't align with source data (a trend not actually in the dataset, a misinterpreted KPI) and uses judgment to decide what to keep, correct, or discard. Re-prompts Copilot for source citations or reruns analyses with different parameters to validate findings. Prevents misinformation by requiring evidence for each major AI-generated insight.",
+        "4": "Develops verification checklists or SOPs for the analyst team when using AI-generated content. Trains colleagues on common failure modes of AI in analytics (hallucinated numeric calculations, incorrect attributions in meeting notes). Advocates for source-citation features and helps establish a culture of 'trust but verify' across the team."
+      },
+      "mk": {
+        "0": "Assumes AI outputs are correct and publishes or uses them without review. Fails to catch AI-introduced errors (like an incorrect interest rate, a made-up statistic, or a misrepresented program feature) or problematic language.",
+        "1": "Does a basic read-through of AI-generated text but may miss subtle errors or implied promises. Might catch obvious mistakes (like a wrong company name) but not double-check numerical claims, program details, or legal fine print.",
+        "2": "Routinely verifies AI outputs against trusted sources. If Copilot drafts a blog post, cross-references any statistics with source data, ensures translations of slogans are accurate, and checks that no policy-violating language (e.g., \"guaranteed\" returns) slipped in. Removes or corrects any content that can't be verified.",
+        "3": "Catches nuanced issues: e.g., an AI-generated customer success story that sounds plausible but includes a product usage that never happened, or a claim about EDC's services that is slightly overstated. Uses domain knowledge to spot where the AI over-generalized or oversold. Refines prompts to eliminate recurring inaccuracies.",
+        "4": "Sets up quality control checklists for AI outputs and shares them with the team. Can explain common failure modes of AI in marketing (such as outdated data, invented statistics, mistranslated idioms) and coaches peers on fact-checking techniques. Helps integrate a \"verify step\" into standard content and analysis workflows, ensuring external communications are always accurate and compliant."
+      },
+      "rm": {
+        "0": "Assumes AI outputs are correct. Copies AI-written financial commentary or meeting recaps into records/emails without checking source data.",
+        "1": "Skims AI output for obvious issues but doesn't systematically verify claims (dates, figures, commitments, next steps) against notes, files, or CRM entries.",
+        "2": "Routinely verifies outputs against source material (client docs, meeting notes, dashboard numbers). Corrects or removes anything unverifiable before it becomes a client message or CRM update.",
+        "3": "Catches subtle, plausible errors (e.g., swapped units, misread variance drivers, wrong geography). Adjusts prompts to reduce hallucinations and asks AI to cite which input it used (where possible), then confirms manually.",
+        "4": "Creates a simple verification checklist for team use (numbers, dates, commitments, product claims). Teaches peers common failure modes in summaries and analyses, improving overall record quality."
+      },
+      "uw": {
+        "0": "Treats AI output as accurate by default. Copies AI text into a credit memo or CIS/MBC notes without checking against source documents.",
+        "1": "Skims outputs for obvious errors but does not systematically verify. May miss plausible-but-wrong details (e.g., swapped years, misstated leverage, misclassified covenant).",
+        "2": "Routinely verifies AI output against originals (financial statements, model outputs, credit reports, policy excerpts). Removes unverifiable claims and recalculates any key ratios that would influence the recommendation.",
+        "3": "Uses a repeatable verification checklist and prompt constraints (cite, quote, 'unknown if not present'). Detects subtle failure modes like 'false certainty' and incomplete risk coverage.",
+        "4": "Creates team verification standards for AI-assisted underwriting (what must be recalculated, what must be cross-checked in system-of-record). Teaches peers how to reduce hallucinations through better prompting and sourcing discipline."
+      }
+    }
+  },
+  "data_decision": {
+    "domain_id": "data_decision",
+    "title": "Data-Driven Decision Making and Portfolio Prioritization",
+    "description": "Using AI and analytics to prioritize effort and improve decisions: interpreting portfolio dashboards, spotting aging/stale leads, connecting market trends to outreach strategy, and stress-testing assumptions—while recognizing where AI lacks the commercial and relationship context the RM holds.",
+    "level_labels": {
+      "0": "Unaware",
+      "1": "Explorer",
+      "2": "Practitioner",
+      "3": "Proficient",
+      "4": "Champion"
+    },
+    "level_descriptors": {
+      "an": {
+        "0": "Does not use AI for data analysis or portfolio decisions. Relies exclusively on manual Excel calculations, static reports, and personal intuition when interpreting financial or portfolio data.",
+        "1": "Uses AI to summarise sector reports or market news. Does not connect AI outputs to specific portfolio decisions or analytical conclusions — treats AI-generated summaries as informational rather than analytical inputs.",
+        "2": "Uses AI to analyse portfolio performance data, flag anomalies or outliers, and draft initial variance interpretations. Validates AI-generated conclusions against source spreadsheets and known business context before including them in deliverables. Distinguishes between AI-detected patterns and AI-inferred explanations — verifying explanations independently.",
+        "3": "Designs AI queries to surface patterns across multiple data dimensions (sector, time period, exposure type, performance metric). Uses AI to stress-test preliminary interpretations ('Is this decline likely seasonal or structural?') before presenting to stakeholders. Builds multi-step analytical workflows where AI assists at each stage — extraction, pattern detection, narrative drafting — with human validation at each transition.",
+        "4": "Develops team-level AI-assisted analytical workflows for recurring deliverables (quarterly portfolio reviews, annual sector assessments). Identifies data signals and AI query patterns that consistently surface useful insights. Shares prompt templates and verification protocols with peers — raising the team's overall analytical output quality and consistency."
+      },
+      "mk": {
+        "0": "Makes marketing decisions purely on gut or gets overwhelmed by data. Does not use AI analytics tools at all, sticking to manual analysis (which might be shallow or slow), or alternatively trusts one data point without verification.",
+        "1": "Has experimented with AI for analysis, e.g., asking Copilot to summarize a campaign report or highlight top-performing segments, but doesn't integrate it into decision-making. Might get interesting charts or trends from AI but is unsure how to interpret them and often defaults back to old habits.",
+        "2": "Uses AI routinely to crunch numbers and highlight patterns—for instance, asks Copilot to compare this quarter's email click-through rates by product line or segment. Verifies AI-highlighted trends with underlying data and considers external factors (e.g., a holiday affecting engagement, a competing campaign) before deciding on a course of action.",
+        "3": "Combines multiple data sets in AI analysis (website analytics, email performance, CRM outcomes, social engagement) to uncover complex insights like lead conversion drivers or optimal send times. Cross-examines AI's conclusions with team knowledge (e.g., consulting Sales if an AI-flagged \"hot segment\" truly seems promising). Adjusts strategies confidently, using AI as a support tool, not an oracle.",
+        "4": "Develops new metrics or dashboards with AI assistance to better measure marketing impact and ROI. Shares success stories where AI analysis led to improvement (and how verification was done). Coaches peers on asking the right analysis questions and verifying answers. Ensures the team moves toward data-informed decisions consistently, with AI as an accelerator that doesn't bypass human insight."
+      },
+      "rm": {
+        "0": "Doesn't use data tools to guide pipeline decisions. Relies on intuition and ad-hoc lists; misses aging leads or SLA risks.",
+        "1": "Views dashboards but mostly consumes metrics passively. Uses AI for generic market commentary without linking insights to specific pipeline actions.",
+        "2": "Uses dashboards and AI explanations to take concrete actions: flags leads over SLA, identifies aging qualified leads, and chooses next-best outreach targets—then sanity-checks with relationship context and workload.",
+        "3": "Frames better questions for AI and analytics (by segment, sector, activity recency). Uses data to run 'what if' thinking (e.g., which accounts are most likely win-back) and documents rationale for prioritization.",
+        "4": "Shares repeatable portfolio review patterns with the team (filters, thresholds, a short prioritization rubric). Helps peers interpret dashboards correctly and avoid false certainty from AI-generated insights."
+      },
+      "uw": {
+        "0": "Does not use AI to support analysis or prioritization. Relies on manual review and intuition without structuring the decision logic.",
+        "1": "Uses AI for summaries but doesn't connect outputs to a decision (approve/decline/conditions). May accept AI's prioritization without validating inputs or understanding assumptions.",
+        "2": "Uses AI to identify key drivers (YoY variances, leverage changes, working capital shifts) and ties them to concrete underwriting actions (ask for clarifications, adjust terms, escalate). Validates against source data and policy limits.",
+        "3": "Designs multi-factor queries (sector + country risk + exposure concentration + covenant trajectory). Uses AI to stress-test assumptions and propose mitigants, then confirms with system-of-record data and specialist input.",
+        "4": "Builds team templates for portfolio reviews and variance narratives. Shares decision heuristics that clarify when AI signals are 'noise' vs 'actionable' and helps peers avoid overconfidence in model-driven output."
+      }
+    }
+  },
+  "relationship_intel": {
+    "domain_id": "relationship_intel",
+    "title": "Relationship Intelligence and Context Synthesis",
+    "description": "Using AI to synthesize relationship history and context so every interaction feels informed: compiling interaction timelines from emails/notes, surfacing open threads, identifying stakeholder preferences, and tailoring prep for quarterly reviews and high-stakes calls—without over-relying on automated recaps.",
+    "level_labels": {
+      "0": "Unaware",
+      "1": "Explorer",
+      "2": "Practitioner",
+      "3": "Proficient",
+      "4": "Champion"
+    },
+    "level_descriptors": {
+      "an": {
+        "0": "Has not used AI to research or prepare for internal stakeholder interactions. Delivers the same analytical format to all audiences without adapting to their specific decision-making context or known priorities.",
+        "1": "Uses AI to generate generic background on a topic or audience (e.g., 'summarize what underwriters care about'). Output is not tailored to the specific stakeholder or deliverable context — the analyst still manually rewrites the framing for each audience.",
+        "2": "Uses AI to synthesize what is known about a specific stakeholder's role, decision-making needs, and recent concerns — then adjusts the structure, emphasis, and level of detail of the deliverable accordingly. For example, uses Copilot to reframe a sector analysis differently for a risk-focused underwriter audience versus a growth-focused BD leader audience.",
+        "3": "Anticipates stakeholder objections, knowledge gaps, and preferred evidence types before delivering a briefing. Uses AI to surface previous analytical outputs or meeting notes relevant to the stakeholder's current priorities, and builds deliverables that address those needs pre-emptively. Adapts the AI briefing based on the forum (committee vs. one-to-one vs. written memo).",
+        "4": "Develops AI-assisted audience-profiling templates for repeated internal stakeholder types (UW committee, RM pipeline review, executive strategy session). Coaches peers on how to research an audience before a briefing and how to use Copilot to rapidly tailor analytical outputs. Acts as a model for audience-aware, stakeholder-centric analytical communication."
+      },
+      "mk": {
+        "0": "Relies only on mass, one-size-fits-all content. Does not use available data about client or segment, nor AI tools, to customize messaging. Might blast the same generic email to all contacts, or inadvertently share sensitive client info with AI when attempting personalization.",
+        "1": "Uses AI for some basic research on prospects (e.g., finds company descriptions or recent news) but stops short of true personalization. May incorporate obvious public facts into outreach, but misses deeper context from internal data or over-shares internal CRM notes with AI when trying to personalize.",
+        "2": "Effectively combines AI-sourced insights with internal knowledge to craft tailored messages. For example, uses AI to get industry trends for a prospect's sector, then manually adds knowledge of the prospect's specific situation from CRM (without giving those details to the AI) to shape a customized value proposition.",
+        "3": "Anticipates client needs by leveraging patterns (like AI analysis of similar prospects) and the history of the account. Produces deeply personalized content—e.g., a campaign email that references a prospect's recent milestones or pain points, all drawn from approved data. Never exposes non-public client strategies or confidential details to AI, yet still uses them to guide messaging.",
+        "4": "Leads the way in account-centric AI usage. Builds playbooks for using AI to gather competitive intelligence and prospect industry news. Mentors colleagues on using AI to craft messages that feel individually tailored. Ensures that the team's AI usage always respects client confidentiality while improving the relevance and impact of outreach."
+      },
+      "rm": {
+        "0": "Preps for meetings by memory or manual CRM review only. Doesn't use AI to synthesize relationship history or spot patterns.",
+        "1": "Uses AI for generic company research or a high-level recap. Output isn't tied to the specific relationship (deal stage, past friction points, internal commitments).",
+        "2": "Uses AI to produce a focused relationship brief: last interactions, unresolved asks, stakeholder map, and suggested agenda—then validates against CRM and key email threads before a call.",
+        "3": "Identifies relationship signals (e.g., repeated concerns, slow response patterns, decision-maker preferences). Adapts outreach and meeting structure accordingly, and avoids 'surprise' topics by confirming context.",
+        "4": "Builds a lightweight relationship-brief template for the team (handoffs, annual reviews, escalations). Coaches peers to use AI as a starting point while preserving nuance and trust."
+      },
+      "uw": {
+        "0": "Does not use AI to prepare for sensitive customer interactions. Replies reactively, relying on memory and templates without tailoring.",
+        "1": "Uses AI to draft replies but outputs are generic, overly apologetic, or too technical. Misses the customer's actual concern and may omit the concrete next step needed to move the case forward.",
+        "2": "Uses AI to extract key concerns, summarize the history, and draft a tailored response that balances clarity, empathy, and policy consistency. Ensures the message avoids internal-only details and aligns with approved template language where appropriate.",
+        "3": "Anticipates objections and selects the right level of detail for the audience (policyholder vs broker vs internal AM). Uses AI to propose options/alternatives and to keep tone steady under pressure, then edits for precision and compliance.",
+        "4": "Develops 'relationship playbooks' for high-friction scenarios (declines, reductions, sanctions-related constraints) and shares prompt patterns for consistent stakeholder management across the team."
+      }
+    }
+  },
+  "augmented_comm": {
+    "domain_id": "augmented_comm",
+    "title": "Augmented Communication Across M365 Surfaces",
+    "description": "Choosing the right M365 Copilot surface for RM communication work and chaining outputs end-to-end: meeting recap → action list → CRM update → follow-up email → internal handoff. Emphasis is on speed with control: accurate, compliant, and audience-appropriate messages across Outlook/Teams/Word/PowerPoint.",
+    "level_labels": {
+      "0": "Unaware",
+      "1": "Explorer",
+      "2": "Practitioner",
+      "3": "Proficient",
+      "4": "Champion"
+    },
+    "level_descriptors": {
+      "an": {
+        "0": "Has not used Copilot features in M365 tools for analytical or communication tasks. Manually copies content between apps (Teams meeting notes to Word, Excel data to email) and is unaware of which tools have AI capabilities.",
+        "1": "Has tried one or two Copilot features (e.g., drafting an email with Outlook Copilot or summarizing a document in Word). Does not connect tools into multi-step analytical workflows — still manually transfers data and summaries between applications.",
+        "2": "Uses at least two M365 Copilot surfaces regularly for analytical work (e.g., Word for structuring a sector brief, Excel for summarizing model outputs). Connects outputs from one tool into the next step without manual re-entry — for example, using a Teams meeting recap as context when drafting a follow-up briefing in Word.",
+        "3": "Designs multi-step communication workflows across 3+ Copilot surfaces. Chooses the right entry point based on input type and output goal (data-in → Excel Copilot; meeting recap-in → Teams then Word; deliverable-out → Outlook). Recovers gracefully when one step produces poor output — adjusts the prompt before moving to the next tool rather than abandoning the workflow.",
+        "4": "Documents and shares analytical communication workflows with the team (e.g., 'how to go from portfolio data to briefing deck to stakeholder email using Copilot'). Identifies new Copilot surfaces or features applicable to analyst work. Trains peers on multi-step patterns and helps eliminate unnecessary manual steps across the team."
+      },
+      "mk": {
+        "0": "Does not use AI in communication workflows. Writes everything manually or uses each tool in isolation, unaware that Copilot could automate hand-offs (like from a transcript to summary) or help with translation. Struggles with repetitive comm tasks and manual formatting.",
+        "1": "Has tried AI in one tool (e.g., uses Outlook's \"Draft with Copilot\" for an email) but uses it as a standalone convenience. Still copies and pastes information manually between apps. May not realize, for example, that Teams can summarize meetings or that Word can help format and structure content for publishing.",
+        "2": "Regularly uses at least three Copilot-enabled apps for comms. For example, after a stakeholder meeting, uses Teams Copilot for the meeting recap, then Word Copilot to draft a summary for the intranet, and Outlook Copilot to tailor follow-up emails. Understands which tool fits each stage (drafting long-form in Word vs. quick messages in Outlook) and moves outputs from one to another smoothly.",
+        "3": "Designs multi-step workflows with AI assist. For instance, they might use Copilot in PowerPoint to turn a quarterly report into slides, then Teams to generate talking points from those slides for a team meeting, then Outlook to craft a message sharing the deck with stakeholders. Can troubleshoot when one tool's output isn't perfect (e.g., editing the Word draft before using it in an email). Ensures French translations or alternative formats are addressed by the right tool.",
+        "4": "Optimizes and shares end-to-end AI workflows for communications. Maybe creates a guide for the team on how to go from a webinar recording to a customer email plus an internal summary using Copilot. Always up to date on new Copilot features in M365 apps and pilots them (e.g., testing the latest Designer or PowerPoint AI features for marketing visuals). Sets a high bar for quality control in AI-assisted communications—every AI-drafted message that goes out is as polished and compliant as if written from scratch."
+      },
+      "rm": {
+        "0": "Unaware of Copilot capabilities across Outlook/Teams/Word/PowerPoint/Excel. Drafts everything manually and doesn't reuse AI outputs across steps.",
+        "1": "Uses Copilot in one place (e.g., email drafting) but doesn't connect it to record governance (actions, owners) or pipeline hygiene.",
+        "2": "Uses multiple Copilot surfaces and a simple chain (e.g., Teams recap → Outlook follow-up). Ensures action items are accurate and assigns owners clearly before sharing or logging.",
+        "3": "Designs multi-step workflows across 3+ surfaces (notes → recap → CRM fields → follow-up + internal summary). Recovers when one step is weak (re-prompts, tightens format, re-checks facts).",
+        "4": "Documents best-practice chains for the team (templates + do/don't). Encourages consistent record governance and teaches peers how to keep outputs accurate and compliant under time pressure."
+      },
+      "uw": {
+        "0": "Has not used Copilot features across M365 tools or does not know which surfaces are best for which underwriting tasks.",
+        "1": "Uses a single Copilot feature (often email drafting) but doesn't connect outputs across tools. Re-enters the same info manually in multiple places.",
+        "2": "Uses at least three surfaces for underwriting communications and documentation (e.g., Excel → Word → Outlook). Builds a simple chain workflow and retains traceability (what came from where, what was verified).",
+        "3": "Designs multi-step workflows across 3+ surfaces, choosing the best entry point based on input type (tables vs long text vs threads). Recovers gracefully when a step produces weak output and knows when to stop using AI and switch to manual.",
+        "4": "Documents and shares 'standard chains' for common underwriting scenarios (urgent decision, committee pack, customer-care request). Helps the team reduce duplicate work and improve consistency without compromising confidentiality."
+      }
+    }
+  }
+}
