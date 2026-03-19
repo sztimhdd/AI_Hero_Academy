@@ -396,13 +396,13 @@ utils/
   sequencing.py               # module sequence algorithm
   styles.py                   # inject_global_css(); section_header()
 content/
-  roles.json                  # {role_id: {...}} — rm + uw + an
-  domains.json                # role-scoped keys (rm_responsible_ai, uw_responsible_ai, an_responsible_ai, ...)
-  diagnostic_items.json       # list of 54 items (18 RM + 18 UW + 18 AN)
-  courses.json                # {course_id: {...}} — 21 courses (7 per role)
-  reading_content.json        # {course_id: {...}} — 21 entries
-  practice_scenarios.json     # {course_id: {...}} — 21 entries
-  evaluation_items.json       # {course_id: [{...}]} — 84 items (21 courses × 4)
+  roles.json                  # {role_id: {...}} — rm + uw + an + mk
+  domains.json                # role-scoped keys (rm_responsible_ai, uw_responsible_ai, an_responsible_ai, mk_responsible_ai, ...)
+  diagnostic_items.json       # list of 72 items (18 RM + 18 UW + 18 AN + 18 MK)
+  courses.json                # {course_id: {...}} — 28 courses (7 per role × 4 roles)
+  reading_content.json        # {course_id: {...}} — 28 entries
+  practice_scenarios.json     # {course_id: {...}} — 28 entries
+  evaluation_items.json       # {course_id: [{...}]} — 112 items (28 courses × 4)
 scripts/
   generate_course_content.py  # multi-agent LLM pipeline for new role content
   reset_uat_user.py           # reset UAT user; --profile {course-built|m1-done|all-done} for mid-journey states

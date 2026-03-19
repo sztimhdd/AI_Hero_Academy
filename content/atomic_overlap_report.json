@@ -1,0 +1,96 @@
+{
+  "merge_candidates": [
+    {
+      "domain": "critical_eval",
+      "atom_ids": [
+        "critical_eval__an_c3_critical_eval",
+        "critical_eval__mk_c3_critical_eval",
+        "critical_eval__rm_c3_critical_eval",
+        "critical_eval__uw_c3_critical_eval"
+      ],
+      "source_course_ids": [
+        "an_c3_critical_eval",
+        "mk_c3_critical_eval",
+        "rm_c3_critical_eval",
+        "uw_c3_critical_eval"
+      ],
+      "min_pairwise_score": 0.09,
+      "avg_pairwise_score": 0.18
+    },
+    {
+      "domain": "relationship_intel",
+      "atom_ids": [
+        "relationship_intel__rm_c4_relationship_intel",
+        "relationship_intel__uw_c4_relationship_intel"
+      ],
+      "source_course_ids": [
+        "rm_c4_relationship_intel",
+        "uw_c4_relationship_intel"
+      ],
+      "min_pairwise_score": 0.09,
+      "avg_pairwise_score": 0.09
+    },
+    {
+      "domain": "responsible_ai",
+      "atom_ids": [
+        "responsible_ai__an_c1_responsible_ai",
+        "responsible_ai__mk_c1_responsible_ai",
+        "responsible_ai__rm_c1_responsible_ai",
+        "responsible_ai__uw_c1_responsible_ai"
+      ],
+      "source_course_ids": [
+        "an_c1_responsible_ai",
+        "mk_c1_responsible_ai",
+        "rm_c1_responsible_ai",
+        "uw_c1_responsible_ai"
+      ],
+      "min_pairwise_score": 0.09,
+      "avg_pairwise_score": 0.17
+    },
+    {
+      "domain": "augmented_comm",
+      "atom_ids": [
+        "augmented_comm__an_c6_augmented_comm",
+        "augmented_comm__mk_c6_augmented_comm"
+      ],
+      "source_course_ids": [
+        "an_c6_augmented_comm",
+        "mk_c6_augmented_comm"
+      ],
+      "min_pairwise_score": 0.09,
+      "avg_pairwise_score": 0.09
+    },
+    {
+      "domain": "strategic_prompting",
+      "atom_ids": [
+        "strategic_prompting__an_c2_strategic_prompting",
+        "strategic_prompting__mk_c2_strategic_prompting",
+        "strategic_prompting__rm_c2_strategic_prompting",
+        "strategic_prompting__uw_c2_strategic_prompting"
+      ],
+      "source_course_ids": [
+        "an_c2_strategic_prompting",
+        "mk_c2_strategic_prompting",
+        "rm_c2_strategic_prompting",
+        "uw_c2_strategic_prompting"
+      ],
+      "min_pairwise_score": 0.09,
+      "avg_pairwise_score": 0.16
+    },
+    {
+      "domain": "data_decision",
+      "atom_ids": [
+        "data_decision__an_c5_data_decision",
+        "data_decision__mk_c5_data_decision"
+      ],
+      "source_course_ids": [
+        "an_c5_data_decision",
+        "mk_c5_data_decision"
+      ],
+      "min_pairwise_score": 0.09,
+      "avg_pairwise_score": 0.09
+    }
+  ],
+  "review_flags": [],
+  "generated_at": "2026-03-19T15:33:41.196397+00:00"
+}

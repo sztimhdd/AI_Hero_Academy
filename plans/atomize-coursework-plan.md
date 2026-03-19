@@ -7,12 +7,51 @@
 
 ---
 
+## Product Vision
+
+The end goal is a product that can serve **any professional role** given a LinkedIn profile
+(or equivalent self-description), with no hardcoded role list. The six-domain hexagon model
+is already profession-agnostic — it measures AI literacy, not finance skills. The only thing
+tying it to specific roles was the content framing. Atomization strips that framing out.
+
+**The full any-role pipeline (across phases):**
+
+```text
+LinkedIn profile
+    → extract: job_title, industry, company_type, seniority
+    → map to:  {role}, {org_type}, {case_type}, {sensitivity_level}
+    → run diagnostic (templatized items, domain-scoped not role-scoped)
+    → score 6 domains
+    → sequence 28+ atoms by gap priority
+    → instantiate atom templates at render time with profile values
+    → AI coach addresses "Senior Credit Analyst at a regional bank"
+       not a hardcoded "Relationship Manager at EDC"
+```
+
+A supply chain manager, HR business partner, product manager, or civil engineer all get a
+fully personalised AI skills curriculum from the same atom library.
+
+**Four gaps between Phase 0.5 and the any-role vision** (later phases, not this script):
+
+| Gap | Phase | Work |
+| --- | --- | --- |
+| Diagnostic items are still role-hardcoded | 0.6 | Same templatization treatment as practice scenarios |
+| Domain keys are role-scoped (`rm_prompting`) | 0.7 | Universal domain schema; instantiated with learner role |
+| No runtime placeholder instantiation layer | 0.7 | `instantiate_atom(atom, profile)` ~50 lines |
+| Role selection UI → LinkedIn onboarding | 1 | LinkedIn OAuth or manual title+industry entry |
+
+Phase 0.5 (this script) closes none of those gaps directly, but makes all four tractable
+by producing a clean, templatized content store.
+
+---
+
 ## Purpose
 
 Phase 0.5 converts the 28 existing RM/UW/AN/MK modules into role-agnostic **atomic** modules
 stored in `content/atomic_modules.json`. The app DOES NOT change — it keeps reading from
-the original JSON files throughout. The output is a parallel data store ready for Phase 1
-(PM + Engineer atoms) and Phase 3 (path assembler activation).
+the original JSON files throughout. The output is a parallel data store ready for Phase 0.6
+(diagnostic templatization), Phase 1 (PM + Engineer atoms), and Phase 3 (path assembler
+activation).
 
 ---
 
@@ -367,10 +406,21 @@ Rules:
 
 ## Script Design: `scripts/atomize_coursework.py`
 
+**Scope**: dev-time batch script only — not deployed to Cloud Run. The app itself runs on
+GCP/Gemini (post phase-d migration). This script runs locally against the Databricks serving
+endpoints, exactly like `scripts/enrich_reading_content.py`, and writes static output files
+that are committed and bundled with the app.
+
 **SDK pattern**: same as `scripts/enrich_reading_content.py` — `WorkspaceClient`, `tenacity`
 retries, `ThreadPoolExecutor`, temperature=0.0 on all calls.
 
 **Model**: `SONNET_ENDPOINT = os.environ.get("SONNET_ENDPOINT", "databricks-claude-sonnet-4-6")`
+
+**Why Sonnet, not Haiku**: `enrich_reading_content.py` uses Haiku for purely extractive
+structured parsing (card/guardrail extraction from existing text). This script must perform
+genuine de-roling and re-writing (Calls 2–6) — replacing implicit role framing, inferring
+placeholder boundaries, generating role-adaptive hints. That requires stronger instruction
+following. Sonnet is justified; Haiku would produce inconsistent placeholder coverage.
 
 **Concurrency**: `ThreadPoolExecutor(max_workers=4)` — concurrent across courses;
 6 calls sequential within each course.
@@ -450,7 +500,7 @@ tasks           : 4 items — skill_focus: [Apply SAFE Step 1, ...]
 mcq_options     : T2: 3 options (best: "Replace all client-specific figures with directional ranges")
                   T3: 3 options (best: "Rewrite using only sector-level descriptors...")
                   T4: 3 options (best: "Apply all four SAFE steps and add explicit output constraints")
-coach_tmpl      : (no "EDC" ✓) (no "analyst" ✓) (no "Meridian" ✓)
+coach_tmpl      : (no "analyst" ✓) (no "Meridian Infrastructure Briefing" ✓) (no "Aurora Initiative" ✓)
 role_hint       : For financial services: ... For engineering: ...
 null_fields     : []
 ```
@@ -628,7 +678,7 @@ print(f'{len(report[\"review_flags\"])} review flags (0.40-0.69 overlap)')
 - [ ] `content/atomic_modules.json` has exactly 28 entries (7 RM + 7 UW + 7 AN + 7 MK)
 - [ ] Every atom has `capability_tags` (3–6 items, no nulls)
 - [ ] Every atom's `practice.scenario_template` contains `{role}` and `{org_type}`
-- [ ] Every atom's `practice.coach_system_prompt_template` has no hardcoded "EDC", "analyst", "Meridian Infrastructure", "Aurora Initiative", "Cascade Portfolio", "Enterprise Intelligence Program"
+- [ ] Every atom's `practice.coach_system_prompt_template` has no hardcoded role titles ("analyst", "Relationship Manager", "underwriter") or fictional programme names ("Meridian Infrastructure Briefing", "Aurora Initiative", "Cascade Portfolio", "Enterprise Intelligence Program") — note: "EDC" was already sanitized from all source content (commit `99383c2`) so residual EDC references would indicate a prompt regression
 - [ ] Every atom from a structured-reading course has `reading.concept.cards` with ≥ 2 items
 - [ ] Every atom's `practice.task_modes` == `["open", "mcq", "mcq", "mcq"]`
 - [ ] Every atom's `practice.task_mcq_options` is a 4-item list: `[null, [...], [...], [...]]`

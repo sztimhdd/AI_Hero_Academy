@@ -10,9 +10,17 @@ You are implementing **Phase 0.5 of the AI Hero Academy atomic architecture**: b
 `scripts/atomize_coursework.py`, running it against all 28 existing courses (7 RM + 7 UW + 7 AN + 7 MK),
 and producing `content/atomic_modules.json` + `content/atomic_overlap_report.json`.
 
+**Why this matters:** The long-term goal is a product that serves any professional role given
+a LinkedIn profile — no hardcoded role list. Atomization strips role-specific framing from
+all 28 courses and replaces it with `{role}`, `{org_type}`, and related placeholders, making
+the content library instantiatable for any learner at runtime. Phases 0.6–1 will templatize
+diagnostics, de-scope domain keys, add a runtime instantiation layer, and wire in LinkedIn
+onboarding. This script is the content foundation those phases depend on.
+
 **The app DOES NOT change.** It keeps running from its original JSON files throughout.
-These output files are a parallel data store for Phase 1 (PM + Engineer content) and
-Phase 3 (path assembler activation). No page, route, or utility reads from these files yet.
+These output files are a parallel data store for Phase 0.6 (diagnostic templatization),
+Phase 1 (PM + Engineer content), and Phase 3 (path assembler activation).
+No page, route, or utility reads from these files yet.
 
 ---
 
@@ -42,22 +50,18 @@ git checkout -b feature/atomize-coursework
 
 #### AC-1 — Build `scripts/atomize_coursework.py`
 
-The full spec is in `plans/atomize-coursework-plan.md`. Key points:
+Full spec is in `plans/atomize-coursework-plan.md`. Read it before writing a line. It contains
+the complete atom JSON schema, all 6 extraction prompts, the `_assemble_atom()` reference
+implementation, the overlap detection algorithm (complete-link Jaccard — not single-link),
+dry-run output format, and all constraints.
 
-- Source files are all **dicts keyed by `course_id`** — join is direct
-- `practice_scenarios.json` already contains `task_modes` and `task_mcq_options` — **copy both
-  fields as-is** into the atom's `practice` block (no LLM call needed; labels are already role-agnostic)
-- For each of 28 courses: run 6 sequential LLM calls (`databricks-claude-sonnet-4-6`, `temperature=0`)
-  to produce one complete atom dict
-- Reading source: `reading_content_structured.json` (primary) → `reading_content.json` (fallback)
-- **Capstone exclusion**: the 4 capstone courses (`rm_c7_capstone`, `uw_c7_capstone`, `an_c7_capstone`,
-  `mk_c7_capstone`) must be included in `atomic_modules.json` but **excluded from overlap detection** —
-  they share `primary_domain = "responsible_ai"` with the c1 courses and would produce false clusters.
-  Use a `CAPSTONE_IDS` set to filter before computing Jaccard groups.
-- Overlap detection: complete-link Jaccard clustering on the 24 domain atoms only — see plan for the
-  full algorithm (single-link / greedy transitive is explicitly NOT correct here)
-- Dry-run must pretty-print a per-atom structured summary (not raw JSON) — see plan for format
-- Write `content/atomic_modules.json` (list of 28 atoms) and `content/atomic_overlap_report.json`
+Summary of what the script must do:
+
+- 6 sequential LLM calls per course → one complete atom dict
+- `task_modes` and `task_mcq_options` copied as-is (no LLM call needed)
+- 28 atoms written to `content/atomic_modules.json`; overlap report to `content/atomic_overlap_report.json`
+- Capstone courses included in atoms but excluded from overlap detection (see plan for `CAPSTONE_IDS` logic)
+- Dry-run pretty-prints a structured per-atom summary; does not write files
 
 CLI:
 
