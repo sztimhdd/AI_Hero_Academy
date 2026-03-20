@@ -246,7 +246,7 @@ the organization's actual use cases and policies.
   Hosting                Streamlit (local); Phase C target: GCP Cloud Run
   Authentication         GCP_USER_EMAIL env var; Phase C: Google IAP
   Persistence            Google Cloud Firestore (GCP project banded-totality-485901)
-  Language               English only
+  Language               English / Chinese (UI language switch; Phase 15, March 2026)
 
 
 ================================================================================
@@ -285,7 +285,7 @@ the organization's actual use cases and policies.
   - Badge export or HR system integration
   - Content management, SCORM, or LMS features
   - Mobile-optimized layout (desktop-first only)
-  - Multilingual or bilingual content (English only)
+  - Multilingual or bilingual content beyond English/Chinese UI toggle (added Phase 15)
   - Real-time notifications or email reminders
   - Peer comparison or leaderboard features
   - Integration with external learning platforms

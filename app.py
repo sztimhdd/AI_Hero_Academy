@@ -53,8 +53,16 @@ if "user_email" not in st.session_state:
         st.session_state["user_email"] = user_email
         st.session_state["user_state"] = state
         st.session_state["role_id"] = role_id or "rm"
+        # Override browser-detected lang with Firestore preference (returning users)
+        if not st.session_state.get("_lang_from_profile"):
+            profile = get_profile(user_email)
+            if profile and profile.get("lang") in ("en", "zh"):
+                st.session_state["lang"] = profile["lang"]
+                st.session_state["_lang_from_profile"] = True
     except Exception as e:
-        st.error(f"Unable to connect to the database. Please refresh.\n\n_{e}_")
+        from utils.i18n import t
+        _lang = st.session_state.get("lang", "en")
+        st.error(t("app.db_error", _lang) + f"\n\n_{e}_")
         st.stop()
 
 user_email: str = st.session_state["user_email"]

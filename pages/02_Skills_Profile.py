@@ -22,6 +22,7 @@ from utils.scoring import (
 from utils.sequencing import compute_module_sequence
 from utils.styles import inject_global_css, section_header, render_sidebar
 from utils.content import get_course
+from utils.i18n import t
 
 st.set_page_config(
     page_title="Skills Profile | AI Hero Academy",
@@ -67,6 +68,14 @@ def load_eval_domain_scores(progress_rows):
     return result
 
 
+_lang = st.session_state.get("lang", "en")
+
+# Profile-based lang override (runs once per session after profile load)
+if not st.session_state.get("_lang_from_profile") and profile and profile.get("lang") in ("en", "zh"):
+    st.session_state["lang"] = profile["lang"]
+    st.session_state["_lang_from_profile"] = True
+    _lang = profile["lang"]
+
 try:
     latest_diag = load_latest_diagnostic()
     all_diags = load_all_diagnostics()
@@ -74,12 +83,12 @@ try:
     progress_rows = load_training_progress()
     eval_domain_scores = load_eval_domain_scores(progress_rows)
 except Exception as e:
-    st.error(f"Unable to load your profile. Please refresh.\n\n_{e}_")
+    st.error(t("profile.error_load", _lang) + f"\n\n_{e}_")
     st.stop()
 
 if not latest_diag:
-    st.info("No diagnostic results yet. Complete the diagnostic to see your profile.")
-    if st.button("Take Diagnostic →", type="primary"):
+    st.info(t("profile.no_diag_info", _lang))
+    if st.button(t("profile.take_diag_btn", _lang), type="primary"):
         st.switch_page("pages/01_Diagnostic.py")
     st.stop()
 
@@ -100,22 +109,27 @@ assessed_date = str(latest_diag.get("completed_at", ""))[:10] if latest_diag els
 display_name = profile.get("display_name", user_email.split("@")[0].title())
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
-render_sidebar("skills_profile", has_course=has_course, progress_rows=progress_rows)
+render_sidebar("skills_profile", has_course=has_course, progress_rows=progress_rows,
+               user_email=user_email, lang=_lang)
 
 
 # ── Page header ───────────────────────────────────────────────────────────────
+_role_id = profile.get("role_id", "rm")
+from utils.content import ROLES as _ROLES
+_role_title = _ROLES.get(_role_id, {}).get("title", _role_id.upper())
+
 col_h, col_date = st.columns([4, 1])
 with col_h:
-    st.title("Your AI Skills Profile")
+    st.title(t("profile.title", _lang))
     st.markdown(
         f'<div style="font-family:\'Inter\',sans-serif; font-size:0.85rem; color:#8990A8">'
-        f'Role: Relationship Manager</div>',
+        f'{t("profile.role_label", _lang).format(role=_role_title)}</div>',
         unsafe_allow_html=True,
     )
 with col_date:
     st.markdown(
         f'<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.75rem; '
-        f'color:#8990A8; text-align:right; margin-top:1.2rem">Last assessed<br>{assessed_date}</div>',
+        f'color:#8990A8; text-align:right; margin-top:1.2rem">{t("profile.last_assessed_label", _lang)}<br>{assessed_date}</div>',
         unsafe_allow_html=True,
     )
 
@@ -125,7 +139,7 @@ with col_score:
     st.metric(label=level_label, value=f"{overall:.1f} / 4.0")
 
 with col_domains:
-    section_header("DOMAIN SCORES")
+    section_header(t("profile.domain_scores_header", _lang))
     # Shortened axis labels — full names overflow on a 6-axis radar
     _short_names = {
         "responsible_ai":      "Resp. AI",
@@ -177,7 +191,7 @@ with col_domains:
     st.plotly_chart(_fig, use_container_width=True, config={"displayModeBar": False})
 
 # ── Gap Map ───────────────────────────────────────────────────────────────────
-section_header("YOUR GAP MAP")
+section_header(t("profile.gap_map_header", _lang))
 
 if gap_map_row:
     try:
@@ -192,9 +206,9 @@ if gap_map_row:
         parts.append(
             '<div style="display:flex; gap:1.25rem; margin-bottom:1rem; font-family:\'Inter\',sans-serif;'
             ' font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.06em">'
-            '<span><span class="gap-priority-dot high" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Critical gap</span>'
-            '<span><span class="gap-priority-dot medium" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>Needs work</span>'
-            '<span><span class="gap-priority-dot low" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>On track</span>'
+            f'<span><span class="gap-priority-dot high" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>{t("profile.gap_priority_critical", _lang)}</span>'
+            f'<span><span class="gap-priority-dot medium" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>{t("profile.gap_priority_needs", _lang)}</span>'
+            f'<span><span class="gap-priority-dot low" style="display:inline-block; vertical-align:middle; margin-right:0.35rem"></span>{t("profile.gap_priority_on_track", _lang)}</span>'
             '</div>'
         )
         for b in sorted([b for b in bullets if isinstance(b, dict)], key=lambda x: x.get("priority", 99)):
@@ -217,19 +231,17 @@ if gap_map_row:
         parts.append('</div>')
         st.markdown("".join(parts), unsafe_allow_html=True)
     else:
-        st.info("Gap map is being generated. Refresh the page in a moment.")
+        st.info(t("profile.gap_generating_info", _lang))
 else:
-    st.markdown("""
-<div class="aha-card-accent">
-  <div style="font-size:0.88rem; color:#8990A8">
-    Your personalised gap map is being generated. Refresh in a moment.
-  </div>
-</div>
-""", unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="aha-card-accent"><div style="font-size:0.88rem; color:#8990A8">'
+        f'{t("profile.gap_generating_card", _lang)}</div></div>',
+        unsafe_allow_html=True,
+    )
 
 # ── Assessment History ─────────────────────────────────────────────────────────
 if len(all_diags) > 0:
-    section_header("ASSESSMENT HISTORY")
+    section_header(t("profile.history_header", _lang))
     rows = []
     for diag in all_diags:
         date_str = str(diag.get("completed_at", ""))[:10]
@@ -253,11 +265,11 @@ if len(all_diags) > 0:
 
 
 # ── Action buttons ─────────────────────────────────────────────────────────────
-section_header("ACTIONS")
+section_header(t("profile.actions_header", _lang))
 col_a, col_b = st.columns([1, 1])
 
 with col_a:
-    if st.button("↩  Retake Diagnostic", use_container_width=True):
+    if st.button(t("profile.retake_btn", _lang), use_container_width=True):
         # Clear any lingering diagnostic session state
         for k in ["diag_item_index", "diag_responses", "diag_session_started", "diag_started"]:
             st.session_state.pop(k, None)
@@ -265,8 +277,8 @@ with col_a:
 
 with col_b:
     if not has_course:
-        if st.button("🗺️  Build My Training Course", use_container_width=True, type="primary"):
-            with st.spinner("Building your personalised course..."):
+        if st.button(t("profile.build_course_btn", _lang), use_container_width=True, type="primary"):
+            with st.spinner(t("profile.spinner_course", _lang)):
                 try:
                     sequence = compute_module_sequence(current_domain_scores, role_id=profile["role_id"])
                     for i, course_id in enumerate(sequence):
@@ -274,7 +286,7 @@ with col_b:
                     st.session_state["user_state"] = "in_training"
                     st.switch_page("pages/03_Home.py")
                 except Exception as e:
-                    st.error(f"Could not create your course. Please try again.\n\n_{e}_")
+                    st.error(t("profile.error_course", _lang) + f"\n\n_{e}_")
     else:
-        if st.button("📚  View My Course", use_container_width=True, type="primary"):
+        if st.button(t("profile.view_course_btn", _lang), use_container_width=True, type="primary"):
             st.switch_page("pages/03_Home.py")

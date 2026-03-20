@@ -1840,6 +1840,70 @@ Commit: `ee09af2` — 4 files changed, 1804 insertions.
 
 ---
 
+### Phase 17 — i18n (English / Chinese UI Language Switch) ✅ COMPLETE (March 2026)
+
+Add bilingual UI support with English/Chinese language switching. All UI strings across all 5 pages and all sub-views of the Course Module page are served via a central `t(key, lang)` translation function. Language preference is persisted in Firestore and restored on login.
+
+---
+
+#### Architecture
+
+```text
+content/i18n/en.json  (140 flat key-value pairs)
+content/i18n/zh.json  (140 matching keys; Chinese translations with [ZH] placeholder suffix)
+        ↓  utils/i18n.py  →  t(key, lang)  (fallback chain: lang → en → key)
+                         →  SUPPORTED_LANGS = {"en": "English", "zh": "中文"}
+                         →  detect_browser_lang()  reads st.context.headers["Accept-Language"]
+
+utils/styles.py  →  inject_global_css()  (browser lang detection on first load)
+                 →  render_sidebar()     (language toggle selectbox; Firestore write on change)
+
+utils/db.py      →  create_profile(…, lang="en")  (writes lang to Firestore on first visit)
+                 →  update_profile_lang(user_email, lang)  (updates lang on toggle)
+
+All 5 pages + all sub-views of pages/04_Course_Module.py  →  t() for every UI string
+```
+
+**Language initialization — two-pass pattern:**
+
+1. `inject_global_css()` runs browser detection and sets `st.session_state["lang"]` before any Firestore query
+2. Each page's guard block checks `_lang_from_profile` sentinel; if absent, reads profile `lang` field and overrides session state (runs once per session per page)
+
+**`_SECTION_LABELS` / `_SECTION_DISPLAY` split (Reading sub-view):**
+Internal English keys stored in session state for navigation logic; translated display list used only for `st.segmented_control(options=)`. Prevents navigation breakage after a mid-session language switch.
+
+---
+
+#### Phase 17 Tasks (all ✅ COMPLETE)
+
+| Task | Description | Files Changed |
+| ---- | ----------- | ------------- |
+| 17.1 | Create `utils/i18n.py` with `t()`, `SUPPORTED_LANGS`, `detect_browser_lang()` | `utils/i18n.py` (new) |
+| 17.2 | Create `content/i18n/en.json` — 140 flat UI string keys | `content/i18n/en.json` (new) |
+| 17.3 | Create `content/i18n/zh.json` — 140 matching keys with `[ZH]` placeholder translations | `content/i18n/zh.json` (new) |
+| 17.4 | Update `utils/db.py` — add `lang` param to `create_profile()`; add `update_profile_lang()` with demo guard | `utils/db.py` |
+| 17.5 | Update `utils/styles.py` — browser lang detection in `inject_global_css()`; sidebar lang toggle in `render_sidebar()` | `utils/styles.py` |
+| 17.6 | Update `app.py` — profile-based lang override; error message via `t()` | `app.py` |
+| 17.7 | Update `pages/00_Welcome.py` — all UI strings via `t()`; pass `lang` to `create_profile()` | `pages/00_Welcome.py` |
+| 17.8 | Update `pages/01_Diagnostic.py` — all UI strings (title, counter, buttons, spinners, errors) via `t()` | `pages/01_Diagnostic.py` |
+| 17.9 | Update `pages/02_Skills_Profile.py` — all UI strings via `t()`; `render_sidebar()` with `user_email`/`lang` | `pages/02_Skills_Profile.py` |
+| 17.10 | Update `pages/03_Home.py` — all UI strings via `t()`; `render_sidebar()` with `user_email`/`lang` | `pages/03_Home.py` |
+| 17.11 | Update `pages/04_Course_Module.py` — all UI strings in Overview, Reading, Practice (MCQ + open), Evaluation, Results sub-views via `t()` | `pages/04_Course_Module.py` |
+| 17.12 | Visual verification via Playwright | (verification) |
+
+---
+
+#### Phase 17 UAT Results (2026-03-20)
+
+- Language toggle in sidebar switches all visible UI strings between English and Chinese (`[ZH]` suffix confirmed on all pages)
+- Browser `Accept-Language` detection sets initial language on first load
+- Language preference persists in Firestore `user_profiles/{email}.lang` across sessions
+- All 5 pages and all 5 Course Module sub-views (Overview / Reading / Practice / Evaluation / Results) fully translated
+- Mid-session language switch does not break Reading section navigation (internal English key sentinel preserved)
+- Demo profiles guarded against `update_profile_lang()` writes
+
+---
+
 ## Execution Order (all phases)
 
 ```text
@@ -1847,6 +1911,8 @@ Phase 0  ✅  Phase 1  ✅  Phase 2  ✅  Phase 3  ✅  Phase 4  ✅  Phase 5  �
 Phase 6  ✅  Phase 7  ✅  Phase 8  ✅  Phase 9  ✅  Phase 10 ✅  Phase 11 ✅
 Phase 12 ✅  Hexagon Domain Refactor — 6-domain/7-course platform architecture
              All tasks complete. UAT PASS 2026-03-04.
+Phase 14 ✅  Reading Content Templates — 4 visual section renderers. UAT PASS 2026-03-06.
+Phase 17 ✅  i18n English/Chinese UI language switch. UAT PASS 2026-03-20.
 
 Migration Phase A ✅  LLM Layer — Gemini replaces Databricks Foundation Models
 Migration Phase B ✅  Data Layer — Firestore replaces Unity Catalog Delta tables (2026-03-18, commit 4a00b68)

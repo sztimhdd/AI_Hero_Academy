@@ -738,6 +738,11 @@ tr:last-child td {{ border-bottom: none; }}
                 st.rerun()
             st.divider()
 
+    # ── Language initialisation (browser detection on first load) ─────────────
+    if "lang" not in st.session_state:
+        from utils.i18n import detect_browser_lang
+        st.session_state["lang"] = detect_browser_lang()
+
 
 def section_header(label: str):
     """Render a divider with a centred label."""
@@ -776,6 +781,8 @@ def render_sidebar(
     progress_rows: list = None,
     active_course_id: str = None,
     module_context: dict = None,
+    user_email: str = None,
+    lang: str = None,
 ):
     """
     Render consistent sidebar navigation on all post-diagnostic pages (NAV1).
@@ -786,7 +793,13 @@ def render_sidebar(
     active_course_id: current course_id (Course Module only)
     module_context: {"seq_order": int, "course_title": str, "domain_display": str}
                     — rendered as a context block on Course Module only
+    user_email: if provided, show language toggle (omit on Welcome page)
+    lang: current language code; defaults to st.session_state["lang"] or "en"
     """
+    from utils.i18n import t, SUPPORTED_LANGS
+    if lang is None:
+        lang = st.session_state.get("lang", "en")
+
     with st.sidebar:
         st.markdown("""
 <div style="padding:1rem 0.5rem">
@@ -798,14 +811,14 @@ def render_sidebar(
 """, unsafe_allow_html=True)
         st.markdown("---")
 
-        if st.button("🏠  My Training", use_container_width=True, disabled=(active_page == "home")):
+        if st.button(t("nav.my_training", lang), use_container_width=True, disabled=(active_page == "home")):
             st.switch_page("pages/03_Home.py")
 
-        if st.button("🏅  Skills Profile", use_container_width=True, disabled=(active_page == "skills_profile")):
+        if st.button(t("nav.skills_profile", lang), use_container_width=True, disabled=(active_page == "skills_profile")):
             st.switch_page("pages/02_Skills_Profile.py")
 
         if has_course:
-            if st.button("📚  My Course", use_container_width=True, disabled=(active_page == "course_module")):
+            if st.button(t("nav.my_course", lang), use_container_width=True, disabled=(active_page == "course_module")):
                 # CX3: find the active (unlocked, incomplete) module to navigate directly to it
                 if progress_rows:
                     _active = next(
@@ -828,9 +841,34 @@ def render_sidebar(
                 f'<div style="padding:1rem 0.5rem; font-family:\'Inter\',sans-serif;'
                 f' font-size:0.75rem; color:#8990A8">'
                 f'<div style="font-weight:600; text-transform:uppercase; letter-spacing:0.08em;'
-                f' color:#8990A8; margin-bottom:0.5rem">Module {seq}</div>'
+                f' color:#8990A8; margin-bottom:0.5rem">{t("nav.module_label", lang).format(n=seq)}</div>'
                 f'<div style="color:#EDF0F7; line-height:1.4; margin-bottom:0.8rem">{title}</div>'
                 f'<div class="module-domain-tag">{domain_display}</div>'
                 f'</div>',
                 unsafe_allow_html=True,
             )
+
+        # ── Language toggle (only when user has a profile) ────────────────────
+        if user_email:
+            st.divider()
+            lang_options = list(SUPPORTED_LANGS.keys())
+            lang_labels = list(SUPPORTED_LANGS.values())
+            current_lang = st.session_state.get("lang", "en")
+            selected_idx = lang_options.index(current_lang) if current_lang in lang_options else 0
+            selected_label = st.selectbox(
+                t("nav.language_toggle", lang),
+                options=lang_labels,
+                index=selected_idx,
+                key="lang_toggle",
+                label_visibility="collapsed",
+            )
+            selected_lang = lang_options[lang_labels.index(selected_label)]
+            if selected_lang != current_lang:
+                st.session_state["lang"] = selected_lang
+                st.session_state["_lang_from_profile"] = True
+                try:
+                    from utils.db import update_profile_lang
+                    update_profile_lang(user_email, selected_lang)
+                except Exception:
+                    pass
+                st.rerun()

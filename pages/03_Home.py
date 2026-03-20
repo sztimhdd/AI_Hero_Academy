@@ -15,6 +15,7 @@ from utils.scoring import (
 )
 from utils.styles import inject_global_css, section_header, render_sidebar
 from utils.content import get_course
+from utils.i18n import t
 
 st.set_page_config(
     page_title="My Training | AI Hero Academy",
@@ -106,14 +107,23 @@ last_updated_str = (
     if last_updated else None
 )
 
+_lang = st.session_state.get("lang", "en")
+
+# Profile-based lang override (runs once per session after profile load)
+if not st.session_state.get("_lang_from_profile") and profile and profile.get("lang") in ("en", "zh"):
+    st.session_state["lang"] = profile["lang"]
+    st.session_state["_lang_from_profile"] = True
+    _lang = profile["lang"]
+
 # ── Sidebar ───────────────────────────────────────────────────────────────────
-render_sidebar("home", has_course=True, progress_rows=progress_rows)
+render_sidebar("home", has_course=True, progress_rows=progress_rows,
+               user_email=user_email, lang=_lang)
 
 
 # ── Greeting ──────────────────────────────────────────────────────────────────
 st.markdown(
     f'<div style="font-family:\'DM Serif Display\',serif; font-size:2rem; '
-    f'color:#EDF0F7; margin-bottom:0.2rem">Welcome back, {display_name}.</div>',
+    f'color:#EDF0F7; margin-bottom:0.2rem">{t("home.greeting", _lang).format(name=display_name)}</div>',
     unsafe_allow_html=True,
 )
 
@@ -127,9 +137,10 @@ with col_card:
     color_hex = {"danger": "#E8455A", "warning": "#F5A623", "success": "#29CC6A"}.get(color_class, "#00D4E8")
     last_updated_html = (
         f'<div style="font-family:\'Inter\',sans-serif; font-size:0.72rem; '
-        f'color:#8990A8; margin-top:0.5rem">Last updated: {last_updated_str}</div>'
+        f'color:#8990A8; margin-top:0.5rem">{t("home.last_updated_label", _lang).format(date=last_updated_str)}</div>'
         if last_updated_str else ""
     )
+    _modules_progress_str = t("home.modules_progress", _lang).format(done=completed_count, total=total_modules)
     st.markdown(f"""
 <div class="aha-card" style="display:flex; gap:2rem; align-items:center">
   <div>
@@ -147,7 +158,7 @@ with col_card:
   <div style="flex:1; border-left:1px solid #2A2F3E; padding-left:1.5rem">
     <div style="font-family:'Inter',sans-serif; font-size:0.82rem; color:#8990A8;
                 margin-bottom:0.5rem">
-      {completed_count} of {total_modules} modules complete
+      {_modules_progress_str}
     </div>
     <div style="background:#1E2330; border-radius:4px; height:6px; overflow:hidden">
       <div style="height:100%; width:{int(completed_count/total_modules*100)}%;
@@ -158,15 +169,19 @@ with col_card:
   </div>
 </div>
 """, unsafe_allow_html=True)
-    if st.button("→  View Full Skills Profile", use_container_width=False, key="view_profile_btn", type="primary"):
+    if st.button(t("home.view_profile_btn", _lang), use_container_width=False, key="view_profile_btn", type="primary"):
         st.switch_page("pages/02_Skills_Profile.py")
 
 # ── Course progress ────────────────────────────────────────────────────────────
-section_header("MY TRAINING COURSE")
+section_header(t("home.course_header", _lang))
 
 
 def _badge(label, state):
     return f'<span class="sub-badge {state}">{label}</span>'
+
+_read_label = t("home.badge_read", _lang)
+_practice_label = t("home.badge_practice", _lang)
+_quiz_label = t("home.badge_quiz", _lang)
 
 
 for row in progress_rows:
@@ -220,7 +235,7 @@ for row in progress_rows:
                 f'<div style="{opacity}">'
                 f'<div class="module-title">{lock_icon}{title}</div>'
                 f'<div style="margin-top:0.3rem"><span class="module-domain-tag">{domain_display}</span></div>'
-                f'<div class="sub-strip">{_badge("Read", r_state)}{_badge("Practice", p_state)}{_badge("Quiz", q_state)}</div>'
+                f'<div class="sub-strip">{_badge(_read_label, r_state)}{_badge(_practice_label, p_state)}{_badge(_quiz_label, q_state)}</div>'
                 f'</div>',
                 unsafe_allow_html=True,
             )
@@ -237,11 +252,11 @@ for row in progress_rows:
 
         if card_state == "active":
             if not reading_done:
-                btn_label = f"Start Module {seq} →"
+                btn_label = t("home.start_module_btn", _lang).format(n=seq)
             elif not practice_done:
-                btn_label = f"Continue Practice →"
+                btn_label = t("home.continue_practice_btn", _lang)
             else:
-                btn_label = f"Take Quiz →"
+                btn_label = t("home.take_quiz_btn", _lang)
             if st.button(btn_label, key=f"module_btn_{seq}", use_container_width=True, type="primary"):
                 st.session_state["active_course_id"] = course_id
                 if not reading_done:
@@ -252,7 +267,7 @@ for row in progress_rows:
                     st.session_state["active_submodule"] = "evaluation"
                 st.switch_page("pages/04_Course_Module.py")
         elif card_state == "completed":
-            if st.button(f"Review Module {seq}", key=f"module_btn_{seq}", type="secondary", use_container_width=True):
+            if st.button(t("home.review_module_btn", _lang).format(n=seq), key=f"module_btn_{seq}", type="secondary", use_container_width=True):
                 st.session_state["active_course_id"] = course_id
                 # Jump directly to results if fully complete; overview otherwise (UI2)
                 all_done = (

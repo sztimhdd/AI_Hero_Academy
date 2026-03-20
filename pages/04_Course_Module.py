@@ -31,6 +31,7 @@ from utils.scoring import (
     compute_current_domain_scores,
 )
 from utils.styles import inject_global_css, section_header, step_progress_strip, render_sidebar
+from utils.i18n import t
 
 st.set_page_config(
     page_title="Course Module | AI Hero Academy",
@@ -69,6 +70,14 @@ if not course_id:
 
 active_sub = st.session_state.get("active_submodule", "overview")
 
+_lang = st.session_state.get("lang", "en")
+
+# Profile-based lang override (runs once per session after profile load)
+if not st.session_state.get("_lang_from_profile") and profile and profile.get("lang") in ("en", "zh"):
+    st.session_state["lang"] = profile["lang"]
+    st.session_state["_lang_from_profile"] = True
+    _lang = profile["lang"]
+
 
 # ── Data loaders ──────────────────────────────────────────────────────────────
 def load_progress(cid: str):
@@ -93,7 +102,7 @@ def load_next_module_title(current_seq: int):
 
 def do_complete_practice(progress_id: str, messages: list, total_turns: int):
     """Write coach session + mark practice complete, then navigate to evaluation."""
-    with st.spinner("Saving practice session..."):
+    with st.spinner(t("module.saving_practice", st.session_state.get("lang", "en"))):
         try:
             session_id = str(uuid.uuid4())
             started_at = st.session_state.pop("practice_started_at", datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
@@ -101,7 +110,7 @@ def do_complete_practice(progress_id: str, messages: list, total_turns: int):
             save_coach_session(session_id, user_email, course_id, started_at, total_turns, conv_json)
             update_progress(user_email, course_id, practice_completed_at=SERVER_TIMESTAMP)
         except Exception as e:
-            st.error(f"Could not save practice session. Please try again.\n\n_{e}_")
+            st.error(t("module.save_practice_error", st.session_state.get("lang", "en")) + f"\n\n_{e}_")
             st.stop()
 
     for k in ["coach_messages_by_task", "mcq_answered_by_task", "practice_task_idx", "practice_turns", "task_turn_counts"]:
@@ -120,15 +129,15 @@ try:
     eval_items = get_eval_items(course_id)
     progress = load_progress(course_id)
 except KeyError as e:
-    st.error(f"Content not found for course: {e}. Please contact your administrator.")
+    st.error(t("module.content_not_found_error", _lang).format(id=e))
     st.stop()
 except Exception as e:
-    st.error(f"Unable to load module content. Please refresh.\n\n_{e}_")
+    st.error(t("module.load_error", _lang) + f"\n\n_{e}_")
     st.stop()
 
 if not course or not progress:
-    st.error("Module not found.")
-    if st.button("← Home"):
+    st.error(t("module.module_not_found_error", _lang))
+    if st.button(t("module.home_btn", _lang)):
         st.switch_page("pages/03_Home.py")
     st.stop()
 
@@ -151,18 +160,20 @@ render_sidebar(
         "course_title": course_title,
         "domain_display": DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain),
     },
+    user_email=user_email,
+    lang=_lang,
 )
 
 
 # ── Breadcrumb ────────────────────────────────────────────────────────────────
 _bc_home_col, _bc_info_col = st.columns([2, 10])
 with _bc_home_col:
-    if st.button("← My Training", key="bc_home", use_container_width=True):
+    if st.button(t("module.back_btn", _lang), key="bc_home", use_container_width=True):
         st.switch_page("pages/03_Home.py")
 with _bc_info_col:
     st.markdown(
         f'<div style="font-family:\'Inter\',sans-serif; font-size:0.75rem; color:#8990A8; padding-top:0.65rem">'
-        f'Module {seq_order}: {course_title}'
+        f'{t("module.breadcrumb", _lang).format(n=seq_order, title=course_title)}'
         f'</div>',
         unsafe_allow_html=True,
     )
@@ -258,7 +269,10 @@ def _render_takeaway(rs: dict) -> None:
 # OVERVIEW
 # ═══════════════════════════════════════════════════════════════════════════════
 if active_sub == "overview":
-    st.markdown(f'<div class="question-counter">Module {seq_order} of 7</div>', unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="question-counter">{t("module.overview_counter", _lang).format(n=seq_order)}</div>',
+        unsafe_allow_html=True,
+    )
     st.title(course_title)
     st.markdown(
         f'<div style="font-family:\'Inter\',sans-serif; font-size:1rem; '
@@ -270,36 +284,30 @@ if active_sub == "overview":
         return "done" if done else ("current" if is_current else "pending")
 
     step_progress_strip([
-        {"label": "Read",     "state": _step(reading_done,  not reading_done)},
-        {"label": "Practice", "state": _step(practice_done, reading_done and not practice_done)},
-        {"label": "Quiz",     "state": _step(eval_done,     practice_done and not eval_done)},
+        {"label": t("module.read_step_label", _lang),     "state": _step(reading_done,  not reading_done)},
+        {"label": t("module.practice_step_label", _lang), "state": _step(practice_done, reading_done and not practice_done)},
+        {"label": t("module.quiz_step_label", _lang),     "state": _step(eval_done,     practice_done and not eval_done)},
     ])
 
-    with st.expander("About this module", expanded=False):
+    with st.expander(t("module.about_expander", _lang), expanded=False):
         domain_display = DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain)
-        st.caption(f"📍 Domain: {domain_display}")
-        st.markdown(
-            "| Step | Format | Est. time |\n"
-            "|------|--------|-----------|\n"
-            "| Read | Article + callouts | ~5 min |\n"
-            "| Practice | AI coach conversation (4 tasks) | ~10–15 min |\n"
-            "| Quiz | 3 MCQ + 1 written response | ~5 min |"
-        )
+        st.caption(t("module.about_domain", _lang).format(domain=domain_display))
+        st.markdown(t("module.about_table_md", _lang))
 
     if eval_done:
-        if st.button("Review Results →", type="primary"):
+        if st.button(t("module.review_results_btn", _lang), type="primary"):
             st.session_state["active_submodule"] = "results"
             st.rerun()
     elif practice_done:
-        if st.button("Take Quiz →", type="primary"):
+        if st.button(t("module.take_quiz_btn", _lang), type="primary"):
             st.session_state["active_submodule"] = "evaluation"
             st.rerun()
     elif reading_done:
-        if st.button("Continue Practice →", type="primary"):
+        if st.button(t("module.continue_practice_btn", _lang), type="primary"):
             st.session_state["active_submodule"] = "practice"
             st.rerun()
     else:
-        if st.button("Start Reading →", type="primary"):
+        if st.button(t("module.start_reading_btn", _lang), type="primary"):
             st.session_state["active_submodule"] = "reading"
             st.rerun()
 
@@ -313,19 +321,27 @@ elif active_sub == "reading":
 
     st.title(course_title)
     step_progress_strip([
-        {"label": "Read", "state": "current"},
-        {"label": "Practice", "state": "pending"},
-        {"label": "Quiz", "state": "pending"},
+        {"label": t("module.read_step_label", _lang),     "state": "current"},
+        {"label": t("module.practice_step_label", _lang), "state": "pending"},
+        {"label": t("module.quiz_step_label", _lang),     "state": "pending"},
     ])
 
     if not reading:
-        st.warning("Reading content is not available yet.")
-        if st.button("← Back"):
+        st.warning(t("module.reading_not_available", _lang))
+        if st.button(t("module.back_btn_sm", _lang)):
             st.session_state["active_submodule"] = "overview"
             st.rerun()
         st.stop()
 
+    # Internal English keys used for session state and section lookup (never translated)
     _SECTION_LABELS = ["Concept", "Example", "Pitfall", "Takeaway"]
+    # Display labels: translated for UI only
+    _SECTION_DISPLAY = [
+        t("module.section_concept", _lang),
+        t("module.section_example", _lang),
+        t("module.section_pitfall", _lang),
+        t("module.section_takeaway", _lang),
+    ]
 
     # Apply pending navigation from Prev/Next buttons BEFORE the widget renders
     if "_reading_nav_target" in st.session_state:
@@ -370,30 +386,38 @@ elif active_sub == "reading":
             if not st.session_state.get(_celebrate_key):
                 st.balloons()
                 st.session_state[_celebrate_key] = True
-            st.success("You've covered all the reading material for this module. Ready to practice?")
+            st.success(t("module.reading_complete_msg", _lang))
 
     # ── Section navigation: Previous / pill selector / Next / Complete Reading ──
     st.divider()
     _rn_prev, _rn_ctrl, _rn_next = st.columns([1, 4, 1])
     with _rn_ctrl:
-        st.segmented_control(
+        # options= uses translated display labels; session state stores English internal key via index
+        _selected_display = st.segmented_control(
             "Reading section",
-            options=_SECTION_LABELS,
-            key="reading_section_ctrl",
+            options=_SECTION_DISPLAY,
+            default=_SECTION_DISPLAY[section_idx],
+            key="reading_section_ctrl_display",
             label_visibility="collapsed",
         )
+        # Keep internal key in sync
+        if _selected_display and _selected_display in _SECTION_DISPLAY:
+            _new_internal = _SECTION_LABELS[_SECTION_DISPLAY.index(_selected_display)]
+            if _new_internal != st.session_state.get("reading_section_ctrl"):
+                st.session_state["reading_section_ctrl"] = _new_internal
+                st.rerun()
     with _rn_prev:
         if section_idx > 0:
-            if st.button(f"← {_SECTION_LABELS[section_idx - 1]}", use_container_width=True):
+            if st.button(f"← {_SECTION_DISPLAY[section_idx - 1]}", use_container_width=True):
                 st.session_state["_reading_nav_target"] = _SECTION_LABELS[section_idx - 1]
                 st.rerun()
     with _rn_next:
         if section_idx < len(_SECTION_LABELS) - 1:
-            if st.button(f"{_SECTION_LABELS[section_idx + 1]} →", type="primary", use_container_width=True):
+            if st.button(f"{_SECTION_DISPLAY[section_idx + 1]} →", type="primary", use_container_width=True):
                 st.session_state["_reading_nav_target"] = _SECTION_LABELS[section_idx + 1]
                 st.rerun()
         else:
-            if st.button("Complete Reading →", key="r_complete", type="primary", use_container_width=True):
+            if st.button(t("module.complete_reading_btn", _lang), key="r_complete", type="primary", use_container_width=True):
                 try:
                     if not reading_done:
                         update_progress(user_email, course_id, reading_completed_at=SERVER_TIMESTAMP)
@@ -444,8 +468,8 @@ elif active_sub == "practice":
         return result
 
     if not scenario:
-        st.warning("Practice scenario not available.")
-        if st.button("← Back"):
+        st.warning(t("module.practice_not_available", _lang))
+        if st.button(t("module.back_btn_sm", _lang)):
             st.session_state["active_submodule"] = "overview"
             st.rerun()
         st.stop()
@@ -462,35 +486,34 @@ elif active_sub == "practice":
 
     st.title(course_title)
     step_progress_strip([
-        {"label": "Read", "state": "done"},
-        {"label": "Practice", "state": "current"},
-        {"label": "Quiz", "state": "pending"},
+        {"label": t("module.read_step_label", _lang),     "state": "done"},
+        {"label": t("module.practice_step_label", _lang), "state": "current"},
+        {"label": t("module.quiz_step_label", _lang),     "state": "pending"},
     ])
 
-    st.error("⚠️ Navigating away will end this practice session. Use **Complete Practice →** to save your progress.")
+    st.error(t("module.practice_warning", _lang))
 
     scenario_html = (scenario.get("scenario_text") or "").replace("\n", "<br>")
-    with st.expander("📋 Scenario", expanded=(len(messages) == 0)):
+    with st.expander(t("module.scenario_expander", _lang), expanded=(len(messages) == 0)):
         st.markdown(f'<div class="scenario-box">{scenario_html}</div>', unsafe_allow_html=True)
 
     # Turn limit reached
     if total_turns >= MAX_TOTAL_TURNS:
-        st.markdown("""
-<div class="aha-card-warning">
-  <strong>Practice limit reached.</strong><br>
-  <span style="font-size:0.88rem; color:#8990A8">
-    You've used all 15 coach turns. Time to take the quiz.
-  </span>
-</div>
-""", unsafe_allow_html=True)
-        if st.button("Go to Quiz →", type="primary"):
+        st.markdown(
+            f'<div class="aha-card-warning">'
+            f'<strong>{t("module.limit_reached_strong", _lang)}</strong><br>'
+            f'<span style="font-size:0.88rem; color:#8990A8">{t("module.limit_reached_sub", _lang)}</span>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+        if st.button(t("module.go_quiz_btn", _lang), type="primary"):
             do_complete_practice(progress_id, _all_messages(), total_turns)
         st.stop()
 
     # All 4 tasks done
     if task_idx >= 4:
-        st.success("You've completed all 4 practice tasks!")
-        if st.button("Complete Practice →", type="primary"):
+        st.success(t("module.all_tasks_done", _lang))
+        if st.button(t("module.complete_practice_btn", _lang), type="primary"):
             do_complete_practice(progress_id, _all_messages(), total_turns)
         st.stop()
 
@@ -500,12 +523,12 @@ elif active_sub == "practice":
     current_mcq_options = task_mcq_options[task_idx] if task_idx < len(task_mcq_options) else None
 
     task_steps = [
-        {"label": f"Task {t + 1}", "state": ("done" if t < task_idx else ("current" if t == task_idx else "pending"))}
-        for t in range(4)
+        {"label": t("module.task_label", _lang).format(n=_t + 1), "state": ("done" if _t < task_idx else ("current" if _t == task_idx else "pending"))}
+        for _t in range(4)
     ]
     step_progress_strip(task_steps)
 
-    section_header(f"TASK {task_idx + 1} OF 4")
+    section_header(t("module.task_header", _lang).format(n=task_idx + 1))
     st.markdown(f'<div class="question-text">{current_task_text}</div>', unsafe_allow_html=True)
 
     def _advance_task():
@@ -554,7 +577,7 @@ elif active_sub == "practice":
                             )
                         mcq_coach_prompt = coach_prompt + mcq_addendum
                         try:
-                            with st.spinner("Coach is thinking..."):
+                            with st.spinner(t("module.coach_thinking", _lang)):
                                 feedback = coach_response(
                                     system_prompt=mcq_coach_prompt,
                                     conversation=[],
@@ -562,7 +585,7 @@ elif active_sub == "practice":
                                     user_email=user_email,
                                 )
                         except Exception as e:
-                            st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
+                            st.error(t("module.coach_unavailable", _lang) + f"\n\n_{e}_")
                             st.stop()
                         updated_by_task = dict(msgs_by_task)
                         updated_by_task[task_idx] = [
@@ -593,10 +616,10 @@ elif active_sub == "practice":
                 with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
                     st.markdown(msg["content"])
             if task_idx < 3:
-                if st.button("Next Task →", key=f"mcq_next_{task_idx}", type="primary"):
+                if st.button(t("module.next_task_btn", _lang), key=f"mcq_next_{task_idx}", type="primary"):
                     _advance_task()
             else:
-                if st.button("Complete Practice →", key="mcq_complete", type="primary"):
+                if st.button(t("module.complete_practice_btn", _lang), key="mcq_complete", type="primary"):
                     do_complete_practice(progress_id, _all_messages(), total_turns)
 
     # ── OPEN TASK (Task 1, or fallback for tasks missing mcq_options) ────────────
@@ -604,15 +627,15 @@ elif active_sub == "practice":
         # Task turn limit — render ABOVE chat history so CTA is always visible (UX-P2)
         effective_limit = MAX_TASK_TURNS + st.session_state.get(f"task_extra_{task_idx}", 0) * 3
         if current_task_turns >= effective_limit:
-            st.warning("You've reached the turn limit for this task.")
+            st.warning(t("module.task_limit_warning", _lang))
             col_cont, col_next = st.columns(2)
             with col_cont:
-                if st.button("Continue (3 more turns) →", key=f"cont_{task_idx}"):
+                if st.button(t("module.continue_turns_btn", _lang), key=f"cont_{task_idx}"):
                     st.session_state[f"task_extra_{task_idx}"] = st.session_state.get(f"task_extra_{task_idx}", 0) + 1
                     st.rerun()
             with col_next:
                 # UI-1: correct label on last task
-                next_label = "Complete Practice →" if task_idx >= 3 else "Next Task →"
+                next_label = t("module.complete_practice_btn", _lang) if task_idx >= 3 else t("module.next_task_btn", _lang)
                 if st.button(next_label, key=f"next_{task_idx}", type="primary"):
                     if task_idx >= 3:
                         do_complete_practice(progress_id, _all_messages(), total_turns)
@@ -629,7 +652,7 @@ elif active_sub == "practice":
             with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
                 st.markdown(msg["content"])
 
-        st.caption(f"Turn {total_turns} of {MAX_TOTAL_TURNS}")
+        st.caption(t("module.turn_counter", _lang).format(n=total_turns, max=MAX_TOTAL_TURNS))
 
         # Determine if we're waiting for user input
         last_role = messages[-1]["role"] if messages else None
@@ -638,39 +661,39 @@ elif active_sub == "practice":
         if not waiting_for_user:
             # Coach just replied — show primary CTA
             if task_idx < 3:
-                if st.button("Next Task →", key="p_next", type="primary"):
+                if st.button(t("module.next_task_btn", _lang), key="p_next", type="primary"):
                     new_tt = dict(task_turns)
                     new_tt[task_idx + 1] = 0
                     st.session_state["practice_task_idx"] = task_idx + 1
                     st.session_state["task_turn_counts"] = new_tt
                     st.rerun()
             else:
-                if st.button("Complete Practice →", key="p_complete_final", type="primary"):
+                if st.button(t("module.complete_practice_btn", _lang), key="p_complete_final", type="primary"):
                     do_complete_practice(progress_id, _all_messages(), total_turns)
 
         # Secondary actions — always accessible via popover
-        with st.popover("⋯ More options"):
+        with st.popover(t("module.more_options_btn", _lang)):
             if waiting_for_user and task_idx < 3:
-                if st.button("Skip this task", key="p_skip_pop"):
+                if st.button(t("module.skip_task_btn", _lang), key="p_skip_pop"):
                     new_tt = dict(task_turns)
                     new_tt[task_idx + 1] = 0
                     st.session_state["practice_task_idx"] = task_idx + 1
                     st.session_state["task_turn_counts"] = new_tt
                     st.rerun()
             if task_idx < 3:
-                if st.button("Complete Practice Early", key="p_early_pop"):
+                if st.button(t("module.complete_early_btn", _lang), key="p_early_pop"):
                     do_complete_practice(progress_id, _all_messages(), total_turns)
 
         # Native chat input pinned to page bottom (only rendered when waiting for user)
         if waiting_for_user:
-            if user_input := st.chat_input("Your response...", key=f"p_input_{task_idx}_{current_task_turns}"):
+            if user_input := st.chat_input(t("module.chat_placeholder", _lang), key=f"p_input_{task_idx}_{current_task_turns}"):
                 # Immediately show the user message — don't wait for AI to reply
                 with st.chat_message("user"):
                     st.markdown(user_input.strip())
 
                 try:
                     with st.chat_message("assistant", avatar="🤖"):
-                        with st.spinner("Coach is thinking..."):
+                        with st.spinner(t("module.coach_thinking", _lang)):
                             reply = coach_response(
                                 system_prompt=coach_prompt + _OPEN_TASK_MASTERY_ADDENDUM,
                                 conversation=messages,
@@ -682,7 +705,7 @@ elif active_sub == "practice":
                         reply_clean = reply.replace("[ADVANCE]", "").strip()
                         st.markdown(reply_clean)
                 except Exception as e:
-                    st.error(f"Coach unavailable. Please try again.\n\n_{e}_")
+                    st.error(t("module.coach_unavailable", _lang) + f"\n\n_{e}_")
                     st.stop()
 
                 new_tt = dict(task_turns)
@@ -720,7 +743,7 @@ elif active_sub == "evaluation":
     EVAL_TOTAL = len(eval_items)
 
     def complete_evaluation(responses: list):
-        with st.spinner("Scoring your quiz responses..."):
+        with st.spinner(t("module.quiz_spinner_scoring", _lang)):
             try:
                 payload = []
                 for r in responses:
@@ -742,10 +765,10 @@ elif active_sub == "evaluation":
                     scores.get("domain_scores", {}).get(primary_domain, eval_score)
                 )
             except Exception as e:
-                st.error(f"Issue scoring quiz. Please refresh and retry.\n\n_{e}_")
+                st.error(t("module.quiz_error_scoring", _lang) + f"\n\n_{e}_")
                 st.stop()
 
-        with st.spinner("Updating skills profile..."):
+        with st.spinner(t("module.quiz_spinner_profile", _lang)):
             try:
                 update_progress(
                     user_email, course_id,
@@ -755,10 +778,10 @@ elif active_sub == "evaluation":
                 )
                 unlock_progress(user_email, seq_order + 1)
             except Exception as e:
-                st.error(f"Could not save quiz results.\n\n_{e}_")
+                st.error(t("module.quiz_error_save", _lang) + f"\n\n_{e}_")
                 st.stop()
 
-        with st.spinner("Generating updated gap map..."):
+        with st.spinner(t("module.quiz_spinner_gap_map", _lang)):
             try:
                 diag_row = get_latest_diagnostic(user_email)
                 try:
@@ -809,12 +832,12 @@ elif active_sub == "evaluation":
             st.session_state.pop(k, None)
         st.rerun()
 
-    st.title(f"Quiz: {course_title}")
-    st.caption(f"Question {min(eval_idx + 1, EVAL_TOTAL)} of {EVAL_TOTAL}")
+    st.title(t("module.quiz_title", _lang).format(title=course_title))
+    st.caption(t("module.quiz_counter", _lang).format(n=min(eval_idx + 1, EVAL_TOTAL), total=EVAL_TOTAL))
     step_progress_strip([
-        {"label": "Read", "state": "done"},
-        {"label": "Practice", "state": "done"},
-        {"label": "Quiz", "state": "current"},
+        {"label": t("module.read_step_label", _lang),     "state": "done"},
+        {"label": t("module.practice_step_label", _lang), "state": "done"},
+        {"label": t("module.quiz_step_label", _lang),     "state": "current"},
     ])
     st.progress(eval_idx / EVAL_TOTAL if EVAL_TOTAL > 0 else 0)
 
@@ -848,7 +871,7 @@ elif active_sub == "evaluation":
             label_visibility="collapsed",
         )
 
-        btn_label = "Submit Quiz →" if is_last else "Next →"
+        btn_label = t("module.eval_submit_quiz_btn", _lang) if is_last else t("module.eval_next_btn", _lang)
         if st.button(btn_label, disabled=(selected is None), key=f"eb_{item_id}", type="primary"):
             st.session_state["eval_responses"].append({
                 "item_id": item_id,
@@ -859,7 +882,7 @@ elif active_sub == "evaluation":
 
     elif item_type == "performance_task":
         if scenario_text:
-            st.caption("SCENARIO")
+            st.caption(t("module.eval_scenario_label", _lang))
             st.markdown(f'<div class="scenario-box">{scenario_text}</div>', unsafe_allow_html=True)
 
         st.markdown(f'<div class="question-text">{question_text}</div>', unsafe_allow_html=True)
@@ -867,10 +890,10 @@ elif active_sub == "evaluation":
             "Response:",
             key=f"ep_{item_id}",
             height=160,
-            placeholder="Write your response here...",
+            placeholder=t("module.eval_response_placeholder", _lang),
             label_visibility="collapsed",
         )
-        if st.button("Submit Quiz →", disabled=not (user_text or "").strip(), key=f"eb_{item_id}", type="primary"):
+        if st.button(t("module.eval_submit_quiz_btn", _lang), disabled=not (user_text or "").strip(), key=f"eb_{item_id}", type="primary"):
             st.session_state["eval_responses"].append({
                 "item_id": item_id,
                 "response": user_text.strip(),
@@ -916,11 +939,11 @@ elif active_sub == "results":
             st.session_state["module_result_diag_baseline"] = None
     diag_baseline = st.session_state["module_result_diag_baseline"]
 
-    st.title("Module Complete!")
+    st.title(t("module.results_title", _lang))
     step_progress_strip([
-        {"label": "Read", "state": "done"},
-        {"label": "Practice", "state": "done"},
-        {"label": "Quiz", "state": "done"},
+        {"label": t("module.read_step_label", _lang),     "state": "done"},
+        {"label": t("module.practice_step_label", _lang), "state": "done"},
+        {"label": t("module.quiz_step_label", _lang),     "state": "done"},
     ])
 
     try:
@@ -932,7 +955,7 @@ elif active_sub == "results":
     if diag_baseline is not None:
         try:
             delta_val = rs - float(diag_baseline)
-            delta_str = f"{delta_val:+.1f} vs. diagnostic"
+            delta_str = t("module.results_delta", _lang).format(delta=f"{delta_val:+.1f}")
         except (TypeError, ValueError):
             pass
 
@@ -952,10 +975,10 @@ elif active_sub == "results":
 
     if coach_note:
         with st.container(border=True):
-            st.caption("🤖 AI COACH NOTE")
+            st.caption(t("module.results_coach_note_label", _lang))
             st.markdown(coach_note)
 
-    st.success("✓ Your skills profile has been updated.")
+    st.success(t("module.results_updated_success", _lang))
 
     all_prog = load_all_progress()
     next_module = next(
@@ -967,14 +990,14 @@ elif active_sub == "results":
     col_a, col_b = st.columns(2)
     with col_a:
         if not all_complete:
-            if st.button("View Updated Skills Profile →", use_container_width=True, type="secondary"):
+            if st.button(t("module.results_view_profile_btn", _lang), use_container_width=True, type="secondary"):
                 st.switch_page("pages/02_Skills_Profile.py")
     with col_b:
         if all_complete:
-            if st.button("🏆  View Final Skills Profile →", use_container_width=True, type="primary"):
+            if st.button(t("module.results_final_profile_btn", _lang), use_container_width=True, type="primary"):
                 st.switch_page("pages/02_Skills_Profile.py")
         elif next_module:
-            if st.button(f"Start Module {seq_order + 1} →", use_container_width=True, type="primary"):
+            if st.button(t("module.results_start_next_btn", _lang).format(n=seq_order + 1), use_container_width=True, type="primary"):
                 st.session_state.update({
                     "active_course_id": next_module["course_id"],
                     "active_submodule": "overview",

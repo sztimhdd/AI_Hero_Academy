@@ -388,13 +388,14 @@ pages/
   03_Home.py                  # course progress dashboard
   04_Course_Module.py         # reading / practice / evaluation sub-views
 utils/
-  db.py                       # Firestore data layer; domain-specific functions (get_profile, save_diagnostic, etc.)
+  db.py                       # Firestore data layer; domain-specific functions (get_profile, save_diagnostic, update_profile_lang, etc.)
   ai.py                       # Gemini API calls via google-genai; writes to ai_call_log Firestore collection
   auth.py                     # extracts user_email from GCP_USER_EMAIL / DEV_USER_EMAIL env var
   content.py                  # JSON file loader; typed getters for all content
+  i18n.py                     # i18n module; t(key, lang) translation fn; SUPPORTED_LANGS; detect_browser_lang()
   scoring.py                  # MCQ scoring; rubric parsing; domain score calculation
   sequencing.py               # module sequence algorithm
-  styles.py                   # inject_global_css(); section_header()
+  styles.py                   # inject_global_css() (browser lang detection); render_sidebar() (lang toggle); section_header()
 content/
   roles.json                  # {role_id: {...}} — rm + uw + an + mk
   domains.json                # role-scoped keys (rm_responsible_ai, uw_responsible_ai, an_responsible_ai, mk_responsible_ai, ...)
@@ -403,6 +404,9 @@ content/
   reading_content.json        # {course_id: {...}} — 28 entries
   practice_scenarios.json     # {course_id: {...}} — 28 entries
   evaluation_items.json       # {course_id: [{...}]} — 112 items (28 courses × 4)
+  i18n/
+    en.json                   # 140 flat key-value UI string pairs (English)
+    zh.json                   # 140 matching keys with Chinese translations (placeholder [ZH] suffix)
 scripts/
   generate_course_content.py  # multi-agent LLM pipeline for new role content
   reset_uat_user.py           # reset UAT user; --profile {course-built|m1-done|all-done} for mid-journey states
@@ -498,6 +502,10 @@ st.session_state["mcq_answered_by_task"]    # dict {task_idx: chosen_label | Non
 st.session_state["practice_task_idx"]       # int: 0-3
 st.session_state["practice_turns"]          # int: total turns used in this session
 st.session_state["task_extra_{task_idx}"]   # int: number of 3-turn extensions granted (open tasks)
+
+# i18n (Phase 15, March 2026)
+st.session_state["lang"]                # str: "en" | "zh"; default "en"
+st.session_state["_lang_from_profile"]  # bool sentinel: True once profile lang has been applied (avoids redundant Firestore reads)
 ```
 
 ### 5.5 Database Helper (`utils/db.py`)
@@ -507,7 +515,8 @@ All learner reads/writes go through domain-specific Firestore functions. There i
 ```python
 # User profiles
 get_profile(user_email) -> dict | None
-create_profile(user_email, display_name, role_id) -> None
+create_profile(user_email, display_name, role_id, lang: str = "en") -> None  # lang written to Firestore profile
+update_profile_lang(user_email, lang) -> None                                  # updates lang field; no-op for demo profiles
 
 # Diagnostic sessions
 get_latest_diagnostic(user_email) -> dict | None   # completed only, newest first

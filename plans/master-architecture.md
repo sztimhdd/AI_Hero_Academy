@@ -1,6 +1,8 @@
 # Architectural Brainstorm: Atomic Modular Learning vs. Role-Based Curriculum
 
 > Status: Recommendation phase — strategic direction, not implementation plan yet.
+>
+> **Current app status (March 2026):** Four roles live (RM, UW, AN, MK). 6-domain hexagon architecture. Bilingual UI — English / Chinese language switching via `utils/i18n.py` + `content/i18n/{en,zh}.json`; language persisted in Firestore user profile. Reading sub-view uses 4 visual section templates (Phase 14). MCQ hybrid practice model live across all 4 roles.
 
 ---
 

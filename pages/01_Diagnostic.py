@@ -16,6 +16,7 @@ from utils.ai import score_diagnostic, generate_gap_map
 from utils.scoring import DOMAIN_DISPLAY_NAMES
 from utils.styles import inject_global_css
 from utils.content import get_diagnostic_items, get_domain_descriptions
+from utils.i18n import t
 
 st.set_page_config(
     page_title="Diagnostic | AI Hero Academy",
@@ -44,9 +45,10 @@ items = get_diagnostic_items(role_id)
 domain_descriptions = get_domain_descriptions(role_id)
 
 TOTAL = len(items)
+_lang = st.session_state.get("lang", "en")
 
 if TOTAL == 0:
-    st.warning("No diagnostic questions found. The content database may not be seeded yet. Please contact your administrator.")
+    st.warning(t("diag.no_questions", _lang))
     st.stop()
 
 # ── Session state init ────────────────────────────────────────────────────────
@@ -66,10 +68,10 @@ if not st.session_state.get("diag_started"):
   <div class="aha-brand-name">AI <span>Hero</span> Academy</div>
 </div>
 """, unsafe_allow_html=True)
-    st.title("AI Skills Diagnostic")
+    st.title(t("diag.title", _lang))
     st.markdown(
-        '<div style="font-family:\'Inter\',sans-serif; font-size:0.85rem; color:#8990A8; margin-bottom:2rem">'
-        'Before we build your personalised training course, we need to understand your current AI skill level.</div>',
+        f'<div style="font-family:\'Inter\',sans-serif; font-size:0.85rem; color:#8990A8; margin-bottom:2rem">'
+        f'{t("diag.subheading", _lang)}</div>',
         unsafe_allow_html=True,
     )
     st.markdown(f"""
@@ -77,15 +79,15 @@ if not st.session_state.get("diag_started"):
   <div style="display:flex; gap:2.5rem; flex-wrap:wrap; margin-bottom:1.25rem">
     <div style="text-align:center; min-width:80px">
       <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">~5</div>
-      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">minutes</div>
+      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">{t("diag.minutes_label", _lang)}</div>
     </div>
     <div style="text-align:center; min-width:80px">
       <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">{TOTAL}</div>
-      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">questions</div>
+      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">{t("diag.questions_label", _lang)}</div>
     </div>
     <div style="text-align:center; min-width:80px">
       <div style="font-family:'IBM Plex Mono',monospace; font-size:1.8rem; font-weight:700; color:#E8E9EF">6</div>
-      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">skill domains</div>
+      <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">{t("diag.domains_label", _lang)}</div>
     </div>
   </div>
   <div style="font-family:'Inter',sans-serif; font-size:0.85rem; color:#8990A8; line-height:1.6">
@@ -98,12 +100,12 @@ if not st.session_state.get("diag_started"):
 """, unsafe_allow_html=True)
     _orient_cols = st.columns([3, 1]) if _can_exit else [None]
     with (_orient_cols[0] if _can_exit else st.container()):
-        if st.button("Start Assessment →", type="primary"):
+        if st.button(t("diag.start_btn", _lang), type="primary"):
             st.session_state["diag_started"] = True
             st.rerun()
     if _can_exit:
         with _orient_cols[1]:
-            if st.button("← Exit", key="diag_exit_orient", use_container_width=True):
+            if st.button(t("diag.exit_btn", _lang), key="diag_exit_orient", use_container_width=True):
                 st.switch_page("pages/03_Home.py")
     st.stop()
 
@@ -119,15 +121,15 @@ st.markdown("""
 
 col_title, col_counter, col_exit = st.columns([4, 1, 1])
 with col_title:
-    st.title("Diagnostic")
+    st.title(t("diag.header_title", _lang))
 with col_counter:
     st.markdown(
         f'<div class="question-counter" style="text-align:right; margin-top:1.4rem">'
-        f'Question {min(idx + 1, TOTAL)} of {TOTAL}</div>',
+        f'{t("diag.question_counter", _lang).format(n=min(idx + 1, TOTAL), total=TOTAL)}</div>',
         unsafe_allow_html=True,
     )
 with col_exit:
-    if st.button("← Exit", key="diag_exit_quiz", use_container_width=True):
+    if st.button(t("diag.exit_btn", _lang), key="diag_exit_quiz", use_container_width=True):
         for k in ["diag_item_index", "diag_responses", "diag_session_started",
                   "diag_started_at", "diag_started"]:
             st.session_state.pop(k, None)
@@ -140,7 +142,7 @@ st.progress(progress_pct)
 # ── Scoring / completion handler ──────────────────────────────────────────────
 def complete_diagnostic(responses: list[dict]):
     """Called after the final question is submitted."""
-    with st.spinner("Analysing your responses — this takes about 20 seconds..."):
+    with st.spinner(t("diag.spinner_analysing", _lang)):
         try:
             # Build scoring payload
             scoring_payload = []
@@ -162,11 +164,7 @@ def complete_diagnostic(responses: list[dict]):
             overall_score = scores["overall_score"]
 
         except Exception as e:
-            st.error(
-                "We encountered an issue scoring your responses. "
-                "Your answers are saved in this session. Please try again by refreshing.\n\n"
-                f"_{e}_"
-            )
+            st.error(t("diag.error_scoring", _lang) + f"\n\n_{e}_")
             st.stop()
 
         # Write diagnostic session to Firestore
@@ -181,10 +179,10 @@ def complete_diagnostic(responses: list[dict]):
                 resp_json, item_scores_json, domain_scores_json, overall_score,
             )
         except Exception as e:
-            st.error(f"Could not save your results. Please try again.\n\n_{e}_")
+            st.error(t("diag.error_save", _lang) + f"\n\n_{e}_")
             st.stop()
 
-    with st.spinner("Building your personalised gap map..."):
+    with st.spinner(t("diag.spinner_gap_map", _lang)):
         gap_bullets = []
         try:
             gap_bullets = generate_gap_map(
@@ -257,7 +255,7 @@ if item_type == "mcq":
         index=None,
     )
 
-    btn_label = "Submit & Continue →" if is_last else "Next →"
+    btn_label = t("diag.submit_continue_btn", _lang) if is_last else t("diag.next_btn", _lang)
     if st.button(btn_label, disabled=(selected is None), key=f"btn_{item_id}", type="primary"):
         chosen_idx = opt_labels.index(selected)
         chosen_label = opt_keys[chosen_idx]
@@ -270,11 +268,12 @@ if item_type == "mcq":
 
 # ── Prompt Sandbox ────────────────────────────────────────────────────────────
 elif item_type == "prompt_sandbox":
-    st.markdown("""
-<div style="font-family:'Inter',sans-serif; font-size:0.78rem; font-weight:700;
-            text-transform:uppercase; letter-spacing:0.08em; color:#8990A8;
-            margin-bottom:0.4rem">Scenario</div>
-""", unsafe_allow_html=True)
+    st.markdown(
+        f'<div style="font-family:\'Inter\',sans-serif; font-size:0.78rem; font-weight:700;'
+        f' text-transform:uppercase; letter-spacing:0.08em; color:#8990A8;'
+        f' margin-bottom:0.4rem">{t("diag.scenario_label", _lang)}</div>',
+        unsafe_allow_html=True,
+    )
     st.markdown(
         f'<div class="scenario-box">{scenario_text}</div>',
         unsafe_allow_html=True,
@@ -282,26 +281,27 @@ elif item_type == "prompt_sandbox":
 
     st.markdown(f'<div class="question-text">{question_text}</div>', unsafe_allow_html=True)
 
-    st.markdown("""
-<div style="font-family:'Inter',sans-serif; font-size:0.8rem; color:#8990A8;
-            margin-bottom:0.4rem">Write the prompt you would give Copilot:</div>
-""", unsafe_allow_html=True)
+    st.markdown(
+        f'<div style="font-family:\'Inter\',sans-serif; font-size:0.8rem; color:#8990A8;'
+        f' margin-bottom:0.4rem">{t("diag.prompt_hint", _lang)}</div>',
+        unsafe_allow_html=True,
+    )
 
     user_text = st.text_area(
         "Your prompt:",
         key=f"sandbox_{item_id}",
         height=140,
-        placeholder="Write your prompt here. Aim for 3–8 sentences.",
+        placeholder=t("diag.prompt_placeholder", _lang),
         label_visibility="collapsed",
     )
 
     st.markdown(
-        '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.72rem; '
-        'color:#8990A8; margin-top:0.3rem">Aim for 3–8 sentences</div>',
+        f'<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.72rem; '
+        f'color:#8990A8; margin-top:0.3rem">{t("diag.prompt_aim", _lang)}</div>',
         unsafe_allow_html=True,
     )
 
-    btn_label = "Submit →" if is_last else "Submit →"
+    btn_label = t("diag.submit_btn", _lang)
     if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}", type="primary"):
         st.session_state["diag_responses"].append({
             "item_id": item_id,
@@ -312,11 +312,12 @@ elif item_type == "prompt_sandbox":
 
 # ── Micro Task ────────────────────────────────────────────────────────────────
 elif item_type == "micro_task":
-    st.markdown("""
-<div style="font-family:'Inter',sans-serif; font-size:0.78rem; font-weight:700;
-            text-transform:uppercase; letter-spacing:0.08em; color:#8990A8;
-            margin-bottom:0.4rem">Review this content</div>
-""", unsafe_allow_html=True)
+    st.markdown(
+        f'<div style="font-family:\'Inter\',sans-serif; font-size:0.78rem; font-weight:700;'
+        f' text-transform:uppercase; letter-spacing:0.08em; color:#8990A8;'
+        f' margin-bottom:0.4rem">{t("diag.microtask_label", _lang)}</div>',
+        unsafe_allow_html=True,
+    )
     st.markdown(
         f'<div class="scenario-box"><pre>{scenario_text}</pre></div>',
         unsafe_allow_html=True,
@@ -328,11 +329,11 @@ elif item_type == "micro_task":
         "Your response:",
         key=f"microtask_{item_id}",
         height=120,
-        placeholder="Type your response here...",
+        placeholder=t("diag.response_placeholder", _lang),
         label_visibility="collapsed",
     )
 
-    btn_label = "Submit →"
+    btn_label = t("diag.submit_btn", _lang)
     if st.button(btn_label, disabled=not (user_text or "").strip(), key=f"btn_{item_id}", type="primary"):
         st.session_state["diag_responses"].append({
             "item_id": item_id,

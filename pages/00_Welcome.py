@@ -13,6 +13,7 @@ from utils.auth import get_user_email
 from utils.db import get_profile, get_latest_diagnostic, get_any_progress, create_profile
 from utils.styles import inject_global_css
 from utils.content import ROLES
+from utils.i18n import t
 
 st.set_page_config(
     page_title="Welcome | AI Hero Academy",
@@ -278,6 +279,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+_lang = st.session_state.get("lang", "en")
 _role_map = {v["title"]: k for k, v in ROLES.items()}
 _available_roles = list(_role_map.keys())
 _derived_name = user_email.split("@")[0].replace(".", " ").title()
@@ -287,42 +289,43 @@ _col_sel, _col_btn = st.columns([2, 1], gap="medium")
 
 with _col_sel:
     if len(_available_roles) == 1:
-        st.info(f"Your role: **{_available_roles[0]}**")
+        st.info(t("welcome.your_role_info", _lang).format(role=_available_roles[0]))
         _selected_role = _available_roles[0]
     else:
         _selected_role = st.selectbox(
-            "Select your role",
-            options=["— Select your role —"] + _available_roles,
+            t("welcome.role_select_label", _lang),
+            options=[t("welcome.role_placeholder", _lang)] + _available_roles,
             label_visibility="collapsed",
             key="welcome_role",
         )
     _display_name_val = st.text_input(
-        "Display name",
+        t("welcome.display_name_label", _lang),
         value=_derived_name,
         key="welcome_display_name",
-        help="This is how you will be greeted throughout the app. Edit if needed.",
+        help=t("welcome.display_name_help", _lang),
     )
 
-_role_selected = _selected_role not in ("— Select your role —",)
+_role_selected = _selected_role not in (t("welcome.role_placeholder", _lang),)
 
 with _col_btn:
     if st.button(
-        "Start My Diagnostic →",
+        t("welcome.cta_btn", _lang),
         disabled=not _role_selected,
         use_container_width=True,
         type="primary",
         key="hero_cta",
     ):
-        with st.spinner("Setting up your profile..."):
+        with st.spinner(t("welcome.spinner_setup", _lang)):
             try:
                 _display_name = _display_name_val.strip() if _display_name_val.strip() else _derived_name
                 _role_id = _role_map.get(_selected_role, "rm")
-                create_profile(user_email, _display_name, _role_id)
+                create_profile(user_email, _display_name, _role_id, lang=_lang)
                 st.session_state["user_email"] = user_email
                 st.session_state["user_state"] = "needs_diagnostic"
+                st.session_state["_lang_from_profile"] = True
                 st.switch_page("pages/01_Diagnostic.py")
             except Exception as err:
-                st.error(f"Could not create your profile. Please refresh and try again.\n\n_{err}_")
+                st.error(t("welcome.error_create_profile", _lang) + f"\n\n_{err}_")
 
 st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
 
@@ -446,11 +449,11 @@ st.markdown("""
 import os as _os
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "🎯 Diagnostic",
-    "🗺️ Skills Profile",
-    "📚 Course Module",
-    "🤖 AI Coach",
-    "📊 Results",
+    t("welcome.tab_diagnostic", _lang),
+    t("welcome.tab_skills_profile", _lang),
+    t("welcome.tab_course_module", _lang),
+    t("welcome.tab_ai_coach", _lang),
+    t("welcome.tab_results", _lang),
 ])
 
 _BASE = _os.path.join(_os.path.dirname(__file__), "..", "assets", "screenshots")
@@ -603,7 +606,7 @@ st.markdown("""
 <div class="demo-section-sub">This is version 1. Three roles are live today.<br>The roadmap below reflects what's already being built.</div>
 """, unsafe_allow_html=True)
 
-with st.expander("Roadmap →", expanded=False):
+with st.expander(t("welcome.roadmap_expander", _lang), expanded=False):
     rc1, rc2 = st.columns(2, gap="medium")
 
     with rc1:

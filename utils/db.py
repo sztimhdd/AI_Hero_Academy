@@ -76,12 +76,19 @@ def get_profile(user_email: str) -> dict | None:
     return d
 
 
-def create_profile(user_email: str, display_name: str, role_id: str) -> None:
+def create_profile(user_email: str, display_name: str, role_id: str, lang: str = "en") -> None:
     _get_db().collection("user_profiles").document(user_email).set({
         "role_id": role_id,
         "display_name": display_name,
+        "lang": lang,
         "created_at": SERVER_TIMESTAMP,
     })
+
+
+def update_profile_lang(user_email: str, lang: str) -> None:
+    if _is_demo_mode():
+        return
+    _get_db().collection("user_profiles").document(user_email).update({"lang": lang})
 
 
 # ── Diagnostic sessions ───────────────────────────────────────────────────────
