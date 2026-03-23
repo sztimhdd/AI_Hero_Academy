@@ -1002,11 +1002,10 @@ elif active_sub == "evaluation":
             placeholder=t("module.eval_response_placeholder", _lang),
             label_visibility="collapsed",
         )
-        if st.button(t("module.eval_submit_quiz_btn", _lang), disabled=not (user_text or "").strip(), key=f"eb_{item_id}", type="primary"):
-            response_text = user_text.strip()
-            if len(response_text) > MAX_USER_INPUT_CHARS:
-                st.warning(f"Your response was trimmed to {MAX_USER_INPUT_CHARS} characters.")
-                response_text = response_text[:MAX_USER_INPUT_CHARS]
+        response_text = (user_text or "").strip()
+        if len(response_text) > MAX_USER_INPUT_CHARS:
+            st.warning(f"Response must be {MAX_USER_INPUT_CHARS} characters or fewer ({len(response_text)} entered). Please shorten your answer.")
+        if st.button(t("module.eval_submit_quiz_btn", _lang), disabled=(not response_text or len(response_text) > MAX_USER_INPUT_CHARS), key=f"eb_{item_id}", type="primary"):
             st.session_state["eval_responses"].append({
                 "item_id": item_id,
                 "response": response_text,
