@@ -1,0 +1,3208 @@
+{
+  "an_c1_responsible_ai": [
+    {
+      "item_id": "ev_an_c1_responsible_ai_q1",
+      "course_id": "an_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程阅读材料，SAFE抽象法的首要目的是什么？",
+      "scenario_text": "一位业务分析师准备将客户的公司注册文件详情粘贴到Copilot提示词中，以生成风险摘要。",
+      "options": [
+        {
+          "label": "A",
+          "text": "通过使用预审批模板加快提示词撰写流程"
+        },
+        {
+          "label": "B",
+          "text": "确保业务分析师在不牺牲分析价值的前提下满足数据保护合规要求"
+        },
+        {
+          "label": "C",
+          "text": "帮助Copilot生成更具创意且更详尽的输出内容"
+        },
+        {
+          "label": "D",
+          "text": "通过在使用前对数据进行抽象化处理，取代使用机构审批工具的必要性"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that SAFE lets analysts stay compliant without sacrificing analytical value, because protecting client and organizational data is not optional. It is a compliance method, not a productivity shortcut or a substitute for approved tools.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c1_responsible_ai_q2",
+      "course_id": "an_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "根据SAFE抽象法，「A」步骤要求业务分析师执行哪项操作？",
+      "scenario_text": "在提交一个涉及客户股权架构图的Copilot提示词之前，一位业务分析师正在逐步完成SAFE检查清单的每个步骤。",
+      "options": [
+        {
+          "label": "A",
+          "text": "审批输出内容以供分发给相关干系人"
+        },
+        {
+          "label": "B",
+          "text": "将标识符抽象化为通用描述符"
+        },
+        {
+          "label": "C",
+          "text": "在提交提示词前对数据来源进行身份验证"
+        },
+        {
+          "label": "D",
+          "text": "分析最终输出内容的敏感程度"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly defines the 'A' in SAFE as 'abstract identifiers into generic descriptors,' which is the step that removes or replaces specific client-identifying information before it enters a prompt.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c1_responsible_ai_q3",
+      "course_id": "an_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "在业务分析师处理客户文件时，阅读材料明确指出以下哪类信息在性质上属于保密信息？",
+      "scenario_text": "一位新入职的业务分析师正在接受培训，学习哪些类型的数据在撰写任何Copilot提示词之前需要使用SAFE抽象法进行处理。",
+      "options": [
+        {
+          "label": "A",
+          "text": "公开财务报表、新闻稿及行业基准数据"
+        },
+        {
+          "label": "B",
+          "text": "公司注册文件、股权架构图、征信报告摘录及内部风险评级"
+        },
+        {
+          "label": "C",
+          "text": "会议纪要、项目时间表及业务分析师绩效评估报告"
+        },
+        {
+          "label": "D",
+          "text": "行业报告、宏观经济预测及监管指引文件"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly lists incorporation documents, ownership charts, credit bureau extracts, and internal risk ratings as examples of information that is confidential by nature in an analyst's workflow.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c1_responsible_ai_q4",
+      "course_id": "an_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将SAFE抽象法应用于以下场景。请撰写一份回答，逐步阐述SAFE的四个步骤，并说明在提交任何Copilot提示词之前，您将如何处理该情况。",
+      "scenario_text": "您是一位业务分析师，正在负责一家新企业客户的KYC客户准入审查工作。您收到了一份文件，其中包含：客户的完整法定名称、一份详细的股权架构图（显示三位实际受益人的护照号码及持股比例）、一份附有数字风险评分的征信报告摘录，以及一份标注为保密的内部风险评级备忘录。您希望使用Copilot起草一份股权结构摘要，并为入职委员会标注任何集中度风险。请详细描述您在撰写Copilot提示词之前，将如何应用SAFE抽象法。",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答正确识别并解释了「S」步骤——审查敏感内容——通过列举场景中的具体敏感要素（如法定名称、护照号码、信用评分、内部风险评级）加以说明。",
+        "key2": "回答正确解释了「A」步骤——将标识符抽象化为通用描述符——通过展示如何替换具体客户信息（如将客户名称替换为（某企业主体），将护照号码替换为（实际受益人标识符））加以说明。",
+        "key3": "回答正确阐述了「F」步骤——过滤输出内容中的泄露信息——描述了业务分析师将如何审查Copilot的输出内容，确保已抽象化或敏感的信息未在生成文本中重新出现。",
+        "key4": "回答正确阐述了「E」步骤——确保在机构审批的工具内完成工作——并体现出对以下要点的理解：SAFE并不取代使用审批工具的要求，而是与之配合使用。"
+      }
+    }
+  ],
+  "an_c2_strategic_prompting": [
+    {
+      "item_id": "ev_an_c2_strategic_prompting_q1",
+      "course_id": "an_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据CRAF框架，「C——背景」要素要求业务分析师在Copilot提示词中提供哪些内容？",
+      "scenario_text": "一位业务分析师正在撰写一个Copilot提示词，用于为董事会汇报总结行业敞口报告，并希望正确应用CRAF框架。",
+      "options": [
+        {
+          "label": "A",
+          "text": "Copilot应执行的具体操作，例如汇总或比较数据"
+        },
+        {
+          "label": "B",
+          "text": "业务分析师正在处理的内容以及输出结果的目标读者"
+        },
+        {
+          "label": "C",
+          "text": "输出内容的期望格式，例如表格或项目符号列表"
+        },
+        {
+          "label": "D",
+          "text": "Copilot在生成回复时应扮演的专业角色"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly defines 'C — Context' as telling Copilot what you are working with and who will read the output, illustrated by the example of specifying a 28-page document and its intended audience.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c2_strategic_prompting_q2",
+      "course_id": "an_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "阅读材料指出，决定Copilot输出内容能否达到董事会汇报标准、还是需要完全重写的关键因素是什么？",
+      "scenario_text": "两位业务分析师各自提交了一个Copilot提示词以生成简报。其中一位收到了精炼、可直接用于汇报的输出内容，另一位收到的草稿则含糊不清，需要完全重写。",
+      "options": [
+        {
+          "label": "A",
+          "text": "获得更优输出的业务分析师使用了字数更多的提示词"
+        },
+        {
+          "label": "B",
+          "text": "获得更优输出的业务分析师拥有更高级别的Copilot订阅套餐"
+        },
+        {
+          "label": "C",
+          "text": "获得更优输出的业务分析师在所有四个CRAF要素上都做到了精准具体"
+        },
+        {
+          "label": "D",
+          "text": "获得更优输出的业务分析师在非高峰时段提交了提示词"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The reading's takeaway explicitly states that 'specificity across all four CRAF elements — Context, Role, Action, and Format — is what separates a Copilot output you can present to the board from one you have to rewrite entirely.'",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c2_strategic_prompting_q3",
+      "course_id": "an_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "在CRAF框架中，哪个要素指示业务分析师为Copilot指定与任务相关的专业身份？",
+      "scenario_text": "一位业务分析师希望Copilot从审查投资组合报告的资深信用风险专业人士的视角生成分析内容。",
+      "options": [
+        {
+          "label": "A",
+          "text": "C——背景"
+        },
+        {
+          "label": "B",
+          "text": "R——角色"
+        },
+        {
+          "label": "C",
+          "text": "A——行动"
+        },
+        {
+          "label": "D",
+          "text": "F——格式"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The CRAF Framework's 'R — Role' element is the component that tells Copilot what professional identity or perspective to adopt, which shapes the tone and framing of the generated output.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c2_strategic_prompting_q4",
+      "course_id": "an_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "运用CRAF框架，为以下场景撰写一个完整的、达到董事会汇报标准的Copilot提示词。您的回答必须明确涵盖所有四个CRAF要素，并解释每个要素如何提升预期输出的质量。",
+      "scenario_text": "您是一位业务分析师，正在为Meridian基础设施项目做准备。您手头有一份35页的基础设施行业风险报告，该报告将由五位时间有限的高级领导组成的执行委员会审阅，他们需要就一项新融资安排作出是否推进的决策。您需要Copilot协助您生成一份简洁的执行摘要，重点呈现三大风险因素、任何集中度隐患以及建议的后续步骤。请撰写一个完整的CRAF结构提示词，并逐一解释每个要素。",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答包含清晰阐述的「C——背景」要素，明确说明文件内容（35页基础设施行业风险报告）及目标受众（负责作出是否推进决策的执行委员会）。",
+        "key2": "回答包含清晰阐述的「R——角色」要素，为Copilot指定与任务及受众相匹配的相关专业身份（如资深风险分析专家、高管简报专家等）。",
+        "key3": "回答包含清晰阐述的「A——行动」要素，明确说明Copilot应执行的具体操作（如总结三大风险因素、识别集中度隐患并提出后续建议步骤）。",
+        "key4": "回答包含清晰阐述的「F——格式」要素，明确说明期望的输出结构（如附有项目符号或编号章节的简洁执行摘要），并解释该格式如何服务于执行委员会受众。"
+      }
+    }
+  ],
+  "an_c3_critical_eval": [
+    {
+      "item_id": "ev_an_c3_critical_eval_q1",
+      "course_id": "an_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据阅读材料，为什么在与干系人共享AI生成的分析内容之前，仅审查其逻辑连贯性是不够的？",
+      "scenario_text": "一位业务分析师收到了Copilot生成的财务摘要，内容表述清晰，内部逻辑看似一致。她正在考虑将其直接发送给财务总监。",
+      "options": [
+        {
+          "label": "A",
+          "text": "因为Copilot的输出内容在格式上始终不符合财务总监受众的要求"
+        },
+        {
+          "label": "B",
+          "text": "因为AI可能生成听起来合理但实际有误的数据，而业务分析师的专业信誉取决于其所签发的内容"
+        },
+        {
+          "label": "C",
+          "text": "因为财务总监无论质量如何，都会要求提供第二版本"
+        },
+        {
+          "label": "D",
+          "text": "因为逻辑连贯性只是内容分发前两个必要审批步骤之一"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading explicitly warns that 'even the most capable AI can produce plausible-sounding figures that are simply wrong,' and that the analyst's credibility depends on what they sign off on — not what the AI drafted.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c3_critical_eval_q2",
+      "course_id": "an_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "阅读材料指出，VERIFY检查清单应在哪些具体工具中作为习惯性操作加以应用？",
+      "scenario_text": "一位业务分析师希望根据课程阅读材料，明确了解VERIFY检查清单应在何时、何处使用。",
+      "options": [
+        {
+          "label": "A",
+          "text": "仅在Microsoft Teams中审查会议摘要时使用"
+        },
+        {
+          "label": "B",
+          "text": "在机构审批的任何第三方AI工具中使用"
+        },
+        {
+          "label": "C",
+          "text": "每次使用Excel中的Copilot或Microsoft 365 Copilot生成分析内容时使用"
+        },
+        {
+          "label": "D",
+          "text": "仅在输出内容将对外与客户共享时使用"
+        }
+      ],
+      "correct_option": "C",
+      "explanation": "The reading explicitly states that the VERIFY Checklist is 'a six-step habit to apply every time you use Copilot in Excel or Microsoft 365 Copilot to generate' analysis, specifying these tools by name.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c3_critical_eval_q3",
+      "course_id": "an_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "阅读材料的核心要点指出，防止「看似合理的AI草稿」最终在财务总监收件箱中酿成被动错误的唯一手段是什么？",
+      "scenario_text": "一位团队负责人正在向初级业务分析师解释，即使在截止日期压力下，也不得跳过生成后的审查步骤。",
+      "options": [
+        {
+          "label": "A",
+          "text": "在任何输出内容分发前，由第二位业务分析师进行同行评审"
+        },
+        {
+          "label": "B",
+          "text": "使用VERIFY检查清单进行几分钟的系统性核查"
+        },
+        {
+          "label": "C",
+          "text": "使用相同提示词重新运行两次并对比两份输出结果"
+        },
+        {
+          "label": "D",
+          "text": "将输出内容提交合规团队审批签发"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states that 'a few minutes of systematic checking is the only thing standing between a plausible AI draft and an embarrassing error in a Finance Director's inbox,' referring to the VERIFY Checklist.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c3_critical_eval_q4",
+      "course_id": "an_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将VERIFY检查清单应用于以下场景。请撰写一份结构化回答，逐步完成检查清单的每个步骤，识别AI生成输出内容中的具体风险，并说明在共享分析内容之前您将采取哪些纠正措施。",
+      "scenario_text": "您是一位业务分析师，正在负责Aurora项目的差异分析工作。您使用Excel中的Copilot生成了一份差异摘要，对五个项目工作条线的第二季度与第三季度预算实际执行情况进行了比较。输出内容包含一张列有百分比差异的表格、一段将三个工作条线标注为「严重超支」的书面叙述，以及一个预计年末缺口数字420万美元。叙述内容表述清晰，数字内部逻辑看似一致。但您注意到，表格中某个工作条线的标签与源数据文件中使用的标签不符，且预计缺口数字在源数据中并未出现——该数字似乎是由Copilot推算得出的。请描述您在将该内容发送给财务总监之前，将如何应用VERIFY检查清单对其进行审查。",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答体现出对以下要点的理解：VERIFY检查清单必须系统性地应用于每一份AI生成的分析内容，而非选择性使用，并将审查过程定位为专业职责而非可选步骤。",
+        "key2": "回答专门针对工作条线标签不符问题进行了核查说明——解释每个数据点必须追溯至源数据，标签差异表明存在潜在的数据映射错误，必须在分发前予以纠正。",
+        "key3": "回答专门将420万美元的预计缺口数字识别为高风险发现——认识到源数据中不存在的数字属于AI推算结果而非经过核实的分析内容，必须依据可追溯的测算依据加以核实，或从输出内容中予以删除。",
+        "key4": "回答以明确的纠正措施方案作结——描述将对输出内容进行哪些修改（如更正标签、删除或验证推算数字），并确认修订后的输出内容在提交财务总监之前将再次进行核查。"
+      }
+    }
+  ],
+  "an_c4_relationship_intel": [
+    {
+      "item_id": "ev_an_c4_relationship_intel_q1",
+      "course_id": "an_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程内容，将同一份分析成果发送给多位不同干系人，其核心问题是什么？",
+      "scenario_text": "一位业务分析师完成了一份行业敞口分析，正在考虑是否将同一份文件分别发送给核保委员会、业务拓展领导团队和一位高管。",
+      "options": [
+        {
+          "label": "A",
+          "text": "不同干系人使用不同的文件格式，导致单一文件在技术上存在兼容性问题"
+        },
+        {
+          "label": "B",
+          "text": "每位受众的决策情境各不相同，同一份文件无法有效满足三方需求"
+        },
+        {
+          "label": "C",
+          "text": "将同一份文件发送给多位受众违反了数据保密政策"
+        },
+        {
+          "label": "D",
+          "text": "核保委员会与业务拓展团队不允许接收相同的风险数据"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "课程内容明确指出，同一份行业敞口分析对不同受众的意义截然不同：核保委员会关注集中度风险，业务拓展团队寻求增长机会，而高管只有四分钟时间——三方各有不同的决策情境，单一文件无法同时满足所有人的需求。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c4_relationship_intel_q2",
+      "course_id": "an_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "课程要点指出，运用STAKE框架不仅仅是调整成果物的语气。课程还要求业务分析师必须做到哪一点？",
+      "scenario_text": "一位业务分析师认为，针对新受众调整报告，只需将技术性语言改写为通俗易懂的表达即可。",
+      "options": [
+        {
+          "label": "A",
+          "text": "将文件重新套用经该受众类型审批的新模板"
+        },
+        {
+          "label": "B",
+          "text": "完整执行STAKE的全部五个步骤，并在改写前使用Copilot研究受众的决策情境"
+        },
+        {
+          "label": "C",
+          "text": "针对任何高管受众，将文件压缩至不超过一页"
+        },
+        {
+          "label": "D",
+          "text": "在分发前将调整后的版本提交给客户经理审批"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "课程要点明确指出，业务分析师每次为新受众调整分析成果物时，须「每次为新受众调整分析成果物时，须完整执行STAKE的全部五个步骤——而非仅调整语气——并在开始改写前使用Copilot研究受众的决策情境」。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c4_relationship_intel_q3",
+      "course_id": "an_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程内容，以下哪项最准确地描述了高管受众在接收分析成果物时面临的主要制约？",
+      "scenario_text": "一位业务分析师正在为三类不同受众调整一份行业敞口分析，需要了解高管读者最看重什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "高管需要完整的方法论章节，以便在采取行动前验证分析结论"
+        },
+        {
+          "label": "B",
+          "text": "高管在下一个电话会议前只有四分钟，需要立即获取核心结论"
+        },
+        {
+          "label": "C",
+          "text": "高管主要关注集中度风险和投资组合限额"
+        },
+        {
+          "label": "D",
+          "text": "高管在做出决策前需要一份包含所有支撑数据的独立附录"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "课程内容明确将高管描述为「在下一个电话会议前只有四分钟」的人，将时间确立为高管的首要制约，也正是同一份文件无法服务三类受众的根本原因。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c4_relationship_intel_q4",
+      "course_id": "an_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将STAKE框架应用于以下场景。请撰写一份回答，展示STAKE的全部五个步骤，并为场景中描述的两位干系人分别制定针对性的沟通方案。",
+      "scenario_text": "您是风险赋能工作组的一位业务分析师，刚刚完成了一份针对区域投资组合交易对手集中度风险的详细分析报告，共20页，包含定量敞口表、方法论章节、情景压力测试及书面叙述。您需要向两类截然不同的受众分享分析结论：（1）由资深核保专员组成的风险委员会，他们将在下周的会议上依据分析结果制定新的敞口限额；（2）首席运营官，他需要在当天下班前决定是否暂停受影响行业的新交易审批。请描述您将如何运用STAKE的全部五个步骤，分别为两类受众调整成果物，并说明Copilot在这一过程中将发挥怎样的作用。",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答展示了对STAKE框架作为多步骤流程的理解——而非仅仅调整语气——并明确列举或描述了至少三个STAKE步骤在本场景中的具体应用。",
+        "key2": "回答为风险委员会制定了清晰的差异化调整方案，识别其决策情境（制定敞口限额），并说明如何构建成果物以满足其需求（例如保留方法论、敞口表和压力测试结果）。",
+        "key3": "回答为首席运营官制定了清晰的差异化调整方案，识别其决策情境（须于当天做出是否暂停的决策），并说明如何重构成果物以满足其需求（例如提供一页摘要，包含明确建议和最关键的单一数据点）。",
+        "key4": "回答明确描述了如何使用Copilot在开始改写前研究每位受众的决策情境，体现出受众研究是流程中的一个步骤，而非预设假设。"
+      }
+    }
+  ],
+  "an_c5_data_decision": [
+    {
+      "item_id": "ev_an_c5_data_decision_q1",
+      "course_id": "an_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程内容，业务分析师在未运用TRACE框架的情况下直接采纳AI生成的数据异常发现，其核心风险是什么？",
+      "scenario_text": "一位业务分析师正在审查Copilot生成的投资组合分析，其中标记了某行业敞口的异常峰值。她面临截止日期压力，考虑将该发现直接纳入报告。",
+      "options": [
+        {
+          "label": "A",
+          "text": "业务分析师可能错失以最直观的视觉形式呈现该发现的机会"
+        },
+        {
+          "label": "B",
+          "text": "AI生成的发现所反映的可能是数据的结构性规律，而非真实的业务状况"
+        },
+        {
+          "label": "C",
+          "text": "该发现可能在第二份AI生成的报告中被重复，导致前后不一致"
+        },
+        {
+          "label": "D",
+          "text": "业务分析师可能在无意间将机密数据共享给未经审批的工具"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "课程内容明确警示：「AI生成的分析所反映的可能是数据的结构性规律，而非真实的业务状况」，这正是TRACE框架所要应对的具体风险。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c5_data_decision_q2",
+      "course_id": "an_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "课程内容指出了一种特定的行为倾向，使业务分析师容易不加批判地接受AI生成的发现。这种倾向是什么？",
+      "scenario_text": "一位团队负责人正在辅导一位业务分析师，该分析师一直将AI生成的发现未经核实地直接复制到报告中。",
+      "options": [
+        {
+          "label": "A",
+          "text": "对自身领域专业知识过度自信"
+        },
+        {
+          "label": "B",
+          "text": "接受发现后直接推进的本能反应，在截止日期压力下尤为突出"
+        },
+        {
+          "label": "C",
+          "text": "偏好定量数据而非定性判断"
+        },
+        {
+          "label": "D",
+          "text": "不愿质疑资深同事生成的输出结果"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "课程内容明确将这一行为风险定义为「接受发现后直接推进的本能反应——在截止日期压力下尤为突出」，这正是TRACE框架旨在抵消的特定人类行为倾向。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c5_data_decision_q3",
+      "course_id": "an_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程要点，业务分析师应如何对待每一项AI生成的数据解读？",
+      "scenario_text": "一位业务分析师正在决定，在将Copilot生成的趋势分析纳入季度投资组合报告之前，应给予其多大的权重。",
+      "options": [
+        {
+          "label": "A",
+          "text": "视为最终结论——若输出结果内部一致，可直接引用"
+        },
+        {
+          "label": "B",
+          "text": "视为需要与源数据核实的假设，而非可直接复制到报告中的结论"
+        },
+        {
+          "label": "C",
+          "text": "视为草稿——仅在发现出乎意料或与直觉相悖时才需审查"
+        },
+        {
+          "label": "D",
+          "text": "视为可靠的起点——仅需完成格式审查即可分发"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "课程要点明确指出，业务分析师应「运用TRACE框架，将每一项AI生成的数据解读视为需要与源数据核实的假设，而非可直接复制到报告中的结论」。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c5_data_decision_q4",
+      "course_id": "an_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将TRACE框架应用于以下场景。请撰写一份结构化回答，逐步梳理框架的每个步骤，识别AI生成发现中的具体风险，并说明在将任何结论纳入报告之前您将采取哪些核实措施。",
+      "scenario_text": "您是Cascade投资组合Q3分析项目的业务分析师。您使用Excel中的Copilot对六个行业板块共200笔交易的数据集进行了分析。Copilot的输出结果显示，「先进制造」板块的平均交易规模较Q2增长34%，并将其标注为「显著正向趋势」。然而，您记得数据团队近期在年中分类体系更新中，将若干笔交易从「通用工业」重新归类至「先进制造」。您不确定数据集中的Q2基准是否反映的是旧分类还是新分类。Q3报告将在两小时后截止。请描述您将如何在将该发现纳入报告之前，运用TRACE框架对其进行处理。",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答正确识别了核心风险——34%的增幅可能源于数据重新分类（即分类体系更新）所产生的虚假结果，而非真实的业务趋势——并将其定性为数据的结构性规律，而非真实业务状况的反映。",
+        "key2": "回答描述了与源数据挂钩的具体核实措施，例如核查Q2基准采用的是旧分类还是新分类，或向数据团队确认哪些交易被重新归类及归类时间。",
+        "key3": "回答体现了对TRACE框架的严格应用——将AI发现视为假设而非结论，并明确指出在分类问题得到解决之前，「显著正向趋势」的标注不得用于报告。",
+        "key4": "回答明确回应了截止日期压力——或描述了可在时间限制内完成的最小可行核实步骤，或建议将该发现标注为「待核实」，而非在未经核查的情况下直接纳入或删除。"
+      }
+    }
+  ],
+  "an_c6_augmented_comm": [
+    {
+      "item_id": "ev_an_c6_augmented_comm_q1",
+      "course_id": "an_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程内容，业务分析师在开始任何Copilot辅助任务之前，应遵循怎样的指导原则？",
+      "scenario_text": "一位业务分析师需要完成三项任务：总结会议记录、起草干系人备忘录、撰写跟进邮件。她正在考虑每项任务应使用哪个Copilot界面。",
+      "options": [
+        {
+          "label": "A",
+          "text": "始终从Excel Copilot开始，因为它能生成最结构化的输出"
+        },
+        {
+          "label": "B",
+          "text": "在输入提示词之前，先明确「哪个Copilot界面最适合这项任务」，确保工具与任务相匹配"
+        },
+        {
+          "label": "C",
+          "text": "所有任务使用同一个Copilot界面，以保持输出结果的一致性"
+        },
+        {
+          "label": "D",
+          "text": "选择能生成最长输出的Copilot界面，以获取最详尽的内容"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "课程要点明确指出：「在输入提示词之前，先明确哪个Copilot界面最适合这项任务——确保工具与任务相匹配，意味着每项输出都能直接作为下一步的输入。」",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c6_augmented_comm_q2",
+      "course_id": "an_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "根据课程内容，哪个M365 Copilot界面被明确描述为专为撰写干系人邮件及调整邮件语气而设计？",
+      "scenario_text": "一位业务分析师需要在一次困难会议后向资深干系人发送一封措辞审慎的跟进邮件，希望使用最合适的Copilot界面。",
+      "options": [
+        {
+          "label": "A",
+          "text": "Teams Copilot"
+        },
+        {
+          "label": "B",
+          "text": "Word Copilot"
+        },
+        {
+          "label": "C",
+          "text": "Excel Copilot"
+        },
+        {
+          "label": "D",
+          "text": "Outlook Copilot"
+        }
+      ],
+      "correct_option": "D",
+      "explanation": "课程内容明确指出「Outlook Copilot负责撰写干系人邮件并调整邮件语气」，将其定位为专为这一特定沟通任务而设计的界面。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c6_augmented_comm_q3",
+      "course_id": "an_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "课程内容将工具与任务相匹配的优势描述为确保每项输出「能直接作为下一步的输入」。这解决了什么问题？",
+      "scenario_text": "一位业务分析师反思，为何她之前的工作方式——对所有任务使用同一个Copilot界面——总是产生需要大量修改才能进入下一步的输出结果。",
+      "options": [
+        {
+          "label": "A",
+          "text": "消除了对任何Copilot输出应用VERIFY检查清单的必要性"
+        },
+        {
+          "label": "B",
+          "text": "消除了返工，使分析工作流程保持顺畅"
+        },
+        {
+          "label": "C",
+          "text": "确保所有输出自动按照董事会级别的呈现格式进行排版"
+        },
+        {
+          "label": "D",
+          "text": "减少了完成任何分析任务所需的提示词数量"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "课程内容明确指出，工具与任务相匹配「意味着每项输出都能直接作为下一步的输入，从而消除返工，使分析工作流程保持顺畅」。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c6_augmented_comm_q4",
+      "course_id": "an_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将M365 Copilot界面匹配原则应用于以下场景。请撰写一份回答，为每项任务指定正确的Copilot界面，说明该界面为何是最佳选择，并描述每个步骤的输出如何衔接至下一步。",
+      "scenario_text": "您是企业智能项目的业务分析师，刚刚参加了一场时长90分钟的工作组会议，会议已录音并生成会议文字记录。会后，您需要完成四项任务：（1）从会议文字记录中提取关键决策和行动事项；（2）起草一份正式的3页简报，向指导委员会汇总项目当前状态与风险；（3）分析附件中包含项目KPI的Excel数据集，识别哪些指标未达标；（4）向项目发起人发送一封简洁、专业的进展更新邮件，概述最主要的两项风险和下一个里程碑。请描述您将为每项任务使用哪个Copilot界面、为何这是正确选择，以及每项任务的输出如何衔接至下一步。",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答正确将Teams Copilot分配给任务1（从会议文字记录中提取决策和行动事项），并说明Teams Copilot专为理解会议文字记录和对话线程而设计。",
+        "key2": "回答正确将Word Copilot分配给任务2（起草正式简报），将Excel Copilot分配给任务3（分析KPI数据集），并说明Word Copilot负责起草和构建长篇文档，而Excel Copilot负责数据查询和趋势挖掘。",
+        "key3": "回答正确将Outlook Copilot分配给任务4（干系人进展更新邮件），并说明Outlook Copilot专为撰写干系人沟通内容及调整邮件语气而设计。",
+        "key4": "回答明确描述了各步骤之间的衔接关系——Teams的输出如何流入Word简报、Excel的KPI发现如何融入简报或邮件、Word和Excel经过核实的分析结果如何成为Outlook邮件的输入——体现出每项输出都能直接作为下一步的输入。"
+      }
+    }
+  ],
+  "an_c7_capstone": [
+    {
+      "item_id": "ev_an_c7_capstone_q1",
+      "course_id": "an_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据阅读材料，将Copilot作为快捷工具使用与将其作为战略性分析工具使用，两者之间的核心区别是什么？",
+      "scenario_text": "一位资深业务分析师正在辅导一名初级同事。该同事一直使用Copilot快速生成输出结果，但未能将其整合为连贯的工作流程。",
+      "options": [
+        {
+          "label": "A",
+          "text": "战略性使用需要购买功能更丰富的高级Copilot许可证"
+        },
+        {
+          "label": "B",
+          "text": "战略性使用意味着将每项AI辅助任务视为一系列有意为之的关联步骤，每个步骤将经过验证的输出结果传递至下一步骤"
+        },
+        {
+          "label": "C",
+          "text": "战略性使用意味着仅将Copilot用于经合规专员预先审批的任务"
+        },
+        {
+          "label": "D",
+          "text": "战略性使用要求为每项任务撰写包含更详细说明的较长提示词"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "阅读材料明确将端到端AI工作流程定义为「将每项AI辅助任务视为一系列有意为之的关联步骤，而非孤立的单次提示词操作——每个步骤将经过验证、适合受众的输出结果传递至下一步骤」，这正是战略性使用与将Copilot作为快捷工具使用之间的本质区别。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c7_capstone_q2",
+      "course_id": "an_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "阅读材料将端到端AI工作流程中每次工具交接描述为「质量关卡」。这在实践中意味着什么？",
+      "scenario_text": "一位业务分析师正在从Excel分析转至Word草稿，再转至Outlook邮件，希望在每次交接时正确应用综合评估原则。",
+      "options": [
+        {
+          "label": "A",
+          "text": "每次工具交接都需要经理正式签字确认，方可进入下一步骤"
+        },
+        {
+          "label": "B",
+          "text": "在每次工具交接时，须先核验输出结果再起草，先审核内容再交付"
+        },
+        {
+          "label": "C",
+          "text": "每次工具交接会自动将输出结果重新格式化，以符合下一工具的要求"
+        },
+        {
+          "label": "D",
+          "text": "每次工具交接均应记录在工作流程日志中，以满足合规要求"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "阅读材料的核心要点明确指出：「将每次工具交接——从Excel到Word再到Outlook——视为质量关卡：起草前先核验，交付前先审核」，由此确立了核验与审核作为质量关卡的实践内涵。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c7_capstone_q3",
+      "course_id": "an_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据阅读材料的核心要点，当业务分析师在每次交接时正确应用端到端AI工作流程与质量关卡后，会产生怎样的结果？",
+      "scenario_text": "一位业务分析师向其主管询问：既然每个单独工具已能产出良好结果，端到端AI工作流程的意义何在？",
+      "options": [
+        {
+          "label": "A",
+          "text": "AI工作流程将取代人工判断，处理常规分析任务"
+        },
+        {
+          "label": "B",
+          "text": "AI工作流程将放大业务分析师的判断力，而非绕过它"
+        },
+        {
+          "label": "C",
+          "text": "AI工作流程将减少所有工具所需的提示词总数"
+        },
+        {
+          "label": "D",
+          "text": "AI工作流程将自动确保所有输出结果符合数据政策要求"
+        }
+      ],
+      "correct_option": "B",
+      "explanation": "阅读材料的核心要点明确指出，在每次交接时应用质量关卡意味着「您的AI工作流程将放大您的判断力，而非绕过它」，将人工判断定位为工作流程所强化的核心要素。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_an_c7_capstone_q4",
+      "course_id": "an_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请针对以下场景设计一套完整的端到端AI工作流程。您的回答须涵盖以下内容：明确工作流程中的每个步骤；说明每个步骤适用的Copilot界面及相关框架；描述每次工具交接处的质量关卡；并阐释最终输出结果如何体现业务分析师的判断力，而非绕过它。",
+      "scenario_text": "您是Horizon项目年度审查的主责业务分析师。本次审查要求您完成以下工作：（1）从过去一年四次季度指导委员会会议的记录中提取关键主题与未解决风险；（2）分析一份包含项目KPI、预算实际值与预测值对比及里程碑完成率的多工作表Excel工作簿，识别排名前三的绩效问题；（3）为项目执行发起人撰写一份5页的年度审查报告，将会议主题与数据发现综合为连贯叙述并提出建议；（4）向发起人的首席幕僚发送一封简报邮件，概述报告的三项主要建议并申请安排30分钟审查会议。请应用阅读材料中的综合实训原则，设计完成本次任务的完整端到端AI工作流程。",
+      "options": [],
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答正确地将四项任务分别对应至适当的Copilot界面（会议记录使用Teams Copilot、KPI与预算分析使用Excel Copilot、年度审查报告使用Word Copilot、简报邮件使用Outlook Copilot），并说明每个界面适用于其对应任务的原因。",
+        "key2": "回答明确描述了至少两个质量关卡——即工具交接之间业务分析师核验输出结果后再传递至下一步骤的节点——体现出对每次交接是有意为之的检查点而非自动传递的理解。",
+        "key3": "回答展示了对前序学习模块中至少两个框架的整合应用（例如：提示词前使用SAFE、用CRAF构建提示词、用VERIFY核查输出结果、用TRACE解读数据，或用STAKE进行受众适配），表明端到端工作流程贯通了所有前期学习成果。",
+        "key4": "回答明确阐释了业务分析师的判断力在整个工作流程中如何得到保留与放大——例如，描述一个具体的决策节点，说明业务分析师如何在AI生成的发现进入下一步骤或呈交执行发起人之前，对其进行解读、质疑或情境化处理。"
+      }
+    }
+  ],
+  "rm_c1_responsible_ai": [
+    {
+      "item_id": "ev_rm_c1_responsible_ai_q1",
+      "course_id": "rm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据SAFE框架，客户经理在将任何客户信息输入AI工具之前，应首先采取什么行动？",
+      "scenario_text": null,
+      "options": {
+        "A": "聚焦于需要作出的具体决策",
+        "B": "用通用占位符替换客户标识信息",
+        "C": "确认该工具已列入经审批的软件清单",
+        "D": "避免在提示词中包含任何财务数据"
+      },
+      "correct_option": "B",
+      "explanation": "SAFE框架以「S」开头——替换标识信息——即在任何内容输入AI工具之前，将真实客户姓名、账号及其他识别信息替换为通用占位符。这是整个操作流程中的首要防护步骤。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c1_responsible_ai_q2",
+      "course_id": "rm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "一位客户经理希望使用AI工具在客户会议后起草跟进邮件。会议中曾讨论客户的经审计财务数据。以下哪项操作最能体现SAFE框架中「A」这一步骤的要求？",
+      "scenario_text": null,
+      "options": {
+        "A": "将经审计的财务数据直接粘贴至提示词中，以便AI掌握完整背景",
+        "B": "要求AI在起草邮件前先对财务数据进行摘要",
+        "C": "避免输入具体财务数字，转而描述总体趋势",
+        "D": "仅在获得客户书面同意后方可使用AI工具"
+      },
+      "correct_option": "C",
+      "explanation": "SAFE中的「A」代表「避免输入精确数字」。客户经理应以概括性描述代替输入具体的非公开财务数据，在保护客户保密信息的同时，仍能获得实用的草稿。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c1_responsible_ai_q3",
+      "course_id": "rm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "为什么SAFE框架将「确认使用经审批工具」作为独立步骤，即便其他三个步骤均已正确执行？",
+      "scenario_text": null,
+      "options": {
+        "A": "未经审批的工具可能生成质量较低的草稿，需要更多修改",
+        "B": "经审批的工具速度更快，且可直接与CRM系统集成",
+        "C": "无论提示词构建多么谨慎，使用未经审批的工具仍可能导致非公开数据泄露",
+        "D": "监管机构要求所有AI输出结果在使用前须记录于经审批的系统中"
+      },
+      "correct_option": "C",
+      "explanation": "即便提示词经过了仔细匿名化处理，若通过缺乏必要数据处理管控的未经审批工具进行处理，仍可能导致非公开客户数据泄露。「E」步骤——确认使用经审批工具——无论其他步骤执行得多么到位，都能弥补这一漏洞。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c1_responsible_ai_q4",
+      "course_id": "rm_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请将完整的SAFE框架应用于以下场景。撰写一份回答，逐一阐述SAFE的四个步骤，并生成一条合规、可直接使用的AI提示词。",
+      "scenario_text": "您正在为与Harbourline Fabrication Ltd.的信贷续期会议做准备。您的文件包含该客户的KYC记录、一份显示计划采购420万美元设备的业务计划草案，以及内部销售管道备注（其中标注了一家同样在向该客户推介的竞争银行）。您希望使用经审批的AI工具起草一份简报，概述客户的战略重点及会议前可能提出的异议。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "替换（Substitute）：回答在构建提示词前，将Harbourline Fabrication Ltd.的名称及所有识别信息（如客户名称、账户参考编号）替换为通用占位符，例如「客户A」或「一家中型金属加工企业」。",
+        "key2": "避免（Abstain）：回答省略了420万美元的具体数字及任何逐字引用的KYC或销售管道详情，转而以概括性描述代替（例如「一项重大的计划资本支出」或「来自另一家贷款机构的竞争压力」）。",
+        "key3": "聚焦（Focus）：回答围绕所需的具体决策或输出结果清晰构建提示词——即一份涵盖战略重点与可能异议的会前简报——而非提出模糊或开放性问题。",
+        "key4": "确认（Ensure）：回答在提交提示词前明确确认或声明所使用的工具已列入机构审批清单，体现出对工具审批作为不可逾越的合规底线的认知。"
+      }
+    }
+  ],
+  "rm_c2_strategic_prompting": [
+    {
+      "item_id": "ev_rm_c2_strategic_prompting_q1",
+      "course_id": "rm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "CRAF框架主要解决客户经理在开发新潜在客户时面临的什么问题？",
+      "scenario_text": null,
+      "options": {
+        "A": "它将完整的邮件发送流程自动化，使客户经理无需审阅草稿",
+        "B": "它通过精准具体的提示词，将有限的潜在客户数据转化为结构完整、可直接发送的拓客内容",
+        "C": "它在起草任何拓客内容之前，先对潜在客户的转化可能性进行评分",
+        "D": "它从外部数据库中提取额外的潜在客户数据，以填补信息空白"
+      },
+      "correct_option": "B",
+      "explanation": "阅读材料明确指出，CRAF为客户经理提供了一套可重复使用的结构，能够将有限的潜在客户数据——例如仅有行业、地区和出口商状态——通过精准具体的提示词转化为可直接发送的拓客内容，从而避免模糊提示词产生模糊邮件、损害客户经理公信力的问题。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c2_strategic_prompting_q2",
+      "course_id": "rm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "在CRAF框架中，「R」这一要素要求客户经理明确说明什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "关于潜在客户的地区和行业数据",
+        "B": "所需交付成果——即AI输出结果的具体形式",
+        "C": "确保草稿准确且体现客户经理风格的护栏条件",
+        "D": "客户经理与潜在客户之间的关系历史"
+      },
+      "correct_option": "B",
+      "explanation": "在CRAF中，「R」代表所需交付成果——客户经理须明确告知AI需要什么输出结果（例如首次联系邮件、简报），以确保提示词产出实用内容，而非泛泛的回应。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c2_strategic_prompting_q3",
+      "course_id": "rm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "为什么CRAF框架将护栏条件作为独立要素，而非将语气和准确性交由AI自行判断？",
+      "scenario_text": null,
+      "options": {
+        "A": "护栏条件允许AI生成多个草稿版本供客户经理选择",
+        "B": "若缺乏明确的护栏条件，AI生成的草稿可能不够准确或无法体现客户经理本人的表达风格，从而损害公信力",
+        "C": "护栏条件是合规政策的要求，任何AI生成的邮件在发送前均须满足",
+        "D": "护栏条件指示AI在起草前从CRM中提取经核实的数据"
+      },
+      "correct_option": "B",
+      "explanation": "阅读材料指出，护栏条件确保每份AI生成的草稿既准确又体现客户经理本人的表达风格。若缺乏护栏条件，输出结果可能显得千篇一律或包含错误，从而损害客户经理的公信力——在首次联系新潜在客户时尤为关键。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c2_strategic_prompting_q4",
+      "course_id": "rm_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请运用CRAF框架，针对以下场景撰写一条完整、结构清晰的AI提示词。您的回答须清晰标注并涵盖CRAF的全部四个要素。",
+      "scenario_text": "您的CRM中刚收到一条新线索：Prairie Pulse Foods Inc.，一家位于萨斯喀彻温省的中型食品加工企业，被归类为活跃的美国出口商。您与该公司此前没有任何业务往来。您的目标是发送一封首次联系邮件，介绍您本人及您的贸易融资服务，并争取安排一次初步沟通电话。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "背景（Context）：提示词清晰呈现了该潜在客户的具体背景信息——包括行业（食品加工/农业食品）、地区（萨斯喀彻温省）及出口商状态（活跃的美国出口商）——确保AI获得精准背景，而非模糊泛泛的信息。",
+        "key2": "所需交付成果（Required Deliverable）：提示词明确说明所需的输出结果——一封首次联系拓客邮件——并指定争取安排初步沟通电话的目标，对所需文件类型不存在任何歧义。",
+        "key3": "受众与结构（Audience & Structure）：提示词明确了预期收件人（一位食品加工出口企业的高级决策者），并说明邮件的期望结构或篇幅（例如：简短的自我介绍、价值主张、行动号召）。",
+        "key4": "护栏条件（Guardrails）：提示词包含至少一项明确的护栏条件——例如指示AI避免对该公司作出未经核实的陈述、保持与客户经理本人表达风格一致的专业而亲切的语气，或标注其所作的任何假设。"
+      }
+    }
+  ],
+  "rm_c3_critical_eval": [
+    {
+      "item_id": "ev_rm_c3_critical_eval_q1",
+      "course_id": "rm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程内容，为什么AI生成的财务评述在信贷审批环境中尤为危险？",
+      "scenario_text": null,
+      "options": {
+        "A": "根据大多数银行政策，AI工具不得访问财务数据",
+        "B": "AI生成的评述即便数据有误，也可能听起来言之凿凿",
+        "C": "信贷核保专员不接受任何AI生成的文件作为支撑材料",
+        "D": "财务评述需要持牌业务分析师签署，而AI无法提供"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容明确指出，AI生成的财务评述即便数据有误，也可能听起来言之凿凿，而这种虚假的确定性在信贷审批环境中尤为危险——错误一旦流入核保环节或传达给客户，后果不堪设想。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c3_critical_eval_q2",
+      "course_id": "rm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "VERIFY核查清单旨在培养客户经理哪项核心工作规范？",
+      "scenario_text": null,
+      "options": {
+        "A": "在提交前将所有AI生成的评述从头重写",
+        "B": "在AI生成的差异评述（即针对财务数据变动的分析性说明）流入核保环节、CRM记录或客户之前，及时发现其中的错误",
+        "C": "用经过核实的财务数据训练AI模型，以提升未来的输出质量",
+        "D": "就所有AI生成的财务摘要取得客户的书面确认"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容指出，VERIFY核查清单为客户经理提供了一套快速、可重复执行的操作规范，帮助其在错误流入核保环节、CRM记录或客户之前加以拦截——在分发前发现并纠正错误，正是该框架的核心目的。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c3_critical_eval_q3",
+      "course_id": "rm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程内容的核心要点，在审查AI生成的差异评述中的某项论断时，仅有哪两种做法是经得起审查的？",
+      "scenario_text": null,
+      "options": {
+        "A": "若论断听起来合理则予以采纳，若似乎不太可能则予以删除",
+        "B": "用第二个AI工具核实该论断，或将其上报给资深客户经理",
+        "C": "将该论断追溯至本人在源文件中亲自核实的具体数据，或明确标注为未经证实",
+        "D": "保留该论断并附加免责声明脚注，或要求客户予以确认"
+      },
+      "correct_option": "C",
+      "explanation": "课程内容的核心要点指出，不存在任何可以折中的做法：每项论断要么能追溯至客户经理本人在源文件中亲自核实的具体数据，要么必须明确标注为未经证实。任何其他做法都会使客户经理面临风险敞口。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c3_critical_eval_q4",
+      "course_id": "rm_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请将VERIFY核查清单的工作方法应用于以下场景，撰写一份结构化回应，逐一评估每项AI生成的论断，并说明针对每项论断你将采取的具体行动。",
+      "scenario_text": "你要求AI工具为SkyNorth Aero Components Inc.最新季度财务数据生成差异评述。AI输出了以下三项陈述：（1）「营收同比增长18%，增长动力来自与一家国防供应商签订的新合同。」（2）「运营利润率提升至14.2%，反映出供应链成本效率的改善。」（3）「公司现金状况稳健，短期内不存在流动性压力。」你手边备有客户的源财务报表。第1项陈述中的营收数据与源文件一致，但源文件中未提及任何合同细节。第2项陈述中的利润率数据在源文件中无从查证。第3项陈述完全不含任何具体数字。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "第1项陈述的处理：回应正确识别出18%的营收数据已在源文件中得到核实，但将国防供应商合同细节标注为未经证实（源文件中未提及），并说明在使用该评述前，此细节必须标注为未经证实或予以删除。",
+        "key2": "第2项陈述的处理：回应正确识别出14.2%的运营利润率数据无法在源文件中得到印证，因此在流入核保环节或传达给客户之前，必须明确标注为未经证实或予以删除，不得按原文使用。",
+        "key3": "第3项陈述的处理：回应正确识别出该论断不含任何可供核实的具体数字，缺乏经源文件核实数据支撑的模糊定性表述属于未经证实的论断，必须相应标注或予以删除。",
+        "key4": "整体工作规范：回应体现了VERIFY原则——不存在任何可以折中的做法。每项论断要么经核实可追溯至具体的源文件数据，要么明确标注，不得仅因「听起来合理」或言之凿凿便予以采纳。"
+      }
+    }
+  ],
+  "rm_c4_relationship_intel": [
+    {
+      "item_id": "ev_rm_c4_relationship_intel_q1",
+      "course_id": "rm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程内容，关系简报与从数据库中调取的标准公司档案有何本质区别？",
+      "scenario_text": null,
+      "options": {
+        "A": "关系简报由AI生成并自动更新，而数据库档案是静态的",
+        "B": "关系简报是互动往来、承诺事项及相关责任人的鲜活记录",
+        "C": "关系简报侧重财务指标，而数据库档案涵盖定性信息",
+        "D": "关系简报与客户共享，而数据库档案仅供内部使用"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容明确指出，关系简报并非从数据库中调取的公司档案，而是互动往来、承诺事项及相关责任人的鲜活记录，记录了曾经许下的承诺、尚未解决的事项，以及每位相关人员真正在意的事情。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c4_relationship_intel_q2",
+      "course_id": "rm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "根据课程内容，RELATE框架的首要目的是什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "无需客户经理介入，自动生成客户关系简报",
+        "B": "帮助客户经理以充分准备的状态出席每次客户会议，同时确保AI对其所知与所编内容保持诚实",
+        "C": "按客户互动活跃度对客户关系进行评分，并标记存在流失风险的账户",
+        "D": "统一CRM记录的格式，以便AI工具进行处理"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容的核心要点指出，RELATE帮助你以「如同对所有细节都了如指掌」的状态出席每次客户会议，同时确保AI对其实际掌握的信息与其编造的内容保持诚实。充分准备与AI问责，是该框架的双重目标。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c4_relationship_intel_q3",
+      "course_id": "rm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "在借助AI辅助关系洞察准备季度回顾会议时，课程内容指出客户经理需要了解与会人员的哪三项信息？",
+      "scenario_text": null,
+      "options": {
+        "A": "他们的职位头衔、所在公司的营收规模，以及他们偏好的沟通方式",
+        "B": "曾经许下的承诺、尚未解决的事项，以及每位与会者真正在意的事情",
+        "C": "他们的决策权限、在公司的任职年限，以及他们的LinkedIn动态",
+        "D": "最近一次互动的日期、持有的产品，以及信用评级"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容指出，在出席季度回顾会议前，客户经理需要了解：曾经许下的承诺、尚未解决的事项，以及每位与会者真正在意的事情——这三项关系洞察优先事项正是RELATE框架的核心所在。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c4_relationship_intel_q4",
+      "course_id": "rm_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请运用RELATE框架，针对以下场景撰写一份结构化的会前准备方案。你的回应须涵盖RELATE的所有关键要素，并展示你将如何确保AI对其所知与其可能编造的内容保持诚实。",
+      "scenario_text": "你正在为明天上午与GlacierTech Robotics Ltd.举行的季度业务回顾会议做准备。与会人员包括首席财务官、运营副总裁，以及一位三个月前刚入职的新采购经理。你的CRM记录显示，六个月前你曾承诺为客户引荐贸易融资团队，但此后没有任何跟进记录可以证实此事已落实。你使用AI工具起草会前简报时，工具生成了一项陈述，称「客户在上次会议中明确表达了扩大授信额度的强烈意愿」——但你本人对此并无记忆，且在记录中也无从查证。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "关系历史：回应识别并处理了六个月前尚未落实的承诺事项（引荐贸易融资团队），将其作为待处理的行动项，明确指出须在会议中予以确认或跟进，而非置之不理。",
+        "key2": "与会人员洞察：回应体现了对每位与会者的差异化认知——注意到首席财务官与运营副总裁已有既定的关系背景，并特别指出新采购经理尚属陌生面孔，需采取初次建立关系的沟通方式。",
+        "key3": "AI问责：回应明确将AI关于「强烈表达扩大授信额度意愿」的陈述标注为未经核实，指出在未找到来源记录加以佐证的情况下，该陈述不得纳入会前简报或在客户面前提及——与确保AI对其所知与所编内容保持诚实的原则一致。",
+        "key4": "准备成果：回应形成或描述了一份可直接使用的会前方案，将经核实的关系历史、与会人员背景及待处理承诺事项整合为一份连贯的简报——展示出RELATE所产出的是可直接用于会议的洞察，而非单纯的问题清单。"
+      }
+    }
+  ],
+  "rm_c5_data_decision": [
+    {
+      "item_id": "ev_rm_c5_data_decision_q1",
+      "course_id": "rm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程内容，客户经理在使用呈现大量数据点的投资组合看板时，面临的主要风险是什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "数据不足，无法做出有依据的优先级排序决策",
+        "B": "基于错误信号采取行动，或在未经客户经理判断的情况下让AI自动排定优先级",
+        "C": "花费过多时间逐一手动审查每个数据点，而未充分利用AI",
+        "D": "看板数据在客户经理采取行动前已经过时"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容明确指出，风险并非数据不足，而是基于错误信号采取行动，更糟糕的是在未经客户经理判断的情况下让AI自动排定优先级。SIGNAL框架正是为应对这一具体风险而设计的。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c5_data_decision_q2",
+      "course_id": "rm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "SIGNAL框架最终能帮助客户经理对投资组合数据实现什么目标？",
+      "scenario_text": null,
+      "options": {
+        "A": "自动生成每周投资组合报告，无需人工审核即可发送给客户",
+        "B": "将看板指标转化为客户经理能够解释、执行并为之负责的决策",
+        "C": "根据客户活跃度近期评分识别应予退出的客户",
+        "D": "将看板数据与CRM同步，消除重复录入"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容的核心要点指出，SIGNAL将看板指标转化为你能够解释、执行并为之负责的决策——因为对投资组合负责的是客户经理，而非AI。可解释性与可辩护性是该框架的关键产出。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c5_data_decision_q3",
+      "course_id": "rm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "课程内容提到了周一早晨投资组合看板上呈现的多种数据点。以下哪个选项最准确地呈现了课程所描述的各类信号？",
+      "scenario_text": null,
+      "options": {
+        "A": "客户信用评分、贷款价值比，以及利率敏感性预警标记",
+        "B": "线索存续时长、SLA倒计时、客户互动近期标记，以及市场洞察摘要",
+        "C": "营收趋势、人员变动情况，以及竞争对手动态预警",
+        "D": "邮件打开率、通话记录，以及产品交叉销售机会评分"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容明确列出，每周一早晨投资组合看板上呈现的数据点类型包括：线索存续时长、SLA倒计时、客户互动近期标记，以及市场洞察生成器输出的市场洞察摘要。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c5_data_decision_q4",
+      "course_id": "rm_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请将SIGNAL框架应用于以下场景，撰写一份结构化回应，逐步阐述你的优先级排序思路，并形成一份本周可执行、经得起推敲的行动计划。",
+      "scenario_text": "周一早晨，你的投资组合看板显示Maple Ridge Exporters Co.的以下信息：（1）SLA倒计时提示一份信贷续期申请将在4个工作日内到期。（2）客户互动近期标记显示客户经理已47天未与该客户联系。（3）AI工具生成的市场洞察摘要称「受汇率波动影响，农业出口行业正面临逆风——该细分市场的客户可能正在重新评估融资需求。」（4）线索存续时长指标显示该客户的一条新转介绍已搁置12天未跟进。AI工具已自动将市场洞察列为本周首要行动事项。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "信号识别：回应正确识别并区分了四类数据信号——SLA截止期限、客户互动断档期、AI生成的市场洞察，以及存续时间过长的转介绍——而非将其视为无差别的信息列表一并处理。",
+        "key2": "客户经理判断优先于AI自动排序：回应明确质疑或推翻了AI将市场洞察自动列为首要优先事项的排序，体现了SIGNAL原则——对优先级排序决策负责的是客户经理，而非AI。",
+        "key3": "经得起推敲的优先级排序：回应给出清晰、有据可查的优先级顺序（例如：鉴于4个工作日的窗口期，SLA截止期限优先；其次处理客户互动断档及跟进联系；再次跟进存续时间过长的转介绍；最后将市场洞察作为背景参考），并附有客户经理能够向上级或客户解释的理由。",
+        "key4": "行动计划：回应将已排序的信号转化为本周具体、可执行的行动（例如：「今日联系客户，启动信贷续期材料准备；安排通话，处理47天未联系问题；周三前跟进转介绍」）——展示出SIGNAL所产出的是可落地的决策，而非单纯的分析结论。"
+      }
+    }
+  ],
+  "rm_c6_augmented_comm": [
+    {
+      "item_id": "ev_rm_c6_augmented_comm_q1",
+      "course_id": "rm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据Copilot入口选择器规范，客户经理在使用AI辅助沟通任务时，应始终从哪里开始？",
+      "scenario_text": null,
+      "options": {
+        "A": "从CRM系统开始，因为客户操作最终记录于此",
+        "B": "从原始素材最为完整的入口开始",
+        "C": "从电子邮件客户端开始，因为客户经理的大多数沟通都通过邮件完成",
+        "D": "从能最快生成初稿的AI工具开始"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料明确阐述了这一原则：始终从原始素材最为完整的入口开始。Copilot入口选择器正是建立在这一原则之上——起始入口的质量决定了后续整个链路的质量。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c6_augmented_comm_q2",
+      "course_id": "rm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "课程材料将Copilot入口选择器描述为「一项规范，而非仅仅是一个技巧」。这一区别在实践中意味着什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "客户经理必须完成认证后，才能在客户沟通中使用任何Copilot入口",
+        "B": "入口选择过程必须记录在CRM系统中，以满足合规要求",
+        "C": "客户经理必须有目的性地将输出结果链式传递至行动发生的节点，而非仅仅选择一个方便的起点",
+        "D": "该规范要求在每项沟通任务中按顺序使用所有可用的Copilot入口"
+      },
+      "correct_option": "C",
+      "explanation": "课程材料解释道，Copilot入口选择器之所以是一项规范，在于它要求客户经理有目的性地将输出结果链式传递至行动发生的节点，而非仅仅选择一个方便的工具。经过深思熟虑的链式传递，而非便利性，才是其作为规范的本质所在。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c6_augmented_comm_q3",
+      "course_id": "rm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程材料的核心要点，客户经理在链式传递AI输出时跳过验证关卡，会面临什么风险？",
+      "scenario_text": null,
+      "options": {
+        "A": "CRM系统将拒绝接受未附验证时间戳的AI生成内容",
+        "B": "缺少验证环节的速度，不过是以更快的方式犯下代价高昂的错误",
+        "C": "跳过验证将使输出结果失效，客户经理须重新启动整个链式流程",
+        "D": "AI工具将标记该输出为未经验证，并阻止其发送"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料的核心要点明确指出：「缺少验证环节的速度，不过是以更快的方式犯下代价高昂的错误。」验证关卡不可或缺——以效率为由跳过它，只会放大而非降低风险。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c6_augmented_comm_q4",
+      "course_id": "rm_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将Copilot入口选择器规范应用于以下场景。请撰写一份回答，完整梳理沟通链路——明确最佳起始入口、各步骤经过深思熟虑的链式传递，以及验证关卡——然后再生成最终输出。",
+      "scenario_text": "您刚刚结束了一次与Bluewave Marine Logistics Inc.长达45分钟的通话。通话期间，您在Microsoft OneNote中记录了零散的笔记，涵盖三个主题：（1）客户提出探索新循环信贷额度的需求；（2）首席财务官对燃油成本上涨影响现金流表示担忧；（3）您承诺在本周末前发送一份产品对比文件。现在您需要完成以下两项任务：向首席财务官发送一封跟进邮件，总结通话内容并确认您的承诺；以及在CRM系统中记录一条结构化备注，涵盖关键讨论要点和后续步骤。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "起始入口：回答正确识别Microsoft OneNote（通话笔记所在位置）为最佳起始入口——即原始素材最为完整的节点——并从此处启动AI辅助工作流，而非直接跳至邮件或CRM系统。",
+        "key2": "经过深思熟虑的链式传递：回答梳理出合乎逻辑、有目的性的步骤链路——例如，在OneNote中使用Copilot整理并汇总原始笔记，再将结构化摘要链式传递至邮件草稿，然后将经验证的摘要链式传递至CRM备注——而非将每项输出视为独立任务处理。",
+        "key3": "验证关卡：回答明确包含验证步骤——在发送跟进邮件前及保存CRM备注前，确认三个讨论要点（信贷额度、燃油成本担忧、承诺事项）均得到准确体现，且无任何AI生成的细节未经核实。",
+        "key4": "最终输出：回答生成或清晰描述两项所需输出——致首席财务官的跟进邮件和结构化CRM备注——证明链式流程已完整推进至行动发生的节点，而非停留在草稿阶段。"
+      }
+    }
+  ],
+  "rm_c7_capstone": [
+    {
+      "item_id": "ev_rm_c7_capstone_q1",
+      "course_id": "rm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据本模块课程材料，AI在哪个环节为客户经理创造最大价值？",
+      "scenario_text": null,
+      "options": {
+        "A": "通过一个高度优化的提示词，一次性覆盖所有工作流需求",
+        "B": "通过整合多个框架的、经过深思熟虑的连贯步骤链",
+        "C": "通过能自主完成完整客户服务工作流的AI工具",
+        "D": "通过在客户通话期间为客户经理提供实时指导的AI辅导员"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料明确指出，AI创造最大价值的方式并非依赖单一的巧妙提示词，而是通过经过深思熟虑的连贯步骤链——即整合了项目中六大规范的端到端AI工作流。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c7_capstone_q2",
+      "course_id": "rm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "本模块课程材料描述端到端AI工作流以SAFE作为起点。为何SAFE被置于工作流的第一步，而非链路的后续环节？",
+      "scenario_text": null,
+      "options": {
+        "A": "SAFE是最快完成的步骤，优先完成可节省后续步骤的时间",
+        "B": "SAFE必须在任何信息进入工具之前完成——对输入内容的保护是所有后续步骤得以推进的前提",
+        "C": "监管机构要求在激活任何AI工具前提交SAFE文档",
+        "D": "SAFE生成所有后续框架步骤所依赖的上下文数据"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料指出，SAFE的作用是「在任何信息进入工具之前保护输入内容」——使其成为不可或缺的基础前提。若非公开数据在未经SAFE处理的情况下进入AI工具，后续任何步骤都无法弥补这一暴露风险。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c7_capstone_q3",
+      "course_id": "rm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据本模块课程材料的核心要点，在端到端AI工作流中，哪项输入是任何Copilot入口都无法替代的？",
+      "scenario_text": null,
+      "options": {
+        "A": "来自客户源文件的经验证财务数据",
+        "B": "客户经理的专业判断",
+        "C": "历次客户互动的CRM备注",
+        "D": "通过验证关卡的已审批AI工具输出结果"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料的核心要点指出，「客户经理的专业判断是任何Copilot入口都无法替代的输入」。工作流中的每个步骤都设有防护措施，但人的判断始终是赋予整个链路完整性的不可或缺的要素。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_rm_c7_capstone_q4",
+      "course_id": "rm_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将完整的端到端AI工作流应用于以下场景。您的回答须展示如何在工作流中整合六大框架（SAFE、CRAF、VERIFY、RELATE、SIGNAL及Copilot入口选择器）中的至少四个，各步骤之间须有清晰的交接，且每个关卡处须体现明确的客户经理判断。",
+      "scenario_text": "您是一家金融机构的客户经理。Evergreen Advanced Materials Group是您客户储备中的一个新潜在客户——一家位于不列颠哥伦比亚省的中型先进材料制造商，被归类为亚太市场的活跃出口商。您目前掌握的信息包括：CRM系统中的行业分类、所在地区及出口商标识。您还收到一条投资组合仪表盘提醒，显示该潜在客户已18天未被联系，且首次联系的SLA截止日期为2个工作日后。一款AI工具已预先生成一份市场洞察摘要，内容为「不列颠哥伦比亚省先进材料出口商正经历强劲需求增长，同比约为22%」。您尚未核实该数据。您的任务包括：（1）安全准备AI输入内容；（2）起草首次联系的外发邮件；（3）在使用AI生成的市场洞察前对其进行评估；（4）完成外发后记录结构化CRM备注。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "SAFE应用：回答在任何信息进入AI工具之前应用SAFE——将Evergreen Advanced Materials Group的识别信息替换为占位符，不输入任何非公开数据，将提示词聚焦于具体任务（首次联系邮件），并确认使用已审批工具。",
+        "key2": "CRAF提示词构建：回答为首次联系邮件构建符合CRAF结构的提示词——明确上下文（不列颠哥伦比亚省先进材料出口商、亚太市场）、所需交付物（用于争取初步会面的首次联系外发邮件）、受众与结构，以及防止未经核实声明（包括未经核实的22%数据）出现在草稿中的防护措施。",
+        "key3": "VERIFY规范：回答明确标记AI生成的「22%需求增长」数据为未经核实——说明在未将其与客户经理亲自核查过的来源文件挂钩之前，该数据不得出现在外发邮件或CRM备注中——并在所有输出中将其删除或标注为未经确认。",
+        "key4": "Copilot入口选择器与客户经理判断：回答梳理出从最佳起始入口（CRM潜在客户数据及仪表盘）到邮件草稿和CRM备注的经过深思熟虑的链路，在发送前包含验证关卡，并至少在一处体现客户经理判断——例如推翻AI对市场洞察的优先排序，或就AI无法自主决定的语气与内容作出明确决策。"
+      }
+    }
+  ],
+  "uw_c1_responsible_ai": [
+    {
+      "item_id": "ev_uw_c1_responsible_ai_q1",
+      "course_id": "uw_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据SAFE框架，在将核保数据输入AI工具之前，「S」步骤的首要目的是什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "汇总关键财务比率，使AI能够聚焦于最重要的数据",
+        "B": "将真实客户标识符及非公开信息替换为通用占位符",
+        "C": "从已审批软件列表中选择最合适的AI工具",
+        "D": "在向AI提交任何提示词之前安排合规审查"
+      },
+      "correct_option": "B",
+      "explanation": "SAFE中的「S」代表「剥离标识符」——在将任何内容输入AI工具之前，将真实客户名称、账户编号、交易条款及其他非公开信息替换为通用占位符。这是保护机密核保数据的基础性第一步。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c1_responsible_ai_q2",
+      "course_id": "uw_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "一位核保专员即将使用AI工具协助起草信贷备忘录。课程材料明确指出，以下哪类信息需要在SAFE框架下受到保护？",
+      "scenario_text": null,
+      "options": {
+        "A": "公开可获取的行业基准数据和行业报告",
+        "B": "内部风险评级、财务契约缓冲空间计算及交易条款",
+        "C": "来源于已发布研究报告的宏观经济综述",
+        "D": "行业通用的标准化财务比率定义"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料明确列举了内部风险评级、财务契约缓冲空间计算、交易条款及决策依据，作为在使用AI工具前必须加以保护的非公开信息示例。这些正是SAFE框架专门设计用于保护的信息类别。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c1_responsible_ai_q3",
+      "course_id": "uw_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程材料，SAFE框架旨在解决核保专员使用AI工具时面临的哪一核心矛盾？",
+      "scenario_text": null,
+      "options": {
+        "A": "撰写更详尽备忘录与赶在信贷委员会截止日期之间的矛盾",
+        "B": "获取AI效率收益与保护非公开客户数据之间的矛盾",
+        "C": "使用已审批工具与访问能力更强的外部AI平台之间的矛盾",
+        "D": "初级业务分析师输出质量与高级核保专员审核时间之间的矛盾"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料明确将SAFE框架定位为解决一项具体矛盾的方案：MS Copilot等AI工具能够显著加快起草和结构化工作的速度，但核保工作涉及大量不得置于风险之中的非公开信息。SAFE使核保专员能够在不损害数据保密性的前提下获取效率收益。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c1_responsible_ai_q4",
+      "course_id": "uw_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将SAFE框架应用于以下核保场景。请撰写完整回答，展示在使用任何AI工具之前SAFE每个步骤的具体操作。",
+      "scenario_text": "您是一家区域性商业银行的核保专员。您刚刚收到Bayfield Composites Ltd.提交的一份机密信贷申请，该公司为一家中型制造商。文件包含以下信息：公司内部风险评级为BB–；财务契约缓冲空间计算显示利息覆盖率缓冲仅为8%；拟议交易条款为4,200,000美元循环信贷额度，贷款加点幅度为275个基点；内部决策依据中注明了对客户集中度风险的担忧。您希望使用AI工具协助起草信贷备忘录的风险叙述部分。请展示在向AI工具提交任何提示词之前，您将如何应用SAFE框架。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答在构建AI提示词之前，将所有真实客户标识符（公司名称、具体金额、具体评级及具名交易条款）替换为通用占位符——展示「S」（替换/剥离标识符）步骤。",
+        "key2": "回答对敏感数值细节进行抽象化或泛化处理（例如，精确的财务契约缓冲空间百分比、精确贷款加点幅度、精确额度规模），使AI提示词中不包含精确的非公开数据——展示「A」（抽象化）步骤。",
+        "key3": "回答将AI提示词明确聚焦于一项具体、有边界的任务（例如，仅起草风险叙述部分），而非提交完整文件或开放式请求——展示「F」（聚焦）步骤。",
+        "key4": "回答在AI提示词中包含明确的约束条件（例如，指示AI不得推断或添加客户特定细节、仅使用所提供的信息，或标注假设前提）——展示「E」（强制约束）步骤。"
+      }
+    }
+  ],
+  "uw_c2_strategic_prompting": [
+    {
+      "item_id": "ev_uw_c2_strategic_prompting_q1",
+      "course_id": "uw_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据阅读材料，当核保专员使用AI撰写财务分析报告时，CRAF框架解决了什么问题？",
+      "scenario_text": null,
+      "options": {
+        "A": "它防止AI工具在起草过程中访问客户的保密数据",
+        "B": "它通过四个结构化要素，将模糊的AI请求转化为可控的起草指令",
+        "C": "它自动核验AI生成的财务比率与原始文件是否一致",
+        "D": "它根据任务的保密级别，自动选择合适的Copilot界面"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that the CRAF framework turns a vague request into a controlled drafting instruction by supplying four elements every underwriting prompt needs. This is the core problem CRAF solves — moving from unpredictable AI output to credit-committee-ready narratives.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c2_strategic_prompting_q2",
+      "course_id": "uw_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "阅读材料将财务分析报告描述为「高风险但重复性强」。根据CRAF框架，这一特点为何使其尤为适合引入AI辅助处理？",
+      "scenario_text": null,
+      "options": {
+        "A": "因为重复性任务所需的人工监督较少，AI可以自主运作",
+        "B": "因为重复性的结构意味着CRAF提示词可以模板化，并在类似交易中复用",
+        "C": "因为高风险属性意味着AI输出将自动经过合规团队审查",
+        "D": "因为重复性任务的保密要求较低，减少了数据保护的需要"
+      },
+      "correct_option": "B",
+      "explanation": "The reading identifies the repetitive nature of financial analysis write-ups as the quality that makes them ideal for AI assistance — the structured, recurring format means a well-constructed CRAF prompt can be templated and applied consistently, producing controlled drafting output with minimal rework.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c2_strategic_prompting_q3",
+      "course_id": "uw_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据阅读材料对CRAF的描述，当核保专员在AI提示词中正确运用框架的全部四个要素时，预期会产生什么结果？",
+      "scenario_text": null,
+      "options": {
+        "A": "AI工具在起草前自动核验所有财务数据与原始模型是否一致",
+        "B": "AI生成一份基本无需修改、可直接提交信贷委员会的叙述报告",
+        "C": "AI自动识别并删除提示词中包含的任何非公开信息",
+        "D": "AI生成多个草稿版本，供核保专员选择最准确的一份"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states that CRAF transforms AI from an unpredictable writer into a controlled drafting assistant that produces credit-committee-ready narratives with minimal rework. This is the stated outcome of correctly applying all four CRAF elements.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c2_strategic_prompting_q4",
+      "course_id": "uw_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "运用CRAF框架，针对以下核保场景撰写一份完整、结构化的AI提示词。你的回答须清晰体现CRAF的全部四个要素。",
+      "scenario_text": "你是Northshore Windworks Inc.往来银行的一名核保专员。该公司申请了一笔750万美元的定期贷款，用于收购两艘风力涡轮机维护船。你已完成财务分析，并准备好以下匿名化输入数据：EBITDA同比增长18%，达到310万美元；交易完成后净债务/EBITDA为2.4倍；公司订单储备充足，未来24个月预计收入的80%已有保障；主要风险为客户集中度，前两大客户占收入的61%。你需要为信贷委员会起草信贷备忘录中的「财务评估」部分。请写出你将提交给AI起草工具的完整CRAF结构提示词。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "提示词清晰体现CRAF的「背景」（Context）要素——明确说明核保专员角色、所起草文件的类型（信贷备忘录财务评估部分）及目标受众（信贷委员会），使AI理解专业背景与写作目的。",
+        "key2": "提示词包含CRAF的「角色」（Role）要素——明确指示AI采用适合核保工作的特定身份或语气（例如，以资深信贷分析师或核保起草助手的身份，使用正式的信贷委员会语言进行写作）。",
+        "key3": "提示词体现CRAF的「受众/行动」（Audience/Action）要素——提供具体的匿名化财务输入数据（EBITDA增长、杠杆比率、订单覆盖率、集中度风险），作为AI的结构化数据来源，并明确说明所需执行的具体操作（起草财务评估部分）。",
+        "key4": "提示词包含CRAF的「格式/约束」（Format/Constraints）要素——明确输出格式要求（如段落结构、篇幅、语气、特定标题的使用），并至少设定一项约束条件（如仅使用所提供的数据、不得推断额外数字、须标注假设前提）。"
+      }
+    }
+  ],
+  "uw_c3_critical_eval": [
+    {
+      "item_id": "ev_uw_c3_critical_eval_q1",
+      "course_id": "uw_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据阅读材料，为何AI生成的信贷文件中「措辞精练、比率数据表述确凿」的段落可能存在风险？",
+      "scenario_text": null,
+      "options": {
+        "A": "因为措辞精练意味着AI已超出其获批的使用范围",
+        "B": "因为自信的表述方式可能使错误数据看起来已经过核实，而实际上并未经过验证",
+        "C": "因为AI输出中的正式语言通常表明该工具使用了外部数据来源",
+        "D": "因为结构完整的段落比要点格式更难被合规团队审计"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly warns that 'a polished paragraph with a confident-sounding ratio is not the same as a verified fact.' The danger is that professional-looking AI output can make errors appear credible, causing underwriters to accept incorrect figures without verification — which is precisely what the VERIFY checklist is designed to prevent.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c3_critical_eval_q2",
+      "course_id": "uw_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "阅读材料指出核保专员「不能将专业判断假手于AI」。在VERIFY核查清单的语境下，这对AI生成的信贷摘要应如何处理意味着什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "AI生成的摘要只能用于内部草稿，不得提交信贷委员会",
+        "B": "每一份AI生成的文本在纳入信贷决策前，必须经过VERIFY六步规范的审查",
+        "C": "核保专员应将所有AI输出从头重写，以确保语言体现自身判断",
+        "D": "AI工具应仅限于格式化任务，不得参与任何分析或叙述性工作"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's core message is that because underwriters cannot delegate their judgment to AI, every piece of AI-generated text must be run through the VERIFY checklist — a six-step discipline — before it enters a credit decision. The checklist is the mechanism through which human judgment is applied to AI output.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c3_critical_eval_q3",
+      "course_id": "uw_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据阅读材料的核心结论，VERIFY核查清单所强调的根本区别是什么？这一区别为何对核保工作至关重要？",
+      "scenario_text": null,
+      "options": {
+        "A": "已获批准使用的AI工具与未获批准的AI工具之间的区别",
+        "B": "看起来正确的数字与实际正确的数字之间的区别",
+        "C": "初稿与最终信贷委员会提交文件之间的区别",
+        "D": "定量财务数据与定性风险评述之间的区别"
+      },
+      "correct_option": "B",
+      "explanation": "The reading's takeaway explicitly states: 'a number that looks right and a number that is right are not the same thing, and only one of them belongs in a credit decision.' This is the fundamental distinction the VERIFY checklist enforces — ensuring that apparent accuracy is replaced by confirmed accuracy before AI output drives any underwriting decision.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c3_critical_eval_q4",
+      "course_id": "uw_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "对以下AI生成的输出内容运用VERIFY核查清单。请撰写完整的评估回答，逐一审查VERIFY的六个步骤，并就该输出是否可安全纳入信贷决策得出明确结论。",
+      "scenario_text": "你是一名核保专员，正在审查HarborGate Foods Ltd.（一家食品加工与分销公司）的信贷续期申请。你向AI起草工具提交了一份匿名化提示词，并收到以下AI生成的段落，用于信贷备忘录的「杠杆与偿债能力」部分：\n\n「HarborGate Foods在审查期内持续去杠杆。过去两个财年，净债务/EBITDA从3.8倍改善至2.9倍，得益于EBITDA约14%的增长。利息覆盖率为4.1倍，远高于3.0倍的契约门槛，提供了37%的缓冲空间。自由现金流转化率保持强劲，达82%，表明公司无需依赖循环信贷提款即可维持充足流动性以履行债务义务。」\n\n你的原始财务模型显示：净债务/EBITDA从3.8倍变动至3.1倍（而非2.9倍）；EBITDA增长为11%（而非14%）；利息覆盖率为3.8倍（而非4.1倍）；契约门槛为3.0倍；自由现金流转化率为79%（而非82%）。请运用完整的VERIFY核查清单，撰写你的评估意见。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答系统性地识别并标注AI生成内容与原始财务模型之间的每一处具体数据差异（净债务/EBITDA：2.9倍对比3.1倍；EBITDA增长：14%对比11%；利息覆盖率：4.1倍对比3.8倍；自由现金流转化率：82%对比79%），体现了对照原始数据进行核实的步骤。",
+        "key2": "回答评估了上述错误的重要性及风险影响——特别指出利息覆盖率被高估（4.1倍对比实际3.8倍）以及杠杆比率被低估，影响了契约缓冲空间计算的准确性，可能误导信贷委员会对公司真实风险状况的判断。",
+        "key3": "回答在数字核实之外，还运用了至少两个额外的VERIFY步骤——例如：评估AI叙述逻辑的内部一致性、核查在数据更正后原有结论（如「缓冲空间充足」）是否仍然成立，或识别AI输出中无法追溯至所提供原始数据的任何表述。",
+        "key4": "回答就AI输出得出明确、有据可查的结论——指出该内容不能按现有版本使用，明确列出在纳入信贷备忘录前必须更正的数据，并确认更正后的版本在提交信贷委员会前须重新审查。"
+      }
+    }
+  ],
+  "uw_c4_relationship_intel": [
+    {
+      "item_id": "ev_uw_c4_relationship_intel_q1",
+      "course_id": "uw_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据阅读材料，RELATE框架专门帮助核保专员处理哪类客户沟通场景？",
+      "scenario_text": null,
+      "options": {
+        "A": "内部信贷委员会陈述及风险评级说明备忘录",
+        "B": "信贷额度削减、拒绝申请，以及可能令客户感到被盘问的信息请求",
+        "C": "向外部审计机构提交的监管报告及合规披露",
+        "D": "契约豁免谈判及重组条款清单沟通"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly identifies credit limit reductions, declines, and information requests that can feel like interrogations to a frustrated customer as the difficult messages the RELATE framework is designed to handle. These are described as some of the most difficult messages in commercial finance.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c4_relationship_intel_q2",
+      "course_id": "uw_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "阅读材料警告称，核保专员措辞不当的回复所造成的后果不仅限于损害客户关系。材料中具体指出了哪些升级风险？",
+      "scenario_text": null,
+      "options": {
+        "A": "监管罚款及对核保团队的强制再培训要求",
+        "B": "正式投诉，以及升级至高级管理层或外部争议渠道",
+        "C": "信贷档案自动暂停及对账户的强制合规审查",
+        "D": "客户经理失去客户组合及账户被重新分配"
+      },
+      "correct_option": "B",
+      "explanation": "The reading explicitly states that a poorly worded response 'can trigger formal complaints, escalate' — identifying formal complaints and escalation as the specific downstream risks of poor communication in difficult underwriting messages. The RELATE framework is designed to prevent these outcomes.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c4_relationship_intel_q3",
+      "course_id": "uw_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据阅读材料的核心结论，RELATE框架对AI生成的客户沟通内容在内部核保逻辑方面设置了怎样的关键约束？",
+      "scenario_text": null,
+      "options": {
+        "A": "内部风险评级必须始终向客户披露，以维护透明度",
+        "B": "AI生成的回复在发送前必须经客户经理审阅",
+        "C": "AI提示词必须加以约束，确保内部决策逻辑不会在输出内容中泄露",
+        "D": "客户沟通内容须限制在200字以内，以降低被误解的风险"
+      },
+      "correct_option": "C",
+      "explanation": "The reading's takeaway explicitly states that embedding RELATE as a six-point constraint in every AI prompt ensures the message 'never leaks internal logic.' Preventing the disclosure of internal underwriting rationale, risk ratings, and decision logic in customer-facing communications is a core constraint of the RELATE framework.",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c4_relationship_intel_q4",
+      "course_id": "uw_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "运用RELATE框架，针对以下场景撰写完整的AI提示词及其应生成的客户沟通内容。你的回答须清晰体现RELATE的全部六项约束。",
+      "scenario_text": "你是一家商业银行的核保专员。Seabright Equipment Brokers Ltd.（一家中型设备经纪公司）与贵行已有六年合作关系，持有一笔300万美元的循环信贷额度。经年度审查，你判断需将额度削减至220万美元，原因是该公司营运资金周期恶化——过去18个月，应收账款回收天数从42天延长至67天，净债务/EBITDA已升至3.6倍。内部评级已从BB下调至BB–。客户经理请你起草一份致该公司首席财务官的沟通函，告知其额度削减事宜。该首席财务官以强势、寸步不让著称，此前曾将问题升级至高级管理层。请撰写：（1）你将使用的RELATE结构化AI提示词；（2）AI应生成的客户沟通内容。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "AI提示词明确嵌入约束条件，防止内部核保逻辑出现在客户沟通内容中——具体而言，内部评级调整（BB至BB–）、决策中使用的具体净债务/EBITDA数值，以及任何内部风险评估语言均不得出现在面向客户的输出内容中。",
+        "key2": "AI提示词及生成的客户沟通内容体现RELATE的关系维护要素——语气专业、富有同理心，认可双方长期合作关系（六年），并将额度削减定位为银行持续支持公司业务需要的举措，而非惩罚性行动。",
+        "key3": "客户沟通内容清晰传达首席财务官所需的关键信息（新额度220万美元、生效日期或后续步骤），表述直接、不含糊其辞，并包含具有建设性的前瞻性内容（如邀请进一步沟通、说明审查时间安排或提供支持），体现RELATE所追求的可操作性而非仅停留于外交辞令。",
+        "key4": "回答体现了对强势型首席财务官所带来的升级风险的充分认识——提示词包含相应约束条件，或沟通内容包含专门旨在降低正式投诉或升级可能性的表述（如主动提出电话沟通、认可对方所受影响、明确联系人），与RELATE将高摩擦信息转化为关系维护型沟通的核心目标相符。"
+      }
+    }
+  ],
+  "uw_c5_data_decision": [
+    {
+      "item_id": "ev_uw_c5_data_decision_q1",
+      "course_id": "uw_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程阅读材料，SIFT框架为何将「看到财务差异时本能地抓取最近解释」的冲动定性为危险行为？",
+      "scenario_text": null,
+      "options": {
+        "A": "因为最近的解释通常最为复杂，需要专业知识才能评估",
+        "B": "因为在证据得到验证之前，依据未经确认的假设采取行动，是将线索当作结论来处理",
+        "C": "因为AI生成的差异假设在统计上不如人工计算的结果可靠",
+        "D": "因为AI工具中的财务差异通常由数据录入错误引起，而非真实的业务变化"
+      },
+      "correct_option": "B",
+      "explanation": "阅读材料明确指出「财务差异是线索，而非结论」，并将本能地抓取最近解释的冲动定性为危险行为。SIFT框架的设计初衷，正是防止核保专员在假设得到证据确认之前便付诸行动——将可能的解释当作已验证的事实，是该框架所要应对的核心风险。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c5_data_decision_q2",
+      "course_id": "uw_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "阅读材料列举了可能出现在财务差异分析工具中的具体财务差异示例。以下哪个选项准确反映了材料中所使用的示例？",
+      "scenario_text": null,
+      "options": {
+        "A": "债务成本上升50个基点，库存周转改善15天",
+        "B": "利润率下降200个基点，应收账款账期延长30天",
+        "C": "营收下降10%，资本支出预算翻倍",
+        "D": "净债务与EBITDA之比扩大5倍，应付账款账期延长45天"
+      },
+      "correct_option": "B",
+      "explanation": "阅读材料明确以「利润率下降200个基点」和「应收账款账期延长30天」作为财务差异分析工具中可能出现的差异示例。这两个具体示例用于说明为何在依据AI生成的差异假设采取行动之前，必须先运用SIFT框架进行审视。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c5_data_decision_q3",
+      "course_id": "uw_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据阅读材料的核心要点，核保专员在依据AI生成的差异假设采取行动之前，SIFT要求其确认什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "用于生成假设的AI工具已列入银行的批准软件清单",
+        "B": "该差异已经客户经理和信贷委员会审阅",
+        "C": "必须以证据确认差异的成因（「为何」），方可就差异本身（「是何」）采取行动",
+        "D": "该差异已超过银行信贷政策中规定的重要性阈值"
+      },
+      "correct_option": "C",
+      "explanation": "阅读材料的核心要点明确指出：「SIFT通过强制要求你在依据现象采取行动之前先确认原因，将AI生成的差异假设转化为经过验证、有据可查的核保决策。」这是SIFT所强调的核心纪律——在作出任何决策之前，必须以证据确认差异的成因。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c5_data_decision_q4",
+      "course_id": "uw_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将SIFT框架应用于以下场景。请撰写完整回答，逐步完成SIFT各步骤的分析，并得出经过验证、有据可查的核保立场。",
+      "scenario_text": "您是一名核保专员，正在对AtlasForge Machinery Ltd.（一家中型工业机械制造商）进行年度审查。您已将该公司的财务数据输入财务差异分析工具，AI工具标记出以下与上一年度相比的差异：\n\n• 毛利率下降180个基点（从34.2%降至32.4%）\n• 应付账款天数从38天延长至59天\n• 营收同比增长9%\n\nAI工具生成了以下假设：「利润率压缩很可能源于原材料投入成本上升，与行业整体钢材价格通胀趋势一致。应付账款账期延长可能反映管理层有意进行营运资金优化。」\n\n您还可获取以下补充信息：（a）AtlasForge的两家最大竞争对手在同期报告了持平或改善的利润率；（b）公司管理账目显示直接人工成本上升6%，但未见相应的生产效率提升；（c）首席财务官在近期一次通话中提到，由于短期现金流紧张，他们一直在对供应商适当压账。请运用完整的SIFT框架，撰写您的核保评估意见。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答运用SIFT第一步，将AI生成的差异视为线索而非结论——明确指出AI假设（钢材价格通胀、有意进行营运资金优化）是尚未经过确认的初步判断，需要以证据加以验证，方可作为核保决策的依据。",
+        "key2": "回答针对现有证据对AI的利润率压缩假设进行审查——具体运用竞争对手数据（同期利润率持平或改善）和管理账目（直接人工成本上升6%但无生产效率提升），对AI提出的「行业整体钢材价格通胀」解释提出质疑或加以修正，体现SIFT要求以原始证据检验假设的分析纪律。",
+        "key3": "回答针对现有证据对AI的应付账款延长假设进行审查——具体运用首席财务官关于「因短期现金流紧张而对供应商压账」的表述，将应付账款账期延长重新定性为潜在的流动性预警信号，而非有意为之的优化举措，体现SIFT要求核保专员在接受AI框架之前先确认「原因」的分析纪律。",
+        "key4": "回答得出清晰、有据可查的核保立场，不止于AI假设——识别出利润率压缩（很可能由人工成本效率低下驱动）、应付账款延长（很可能由现金流压力驱动）与营收增长三者叠加所呈现的风险组合，判断该组合值得进一步调查或附加特定信贷条件，并明确说明在作出最终决策之前还需获取哪些补充证据。"
+      }
+    }
+  ],
+  "uw_c6_augmented_comm": [
+    {
+      "item_id": "ev_uw_c6_augmented_comm_q1",
+      "course_id": "uw_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据阅读材料，在没有明确匹配策略的情况下跨多个工作界面使用Copilot，其核心问题是什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "不同Copilot界面生成的输出格式互不兼容，无法合并为单一文档",
+        "B": "每个界面具有不同的功能优势和保密风险，在错误的时机使用错误的界面会造成信息泄露风险",
+        "C": "Teams上的Copilot与Outlook上的Copilot使用不同的AI模型，导致分析质量参差不齐",
+        "D": "同时使用多个界面会超出大多数银行IT政策规定的批准使用限额"
+      },
+      "correct_option": "B",
+      "explanation": "阅读材料明确指出「每个界面具有不同的功能优势和不同的保密风险」，而「在错误的时机使用错误的界面」是核心问题所在。材料所传授的解决方案，是始终将Copilot界面与任务性质及工作内容的保密级别相匹配。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c6_augmented_comm_q2",
+      "course_id": "uw_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "阅读材料指出核保专员的日常工作横跨多个界面。以下哪个选项准确列出了材料中明确提及的界面？",
+      "scenario_text": null,
+      "options": {
+        "A": "Teams、Outlook、Word、Excel和SharePoint",
+        "B": "Teams、Outlook、PowerPoint、OneNote和SharePoint",
+        "C": "Word、Excel、PowerPoint、SharePoint和网页浏览器",
+        "D": "Outlook、Excel、SharePoint、OneNote和Teams"
+      },
+      "correct_option": "A",
+      "explanation": "阅读材料明确列出了Teams讨论串、Outlook收件箱、Word备忘录、Excel模型和SharePoint存储库，作为核保专员日常工作所涉及的五个界面，Copilot均可在这些界面中使用。这也是本课程界面匹配框架所针对的完整界面集合。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c6_augmented_comm_q3",
+      "course_id": "uw_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据阅读材料的核心要点，在Copilot各界面之间每次交接时，必须核查哪项具体风险？",
+      "scenario_text": null,
+      "options": {
+        "A": "输出格式是否与接收界面的文档规范兼容",
+        "B": "仅供内部使用的内容是否已泄露至对外输出内容中",
+        "C": "各界面所使用的AI模型版本是否为IT部门批准的最新版本",
+        "D": "输出内容的字数和语气是否符合信贷委员会的提交要求"
+      },
+      "correct_option": "B",
+      "explanation": "阅读材料的核心要点明确指出：「在每次交接时，核查仅供内部使用的内容是否已泄露至对外输出内容中。」这是材料对核保专员在跨Copilot界面传递AI辅助工作成果时所提出的具体核查要求。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c6_augmented_comm_q4",
+      "course_id": "uw_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "针对以下描述的多界面核保工作流程，撰写完整回答：为每项任务识别正确的Copilot界面，说明每个阶段的保密风险，并描述每次交接时所需的核查步骤。",
+      "scenario_text": "您是一名核保专员，负责管理PrairiePulse Exporters Inc.（一家谷物和豆类出口公司）的年度信贷审查。在接下来的两天内，您需要完成以下任务：\n\n任务一：对一次时长45分钟的内部信贷讨论进行主题归纳。该讨论通过Teams会议进行，参与者包括客户经理和信贷风险团队，讨论内容涉及公司内部风险评级、契约条款余量方面的顾虑，以及要求追加担保的初步决定。\n\n任务二：在Word文档中起草信贷备忘录的「风险评估」章节，内容参考存储于SharePoint上Excel工作簿中的财务模型输出结果。\n\n任务三：通过Teams向信贷总监发送一条内部更新消息，概述本次审查中识别出的三项主要风险。\n\n任务四：向PrairiePulse Exporters Inc.首席财务官起草一封信息请求函，要求提供最新的管理账目和应收账款账龄分析表。\n\n针对每项任务：请识别适当的Copilot界面，说明该界面和任务所特有的保密风险，并描述在输出内容进入下一阶段之前您将执行的核查步骤。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "针对任务一和任务三（基于Teams的任务），回答正确识别Teams中的Copilot为适用界面，说明Teams摘要可能捕获并呈现内部风险评级、初步决定或契约条款顾虑等内容、进而被分享至预期受众之外的保密风险，并描述核查步骤（例如：审阅摘要，确认其中不含内部评级措辞或初步决定措辞，再行保存或转发）。",
+        "key2": "针对任务二（Word/Excel/SharePoint），回答正确识别Word和（或）Excel中的Copilot为起草风险评估章节的适用界面，说明SharePoint关联内容（如财务模型）被引用或呈现于可能对外共享的文档中所带来的保密风险，并描述交接时的核查步骤（例如：确认模型专属内部数据或SharePoint文件引用不以可能被分享给客户的形式出现在最终Word文档中）。",
+        "key3": "针对任务四（对外客户函件），回答正确识别该任务需要最高级别的界面与内容审查——因为输出内容面向外部——并明确描述所需的核查步骤，以确保任务一至三中的内部核保逻辑、风险评级、契约条款顾虑或初步决定均未泄露至面向客户的信息请求函中。",
+        "key4": "回答通过在全部四项任务中明确运用界面匹配原则，体现阅读材料的核心原则——说明Copilot界面的选择同时取决于任务性质和内容的保密级别，且每次任务交接均需进行专项核查，确保仅供内部使用的内容未迁移至面向更广泛受众或外部受众的输出内容中。"
+      }
+    }
+  ],
+  "uw_c7_capstone": [
+    {
+      "item_id": "ev_uw_c7_capstone_q1",
+      "course_id": "uw_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据阅读材料，在核保案例的语境下，「端到端AI工作流程整合」是什么意思？",
+      "scenario_text": null,
+      "options": {
+        "A": "使用单一AI工具完成核保流程的所有阶段，无需切换平台",
+        "B": "将核保案例的每个阶段视为独立的检查节点，由AI提供辅助、人工完成核查后，输出内容方可进入下一阶段",
+        "C": "将AI输出直接整合至信贷管理系统，以消除人工数据录入环节",
+        "D": "由AI完成分析阶段，核保专员专注于客户沟通工作"
+      },
+      "correct_option": "B",
+      "explanation": "阅读材料明确将端到端AI工作流程整合定义为「将核保案例的每个阶段视为独立的检查节点，由AI提供辅助、人工完成核查后，输出内容方可进入下一阶段」。这种以人工把关为核心的检查节点模式，是材料所阐述的整合概念的本质特征。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c7_capstone_q2",
+      "course_id": "uw_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "阅读材料将六大领域描述为构成一条链条。根据材料，SAFE在这条链条起始端的作用是什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "SAFE对AI提示词进行结构化处理，使输出内容的格式符合信贷委员会的审阅要求",
+        "B": "SAFE在撰写任何提示词之前，通过对输入内容进行脱敏处理来保护保密性",
+        "C": "SAFE核查所有AI生成的数据是否准确，再将其纳入信贷备忘录",
+        "D": "SAFE根据任务的保密级别选择适当的Copilot界面"
+      },
+      "correct_option": "B",
+      "explanation": "阅读材料明确指出，在六大领域构成的链条中，「SAFE在撰写任何提示词之前，通过对输入内容进行脱敏处理来保护保密性」。SAFE之所以位居链条之首，正是因为保密保护必须在任何其他AI辅助步骤开始之前完成。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c7_capstone_q3",
+      "course_id": "uw_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据阅读材料的核心要点，在整合工作流程中，每项AI输出在驱动核保决策之前必须具备哪三项特质？",
+      "scenario_text": null,
+      "options": {
+        "A": "已格式化、已审批，并已提交至信贷管理系统",
+        "B": "已核实、已标注、可追溯",
+        "C": "已摘要、已脱敏，并经客户经理审阅",
+        "D": "已起草、已修订，并经资深核保专员签字确认"
+      },
+      "correct_option": "B",
+      "explanation": "阅读材料的核心要点明确指出，整合意味着「每项AI输出在驱动核保决策之前均须经过核实、完成标注且具备可追溯性」。已核实、已标注、可追溯——这三项特质是本课程框架对整合工作流程中所有AI输出所规定的具体标准。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_uw_c7_capstone_q4",
+      "course_id": "uw_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "针对以下案例，设计并记录一套完整的端到端AI辅助核保工作流程。您的回答须展示六大领域（SAFE、CRAF、VERIFY、RELATE、SIFT及界面匹配）如何在整个案例中作为序列化人工把关检查节点发挥作用。",
+      "scenario_text": "您是Cascadia Marine Systems Ltd.（一家海洋工程及船舶装备公司）新增信贷申请的主责核保专员。该公司申请一笔950万美元的定期贷款和一笔200万美元的循环信贷额度，用于资助干船坞设施扩建及提升营运资金能力。申请文件包含：三年经审计财务报表、管理层编制的五年期预测、干船坞扩建项目的详细成本明细，以及公司最大客户（占营收48%）出具的支持函，确认续签五年期合同。\n\n您的工作流程将涉及：（1）为AI辅助分析准备输入内容；（2）起草信贷备忘录的财务评估章节；（3）评估AI生成的公司营运资金指标差异分析；（4）就补充信息请求与公司首席财务官进行沟通（该公司此前曾对信息请求持抵触态度）；（5）准备最终的综合信贷建议。\n\n请撰写完整的工作流程文档，将五个工作流程阶段分别映射至相应的AI框架，识别每个阶段的人工核查检查节点，并说明如何确保每项AI输出在对最终信贷决策产生影响之前均已完成核实、标注并具备可追溯性。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答在阶段一（输入准备）正确运用SAFE——展示在撰写任何AI提示词之前，所有非公开标识符、具体财务数据、内部评级及交易条款均已完成脱敏处理，并将此作为第一个人工把关检查节点，由核保专员确认不会有保密数据以原始形式进入AI工具。",
+        "key2": "回答在阶段二（起草财务评估）正确运用CRAF，在阶段三（评估营运资金差异分析）正确运用SIFT——针对CRAF，展示AI提示词包含全部四个结构化要素，以生成受控的信贷备忘录草稿；针对SIFT，展示AI生成的营运资金指标差异假设被视为线索，须经证据确认后方可影响信贷建议，且每个阶段均设有人工核查检查节点。",
+        "key3": "回答在适当阶段正确运用VERIFY——展示信贷备忘录草稿中AI生成的财务数据、比率及叙述性表述在输出内容进入下一阶段之前均已与原始文件进行核对，且人工核查检查节点明确确认AI输出中的每项数据均准确无误、可追溯至信息来源，并在核实后完成标注。",
+        "key4": "回答在阶段四（首席财务官沟通）正确运用RELATE，并在所有阶段运用界面匹配原则——针对RELATE，展示信息请求函的AI提示词包含防止内部逻辑泄露的约束条件，并针对首席财务官已知的抵触倾向进行专项设计；针对界面匹配，为每个阶段识别适当的Copilot界面，并描述交接核查步骤，确保仅供内部使用的内容不会迁移至面向外部的首席财务官沟通内容或最终信贷建议中。"
+      }
+    }
+  ],
+  "mk_c1_responsible_ai": [
+    {
+      "item_id": "ev_mk_c1_responsible_ai_q1",
+      "course_id": "mk_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据SAFE抽象化方法，营销人员在将营销活动数据输入生成式AI工具之前，正确的第一步是什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "直接将数据输入Copilot以节省时间",
+        "B": "识别数据中的敏感信息或可识别个人身份的信息",
+        "C": "在分享前检查AI输出内容的准确性",
+        "D": "将所有数字数据抽象化为四舍五入的估算值"
+      },
+      "correct_option": "B",
+      "explanation": "SAFE方法以「S」——识别（Spot）——为起点，即营销人员必须首先识别数据中的敏感信息或可识别个人身份的信息，再采取任何后续行动。这是整个方法得以实施的基础步骤。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c1_responsible_ai_q2",
+      "course_id": "mk_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "一位营销人员希望使用Copilot，根据一份包含真实姓名、电子邮件地址及公司信息的展会潜在客户名单，起草一系列跟进邮件。根据SAFE抽象化方法，该营销人员在向Copilot输入提示词之前，应如何处理这份名单？",
+      "scenario_text": null,
+      "options": {
+        "A": "将完整名单粘贴至提示词中，以便为Copilot提供最充分的背景信息",
+        "B": "仅保留公司名称，删除个人电子邮件地址",
+        "C": "将真实身份标识符抽象化，替换为通用占位符",
+        "D": "请同事审阅名单后再提交给Copilot"
+      },
+      "correct_option": "C",
+      "explanation": "SAFE中的「A」代表抽象化（Abstract）——在将数据输入AI工具之前，用通用占位符替换真实姓名、电子邮件及其他身份标识信息。这样既能保护个人隐私，又能让Copilot生成有价值的内容。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c1_responsible_ai_q3",
+      "course_id": "mk_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "以下哪类数据被课程材料明确列为在使用生成式AI工具时绝不能脱离组织安全环境的信息？",
+      "scenario_text": null,
+      "options": {
+        "A": "公开可获取的竞争对手定价信息及行业基准数据",
+        "B": "尚未发布的产品详情、客户联系记录及内部营销活动指标",
+        "C": "通用营销最佳实践及渠道策略框架",
+        "D": "已审批的品牌规范及已发布的案例研究"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料明确列举了以下数据类型：尚未发布的产品详情、客户联系记录、展会潜在客户名单及内部营销活动指标，并指出这些数据在使用生成式AI工具时绝不能脱离组织的安全环境。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c1_responsible_ai_q4",
+      "course_id": "mk_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请将SAFE抽象化方法应用于以下场景。撰写一份回答，展示该方法的每个步骤，并说明在每个阶段您将采取的具体行动。",
+      "scenario_text": "您是Westport Composites Ltd.的市场营销经理。您的团队刚刚完成了一项客户满意度调查。调查结果文件包含客户姓名、电子邮件地址、净推荐值（NPS）及客户原始评论——其中部分评论涉及尚未公开披露的保密产品质量问题。您的主管要求您使用Copilot，根据这些调查结果起草一份摘要报告及一封客户沟通邮件。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答正确识别了「识别」（Spot）步骤——明确指出场景中的敏感信息（客户姓名、电子邮件地址、NPS得分及保密产品质量评论），并将其标记为在继续操作前必须予以关注的信息。",
+        "key2": "回答正确描述了「抽象化」（Abstract）步骤——说明如何将真实客户姓名、电子邮件及身份标识信息替换为通用占位符（如「客户A」、「受访者」），以及如何在向Copilot输入提示词之前删除或概括保密产品问题。",
+        "key3": "回答正确描述了「输入」（Feed）步骤——展示如何将经过抽象化、去标识化处理的数据输入Copilot，以生成摘要报告和客户沟通邮件草稿。",
+        "key4": "回答正确描述了「审查」（Examine）步骤——说明必须对AI输出内容进行审核，确认未出现真实身份标识符或保密信息，且内容准确、适当，方可向任何受众分享。"
+      }
+    }
+  ],
+  "mk_c2_strategic_prompting": [
+    {
+      "item_id": "ev_mk_c2_strategic_prompting_q1",
+      "course_id": "mk_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据CRAF框架，营销人员在向Copilot发送提示词时，「R」这一要素要求指定什么内容？",
+      "scenario_text": null,
+      "options": {
+        "A": "输出内容所需的字数及格式规范",
+        "B": "Copilot在生成内容时应扮演的角色或人设",
+        "C": "Copilot应参考的研究来源以确保准确性",
+        "D": "内容生成后将经历的审核流程"
+      },
+      "correct_option": "B",
+      "explanation": "在CRAF框架中，「R」代表角色（Role）——营销人员指示Copilot扮演特定人设或专业角色（例如「请以B2B内容策略师的身份」），使输出内容的语气和专业水准与预期目的相匹配。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c2_strategic_prompting_q2",
+      "course_id": "mk_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "一位营销人员撰写了以下提示词：「写一些关于我们新产品发布的内容。」根据CRAF框架，这条提示词的主要问题是什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "未指定字数或字符数限制",
+        "B": "缺少背景、角色、行动和格式——CRAF的全部四个要素均未体现",
+        "C": "使用了Copilot无法理解的非正式语言",
+        "D": "应以要点列表形式提交，而非以句子形式呈现"
+      },
+      "correct_option": "B",
+      "explanation": "CRAF框架要求同时具备全部四个要素——背景（Context）、角色（Role）、行动（Action）和格式（Format）——Copilot才能生成有针对性、符合品牌调性、适合渠道发布的文案。示例中的提示词未包含任何这些要素，导致Copilot缺乏生成可用输出所需的信息。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c2_strategic_prompting_q3",
+      "course_id": "mk_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程材料，在使用CRAF框架向Copilot发送营销内容提示词时，预期达到的效果是什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "彻底消除对AI生成内容进行人工编辑或审核的需要",
+        "B": "生成有针对性、符合品牌调性、适合渠道发布的文案，供营销人员润色而非重写",
+        "C": "确保Copilot搜索互联网以获取最新的营销趋势",
+        "D": "通过自动化简报流程减少所需的提示词数量"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料的核心要点明确指出，CRAF旨在提供「有针对性、符合品牌调性、适合渠道发布的文案，供您润色而非重写」。该框架旨在生成一份可用的初稿，供使用者精细打磨，而非全盘重写。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c2_strategic_prompting_q4",
+      "course_id": "mk_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请运用CRAF框架，为以下场景撰写一条完整、结构清晰的提示词，并简要说明CRAF四个要素在您的提示词中各自如何体现。",
+      "scenario_text": "您是BrightWave Electronics Inc.的市场传播经理，该公司是一家专注于智能楼宇传感器的B2B制造商。BrightWave即将推出一款面向商业地产领域设施管理人员的新型能耗监测传感器。您需要Copilot起草一篇LinkedIn帖子，宣布该产品的发布，重点突出节能效益，语气专业，并引导受众访问产品落地页。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "提示词包含清晰的背景（Context）要素——通过说明BrightWave Electronics Inc.、产品（能耗监测传感器）及目标受众（商业地产领域的设施管理人员）来交代场景背景。",
+        "key2": "提示词包含清晰的角色（Role）要素——指示Copilot扮演适合该任务的特定人设（例如「请以B2B LinkedIn内容专家的身份」或类似专业角色）。",
+        "key3": "提示词包含清晰的行动（Action）要素——明确说明Copilot需要完成的任务（例如「撰写一篇LinkedIn帖子，宣布产品发布，突出节能效益，并附上引导至产品落地页的行动号召」）。",
+        "key4": "提示词包含清晰的格式（Format）要素——指定适合LinkedIn的输出格式（例如字符数或字数限制、是否使用表情符号或话题标签、段落结构），且学员的说明正确地将CRAF全部四个要素与其提示词内容一一对应。"
+      }
+    }
+  ],
+  "mk_c3_critical_eval": [
+    {
+      "item_id": "ev_mk_c3_critical_eval_q1",
+      "course_id": "mk_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程材料，为什么「只求速度、不加审查」被描述为市场与传播专业人员使用AI工具时的一种「潜在风险」？",
+      "scenario_text": null,
+      "options": {
+        "A": "因为AI工具速度太慢，若无人工加速则无法满足真实的营销截止期限",
+        "B": "因为公开内容中出现不准确的数据、虚构的引用或保密信息，可能损害公信力并造成危害",
+        "C": "因为AI生成的内容在使用前始终需要完全重写",
+        "D": "因为Copilot无法处理超过十页的营销简报"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料明确指出，「一个不准确的数据、一句虚构的引用，或一条保密信息出现在公开帖子中，都可能损害公信力」，这正是「只求速度、不加审查」构成潜在风险的原因——未经审核的AI输出可能给组织声誉带来损害。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c3_critical_eval_q2",
+      "course_id": "mk_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "根据课程材料，VERIFY核查清单应在内容创作流程的哪个环节使用？",
+      "scenario_text": null,
+      "options": {
+        "A": "在撰写提示词之前，以确保简报内容完整",
+        "B": "在AI生成过程中，实时引导Copilot的输出",
+        "C": "在AI生成摘要或草稿之后、任何内容触达受众之前",
+        "D": "仅当内容包含统计数据或财务数字时"
+      },
+      "correct_option": "C",
+      "explanation": "课程材料的核心要点指出，每一份AI生成的摘要或草稿都必须经过VERIFY核查清单的审核，「在任何内容触达受众之前」完成，使其成为生成后、发布前的审核步骤。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c3_critical_eval_q3",
+      "course_id": "mk_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程材料，以下哪项被明确列为VERIFY核查清单要求营销人员在AI生成内容中检查的要素？",
+      "scenario_text": null,
+      "options": {
+        "A": "SEO关键词密度及元描述准确性",
+        "B": "事实、语气、准确性、遗漏要素及保密信息",
+        "C": "字数合规性及品牌字体使用规范",
+        "D": "社交媒体平台算法兼容性"
+      },
+      "correct_option": "B",
+      "explanation": "课程材料明确指出，VERIFY核查清单涵盖「事实、语气、准确性、遗漏要素及保密信息」——这是营销人员在每份AI生成草稿发布前必须审核的五个维度。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c3_critical_eval_q4",
+      "course_id": "mk_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请将VERIFY核查清单应用于以下场景中描述的AI生成内容。撰写一份结构化评估，逐一回应核查清单的每个要素，并指出在内容发布前必须解决的所有问题。",
+      "scenario_text": "您是Lakeview Foods Inc.的传播经理。Copilot已生成一份新闻稿，宣布推出一系列植物基零食。草稿中引用了一项数据，声称「78%的消费者更偏好植物基零食而非传统零食」——但您无法找到该数据的原始来源。草稿还引用了您的CEO的话：「这是我们公司30年历史上最重要的产品发布」——但您没有任何该CEO发表过此声明的记录。此外，草稿中提及Lakeview Foods目前正与一家区域经销商进行并购洽谈，而这一信息属于保密内容，尚未公开披露。整体语气热情洋溢，但不乏夸大之嫌。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答识别了事实问题——将未注明来源的「78%」数据标记为未经核实的信息，并说明在发布前必须追溯至可信、可引用的来源，或将其从草稿中删除。",
+        "key2": "回答识别了准确性问题——将未经核实的CEO引用标记为可能属于虚构或AI幻觉生成的归因，并说明必须直接向CEO本人确认，或将其从草稿中删除。",
+        "key3": "回答识别了保密信息问题——将并购洽谈的相关内容标记为保密的非公开信息，并说明在新闻稿发布前必须将其完全删除。",
+        "key4": "回答识别了语气问题——指出夸大其词的表述存在公信力风险，并建议进行具体修改，使语气符合专业、客观的传播规范，从而展示了对VERIFY核查清单的全面应用。"
+      }
+    }
+  ],
+  "mk_c4_relationship_intel": [
+    {
+      "item_id": "ev_mk_c4_relationship_intel_q1",
+      "course_id": "mk_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程内容，TAILOR方法论旨在解决目标客户营销（ABM）人员面临的哪项核心挑战？",
+      "scenario_text": null,
+      "options": {
+        "A": "缩短为个性化营销活动设计视觉素材所需的时间",
+        "B": "在大规模开展个性化触达的同时，防止机密信息泄露至AI工具",
+        "C": "将整个触达流程自动化，使营销人员能够专注于战略层面",
+        "D": "确保AI生成的邮件符合各市场的数据隐私法规"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容明确指出，TAILOR所应对的挑战是「在大规模执行的同时，避免机密信息泄露至AI工具」——该框架在个性化需求与敏感数据保护要求之间实现了平衡。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c4_relationship_intel_q2",
+      "course_id": "mk_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "根据TAILOR方法论，在使用AI进行客户调研和起草个性化触达内容时，应使用哪类信息作为提示词输入？",
+      "scenario_text": null,
+      "options": {
+        "A": "内部CRM备注及私密客户历史记录，以最大化个性化效果",
+        "B": "仅使用公开可获取的信息，再由人工在事后补充关系背景",
+        "C": "将公开数据与机密数据结合使用，并在提示词中明确标注",
+        "D": "对所有客户数据（包括内部交易阶段）进行匿名化处理后使用"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容的核心要点明确表述为：「仅使用公开信息让AI进行调研和起草，再由人工叠加自身掌握的知识与关系背景。」这一操作顺序正是TAILOR方法论的核心原则。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c4_relationship_intel_q3",
+      "course_id": "mk_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程内容，为何泛化触达在目标客户营销（ABM）中被称为「噪音」？",
+      "scenario_text": null,
+      "options": {
+        "A": "因为与个性化内容相比，大规模生产泛化内容的成本更高",
+        "B": "因为AI工具生成泛化内容的效果不如生成个性化内容",
+        "C": "因为真正能赢得关注的，是基于对潜在客户真实洞察的个性化触达",
+        "D": "因为泛化触达违反了大多数B2B邮件营销合规标准"
+      },
+      "correct_option": "C",
+      "explanation": "课程内容将泛化触达（称为「噪音」）与「基于对潜在客户真实洞察的个性化触达」进行对比，明确指出相关性与洞察力才是有效ABM触达的差异化所在。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c4_relationship_intel_q4",
+      "course_id": "mk_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将TAILOR方法论应用于以下场景。请撰写一份回答，展示你如何在保护机密信息的前提下，借助AI为该客户构建个性化触达方案。",
+      "scenario_text": "你是Montane Aerospace Corp的目标客户营销（ABM）经理，正在为一家重要潜在客户准备个性化触达营销活动。该潜在客户是一家大型区域性航空公司，近期宣布了机队现代化改造计划（此消息已见诸航空行业媒体）。内部CRM显示，Montane曾于18个月前与该航空公司进行过一次未能成功的销售洽谈，原因是价格方面存在分歧；此外，你的销售总监与该航空公司采购副总裁存在私人关系。你需要使用Copilot对该潜在客户进行调研，并起草一封初步触达邮件。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答正确识别了哪些信息可以安全输入Copilot——具体而言，是来自行业媒体的公开机队现代化改造公告——并说明为何此类公开信息可在AI提示词中使用而不存在风险。",
+        "key2": "回答正确识别了哪些信息不得输入Copilot——包括关于销售洽谈失败的内部CRM备注、价格分歧情况以及销售总监的私人关系——并说明此类机密关系背景必须与AI工具隔离。",
+        "key3": "回答展示了如何仅使用公开信息构建提示词，引导Copilot对潜在客户进行调研并生成触达邮件草稿（例如，引用机队现代化改造计划及Montane的相关能力）。",
+        "key4": "回答说明了营销人员如何在Copilot生成草稿后，将人工掌握的关系背景（历史洽谈记录、价格敏感性、与采购副总裁的私人关系）叠加至最终邮件中——体现了TAILOR原则中「AI优先起草、人工个性化补充」的操作逻辑。"
+      }
+    }
+  ],
+  "mk_c5_data_decision": [
+    {
+      "item_id": "ev_mk_c5_data_decision_q1",
+      "course_id": "mk_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程内容，DECIDE框架为使用Copilot（Excel及Power BI）等AI工具的营销人员解决了什么问题？",
+      "scenario_text": null,
+      "options": {
+        "A": "自动创建营销活动仪表板，使营销人员能够专注于创意工作",
+        "B": "确保AI生成的营销洞察在驱动预算或战略决策之前，经过明确定义、核实与情境化处理",
+        "C": "通过让营销人员独立解读原始数据，取代业务分析师的职能",
+        "D": "统一各业务单元营销报告的视觉呈现格式"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容的核心要点明确指出，DECIDE框架确保「每一条AI生成的营销洞察在驱动预算或战略决策之前，均经过明确定义、核实与情境化处理」——从而应对因追求速度而缺乏结构导致决策失误的风险。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c5_data_decision_q2",
+      "course_id": "mk_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "根据课程内容，DECIDE框架帮助营销人员应对每季度面临的哪项周期性压力？",
+      "scenario_text": null,
+      "options": {
+        "A": "生成足够多的创意内容变体，以满足A/B测试需求",
+        "B": "将满载营销活动指标的电子表格转化为清晰的故事叙述和更优的行动计划",
+        "C": "同步降低所有数字营销渠道的每线索获取成本",
+        "D": "将营销KPI与财务部门的报告周期保持一致"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容明确将这一季度性压力描述为「将满载营销活动指标的电子表格转化为清晰的故事叙述和更优的行动计划」——这正是DECIDE框架所针对的具体挑战。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c5_data_decision_q3",
+      "course_id": "mk_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程内容，在没有DECIDE等结构化框架的情况下使用Copilot（Excel及Power BI）等AI工具，会带来什么风险？",
+      "scenario_text": null,
+      "options": {
+        "A": "AI生成的可视化图表将与标准演示软件不兼容",
+        "B": "速度缺乏结构支撑，将导致决策失误",
+        "C": "AI只会呈现历史趋势，而忽略前瞻性预测",
+        "D": "营销人员将过度依赖AI，导致自身分析能力逐渐退化"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容明确警示，在使用AI工具分析营销活动指标时，「速度缺乏结构支撑将导致决策失误」——这正是DECIDE框架旨在规避的核心风险。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c5_data_decision_q4",
+      "course_id": "mk_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将DECIDE框架应用于以下场景。请撰写一份结构化回答，展示你如何运用该框架，从AI生成的原始数据洞察出发，最终形成合理的营销决策。",
+      "scenario_text": "你是Atlas Marine Equipment Co.的营销经理。第三季度末，你请Copilot（Excel）分析营销活动绩效数据。Copilot呈现了以下洞察：「本季度，针对港口运营经理的邮件营销活动点击率，比针对采购经理的营销活动高出42%。」你的总监希望仅凭这一发现，将Q4数字营销预算的30%从采购导向营销活动转移至港口运营受众。在就是否推进此次预算调整提出建议之前，你需要先应用DECIDE框架进行分析。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答展示了「定义（Define）」步骤——清晰阐明需要做出的具体决策（是否将Q4数字营销预算的30%调拨至港口运营受众），以及数据需要回答哪些问题才能支撑该决策。",
+        "key2": "回答展示了「核实（Verify）」步骤——质疑AI生成的42%点击率差异是否具有统计意义，核查样本量、时间周期，以及数据是否完整准确，再将其视为可靠信号。",
+        "key3": "回答展示了「情境化（Contextualise）」步骤——考量原始指标之外可能解释该差异的因素（如季节性采购周期、营销创意差异、名单质量等），并评估这些因素是否影响该洞察对Q4规划的适用性。",
+        "key4": "回答给出了结构化建议——支持、调整或否决拟议的预算调整方案——并提供清晰的推理依据，表明决策建立在经过核实与情境化处理的洞察之上，而非仅凭AI原始输出，从而完整呈现DECIDE流程。"
+      }
+    }
+  ],
+  "mk_c6_augmented_comm": [
+    {
+      "item_id": "ev_mk_c6_augmented_comm_q1",
+      "course_id": "mk_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程内容，营销人员在跨多个工具使用M365 Copilot时，撰写任何提示词之前应遵循哪项核心原则？",
+      "scenario_text": null,
+      "options": {
+        "A": "始终从Microsoft Word开始，再切换至其他M365应用",
+        "B": "先暂停，思考哪个M365 Copilot界面最适合当前所执行的具体步骤",
+        "C": "在所有M365工具中使用相同的提示词，以确保输出一致",
+        "D": "以速度优先为由，选择桌面上已打开的工具"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容的核心要点明确表述为：「在输入提示词之前，先暂停并思考哪个M365 Copilot界面最适合当前这一具体步骤——无论是调研、起草、翻译还是分发。」将工具与任务精准匹配，是本课程的核心原则。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c6_augmented_comm_q2",
+      "course_id": "mk_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "根据课程内容，以下哪个示例最能说明单一营销交付物需要调用多个M365 Copilot界面的复杂性？",
+      "scenario_text": null,
+      "options": {
+        "A": "完全在Microsoft Excel中构建的社交媒体内容日历",
+        "B": "一封关于市场动荡的英法双语客户邮件，需要经历情报收集、内容起草、翻译及格式化分发等多个环节",
+        "C": "在PowerPoint中使用Copilot图像生成功能设计的产品宣传册",
+        "D": "在Microsoft Word中起草、通过SharePoint分发的每周内部通讯"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容以「一封关于市场动荡的英法双语客户邮件」为具体示例，该邮件需要依次完成情报收集、文案起草、翻译及格式化分发等环节，明确说明了单一交付物如何横跨多个M365 Copilot界面。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c6_augmented_comm_q3",
+      "course_id": "mk_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程内容，在沟通工作流中将合适的M365 Copilot工具与合适的任务相匹配，会带来什么结果？",
+      "scenario_text": null,
+      "options": {
+        "A": "无需人工审核即可直接发送沟通内容",
+        "B": "将泛化的AI输出转化为精致、可直接发送的双语沟通内容",
+        "C": "营销人员可在单一M365应用内完成整个工作流",
+        "D": "确保沟通内容自动符合各地区的语言法规要求"
+      },
+      "correct_option": "B",
+      "explanation": "课程内容的核心要点指出，将工具与任务精准匹配「能够将泛化的AI输出转化为精致、可直接发送的双语沟通内容」——质量的提升正是源于在每个工作流阶段有意识地选择合适工具。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c6_augmented_comm_q4",
+      "course_id": "mk_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "将M365 Copilot多界面工作流原则应用于以下场景。请撰写一份回答，将沟通任务的每个阶段映射至最合适的M365 Copilot界面，并说明为何该工具是该步骤的最佳选择。",
+      "scenario_text": "你是NovaTech Innovations Inc.（一家技术解决方案提供商）的营销传播经理。NovaTech某核心产品线受到重大供应链中断的影响，你需要主动向最重要的50家企业客户发送英法双语沟通内容。该沟通内容须满足以下要求：（1）概述此次中断情况及其对交货周期的可能影响；（2）通过清晰的应对方案安抚客户；（3）准确翻译成法语；（4）通过邮件分发至正确的客户联系人。你的截止时间为两小时。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答识别了适用于情报收集或调研步骤的M365 Copilot界面（例如，使用Teams中的Copilot或Bing/Edge中的Copilot收集有关此次中断及其影响范围的信息），并说明为何该工具适合执行此任务。",
+        "key2": "回答识别了适用于起草步骤的M365 Copilot界面（例如，使用Word或Outlook中的Copilot起草涵盖中断概述及应对方案的客户沟通内容），并说明为何该工具适合起草结构化的专业沟通内容。",
+        "key3": "回答识别了适用于翻译步骤的M365 Copilot界面或功能（例如，使用Word中具备翻译能力的Copilot，或M365内的专用翻译工具），并说明为何准确翻译需要有意识地选择工具，而非依赖泛化提示词。",
+        "key4": "回答识别了适用于分发步骤的M365 Copilot界面（例如，使用Outlook中的Copilot对邮件进行个性化处理，并发送至名单中的正确客户联系人），并说明将分发工具与最终步骤精准匹配如何确保沟通内容高效触达目标受众——从而完整呈现多界面工作流原则。"
+      }
+    }
+  ],
+  "mk_c7_capstone": [
+    {
+      "item_id": "ev_mk_c7_capstone_q1",
+      "course_id": "mk_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "根据课程阅读材料，端到端AI工作流与单纯将AI用于孤立任务的本质区别是什么？",
+      "scenario_text": null,
+      "options": {
+        "A": "端到端AI工作流在整个项目中只使用一种AI工具，以确保一致性",
+        "B": "端到端AI工作流将AI辅助有意识地整合到营销项目的每个阶段，形成相互衔接的完整链条",
+        "C": "端到端AI工作流将项目所有阶段全部自动化，无需人工介入",
+        "D": "端到端AI工作流仅适用于拥有专属数据科学支持的大规模营销活动"
+      },
+      "correct_option": "B",
+      "explanation": "课程阅读材料明确将端到端AI工作流定义为「有意识地将AI辅助整合到营销项目的每个阶段——而非仅在某个单一任务遇到困难时才临时借助AI」，强调的是这一方法的连贯性与主动性。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c7_capstone_q2",
+      "course_id": "mk_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "根据课程阅读材料，对市场营销与传播专业人员而言，端到端AI工作流在哪些阶段提供AI辅助？",
+      "scenario_text": null,
+      "options": {
+        "A": "AI仅辅助内容创作和社交媒体排期",
+        "B": "AI辅助规划阶段的潜在客户画像与优先级排序，并贯穿执行、评估和报告全程",
+        "C": "AI主要辅助活动结束后的分析和预算预测",
+        "D": "AI辅助对所有营销材料进行合规审查和法律审核"
+      },
+      "correct_option": "B",
+      "explanation": "课程阅读材料将端到端AI工作流描述为「一条相互衔接的链条：AI在规划阶段帮助你完成潜在客户画像与优先级排序」，并延伸至执行、评估和报告各阶段，覆盖营销项目的全部环节。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c7_capstone_q3",
+      "course_id": "mk_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "根据课程阅读材料，无论使用多少AI辅助，端到端AI工作流的每个阶段都必须坚守哪项保障措施？",
+      "scenario_text": null,
+      "options": {
+        "A": "必须由第二个AI工具对主AI工具的所有输出进行验证，方可使用",
+        "B": "所有AI生成的内容必须提交法务部门审批",
+        "C": "在数据、内容或洞察进入下一环节之前，每个输出节点都必须设置人工审核关卡",
+        "D": "工作流必须经过高层领导审批备案，方可开始执行"
+      },
+      "correct_option": "C",
+      "explanation": "课程阅读材料的核心要点明确指出：「在数据、内容或洞察进入下一环节之前，每个输出节点都必须设置人工审核关卡」——这是端到端AI工作流每个阶段都不可或缺的保障措施。",
+      "scoring_rubric": {
+        "correct": 4,
+        "incorrect": 0
+      }
+    },
+    {
+      "item_id": "ev_mk_c7_capstone_q4",
+      "course_id": "mk_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请针对以下场景设计一套端到端AI工作流。你的回答应涵盖：将AI辅助映射到项目各主要阶段、说明课程中哪些框架或工具适用于各阶段，以及明确各阶段人工审核关卡的设置位置。",
+      "scenario_text": "你是ExportBoost计划的市场营销负责人。ExportBoost是一项由政府支持的计划，旨在帮助中小企业开拓新的出口市场。ExportBoost即将启动一项为期六周的活动，目标是为下一期出口准备培训班招募200家新的中小企业参与者。本次活动包括：针对预筛选中小企业潜在客户的定向推广、内容系列（博客文章、LinkedIn帖子及电子邮件跟进培育序列）、按周度招募目标进行绩效跟踪，以及为项目执行委员会撰写活动结束后的报告。你的团队仅有两人，预算有限。请为本次活动设计端到端AI工作流。",
+      "options": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "回答将AI辅助映射至规划与潜在客户挖掘阶段——说明如何运用AI（例如采用TAILOR方法）基于公开信息对中小企业潜在客户进行画像与优先级排序，并在最终确定外联名单前设置人工审核关卡。",
+        "key2": "回答将AI辅助映射至内容创作与执行阶段——说明如何运用AI（例如采用CRAF框架）起草博客文章、LinkedIn帖子和电子邮件序列，并在每项内容发布或发送前设置人工审核关卡（例如运用VERIFY检查清单）。",
+        "key3": "回答将AI辅助映射至绩效跟踪与评估阶段——说明如何运用AI（例如在Excel或Power BI中采用DECIDE框架）分析每周招募数据并提炼洞察，并在将洞察用于调整活动策略或预算之前设置人工审核关卡。",
+        "key4": "回答将AI辅助映射至报告阶段——说明如何运用AI将活动成果综合整理为执行委员会报告草稿，并明确设置最终人工审核关卡，在报告呈交前核验其准确性、语气与完整性——从而展示一套在每个阶段均具备人工监督的完整端到端AI工作流。"
+      }
+    }
+  ],
+  "pm_c1_responsible_ai": [
+    {
+      "item_id": "ev_pm_c1_responsible_ai_q1",
+      "course_id": "pm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "以下哪项陈述最准确地反映了组织对工作中使用生成式AI输出内容的政策要求？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "组织政策要求在使用或传递AI生成内容之前，必须经过人工审核。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "若受众为内部人员，可无需审核直接使用"
+        },
+        {
+          "label": "B",
+          "text": "使用前必须始终经过人工审核"
+        },
+        {
+          "label": "C",
+          "text": "若供应商知名度高，可信任其AI输出"
+        },
+        {
+          "label": "D",
+          "text": "只要删除人名即可安全使用"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c1_responsible_ai_q2",
+      "course_id": "pm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "一位项目经理希望借助AI处理包含预算压力和待定方案的会议记录，最安全的操作模式是什么？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "SAFE从数据分类和信息抽象化处理入手，在经批准的工具中完成任务，并对输出结果进行人工审核。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "将所有内容粘贴至公开AI工具，事后再清理敏感信息"
+        },
+        {
+          "label": "B",
+          "text": "使用经批准的工具，对不必要的细节进行抽象化处理，再审核输出结果"
+        },
+        {
+          "label": "C",
+          "text": "让其他员工在网络外完成此项工作"
+        },
+        {
+          "label": "D",
+          "text": "跳过所有抽象化处理，因为「只是整理会议记录」"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c1_responsible_ai_q3",
+      "course_id": "pm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "以下哪项是PM AI工作流中最值得警惕的风险信号？",
+      "scenario_text": null,
+      "correct_option": "C",
+      "explanation": "核心政策风险在于将组织非公开信息输入未经批准的AI工具或工作流。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "要求以要点形式而非段落形式呈现内容"
+        },
+        {
+          "label": "B",
+          "text": "使用经批准的内部工具起草会议记录"
+        },
+        {
+          "label": "C",
+          "text": "将组织非公开信息输入不当的AI平台"
+        },
+        {
+          "label": "D",
+          "text": "要求生成简短摘要"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c1_responsible_ai_q4",
+      "course_id": "pm_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "你手头有一份内部交付会议的文字记录，其中涉及初步预算压力、供应商问题及尚未批准的后续行动方案。请撰写一段简短回答，说明：（1）你会对哪些内容进行抽象化处理；（2）你所依据的合规使用前提；（3）你用于起草会议记录的安全提示词；（4）在分享前你会采取的审核步骤。",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "清晰区分敏感或非公开的项目内容与风险较低的内容",
+        "key2": "采用经批准的内部使用模式，不依赖不安全的工具假设",
+        "key3": "撰写边界清晰的提示词，对不必要的敏感细节进行抽象化处理或予以排除",
+        "key4": "包含人工审核步骤，在分享前核验内容的准确性与适当性"
+      },
+      "options": null
+    }
+  ],
+  "pm_c2_strategic_prompting": [
+    {
+      "item_id": "ev_pm_c2_strategic_prompting_q1",
+      "course_id": "pm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "在CRAF框架中，哪个要素最直接地控制输出内容的结构？",
+      "scenario_text": null,
+      "correct_option": "D",
+      "explanation": "「格式」（Format）指示AI如何组织、规定篇幅并呈现回答内容。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "背景（Context）"
+        },
+        {
+          "label": "B",
+          "text": "角色（Role）"
+        },
+        {
+          "label": "C",
+          "text": "行动（Action）"
+        },
+        {
+          "label": "D",
+          "text": "格式（Format）"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c2_strategic_prompting_q2",
+      "course_id": "pm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "一位项目经理的提示词生成了一篇泛泛而谈的文章，而非可供项目发起人使用的计划文档。最有可能解决此问题的调整是什么？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "明确目标受众、具体交付物和输出结构，是使规划类提示词具备实用价值的核心要素。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "添加表情符号"
+        },
+        {
+          "label": "B",
+          "text": "明确指定受众、交付物和输出结构"
+        },
+        {
+          "label": "C",
+          "text": "删除所有背景信息"
+        },
+        {
+          "label": "D",
+          "text": "要求「更高质量」"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c2_strategic_prompting_q3",
+      "course_id": "pm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "在项目管理提示词中，角色指令为何有用？",
+      "scenario_text": null,
+      "correct_option": "C",
+      "explanation": "角色设定了输出内容的视角和隐含专业背景，但不能替代背景信息的提供或结果验证。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "它能保证输出内容不出现幻觉"
+        },
+        {
+          "label": "B",
+          "text": "它能让AI的回答更简短"
+        },
+        {
+          "label": "C",
+          "text": "它有助于校准输出的视角、用语和相关性"
+        },
+        {
+          "label": "D",
+          "text": "它可以替代背景信息的提供"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c2_strategic_prompting_q4",
+      "course_id": "pm_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "你需要为一个虚构的内部计划（该计划下月进入交付阶段）撰写一份单页高层级计划。项目发起人希望看到里程碑、依赖关系、假设条件和需决策事项。请撰写一个完整的CRAF提示词，使其能够生成可用的初稿。",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "背景（Context）清晰说明计划所处阶段、目标受众和撰写目的",
+        "key2": "角色（Role）指令与项目管理工作高度相关",
+        "key3": "行动（Action）明确指定所需的具体交付物及其内容要求",
+        "key4": "格式（Format）定义了简洁清晰、适合项目发起人审阅的结构"
+      },
+      "options": null
+    }
+  ],
+  "pm_c3_critical_eval": [
+    {
+      "item_id": "ev_pm_c3_critical_eval_q1",
+      "course_id": "pm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "AI生成的高管摘要中，哪类缺陷最为危险？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "高管摘要的风险在于过度渲染确定性，或凭空得出领导层可能据此决策的结论。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "语气略显正式"
+        },
+        {
+          "label": "B",
+          "text": "将缺乏依据的判断作为既定事实陈述"
+        },
+        {
+          "label": "C",
+          "text": "项目符号过多"
+        },
+        {
+          "label": "D",
+          "text": "使用被动语态"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c3_critical_eval_q2",
+      "course_id": "pm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "VERIFY框架中的「E」主要提醒项目经理检查哪方面内容？",
+      "scenario_text": null,
+      "correct_option": "C",
+      "explanation": "综合评估不仅是发现错误，更要检查AI遗漏了哪些仍具重要性的内容。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "表情符号的使用情况"
+        },
+        {
+          "label": "B",
+          "text": "仅核查支出编码"
+        },
+        {
+          "label": "C",
+          "text": "遗漏内容与缺失的背景信息"
+        },
+        {
+          "label": "D",
+          "text": "导出设置"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c3_critical_eval_q3",
+      "course_id": "pm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "摘要中写道「范围已明确」，但原始记录显示「范围方案仍在审议中」。项目经理应如何处理？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "项目经理审查须消除缺乏依据的确定性表述，并恢复与原始资料一致的措辞。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "保留措辞更强硬的表述，因为听起来更有把握"
+        },
+        {
+          "label": "B",
+          "text": "改写该句，使其与原始资料一致并体现不确定性"
+        },
+        {
+          "label": "C",
+          "text": "删除整份摘要"
+        },
+        {
+          "label": "D",
+          "text": "增加更多修饰词"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c3_critical_eval_q4",
+      "course_id": "pm_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "现有一份AI生成的简短高管进展更新，其中存在决策表述夸大、一项未解决的依赖关系被隐藏、以及行动事项归属错误等问题。请将其改写为一份有据可查、经得起质询的摘要，并简要说明所做的修改。",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "删除缺乏依据或夸大其词的表述",
+        "key2": "补充缺失的依赖关系或不确定性说明",
+        "key3": "更正责任归属与行动事项的对应关系",
+        "key4": "产出一份简洁、面向高管、以可核实内容为基础的摘要"
+      },
+      "options": null
+    }
+  ],
+  "pm_c4_relationship_intel": [
+    {
+      "item_id": "ev_pm_c4_relationship_intel_q1",
+      "course_id": "pm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "对赞助方、运营团队和交付团队使用同一份AI生成的项目回顾，项目经理面临的主要风险是什么？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "千篇一律的信息传递会削弱干系人对齐效果，因为不同受众关注的侧重点各有不同。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "文件体积可能过小"
+        },
+        {
+          "label": "B",
+          "text": "各受众可能错过对自身最重要的信息"
+        },
+        {
+          "label": "C",
+          "text": "AI将停止运行"
+        },
+        {
+          "label": "D",
+          "text": "内容将始终转变为幻灯片"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c4_relationship_intel_q2",
+      "course_id": "pm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "在ALIGN Map中，「L」代表什么？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "Lens（视角）指对特定受众而言最为关键的观察角度或优先事项。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "篇幅长度（Length）"
+        },
+        {
+          "label": "B",
+          "text": "视角（Lens）"
+        },
+        {
+          "label": "C",
+          "text": "登录（Log-in）"
+        },
+        {
+          "label": "D",
+          "text": "大语言模型（Language model）"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c4_relationship_intel_q3",
+      "course_id": "pm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "以下哪种项目经理行为最能体现关系洞察能力？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "关系洞察的核心在于适配受众需求，而非改变事实本身。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "对所有人复用同一份记录"
+        },
+        {
+          "label": "B",
+          "text": "将相同的事实针对不同干系人需求进行差异化呈现"
+        },
+        {
+          "label": "C",
+          "text": "让AI决定谁需要接收该信息"
+        },
+        {
+          "label": "D",
+          "text": "为追求效率而省略所有细节"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c4_relationship_intel_q4",
+      "course_id": "pm_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "基于一份模拟内部项目回顾，分别撰写两份简短输出：一份面向赞助方、聚焦决策与风险的沟通备忘；一份面向交付团队、聚焦依赖关系与后续行动的工作说明。",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "清晰区分不同受众的需求差异",
+        "key2": "确保两份输出的核心事实保持一致",
+        "key3": "针对各受众采用恰当的语气与详略程度",
+        "key4": "避免出现指责性语言、模糊表述或遗漏后续行动事项"
+      },
+      "options": null
+    }
+  ],
+  "pm_c5_data_decision": [
+    {
+      "item_id": "ev_pm_c5_data_decision_q1",
+      "course_id": "pm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "以下哪种表述最能体现项目经理善用AI解读仪表盘信号的良好做法？",
+      "scenario_text": null,
+      "correct_option": "C",
+      "explanation": "项目经理的判断取决于具体背景，而非仅凭颜色标识。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "红色信号始终意味着需要立即上报"
+        },
+        {
+          "label": "B",
+          "text": "AI的排序结果足以直接指导行动"
+        },
+        {
+          "label": "C",
+          "text": "信号须结合基准线与具体背景加以解读"
+        },
+        {
+          "label": "D",
+          "text": "绿色信号始终意味着无需采取任何行动"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c5_data_decision_q2",
+      "course_id": "pm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "在SIGNAL Review中，哪个步骤用于判断某个红色信号是否属于预期情况或存在误导性？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "噪声检验用于区分常规或可解释的波动与真正需要上报的触发信号。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "来源核查（Source）"
+        },
+        {
+          "label": "B",
+          "text": "噪声检验（Noise check）"
+        },
+        {
+          "label": "C",
+          "text": "行动建议（Action）"
+        },
+        {
+          "label": "D",
+          "text": "领导层沟通（Leadership message）"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c5_data_decision_q3",
+      "course_id": "pm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "进度状态显示红色，原因是预测完成日期超出容差范围。项目经理下一步应重点考虑什么？",
+      "scenario_text": null,
+      "correct_option": "A",
+      "explanation": "进度信号只有结合已批准的基准线及重新基准化逻辑才有意义。 %20-%20Job%20Aid.pdf?web=1)",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "基准线本身是否已变更或需要重新审批"
+        },
+        {
+          "label": "B",
+          "text": "该颜色在幻灯片中是否显得不美观"
+        },
+        {
+          "label": "C",
+          "text": "文件是否应归档处理"
+        },
+        {
+          "label": "D",
+          "text": "AI是否使用了超过100个词"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c5_data_decision_q4",
+      "course_id": "pm_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "现有一份模拟项目组合快照，包含三个项目，各自呈现不同程度的进度偏差、资源紧张和整体状态。请撰写一份简短建议，分别指出需持续关注的项目、需上报的项目和可维持现状的项目，并提供基于数据的理由。",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "正确解读各项指标，而非仅作简单复述",
+        "key2": "体现对基准线或管理背景的认知",
+        "key3": "清晰区分持续关注、纠偏处理与上报升级的判断逻辑",
+        "key4": "撰写一份简洁、面向领导层的建议报告"
+      },
+      "options": null
+    }
+  ],
+  "pm_c6_augmented_comm": [
+    {
+      "item_id": "ev_pm_c6_augmented_comm_q1",
+      "course_id": "pm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "当素材来源为录制会议时，Microsoft 365 中哪个应用是最佳起点？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "「Teams」是以会议为素材来源、需要生成摘要或提取行动事项时的天然入口。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Outlook"
+        },
+        {
+          "label": "B",
+          "text": "Teams"
+        },
+        {
+          "label": "C",
+          "text": "Excel"
+        },
+        {
+          "label": "D",
+          "text": "以上均不适用"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c6_augmented_comm_q2",
+      "course_id": "pm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "为什么项目经理不应将原始会议摘要文本直接复制到发给利益相关方的邮件中？",
+      "scenario_text": null,
+      "correct_option": "A",
+      "explanation": "良好的增强沟通应确保沟通链路前后一致，并在最终使用前完成审核。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "可能导致内容不一致，并跳过必要的审核环节"
+        },
+        {
+          "label": "B",
+          "text": "邮件中不能包含摘要内容"
+        },
+        {
+          "label": "C",
+          "text": "Outlook 会自动删除项目符号"
+        },
+        {
+          "label": "D",
+          "text": "Teams 的输出内容毫无实用价值"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c6_augmented_comm_q3",
+      "course_id": "pm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "多步骤 Copilot 工作流对项目经理的核心价值是什么？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "项目经理的沟通工作常需将相同信息以不同形式呈现；串联工具可有效减少重复劳动。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "使会议时间更长"
+        },
+        {
+          "label": "B",
+          "text": "在保持各输出成果相互关联的同时，减少重复撰写工作"
+        },
+        {
+          "label": "C",
+          "text": "消除对治理机制的需求"
+        },
+        {
+          "label": "D",
+          "text": "完全避免使用 Word 或 Outlook"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c6_augmented_comm_q4",
+      "course_id": "pm_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "请设计一个简短的工作流，将一次指导委员会会议转化为：（1）经过审核的会议摘要、（2）正式会议记录、（3）后续跟进邮件。请为每个步骤指定最适合的工具，并说明一项审核管控措施。",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "能根据素材来源和输出类型选择合理的工具",
+        "key2": "各步骤排列顺序合乎逻辑",
+        "key3": "展示各步骤输出成果如何衔接后续步骤，避免内容重复",
+        "key4": "在最终对外沟通前，纳入人工审核或一致性核查环节"
+      },
+      "options": null
+    }
+  ],
+  "pm_c7_capstone": [
+    {
+      "item_id": "ev_pm_c7_capstone_q1",
+      "course_id": "pm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "在端到端的项目经理 AI 工作流中，哪个步骤应在使用提示词生成内容之前完成？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "安全处理优先；工作流的起点是核查哪些内容可以使用、在何处使用。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "发送邮件"
+        },
+        {
+          "label": "B",
+          "text": "对素材来源进行负责任AI审查"
+        },
+        {
+          "label": "C",
+          "text": "上报问题"
+        },
+        {
+          "label": "D",
+          "text": "制作幻灯片"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c7_capstone_q2",
+      "course_id": "pm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "哪项表现最能体现项目经理在多领域 AI 能力上的成熟度？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "综合评估的核心在于在工作流的正确节点运用恰当的规范方法。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "随意使用多种工具"
+        },
+        {
+          "label": "B",
+          "text": "按顺序完成提示词构建、审核、针对受众定制、结果解读和对外沟通"
+        },
+        {
+          "label": "C",
+          "text": "撰写尽可能长的提示词"
+        },
+        {
+          "label": "D",
+          "text": "完全信任 AI 生成的会议摘要"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c7_capstone_q3",
+      "course_id": "pm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "以下哪项最能说明项目经理的工作流仍处于人工管控之下？",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "综合评估考量的不仅是效率，更在于工作流的受控性与可追溯性。",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "AI 快速生成了初稿"
+        },
+        {
+          "label": "B",
+          "text": "项目经理核查了合规性，验证了相关结论，并根据受众和行动要求对输出内容进行了调整"
+        },
+        {
+          "label": "C",
+          "text": "项目经理使用了三种不同的工具"
+        },
+        {
+          "label": "D",
+          "text": "项目经理完全回避了 AI 的使用"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c7_capstone_q4",
+      "course_id": "pm_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "假设你有一个虚构的项目经理工作周，涵盖项目规划、会议摘要、项目发起人汇报、投资组合审查和月度进展更新。请描述你在这一周中将采用的 AI 工作流，并包含以下各项：一项安全使用核查、一个结构化提示词、一个验证步骤、一次利益相关方定制调整、一个数据解读步骤，以及一项沟通链路选择。",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "工作流在整个工作周内的排序合乎逻辑",
+        "key2": "在每个相关领域中至少应用一项具体行动",
+        "key3": "工作流紧密结合项目经理的实际交付物与工具",
+        "key4": "在每个关键节点均体现清晰的人工判断与管控"
+      },
+      "options": null
+    }
+  ]
+}

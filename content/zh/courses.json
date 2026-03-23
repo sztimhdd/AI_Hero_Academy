@@ -1,0 +1,352 @@
+{
+  "an_c1_responsible_ai": {
+    "course_id": "an_c1_responsible_ai",
+    "role_id": "an",
+    "primary_domain": "responsible_ai",
+    "title": "守护数据：业务分析师的AI安全使用规范",
+    "tagline": "充分发挥AI效能，同时保护机密数据、遵守Apex Trade Finance各项政策。",
+    "description": "数据工作责任重大。本课程帮助业务分析师在严格遵守Apex Trade Finance数据安全与隐私规定的前提下，高效使用Copilot。您将学习适用于生成式AI的SAFE抽象方法——一套四步流程，确保在使用AI时不泄露组织内部的非公开数据。在模拟的了解客户（KYC）客户准入场景中，您将练习识别敏感内容（包括个人身份信息、财务细节及内部评级），并在输入提示词前对其进行转化或移除处理。此外，您还将学习如何在日常分析工作中理解并落实组织AI使用政策，从而在数据验证、文件审查和调研工作中放心使用AI，规避合规风险。",
+    "real_use_case": "KYC／CIM验证智能体",
+    "sequence_order": 1
+  },
+  "an_c2_strategic_prompting": {
+    "course_id": "an_c2_strategic_prompting",
+    "role_id": "an",
+    "primary_domain": "strategic_prompting",
+    "title": "精准提炼：直达董事会的高质量简报",
+    "tagline": "运用结构化提示词，将厚重报告转化为清晰的高管层简报。",
+    "description": "业务分析师经常需要将大量信息——冗长的业绩报告、研究成果、行业数据——提炼为供高级管理层和委员会使用的精炼简报。本课程讲授CRAF框架（背景、角色、行动、格式）在真实分析师场景中的应用，例如为复杂的季度报告撰写执行摘要。您将练习精准构建提示词：明确受众、核心关注点及所需格式，使Copilot的输出可直接用于您的交付成果。掌握这一技能，既能节省编辑时间，又能确保AI输出切实满足利益相关方的需求。",
+    "real_use_case": "董事会报告摘要",
+    "sequence_order": 2
+  },
+  "an_c3_critical_eval": {
+    "course_id": "an_c3_critical_eval",
+    "role_id": "an",
+    "primary_domain": "critical_eval",
+    "title": "信任，更要核实：验证AI分析结果",
+    "tagline": "不轻信AI输出——学会对Copilot的结果进行事实核查与优化。",
+    "description": "对于业务分析师而言，准确性不容妥协——AI生成的差异分析或风险评估，只有在正确的前提下才有价值。本课程培养您在依赖Copilot输出之前发现并纠正错误的能力。您将练习使用VERIFY核查清单——一套系统性审查AI输出的方法，包括：将数据与源数据比对、质疑假设前提、修正逻辑不一致之处。通过贴近实际的财务规划与分析场景，您将磨练批判性评估AI建议的判断力——识别计算或推理中的细微错误，确保最终分析结果经得起管理层和审计人员的审查。",
+    "real_use_case": "财务差异分析工具",
+    "sequence_order": 3
+  },
+  "an_c4_relationship_intel": {
+    "course_id": "an_c4_relationship_intel",
+    "role_id": "an",
+    "primary_domain": "relationship_intel",
+    "title": "了解你的受众：AI辅助利益相关方简报",
+    "tagline": "借助AI深入了解受众背景，让每份交付成果都契合其决策方式。",
+    "description": "业务分析师需要面向多类内部受众输出成果——注重风险的核保专员、聚焦增长的业务拓展负责人，以及时间紧迫的高管——同样的数据往往需要针对不同受众采用不同的呈现方式。本课程讲授用于关系洞察的STAKE框架：如何利用AI研究利益相关方的角色与优先事项，调整分析输出的结构与侧重点，并预判各类受众可能提出的问题。在一个需要基于同一底层分析向两个不同内部委员会汇报的真实场景中，您将练习使用Copilot定制交付成果，无需每次重新起草。",
+    "real_use_case": "面向业务拓展的Copilot 365使用权限",
+    "sequence_order": 4
+  },
+  "an_c5_data_decision": {
+    "course_id": "an_c5_data_decision",
+    "role_id": "an",
+    "primary_domain": "data_decision",
+    "title": "从数据到洞见：AI辅助投资组合分析",
+    "tagline": "发现异常、验证解读，构建AI辅助的投资组合审查分析工作流。",
+    "description": "业务分析师需要从复杂的金融与投资组合数据中识别规律、得出结论——而AI既能加速这一过程，也可能带来误导。本课程讲授TRACE框架：一套在使用AI进行数据分析的同时，将输出结果与源数据交叉核验，再向内部利益相关方呈现结论的结构化方法。您将在一个真实的季度投资组合审查场景中，使用Excel Copilot发现数据异常，将AI生成的解读与底层数据进行核实，并在Word Copilot中起草以数据为依据的执行摘要——从而培养判断何时可信赖AI分析、何时需要深入核查的能力。",
+    "real_use_case": "财务差异分析工具；优化季度分析与报告的生产流程",
+    "sequence_order": 5
+  },
+  "an_c6_augmented_comm": {
+    "course_id": "an_c6_augmented_comm",
+    "role_id": "an",
+    "primary_domain": "augmented_comm",
+    "title": "善用利器，步步为营：业务分析师M365 Copilot实战",
+    "tagline": "按序掌握Copilot全套工具——Excel、Word、Teams、PowerPoint、Outlook。",
+    "description": "既然Copilot能在每款工具中无缝协助您，又何必在应用之间反复复制粘贴数据？本学习模块帮助业务分析师掌握在分析工作流的每个环节选用最合适的M365 Copilot界面的方法，并将各界面串联起来，使上一工具的输出直接成为下一工具的输入，从而最大化工作效率。通过一个围绕编制项目情报简报的多步骤场景，您将练习从Teams会议纪要，到Word简报草稿，再到Outlook干系人沟通的完整流程——彻底消除手动转移数据的环节，减少返工，并确保内容始终留存于组织安全的M365环境之内。",
+    "real_use_case": "优化季度分析与报告的编制流程",
+    "sequence_order": 6
+  },
+  "an_c7_capstone": {
+    "course_id": "an_c7_capstone",
+    "role_id": "an",
+    "primary_domain": "responsible_ai",
+    "title": "分析师实战：端到端AI工作流（综合评估）",
+    "tagline": "融会贯通——从原始数据到最终沟通，以负责任AI为准则，兼顾精准性、受众意识与数据驱动，实现全流程AI辅助。",
+    "description": "本综合评估将六大技能领域整合于一个贴近实际的端到端工作流之中。您将以Apex贸易融资业务分析师的身份，为高级管理层准备年度项目回顾报告。从Excel投资组合数据集、Teams会议记录和内部战略备忘录出发，您将在每个阶段运用AI：挖掘投资组合洞察（数据决策）、在内容纳入叙述前核验AI输出（批判性评估）、针对两类不同内部受众定制简报（关系洞察）、运用CRAF构建简报结构（战略性提示）、全程维护数据安全（负责任AI），以及跨Excel、Word、Outlook串联Copilot工具（增强沟通）。完成本课程，即证明您具备在复杂多步骤分析工作流中统筹调度AI的能力——正如您在实际工作中所需展现的那样。",
+    "real_use_case": "优化季度分析与报告的编制流程；财务差异分析工具；KYC/CIM验证智能体",
+    "sequence_order": 7
+  },
+  "rm_c1_responsible_ai": {
+    "course_id": "rm_c1_responsible_ai",
+    "role_id": "rm",
+    "primary_domain": "responsible_ai",
+    "title": "防护在前，摘要在后：客户数据与AI合规使用",
+    "tagline": "运用SAFE脱敏方法，在不泄露客户非公开信息的前提下获取AI辅助。",
+    "description": "客户经理常常面临时间压力，需要快速汇总客户文件、会议记录和交易背景。本学习模块帮助客户经理养成输入内容脱敏、工具安全选用、提示词优化的操作习惯，从而在保障信息保密性的同时，仍能获得可用于内部工作的高质量草稿。",
+    "real_use_case": "本应用场景的核心目标，是获得授权将内部（即非公开）客户数据输入网页版MS Copilot，以提升开发融资团队的工作效率。",
+    "sequence_order": 1
+  },
+  "rm_c2_strategic_prompting": {
+    "course_id": "rm_c2_strategic_prompting",
+    "role_id": "rm",
+    "primary_domain": "strategic_prompting",
+    "title": "精准提示锁定潜客：从线索稀薄到高质量触达",
+    "tagline": "运用CRAF框架，将有限的线索信息转化为个性化的客户触达内容。",
+    "description": "新线索往往只附带基本信息。本学习模块讲授CRAF框架（背景、角色、行动、格式），帮助客户经理生成实用的潜客概况和首次联系邮件——内容有据可依、切中要点，且真实呈现客户经理本人的沟通风格，而非千篇一律的模板化表达。",
+    "real_use_case": "潜客情报分析",
+    "sequence_order": 2
+  },
+  "rm_c3_critical_eval": {
+    "course_id": "rm_c3_critical_eval",
+    "role_id": "rm",
+    "primary_domain": "critical_eval",
+    "title": "信任之后，必须核验：识别财务评述中的AI错误",
+    "tagline": "运用VERIFY方法，在分享前验证AI生成的差异分析结论。",
+    "description": "当AI协助解读财务数据或财务比率时，细微的错误可能引发重大的下游风险。本学习模块为客户经理提供一套切实可行的核验流程，确保数字、假设和解读在提交核保专员、同步至CRM系统或呈送客户之前均经过严格确认。",
+    "real_use_case": "财务差异分析工具",
+    "sequence_order": 3
+  },
+  "rm_c4_relationship_intel": {
+    "course_id": "rm_c4_relationship_intel",
+    "role_id": "rm",
+    "primary_domain": "relationship_intel",
+    "title": "深度读懂客户关系：AI驱动的会议准备，精准还原关系全貌",
+    "tagline": "运用RELATE框架整合历史记录、相关方信息与待处理事项，并进行验证。",
+    "description": "客户经理需要的不只是一份公司概况——他们需要完整的客户关系故事：发生了什么、哪些问题尚未解决、与会各方的核心关切是什么。本学习模块教授一套结构化方法，帮助学员从内部信号（如会议记录、邮件、历史行动）中生成客户关系简报，同时避免过度依赖自动化摘要。",
+    "real_use_case": "客户互动回顾",
+    "sequence_order": 4
+  },
+  "rm_c5_data_decision": {
+    "course_id": "rm_c5_data_decision",
+    "role_id": "rm",
+    "primary_domain": "data_decision",
+    "title": "以信号驱动决策：将仪表盘与市场洞察转化为行动",
+    "tagline": "运用SIGNAL框架，将分析结果转化为客户组合的最优后续行动。",
+    "description": "仪表盘和市场工具能够揭示风险与机遇——但前提是学员了解该关注什么、如何采取行动。本学习模块教授客户经理将客户组合分析（线索老化、SLA风险、活动时效性）与市场洞察相结合，以清晰的逻辑依据优先安排客户触达与业务规划。",
+    "real_use_case": "市场洞察生成器",
+    "sequence_order": 5
+  },
+  "rm_c6_augmented_comm": {
+    "course_id": "rm_c6_augmented_comm",
+    "role_id": "rm",
+    "primary_domain": "augmented_comm",
+    "title": "形成闭环：从会议到行动，再到规范留档",
+    "tagline": "借助Copilot快速生成准确的会议回顾、责任人分配与后续跟进事项。",
+    "description": "客户经理的日程往往是密集的背靠背会议。本学习模块构建一套可复用的多步骤工作流，将会议成果转化为行动清单、规范的CRM更新记录及专业的跟进沟通——同时确保信息准确、责任清晰、合规到位。",
+    "real_use_case": "记录管理——整理会议纪要与行动事项（含与会人员标注）",
+    "sequence_order": 6
+  },
+  "rm_c7_capstone": {
+    "course_id": "rm_c7_capstone",
+    "role_id": "rm",
+    "primary_domain": "responsible_ai",
+    "title": "AI全流程协作：从客户开发到跟进回访",
+    "tagline": "全面贯通六大领域，端到端运行，不走捷径。",
+    "description": "本模块呈现一个贴近实战的客户经理端到端场景：运用AI识别并筛选目标客户、撰写客户触达材料、基于客户关系历史准备会议、验证AI辅助分析结果，并完成合规的跟进沟通与记录更新。学员须在整个流程中展现良好判断力、核实能力以及对信息的安全处理规范。",
+    "real_use_case": "使用Copilot 365开展业务拓展；客户互动回顾；记录管理——整理会议纪要与行动事项（含与会人员标注）",
+    "sequence_order": 7
+  },
+  "uw_c1_responsible_ai": {
+    "course_id": "uw_c1_responsible_ai",
+    "role_id": "uw",
+    "primary_domain": "responsible_ai",
+    "title": "敏感交易数据的安全AI使用规范",
+    "tagline": "运用SAFE抽象化方法，在不泄露非公开核保信息的前提下，充分借助AI提升工作效能。",
+    "description": "核保专员处理的财务数据和内部风险判断高度敏感。本学习模块帮助学员建立实用判断力，明确哪些内容可以输入AI工具、哪些不可以，并通过学习SAFE抽象化方法，在确保政策合规、满足审计要求的同时，仍能获取有价值的AI输出结果。",
+    "real_use_case": "本应用场景的核心目标是获得授权，将内部（即非公开）客户数据输入网页版MS Copilot，以提升开发融资团队的工作效率。",
+    "sequence_order": 1
+  },
+  "uw_c2_strategic_prompting": {
+    "course_id": "uw_c2_strategic_prompting",
+    "role_id": "uw",
+    "primary_domain": "strategic_prompting",
+    "title": "运用AI辅助撰写财务分析报告",
+    "tagline": "借助CRAF框架，将零散的财务数据转化为规范的信贷叙述。",
+    "description": "财务分析报告工作重复性高，但风险不容忽视。本学习模块讲授如何运用结构化提示词（CRAF），从Excel表格和财务报表摘录中生成符合核保要求的叙述性报告——聚焦风险叙事本身，而非泛泛的财务评述。",
+    "real_use_case": "运用生成式AI辅助财务报表报告",
+    "sequence_order": 2
+  },
+  "uw_c3_critical_eval": {
+    "course_id": "uw_c3_critical_eval",
+    "role_id": "uw",
+    "primary_domain": "critical_eval",
+    "title": "让AI解读合同细则，再由你把关复核",
+    "tagline": "运用VERIFY核查清单，在AI输出内容进入信贷决策或系统记录前拦截错误。",
+    "description": "AI能够加速处理冗长的申请材料、报告及决策历史，但也可能生成失实内容。本学习模块讲授一套严谨的核查工作流程（VERIFY），帮助核保专员在提升效率的同时，确保准确性与合规性不打折扣。",
+    "real_use_case": "核保流程提效",
+    "sequence_order": 3
+  },
+  "uw_c4_relationship_intel": {
+    "course_id": "uw_c4_relationship_intel",
+    "role_id": "uw",
+    "primary_domain": "relationship_intel",
+    "title": "借助AI深化客户洞察与关系维护",
+    "tagline": "运用RELATE方法，以精准、同理心与一致性回应沟通难度较高的利益相关方。",
+    "description": "核保专员在日常工作中需频繁传达拒绝、额度削减及信息补充等决定。本学习模块展示如何利用AI整合互动历史、起草回复内容，在维护客户关系的同时，避免泄露内部专用的决策依据，并确保措辞符合标准规范。",
+    "real_use_case": "客户互动记录整理",
+    "sequence_order": 4
+  },
+  "uw_c5_data_decision": {
+    "course_id": "uw_c5_data_decision",
+    "role_id": "uw",
+    "primary_domain": "data_decision",
+    "title": "借助AI洞察发现财务趋势",
+    "tagline": "运用SIFT方法，将差异分析转化为清晰可执行的核保行动方案。",
+    "description": "差异分析在核保工作中无处不在，却往往变成一堆数字的罗列。本学习模块讲授核保专员如何运用AI识别关键差异项、解析驱动因素、预判影响，并将洞察落实为具体的决策或后续行动。",
+    "real_use_case": "财务差异分析",
+    "sequence_order": 5
+  },
+  "uw_c6_augmented_comm": {
+    "course_id": "uw_c6_augmented_comm",
+    "role_id": "uw",
+    "primary_domain": "augmented_comm",
+    "title": "以AI作为邮件与消息起草的协作伙伴",
+    "tagline": "选择合适的Copilot工作界面，端到端串联全流程：互动摘要→备忘录→决策邮件→记录更新。",
+    "description": "核保专员需同时在Outlook、Word、Teams、Excel及SharePoint/OneNote等平台间跨平台操作，并同步更新核保系统。本学习模块讲授Copilot界面选择方法与多步骤工作流程，有效减少重复返工、提升一致性，同时确保记录准确合规。",
+    "real_use_case": "向客户服务团队发起请求",
+    "sequence_order": 6
+  },
+  "uw_c7_capstone": {
+    "course_id": "uw_c7_capstone",
+    "role_id": "uw",
+    "primary_domain": "responsible_ai",
+    "title": "AI驱动的端到端核保流程（从分析到审批）",
+    "tagline": "综合运用全部6大领域，快速、安全、可验证地完成核保工作流。",
+    "description": "本综合评估课程将负责任AI、战略性提示、批判性评估、关系洞察、数据决策与增强沟通融为一体，呈现一个真实的核保案例。学员将依次完成：案件受理→分析→建议→审批支持→利益相关方沟通，在每个环节安全、透明地运用AI。",
+    "real_use_case": "探索信用保险项目的Copilot 360选项，利用生成式AI辅助开展企业评估。这并非全新构想，而是尝试借助外部工具（如CB Insights或Alphasense）作为搜索引擎（这些工具本身可能已集成AI），以支持投资尽职调查工作。",
+    "sequence_order": 7
+  },
+  "mk_c1_responsible_ai": {
+    "course_id": "mk_c1_responsible_ai",
+    "role_id": "mk",
+    "primary_domain": "responsible_ai",
+    "title": "在AI应用中保护非公开营销数据",
+    "tagline": "学会在不泄露客户线索或机密营销信息的前提下，充分发挥AI工具的价值。",
+    "description": "本课程帮助市场营销人员在日常工作中落实Apex Trade Finance的负责任AI准则。您将学会识别营销场景中的非公开数据（如客户名单、内部活动数据、未发布素材及内部策略），并掌握在使用生成式AI前对数据进行转化或脱敏处理的方法。通过对展会线索进行AI摘要处理、基于内部数据撰写内容、开展潜客调研等真实场景的练习，您将熟练掌握安全提示词技巧，在借助AI提升效率的同时，切实保护客户隐私、遵守加拿大反垃圾邮件法规（CASL），并维护Apex Trade Finance的商业信誉。",
+    "real_use_case": "本案例的核心目标是获得授权，将内部（即非公开）客户数据输入网页版MS Copilot，以提升开发融资团队的工作效率。",
+    "sequence_order": 1
+  },
+  "mk_c2_strategic_prompting": {
+    "course_id": "mk_c2_strategic_prompting",
+    "role_id": "mk",
+    "primary_domain": "strategic_prompting",
+    "title": "用更优提示词，更快产出营销文案",
+    "tagline": "掌握AI提示词战略，让空白页迅速变成符合品牌调性的活动内容。",
+    "description": "市场人员常常面临紧迫的内容创作截止期限。本课程将引导您运用CRAF提示词框架，在数分钟内生成高质量的营销素材初稿。您将学会向Copilot提供恰当的背景信息——包括目标受众、产品价值主张、期望语气与格式——从而生成切实可用的邮件、社交媒体帖子和博客提纲。我们将把模糊笼统、产出泛泛内容的提示词转化为精准有效的战略性提示，从而产出贴合实际需求的定制化文案，在缩短写作时间的同时，保持Apex Trade Finance的品牌声音与标准。",
+    "real_use_case": "内容创作与全生命周期管理",
+    "sequence_order": 2
+  },
+  "mk_c3_critical_eval": {
+    "course_id": "mk_c3_critical_eval",
+    "role_id": "mk",
+    "primary_domain": "critical_eval",
+    "title": "行动前，先审核AI生成的摘要",
+    "tagline": "不可轻信AI摘要——学会核实事实、筛选输出内容。",
+    "description": "营销节奏快，但AI生成的摘要和内容必须审慎对待。本课程将培养您批判性审视AI输出结果的能力。您将通过实际场景进行练习，例如获取一份10页产品简报或网络研讨会文字实录的摘要，并在内容扩散前发现其中的细微错误或夸大表述。课程涵盖VERIFY核查清单，帮助您逐一核实姓名、数字、事实性声明、译文与语气。完成本课程后，您将能够自信地借助AI减轻工作负担，同时确保所有对外发布或提交团队的内容100%准确合规。",
+    "real_use_case": "客户互动摘要",
+    "sequence_order": 3
+  },
+  "mk_c4_relationship_intel": {
+    "course_id": "mk_c4_relationship_intel",
+    "role_id": "mk",
+    "primary_domain": "relationship_intel",
+    "title": "借助潜客洞察，打造更有力的外联触达",
+    "tagline": "将AI调研与内部知识相结合，实现前所未有的个性化营销。",
+    "description": "在基于客户的营销中，千篇一律的方式往往收效甚微。本课程将展示如何利用AI快速获取行业与企业洞察，再将这些洞察与您掌握的客户内部信息相融合。您将运用TAILOR方法在保护信息保密性（不泄露非公开信息）的前提下，撰写高度个性化的邮件和社交媒体内容。课程场景包括：为针对重点客户的营销活动做准备——用AI收集近期新闻和行业趋势，单独补充销售团队的内部洞察，并据此打磨直击潜客实际处境的沟通话术。",
+    "real_use_case": "潜客情报分析",
+    "sequence_order": 4
+  },
+  "mk_c5_data_decision": {
+    "course_id": "mk_c5_data_decision",
+    "role_id": "mk",
+    "primary_domain": "data_decision",
+    "title": "将营销数据转化为更优决策",
+    "tagline": "借助AI挖掘营销数据中的隐藏洞察——并学会判断何时可以信赖这些洞察。",
+    "description": "现代市场营销人员高度依赖数据，从邮件打开率到线索转化指标。在本学习模块中，您将学习如何在Excel和Power BI等工具中使用Copilot快速分析绩效数据，并运用DECIDE框架对AI驱动的洞察进行验证。我们将以季度营销复盘为场景进行实操练习：向Copilot询问趋势与关键结论，再将其与源数据及业务背景进行核对。完成本课程后，您将能够借助AI就预算分配、目标细分市场及策略调整做出审慎的决策，并对洞察的可靠性充满信心。",
+    "real_use_case": "优化季度分析与报告的生产流程",
+    "sequence_order": 5
+  },
+  "mk_c6_augmented_comm": {
+    "course_id": "mk_c6_augmented_comm",
+    "role_id": "mk",
+    "primary_domain": "augmented_comm",
+    "title": "高效撰写清晰的双语营销传播内容",
+    "tagline": "跨Office应用借助AI起草、翻译并润色能够引发共鸣的传播内容。",
+    "description": "市场营销与传播岗位需要同时处理内部备忘录、新闻稿、客户邮件等多类内容，且往往需要兼顾英法双语。本学习模块将介绍如何使用Copilot Surface Selector，简化跨平台内容的创建与复用流程，覆盖Outlook、Word、Teams和PowerPoint。您将练习多步骤工作流，例如：将Teams会议内容提炼为要点，在Word中扩展为内网文章，再借助Copilot将其翻译并排版为法语版本。我们还将模拟一个紧急对外传播场景，使用AI起草信息，并进行精细化修改，确保内容语气得当、表述准确、完整覆盖双语受众。",
+    "real_use_case": "企业传播（翻译与信息传递）",
+    "sequence_order": 6
+  },
+  "mk_c7_capstone": {
+    "course_id": "mk_c7_capstone",
+    "role_id": "mk",
+    "primary_domain": "responsible_ai",
+    "title": "全流程执行AI辅助营销工作",
+    "tagline": "在AI支持下规划并执行完整营销活动，全面整合六大AI技能领域。",
+    "description": "本综合实践课程将您所学的全部内容融入一个贴近实际的项目中。您将以营销负责人的身份主导ExportBoost计划——一项旨在优化出口商客户旅程的专项举措。在整个课程中，您将在每个阶段借助AI提供支持：安全分析客户数据（负责任AI）、起草内容与战略规划（战略性提示）、生成并核验客户互动摘要（批判性评估）、研究并定制化触达重点潜在客户（关系洞察）、分析营销活动绩效（数据决策），以及为利益相关方创建双语传播内容（增强沟通）。完成本项目后，您将充分展示在整个营销活动中统筹运用AI工具的能力，同时恪守Apex Trade Finance的相关标准。",
+    "real_use_case": "出口商旅程优化智能体；潜在客户画像自动化；客户互动摘要；优化季度分析与报告的生产流程；企业传播（翻译与信息传递）",
+    "sequence_order": 7
+  },
+  "pm_c1_responsible_ai": {
+    "course_id": "pm_c1_responsible_ai",
+    "role_id": "pm",
+    "primary_domain": "responsible_ai",
+    "sequence_order": 1,
+    "title": "在组织内安全使用AI会议纪要",
+    "tagline": "在高效生成会议摘要的同时，严守组织数据与政策边界。",
+    "description": "项目经理在日常工作中频繁使用会议记录与纪要来生成备忘、行动事项及跟进内容。本学习模块将指导项目经理如何将组织的生成式AI政策应用于会议记录、行动日志、决策内容及敏感项目资料，从而在经批准的工作流中安全使用AI，并避免将敏感内容复制至未经批准的工具。",
+    "real_use_case": "Teams Premium——基于会议记录的AI纪要功能（评估其是否符合组织AI使用政策）"
+  },
+  "pm_c2_strategic_prompting": {
+    "course_id": "pm_c2_strategic_prompting",
+    "role_id": "pm",
+    "primary_domain": "strategic_prompting",
+    "sequence_order": 2,
+    "title": "通过提示词引导Copilot生成可用的项目计划",
+    "tagline": "将模糊的项目需求转化为清晰、结构化的输出成果，有效节省时间。",
+    "description": "项目经理需要制定高层级计划、操作指引、流程图及内部沟通文件。本学习模块将介绍CRAF框架，指导项目经理如何提示AI生成切实可用的项目规划成果，并从一开始便将正确的受众定位、约束条件、格式要求及治理背景纳入提示词设计中。",
+    "real_use_case": "面向项目群管理的Copilot应用"
+  },
+  "pm_c3_critical_eval": {
+    "course_id": "pm_c3_critical_eval",
+    "role_id": "pm",
+    "primary_domain": "critical_eval",
+    "sequence_order": 3,
+    "title": "像资深主编一样审核AI简报",
+    "tagline": "在领导层依据摘要决策之前，识别潜藏的错误。",
+    "description": "项目经理通常需要从大量项目信息中提炼高管或指导委员会所需的摘要。本学习模块教授一套严谨的审核方法，帮助学员在AI生成的简报呈送高管受众之前，逐一核对源数据、已批准计划、状态逻辑及实际决策，确保内容准确可靠。%20-%20Job%20Aid.pdf?web=1)",
+    "real_use_case": "高管简报摘要"
+  },
+  "pm_c4_relationship_intel": {
+    "course_id": "pm_c4_relationship_intel",
+    "role_id": "pm",
+    "primary_domain": "relationship_intel",
+    "sequence_order": 4,
+    "title": "借助AI摘要快速凝聚干系人共识",
+    "tagline": "将同一套事实转化为面向不同干系人群体的精准信息。",
+    "description": "项目经理的工作有赖于项目发起人、交付团队、主题专家及支持职能部门之间的高度协同。本学习模块教授学员如何运用AI将零散的进展更新整合为面向特定干系人的简报包，清晰呈现依赖关系，并在不损失细节与信任的前提下准备定向沟通材料。本课程基于项目经理工作流程实证综合编写，以填补课程库中项目经理关系洞察专项内容的空白。",
+    "real_use_case": "客户互动纪要"
+  },
+  "pm_c5_data_decision": {
+    "course_id": "pm_c5_data_decision",
+    "role_id": "pm",
+    "primary_domain": "data_decision",
+    "sequence_order": 5,
+    "title": "借助AI提前发现项目组合预警信号",
+    "tagline": "在风险演变为意外之前，将项目组合数据转化为行动。",
+    "description": "项目经理和项目群负责人依赖项目管理系统的报告与状态数据，识别风险、资源压力、进度偏差及上报需求。本学习模块教授如何运用AI解读报告数据中的规律，区分有效信号与冗余干扰，并将分析结果转化为有据可查的行动建议。%20-%20Job%20Aid.pdf?web=1)",
+    "real_use_case": "项目组合自动化报告智能体"
+  },
+  "pm_c6_augmented_comm": {
+    "course_id": "pm_c6_augmented_comm",
+    "role_id": "pm",
+    "primary_domain": "augmented_comm",
+    "sequence_order": 6,
+    "title": "借助AI会议纪要将讨论转化为行动",
+    "tagline": "构建从实时讨论到后续跟进的完整Microsoft 365工作流。",
+    "description": "项目经理需要花费大量时间将会议内容转化为摘要、行动项、邮件及记录文档。本学习模块教授如何选择合适的Microsoft 365 Copilot功能入口，并将Teams、Word、PowerPoint、Outlook及项目记录的输出结果串联起来，使沟通工作提速增效、输出更整洁、治理更便捷。%20-%20Job%20Aid.pdf?web=1)",
+    "real_use_case": "MS Teams中面向项目经理及Scrum Master（PM/SM）的会议「纪要」功能"
+  },
+  "pm_c7_capstone": {
+    "course_id": "pm_c7_capstone",
+    "role_id": "pm",
+    "primary_domain": "capstone",
+    "sequence_order": 7,
+    "title": "安全地用Copilot完成一周项目群管理工作",
+    "tagline": "在一个真实的项目经理工作流中完成计划、纪要、报告与升级上报全流程。",
+    "description": "本综合评估将六大领域整合于一个完整的项目经理工作流中：运用AI准备计划输出成果、整理会议纪要、维护符合治理要求的记录、解读项目组合预警信号，并在遵守政策、理性使用AI的前提下，向各方清晰、有效地传达信息。课程内容真实还原了项目经理在计划、执行、报告与干系人协同各阶段的工作节奏。%20-%20Job%20Aid.pdf?web=1)",
+    "real_use_case": "项目群管理Copilot应用；MS Teams中面向项目经理及Scrum Master（PM/SM）的会议「纪要」功能；记录治理——会议纪要与行动项汇总（含参会人员标注）；项目组合自动化报告智能体"
+  }
+}
