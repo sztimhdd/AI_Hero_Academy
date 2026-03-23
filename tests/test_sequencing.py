@@ -25,13 +25,14 @@ def _make_scores(**overrides) -> dict:
 # ── Course map constants ──────────────────────────────────────────────────────
 
 
-def test_domain_to_course_has_rm_and_uw():
-    assert "rm" in DOMAIN_TO_COURSE
-    assert "uw" in DOMAIN_TO_COURSE
+def test_domain_to_course_has_all_roles():
+    for role in ("rm", "uw", "an", "mk"):
+        assert role in DOMAIN_TO_COURSE, f"Missing role {role!r} in DOMAIN_TO_COURSE"
+        assert role in CAPSTONE_COURSE_ID, f"Missing role {role!r} in CAPSTONE_COURSE_ID"
 
 
 def test_domain_to_course_has_6_domains_per_role():
-    for role in ("rm", "uw"):
+    for role in ("rm", "uw", "an", "mk"):
         assert len(DOMAIN_TO_COURSE[role]) == 6, f"Expected 6 domains for {role!r}"
 
 

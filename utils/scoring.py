@@ -133,38 +133,6 @@ def compute_current_domain_scores(
     }
 
 
-def calculate_domain_scores(
-    diagnostic_item_scores: dict,      # {item_id: score}
-    diagnostic_item_domains: dict,     # {item_id: domain_id}
-    evaluation_scores_by_module: list[dict],  # [{domain_id: score, ...}, ...]
-) -> dict:
-    """
-    Calculate current domain scores as the average of:
-    - All diagnostic item scores for that domain
-    - All evaluation module scores for that domain (one per completed module)
-
-    Returns {domain_id: float}
-    """
-    # Collect all scores per domain
-    domain_buckets: dict[str, list[float]] = {d: [] for d in DOMAIN_IDS}
-
-    # Diagnostic item scores
-    for item_id, score in diagnostic_item_scores.items():
-        domain = diagnostic_item_domains.get(item_id)
-        if domain and domain in domain_buckets:
-            domain_buckets[domain].append(float(score))
-
-    # Evaluation module scores
-    for eval_scores in evaluation_scores_by_module:
-        for domain_id, score in eval_scores.items():
-            if domain_id in domain_buckets and score is not None:
-                domain_buckets[domain_id].append(float(score))
-
-    result = {}
-    for domain_id, scores in domain_buckets.items():
-        result[domain_id] = round(sum(scores) / len(scores), 2) if scores else 0.0
-    return result
-
 
 def calculate_overall_score(domain_scores: dict) -> float:
     """Average of the 6 domain scores."""

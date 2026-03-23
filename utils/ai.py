@@ -1,11 +1,12 @@
+import json
 import os
 import re
 import time
 import uuid
-import json
 
 from google import genai
 from google.genai import types
+from utils.db import log_ai_call
 
 
 def call_llm(
@@ -19,7 +20,7 @@ def call_llm(
 
     messages: list of {"role": "system"|"user"|"assistant", "content": "..."}
     Returns the assistant reply string.
-    Always writes one entry to logs/ai_call_log.jsonl.
+    Always writes one entry to Firestore ai_call_log.
     """
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
@@ -64,26 +65,32 @@ def call_llm(
 
 def _log_call(user_email, call_type, endpoint, latency_ms, success, error=None,
               prompt_tokens=None, completion_tokens=None):
-    """Write one entry to logs/ai_call_log.jsonl. Silently ignore log failures."""
-    try:
-        log_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "logs")
-        os.makedirs(log_dir, exist_ok=True)
-        log_path = os.path.join(log_dir, "ai_call_log.jsonl")
-        entry = {
-            "log_id": str(uuid.uuid4()),
-            "user_email": user_email or "",
-            "call_type": call_type,
-            "model_endpoint": endpoint,
-            "prompt_tokens": prompt_tokens,
-            "completion_tokens": completion_tokens,
-            "latency_ms": latency_ms,
-            "success": success,
-            "error_message": str(error)[:500] if error else None,
-        }
-        with open(log_path, "a", encoding="utf-8") as f:
-            f.write(json.dumps(entry) + "\n")
-    except Exception:
-        pass  # Never let logging failures break the main flow
+    """Write one entry to Firestore ai_call_log. Silently ignore log failures."""
+    log_ai_call({
+        "log_id": str(uuid.uuid4()),
+        "user_email": user_email or "",
+        "call_type": call_type,
+        "model_endpoint": endpoint,
+        "prompt_tokens": prompt_tokens,
+        "completion_tokens": completion_tokens,
+        "latency_ms": latency_ms,
+        "success": success,
+        "error_message": str(error)[:500] if error else None,
+    })
+
+
+_LANG_INSTRUCTION: dict[str, str] = {
+    "zh": (
+        "\n\nIMPORTANT: All your responses MUST be written entirely in Simplified Chinese "
+        "(简体中文). Do not use English except for: framework acronyms (SAFE, CRAF, VERIFY, "
+        "TRACE, STAKE), fictional company names (Meridian, Aurora, Crestwood, Apex, etc.), "
+        "and JSON field names. Maintain a professional financial services tone."
+    )
+}
+
+
+def _lang_instruction(lang: str) -> str:
+    return _LANG_INSTRUCTION.get(lang, "")
 
 
 def _extract_json(raw: str) -> dict:
@@ -210,6 +217,7 @@ def generate_gap_map(
     domain_descriptions: dict,
     user_email: str = None,
     source_type: str = "diagnostic",
+    lang: str = "en",
 ) -> list[dict]:
     """
     Generate gap map bullets from domain scores.
@@ -242,7 +250,7 @@ Return ONLY valid JSON:
     {{"priority": 1, "domain_id": "...", "bullet": "..."}},
     ...
   ]
-}}"""
+}}{_lang_instruction(lang)}"""
 
     raw = call_llm(
         [{"role": "user", "content": prompt}],
@@ -262,6 +270,7 @@ def coach_response(
     conversation: list[dict],
     user_input: str,
     user_email: str = None,
+    lang: str = "en",
 ) -> str:
     """
     Get an AI coach response for the current practice turn.
@@ -273,7 +282,7 @@ def coach_response(
     Returns the coach reply string.
     """
     messages = [
-        {"role": "system", "content": system_prompt},
+        {"role": "system", "content": system_prompt + _lang_instruction(lang)},
         *conversation,
         {"role": "user", "content": user_input},
     ]
@@ -281,7 +290,7 @@ def coach_response(
         messages,
         temperature=0.4,
         user_email=user_email,
-        call_type="coach_response",
+        call_type="module_coach_note",
     )
 
 
@@ -329,6 +338,7 @@ def generate_module_coach_note(
     domain_scores: dict,
     next_module_title: str | None,
     user_email: str = None,
+    lang: str = "en",
 ) -> str:
     """
     Generate a 1–2 sentence personalised coach note for the module results screen.
@@ -346,7 +356,7 @@ Write a 1–2 sentence coach note that:
 - If there is a next module, hints at what skill it will build
 - Uses second person ("You")
 
-Return only the coach note text — no JSON, no quotes."""
+Return only the coach note text — no JSON, no quotes.{_lang_instruction(lang)}"""
 
     return call_llm(
         [{"role": "user", "content": prompt}],

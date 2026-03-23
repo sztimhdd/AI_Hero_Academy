@@ -29,6 +29,14 @@ DOMAIN_TO_COURSE: dict[str, dict[str, str]] = {
         "data_decision":       "uw_c5_data_decision",
         "augmented_comm":      "uw_c6_augmented_comm",
     },
+    "an": {
+        "responsible_ai":      "an_c1_responsible_ai",
+        "strategic_prompting": "an_c2_strategic_prompting",
+        "critical_eval":       "an_c3_critical_eval",
+        "relationship_intel":  "an_c4_relationship_intel",
+        "data_decision":       "an_c5_data_decision",
+        "augmented_comm":      "an_c6_augmented_comm",
+    },
     "mk": {
         "responsible_ai":      "mk_c1_responsible_ai",
         "strategic_prompting": "mk_c2_strategic_prompting",
@@ -41,6 +49,7 @@ DOMAIN_TO_COURSE: dict[str, dict[str, str]] = {
 CAPSTONE_COURSE_ID: dict[str, str] = {
     "rm": "rm_c7_capstone",
     "uw": "uw_c7_capstone",
+    "an": "an_c7_capstone",
     "mk": "mk_c7_capstone",
 }
 
