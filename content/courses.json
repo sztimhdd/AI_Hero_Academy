@@ -278,5 +278,75 @@
     "description": "The capstone brings together everything you've learned in a realistic project. You'll step into the shoes of a marketing lead running the ExportBoost Program, an initiative to improve the customer journey for exporters. Over this course, you will use AI to assist at each stage: safely analyzing customer data (Responsible AI), drafting content and strategic plans (Strategic Prompting), generating and verifying summaries of client interactions (Critical Evaluation), researching and tailoring outreach to key prospects (Relationship Intelligence), analyzing campaign performance (Data-Driven Decisions), and creating bilingual communications for stakeholders (Augmented Communication). By completing this project, you'll demonstrate your ability to orchestrate AI tools throughout a marketing campaign while upholding Apex Trade Finance's standards.",
     "real_use_case": "Exporter Journey Optimization Agent; Automating Prospect Profiling; Customer Interaction Recap; Streamline production of Quarterly analysis and reporting; Corporate Communications (translation, messaging)",
     "sequence_order": 7
+  },
+  "pm_c1_responsible_ai": {
+    "course_id": "pm_c1_responsible_ai",
+    "role_id": "pm",
+    "primary_domain": "responsible_ai",
+    "sequence_order": 1,
+    "title": "Use AI Meeting Notes Safely at the organization",
+    "tagline": "Keep meeting recap speed high without crossing the organization data and policy lines.",
+    "description": "PMs regularly use transcripts and meeting notes to produce records, actions, and follow-ups. This course teaches them how to apply the organization’s Gen AI policy to transcripts, action logs, decisions, and sensitive project content so they can use AI safely inside approved workflows and avoid unsafe copying into the wrong tool.",
+    "real_use_case": "Teams Premium - AI Notes from Transcripts (inquiry into whether this meets our AI use policy)"
+  },
+  "pm_c2_strategic_prompting": {
+    "course_id": "pm_c2_strategic_prompting",
+    "role_id": "pm",
+    "primary_domain": "strategic_prompting",
+    "sequence_order": 2,
+    "title": "Prompt Copilot to Draft Usable Project Plans",
+    "tagline": "Turn vague project asks into clear, structured outputs that save time.",
+    "description": "PMs create high-level plans, job aids, process maps, and internal communications. This course teaches the CRAF Framework for prompting AI to generate usable project planning outputs with the right audience, constraints, format, and governance context built in from the start.",
+    "real_use_case": "Co pilot for Program Management"
+  },
+  "pm_c3_critical_eval": {
+    "course_id": "pm_c3_critical_eval",
+    "role_id": "pm",
+    "primary_domain": "critical_eval",
+    "sequence_order": 3,
+    "title": "Review AI Briefs Like an Executive Editor",
+    "tagline": "Catch the subtle errors before leaders act on the summary.",
+    "description": "PMs often prepare executive or steering summaries from large volumes of project information. This course teaches a disciplined review method for checking AI-generated briefings against source data, approved plans, status logic, and actual decisions before any executive audience sees them. %20-%20Job%20Aid.pdf?web=1)",
+    "real_use_case": "Executive Brief Summaries"
+  },
+  "pm_c4_relationship_intel": {
+    "course_id": "pm_c4_relationship_intel",
+    "role_id": "pm",
+    "primary_domain": "relationship_intel",
+    "sequence_order": 4,
+    "title": "Use AI Recaps to Align Stakeholders Fast",
+    "tagline": "Tailor one set of facts into the right message for each stakeholder group.",
+    "description": "PM work depends on alignment across sponsors, delivery teams, SMEs, and support functions. This course teaches learners how to use AI to turn fragmented updates into stakeholder-specific briefing packs, highlight dependencies, and prepare targeted communications without losing nuance or trust. This course is synthesized from PM workflow evidence because the library has no strong PM-specific relationship-intelligence anchor.",
+    "real_use_case": "Customer Interaction Recap"
+  },
+  "pm_c5_data_decision": {
+    "course_id": "pm_c5_data_decision",
+    "role_id": "pm",
+    "primary_domain": "data_decision",
+    "sequence_order": 5,
+    "title": "Use AI to Surface Portfolio Signals Early",
+    "tagline": "Turn portfolio data into action before risks become surprises.",
+    "description": "PMs and program leads rely on the project management system reporting and status data to spot risk, resource strain, schedule drift, and escalation needs. This course teaches how to use AI to interpret patterns in reporting data, distinguish signal from noise, and turn that into evidence-based recommendations. %20-%20Job%20Aid.pdf?web=1)",
+    "real_use_case": "Automated Portfolio Reporting Agent"
+  },
+  "pm_c6_augmented_comm": {
+    "course_id": "pm_c6_augmented_comm",
+    "role_id": "pm",
+    "primary_domain": "augmented_comm",
+    "sequence_order": 6,
+    "title": "Turn Meetings into Actions with AI Recaps",
+    "tagline": "Build a clean Microsoft 365 workflow from live discussion to follow-up.",
+    "description": "PMs spend large amounts of time moving from meetings to summaries, actions, emails, and records. This course teaches how to choose the right Microsoft 365 Copilot surface and chain outputs across Teams, Word, PowerPoint, Outlook, and project records so communication work is faster, cleaner, and easier to govern. %20-%20Job%20Aid.pdf?web=1)",
+    "real_use_case": "Meeting \"Recap\" feature in MS-Teams for Project Managers /Scrum Masters (PMs / SMs)"
+  },
+  "pm_c7_capstone": {
+    "course_id": "pm_c7_capstone",
+    "role_id": "pm",
+    "primary_domain": "capstone",
+    "sequence_order": 7,
+    "title": "Run a Program Week with Copilot Safely",
+    "tagline": "Plan, recap, report, and escalate across one realistic PM workflow.",
+    "description": "This capstone integrates all six domains in a single PM workflow: use AI to prepare planning outputs, recap meetings, maintain governance-ready records, interpret portfolio signals, and communicate clearly without breaking policy or trusting AI blindly. It reflects the real rhythm of PM work across planning, execution, reporting, and stakeholder alignment. %20-%20Job%20Aid.pdf?web=1)",
+    "real_use_case": "Co pilot for Program Management; Meeting \"Recap\" feature in MS-Teams for Project Managers /Scrum Masters (PMs / SMs); Record governance - Summarizing Meeting notes and actions (with attendees tagged); Automated Portfolio Reporting Agent"
   }
 }

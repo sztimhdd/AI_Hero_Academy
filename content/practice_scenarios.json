@@ -1706,5 +1706,159 @@
         }
       ]
     ]
+  },
+  "pm_c1_responsible_ai": {
+    "scenario_id": "pm_c1_responsible_ai",
+    "course_id": "pm_c1_responsible_ai",
+    "scenario_text": "You have just finished a weekly delivery meeting for the fictional internal initiative Atlas Delivery Renewal. The Teams meeting was recorded and transcribed. The discussion included open vendor issues, tentative budget pressures, and comments from the sponsor about options not yet approved. You want to use AI to generate the meeting notes quickly, but you are under pressure to send a recap today.",
+    "task_1_text": "Identify which parts of the meeting content are safe to use directly in an approved AI workflow and which parts require abstraction or extra caution.",
+    "task_2_text": "Write a safe prompt for an approved AI tool to draft internal meeting notes without exposing unnecessary non-public detail.",
+    "task_3_text": "Review a draft AI recap and mark any sentence that should not be forwarded as-is because it contains unsupported, sensitive, or incomplete information.",
+    "task_4_text": "Produce a final short note to the team that keeps the useful actions and decisions while removing or rewriting risky content.",
+    "coach_system_prompt": "You are an AI skills coach for Project and Program Managers. The learner is practicing safe AI use with meeting transcripts and project records. Do not write the final answer for them. Ask guiding questions that help them classify data, choose approved use patterns, and keep human review in place. Flag any attempt to paste real non-public data, real employee information, actual customer information, credentials, contract clauses, or sensitive financial details. If the learner ignores policy risk, redirect them to the public/non-public test and manual review requirement.",
+    "task_modes": [
+      "open",
+      "open",
+      "open",
+      "open"
+    ],
+    "task_mcq_options": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "pm_c2_strategic_prompting": {
+    "scenario_id": "pm_c2_strategic_prompting",
+    "course_id": "pm_c2_strategic_prompting",
+    "scenario_text": "You are preparing the planning package for NorthBridge CRM Release 2, a fictional internal initiative moving from planning into delivery. You have a rough scope statement, three expected milestones, a few dependency notes, and a sponsor request for a one-page high-level plan by tomorrow morning. You want AI to help draft the first version, but your first instinct is to type “build me a project plan” and hope for the best.",
+    "task_1_text": "Write a CRAF prompt that asks AI to produce a one-page high-level project plan with milestones, dependencies, assumptions, and decision points.",
+    "task_2_text": "Revise the prompt so the output is written for a sponsor, not a delivery team, and excludes unnecessary implementation detail.",
+    "task_3_text": "Add constraints so the AI output matches the organization-style planning needs: concise, structured, and clear about unresolved dependencies and required approvals.",
+    "task_4_text": "Your output still feels generic. Rewrite the weakest part of your prompt so the plan becomes specific enough to use with minor edits.",
+    "coach_system_prompt": "You are an AI skills coach for Project and Program Managers practicing the CRAF Framework. Do not draft the prompt for them. Help them strengthen Context, Role, Action, and Format step by step. If they forget audience, constraints, or decision needs, ask what the sponsor actually needs to know. Flag if they try to include real sensitive data or confidential vendor content.",
+    "task_modes": [
+      "open",
+      "open",
+      "open",
+      "open"
+    ],
+    "task_mcq_options": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "pm_c3_critical_eval": {
+    "scenario_id": "pm_c3_critical_eval",
+    "course_id": "pm_c3_critical_eval",
+    "scenario_text": "You are building an executive update for Summit Portfolio Review, a fictional quarterly review of several internal initiatives. An AI tool has already generated a concise summary from portfolio notes, meeting recaps, and status updates. It reads well, but you notice it may be too confident in a few places and might have blended separate issues into one story. Leaders will use this summary to decide where to focus attention.",
+    "task_1_text": "Identify the three biggest risks of forwarding the AI summary without review.",
+    "task_2_text": "Apply a verification method to check the summary against source categories: approved baseline, current status, decisions made, and unresolved risks.",
+    "task_3_text": "Rewrite two sentences that overstate certainty, invent causality, or blur together unsupported points.",
+    "task_4_text": "Produce a final executive summary that is shorter, more defensible, and clearly anchored in what is actually known.",
+    "coach_system_prompt": "You are an AI skills coach for Project and Program Managers practicing critical evaluation. Do not rewrite the learner’s full summary. Guide them to test claims against source evidence, separate verified facts from inference, and remove unsupported wording. Watch for blind trust in fluent AI language.",
+    "task_modes": [
+      "open",
+      "open",
+      "open",
+      "open"
+    ],
+    "task_mcq_options": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "pm_c4_relationship_intel": {
+    "scenario_id": "pm_c4_relationship_intel",
+    "course_id": "pm_c4_relationship_intel",
+    "scenario_text": "You are preparing a stakeholder briefing pack for Horizon Service Transition, a fictional internal service change involving delivery, operations, change, and finance teams. Everyone needs a different version of the story: sponsors need decisions, operations needs readiness impacts, and the delivery team needs dependency clarity. You are tempted to send the same AI-generated recap to everyone because time is tight.",
+    "task_1_text": "Map the main stakeholder groups and state what each one needs most from the briefing.",
+    "task_2_text": "Write a prompt that asks AI to produce separate briefing sections for sponsor, operations, and delivery audiences from the same source notes.",
+    "task_3_text": "Adjust the output so it highlights dependency risks and decision needs without blaming any group or creating unnecessary tension.",
+    "task_4_text": "Create a short sponsor note and a short delivery-team note that use the same facts but different framing and detail levels.",
+    "coach_system_prompt": "You are an AI skills coach for Project and Program Managers practicing stakeholder-focused communication. Do not produce the final briefs. Help the learner distinguish audience needs, decision authority, and dependency context. Watch for over-sharing, one-size-fits-all messaging, or content that could damage trust between teams.",
+    "task_modes": [
+      "open",
+      "open",
+      "open",
+      "open"
+    ],
+    "task_mcq_options": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "pm_c5_data_decision": {
+    "scenario_id": "pm_c5_data_decision",
+    "course_id": "pm_c5_data_decision",
+    "scenario_text": "You are reviewing a fictional dashboard for Beacon Capacity Dashboard that shows project effort, overall status, and a few red signals across the portfolio. An AI assistant has summarized the dashboard and suggested which initiatives need escalation. You know the numbers matter, but you also know that PM judgment matters because some red indicators are expected and some are noise.",
+    "task_1_text": "Identify which dashboard signals are descriptive, which are predictive, and which need more context before action.",
+    "task_2_text": "Write a prompt asking AI to compare projects based on schedule drift, resource strain, and status trend while avoiding unsupported ranking language.",
+    "task_3_text": "Review an AI-generated priority list and explain where it may be misleading because it lacks baseline or business context.",
+    "task_4_text": "Write a short recommendation for leadership that names one project to watch, one to escalate, and one to leave alone—for reasons grounded in the data and context.",
+    "coach_system_prompt": "You are an AI skills coach for Project and Program Managers practicing AI-assisted decision support. Do not choose the projects for them. Help them separate signal from noise, validate AI interpretations against known context, and avoid overconfident conclusions from incomplete data.",
+    "task_modes": [
+      "open",
+      "open",
+      "open",
+      "open"
+    ],
+    "task_mcq_options": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "pm_c6_augmented_comm": {
+    "scenario_id": "pm_c6_augmented_comm",
+    "course_id": "pm_c6_augmented_comm",
+    "scenario_text": "You have just run the fictional Maple Program SteerCo meeting. The discussion produced decisions, follow-ups, open issues, and one unresolved sponsor request. Your job is to turn that into a clean communication chain: meeting recap, action list, and follow-up email. You could copy and paste manually across tools, but that will take too long and increases the chance of inconsistency.",
+    "task_1_text": "Choose the best Microsoft 365 Copilot surface for each step: recap, formal notes, slide-ready summary, and follow-up email.",
+    "task_2_text": "Draft the workflow order that turns one meeting into multiple outputs with minimal duplication.",
+    "task_3_text": "Improve an AI-generated follow-up email so it is clear, accurate, and aligned with the recap and action log.",
+    "task_4_text": "Produce a final mini-workflow that shows how you would move from Teams recap to Word notes to Outlook follow-up while keeping governance and traceability intact.",
+    "coach_system_prompt": "You are an AI skills coach for Project and Program Managers practicing multi-step Microsoft 365 communication workflows. Do not write the final workflow or email. Ask the learner to justify tool choice, sequence, and review steps. Watch for inconsistent outputs, loss of decisions between steps, or attempts to skip validation.",
+    "task_modes": [
+      "open",
+      "open",
+      "open",
+      "open"
+    ],
+    "task_mcq_options": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "pm_c7_capstone": {
+    "scenario_id": "pm_c7_capstone",
+    "course_id": "pm_c7_capstone",
+    "scenario_text": "It is a high-pressure week for Polaris Transformation Wave, a fictional internal program. On Monday you need a refreshed planning summary. On Wednesday you need accurate meeting recaps and action tracking. On Thursday you need a sponsor briefing that reflects new risks. On Friday you must review portfolio signals and prepare the monthly status update. AI could help at every step—but only if you use it safely, prompt it well, verify it carefully, tailor it to stakeholders, and choose the right tool each time.",
+    "task_1_text": "Outline the end-to-end AI workflow you would use across the week, naming the domain discipline needed at each step.",
+    "task_2_text": "Write one safe, structured prompt for the planning step and one for the sponsor briefing step.",
+    "task_3_text": "Review a flawed AI output set containing an inaccurate recap, an overstated executive summary, and a weak escalation recommendation; mark what must be fixed and why.",
+    "task_4_text": "Produce a final PM work package consisting of a one-paragraph status update, three action items, one sponsor ask, and one note on how you kept the workflow policy-safe.",
+    "coach_system_prompt": "You are an AI skills coach for Project and Program Managers in a capstone exercise. Do not solve the case for them. Help them sequence the workflow, apply the right framework at the right moment, and reflect on tradeoffs. Watch for policy breaches, shallow prompts, unverified claims, weak stakeholder targeting, and poor tool choices.",
+    "task_modes": [
+      "open",
+      "open",
+      "open",
+      "open"
+    ],
+    "task_mcq_options": [
+      null,
+      null,
+      null,
+      null
+    ]
   }
 }

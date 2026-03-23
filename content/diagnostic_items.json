@@ -1149,5 +1149,599 @@
       ]
     },
     "role_id": "mk"
+  },
+  {
+    "item_id": "pm_responsible_ai_1",
+    "domain_id": "responsible_ai",
+    "item_type": "mcq",
+    "display_order": 1,
+    "role_id": "pm",
+    "question_text": "A PM wants to use AI to draft meeting minutes from an internal project transcript that includes budget concerns and unapproved vendor options. What is the safest first action?",
+    "scenario_text": null,
+    "correct_option": "B",
+    "options": [
+      {
+        "label": "A",
+        "text": "Paste the full transcript into any AI tool because the output is only for internal use"
+      },
+      {
+        "label": "B",
+        "text": "Apply the public/non-public test, stay in an approved tool, and abstract details the AI does not need"
+      },
+      {
+        "label": "C",
+        "text": "Remove only the people names and keep all other exact details"
+      },
+      {
+        "label": "D",
+        "text": "Ask a colleague to use their personal device instead"
+      }
+    ],
+    "scoring_rubric": null
+  },
+  {
+    "item_id": "pm_responsible_ai_2",
+    "domain_id": "responsible_ai",
+    "item_type": "prompt_sandbox",
+    "display_order": 2,
+    "role_id": "pm",
+    "question_text": "Write a safe prompt for an approved AI tool to draft internal meeting notes without exposing unnecessary non-public detail.",
+    "scenario_text": "You have a transcript from an internal delivery meeting with open risks, tentative options, and draft sponsor comments.",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Identifies that the task must stay within an approved AI workflow",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Abstracts or excludes sensitive details not needed for the output",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Requests a clearly bounded internal-use deliverable",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Includes a cue for manual review or uncertainty handling",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_responsible_ai_3",
+    "domain_id": "responsible_ai",
+    "item_type": "micro_task",
+    "display_order": 3,
+    "role_id": "pm",
+    "question_text": "Rewrite the instruction so it is policy-safer while still useful for drafting internal notes.",
+    "scenario_text": "A PM writes: “Summarize this full transcript and send polished minutes to the whole steering group. Include every budget detail and vendor option.”",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Removes or abstracts sensitive project details",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Keeps the task inside an approved internal-use pattern",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Narrows the deliverable to what is needed",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Preserves a human review step before sharing",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_strategic_prompting_1",
+    "domain_id": "strategic_prompting",
+    "item_type": "mcq",
+    "display_order": 4,
+    "role_id": "pm",
+    "question_text": "Which missing element most often causes AI-generated project plans to feel generic?",
+    "scenario_text": null,
+    "correct_option": "B",
+    "options": [
+      {
+        "label": "A",
+        "text": "Font preference"
+      },
+      {
+        "label": "B",
+        "text": "Context about the initiative stage, audience, and deliverable"
+      },
+      {
+        "label": "C",
+        "text": "Use of exclamation points"
+      },
+      {
+        "label": "D",
+        "text": "Asking for British spelling"
+      }
+    ],
+    "scoring_rubric": null
+  },
+  {
+    "item_id": "pm_strategic_prompting_2",
+    "domain_id": "strategic_prompting",
+    "item_type": "prompt_sandbox",
+    "display_order": 5,
+    "role_id": "pm",
+    "question_text": "Write a CRAF-style prompt that asks AI to produce a sponsor-ready high-level plan with milestones, dependencies, and decisions needed.",
+    "scenario_text": "You need a one-page high-level plan for a fictional internal initiative starting delivery next month.",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Includes specific context about the initiative and audience",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Includes a role instruction",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Defines a concrete action and deliverable",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Specifies a clear structure or output format",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_strategic_prompting_3",
+    "domain_id": "strategic_prompting",
+    "item_type": "micro_task",
+    "display_order": 6,
+    "role_id": "pm",
+    "question_text": "In one or two sentences, explain why the output is weak and name the two CRAF elements most clearly missing.",
+    "scenario_text": "Prompt used: “Create a project plan.” Output: a long, generic essay on project management best practices.",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Correctly identifies weak or missing context",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Correctly identifies weak or missing action/format",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Explains why the generic output happened",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Uses PM-specific language rather than abstract prompt theory",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_critical_eval_1",
+    "domain_id": "critical_eval",
+    "item_type": "mcq",
+    "display_order": 7,
+    "role_id": "pm",
+    "question_text": "Why is fluent AI language especially risky in PM executive summaries?",
+    "scenario_text": null,
+    "correct_option": "B",
+    "options": [
+      {
+        "label": "A",
+        "text": "It makes the summary too short"
+      },
+      {
+        "label": "B",
+        "text": "It can hide unsupported assumptions behind polished wording"
+      },
+      {
+        "label": "C",
+        "text": "It prevents copy-paste"
+      },
+      {
+        "label": "D",
+        "text": "It always uses too many bullets"
+      }
+    ],
+    "scoring_rubric": null
+  },
+  {
+    "item_id": "pm_critical_eval_2",
+    "domain_id": "critical_eval",
+    "item_type": "prompt_sandbox",
+    "display_order": 8,
+    "role_id": "pm",
+    "question_text": "Write a prompt asking AI to regenerate the summary with stricter evidence handling and clear uncertainty language.",
+    "scenario_text": "An AI-generated status summary says a vendor issue is resolved, but your notes only say a mitigation plan was discussed.",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Requests evidence-bound wording",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Instructs the AI to flag uncertainty rather than invent closure",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Keeps the scope limited to source-backed content",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Specifies an output style suitable for PM reporting",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_critical_eval_3",
+    "domain_id": "critical_eval",
+    "item_type": "micro_task",
+    "display_order": 9,
+    "role_id": "pm",
+    "question_text": "Correct the AI sentence so it matches the source.",
+    "scenario_text": "AI summary sentence: “Leadership approved the revised scope and the delay is now contained.” Source notes show: “leadership requested a revised scope option for next meeting; delay impact under review.”",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Removes unsupported approval claim",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Removes unsupported certainty about delay containment",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Preserves what the source actually says",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Uses concise PM reporting language",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_relationship_intel_1",
+    "domain_id": "relationship_intel",
+    "item_type": "mcq",
+    "display_order": 10,
+    "role_id": "pm",
+    "question_text": "A sponsor, an operations lead, and a delivery lead all need an update from the same meeting. What is the best PM approach?",
+    "scenario_text": null,
+    "correct_option": "B",
+    "options": [
+      {
+        "label": "A",
+        "text": "Send the identical recap to all three to save time"
+      },
+      {
+        "label": "B",
+        "text": "Use the same facts but tailor emphasis and asks to each audience"
+      },
+      {
+        "label": "C",
+        "text": "Give the sponsor the longest version and everyone else nothing"
+      },
+      {
+        "label": "D",
+        "text": "Ask AI to choose the audience for you"
+      }
+    ],
+    "scoring_rubric": null
+  },
+  {
+    "item_id": "pm_relationship_intel_2",
+    "domain_id": "relationship_intel",
+    "item_type": "prompt_sandbox",
+    "display_order": 11,
+    "role_id": "pm",
+    "question_text": "Write a prompt that asks for two audience-specific outputs with different focus areas but consistent facts.",
+    "scenario_text": "You need AI to create a sponsor note and a delivery-team note from the same internal project recap.",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Names at least two distinct audiences",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Specifies what each audience cares about",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Preserves one factual base across both outputs",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Avoids blame or over-sharing",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_relationship_intel_3",
+    "domain_id": "relationship_intel",
+    "item_type": "micro_task",
+    "display_order": 12,
+    "role_id": "pm",
+    "question_text": "Rewrite this into a sponsor-facing line and a delivery-facing line.",
+    "scenario_text": "Draft line for all audiences: “Everything is progressing well, though some teams need to move faster.”",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Tailors the sponsor version to decision or risk visibility",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Tailors the delivery version to actionable coordination",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Avoids vague blame language",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Keeps both lines aligned to the same core facts",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_data_decision_1",
+    "domain_id": "data_decision",
+    "item_type": "mcq",
+    "display_order": 13,
+    "role_id": "pm",
+    "question_text": "What is the PM’s main job when using AI with portfolio status data?",
+    "scenario_text": null,
+    "correct_option": "C",
+    "options": [
+      {
+        "label": "A",
+        "text": "Accept the ranking with the highest confidence score"
+      },
+      {
+        "label": "B",
+        "text": "Turn every red signal into an escalation"
+      },
+      {
+        "label": "C",
+        "text": "Interpret the signals against baseline and business context before recommending action"
+      },
+      {
+        "label": "D",
+        "text": "Remove all data that looks negative"
+      }
+    ],
+    "scoring_rubric": null
+  },
+  {
+    "item_id": "pm_data_decision_2",
+    "domain_id": "data_decision",
+    "item_type": "prompt_sandbox",
+    "display_order": 14,
+    "role_id": "pm",
+    "question_text": "Write a prompt asking AI to identify which initiatives likely need watch, correction, or escalation—without inventing unsupported ranking logic.",
+    "scenario_text": "You have project data on overall status, schedule variance, and resource strain across five initiatives.",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Specifies the decision categories or output structure",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Tells AI to use evidence from provided metrics only",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Requests uncertainty or caution where context is missing",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Avoids overclaiming or unsupported prioritization language",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_data_decision_3",
+    "domain_id": "data_decision",
+    "item_type": "micro_task",
+    "display_order": 15,
+    "role_id": "pm",
+    "question_text": "Explain why the AI conclusion is weak and what additional context is needed.",
+    "scenario_text": "AI output: “Project A is clearly the highest priority problem because it is red.” Context you know: Project A was intentionally marked red to surface support needs early, while Project B has hidden resource strain but remains green.",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Identifies that colour alone is not enough",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Recognizes the need for baseline and management context",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Distinguishes signal from noise",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Suggests a better evidence check before action",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_augmented_comm_1",
+    "domain_id": "augmented_comm",
+    "item_type": "mcq",
+    "display_order": 16,
+    "role_id": "pm",
+    "question_text": "Which tool sequence is most sensible for turning one PM meeting into final follow-up communication?",
+    "scenario_text": null,
+    "correct_option": "B",
+    "options": [
+      {
+        "label": "A",
+        "text": "Outlook first, then Teams, then ignore formal notes"
+      },
+      {
+        "label": "B",
+        "text": "Teams recap, then formal notes in Word, then follow-up in Outlook"
+      },
+      {
+        "label": "C",
+        "text": "PowerPoint first, then raw chat copy"
+      },
+      {
+        "label": "D",
+        "text": "Excel only"
+      }
+    ],
+    "scoring_rubric": null
+  },
+  {
+    "item_id": "pm_augmented_comm_2",
+    "domain_id": "augmented_comm",
+    "item_type": "prompt_sandbox",
+    "display_order": 17,
+    "role_id": "pm",
+    "question_text": "Write a prompt for Teams Copilot to generate the recap you would use as the first step in a broader communication workflow.",
+    "scenario_text": "You have just completed a steering meeting and need actions, formal notes, and a short follow-up email.",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Requests decisions, actions, and unresolved points clearly",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Keeps the recap concise and structured",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Prepares the output for downstream reuse",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Signals the need for review before reuse",
+          "max": 1
+        }
+      ]
+    }
+  },
+  {
+    "item_id": "pm_augmented_comm_3",
+    "domain_id": "augmented_comm",
+    "item_type": "micro_task",
+    "display_order": 18,
+    "role_id": "pm",
+    "question_text": "Correct the communication chain so the email does not overstate what the recap actually confirmed.",
+    "scenario_text": "Teams recap says “Action owner to be confirmed.” Your follow-up email draft says “Jordan will complete the task by Friday.”",
+    "correct_option": null,
+    "options": null,
+    "scoring_rubric": {
+      "criteria": [
+        {
+          "name": "Criterion 1",
+          "description": "Detects the inconsistency across tools",
+          "max": 1
+        },
+        {
+          "name": "Criterion 2",
+          "description": "Revises the email to match verified content",
+          "max": 1
+        },
+        {
+          "name": "Criterion 3",
+          "description": "Keeps the message clear and useful",
+          "max": 1
+        },
+        {
+          "name": "Criterion 4",
+          "description": "Preserves governance discipline across outputs",
+          "max": 1
+        }
+      ]
+    }
   }
 ]

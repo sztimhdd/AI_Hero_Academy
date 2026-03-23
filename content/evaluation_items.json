@@ -2462,5 +2462,747 @@
         "key4": "The response maps AI assistance to the reporting stage — describing how AI would be used to synthesize campaign results into a draft executive board report, and specifies a final human review gate to verify accuracy, tone, and completeness before the report is presented — demonstrating a fully connected End-to-End AI Workflow with human oversight at every stage."
       }
     }
+  ],
+  "pm_c1_responsible_ai": [
+    {
+      "item_id": "ev_pm_c1_responsible_ai_q1",
+      "course_id": "pm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "Which statement best reflects organizational policy for Gen AI output used at work?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "the organization’s policy requires manual human review before using or transmitting AI-generated content for work.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "It can be used without review if the audience is internal"
+        },
+        {
+          "label": "B",
+          "text": "It must always be manually reviewed before use"
+        },
+        {
+          "label": "C",
+          "text": "It may be trusted if the vendor is well known"
+        },
+        {
+          "label": "D",
+          "text": "It is safe if you remove people names only"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c1_responsible_ai_q2",
+      "course_id": "pm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "A PM wants AI help on meeting notes that include budget pressure and draft options. What is the safest pattern?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "SAFE starts with data classification and abstraction, then keeps the task in an approved tool with manual review.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Paste everything into a public AI tool and clean it later"
+        },
+        {
+          "label": "B",
+          "text": "Use an approved tool, abstract unnecessary details, then review the output"
+        },
+        {
+          "label": "C",
+          "text": "Ask another employee to do it off network"
+        },
+        {
+          "label": "D",
+          "text": "Skip all abstraction because it is “just recap work”"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c1_responsible_ai_q3",
+      "course_id": "pm_c1_responsible_ai",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "Which of the following is the strongest red flag in a PM AI workflow?",
+      "scenario_text": null,
+      "correct_option": "C",
+      "explanation": "The core policy risk is exposing non-public the organization information in unapproved AI tools or workflows.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Asking for bullets instead of paragraphs"
+        },
+        {
+          "label": "B",
+          "text": "Using an approved internal tool to draft notes"
+        },
+        {
+          "label": "C",
+          "text": "Inputting non-public the organization information into the wrong AI surface"
+        },
+        {
+          "label": "D",
+          "text": "Requesting a short summary"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c1_responsible_ai_q4",
+      "course_id": "pm_c1_responsible_ai",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "You have an internal transcript from a delivery meeting that includes tentative budget pressure, vendor issues, and unapproved next-step options. Write a short response showing: (1) what you would abstract, (2) what approved-use assumption you are making, (3) the safe prompt you would use for drafting notes, and (4) the review step you would take before sharing.",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Clearly distinguishes sensitive/non-public project content from lower-risk content",
+        "key2": "Uses an approved internal-use pattern and does not rely on an unsafe tool assumption",
+        "key3": "Writes a bounded prompt that abstracts or excludes unnecessary sensitive details",
+        "key4": "Includes a manual review step that checks accuracy and appropriateness before sharing"
+      },
+      "options": null
+    }
+  ],
+  "pm_c2_strategic_prompting": [
+    {
+      "item_id": "ev_pm_c2_strategic_prompting_q1",
+      "course_id": "pm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "In the CRAF Framework, which element most directly controls the structure of the output?",
+      "scenario_text": null,
+      "correct_option": "D",
+      "explanation": "Format tells the AI how the response should be organized, sized, and presented.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Context"
+        },
+        {
+          "label": "B",
+          "text": "Role"
+        },
+        {
+          "label": "C",
+          "text": "Action"
+        },
+        {
+          "label": "D",
+          "text": "Format"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c2_strategic_prompting_q2",
+      "course_id": "pm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "A PM prompt produces a generic essay instead of a sponsor-ready plan. Which change is most likely to fix it?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "Sponsor audience, concrete artifact, and structure are the core controls that make planning prompts usable.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Add emoji"
+        },
+        {
+          "label": "B",
+          "text": "Specify the audience, deliverable, and output structure"
+        },
+        {
+          "label": "C",
+          "text": "Remove all context"
+        },
+        {
+          "label": "D",
+          "text": "Ask for “better quality”"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c2_strategic_prompting_q3",
+      "course_id": "pm_c2_strategic_prompting",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "Why is a role instruction useful in PM prompting?",
+      "scenario_text": null,
+      "correct_option": "C",
+      "explanation": "Role sets the lens and implied expertise of the output but does not replace context or validation.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "It guarantees no hallucinations"
+        },
+        {
+          "label": "B",
+          "text": "It tells the AI to be shorter"
+        },
+        {
+          "label": "C",
+          "text": "It helps calibrate perspective, vocabulary, and relevance"
+        },
+        {
+          "label": "D",
+          "text": "It replaces the need for context"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c2_strategic_prompting_q4",
+      "course_id": "pm_c2_strategic_prompting",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "You need a one-page high-level plan for a fictional internal initiative entering delivery next month. The sponsor wants milestones, dependencies, assumptions, and decisions needed. Write a full CRAF prompt that would generate a usable first draft.",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Context clearly states initiative stage, audience, and purpose",
+        "key2": "Role instruction is relevant to PM work",
+        "key3": "Action specifies the exact artifact and content needed",
+        "key4": "Format defines a concise structure suitable for sponsor review"
+      },
+      "options": null
+    }
+  ],
+  "pm_c3_critical_eval": [
+    {
+      "item_id": "ev_pm_c3_critical_eval_q1",
+      "course_id": "pm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "Which flaw is most dangerous in an AI-generated executive summary?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "Executive summaries are risky when they overstate certainty or invent conclusions leaders may act on.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Slightly formal tone"
+        },
+        {
+          "label": "B",
+          "text": "Unsupported certainty stated as fact"
+        },
+        {
+          "label": "C",
+          "text": "Too many bullet points"
+        },
+        {
+          "label": "D",
+          "text": "Passive voice"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c3_critical_eval_q2",
+      "course_id": "pm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "What is the “E” in VERIFY mainly reminding the PM to check?",
+      "scenario_text": null,
+      "correct_option": "C",
+      "explanation": "Evaluation is not just spotting errors; it is checking what the AI left out that still matters.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Emoji use"
+        },
+        {
+          "label": "B",
+          "text": "Expenditure coding only"
+        },
+        {
+          "label": "C",
+          "text": "Omissions and missing context"
+        },
+        {
+          "label": "D",
+          "text": "Export settings"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c3_critical_eval_q3",
+      "course_id": "pm_c3_critical_eval",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "A summary says “scope is contained” but the source notes say “scope options under review.” What should the PM do?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "PM review must reduce unsupported certainty and restore source-accurate language.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Keep the stronger wording because it sounds confident"
+        },
+        {
+          "label": "B",
+          "text": "Rewrite the sentence to match the source and show uncertainty"
+        },
+        {
+          "label": "C",
+          "text": "Delete the whole summary"
+        },
+        {
+          "label": "D",
+          "text": "Add more adjectives"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c3_critical_eval_q4",
+      "course_id": "pm_c3_critical_eval",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "You are given a short AI-generated executive update that overstates decisions, hides one unresolved dependency, and assigns an action to the wrong owner. Rewrite it into a defensible summary and briefly note what you changed.",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Removes unsupported or exaggerated claims",
+        "key2": "Restores missing dependency or uncertainty",
+        "key3": "Corrects ownership and action attribution",
+        "key4": "Produces a concise executive-ready summary grounded in verifiable content"
+      },
+      "options": null
+    }
+  ],
+  "pm_c4_relationship_intel": [
+    {
+      "item_id": "ev_pm_c4_relationship_intel_q1",
+      "course_id": "pm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "What is the PM risk of using the same AI-generated recap for sponsor, operations, and delivery audiences?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "One-size-fits-all messaging weakens stakeholder alignment because audiences need different emphasis.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "The file size may be too small"
+        },
+        {
+          "label": "B",
+          "text": "Each audience may miss what matters most"
+        },
+        {
+          "label": "C",
+          "text": "AI will stop working"
+        },
+        {
+          "label": "D",
+          "text": "It will always become a slide deck"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c4_relationship_intel_q2",
+      "course_id": "pm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "In the ALIGN Map, what does the “L” stand for?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "Lens means the viewpoint or priority that matters most to a given audience.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Length"
+        },
+        {
+          "label": "B",
+          "text": "Lens"
+        },
+        {
+          "label": "C",
+          "text": "Log-in"
+        },
+        {
+          "label": "D",
+          "text": "Language model"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c4_relationship_intel_q3",
+      "course_id": "pm_c4_relationship_intel",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "Which PM behavior best reflects relationship intelligence?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "Relationship intelligence is about audience fit, not changing the underlying facts.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Reusing the same note for everyone"
+        },
+        {
+          "label": "B",
+          "text": "Tailoring the same facts to different stakeholder needs"
+        },
+        {
+          "label": "C",
+          "text": "Letting AI choose who needs the message"
+        },
+        {
+          "label": "D",
+          "text": "Removing all nuance for speed"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c4_relationship_intel_q4",
+      "course_id": "pm_c4_relationship_intel",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "From one fictional internal project recap, create two short outputs: a sponsor note focused on decisions and risk, and a delivery-team note focused on dependencies and next actions.",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Differentiates audience needs clearly",
+        "key2": "Keeps the factual core consistent across both outputs",
+        "key3": "Uses appropriate tone and detail level for each audience",
+        "key4": "Avoids blame, vague language, or missing next steps"
+      },
+      "options": null
+    }
+  ],
+  "pm_c5_data_decision": [
+    {
+      "item_id": "ev_pm_c5_data_decision_q1",
+      "course_id": "pm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "Which statement best reflects good PM use of AI with dashboard signals?",
+      "scenario_text": null,
+      "correct_option": "C",
+      "explanation": "PM judgment depends on context, not colour alone.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Red always means immediate escalation"
+        },
+        {
+          "label": "B",
+          "text": "AI ranking is enough for action"
+        },
+        {
+          "label": "C",
+          "text": "Signals must be interpreted against baseline and context"
+        },
+        {
+          "label": "D",
+          "text": "Green always means no action needed"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c5_data_decision_q2",
+      "course_id": "pm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "In SIGNAL Review, which step asks whether a red signal may be expected or misleading?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "Noise check separates routine or explainable variation from meaningful escalation triggers.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Source"
+        },
+        {
+          "label": "B",
+          "text": "Noise check"
+        },
+        {
+          "label": "C",
+          "text": "Action"
+        },
+        {
+          "label": "D",
+          "text": "Leadership message"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c5_data_decision_q3",
+      "course_id": "pm_c5_data_decision",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "A schedule status is red because the forecasted end date is outside tolerance. What should the PM consider next?",
+      "scenario_text": null,
+      "correct_option": "A",
+      "explanation": "Schedule signals only make sense relative to the approved baseline and re-baseline logic. %20-%20Job%20Aid.pdf?web=1)",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Whether the baseline itself changed or needs reapproval"
+        },
+        {
+          "label": "B",
+          "text": "Whether the colour looks bad in a slide"
+        },
+        {
+          "label": "C",
+          "text": "Whether the file should be archived"
+        },
+        {
+          "label": "D",
+          "text": "Whether the AI used more than 100 words"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c5_data_decision_q4",
+      "course_id": "pm_c5_data_decision",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "You are given a fictional portfolio snapshot with three initiatives, each showing different mixes of schedule drift, resource strain, and overall status. Write a short recommendation naming one to watch, one to escalate, and one to leave alone, with evidence-based reasons.",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Correctly interprets the metrics rather than just restating them",
+        "key2": "Shows awareness of baseline or management context",
+        "key3": "Distinguishes watch/correct/escalate logic clearly",
+        "key4": "Writes a concise leadership-ready recommendation"
+      },
+      "options": null
+    }
+  ],
+  "pm_c6_augmented_comm": [
+    {
+      "item_id": "ev_pm_c6_augmented_comm_q1",
+      "course_id": "pm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "Which Microsoft 365 surface is the best starting point when the source material is a recorded meeting?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "Teams is the natural entry point when the source is a meeting and recap or action capture is needed.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Outlook"
+        },
+        {
+          "label": "B",
+          "text": "Teams"
+        },
+        {
+          "label": "C",
+          "text": "Excel"
+        },
+        {
+          "label": "D",
+          "text": "None of them"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c6_augmented_comm_q2",
+      "course_id": "pm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "Why should a PM avoid copying raw recap text straight into a stakeholder email?",
+      "scenario_text": null,
+      "correct_option": "A",
+      "explanation": "Good augmented communication keeps the chain consistent and reviewed before final use.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "It may create inconsistency and skip review"
+        },
+        {
+          "label": "B",
+          "text": "Emails cannot contain summaries"
+        },
+        {
+          "label": "C",
+          "text": "Outlook removes bullets automatically"
+        },
+        {
+          "label": "D",
+          "text": "Teams outputs are never useful"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c6_augmented_comm_q3",
+      "course_id": "pm_c6_augmented_comm",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "What is the main value of a multi-step Copilot workflow for PMs?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "PM communication work often repeats the same information in different forms; chaining tools reduces rework.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "It makes meetings longer"
+        },
+        {
+          "label": "B",
+          "text": "It reduces duplicate writing while keeping outputs connected"
+        },
+        {
+          "label": "C",
+          "text": "It removes the need for governance"
+        },
+        {
+          "label": "D",
+          "text": "It avoids using Word or Outlook entirely"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c6_augmented_comm_q4",
+      "course_id": "pm_c6_augmented_comm",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "Design a short workflow for turning one steering meeting into (1) a reviewed recap, (2) formal notes, and (3) a follow-up email. Name the best tool for each step and explain one review control.",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Chooses sensible tools for source and output type",
+        "key2": "Orders the steps logically",
+        "key3": "Shows how outputs feed into later steps without duplication",
+        "key4": "Includes a human review or consistency check before final communication"
+      },
+      "options": null
+    }
+  ],
+  "pm_c7_capstone": [
+    {
+      "item_id": "ev_pm_c7_capstone_q1",
+      "course_id": "pm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "In an end-to-end PM AI workflow, which step should happen before prompting for content?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "Safe handling comes first; the workflow starts by checking what can be used and where.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Send the email"
+        },
+        {
+          "label": "B",
+          "text": "Apply the responsible AI screen to the source material"
+        },
+        {
+          "label": "C",
+          "text": "Escalate the issue"
+        },
+        {
+          "label": "D",
+          "text": "Build the slide deck"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c7_capstone_q2",
+      "course_id": "pm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 2,
+      "question_text": "What most clearly shows multi-domain PM AI maturity?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "Capstone performance is about applying the right discipline at the right workflow moment.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "Using many tools randomly"
+        },
+        {
+          "label": "B",
+          "text": "Prompting, reviewing, tailoring, interpreting, and communicating in sequence"
+        },
+        {
+          "label": "C",
+          "text": "Writing the longest prompt possible"
+        },
+        {
+          "label": "D",
+          "text": "Trusting every AI recap"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c7_capstone_q3",
+      "course_id": "pm_c7_capstone",
+      "item_type": "mcq",
+      "sequence": 3,
+      "question_text": "Which of the following is the best sign that a PM workflow is still under human control?",
+      "scenario_text": null,
+      "correct_option": "B",
+      "explanation": "The capstone is not about speed alone; it is about controlled, defensible workflow use.",
+      "scoring_rubric": null,
+      "options": [
+        {
+          "label": "A",
+          "text": "AI created the first draft quickly"
+        },
+        {
+          "label": "B",
+          "text": "The PM checked policy fit, validated claims, and adjusted outputs for audience and action"
+        },
+        {
+          "label": "C",
+          "text": "The PM used three different tools"
+        },
+        {
+          "label": "D",
+          "text": "The PM avoided all AI use"
+        }
+      ]
+    },
+    {
+      "item_id": "ev_pm_c7_capstone_q4",
+      "course_id": "pm_c7_capstone",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "You have one fictional PM workweek involving planning, meeting recap, sponsor briefing, portfolio review, and monthly status update. Describe the AI workflow you would use across the week and include: one safe-use check, one structured prompt, one verification step, one stakeholder tailoring move, one data interpretation step, and one communication chain choice.",
+      "scenario_text": null,
+      "correct_option": null,
+      "explanation": null,
+      "scoring_rubric": {
+        "key1": "Sequences the workflow logically across the week",
+        "key2": "Applies at least one concrete action from each relevant domain",
+        "key3": "Keeps the workflow grounded in PM artifacts and tools",
+        "key4": "Shows clear human judgment and control at every critical step"
+      },
+      "options": null
+    }
   ]
 }

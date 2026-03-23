@@ -430,6 +430,18 @@ real_use_case:
   course_5: [verbatim use case title(s) from Prompt B Task 3]
   course_6: [verbatim use case title(s) from Prompt B Task 3]
   course_7: [verbatim use case title(s) from Prompt B Task 3]
+
+capability_tags:
+  NOTE: 3–6 lowercase_snake_case tags per course capturing the core AI skill taught.
+  Used for path assembly matching in the atomic library. Match the framework name
+  (e.g., "safe_framework") and 2–5 specific skills demonstrated in that course.
+  course_1: [3–6 tags — e.g., "safe_framework", "data_classification", "prompt_abstraction"]
+  course_2: [3–6 tags — e.g., "craf_framework", "prompt_structuring", "output_formatting"]
+  course_3: [3–6 tags — e.g., "verify_checklist", "hallucination_detection", "output_validation"]
+  course_4: [3–6 tags — e.g., stakeholder/relationship-intelligence-specific]
+  course_5: [3–6 tags — e.g., data/decision-specific]
+  course_6: [3–6 tags — e.g., "copilot_surface_selector", "m365_workflow", "communication_drafting"]
+  course_7: [3–6 tags spanning all 6 domains — this is the capstone]
 ```
 
 Each fictional entity name must be unique across all 7 courses (no repeats). For client-facing
@@ -487,6 +499,11 @@ SECTION D — All 7 Scenario Seeds
   - Tasks should progress in difficulty: task_1 is foundational, task_4 is the hardest
   - Coach system prompt: tell the AI coach what NOT to do (do not write the answer for them),
     what to watch for (red flags like real data entry), and how to guide without solving
+  - For each scenario, add a `role_variants_hint` line: one sentence stating which
+    placeholder values ({role}, {org_type}, {case_type}) are most critical for this
+    course's scenario and how they would shift for a different professional role
+    (e.g., "For engineering roles, replace {case_type} with 'code review ticket'
+    and {org_type} with 'technology company'.")
 
 SECTION E — All 7 Reading Concept Specs
   For each course, provide:
@@ -575,6 +592,13 @@ QUALITY RULES
 - If you are uncertain about a role-specific detail, check your M365 knowledge of this
   role at EDC (SharePoint, emails, meeting transcripts). Do not guess.
 - Do not truncate. Every section requires complete output.
+
+SIZE + URL RULES
+- Do NOT include any hyperlinks or URLs anywhere in the output. Reference documents
+  by name only (e.g., "the EDC Responsible AI Policy" — not a URL). URLs inflate
+  file size and cause downstream JSON parse failures in the content generation pipeline.
+- OUTPUT SIZE TARGET: 60,000–70,000 characters total. Stay within this range.
+  If you exceed 70,000 characters, review for verbose repetition and URL leakage first.
 
 NOW DO THE WORK.
 
