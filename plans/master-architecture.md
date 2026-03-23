@@ -1,8 +1,27 @@
 # Architectural Brainstorm: Atomic Modular Learning vs. Role-Based Curriculum
 
-> Status: Recommendation phase — strategic direction, not implementation plan yet.
+> Status: **In execution** — Phases 0–2 complete. Phase 3 (Path Assembler) is next.
 >
-> **Current app status (March 2026):** Four roles live (RM, UW, AN, MK). 6-domain hexagon architecture. Bilingual UI — English / Chinese language switching via `utils/i18n.py` + `content/i18n/{en,zh}.json`; language persisted in Firestore user profile. Reading sub-view uses 4 visual section templates (Phase 14). MCQ hybrid practice model live across all 4 roles.
+> **Current app status (March 2026):** Five roles live (RM, UW, AN, MK, PM). 6-domain hexagon architecture. Bilingual UI — English / Chinese language switching via `utils/i18n.py` + `content/i18n/{en,zh}.json`; language persisted in Firestore user profile. Reading sub-view uses 4 visual section templates (Phase 14). MCQ hybrid practice model live across all 5 roles.
+>
+> **Atomic library status:**
+>
+> - `content/atomic_modules.json` — 35 role-specific draft atoms (5 roles × 7 courses), status="draft"
+> - `content/atomic_modules_v2.json` — 15 canonical atoms (5 universal + 10 role-variant), status="canonical"/"role-variant"; task_mode + mcq_options patch pending
+> - `content/atomic_overlap_report.json` — 6 merge groups documented
+> - `content/atomic_diagnostic_items.json` — 36 items (covering all 5 roles)
+> - `content/domains_universal.json` — 6 domains × 4 role variants
+>
+> **Phase completion:**
+>
+> - ✅ Phase 0: RM + UW + AN + MK live
+> - ✅ Phase 0.5: Atomic data model + conversion pipeline (atomize_coursework.py)
+> - ✅ Phase 0.6: Atomic diagnostic items
+> - ✅ Phase 0.7: Universal domain descriptors
+> - ✅ Phase 1 (PM): PM role content ingested and atomized (Engineer deferred to Phase 4)
+> - ✅ Phase 2: Atom merge → canonical v2 library (scripts/merge_atoms.py); patch in progress
+> - ✅ i18n: Bilingual EN/ZH infrastructure with browser lang detection
+> - 🔜 Phase 3: Path assembler + dynamic onboarding (NEXT)
 
 ---
 

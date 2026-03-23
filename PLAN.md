@@ -1,7 +1,67 @@
 # PLAN.md — AI Hero Academy MVP
 **Next Steps Implementation Plan**
 Based on: PRD.md, TDD.md, Issues.md
-Date: February 2026
+Last updated: March 2026
+
+---
+
+## Part 0 — Completed Phases (March 2026)
+
+| Phase | Description | Status |
+|-------|-------------|--------|
+| Phase 0 | RM + UW + AN + MK roles live; 6-domain hexagon; MCQ hybrid practice | ✅ Complete |
+| Phase 0.5 | Atomic data model + `atomize_coursework.py`; 35 draft atoms | ✅ Complete |
+| Phase 0.6 | `atomic_diagnostic_items.json` — 36 items | ✅ Complete |
+| Phase 0.7 | `domains_universal.json` — 6 domains × 4 role variants | ✅ Complete |
+| Phase 1 | PM role content ingested; `ingest_pm_coursework.py`; 5 roles live | ✅ Complete |
+| Phase 2 | `merge_atoms.py`; `atomic_modules_v2.json` — 15 canonical atoms; patch pending | ✅ Complete (patch in progress) |
+| i18n | `utils/i18n.py`; EN/ZH bilingual UI; browser language detection; Firestore `lang` field | ✅ Complete |
+
+---
+
+## Part 3 — Phase 3: Path Assembler (NEXT)
+
+### Overview
+Replace the static role-based curriculum with a dynamic personalized path driven by
+an intake form + diagnostic scores. Activates the `atomic_modules_v2.json` library
+in the live app for the first time.
+
+### Acceptance Criteria
+
+| # | Criterion | File(s) |
+|---|-----------|---------|
+| 1 | Welcome page shows Q1 (free-text role + magic wish) + Q2 (AI tools multi-select) instead of role dropdown | `pages/00_Welcome.py` |
+| 2 | LLM parses Q1 into `{role_text, magic_wish, daily_tasks}` on submit (Haiku, temp=0.1) | `utils/ai.py` or inline |
+| 3 | `intake_profile` dict written to Firestore `user_profiles` on profile creation | `utils/db.py` |
+| 4 | `utils/path_assembler.py` exists; `assemble_path(intake_profile, domain_scores) → list[atom_id]` | `utils/path_assembler.py` |
+| 5 | Path assembler: filter atoms by tag-use-case match → rank by domain gap (60%) + intake signal (40%) → sequence: quick-win → gaps → rest | `utils/path_assembler.py` |
+| 6 | Assembled path (list of atom IDs) written to Firestore `user_profiles.assembled_path` after diagnostic | `utils/db.py` |
+| 7 | Home page reads `assembled_path` from Firestore and renders the atom sequence (title, domain, estimated_minutes) | `pages/03_Home.py` |
+| 8 | Module page loads atom from `atomic_modules_v2.json` when `assembled_path` is present; falls back to legacy role-based course if not | `pages/04_Course_Module.py` |
+| 9 | Scenario filled at practice start: Haiku call fills `scenario_template` with learner context; fallback = raw template | `pages/04_Course_Module.py` |
+| 10 | `task_mode` and `mcq_options` from atom's `task_templates` drive practice rendering | `pages/04_Course_Module.py` |
+| 11 | All existing users (no `assembled_path`) continue on legacy role-based path without disruption | `pages/03_Home.py`, `pages/04_Course_Module.py` |
+| 12 | App passes `bash run_uat.sh` smoke test; existing UAT profiles unaffected | — |
+
+### New files
+- `utils/path_assembler.py` — pure Python path assembly logic (no LLM; deterministic)
+
+### Modified files
+- `pages/00_Welcome.py` — intake form (Q1 + Q2 replaces role dropdown)
+- `pages/03_Home.py` — render assembled atom path
+- `pages/04_Course_Module.py` — load atom from v2 + runtime scenario fill
+- `utils/db.py` — `create_profile()` accepts `intake_profile`; new `save_assembled_path()`
+- `utils/content.py` — confirm `get_atomic_modules()` returns v2 atoms
+
+### Firestore changes
+- `user_profiles`: add `intake_profile` (JSON string) + `assembled_path` (JSON string list)
+- No new collections needed
+
+### Backward compatibility rule
+If `user_profiles.assembled_path` is null/absent → use legacy role-based sequencing.
+If present → use atom path. Both code paths must work simultaneously.
+
+---
 
 ---
 

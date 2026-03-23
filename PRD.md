@@ -29,9 +29,13 @@ AI Hero Academy is an internal Streamlit app (GCP Cloud Run) that evaluates, tra
 benchmarks employees on AI skills through real-life, job-specific use cases
 and AI coaching powered by Google Gemini API.
 
-The MVP launched with Relationship Manager (RM) and expanded to include
-Underwriter (UW), Analyst (AN), and Marketing/Comms Advisor (MK). All four
-roles deliver a complete learning loop:
+**Current state (March 2026):** Five roles live — Relationship Manager (RM),
+Underwriter (UW), Analyst (AN), Marketing/Comms Advisor (MK), and Project
+Manager (PM). Bilingual EN/ZH UI with browser language auto-detection. Atomic
+capability library built (15 canonical atoms in content/atomic_modules_v2.json).
+Phase 3 (dynamic path assembler) is under active development.
+
+The app delivers a four-stage learning loop:
 
   1. DIAGNOSE the employee's AI skill level through a role-specific assessment
   2. MAP GAPS using AI-generated personalized gap analysis
@@ -867,7 +871,7 @@ sub-module the user is in.
     Understanding what information can and cannot be shared with AI
     tools, applying the organization's GenAI policy in practice,
     handling sensitive client data appropriately, and recognizing
-    when AI use crosses compliance boundaries. Specific to EDC:
+    when AI use crosses compliance boundaries. Specific to the organization:
     no non-public information in AI tools, approved applications
     only, mandatory human review.
 

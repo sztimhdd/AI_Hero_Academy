@@ -7,6 +7,7 @@ to the correct page for their state; only new/unregistered users see the
 full executive demo page.
 """
 
+import json
 import streamlit as st
 import uuid
 from utils.auth import get_user_email
@@ -14,6 +15,7 @@ from utils.db import get_profile, get_latest_diagnostic, get_any_progress, creat
 from utils.styles import inject_global_css
 from utils.content import ROLES
 from utils.i18n import t
+from utils.ai import call_llm
 
 st.set_page_config(
     page_title="Welcome | AI Hero Academy",
@@ -267,7 +269,7 @@ st.markdown(DEMO_CSS, unsafe_allow_html=True)
 # ── Section 1 — Hero ──────────────────────────────────────────────────────────
 st.markdown("""
 <div class="demo-hero">
-  <div class="demo-eyebrow">EDC Internal · AI Skills Platform</div>
+  <div class="demo-eyebrow">Internal · AI Skills Platform</div>
   <div class="demo-headline">
     Turn every employee into an<br><em>AI-powered</em> professional.
   </div>
@@ -284,10 +286,33 @@ _role_map = {v["title"]: k for k, v in ROLES.items()}
 _available_roles = list(_role_map.keys())
 _derived_name = user_email.split("@")[0].replace(".", " ").title()
 
-# ── Inline role/name form in the hero ─────────────────────────────────────────
-_col_sel, _col_btn = st.columns([2, 1], gap="medium")
+_AI_TOOL_OPTIONS = [
+    "Microsoft Copilot (M365 — Word, Excel, Teams, Outlook)",
+    "GitHub Copilot / Cursor (coding)",
+    "ChatGPT (browser / API)",
+    "Google Gemini",
+    "Databricks AI / internal LLM tools",
+    "AI features in enterprise software (Salesforce, ServiceNow, etc.)",
+    "None yet — just getting started",
+]
 
-with _col_sel:
+# ── Intake form ───────────────────────────────────────────────────────────────
+_q1_text = st.text_area(
+    t("welcome.q1_label", _lang),
+    placeholder=t("welcome.q1_placeholder", _lang),
+    height=200,
+    max_chars=1000,
+    key="welcome_q1",
+)
+
+_selected_tools = st.multiselect(
+    t("welcome.q2_label", _lang),
+    options=_AI_TOOL_OPTIONS,
+    key="welcome_q2_tools",
+)
+
+# Advanced options (demo / admin) — keeps role selector accessible without cluttering main flow
+with st.expander(t("welcome.advanced_options_label", _lang), expanded=False):
     if len(_available_roles) == 1:
         st.info(t("welcome.your_role_info", _lang).format(role=_available_roles[0]))
         _selected_role = _available_roles[0]
@@ -295,7 +320,6 @@ with _col_sel:
         _selected_role = st.selectbox(
             t("welcome.role_select_label", _lang),
             options=[t("welcome.role_placeholder", _lang)] + _available_roles,
-            label_visibility="collapsed",
             key="welcome_role",
         )
     _display_name_val = st.text_input(
@@ -305,21 +329,72 @@ with _col_sel:
         help=t("welcome.display_name_help", _lang),
     )
 
-_role_selected = _selected_role not in (t("welcome.role_placeholder", _lang),)
+_adv_role_placeholder = t("welcome.role_placeholder", _lang)
 
-with _col_btn:
-    if st.button(
-        t("welcome.cta_btn", _lang),
-        disabled=not _role_selected,
-        use_container_width=True,
-        type="primary",
-        key="hero_cta",
-    ):
+if st.button(
+    t("welcome.cta_btn", _lang),
+    use_container_width=False,
+    type="primary",
+    key="hero_cta",
+):
+    if not _q1_text or not _q1_text.strip():
+        st.error(t("welcome.error_q1_empty", _lang))
+    else:
+        with st.spinner(t("welcome.spinner_parse", _lang)):
+            # ── LLM parse of Q1 → structured intake_profile ───────────────
+            _parse_prompt = (
+                'Extract structured information from this employee\'s self-description. '
+                'Return ONLY valid JSON with keys: "role_text" (job title in 3-5 words), '
+                '"daily_tasks" (list of 3 task strings), "magic_wish" (the AI wish in one sentence).'
+            )
+            try:
+                _raw = call_llm(
+                    messages=[
+                        {"role": "system", "content": _parse_prompt},
+                        {"role": "user", "content": _q1_text.strip()},
+                    ],
+                    temperature=0.1,
+                    user_email=user_email,
+                    call_type="intake_parse",
+                )
+                # Strip markdown fences if present
+                _raw_clean = _raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+                _parsed = json.loads(_raw_clean)
+            except Exception:
+                # Graceful fallback — never block profile creation on LLM failure
+                _parsed = {
+                    "role_text": _q1_text.strip()[:50],
+                    "daily_tasks": [],
+                    "magic_wish": _q1_text.strip()[:100],
+                }
+            _parsed["ai_tools"] = _selected_tools
+
+            # ── Infer role_id for legacy compat ───────────────────────────
+            _role_text_lower = (_parsed.get("role_text") or "").lower() + " " + _q1_text.lower()
+            if any(kw in _role_text_lower for kw in ["relationship manager", " rm ", "client relationship"]):
+                _inferred_role_id = "rm"
+            elif any(kw in _role_text_lower for kw in ["underwriter", "underwriting", " uw "]):
+                _inferred_role_id = "uw"
+            elif any(kw in _role_text_lower for kw in ["analyst", " an ", "analytics"]):
+                _inferred_role_id = "an"
+            else:
+                # Use advanced-options selection if provided, else default to "rm"
+                _adv_sel = st.session_state.get("welcome_role", _adv_role_placeholder)
+                _inferred_role_id = _role_map.get(_adv_sel, "rm")
+
+            # ── Display name from advanced options or email prefix ─────────
+            _adv_name = st.session_state.get("welcome_display_name", "").strip()
+            _display_name = _adv_name if _adv_name else _derived_name
+
         with st.spinner(t("welcome.spinner_setup", _lang)):
             try:
-                _display_name = _display_name_val.strip() if _display_name_val.strip() else _derived_name
-                _role_id = _role_map.get(_selected_role, "rm")
-                create_profile(user_email, _display_name, _role_id, lang=_lang)
+                create_profile(
+                    user_email,
+                    _display_name,
+                    _inferred_role_id,
+                    lang=_lang,
+                    intake_profile=_parsed,
+                )
                 st.session_state["user_email"] = user_email
                 st.session_state["user_state"] = "needs_diagnostic"
                 st.session_state["_lang_from_profile"] = True
@@ -371,7 +446,7 @@ with sc3:
 
 st.markdown("""
 <div class="demo-edc-callout">
-  At EDC, over 100 employees have already submitted AI use case requests.
+  Across the organization, over 100 employees have already submitted AI use case requests.
   Meeting support, document summarization, and email drafting rank as the top three needs.
   This platform builds the skills to do them right — securely, consistently, at scale.
 </div>
@@ -538,7 +613,7 @@ with dc4:
 <div class="demo-diff-card">
   <div class="demo-diff-icon">🔒</div>
   <div class="demo-diff-headline">Your data never leaves your workspace.</div>
-  <div class="demo-diff-body">Hosted on GCP Cloud Run and served from your EDC environment. No data sent to third-party training platforms. No external user accounts.</div>
+  <div class="demo-diff-body">Hosted on GCP Cloud Run and served from your organization's environment. No data sent to third-party training platforms. No external user accounts.</div>
 </div>
 """, unsafe_allow_html=True)
 

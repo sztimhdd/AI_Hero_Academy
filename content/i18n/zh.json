@@ -1,5 +1,12 @@
 {
   "app.db_error": "Unable to connect to the database. Please refresh. [ZH]",
+  "welcome.q1_label": "Tell us about your work [ZH]",
+  "welcome.q1_placeholder": "Describe your role and a typical workday. Then finish with:\nIf AI could do ONE thing to make your work easier, what would it be? [ZH]",
+  "welcome.q2_label": "Which AI tools have you used at work? [ZH]",
+  "welcome.advanced_options_label": "Advanced options (demo / admin) [ZH]",
+  "welcome.spinner_parse": "Personalizing your journey... [ZH]",
+  "welcome.error_q1_empty": "Please describe your work before starting. [ZH]",
+
   "welcome.role_select_label": "Select your role [ZH]",
   "welcome.role_placeholder": "— Select your role — [ZH]",
   "welcome.display_name_label": "Display name [ZH]",

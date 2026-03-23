@@ -12,6 +12,7 @@ Collections:
   coach_sessions/{session_id}
   ai_call_log/{log_id}
 """
+import json
 import os
 from pathlib import Path
 from datetime import datetime, timezone
@@ -76,13 +77,45 @@ def get_profile(user_email: str) -> dict | None:
     return d
 
 
-def create_profile(user_email: str, display_name: str, role_id: str, lang: str = "en") -> None:
-    _get_db().collection("user_profiles").document(user_email).set({
+def create_profile(
+    user_email: str,
+    display_name: str,
+    role_id: str,
+    lang: str = "en",
+    intake_profile: dict | None = None,
+) -> None:
+    data: dict = {
         "role_id": role_id,
         "display_name": display_name,
         "lang": lang,
         "created_at": SERVER_TIMESTAMP,
+    }
+    if intake_profile is not None:
+        data["intake_profile"] = json.dumps(intake_profile, ensure_ascii=False)
+    _get_db().collection("user_profiles").document(user_email).set(data)
+
+
+def save_assembled_path(user_email: str, assembled_path: list) -> None:
+    """Persist the ordered atom_id list to user_profiles/{user_email}.assembled_path."""
+    if _is_demo_mode():
+        return
+    _get_db().collection("user_profiles").document(user_email).update({
+        "assembled_path": json.dumps(assembled_path, ensure_ascii=False),
     })
+
+
+def get_assembled_path(user_email: str) -> list | None:
+    """Return the assembled atom path for the user, or None if not yet assembled."""
+    doc = _get_db().collection("user_profiles").document(user_email).get()
+    if not doc.exists:
+        return None
+    raw = doc.to_dict().get("assembled_path")
+    if raw is None:
+        return None
+    try:
+        return json.loads(raw)
+    except (json.JSONDecodeError, TypeError):
+        return None
 
 
 def update_profile_lang(user_email: str, lang: str) -> None:
