@@ -21,7 +21,7 @@
 > - ✅ Phase 1 (PM): PM role content ingested and atomized (Engineer deferred to Phase 4)
 > - ✅ Phase 2: Atom merge → canonical v2 library (scripts/merge_atoms.py); patch in progress
 > - ✅ i18n: Bilingual EN/ZH infrastructure with browser lang detection
-> - 🔜 Phase 3: Path assembler + dynamic onboarding (NEXT)
+> - ✅ Phase 3: Path assembler + dynamic onboarding — 34/34 UAT checks pass (2026-03-23)
 
 ---
 

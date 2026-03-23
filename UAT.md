@@ -8,6 +8,7 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 3.1 | 2026-03-23 | Phase 3 automated UAT added (Section 9): `tests/uat_phase3.js` — 34/34 checks pass; demo personas 3a–3f via `?demo=true&profile=X`; note on F1 validation mechanism (post-click, not disabled button) |
 | 3.0 | 2026-03 | Phase 3 intake form; remove Databricks Delta checks (app uses Firestore); fix Welcome page flow; add PM role (UAT-18); add Group E smoke test; branding pre-flight; fix --role an availability |
 | 2.0 | 2026-03 | Added Group D state variants, UW/AN/MK smoke tests |
 | 1.0 | 2026-02 | Initial spec |
@@ -965,3 +966,73 @@ OVERALL RESULT: PASS / FAIL
 FAILURES REQUIRING INVESTIGATION:
 - [list any FAILs with screenshot references and reproduction steps]
 ```
+
+---
+
+## 9. Phase 3 Automated UAT — Results (2026-03-23)
+
+### 9.1 Overview
+
+Phase 3 automated UAT is covered by `tests/uat_phase3.js` — a self-contained Node.js Playwright script that exercises the demo persona infrastructure (`?demo=true&profile=<id>`) rather than the `reset_uat_user.py` workflow. It runs without the Playwright MCP server; any machine with Node.js and `playwright` npm installed can execute it.
+
+**Run command:**
+```bash
+node tests/uat_phase3.js
+```
+
+**Prerequisites:**
+- App running: `bash run_uat.sh` (port 8501, `LOCAL_UAT=true`)
+- Demo personas auto-seeded on first navigation (handled by `utils/demo.py`)
+
+**Result: 34/34 checks pass (81 s)**
+
+Screenshots saved to `uat_screenshots/phase3/`.
+
+---
+
+### 9.2 Demo Persona Reference
+
+| Profile ID | Label | Email | Purpose |
+|-----------|-------|-------|---------|
+| `3a` | Fresh user | `demo-fresh@demo.local` | Welcome page — intake form, validation |
+| `3b` | RM at Diagnostic | `demo-rm-diag@demo.local` | Diagnostic start state |
+| `3c` | UW, Module 1 complete | `demo-uw-m1@demo.local` | Legacy Home — Read/Practice/Quiz badges |
+| `3d` | AN, all modules done | `demo-an-all@demo.local` | Legacy Home — all 7 scores visible |
+| `3e` | MK, Module 3 in progress | `demo-mk-m3@demo.local` | Legacy Home — mixed states (2 of 7) |
+| `3f` | RM, atom path | `demo-rm-atom@demo.local` | Atom-path Home — domain badges, Start Module |
+
+Navigate to any persona: `http://localhost:8501/?demo=true&profile=<id>`
+
+---
+
+### 9.3 Scenario Results
+
+| Scenario | Checks | Description | Result |
+|----------|--------|-------------|--------|
+| **A** | 5/5 | Welcome page: Q1 textarea, Q2 AI tools, Advanced options expander, no errors | ✅ PASS |
+| **A2** | 6/6 | Atom-path Home (3f): domain badges visible, numbered 01–07, no legacy Read/Practice/Quiz | ✅ PASS |
+| **B** | 4/4 | Click "Start Module 1 →" on atom-path Home → reading content page renders | ✅ PASS |
+| **C** | 6/6 | Legacy UW Home (3c): Read/Practice/Quiz badges, Module 1 completed, locked modules present | ✅ PASS |
+| **D** | 5/5 | Legacy AN Home (3d): "7 of 7" complete, ≥5 score values visible, no locked modules | ✅ PASS |
+| **E** | 5/5 | Legacy MK Home (3e): mixed complete/active/locked, "2 of 7" visible | ✅ PASS |
+| **F1** | 1/1 | Submit with empty Q1 → `st.error("Please describe your work before starting.")` appears | ✅ PASS |
+| **F2** | 2/2 | Advanced options expander click → role selector options visible | ✅ PASS |
+| **TOTAL** | **34/34** | | ✅ **ALL PASS** |
+
+---
+
+### 9.4 Key Implementation Notes (for future UAT runs)
+
+**F1 validation — post-click, not disabled button:**
+The "Start My Diagnostic" button on the Welcome page is **always enabled**. Empty Q1 validation fires *after* the button is clicked, via `st.error(t("welcome.error_q1_empty", _lang))`. The error text is `"Please describe your work before starting."`. Do NOT test `isDisabled()` — test for the error message appearing after a click.
+
+**Atom-path vs legacy branch:**
+The Home page branches on `get_assembled_path(user_email)`:
+- Present → atom cards (domain badges, Start/Continue/Review buttons, no Read/Practice/Quiz badges)
+- Absent → legacy numbered module list (Read/Practice/Quiz sub-badges, lock icons)
+
+**Demo mode seeding:**
+`ensure_demo_seeded(profile_id)` in `utils/demo.py` sets `_DEMO_SEED_IN_PROGRESS = True` before writing to Firestore, bypassing the `_is_demo_mode()` guard that would otherwise suppress DML. Seeding is idempotent — it wipes and re-seeds on each navigation to `?demo=true&profile=<id>`.
+
+**Streamlit hot-reload warning:**
+Editing `utils/demo.py` while Streamlit is running can cause a stale module cache leading to `ImportError` on the next page load. Always restart the Streamlit process after editing any file in `utils/`.

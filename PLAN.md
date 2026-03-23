@@ -16,50 +16,69 @@ Last updated: March 2026
 | Phase 1 | PM role content ingested; `ingest_pm_coursework.py`; 5 roles live | ✅ Complete |
 | Phase 2 | `merge_atoms.py`; `atomic_modules_v2.json` — 15 canonical atoms; patch pending | ✅ Complete (patch in progress) |
 | i18n | `utils/i18n.py`; EN/ZH bilingual UI; browser language detection; Firestore `lang` field | ✅ Complete |
+| **Phase 3** | **Path assembler + dynamic onboarding; atom-path Home; demo personas 3a–3f; 34/34 UAT checks pass** | ✅ **Complete (2026-03-23)** |
 
 ---
 
-## Part 3 — Phase 3: Path Assembler (NEXT)
+## Part 3 — Phase 3: Path Assembler ✅ COMPLETE (2026-03-23)
 
 ### Overview
-Replace the static role-based curriculum with a dynamic personalized path driven by
+Replaced the static role-based curriculum with a dynamic personalized path driven by
 an intake form + diagnostic scores. Activates the `atomic_modules_v2.json` library
 in the live app for the first time.
 
-### Acceptance Criteria
+### UAT Results — 2026-03-23
+**34/34 checks pass** (`node tests/uat_phase3.js`, 81s). Demo personas 3a–3f seeded.
 
-| # | Criterion | File(s) |
-|---|-----------|---------|
-| 1 | Welcome page shows Q1 (free-text role + magic wish) + Q2 (AI tools multi-select) instead of role dropdown | `pages/00_Welcome.py` |
-| 2 | LLM parses Q1 into `{role_text, magic_wish, daily_tasks}` on submit (Haiku, temp=0.1) | `utils/ai.py` or inline |
-| 3 | `intake_profile` dict written to Firestore `user_profiles` on profile creation | `utils/db.py` |
-| 4 | `utils/path_assembler.py` exists; `assemble_path(intake_profile, domain_scores) → list[atom_id]` | `utils/path_assembler.py` |
-| 5 | Path assembler: filter atoms by tag-use-case match → rank by domain gap (60%) + intake signal (40%) → sequence: quick-win → gaps → rest | `utils/path_assembler.py` |
-| 6 | Assembled path (list of atom IDs) written to Firestore `user_profiles.assembled_path` after diagnostic | `utils/db.py` |
-| 7 | Home page reads `assembled_path` from Firestore and renders the atom sequence (title, domain, estimated_minutes) | `pages/03_Home.py` |
-| 8 | Module page loads atom from `atomic_modules_v2.json` when `assembled_path` is present; falls back to legacy role-based course if not | `pages/04_Course_Module.py` |
-| 9 | Scenario filled at practice start: Haiku call fills `scenario_template` with learner context; fallback = raw template | `pages/04_Course_Module.py` |
-| 10 | `task_mode` and `mcq_options` from atom's `task_templates` drive practice rendering | `pages/04_Course_Module.py` |
-| 11 | All existing users (no `assembled_path`) continue on legacy role-based path without disruption | `pages/03_Home.py`, `pages/04_Course_Module.py` |
-| 12 | App passes `bash run_uat.sh` smoke test; existing UAT profiles unaffected | — |
+| Scenario | Description | Result |
+|----------|-------------|--------|
+| A (5 checks) | Welcome intake form renders (Q1, Q2, Advanced options) | ✅ All pass |
+| A2 (6 checks) | Atom-path Home: domain badges, numbered sequence, no legacy badges | ✅ All pass |
+| B (4 checks) | Click "Start Module 1 →" → reading content page loads | ✅ All pass |
+| C (6 checks) | Legacy UW home: Read/Practice/Quiz badges, locked modules | ✅ All pass |
+| D (5 checks) | Legacy AN all-done: 7/7 complete, 7 scores visible | ✅ All pass |
+| E (5 checks) | Legacy MK in-progress: mixed complete/active/locked, 2 of 7 | ✅ All pass |
+| F1 (1 check) | Submit with empty Q1 → error message rendered post-click | ✅ All pass |
+| F2 (2 checks) | Advanced options expander reveals role selector | ✅ All pass |
 
-### New files
-- `utils/path_assembler.py` — pure Python path assembly logic (no LLM; deterministic)
+### Acceptance Criteria — Delivered
+
+| # | Criterion | File(s) | Status |
+|---|-----------|---------|--------|
+| 1 | Welcome page shows Q1 (free-text role + magic wish) + Q2 (AI tools multi-select) instead of role dropdown | `pages/00_Welcome.py` | ✅ |
+| 2 | LLM parses Q1 into `{role_text, magic_wish, daily_tasks}` on submit (Haiku, temp=0.1) | `utils/ai.py` | ✅ |
+| 3 | `intake_profile` dict written to Firestore `user_profiles` on profile creation | `utils/db.py` | ✅ |
+| 4 | `utils/path_assembler.py` exists; `assemble_path(intake_profile, domain_scores) → list[atom_id]` | `utils/path_assembler.py` | ✅ |
+| 5 | Path assembler: filter → rank (gap 60% + intake 40%) → sequence: quick-win → gaps → strong → capstone | `utils/path_assembler.py` | ✅ |
+| 6 | Assembled path written to Firestore after diagnostic | `utils/db.py` | ✅ |
+| 7 | Home page reads `assembled_path` and renders atom cards (title, domain badge, time, Start/Continue/Review) | `pages/03_Home.py` | ✅ |
+| 8 | Module page loads atom from `atomic_modules_v2.json`; falls back to legacy course if no atom path | `pages/04_Course_Module.py` | ✅ |
+| 9 | `fill_scenario()` replaces all `{placeholder}` tokens; no unfilled tokens in any real atom | `utils/path_assembler.py` | ✅ |
+| 10 | All existing users (no `assembled_path`) continue on legacy path without disruption | `pages/03_Home.py`, `pages/04_Course_Module.py` | ✅ |
+| 11 | App passes smoke test; existing UAT profiles unaffected | `tests/uat_phase3.js` | ✅ |
+
+### New files delivered
+- `utils/path_assembler.py` — `assemble_path()`, `fill_scenario()`, `tag_match_score()`
+- `tests/uat_phase3.js` — 34-check Playwright UAT script (node; no MCP required)
+- `tests/test_path_assembler.py` — 8 pytest unit tests (all passing)
 
 ### Modified files
-- `pages/00_Welcome.py` — intake form (Q1 + Q2 replaces role dropdown)
-- `pages/03_Home.py` — render assembled atom path
-- `pages/04_Course_Module.py` — load atom from v2 + runtime scenario fill
-- `utils/db.py` — `create_profile()` accepts `intake_profile`; new `save_assembled_path()`
-- `utils/content.py` — confirm `get_atomic_modules()` returns v2 atoms
+- `pages/00_Welcome.py` — intake form (Q1 + Q2; role dropdown moved to Advanced Options expander)
+- `pages/03_Home.py` — atom-path rendering branch + legacy branch
+- `pages/04_Course_Module.py` — atom-aware routing (`active_atom_id` in session state)
+- `pages/01_Diagnostic.py` — calls `save_assembled_path()` after diagnostic scoring
+- `utils/db.py` — `create_profile()` accepts `intake_profile`; `save_assembled_path()` added
+- `utils/content.py` — `get_atomic_modules()` returns v2 canonical atoms
+- `utils/demo.py` — demo personas 3a–3f; persona 3f seeds intake + atom path + training rows
+
+### Key implementation notes
+- `fill_scenario()` handles all known `{placeholder}` tokens deterministically (no LLM needed); the test `test_fill_scenario_no_unfilled_placeholders_in_all_real_atoms` enforces this as a regression test.
+- F1 validation: the submit button is **always enabled**; empty Q1 guard fires post-click via `st.error()`. UAT F1a was updated accordingly.
+- Backward compat: `assembled_path` absent → legacy list; present → atom cards. Both branches tested in Phase 3 UAT.
 
 ### Firestore changes
-- `user_profiles`: add `intake_profile` (JSON string) + `assembled_path` (JSON string list)
+- `user_profiles`: `intake_profile` (JSON string) + `assembled_path` (JSON string list)
 - No new collections needed
-
-### Backward compatibility rule
-If `user_profiles.assembled_path` is null/absent → use legacy role-based sequencing.
-If present → use atom path. Both code paths must work simultaneously.
 
 ---
 
