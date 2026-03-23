@@ -88,7 +88,10 @@ def parse_options(options_json: str) -> list[dict]:
         return []
 
 
-_DIAG_ITEMS_PER_DOMAIN = 1
+# Weight = 1 per domain: input to compute_current_domain_scores is a
+# pre-averaged domain score (not a raw item count), so each diagnostic
+# domain contributes exactly one weighted unit.
+_DIAG_DOMAIN_WEIGHT = 1
 _EVAL_ITEMS_PER_MODULE = 4
 
 
@@ -112,8 +115,8 @@ def compute_current_domain_scores(
         if domain_id in buckets:
             try:
                 s = float(score)
-                buckets[domain_id]["sum"] += s * _DIAG_ITEMS_PER_DOMAIN
-                buckets[domain_id]["count"] += _DIAG_ITEMS_PER_DOMAIN
+                buckets[domain_id]["sum"] += s * _DIAG_DOMAIN_WEIGHT
+                buckets[domain_id]["count"] += _DIAG_DOMAIN_WEIGHT
             except (TypeError, ValueError):
                 pass
 

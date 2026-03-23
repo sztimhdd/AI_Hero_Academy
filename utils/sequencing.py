@@ -57,7 +57,7 @@ CAPSTONE_COURSE_ID: dict[str, str] = {
 def compute_module_sequence(domain_scores: dict, role_id: str = "rm") -> list[str]:
     """
     domain_scores: {"responsible_ai": 2.0, "strategic_prompting": 0.8, ...}
-    role_id: "rm" or "uw" — determines which course IDs are assigned.
+    role_id: "rm", "uw", "an", or "mk" — determines which course IDs are assigned.
     Returns: list of 7 course_ids in personalised order
     (index 0 = Module 1, index 6 = Capstone always last).
 """

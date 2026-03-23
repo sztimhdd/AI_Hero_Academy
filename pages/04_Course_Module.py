@@ -866,7 +866,7 @@ elif active_sub == "evaluation":
                         "correct_option": item.get("correct_option"),
                         "scoring_rubric": rubric,
                     })
-                scores = score_evaluation(payload, user_email=user_email)
+                scores = score_evaluation(payload, user_email=user_email, lang=_lang)
                 eval_score = float(scores.get("overall_score", 0.0))
                 domain_score_after = float(
                     scores.get("domain_scores", {}).get(primary_domain, eval_score)
@@ -1003,9 +1003,13 @@ elif active_sub == "evaluation":
             label_visibility="collapsed",
         )
         if st.button(t("module.eval_submit_quiz_btn", _lang), disabled=not (user_text or "").strip(), key=f"eb_{item_id}", type="primary"):
+            response_text = user_text.strip()
+            if len(response_text) > MAX_USER_INPUT_CHARS:
+                st.warning(f"Your response was trimmed to {MAX_USER_INPUT_CHARS} characters.")
+                response_text = response_text[:MAX_USER_INPUT_CHARS]
             st.session_state["eval_responses"].append({
                 "item_id": item_id,
-                "response": user_text.strip(),
+                "response": response_text,
             })
             st.session_state["eval_item_index"] += 1
             st.rerun()

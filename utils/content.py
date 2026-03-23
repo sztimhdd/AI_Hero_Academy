@@ -20,14 +20,24 @@ def _load(filename: str):
         return json.load(f)
 
 
+_LANG_CACHE: dict[tuple, object] = {}
+
+
 def _load_lang(filename: str, lang: str = "en") -> "dict | list":
-    """Load lang-specific content file; falls back to English if not available."""
+    """Load lang-specific content file; falls back to English if not available.
+    Results are cached per (filename, lang) for the lifetime of the process."""
+    key = (filename, lang)
+    if key in _LANG_CACHE:
+        return _LANG_CACHE[key]
     if lang != "en":
         p = _CONTENT_DIR / lang / filename
         if p.exists():
             with open(p, encoding="utf-8") as f:
-                return json.load(f)
-    return _load(filename)
+                _LANG_CACHE[key] = json.load(f)
+                return _LANG_CACHE[key]
+    result = _load(filename)
+    _LANG_CACHE[key] = result
+    return result
 
 
 # ── Module-level caches — loaded once at startup ──────────────────────────────

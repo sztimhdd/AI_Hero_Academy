@@ -160,7 +160,7 @@ def complete_diagnostic(responses: list[dict]):
                     "scoring_rubric": rubric,
                 })
 
-            scores = score_diagnostic(scoring_payload, user_email=user_email)
+            scores = score_diagnostic(scoring_payload, user_email=user_email, lang=_lang)
             item_scores = scores["item_scores"]
             domain_scores = scores["domain_scores"]
             overall_score = scores["overall_score"]

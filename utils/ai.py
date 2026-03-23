@@ -118,7 +118,7 @@ def _extract_json(raw: str) -> dict:
     raise ValueError(f"LLM response was not valid JSON. Preview: {raw[:300]}")
 
 
-def _score_batch(items: list[dict], user_email: str, call_type: str) -> dict:
+def _score_batch(items: list[dict], user_email: str, call_type: str, lang: str = "en") -> dict:
     """
     Score a batch of items and return item_scores dict.
     MCQ items are scored locally (deterministic). Only open-ended items go to the LLM.
@@ -155,7 +155,7 @@ Return exactly:
 Rules:
 - Each score is on a 0.0–4.0 scale.
 - For open-ended items (prompt_sandbox, micro_task, performance_task): score each rubric criterion 0 to its max value, sum them, then scale the total to 0.0–4.0 by dividing by the sum of all max values and multiplying by 4.
-"""
+{_lang_instruction(lang)}"""
     raw = call_llm(
         [{"role": "user", "content": prompt}],
         temperature=0.1,
@@ -166,7 +166,7 @@ Rules:
     return {**local_scores, **llm_scores}
 
 
-def score_diagnostic(responses_with_rubrics: list[dict], user_email: str = None) -> dict:
+def score_diagnostic(responses_with_rubrics: list[dict], user_email: str = None, lang: str = "en") -> dict:
     """
     Score all diagnostic responses by batching per domain (one LLM call per domain).
 
@@ -194,7 +194,7 @@ def score_diagnostic(responses_with_rubrics: list[dict], user_email: str = None)
 
     # Score each domain in a separate LLM call (avoids token-limit issues)
     for domain_id, items in by_domain.items():
-        batch_scores = _score_batch(items, user_email, call_type="diagnostic_scoring")
+        batch_scores = _score_batch(items, user_email, call_type="diagnostic_scoring", lang=lang)
         all_item_scores.update(batch_scores)
 
     # Compute domain scores
@@ -294,7 +294,7 @@ def coach_response(
     )
 
 
-def score_evaluation(responses_with_rubrics: list[dict], user_email: str = None) -> dict:
+def score_evaluation(responses_with_rubrics: list[dict], user_email: str = None, lang: str = "en") -> dict:
     """
     Score evaluation quiz responses. Mirrors score_diagnostic: MCQ scored locally,
     open-ended via LLM (one call per domain), aggregates computed in Python.
@@ -314,7 +314,7 @@ def score_evaluation(responses_with_rubrics: list[dict], user_email: str = None)
     all_item_scores: dict[str, float] = {}
 
     for domain_id, items in by_domain.items():
-        batch_scores = _score_batch(items, user_email, call_type="evaluation_scoring")
+        batch_scores = _score_batch(items, user_email, call_type="evaluation_scoring", lang=lang)
         all_item_scores.update(batch_scores)
 
     # Compute domain scores in Python (equal weight per item)
