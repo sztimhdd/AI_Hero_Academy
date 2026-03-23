@@ -60,7 +60,7 @@ def load_eval_domain_scores(progress_rows):
     for r in progress_rows:
         if r.get("evaluation_completed_at") and r.get("domain_score_after") is not None:
             try:
-                course = get_course(r["course_id"])
+                course = get_course(r["course_id"], lang=_lang)
                 domain = course["primary_domain"]
                 result.append({domain: float(r["domain_score_after"])})
             except (KeyError, TypeError, ValueError):
