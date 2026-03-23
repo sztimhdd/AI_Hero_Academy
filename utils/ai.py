@@ -290,7 +290,7 @@ def coach_response(
         messages,
         temperature=0.4,
         user_email=user_email,
-        call_type="module_coach_note",
+        call_type="coach_response",
     )
 
 
@@ -362,5 +362,5 @@ Return only the coach note text — no JSON, no quotes.{_lang_instruction(lang)}
         [{"role": "user", "content": prompt}],
         temperature=0.5,
         user_email=user_email,
-        call_type="coach_response",
+        call_type="module_coach_note",
     )
