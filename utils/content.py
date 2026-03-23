@@ -107,10 +107,12 @@ _DOMAINS_UNIVERSAL: dict | None = None
 
 
 def get_atomic_modules() -> list:
-    """Return all atomic modules from atomic_modules.json (lazy-loaded)."""
+    """Return all atomic modules from atomic_modules_v2.json (lazy-loaded)."""
     global _ATOMIC_MODULES
     if _ATOMIC_MODULES is None:
-        p = _CONTENT_DIR / "atomic_modules.json"
+        p = _CONTENT_DIR / "atomic_modules_v2.json"
+        if not p.exists():
+            p = _CONTENT_DIR / "atomic_modules.json"  # fallback to v1
         _ATOMIC_MODULES = json.loads(p.read_text(encoding="utf-8")) if p.exists() else []
     return _ATOMIC_MODULES
 

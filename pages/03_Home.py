@@ -8,13 +8,13 @@ import json
 from datetime import datetime
 
 from utils.auth import get_user_email
-from utils.db import get_profile, get_latest_diagnostic, get_all_progress
+from utils.db import get_profile, get_latest_diagnostic, get_all_progress, get_assembled_path
 from utils.scoring import (
     DOMAIN_DISPLAY_NAMES, get_level_label, get_score_color,
     calculate_overall_score, compute_current_domain_scores,
 )
 from utils.styles import inject_global_css, section_header, render_sidebar
-from utils.content import get_course
+from utils.content import get_course, get_atomic_modules
 from utils.i18n import t
 
 st.set_page_config(
@@ -172,109 +172,209 @@ with col_card:
     if st.button(t("home.view_profile_btn", _lang), use_container_width=False, key="view_profile_btn", type="primary"):
         st.switch_page("pages/02_Skills_Profile.py")
 
-# ── Course progress ────────────────────────────────────────────────────────────
-section_header(t("home.course_header", _lang))
+# ── Assembled atom path (new-intake users) or legacy course list ──────────────
+_assembled_path = get_assembled_path(user_email)
 
+if _assembled_path:
+    # ── Atom-path rendering ───────────────────────────────────────────────────
+    _atoms_by_id = {
+        a["atom_id"]: a
+        for a in get_atomic_modules()
+        if a.get("status") in ("canonical", "role-variant", "capstone")
+    }
+    # Build a lookup: source_course_id -> progress row
+    _course_progress_map = {r.get("course_id", ""): r for r in _raw_progress}
 
-def _badge(label, state):
-    return f'<span class="sub-badge {state}">{label}</span>'
+    section_header(t("home.course_header", _lang))
 
-_read_label = t("home.badge_read", _lang)
-_practice_label = t("home.badge_practice", _lang)
-_quiz_label = t("home.badge_quiz", _lang)
+    for _atom_seq, _atom_id in enumerate(_assembled_path, start=1):
+        _atom = _atoms_by_id.get(_atom_id)
+        if _atom is None:
+            continue  # atom removed from content — skip silently
 
+        _atom_domain = _atom.get("domain", "")
+        _atom_domain_display = DOMAIN_DISPLAY_NAMES.get(_atom_domain, _atom_domain)
+        _atom_minutes = _atom.get("estimated_minutes", 0)
 
-for row in progress_rows:
-    seq = int(row.get("module_sequence_order", 0))
-    title = row.get("course_title", f"Module {seq}")
-    domain = row.get("primary_domain", "")
-    domain_display = DOMAIN_DISPLAY_NAMES.get(domain, domain)
-    is_locked = str(row.get("is_locked", "true")).lower() == "true"
-    reading_done = bool(row.get("reading_completed_at"))
-    practice_done = bool(row.get("practice_completed_at"))
-    eval_done = bool(row.get("evaluation_completed_at"))
-    eval_score = row.get("evaluation_score")
-    course_id = row.get("course_id", "")
+        # Determine completion: any source_course_id with evaluation_completed_at
+        _source_ids = _atom.get("source_course_ids") or []
+        _atom_eval_done = any(
+            bool(_course_progress_map.get(cid, {}).get("evaluation_completed_at"))
+            for cid in _source_ids
+        )
+        _atom_reading_done = any(
+            bool(_course_progress_map.get(cid, {}).get("reading_completed_at"))
+            for cid in _source_ids
+        )
+        _atom_practice_done = any(
+            bool(_course_progress_map.get(cid, {}).get("practice_completed_at"))
+            for cid in _source_ids
+        )
 
-    # Determine state
-    if is_locked:
-        card_state = "locked"
-    elif eval_done:
-        card_state = "completed"
-    else:
-        card_state = "active"
-
-    # Sub-module badge states
-    if card_state == "completed":
-        r_state, p_state, q_state = "done", "done", "done"
-    elif card_state == "active":
-        if not reading_done:
-            r_state, p_state, q_state = "current", "pending", "pending"
-        elif not practice_done:
-            r_state, p_state, q_state = "done", "current", "pending"
+        if _atom_eval_done:
+            _atom_card_state = "completed"
         else:
-            r_state, p_state, q_state = "done", "done", "current"
-    else:
-        r_state, p_state, q_state = "pending", "pending", "pending"
+            _atom_card_state = "active"
 
-    num_color = "#00D4E8" if card_state == "active" else ("#29CC6A" if card_state == "completed" else "#8990A8")
-    opacity = "opacity:0.5;" if is_locked else ""
+        _num_color = "#00D4E8" if _atom_card_state == "active" else "#29CC6A"
 
-    with st.container(border=True):
-        col_num, col_body, col_score = st.columns([1, 7, 2])
-        with col_num:
-            st.markdown(
-                f'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:0.9rem;'
-                f'font-weight:700;color:{num_color};padding-top:0.3rem;{opacity}">'
-                f'{str(seq).zfill(2)}</div>',
-                unsafe_allow_html=True,
-            )
-        with col_body:
-            lock_icon = "🔒 " if is_locked else ""
-            st.markdown(
-                f'<div style="{opacity}">'
-                f'<div class="module-title">{lock_icon}{title}</div>'
-                f'<div style="margin-top:0.3rem"><span class="module-domain-tag">{domain_display}</span></div>'
-                f'<div class="sub-strip">{_badge(_read_label, r_state)}{_badge(_practice_label, p_state)}{_badge(_quiz_label, q_state)}</div>'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
-        with col_score:
-            if card_state == "completed" and eval_score is not None:
-                try:
+        with st.container(border=True):
+            _col_num, _col_body, _col_time = st.columns([1, 7, 2])
+            with _col_num:
+                st.markdown(
+                    f'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:0.9rem;'
+                    f'font-weight:700;color:{_num_color};padding-top:0.3rem">'
+                    f'{str(_atom_seq).zfill(2)}</div>',
+                    unsafe_allow_html=True,
+                )
+            with _col_body:
+                _done_icon = "✓ " if _atom_card_state == "completed" else ""
+                st.markdown(
+                    f'<div>'
+                    f'<div class="module-title">{_done_icon}{_atom.get("title", _atom_id)}</div>'
+                    f'<div style="margin-top:0.3rem"><span class="module-domain-tag">{_atom_domain_display}</span></div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+            with _col_time:
+                if _atom_minutes:
                     st.markdown(
                         f'<div style="text-align:right;font-family:\'IBM Plex Mono\',monospace;'
-                        f'font-size:0.82rem;color:#29CC6A">{float(eval_score):.1f} / 4.0</div>',
+                        f'font-size:0.75rem;color:#8990A8">{_atom_minutes} min</div>',
                         unsafe_allow_html=True,
                     )
-                except (TypeError, ValueError):
-                    pass
 
-        if card_state == "active":
-            if not reading_done:
-                btn_label = t("home.start_module_btn", _lang).format(n=seq)
-            elif not practice_done:
-                btn_label = t("home.continue_practice_btn", _lang)
-            else:
-                btn_label = t("home.take_quiz_btn", _lang)
-            if st.button(btn_label, key=f"module_btn_{seq}", use_container_width=True, type="primary"):
-                st.session_state["active_course_id"] = course_id
-                if not reading_done:
-                    st.session_state["active_submodule"] = "reading"
-                elif not practice_done:
-                    st.session_state["active_submodule"] = "practice"
+            if _atom_card_state == "active":
+                if not _atom_reading_done:
+                    _atom_btn_label = t("home.start_module_btn", _lang).format(n=_atom_seq)
+                elif not _atom_practice_done:
+                    _atom_btn_label = t("home.continue_practice_btn", _lang)
                 else:
-                    st.session_state["active_submodule"] = "evaluation"
-                st.switch_page("pages/04_Course_Module.py")
-        elif card_state == "completed":
-            if st.button(t("home.review_module_btn", _lang).format(n=seq), key=f"module_btn_{seq}", type="secondary", use_container_width=True):
-                st.session_state["active_course_id"] = course_id
-                # Jump directly to results if fully complete; overview otherwise (UI2)
-                all_done = (
-                    row.get("reading_completed_at")
-                    and row.get("practice_completed_at")
-                    and row.get("evaluation_completed_at")
+                    _atom_btn_label = t("home.take_quiz_btn", _lang)
+                if st.button(_atom_btn_label, key=f"atom_btn_{_atom_id}", use_container_width=True, type="primary"):
+                    st.session_state["active_atom_id"] = _atom_id
+                    st.session_state.pop("active_course_id", None)
+                    if not _atom_reading_done:
+                        st.session_state["active_submodule"] = "reading"
+                    elif not _atom_practice_done:
+                        st.session_state["active_submodule"] = "practice"
+                    else:
+                        st.session_state["active_submodule"] = "evaluation"
+                    st.switch_page("pages/04_Course_Module.py")
+            elif _atom_card_state == "completed":
+                if st.button(
+                    t("home.review_module_btn", _lang).format(n=_atom_seq),
+                    key=f"atom_btn_{_atom_id}",
+                    type="secondary",
+                    use_container_width=True,
+                ):
+                    st.session_state["active_atom_id"] = _atom_id
+                    st.session_state.pop("active_course_id", None)
+                    st.session_state["active_submodule"] = "results"
+                    st.switch_page("pages/04_Course_Module.py")
+
+else:
+    # ── Legacy role-based course list (unchanged) ─────────────────────────────
+    section_header(t("home.course_header", _lang))
+
+    def _badge(label, state):
+        return f'<span class="sub-badge {state}">{label}</span>'
+
+    _read_label = t("home.badge_read", _lang)
+    _practice_label = t("home.badge_practice", _lang)
+    _quiz_label = t("home.badge_quiz", _lang)
+
+    for row in progress_rows:
+        seq = int(row.get("module_sequence_order", 0))
+        title = row.get("course_title", f"Module {seq}")
+        domain = row.get("primary_domain", "")
+        domain_display = DOMAIN_DISPLAY_NAMES.get(domain, domain)
+        is_locked = str(row.get("is_locked", "true")).lower() == "true"
+        reading_done = bool(row.get("reading_completed_at"))
+        practice_done = bool(row.get("practice_completed_at"))
+        eval_done = bool(row.get("evaluation_completed_at"))
+        eval_score = row.get("evaluation_score")
+        course_id = row.get("course_id", "")
+
+        # Determine state
+        if is_locked:
+            card_state = "locked"
+        elif eval_done:
+            card_state = "completed"
+        else:
+            card_state = "active"
+
+        # Sub-module badge states
+        if card_state == "completed":
+            r_state, p_state, q_state = "done", "done", "done"
+        elif card_state == "active":
+            if not reading_done:
+                r_state, p_state, q_state = "current", "pending", "pending"
+            elif not practice_done:
+                r_state, p_state, q_state = "done", "current", "pending"
+            else:
+                r_state, p_state, q_state = "done", "done", "current"
+        else:
+            r_state, p_state, q_state = "pending", "pending", "pending"
+
+        num_color = "#00D4E8" if card_state == "active" else ("#29CC6A" if card_state == "completed" else "#8990A8")
+        opacity = "opacity:0.5;" if is_locked else ""
+
+        with st.container(border=True):
+            col_num, col_body, col_score = st.columns([1, 7, 2])
+            with col_num:
+                st.markdown(
+                    f'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:0.9rem;'
+                    f'font-weight:700;color:{num_color};padding-top:0.3rem;{opacity}">'
+                    f'{str(seq).zfill(2)}</div>',
+                    unsafe_allow_html=True,
                 )
-                st.session_state["active_submodule"] = "results" if all_done else "overview"
-                st.switch_page("pages/04_Course_Module.py")
+            with col_body:
+                lock_icon = "🔒 " if is_locked else ""
+                st.markdown(
+                    f'<div style="{opacity}">'
+                    f'<div class="module-title">{lock_icon}{title}</div>'
+                    f'<div style="margin-top:0.3rem"><span class="module-domain-tag">{domain_display}</span></div>'
+                    f'<div class="sub-strip">{_badge(_read_label, r_state)}{_badge(_practice_label, p_state)}{_badge(_quiz_label, q_state)}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+            with col_score:
+                if card_state == "completed" and eval_score is not None:
+                    try:
+                        st.markdown(
+                            f'<div style="text-align:right;font-family:\'IBM Plex Mono\',monospace;'
+                            f'font-size:0.82rem;color:#29CC6A">{float(eval_score):.1f} / 4.0</div>',
+                            unsafe_allow_html=True,
+                        )
+                    except (TypeError, ValueError):
+                        pass
+
+            if card_state == "active":
+                if not reading_done:
+                    btn_label = t("home.start_module_btn", _lang).format(n=seq)
+                elif not practice_done:
+                    btn_label = t("home.continue_practice_btn", _lang)
+                else:
+                    btn_label = t("home.take_quiz_btn", _lang)
+                if st.button(btn_label, key=f"module_btn_{seq}", use_container_width=True, type="primary"):
+                    st.session_state["active_course_id"] = course_id
+                    if not reading_done:
+                        st.session_state["active_submodule"] = "reading"
+                    elif not practice_done:
+                        st.session_state["active_submodule"] = "practice"
+                    else:
+                        st.session_state["active_submodule"] = "evaluation"
+                    st.switch_page("pages/04_Course_Module.py")
+            elif card_state == "completed":
+                if st.button(t("home.review_module_btn", _lang).format(n=seq), key=f"module_btn_{seq}", type="secondary", use_container_width=True):
+                    st.session_state["active_course_id"] = course_id
+                    # Jump directly to results if fully complete; overview otherwise (UI2)
+                    all_done = (
+                        row.get("reading_completed_at")
+                        and row.get("practice_completed_at")
+                        and row.get("evaluation_completed_at")
+                    )
+                    st.session_state["active_submodule"] = "results" if all_done else "overview"
+                    st.switch_page("pages/04_Course_Module.py")
 

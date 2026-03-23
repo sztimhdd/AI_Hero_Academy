@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from utils.db import (
     _get_db,
     create_profile, save_diagnostic, save_gap_map, create_progress, update_progress,
+    save_assembled_path,
 )
 from google.cloud import firestore as _fs
 
@@ -45,6 +46,12 @@ DEMO_PROFILES = {
         "email": "demo-mk-m3@demo.local",
         "role_id": "mk",
         "display_name": "Morgan Patel (Demo)",
+    },
+    "3f": {
+        "label": "3f — RM, Phase 3 atom path (Home)",
+        "email": "demo-rm-atom@demo.local",
+        "role_id": "rm",
+        "display_name": "Sam Rivera (Demo)",
     },
 }
 
@@ -153,6 +160,58 @@ _MK_COURSES = [
 _MK_MODULE_EVAL_SCORES = [3.1, 2.9]
 _MK_MODULE_DOMAIN_SCORES = [2.2, 2.5]
 
+# 3f — RM with Phase 3 atom path
+_DIAG_DOMAIN_SCORES_3F = {
+    "responsible_ai": 1.0,
+    "strategic_prompting": 2.1,
+    "critical_eval": 1.8,
+    "data_decision": 2.8,
+    "relationship_intel": 1.3,
+    "augmented_comm": 1.5,
+}
+
+_INTAKE_3F = {
+    "role_text": "Relationship Manager",
+    "daily_tasks": ["client meetings", "status reports"],
+    "magic_wish": "draft meeting summaries faster",
+    "ai_tools": ["Microsoft Copilot (M365 — Word, Excel, Teams, Outlook)"],
+}
+
+_GAP_BULLETS_3F = [
+    "Your responsible AI responses show uncertainty in high-risk client data scenarios "
+    "— the Responsible AI module is your highest priority and teaches the SAFE abstraction "
+    "framework to protect client confidentiality.",
+    "Relationship intelligence tasks revealed gaps in AI-assisted client portfolio management "
+    "— the Relationship Intelligence module will strengthen your ability to surface and act "
+    "on CRM signals.",
+    "Strategic prompting is your quick-win domain — building on your instincts with the CRAF "
+    "framework will immediately improve the quality of your AI-generated meeting summaries "
+    "and client briefs.",
+]
+
+# Atom path for 3f — computed from _DIAG_DOMAIN_SCORES_3F + _INTAKE_3F
+# (quick_wins first, gaps next, strong last, capstone appended)
+_PATH_3F = [
+    "augmented_comm__surface_workflow",
+    "critical_eval__verify_framework",
+    "strategic_prompting__craf_framework",
+    "responsible_ai__safe_framework",
+    "relationship_intel__rm_c4_relationship_intel",
+    "data_decision__rm_c5_data_decision",
+    "capstone__end_to_end_workflow",
+]
+
+# RM courses for seeding training_progress (one per atom, in path order)
+_RM_COURSES_3F = [
+    "rm_c6_augmented_comm",
+    "rm_c3_critical_eval",
+    "rm_c2_strategic_prompting",
+    "rm_c1_responsible_ai",
+    "rm_c4_relationship_intel",
+    "rm_c5_data_decision",
+    "rm_c7_capstone",
+]
+
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -199,13 +258,19 @@ def _ensure_demo_seeded_inner(profile_id: str) -> None:
         return  # fresh user — no rows needed
 
     # user_profiles
-    create_profile(email, profile["display_name"], profile["role_id"])
+    intake = _INTAKE_3F if profile_id == "3f" else None
+    create_profile(email, profile["display_name"], profile["role_id"], intake_profile=intake)
 
     if profile_id == "3b":
         return  # RM at diagnostic start — only profile row needed
 
-    # diagnostic_sessions (3c, 3d, 3e)
-    _score_map = {"3c": _DIAG_DOMAIN_SCORES_3C, "3d": _DIAG_DOMAIN_SCORES_3D, "3e": _DIAG_DOMAIN_SCORES_3E}
+    # diagnostic_sessions (3c, 3d, 3e, 3f)
+    _score_map = {
+        "3c": _DIAG_DOMAIN_SCORES_3C,
+        "3d": _DIAG_DOMAIN_SCORES_3D,
+        "3e": _DIAG_DOMAIN_SCORES_3E,
+        "3f": _DIAG_DOMAIN_SCORES_3F,
+    }
     domain_scores = _score_map.get(profile_id, _DIAG_DOMAIN_SCORES_3D)
     overall = round(sum(domain_scores.values()) / len(domain_scores), 2)
     session_id = str(uuid.uuid4())
@@ -218,7 +283,12 @@ def _ensure_demo_seeded_inner(profile_id: str) -> None:
     )
 
     # gap_maps
-    _bullets_map = {"3c": _GAP_BULLETS_3C, "3d": _GAP_BULLETS_3D, "3e": _GAP_BULLETS_3E}
+    _bullets_map = {
+        "3c": _GAP_BULLETS_3C,
+        "3d": _GAP_BULLETS_3D,
+        "3e": _GAP_BULLETS_3E,
+        "3f": _GAP_BULLETS_3F,
+    }
     bullets = _bullets_map.get(profile_id, _GAP_BULLETS_3D)
     # Wrap as list of dicts to match the format written by the actual diagnostic flow
     bullets_list = [{"priority": i + 1, "domain_id": "", "bullet": b} for i, b in enumerate(bullets)]
@@ -268,3 +338,10 @@ def _ensure_demo_seeded_inner(profile_id: str) -> None:
                 update_progress(email, course_id, reading_completed_at=_now_iso())
             else:
                 create_progress(email, course_id, seq, is_locked=True)
+
+    elif profile_id == "3f":
+        # Seed 7 RM training_progress rows (all unlocked, none completed)
+        for i, course_id in enumerate(_RM_COURSES_3F):
+            create_progress(email, course_id, i + 1, is_locked=False)
+        # Save the assembled atom path
+        save_assembled_path(email, _PATH_3F)

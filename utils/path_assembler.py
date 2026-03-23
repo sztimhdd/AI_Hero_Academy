@@ -109,12 +109,18 @@ def fill_scenario(atom: dict, intake_profile: dict, lang_code: str = "en") -> st
     """Fill {placeholder} tokens in an atom's scenario_template.
 
     Substitutions applied:
-      {role}          → intake_profile.role_text or "professional"
-      {org_type}      → inferred from role_text
-      {programme_name}→ "the project"
-      {data_types}    → "your work data"
+      {role}              → intake_profile.role_text or "professional"
+      {org_type}          → inferred from role_text
+      {programme_name}    → "the project"
+      {data_types}        → "your work data"
+      {case_type}         → inferred from role_text (e.g. "client matter")
+      {sensitivity_level} → "standard"
+      {audience}          → inferred from role_text (e.g. "client" or "stakeholder")
+      {workflow_goal}     → "deliver quality outcomes"
+      {key_contact_change}→ "account stakeholder change"
+      {lead_aging_days}   → "30"
+      {SLA_breach_days}   → "5"
 
-    All other placeholders are left as-is (see Q6 clarification answer).
     Never raises — catches all exceptions and returns the raw template.
     """
     try:
@@ -124,24 +130,57 @@ def fill_scenario(atom: dict, intake_profile: dict, lang_code: str = "en") -> st
 
     try:
         role = (intake_profile.get("role_text") or "professional").strip() or "professional"
-
         role_lower = role.lower()
+
         if any(kw in role_lower for kw in ["bank", "financ", "lend", "credit", "invest", "capital"]):
             org_type = "financial services organization"
+            case_type = "client portfolio matter"
+            audience = "client"
         elif any(kw in role_lower for kw in ["insurance", "underwrite", "claim", "actuar"]):
             org_type = "insurance firm"
+            case_type = "underwriting matter"
+            audience = "underwriting stakeholder"
         elif any(kw in role_lower for kw in ["consult"]):
             org_type = "consulting firm"
+            case_type = "client engagement matter"
+            audience = "client"
         elif any(kw in role_lower for kw in ["government", "public", "municipal", "agency"]):
             org_type = "public sector organization"
+            case_type = "programme matter"
+            audience = "internal stakeholder"
+        elif any(kw in role_lower for kw in ["relationship manager", " rm ", "client relationship"]):
+            org_type = "financial services organization"
+            case_type = "client relationship matter"
+            audience = "client"
+        elif any(kw in role_lower for kw in ["analyst", " an ", "analytics"]):
+            org_type = "organization"
+            case_type = "data analysis matter"
+            audience = "business stakeholder"
+        elif any(kw in role_lower for kw in ["market", "campaign", "brand"]):
+            org_type = "organization"
+            case_type = "marketing matter"
+            audience = "target audience"
+        elif any(kw in role_lower for kw in ["project manager", " pm ", "programme"]):
+            org_type = "organization"
+            case_type = "project matter"
+            audience = "project stakeholder"
         else:
             org_type = "organization"
+            case_type = "work matter"
+            audience = "stakeholder"
 
         filled = template
         filled = filled.replace("{role}", role)
         filled = filled.replace("{org_type}", org_type)
         filled = filled.replace("{programme_name}", "the project")
         filled = filled.replace("{data_types}", "your work data")
+        filled = filled.replace("{case_type}", case_type)
+        filled = filled.replace("{sensitivity_level}", "standard")
+        filled = filled.replace("{audience}", audience)
+        filled = filled.replace("{workflow_goal}", "deliver quality outcomes")
+        filled = filled.replace("{key_contact_change}", "account stakeholder change")
+        filled = filled.replace("{lead_aging_days}", "30")
+        filled = filled.replace("{SLA_breach_days}", "5")
         return filled
     except Exception:
         try:

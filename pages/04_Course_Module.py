@@ -14,10 +14,11 @@ import streamlit as st
 from utils.auth import get_user_email
 from utils.db import (
     get_profile, get_progress, get_all_progress, get_progress_by_seq, get_latest_diagnostic,
-    save_coach_session, update_progress, unlock_progress, save_gap_map,
+    save_coach_session, update_progress, unlock_progress, save_gap_map, create_progress,
 )
 from google.cloud.firestore import SERVER_TIMESTAMP
-from utils.content import get_course, get_reading, get_scenario, get_eval_items, get_domain_descriptions, get_reading_structured
+from utils.content import get_course, get_reading, get_scenario, get_eval_items, get_domain_descriptions, get_reading_structured, get_atomic_modules, EVAL_ITEMS
+from utils.path_assembler import fill_scenario as _fill_scenario
 from utils.ai import (
     coach_response,
     score_evaluation,
@@ -65,7 +66,8 @@ if not profile:
     st.switch_page("pages/00_Welcome.py")
 
 course_id = st.session_state.get("active_course_id")
-if not course_id:
+active_atom_id = st.session_state.get("active_atom_id")
+if not course_id and not active_atom_id:
     st.switch_page("pages/03_Home.py")
 
 active_sub = st.session_state.get("active_submodule", "overview")
@@ -122,18 +124,103 @@ def do_complete_practice(progress_id: str, messages: list, total_turns: int):
 
 
 # ── Load content ──────────────────────────────────────────────────────────────
-try:
-    course = get_course(course_id)
-    reading = get_reading(course_id)
-    scenario = get_scenario(course_id)
-    eval_items = get_eval_items(course_id)
-    progress = load_progress(course_id)
-except KeyError as e:
-    st.error(t("module.content_not_found_error", _lang).format(id=e))
-    st.stop()
-except Exception as e:
-    st.error(t("module.load_error", _lang) + f"\n\n_{e}_")
-    st.stop()
+_eval_auto_complete = False  # True when atom has no eval items → skip eval, auto-mark done
+
+if active_atom_id:
+    # ── Atom path: build content variables from atom structure ────────────────
+    _atoms_map = {a["atom_id"]: a for a in get_atomic_modules()}
+    _atom = _atoms_map.get(active_atom_id)
+    if _atom is None:
+        # Atom removed from content; fall back to legacy course_id path
+        active_atom_id = None
+    else:
+        # Intake profile for scenario filling
+        _intake_raw = profile.get("intake_profile") if profile else None
+        try:
+            _intake = json.loads(_intake_raw) if _intake_raw else {}
+        except Exception:
+            _intake = {}
+
+        # Effective course_id for Firestore progress writes
+        _source_ids = _atom.get("source_course_ids") or []
+        _eff_course_id = _source_ids[0] if _source_ids else active_atom_id
+        course_id = _eff_course_id
+
+        # course dict — same keys used by the rendering code
+        course = {
+            "title": _atom.get("title", active_atom_id),
+            "tagline": "",
+            "primary_domain": _atom.get("domain", ""),
+        }
+
+        # reading dict — atom["reading"] uses same keys (concept_text, good_example, anti_pattern, takeaway)
+        reading = _atom.get("reading") or {}
+
+        # scenario dict — map atom practice structure to legacy expected format
+        _practice = _atom.get("practice") or {}
+        _task_templates = _practice.get("task_templates") or []
+        _role_text = _intake.get("role_text") or "professional"
+        _coach_prompt = (
+            (_practice.get("coach_system_prompt_template") or "")
+            .replace("{role}", _role_text)
+            .replace("{organisation}", "your organization")
+            .replace("{scenario_name}", _atom.get("title") or "the module")
+        )
+        scenario = {
+            "scenario_text": _fill_scenario(_atom, _intake, _lang),
+            "task_1_text": _task_templates[0]["text_template"] if len(_task_templates) > 0 else "",
+            "task_2_text": _task_templates[1]["text_template"] if len(_task_templates) > 1 else "",
+            "task_3_text": _task_templates[2]["text_template"] if len(_task_templates) > 2 else "",
+            "task_4_text": _task_templates[3]["text_template"] if len(_task_templates) > 3 else "",
+            "coach_system_prompt": _coach_prompt,
+            "task_modes": [tt.get("task_mode", "open") for tt in _task_templates],
+            "task_mcq_options": [tt.get("mcq_options") for tt in _task_templates],
+        }
+
+        # eval_items: try source_course_ids[0], then domain fallback, then skip
+        eval_items = []
+        if _source_ids:
+            try:
+                eval_items = get_eval_items(_source_ids[0])
+            except (KeyError, Exception):
+                eval_items = []
+        if not eval_items:
+            _atom_domain = _atom.get("domain", "")
+            _fallback_cid = next(
+                (cid for cid in EVAL_ITEMS.keys() if _atom_domain in cid),
+                None,
+            )
+            if _fallback_cid:
+                eval_items = list(EVAL_ITEMS[_fallback_cid])
+            else:
+                eval_items = []
+                _eval_auto_complete = True
+
+        # progress: load by effective course_id; auto-create if missing (atom user's first visit)
+        progress = load_progress(course_id)
+        if progress is None:
+            try:
+                create_progress(user_email, course_id, seq=1, is_locked=False)
+                progress = load_progress(course_id)
+            except Exception:
+                pass
+
+if not active_atom_id:
+    # ── Legacy course path ────────────────────────────────────────────────────
+    if not course_id:
+        st.switch_page("pages/03_Home.py")
+    try:
+        course = get_course(course_id)
+        reading = get_reading(course_id)
+        scenario = get_scenario(course_id)
+        eval_items = get_eval_items(course_id)
+        progress = load_progress(course_id)
+    except KeyError as e:
+        st.error(t("module.content_not_found_error", _lang).format(id=e))
+        st.stop()
+    except Exception as e:
+        st.error(t("module.load_error", _lang) + f"\n\n_{e}_")
+        st.stop()
 
 if not course or not progress:
     st.error(t("module.module_not_found_error", _lang))
@@ -734,6 +821,20 @@ elif active_sub == "practice":
 # EVALUATION
 # ═══════════════════════════════════════════════════════════════════════════════
 elif active_sub == "evaluation":
+    # Atom path with no eval items: auto-mark complete with score 0, go to results
+    if _eval_auto_complete:
+        try:
+            update_progress(
+                user_email, course_id,
+                evaluation_completed_at=SERVER_TIMESTAMP,
+                evaluation_score=0,
+                domain_score_after=None,
+            )
+        except Exception:
+            pass
+        st.session_state["active_submodule"] = "results"
+        st.rerun()
+
     if "eval_item_index" not in st.session_state:
         st.session_state["eval_item_index"] = 0
     if "eval_responses" not in st.session_state:

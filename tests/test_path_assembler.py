@@ -146,3 +146,44 @@ def test_assemble_path_never_empty():
     ]
     path = assemble_path(INTAKE_BASIC, scores, atoms)
     assert len(path) >= 1
+
+
+def test_fill_scenario_all_common_placeholders_replaced():
+    """All common placeholders ({case_type}, {sensitivity_level}, etc.) are replaced."""
+    import re
+    full_template_atom = {
+        "atom_id": "x",
+        "domain": "augmented_comm",
+        "practice": {
+            "scenario_template": (
+                "You are a {role} at a {org_type}. "
+                "Case: {case_type}. Sensitivity: {sensitivity_level}. "
+                "Audience: {audience}. Goal: {workflow_goal}. "
+                "Project: {programme_name}. Data: {data_types}."
+            )
+        },
+    }
+    intake = {"role_text": "Relationship Manager", "daily_tasks": [], "magic_wish": "", "ai_tools": []}
+    result = fill_scenario(full_template_atom, intake)
+    remaining = set(re.findall(r'\{(\w+)\}', result))
+    assert remaining == set(), f"Unfilled placeholders remain: {remaining}"
+
+
+def test_fill_scenario_no_unfilled_placeholders_in_all_real_atoms():
+    """All real atoms in atomic_modules_v2.json produce scenario text with no unfilled placeholders."""
+    import re
+    from utils.content import get_atomic_modules
+    atoms = get_atomic_modules()
+    intake = {
+        "role_text": "Relationship Manager",
+        "daily_tasks": ["client briefs"],
+        "magic_wish": "auto-summarize",
+        "ai_tools": [],
+    }
+    failures = []
+    for atom in atoms:
+        filled = fill_scenario(atom, intake)
+        remaining = set(re.findall(r'\{(\w+)\}', filled))
+        if remaining:
+            failures.append(f"{atom['atom_id']}: {remaining}")
+    assert failures == [], "Atoms with unfilled placeholders:\n" + "\n".join(failures)

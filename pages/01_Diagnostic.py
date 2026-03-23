@@ -11,8 +11,10 @@ import sys
 from datetime import datetime
 
 from utils.auth import get_user_email
-from utils.db import get_profile, get_latest_diagnostic, save_diagnostic, save_gap_map
+from utils.db import get_profile, get_latest_diagnostic, save_diagnostic, save_gap_map, save_assembled_path
 from utils.ai import score_diagnostic, generate_gap_map
+from utils.path_assembler import assemble_path
+from utils.content import get_atomic_modules
 from utils.scoring import DOMAIN_DISPLAY_NAMES
 from utils.styles import inject_global_css
 from utils.content import get_diagnostic_items, get_domain_descriptions
@@ -201,6 +203,22 @@ def complete_diagnostic(responses: list[dict]):
                 save_gap_map(gap_map_id, user_email, "diagnostic", session_id, bullets_json)
             except Exception as _db_err:
                 print(f"[WARNING] gap_map write failed after diagnostic: {_db_err}", file=sys.stderr)
+
+    # ── Assemble personalised atom path (new-intake users only) ──────────────
+    try:
+        _intake_raw = profile.get("intake_profile") if profile else None
+        _intake = json.loads(_intake_raw) if _intake_raw else None
+        if _intake:
+            _atoms = [
+                a for a in get_atomic_modules()
+                if a.get("status") in ("canonical", "role-variant")
+            ]
+            if _atoms:
+                _path = assemble_path(_intake, domain_scores, _atoms)
+                save_assembled_path(user_email, _path)
+    except Exception as _path_err:
+        # Non-fatal — legacy flow still works if this fails
+        print(f"[WARNING] path assembly failed after diagnostic: {_path_err}", file=sys.stderr)
 
     # Clear diagnostic session state and navigate
     st.session_state.pop("diag_item_index", None)
