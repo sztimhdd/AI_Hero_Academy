@@ -341,6 +341,21 @@ def save_coach_session(
     })
 
 
+# ── AI call log ──────────────────────────────────────────────────────────────
+
+def log_ai_call(entry: dict) -> None:
+    """Write one entry to Firestore ai_call_log/{log_id}. Silently ignore failures."""
+    try:
+        db = _get_db()
+        log_id = entry.get("log_id") or entry.get("user_email", "unknown")
+        db.collection("ai_call_log").document(log_id).set({
+            **entry,
+            "logged_at": SERVER_TIMESTAMP,
+        })
+    except Exception:
+        pass  # Never let logging failures break the main flow
+
+
 # ── Backward-compat shim ─────────────────────────────────────────────────────
 
 def escape(s: str) -> str:

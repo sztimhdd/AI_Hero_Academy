@@ -41,9 +41,16 @@ _raw_progress = get_all_progress(user_email)
 if not _raw_progress:
     st.switch_page("pages/02_Skills_Profile.py")
 
+# Resolve lang early so content getters below can use it
+_lang = st.session_state.get("lang", "en")
+if not st.session_state.get("_lang_from_profile") and profile and profile.get("lang") in ("en", "zh"):
+    st.session_state["lang"] = profile["lang"]
+    st.session_state["_lang_from_profile"] = True
+    _lang = profile["lang"]
+
 progress_rows = []
 for _row in _raw_progress:
-    _course = get_course(_row["course_id"])
+    _course = get_course(_row["course_id"], lang=_lang)
     progress_rows.append({**_row, "course_title": _course["title"], "primary_domain": _course["primary_domain"]})
 
 
@@ -106,14 +113,6 @@ last_updated_str = (
     last_updated.strftime("%b %d, %Y").replace(" 0", " ")
     if last_updated else None
 )
-
-_lang = st.session_state.get("lang", "en")
-
-# Profile-based lang override (runs once per session after profile load)
-if not st.session_state.get("_lang_from_profile") and profile and profile.get("lang") in ("en", "zh"):
-    st.session_state["lang"] = profile["lang"]
-    st.session_state["_lang_from_profile"] = True
-    _lang = profile["lang"]
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 render_sidebar("home", has_course=True, progress_rows=progress_rows,

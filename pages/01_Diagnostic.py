@@ -43,11 +43,11 @@ _prior_diag = get_latest_diagnostic(user_email)
 _can_exit = bool(_prior_diag)
 
 # ── Load diagnostic items (ordered) ──────────────────────────────────────────
-items = get_diagnostic_items(role_id)
-domain_descriptions = get_domain_descriptions(role_id)
+_lang = st.session_state.get("lang", "en")
+items = get_diagnostic_items(role_id, lang=_lang)
+domain_descriptions = get_domain_descriptions(role_id, lang=_lang)
 
 TOTAL = len(items)
-_lang = st.session_state.get("lang", "en")
 
 if TOTAL == 0:
     st.warning(t("diag.no_questions", _lang))
@@ -160,7 +160,7 @@ def complete_diagnostic(responses: list[dict]):
                     "scoring_rubric": rubric,
                 })
 
-            scores = score_diagnostic(scoring_payload, user_email=user_email)
+            scores = score_diagnostic(scoring_payload, user_email=user_email, lang=_lang)
             item_scores = scores["item_scores"]
             domain_scores = scores["domain_scores"]
             overall_score = scores["overall_score"]
@@ -192,6 +192,7 @@ def complete_diagnostic(responses: list[dict]):
                 domain_descriptions=domain_descriptions,
                 user_email=user_email,
                 source_type="diagnostic",
+                lang=_lang,
             )
         except Exception as _gap_err:
             # Non-fatal — Skills Profile shows fallback if gap map is missing

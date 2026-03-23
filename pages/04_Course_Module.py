@@ -45,6 +45,7 @@ inject_global_css()
 
 MAX_TASK_TURNS = 3
 MAX_TOTAL_TURNS = 15
+MAX_USER_INPUT_CHARS = 2000
 
 # Appended to the coach system prompt for open-ended tasks.
 # Instructs the coach to emit [ADVANCE] at the end of its reply when
@@ -90,7 +91,7 @@ def load_all_progress() -> list:
     _rows = get_all_progress(user_email)
     result = []
     for _row in _rows:
-        _course = get_course(_row["course_id"])
+        _course = get_course(_row["course_id"], lang=_lang)
         result.append({**_row, "primary_domain": _course["primary_domain"], "title": _course["title"]})
     return result
 
@@ -98,7 +99,7 @@ def load_all_progress() -> list:
 def load_next_module_title(current_seq: int):
     nxt = get_progress_by_seq(user_email, current_seq + 1)
     if nxt:
-        return get_course(nxt["course_id"])["title"]
+        return get_course(nxt["course_id"], lang=_lang)["title"]
     return None
 
 
@@ -181,7 +182,7 @@ if active_atom_id:
         eval_items = []
         if _source_ids:
             try:
-                eval_items = get_eval_items(_source_ids[0])
+                eval_items = get_eval_items(_source_ids[0], lang=_lang)
             except (KeyError, Exception):
                 eval_items = []
         if not eval_items:
@@ -210,10 +211,10 @@ if not active_atom_id:
     if not course_id:
         st.switch_page("pages/03_Home.py")
     try:
-        course = get_course(course_id)
-        reading = get_reading(course_id)
-        scenario = get_scenario(course_id)
-        eval_items = get_eval_items(course_id)
+        course = get_course(course_id, lang=_lang)
+        reading = get_reading(course_id, lang=_lang)
+        scenario = get_scenario(course_id, lang=_lang)
+        eval_items = get_eval_items(course_id, lang=_lang)
         progress = load_progress(course_id)
     except KeyError as e:
         st.error(t("module.content_not_found_error", _lang).format(id=e))
@@ -670,6 +671,7 @@ elif active_sub == "practice":
                                     conversation=[],
                                     user_input=chosen,
                                     user_email=user_email,
+                                    lang=_lang,
                                 )
                         except Exception as e:
                             st.error(t("module.coach_unavailable", _lang) + f"\n\n_{e}_")
@@ -774,6 +776,9 @@ elif active_sub == "practice":
         # Native chat input pinned to page bottom (only rendered when waiting for user)
         if waiting_for_user:
             if user_input := st.chat_input(t("module.chat_placeholder", _lang), key=f"p_input_{task_idx}_{current_task_turns}"):
+                if len(user_input) > MAX_USER_INPUT_CHARS:
+                    st.warning(f"Your message was trimmed to {MAX_USER_INPUT_CHARS} characters.")
+                    user_input = user_input[:MAX_USER_INPUT_CHARS]
                 # Immediately show the user message — don't wait for AI to reply
                 with st.chat_message("user"):
                     st.markdown(user_input.strip())
@@ -786,6 +791,7 @@ elif active_sub == "practice":
                                 conversation=messages,
                                 user_input=user_input.strip(),
                                 user_email=user_email,
+                                lang=_lang,
                             )
                         # Strip the mastery signal before displaying
                         auto_advance = "[ADVANCE]" in reply
@@ -860,7 +866,7 @@ elif active_sub == "evaluation":
                         "correct_option": item.get("correct_option"),
                         "scoring_rubric": rubric,
                     })
-                scores = score_evaluation(payload, user_email=user_email)
+                scores = score_evaluation(payload, user_email=user_email, lang=_lang)
                 eval_score = float(scores.get("overall_score", 0.0))
                 domain_score_after = float(
                     scores.get("domain_scores", {}).get(primary_domain, eval_score)
@@ -902,9 +908,10 @@ elif active_sub == "evaluation":
                 merged_scores = compute_current_domain_scores(diag_domain_scores_gm, eval_domain_scores_gm)
                 gap_bullets = generate_gap_map(
                     domain_scores=merged_scores,
-                    domain_descriptions=get_domain_descriptions(st.session_state.get("role_id", "rm")),
+                    domain_descriptions=get_domain_descriptions(st.session_state.get("role_id", "rm"), lang=_lang),
                     user_email=user_email,
                     source_type="evaluation",
+                    lang=_lang,
                 )
                 gm_id = str(uuid.uuid4())
                 save_gap_map(gm_id, user_email, "evaluation", progress_id, json.dumps(gap_bullets, ensure_ascii=False))
@@ -919,6 +926,7 @@ elif active_sub == "evaluation":
                 domain_scores={primary_domain: domain_score_after},
                 next_module_title=load_next_module_title(seq_order),
                 user_email=user_email,
+                lang=_lang,
             )
         except Exception:
             pass
@@ -995,9 +1003,13 @@ elif active_sub == "evaluation":
             label_visibility="collapsed",
         )
         if st.button(t("module.eval_submit_quiz_btn", _lang), disabled=not (user_text or "").strip(), key=f"eb_{item_id}", type="primary"):
+            response_text = user_text.strip()
+            if len(response_text) > MAX_USER_INPUT_CHARS:
+                st.warning(f"Your response was trimmed to {MAX_USER_INPUT_CHARS} characters.")
+                response_text = response_text[:MAX_USER_INPUT_CHARS]
             st.session_state["eval_responses"].append({
                 "item_id": item_id,
-                "response": user_text.strip(),
+                "response": response_text,
             })
             st.session_state["eval_item_index"] += 1
             st.rerun()
