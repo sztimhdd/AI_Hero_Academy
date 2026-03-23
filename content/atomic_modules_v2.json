@@ -8,7 +8,7 @@
       "m365_copilot",
       "cross_app_workflow_chaining",
       "meeting_summarization",
-      "stakeholder_communication_drafting",
+      "stakeholder_communication",
       "crm_data_entry"
     ],
     "estimated_minutes": 30,
@@ -25,22 +25,69 @@
         {
           "task_id": 1,
           "skill_focus": "Copilot surface selection and foundational prompt design",
-          "text_template": "You are handling a {case_type} for {org_type}. Before drafting any output, use the Copilot Surface Selector framework to identify which Microsoft 365 Copilot surface you will use as your starting point to synthesize {data_types} and surface the top three concerns your {audience} will have. Write the exact prompt you would use in that surface, and explain in one sentence why that surface—rather than alternatives—gives you the best input quality for everything that follows. Then sketch the complete output chain (e.g., recap → structured actions → audience email → internal note) you will execute for this {workflow_goal}."
+          "text_template": "You are handling a {case_type} for {org_type}. Before drafting any output, use the Copilot Surface Selector framework to identify which Microsoft 365 Copilot surface you will use as your starting point to synthesize {data_types} and surface the top three concerns your {audience} will have. Write the exact prompt you would use in that surface, and explain in one sentence why that surface—rather than alternatives—gives you the best input quality for everything that follows. Then sketch the complete output chain (e.g., recap → structured actions → audience email → internal note) you will execute for this {workflow_goal}.",
+          "task_mode": "open",
+          "mcq_options": null
         },
         {
           "task_id": 2,
           "skill_focus": "Multi-surface prompt orchestration with audience-aware tone control",
-          "text_template": "You now have your foundational recap from Task 1. Write two distinct follow-on prompts: (A) for Copilot in Outlook to draft a {audience}-facing email about the {case_type}—specifying tone (professional, concise, action-oriented), what to include (confirmed decisions, next steps only), and what to exclude (internal {data_types}, {sensitivity_level} detail, unresolved risks); and (B) for Copilot in Word to draft an internal decision rationale paragraph (3–5 sentences) for the {org_type} file—referencing verified {data_types} as source inputs and flagging any figures Copilot cannot confirm. For each prompt, explain in one sentence why the surface choice and tone differ between the two outputs."
+          "text_template": "You now have your foundational recap from Task 1. Write two distinct follow-on prompts: (A) for Copilot in Outlook to draft a {audience}-facing email about the {case_type}—specifying tone (professional, concise, action-oriented), what to include (confirmed decisions, next steps only), and what to exclude (internal {data_types}, {sensitivity_level} detail, unresolved risks); and (B) for Copilot in Word to draft an internal decision rationale paragraph (3–5 sentences) for the {org_type} file—referencing verified {data_types} as source inputs and flagging any figures Copilot cannot confirm. For each prompt, explain in one sentence why the surface choice and tone differ between the two outputs.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Specify audience, tone, purpose, and confidentiality constraints upfront",
+              "is_best": true
+            },
+            {
+              "label": "Draft with AI, then adjust tone and compliance language afterwards",
+              "is_best": false
+            },
+            {
+              "label": "Accept AI draft if it matches standard format and word count",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 3,
           "skill_focus": "Iterative refinement and governance-aware output validation",
-          "text_template": "Review the {audience}-facing email draft from Task 2A and the internal rationale from Task 2B. Identify two specific improvements needed: (1) inject {org_type}-specific voice and {case_type} context so the communication does not feel generic, and (2) sharpen the call to action so {audience} know exactly what to do next and why it matters now. Write two follow-up Copilot prompts—one for each improvement—and explain what you are asking Copilot to change and why that change strengthens the communication. Then design a three-item pre-submission checklist covering: factual accuracy against source-of-truth {data_types}, confidentiality (no internal-only content in the {audience}-facing output), and consistency with prior {org_type} communications."
+          "text_template": "Review the {audience}-facing email draft from Task 2A and the internal rationale from Task 2B. Identify two specific improvements needed: (1) inject {org_type}-specific voice and {case_type} context so the communication does not feel generic, and (2) sharpen the call to action so {audience} know exactly what to do next and why it matters now. Write two follow-up Copilot prompts—one for each improvement—and explain what you are asking Copilot to change and why that change strengthens the communication. Then design a three-item pre-submission checklist covering: factual accuracy against source-of-truth {data_types}, confidentiality (no internal-only content in the {audience}-facing output), and consistency with prior {org_type} communications.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Write separate prompts with role-specific constraints for each audience",
+              "is_best": true
+            },
+            {
+              "label": "Add specific CTA and context constraints to sharpen the prompt",
+              "is_best": false
+            },
+            {
+              "label": "Send draft after grammar check or junior team member spot-check",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 4,
           "skill_focus": "End-to-end workflow governance and critical surface-mismatch prevention",
-          "text_template": "Design your complete {workflow_goal} workflow for the {case_type} {programme_name}: identify which Copilot surface you will use for each of four steps (synthesizing context, drafting {audience} email, writing internal documentation, storing in system-of-record), and for each step write one sentence explaining why that surface is the correct match and what the primary confidentiality consideration is. Then identify the single step where a surface mismatch would cause the most damage to final output—explain specifically what would be lost or broken (accuracy, structure, tone, governance, time). Finally, describe how the Copilot Surface Selector mindset prevented that failure and propose one additional human review gate you would embed before the {audience}-facing output leaves your {org_type}."
+          "text_template": "Design your complete {workflow_goal} workflow for the {case_type} {programme_name}: identify which Copilot surface you will use for each of four steps (synthesizing context, drafting {audience} email, writing internal documentation, storing in system-of-record), and for each step write one sentence explaining why that surface is the correct match and what the primary confidentiality consideration is. Then identify the single step where a surface mismatch would cause the most damage to final output—explain specifically what would be lost or broken (accuracy, structure, tone, governance, time). Finally, describe how the Copilot Surface Selector mindset prevented that failure and propose one additional human review gate you would embed before the {audience}-facing output leaves your {org_type}.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Justify each surface choice, identify AI risks, and design verification checklist",
+              "is_best": true
+            },
+            {
+              "label": "Map surfaces to workflow steps and mark outputs as AI-generated",
+              "is_best": false
+            },
+            {
+              "label": "Verify only external-facing sections and trust AI to self-censor sensitive data",
+              "is_best": false
+            }
+          ]
         }
       ],
       "coach_system_prompt_template": "You are an AI skills coach for {organisation} {role}s practicing the {domain} framework in the AI Hero Academy. The learner is working through {scenario_name}, a sequential workflow involving Microsoft 365 surfaces (Teams, Word, Outlook, SharePoint, CRM) to produce structured outputs such as programme briefs, stakeholder emails, meeting recaps, action items, and follow-up communications.\n\n**Your Core Coaching Approach:**\n- Guide learners to match each task to the tool best suited for it, and chain outputs from one surface as inputs to the next.\n- Ask probing questions rather than providing finished text or complete drafts.\n- After each learner response, affirm what they did well, then ask one or two targeted questions to deepen their thinking (e.g., 'Why did you choose that tool or surface for this task?' or 'What decision or data from the previous step should inform this one?').\n- Do NOT write the recap, email, internal note, checklist, or CRM entry for the learner. Guide them to construct these themselves.\n- Ask probing questions when a learner's response is vague, incomplete, or skips a required element.\n\n**Data Safety Guardrail — CRITICAL:** If the learner appears to input what looks like real client data — real company names, real financial figures, or verbatim confidential records — flag it immediately and instruct them to use only the fictional scenario data provided in {scenario_name}.\n\n**Task-by-Task Coaching Structure:**\n\n**Task 1 — Meeting Recap & Surface Selection (Teams):**\n- Check that the learner has identified the key decisions, action items, and stakeholders from the meeting transcript or scenario context.\n- Guide them to select Teams as the appropriate surface for capturing and validating the recap before moving downstream.\n- Ask: 'What are the critical decisions or blockers from this meeting? Who needs to confirm them?'\n\n**Task 2 — Document Synthesis & Brief Generation (Word):**\n- Guide the learner to use the Teams recap as input to structure a programme brief, analytical summary, or internal document.\n- Emphasize tone calibration and audience alignment (internal vs. external, technical vs. executive).\n- Ask: 'What data or decisions from Task 1 must appear in this brief? What is the primary audience, and how should that shape the structure and language?'\n\n**Task 3 — Stakeholder Communication & Email Drafting (Outlook):**\n- Guide the learner to repurpose or adapt content from the brief into a client-facing or stakeholder email.\n- Emphasize content separation (what is internal vs. external), tone refinement, and multi-step workflow automation.\n- Ask: 'Which elements from the brief should the stakeholder see? What tone or framing is appropriate for this recipient?'\n\n**Task 4 — CRM Data Entry & Record Governance (CRM/SharePoint):**\n- Guide the learner to extract action items, follow-ups, and attribution from the recap and email.\n- Emphasize audit trail discipline, internal/external content separation, and multi-stakeholder attribution.\n- Ask: 'What actions or decisions need to be recorded for future reference? Who is accountable, and what is the follow-up date?'\n\n**Conversation Discipline Rules:**\n1. Validate tool choice before execution: 'Why is {surface} the right choice for this task?'\n2. Confirm data flow between steps: 'What from the previous step feeds into this one?'\n3. Check for consistency and completeness: 'Have you captured all stakeholders, decisions, and action items?'\n4. Enforce fictional scenario boundaries: 'Is this data from {scenario_name}, or does it look like real client information?'\n5. Affirm effort and reasoning before redirecting: 'I see you chose {surface} because {learner's reason}. Let's explore whether {alternative} might also work here.'\n\n**Role-Specific Coaching Emphasis:**\n- For programme/operational roles: Ground KPIs, stakeholders, and deliverables in programme management artefacts (milestones, RAID logs, steering committees).\n- For analytical/finance roles: Emphasize data integrity, numerical accuracy, and executive summary discipline.\n- For communications/marketing roles: Emphasize tone calibration, bilingual brand voice, and client-facing messaging workflows.\n- For client-facing Relationship Managers: Emphasize CRM update sequencing, internal/external content separation, and multi-stakeholder attribution.\n- For underwriters/risk roles: Emphasize audit trail discipline, coverage decision confirmation in Teams before downstream surfaces, and regulatory compliance in record-keeping.\n- For roles with less meeting governance: Replace meeting recap with the role's main communication chain (e.g., 'analysis to slide deck' or 'customer call to CRM note to email')."
@@ -78,11 +125,11 @@
     "domain": "capstone",
     "capability_tags": [
       "end_to_end_ai_workflow",
-      "safe_craf_verify_relate_signal_framework",
-      "strategic_prompting_and_critical_evaluation",
-      "responsible_data_handling_and_verification",
-      "stakeholder_communication_and_relationship_intelligence",
-      "multi_tool_orchestration_and_copilot_surface_selector"
+      "safe_craf_verify_framework",
+      "strategic_prompting",
+      "responsible_ai",
+      "relationship_intel",
+      "augmented_comm"
     ],
     "estimated_minutes": 30,
     "role_variants_hint": "The core End-to-End AI Workflow structure (Planning → Execution → Follow-up → Reporting) remains constant across all roles, but the {role_context_metrics}, {role_decision_moments}, and operating cycle vary significantly. For programme analysts and PMO leads, anchor CRAF prompts in quantitative performance metrics and risk registers; for Trade Finance Marketing Leads, emphasize exporter client profiling and bilingual campaign analytics; for Relationship Managers, focus on pipeline analytics, CFO/VP stakeholder mapping, and trade finance solution alignment; for senior underwriters, highlight buyer concentration risk, multi-jurisdiction compliance, and credit committee workflows; for any other role, swap the weekly workflow moments for that role's real intake-analysis-review-communication-decision cycle. The runtime LLM should inject role-specific context into guardrails, framework sequencing, and stakeholder priorities while preserving all coaching discipline rules and verification logic.",
@@ -98,22 +145,69 @@
         {
           "task_id": 1,
           "skill_focus": "AI-assisted data ingestion and insight surfacing with structured prompt design",
-          "text_template": "Open the {programme_name} {data_types} file in your approved AI tool. Write a structured prompt that surfaces the top three performance highlights and two areas of concern for the {workflow_goal} briefing to {audience}. Your prompt must: (a) name the analytical frame ({workflow_goal}), (b) define what qualifies as a 'highlight' versus an 'area of concern' for a {audience} audience (e.g., materiality threshold, trend direction, or benchmark comparison), and (c) specify the output structure so results are ready to carry forward into the narrative. Explain in one sentence why this framing protects against AI hallucination."
+          "text_template": "Open the {programme_name} {data_types} file in your approved AI tool. Write a structured prompt that surfaces the top three performance highlights and two areas of concern for the {workflow_goal} briefing to {audience}. Your prompt must: (a) name the analytical frame ({workflow_goal}), (b) define what qualifies as a 'highlight' versus an 'area of concern' for a {audience} audience (e.g., materiality threshold, trend direction, or benchmark comparison), and (c) specify the output structure so results are ready to carry forward into the narrative. Explain in one sentence why this framing protects against AI hallucination.",
+          "task_mode": "open",
+          "mcq_options": null
         },
         {
           "task_id": 2,
           "skill_focus": "Cross-tool verification and conditional decision-making with AI outputs",
-          "text_template": "Your AI tool has flagged a decline in the {programme_name}'s {data_types} as an 'area of concern.' You recall that a recent cross-functional review meeting discussed a scheduling adjustment that may explain this decline – meaning it could be a timing anomaly, not a real {case_type} risk. Write a prompt you would use to search your organization's meeting records for any discussion of the {data_types} metric. Then describe two distinct actions you would take depending on the outcome: (a) if the search confirms the decline was explained by the timing adjustment, and (b) if no explanation is found. For each path, specify which AI tool you would use next and what verification step you would apply before proceeding."
+          "text_template": "Your AI tool has flagged a decline in the {programme_name}'s {data_types} as an 'area of concern.' You recall that a recent cross-functional review meeting discussed a scheduling adjustment that may explain this decline – meaning it could be a timing anomaly, not a real {case_type} risk. Write a prompt you would use to search your organization's meeting records for any discussion of the {data_types} metric. Then describe two distinct actions you would take depending on the outcome: (a) if the search confirms the decline was explained by the timing adjustment, and (b) if no explanation is found. For each path, specify which AI tool you would use next and what verification step you would apply before proceeding.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Apply structured framework, specify context and constraints, then verify output",
+              "is_best": true
+            },
+            {
+              "label": "Use the most capable model available to minimize manual verification effort",
+              "is_best": false
+            },
+            {
+              "label": "Skip documentation review for internal analysis to accelerate delivery",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 3,
           "skill_focus": "Audience-centric prompt engineering and AI-assisted document drafting with compliance controls",
-          "text_template": "You are building the executive summary section of the briefing for {audience}. Using the STAKE framework (Situation, Task, Audience, Key message, Expected output) as your prompt structure, write a prompt that produces this section. Your prompt must: (a) explicitly name {audience} and their primary lens ({case_type}, not {workflow_goal}), (b) incorporate the verified {data_types} from prior steps – including any resolved {case_type} anomalies, (c) specify tone and length appropriate for a {audience}-level executive summary, and (d) instruct the AI tool to flag any claims requiring external verification. Describe one compliance check you would apply to the AI output before sharing with {audience}."
+          "text_template": "You are building the executive summary section of the briefing for {audience}. Using the STAKE framework (Situation, Task, Audience, Key message, Expected output) as your prompt structure, write a prompt that produces this section. Your prompt must: (a) explicitly name {audience} and their primary lens ({case_type}, not {workflow_goal}), (b) incorporate the verified {data_types} from prior steps – including any resolved {case_type} anomalies, (c) specify tone and length appropriate for a {audience}-level executive summary, and (d) instruct the AI tool to flag any claims requiring external verification. Describe one compliance check you would apply to the AI output before sharing with {audience}.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Flag any claim not traceable to a named approved source document",
+              "is_best": true
+            },
+            {
+              "label": "Accept AI outputs that include hedging language as appropriate caution",
+              "is_best": false
+            },
+            {
+              "label": "Use AI summaries that align with your existing recollection of the data",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 4,
           "skill_focus": "AI output audit, data safety violation detection, and stakeholder-appropriate content remediation",
-          "text_template": "While reviewing the AI-drafted briefing, you identify two distinct problems that must be corrected before distribution to {audience}: (a) DATA SAFETY VIOLATION – the {data_types} section references a specific {org_type} partner's liability figure sourced from an Internal Use Only document. This is {sensitivity_level} data and must not appear in any stakeholder-facing version. (b) AUDIENCE MISMATCH – the second section still uses {case_type} framing (emphasizing downside scenarios) even though {audience} requires {workflow_goal} framing (emphasizing opportunity and mitigation). For each problem, specify: (i) the exact edit or re-prompt you would execute, (ii) which AI tool or manual process you would use, and (iii) how you would document the remediation for compliance."
+          "text_template": "While reviewing the AI-drafted briefing, you identify two distinct problems that must be corrected before distribution to {audience}: (a) DATA SAFETY VIOLATION – the {data_types} section references a specific {org_type} partner's liability figure sourced from an Internal Use Only document. This is {sensitivity_level} data and must not appear in any stakeholder-facing version. (b) AUDIENCE MISMATCH – the second section still uses {case_type} framing (emphasizing downside scenarios) even though {audience} requires {workflow_goal} framing (emphasizing opportunity and mitigation). For each problem, specify: (i) the exact edit or re-prompt you would execute, (ii) which AI tool or manual process you would use, and (iii) how you would document the remediation for compliance.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Remove sensitive identifiers and figures; apply full human review before distribution",
+              "is_best": true
+            },
+            {
+              "label": "Delegate AI output verification to junior team members to save time",
+              "is_best": false
+            },
+            {
+              "label": "Apply full review externally; skip verification for internal AI outputs",
+              "is_best": false
+            }
+          ]
         }
       ],
       "coach_system_prompt_template": "You are an AI skills coach for {organisation} {role}s completing the AI Hero Academy Capstone. The learner is preparing the {scenario_name} using an End-to-End AI Workflow across multiple tools and phases: Planning, Execution, Follow-up, and Reporting. Your role is to guide, not to answer. Use targeted questions to develop the learner's judgment at each stage, helping them demonstrate competency across all six AI skill domains — Responsible AI, Strategic Prompting, Critical Evaluation, Relationship Intelligence, Data-Driven Decisions, and Augmented Communication.\n\n**Your coaching approach:**\n- Do not write final prompts, complete emails, meeting briefs, CRM records, workflow maps, verification checklists, or stakeholder packs on behalf of the learner. Instead, ask guiding questions that force them to identify checkpoints, constraints, verification steps, and framework applications themselves.\n- Watch for policy breaches, shallow prompts, unverified claims, weak stakeholder targeting, poor tool choices, and vague superlatives ('best' or 'worst').\n- When a learner's response is incomplete or misses a discipline, surface the gap and prompt them to apply the correct framework step.\n\n**FOR TASK 1 (Planning & Prompting):** Ask whether the prompt defines key terms and success criteria for the specific audience — vague language is not sufficient. Push them to ground outputs in quantitative metrics, risk registers, or role-specific performance indicators.\n\n**FOR TASK 2 (Execution & Tool Chaining):** Guide them through multi-tool orchestration (Excel, Teams, Word, Outlook Copilot, CRM, etc.). Ensure they sequence tools logically and verify data integrity at handoff points.\n\n**FOR TASK 3 (Verification & Critical Evaluation):** Ask them to articulate verification checkpoints, data safety guardrails, and how they will validate AI-generated content before stakeholder communication.\n\n**FOR TASK 4 (Relationship & Stakeholder Communication):** Help them map stakeholder needs, tailor communication tone and format, and ensure audience-appropriate framing of insights and recommendations.\n\n**FOR TASK 5 (Reporting & Decision Support):** Guide them to synthesize findings into actionable recommendations, aligned with governance, compliance, and decision-maker priorities.\n\n**DATA SAFETY GUARDRAIL:** If the learner attempts to process sensitive data (PII, financial records, confidential client information) without explicit safeguards, immediately flag the risk and ask them to design appropriate controls before proceeding.\n\n**FRAMEWORK INTEGRATION:** Integrate SAFE, CRAF, VERIFY, RELATE, SIGNAL, and Copilot Surface Selector disciplines as appropriate to the {role} and {scenario_name}. Help the learner recognize which framework applies at each workflow moment and why.\n\n**Role-specific anchors:** For {role}, ground the workflow in {role_context_metrics} and {role_decision_moments} as the core AI-assist/human-verify touchpoints. Emphasize the operating cycle and stakeholder priorities unique to this role."
@@ -171,22 +265,69 @@
         {
           "task_id": 1,
           "skill_focus": "Identifying verification priorities in AI-generated content",
-          "text_template": "Before applying formal verification steps, read the AI-generated draft on {case_type} carefully and identify at least one figure, claim, or statement that you would prioritise for verification before sharing with {audience}. For each item flagged, explain specifically why it stands out – for example, because the magnitude seems unexpectedly large, the stated cause does not match your knowledge of {programme_name}, the arithmetic appears inconsistent with other figures provided, or the claim lacks a traceable source in your {data_types}. You do not need to resolve or correct it yet; focus on articulating *what* you would check and *why* it matters for {workflow_goal}."
+          "text_template": "Before applying formal verification steps, read the AI-generated draft on {case_type} carefully and identify at least one figure, claim, or statement that you would prioritise for verification before sharing with {audience}. For each item flagged, explain specifically why it stands out – for example, because the magnitude seems unexpectedly large, the stated cause does not match your knowledge of {programme_name}, the arithmetic appears inconsistent with other figures provided, or the claim lacks a traceable source in your {data_types}. You do not need to resolve or correct it yet; focus on articulating *what* you would check and *why* it matters for {workflow_goal}.",
+          "task_mode": "open",
+          "mcq_options": null
         },
         {
           "task_id": 2,
           "skill_focus": "Verifying calculations and interrogating outliers systematically",
-          "text_template": "Using the figures stated in the AI-generated draft, manually verify at least two key claims by recalculating them yourself. For each claim, state: (a) the figures the AI tool cited, (b) your independent calculation, (c) whether the AI's result is confirmed or incorrect, and (d) the accurate figure if different. Then identify any {data_types} or {sensitivity_level} outliers – figures that seem disproportionate, unexplained, or inconsistent with the broader narrative. For each outlier, describe what additional source material or breakdown you would need to confirm whether it represents a genuine anomaly or a data entry error. Document your findings in a structured checklist format."
+          "text_template": "Using the figures stated in the AI-generated draft, manually verify at least two key claims by recalculating them yourself. For each claim, state: (a) the figures the AI tool cited, (b) your independent calculation, (c) whether the AI's result is confirmed or incorrect, and (d) the accurate figure if different. Then identify any {data_types} or {sensitivity_level} outliers – figures that seem disproportionate, unexplained, or inconsistent with the broader narrative. For each outlier, describe what additional source material or breakdown you would need to confirm whether it represents a genuine anomaly or a data entry error. Document your findings in a structured checklist format.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Trace every AI-generated figure to its source before use",
+              "is_best": true
+            },
+            {
+              "label": "Accept AI output if it includes hedging language or plausible source names",
+              "is_best": false
+            },
+            {
+              "label": "Flag only figures that materially differ from your independent estimate",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 3,
           "skill_focus": "Flagging unsupported reasoning and correcting causal claims",
-          "text_template": "Review the AI-generated narrative's explanation for a key finding or variance in {case_type}. The AI attributes the result to a specific cause or driver. Cross-reference this explanation against your detailed {data_types} breakdown, source documents, or {org_type} records. If you find that the stated cause is inaccurate, incomplete, or contradicted by the source material, do one of the following: (a) write a follow-up prompt instructing the AI tool to correct its reasoning, specifying which source it should consult and what the correct driver actually is, OR (b) rewrite the affected paragraph yourself and explain why you chose manual correction rather than re-prompting. In either case, ensure the revised statement is traceable to a specific line item or evidence in your {data_types}."
+          "text_template": "Review the AI-generated narrative's explanation for a key finding or variance in {case_type}. The AI attributes the result to a specific cause or driver. Cross-reference this explanation against your detailed {data_types} breakdown, source documents, or {org_type} records. If you find that the stated cause is inaccurate, incomplete, or contradicted by the source material, do one of the following: (a) write a follow-up prompt instructing the AI tool to correct its reasoning, specifying which source it should consult and what the correct driver actually is, OR (b) rewrite the affected paragraph yourself and explain why you chose manual correction rather than re-prompting. In either case, ensure the revised statement is traceable to a specific line item or evidence in your {data_types}.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Replace unsupported claims with verified source material or language",
+              "is_best": true
+            },
+            {
+              "label": "Ask AI for its source; trust any named document or reference provided",
+              "is_best": false
+            },
+            {
+              "label": "Add a caveat noting the claim is AI-generated; publish with disclosure",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 4,
           "skill_focus": "Synthesizing verification findings into defensible conclusions",
-          "text_template": "Now that you have worked through the {case_type} for {programme_name}, produce a verification log (4–6 sentences or a structured list) that documents your quality assurance process. Your log must: (a) name at least four of the six VERIFY steps explicitly (Verify facts, Examine assumptions, Remove inaccuracies, Interrogate outliers, Flag confidential/unsupported claims, Yield final judgment), (b) describe a concrete finding or action for each step drawn from this scenario, (c) list any remaining gaps or items still pending confirmation, and (d) conclude with a clear statement of confidence – or a specific remaining concern – about whether the analysis is now ready to share with {audience} for {workflow_goal}. Format your log so that a colleague could quickly understand what was checked, what was found, and what risks (if any) remain."
+          "text_template": "Now that you have worked through the {case_type} for {programme_name}, produce a verification log (4–6 sentences or a structured list) that documents your quality assurance process. Your log must: (a) name at least four of the six VERIFY steps explicitly (Verify facts, Examine assumptions, Remove inaccuracies, Interrogate outliers, Flag confidential/unsupported claims, Yield final judgment), (b) describe a concrete finding or action for each step drawn from this scenario, (c) list any remaining gaps or items still pending confirmation, and (d) conclude with a clear statement of confidence – or a specific remaining concern – about whether the analysis is now ready to share with {audience} for {workflow_goal}. Format your log so that a colleague could quickly understand what was checked, what was found, and what risks (if any) remain.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Replace all unverifiable content with validated language; document each step",
+              "is_best": true
+            },
+            {
+              "label": "Re-prompt with stricter constraints and accept the revised output as-is",
+              "is_best": false
+            },
+            {
+              "label": "Publish output with caveat that figures are preliminary and may change",
+              "is_best": false
+            }
+          ]
         }
       ],
       "coach_system_prompt_template": "You are an AI skills coach for {organisation} {role}s enrolled in 'Trust but Verify: Validating AI Analyses' practicing the VERIFY Checklist. The learner is working through {scenario_name} to validate AI-generated outputs across {domain}. Your role is to guide, probe, and stretch their thinking — not to give them answers or complete their work.\n\n**Your coaching approach by task:**\n- Task 1: Ask the learner to be specific about what they're checking and which source they would consult *first*. If they accept AI output without questioning a specific claim, ask: 'Which step of VERIFY applies here, and what would you actually check?' Push back if they list generic sources without tying them to the specific scenario step.\n- Task 2: If the learner rewrites a statement or identifies an error without distinguishing fact from interpretation, probe deeper. Ask them to separate verified facts from inference and remove unsupported wording. Watch for blind trust in fluent AI language.\n- Task 3: Guide the learner to interrogate each part of the AI draft rather than accepting it at face value. If they focus only on obvious errors, prompt them to also consider subtle issues: tone, implied guarantees, missing disclaimers, logical consistency, or unstated assumptions.\n\n**What you must NOT do:** Do not calculate ratios, reconstruct analysis math, write final summary bullets, produce a completed analysis, or rewrite the learner's full work on their behalf. If a learner asks you to 'just write the summary' or 'check if these numbers are right,' redirect them to the verification step they should be performing themselves.\n\n**Conversation discipline:**\n- Ground verification in role-specific sources: for finance, reconcile against ledger data and budget records; for credit, anchor in covenant compliance and approving authority communications; for marketing, emphasize brand voice and reputational risk; for advisory, focus on source-backed claims and decision risk.\n- Ask clarifying questions before accepting the learner's reasoning.\n- If they claim an error, ask them to show the evidence and walk through their logic.\n- Celebrate specificity and evidence-based thinking; redirect vague or assumption-driven conclusions back to the VERIFY discipline."
@@ -244,22 +385,69 @@
         {
           "task_id": 1,
           "text_template": "Review the {case_type} relevant to your {org_type} and identify at least four to five specific data elements that must NOT be shared directly with {programme_name} or any non-approved AI tool. For each element, explain why it qualifies as {sensitivity_level} information and describe a SAFE abstraction — a generic but decision-useful substitute (e.g., a range instead of exact figures, a role title instead of a name, a sector descriptor instead of a specific identifier). Present your answer as a two-column list: 'Original Detail' | 'SAFE Abstraction' with one-sentence reasoning for each.",
-          "skill_focus": "Identifying and abstracting sensitive data elements"
+          "skill_focus": "Identifying and abstracting sensitive data elements",
+          "task_mode": "open",
+          "mcq_options": null
         },
         {
           "task_id": 2,
           "text_template": "Using only the abstracted inputs from Task 1 — no names, no exact {data_types}, no internal classifications — write a complete prompt you would submit to {programme_name} to {workflow_goal}. Your prompt must: (a) provide enough anonymized context for {programme_name} to produce a genuinely useful output; (b) follow a clear Role / Action / Context / Format structure; (c) include at least two explicit constraint instructions (e.g., 'If a detail is not provided, say UNKNOWN. Do not invent figures or assumptions'); and (d) specify the intended use (internal briefing, {audience}-facing communication, etc.). After writing the prompt, explain in one sentence the single most important abstraction choice you made.",
-          "skill_focus": "Crafting compliant AI prompts with abstracted context"
+          "skill_focus": "Crafting compliant AI prompts with abstracted context",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Abstract identifiers; use approved environments; specify format, audience, and no-fabrication constraints",
+              "is_best": true
+            },
+            {
+              "label": "Include real figures for accuracy; let AI choose format and length",
+              "is_best": false
+            },
+            {
+              "label": "Ask AI to anonymize data before generating; use consumer AI platforms",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 3,
           "text_template": "Review the prompt you drafted in Task 2. Identify any detail — such as geography, industry niche, deal size range, unusual structure, or sector-specific terminology — that could allow a knowledgeable reader familiar with {org_type}'s sector to infer the specific {case_type}, parties involved, or re-identify the {audience} even without explicit names (a 'deal fingerprint'). Explain why this detail creates a traceability or confidentiality risk given the {sensitivity_level} of the information. Then rewrite only that portion of the prompt to remove the fingerprint while preserving enough context for {programme_name} to deliver a useful {workflow_goal} output.",
-          "skill_focus": "Detecting and eliminating re-identification risks in prompts"
+          "skill_focus": "Detecting and eliminating re-identification risks in prompts",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Replace specific data with abstracted ranges; flag sector-level details that enable re-identification",
+              "is_best": true
+            },
+            {
+              "label": "Keep publicly available benchmarks and geography; add confidentiality disclaimer",
+              "is_best": false
+            },
+            {
+              "label": "Rewrite using only sector descriptors; add internal-use disclaimer to prompt",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 4,
           "text_template": "You have received output from {programme_name} based on your SAFE prompt. Before using this output in any {case_type} document, internal briefing, or communication to {audience}, you must ensure it meets three standards: (a) **Verified** — the output has been checked against your own analysis and contains no invented figures, unsupported claims, or hallucinations; (b) **Appropriately attributed** — any document using this output makes clear which sections reflect AI-assisted drafting versus {role} judgment; and (c) **Audit-ready** — the workflow (prompt, output, review steps, final use) can be explained and defended if reviewed by {audience} or compliance. Describe the specific verification steps you would take, how you would document attribution, and what audit trail you would maintain.",
-          "skill_focus": "Verifying, attributing, and auditing AI-assisted outputs"
+          "skill_focus": "Verifying, attributing, and auditing AI-assisted outputs",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Verify each AI claim against your analysis; flag unsupported figures before use",
+              "is_best": true
+            },
+            {
+              "label": "Personalize output manually; publish with note that statistics may vary",
+              "is_best": false
+            },
+            {
+              "label": "Use AI draft if professional; add compliance disclaimer to output",
+              "is_best": false
+            }
+          ]
         }
       ],
       "coach_system_prompt_template": "You are an AI skills coach for {organisation} {role}s enrolled in the course '{scenario_name}.' Your role is to guide learners in applying the SAFE Abstraction Method — Substitute identifiers, Abstain from exact sensitive figures, Focus on the decision, Ensure the tool boundary is right — to protect non-public information while still producing useful AI-assisted outputs.\n\nCOACHING PRINCIPLES:\n- Ask probing questions rather than giving direct answers. Guide learners to identify sensitive data, abstract it properly, craft safe prompts, and finalize outputs compliantly.\n- Do not write the learner's abstraction plan, prompt, or final answer for them.\n- Use targeted questions like: 'What makes that detail a fingerprint risk?' or 'How would you describe that figure without using the exact number?'\n- Push learners to be specific about why data is sensitive and how to anonymise it.\n\nCONFIDENTIALITY GUARDRAIL (enforce at all times):\n- Flag any attempt to input real non-public data, real employee information, actual customer information, credentials, contract clauses, or sensitive financial details.\n- If the learner appears to input what looks like real client data — real company names, real financial figures, real addresses, real employee names — stop and redirect them to use fictional equivalents.\n- If the learner ignores policy risk, redirect them to policy boundaries and the requirement for human review.\n\nTASK-BY-TASK GUIDANCE:\n1. Data Identification: Help learners spot sensitive elements (PII, financial data, ownership structures, covenant thresholds, internal risk ratings, meeting transcripts, credentials).\n2. Abstraction Planning: Guide them to substitute identifiers, anonymise figures, and classify data by sensitivity tier.\n3. Prompt Crafting: Coach them to frame requests without exact sensitive data, focusing on the decision or output needed.\n4. Output Finalization: Ensure learners verify that abstractions are consistent, that the AI output does not re-expose sensitive data, and that human review is documented.\n\nCONVERSATION DISCIPLINE:\n- Maintain a Socratic method: ask 'why' and 'how' before offering hints.\n- Acknowledge correct reasoning; redirect incomplete or risky abstractions with follow-up questions.\n- Reinforce that the goal is both compliance and usability — safe prompts still produce high-quality outputs.\n- For role-specific contexts (compliance, sales, underwriting, delivery), ground examples in that role's typical sensitive artifacts and workflows."
@@ -317,22 +505,69 @@
         {
           "task_id": 1,
           "skill_focus": "Constructing complete CRAF prompts with all four elements",
-          "text_template": "Using the CRAF framework (Context, Role, Action, Format), write a complete prompt to have an AI tool produce a {case_type} deliverable for {audience}. Your prompt must explicitly label all four CRAF elements:\n- **Context:** What is the {case_type}? What does it cover? Who is the {audience}? What is the {org_type} or {programme_name} background?\n- **Role:** What perspective or persona should the AI adopt?\n- **Action:** What specific deliverable do you need? What should the output accomplish?\n- **Format:** How should the output be structured, and what are the length/style constraints?\n\nAim to write a prompt that would give the AI enough information to produce a usable first draft without further clarification."
+          "text_template": "Using the CRAF framework (Context, Role, Action, Format), write a complete prompt to have an AI tool produce a {case_type} deliverable for {audience}. Your prompt must explicitly label all four CRAF elements:\n- **Context:** What is the {case_type}? What does it cover? Who is the {audience}? What is the {org_type} or {programme_name} background?\n- **Role:** What perspective or persona should the AI adopt?\n- **Action:** What specific deliverable do you need? What should the output accomplish?\n- **Format:** How should the output be structured, and what are the length/style constraints?\n\nAim to write a prompt that would give the AI enough information to produce a usable first draft without further clarification.",
+          "task_mode": "open",
+          "mcq_options": null
         },
         {
           "task_id": 2,
           "skill_focus": "Diagnosing and refining CRAF elements for accuracy and relevance",
-          "text_template": "Review the AI output from Task 1. Identify a gap: the output either omits critical {data_types}, misses {sensitivity_level} concerns, adopts the wrong tone for {audience}, or reads too generically for the {case_type}.\n\nDiagnose which CRAF element(s) were either missing or insufficiently defined in your Task 1 prompt that likely caused this result. Then revise your prompt with targeted adjustments to that element. For example:\n- If the output is too generic, enrich the **Context** layer with sector-specific details, plausible {data_types}, or common pressures faced by this {org_type}.\n- If the tone is wrong, sharpen the **Role** instruction to specify voice, perspective, and {audience} readiness.\n- If critical information is buried, restructure the **Format** element to prioritize {sensitivity_level} concerns.\n\nPaste your revised prompt and explain which CRAF element you strengthened and why."
+          "text_template": "Review the AI output from Task 1. Identify a gap: the output either omits critical {data_types}, misses {sensitivity_level} concerns, adopts the wrong tone for {audience}, or reads too generically for the {case_type}.\n\nDiagnose which CRAF element(s) were either missing or insufficiently defined in your Task 1 prompt that likely caused this result. Then revise your prompt with targeted adjustments to that element. For example:\n- If the output is too generic, enrich the **Context** layer with sector-specific details, plausible {data_types}, or common pressures faced by this {org_type}.\n- If the tone is wrong, sharpen the **Role** instruction to specify voice, perspective, and {audience} readiness.\n- If critical information is buried, restructure the **Format** element to prioritize {sensitivity_level} concerns.\n\nPaste your revised prompt and explain which CRAF element you strengthened and why.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Specify missing context and constraints explicitly in the Action element",
+              "is_best": true
+            },
+            {
+              "label": "Allow AI to choose the analysis format and approach independently",
+              "is_best": false
+            },
+            {
+              "label": "Submit multiple narrow prompts and manually combine the outputs",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 3,
           "skill_focus": "Adding constraints and guardrails to enforce compliance and boundaries",
-          "text_template": "Your revised prompt from Task 2 is more accurate, but it lacks safeguards. Add explicit constraints to your CRAF prompt that:\n- Prevent misleading, hyperbolic, or unsupported claims (e.g., no guarantee language, no invented {data_types}, no sensationalism)\n- Enforce {sensitivity_level} and {org_type} brand or compliance standards (e.g., plain language for non-expert {audience}, no low-level operational detail, professional tone)\n- Separate factual observations from interpretive commentary if needed (e.g., label [Fact] vs. [Interpretation])\n- Prohibit recommendations or approvals that belong to the {role}, not the AI\n\nWrite the exact constraint wording you would add to your prompt. Explain which CRAF element(s) each constraint belongs to (typically Format or Action)."
+          "text_template": "Your revised prompt from Task 2 is more accurate, but it lacks safeguards. Add explicit constraints to your CRAF prompt that:\n- Prevent misleading, hyperbolic, or unsupported claims (e.g., no guarantee language, no invented {data_types}, no sensationalism)\n- Enforce {sensitivity_level} and {org_type} brand or compliance standards (e.g., plain language for non-expert {audience}, no low-level operational detail, professional tone)\n- Separate factual observations from interpretive commentary if needed (e.g., label [Fact] vs. [Interpretation])\n- Prohibit recommendations or approvals that belong to the {role}, not the AI\n\nWrite the exact constraint wording you would add to your prompt. Explain which CRAF element(s) each constraint belongs to (typically Format or Action).",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Add explicit constraints on format, length, tone, and factual accuracy",
+              "is_best": true
+            },
+            {
+              "label": "Trust AI to maintain standards given a clear goal and context",
+              "is_best": false
+            },
+            {
+              "label": "Instruct AI to flag assumptions; review and approve flagged items",
+              "is_best": false
+            }
+          ]
         },
         {
           "task_id": 4,
           "skill_focus": "Iterating prompts for specificity, audience priority, and real-world usability",
-          "text_template": "Your constrained prompt from Task 3 is now accurate and safe, but it still feels generic or misses {audience} priorities. Rewrite the weakest part of your prompt – typically the **Context** or **Action** element – to make the output specific enough to use with minimal edits.\n\nConsider:\n- Does the **Context** layer include enough {case_type}-specific detail (e.g., sector, region, {workflow_goal}, known pressures) so the AI can tailor its response?\n- Does the **Action** element clearly state what the {audience} will do with the output, and in what order they need information (e.g., top {sensitivity_level} risks first, then supporting detail)?\n- Does the **Format** element reflect {audience} priorities and {org_type} working norms (e.g., one-page brief, scannable bullets, decision points flagged)?\n\nPaste your fully revised CRAF prompt. Explain which element you rewrote and why it now produces output ready for real-world use."
+          "text_template": "Your constrained prompt from Task 3 is now accurate and safe, but it still feels generic or misses {audience} priorities. Rewrite the weakest part of your prompt – typically the **Context** or **Action** element – to make the output specific enough to use with minimal edits.\n\nConsider:\n- Does the **Context** layer include enough {case_type}-specific detail (e.g., sector, region, {workflow_goal}, known pressures) so the AI can tailor its response?\n- Does the **Action** element clearly state what the {audience} will do with the output, and in what order they need information (e.g., top {sensitivity_level} risks first, then supporting detail)?\n- Does the **Format** element reflect {audience} priorities and {org_type} working norms (e.g., one-page brief, scannable bullets, decision points flagged)?\n\nPaste your fully revised CRAF prompt. Explain which element you rewrote and why it now produces output ready for real-world use.",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Enrich Context and Action with domain-specific detail and audience needs",
+              "is_best": true
+            },
+            {
+              "label": "Accept output that meets structural and word-count requirements",
+              "is_best": false
+            },
+            {
+              "label": "Ask AI to self-critique and rewrite its response before finalising",
+              "is_best": false
+            }
+          ]
         }
       ],
       "coach_system_prompt_template": "You are an AI skills coach supporting {role}s learning to apply the CRAF Framework (Context, Role, Action, Format) to {domain} tasks within {organisation}, a fictional organisation used for this exercise. You are coaching the learner through the {scenario_name} scenario.\n\n**Your coaching approach:**\n- Guide the learner using questions and hints. Do NOT write the prompt or output for them.\n- After each task submission, identify which CRAF element (Context, Role, Action, Format) is strongest and which is weakest, and ask a targeted question to help the learner improve the weak element.\n- If Context is thin, ask: 'What sector-typical pressures, use cases, or background could you add without inventing facts?'\n- If Role is unclear, ask: 'Who is your reader and what decision or action do they need to take?'\n- If Action is vague, ask: 'What specific task or transformation should the AI perform?'\n- If Format is missing, ask: 'What structure, length, or output shape does your reader expect?'\n- Check that all four CRAF elements are explicitly present and well-integrated.\n- When a learner submits work, probe deeper: ask how a real {role} reader would react, what constraints they missed, or what decision context is absent.\n- Flag if they attempt to include real sensitive data, confidential information, or vendor content that should not be shared with an AI system.\n- Push learners to discover gaps themselves rather than correcting them directly.\n- For each role variant, adapt the source document type, target audience, output channel, and domain-specific metrics to match real workflows and decision-making contexts."
