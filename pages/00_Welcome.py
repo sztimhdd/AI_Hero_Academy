@@ -346,9 +346,14 @@ if st.button(
         with st.spinner(t("welcome.spinner_parse", _lang)):
             # ── LLM parse of Q1 → structured intake_profile ───────────────
             _parse_prompt = (
-                'Extract structured information from this employee\'s self-description. '
-                'Return ONLY valid JSON with keys: "role_text" (job title in 3-5 words), '
-                '"daily_tasks" (list of 3 task strings), "magic_wish" (the AI wish in one sentence).'
+                "Extract structured information from this employee job description or self-description. "
+                "Return ONLY valid JSON with exactly these keys:\n"
+                "  role_text: job title in 3-5 words\n"
+                "  daily_tasks: list of 4-5 specific task strings (verbs, e.g. 'review credit applications')\n"
+                "  magic_wish: the primary AI benefit this person would want, one sentence\n"
+                "  industry: industry or sector in 2-3 words (e.g. 'project finance', 'insurance', 'engineering')\n"
+                "  org_type: type of organization in 3-5 words (e.g. 'financial Crown corporation')\n"
+                "  seniority: one of: junior, mid, senior, executive"
             )
             try:
                 _raw = call_llm(
@@ -372,18 +377,9 @@ if st.button(
                 }
             _parsed["ai_tools"] = _selected_tools
 
-            # ── Infer role_id for legacy compat ───────────────────────────
-            _role_text_lower = (_parsed.get("role_text") or "").lower() + " " + _q1_text.lower()
-            if any(kw in _role_text_lower for kw in ["relationship manager", " rm ", "client relationship"]):
-                _inferred_role_id = "rm"
-            elif any(kw in _role_text_lower for kw in ["underwriter", "underwriting", " uw "]):
-                _inferred_role_id = "uw"
-            elif any(kw in _role_text_lower for kw in ["analyst", " an ", "analytics"]):
-                _inferred_role_id = "an"
-            else:
-                # Use advanced-options selection if provided, else default to "rm"
-                _adv_sel = st.session_state.get("welcome_role", _adv_role_placeholder)
-                _inferred_role_id = _role_map.get(_adv_sel, "rm")
+            # ── role_id: use Advanced Options selection if provided; else "universal" ──
+            _adv_sel = st.session_state.get("welcome_role", _adv_role_placeholder)
+            _inferred_role_id = _role_map.get(_adv_sel, "universal")
 
             # ── Display name from advanced options or email prefix ─────────
             _adv_name = st.session_state.get("welcome_display_name", "").strip()

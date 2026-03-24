@@ -1,8 +1,8 @@
 {
   "app.db_error": "Unable to connect to the database. Please refresh.",
 
-  "welcome.q1_label": "Tell us about your work",
-  "welcome.q1_placeholder": "Describe your role and a typical workday. Then finish with:\nIf AI could do ONE thing to make your work easier, what would it be?",
+  "welcome.q1_label": "Paste your job description, or describe your role and main responsibilities",
+  "welcome.q1_placeholder": "You can paste a job posting, LinkedIn summary, or write 2-3 sentences about what you do and what your biggest time sinks are.",
   "welcome.q2_label": "Which AI tools have you used at work?",
   "welcome.advanced_options_label": "Advanced options (demo / admin)",
   "welcome.spinner_parse": "Personalizing your journey...",
@@ -24,6 +24,7 @@
   "welcome.roadmap_expander": "Roadmap →",
 
   "diag.title": "AI Skills Diagnostic",
+  "diag.byow_intro": "Answer each question based on your own work experience. There are no right or wrong answers — your responses shape your personalised training path.",
   "diag.subheading": "Before we build your personalised training course, we need to understand your current AI skill level.",
   "diag.minutes_label": "minutes",
   "diag.questions_label": "questions",
@@ -166,5 +167,16 @@
   "scoring.domain.critical_eval": "Critical Evaluation",
   "scoring.domain.relationship_intel": "Relationship Intelligence",
   "scoring.domain.data_decision": "Data-Driven Decision Making",
-  "scoring.domain.augmented_comm": "Augmented Communication"
+  "scoring.domain.augmented_comm": "Augmented Communication",
+
+  "profile.domain_short.responsible_ai": "Resp. AI",
+  "profile.domain_short.strategic_prompting": "Prompting",
+  "profile.domain_short.critical_eval": "Crit. Eval",
+  "profile.domain_short.relationship_intel": "Rel. Intel",
+  "profile.domain_short.data_decision": "Data Dec.",
+  "profile.domain_short.augmented_comm": "Comm.",
+  "profile.history_col_date": "Date",
+  "profile.history_col_overall": "Overall",
+
+  "module.eval_answer_label": "Answer:"
 }

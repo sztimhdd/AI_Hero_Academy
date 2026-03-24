@@ -141,14 +141,7 @@ with col_score:
 with col_domains:
     section_header(t("profile.domain_scores_header", _lang))
     # Shortened axis labels — full names overflow on a 6-axis radar
-    _short_names = {
-        "responsible_ai":      "Resp. AI",
-        "strategic_prompting": "Prompting",
-        "critical_eval":       "Crit. Eval",
-        "relationship_intel":  "Rel. Intel",
-        "data_decision":       "Data Dec.",
-        "augmented_comm":      "Comm.",
-    }
+    _short_names = {d: t(f"profile.domain_short.{d}", _lang) for d in DOMAIN_IDS}
     _cats = [_short_names.get(d, d) for d in DOMAIN_IDS]
     _vals = []
     for _d in DOMAIN_IDS:
@@ -251,14 +244,14 @@ if len(all_diags) > 0:
         except (json.JSONDecodeError, TypeError):
             ds = {}
         rows.append({
-            "Date": date_str,
-            "Overall": round(ov, 1),
-            "Resp. AI": round(float(ds.get("responsible_ai", 0)), 1),
-            "Prompting": round(float(ds.get("strategic_prompting", 0)), 1),
-            "Crit. Eval": round(float(ds.get("critical_eval", 0)), 1),
-            "Rel. Intel": round(float(ds.get("relationship_intel", 0)), 1),
-            "Data Dec.": round(float(ds.get("data_decision", 0)), 1),
-            "Comm.": round(float(ds.get("augmented_comm", 0)), 1),
+            t("profile.history_col_date", _lang):    date_str,
+            t("profile.history_col_overall", _lang): round(ov, 1),
+            t("profile.domain_short.responsible_ai", _lang):      round(float(ds.get("responsible_ai", 0)), 1),
+            t("profile.domain_short.strategic_prompting", _lang): round(float(ds.get("strategic_prompting", 0)), 1),
+            t("profile.domain_short.critical_eval", _lang):       round(float(ds.get("critical_eval", 0)), 1),
+            t("profile.domain_short.relationship_intel", _lang):  round(float(ds.get("relationship_intel", 0)), 1),
+            t("profile.domain_short.data_decision", _lang):       round(float(ds.get("data_decision", 0)), 1),
+            t("profile.domain_short.augmented_comm", _lang):      round(float(ds.get("augmented_comm", 0)), 1),
         })
     df = pd.DataFrame(rows)
     st.dataframe(df, use_container_width=True, hide_index=True)

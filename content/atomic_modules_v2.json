@@ -3245,5 +3245,188 @@
     "merged_from": [],
     "atomized_at": "2026-03-24",
     "status": "canonical"
+  },
+  {
+    "atom_id": "data_decision__universal_analysis",
+    "title": "Signal to Decision: AI-Assisted Analysis for Any Role",
+    "domain": "data_decision",
+    "capability_tags": [
+      "data_synthesis",
+      "ai_assisted_analysis",
+      "decision_support",
+      "insight_generation",
+      "structured_reasoning"
+    ],
+    "estimated_minutes": 30,
+    "role_variants_hint": "Individual contributors to managers across all departments can use this framework to improve decision-making speed and quality.",
+    "reading": {
+      "concept_text": "The SIGNAL framework transforms raw data into actionable decisions, saving you time and improving decision quality. By using AI to rapidly analyze information, you can quickly identify key insights and make informed choices, regardless of your role. The SIGNAL framework consists of six steps: Source (identify your inputs), Interrogate (prompt AI to surface patterns), Generate (produce structured insight), Narrate (translate to plain language), Act (link insight to decision), and Log (record for audit trail). This structured approach ensures that every decision is data-informed, transparent, and auditable. Mastering SIGNAL empowers you to confidently navigate complex information landscapes and drive better outcomes for your {org_type}.",
+      "good_example": "At Meridian Corp, a marketing specialist used the SIGNAL framework to analyze customer feedback data. By using AI to interrogate the data, they quickly identified a previously unnoticed trend: customers were increasingly requesting sustainable packaging. They generated a report highlighting this trend, narrated the findings to the product team, and recommended a shift towards eco-friendly packaging. This led to a 15% increase in customer satisfaction and a positive impact on Meridian's brand image.",
+      "anti_pattern": "Failing to use a structured approach like SIGNAL can lead to biased or incomplete analysis, resulting in poor decisions. Imagine a project manager at Aurora Industries relying solely on gut feeling to allocate resources. Without interrogating relevant project data, they might misallocate resources, leading to project delays, budget overruns, and ultimately, damage to their professional reputation and career prospects.",
+      "takeaway": "By mastering the SIGNAL framework, you'll gain the ability to transform data into clear, actionable decisions, saving time and improving your decision-making effectiveness."
+    },
+    "practice": {
+      "scenario_template": "As a {role} at {organisation}, you need to make a decision based on a collection of data. Use the SIGNAL framework to analyze the information and recommend a course of action.",
+      "task_templates": [
+        {
+          "task_id": 1,
+          "text_template": "You are starting the 'Source' step of the SIGNAL framework. Describe the data sources you will use for your analysis in this {scenario_name} scenario.",
+          "skill_focus": "Source identification",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 2,
+          "text_template": "You are at the 'Interrogate' step. Which AI prompt would best help you identify key patterns and insights from the data?",
+          "skill_focus": "Prompt engineering for pattern recognition",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Summarize the data and highlight the most common data points without looking for specific trends.",
+              "is_best": false
+            },
+            {
+              "label": "Identify any correlations, anomalies, or trends within the data that could inform a decision.",
+              "is_best": true
+            },
+            {
+              "label": "Provide a detailed description of each data point and its individual characteristics.",
+              "is_best": false
+            }
+          ]
+        },
+        {
+          "task_id": 3,
+          "text_template": "You've completed the 'Generate' step and have structured insights. Now, in the 'Narrate' step, translate these insights into plain language for stakeholders.",
+          "skill_focus": "Communicating insights clearly",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 4,
+          "text_template": "You've reached the 'Act' step. Based on your analysis, what specific action do you recommend?",
+          "skill_focus": "Decision recommendation",
+          "task_mode": "open",
+          "mcq_options": null
+        }
+      ],
+      "coach_system_prompt_template": "As an AI coach, provide feedback to the {role} at {organisation} on their use of the SIGNAL framework in the {scenario_name} scenario. Focus on the clarity and effectiveness of their analysis and recommendations within the {domain} domain."
+    },
+    "eval": {
+      "items_ref": "inline",
+      "inline_items": [
+        {
+          "item_id": "ev_data_decision__universal_analysis_q1",
+          "item_type": "mcq",
+          "sequence": 1,
+          "question_text": "Which step in the SIGNAL framework focuses on identifying the relevant information needed for analysis?",
+          "scenario_text": "A project manager is starting a new project and needs to gather data for decision-making.",
+          "options": [
+            {
+              "label": "A",
+              "text": "Narrate: Translating insights into plain language for stakeholders."
+            },
+            {
+              "label": "B",
+              "text": "Source: Identifying and gathering the relevant data inputs."
+            },
+            {
+              "label": "C",
+              "text": "Generate: Structuring insights from the analyzed data."
+            },
+            {
+              "label": "D",
+              "text": "Act: Implementing the decision based on the analysis."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_data_decision__universal_analysis_q2",
+          "item_type": "mcq",
+          "sequence": 2,
+          "question_text": "In the SIGNAL framework, what is the primary goal of the 'Interrogate' step?",
+          "scenario_text": "An analyst at Crestwood Inc. has gathered data and is ready to begin the analysis process.",
+          "options": [
+            {
+              "label": "A",
+              "text": "To present the findings in a visually appealing format for stakeholders."
+            },
+            {
+              "label": "B",
+              "text": "To use AI to identify patterns, correlations, and anomalies within the data."
+            },
+            {
+              "label": "C",
+              "text": "To document the data sources and their limitations for future reference."
+            },
+            {
+              "label": "D",
+              "text": "To determine the best course of action based on personal experience."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_data_decision__universal_analysis_q3",
+          "item_type": "mcq",
+          "sequence": 3,
+          "question_text": "What is the purpose of the 'Log' step in the SIGNAL framework?",
+          "scenario_text": "A team at Northfield Solutions has made a decision using the SIGNAL framework and is now completing the process.",
+          "options": [
+            {
+              "label": "A",
+              "text": "To create a detailed record of the entire decision-making process for auditing and future reference."
+            },
+            {
+              "label": "B",
+              "text": "To communicate the decision to all stakeholders in a clear and concise manner."
+            },
+            {
+              "label": "C",
+              "text": "To implement the decision and monitor its impact on the organization."
+            },
+            {
+              "label": "D",
+              "text": "To gather feedback from stakeholders on the effectiveness of the decision."
+            }
+          ],
+          "correct_answer": "A",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_data_decision__universal_analysis_q4",
+          "item_type": "performance_task",
+          "sequence": 4,
+          "question_text": "Apply the SIGNAL framework to a decision-making scenario.",
+          "scenario_text": "You are a marketing manager at Lakewood Enterprises. Analyze recent website traffic data, customer feedback, and sales figures to recommend a strategy for the next quarter.",
+          "rubric": [
+            {
+              "criterion": "Source: Identifies relevant data sources (website traffic, customer feedback, sales figures).",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Interrogate & Generate: Uses AI to identify key trends and insights from the data.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Narrate: Clearly articulates the findings and their implications for the marketing strategy.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Act & Log: Recommends a specific marketing strategy and documents the decision-making process.",
+              "weight": 0.25
+            }
+          ]
+        }
+      ],
+      "source_course_ids": []
+    },
+    "source_course_ids": [],
+    "merged_from": [],
+    "atomized_at": "2026-03-24",
+    "status": "canonical"
   }
 ]

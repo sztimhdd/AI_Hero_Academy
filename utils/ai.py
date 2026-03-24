@@ -212,6 +212,89 @@ def score_diagnostic(responses_with_rubrics: list[dict], user_email: str = None,
     }
 
 
+_BYOW_SCORER_SYSTEM = """\
+You are an AI skills assessor scoring a professional's self-reported diagnostic responses.
+
+Score each response 0–4 using the rubric provided per item.
+Return ONLY valid JSON: {"scores": {"<item_id>": <float>, ...}}
+
+Calibration guide:
+- 0: No answer, irrelevant, or actively wrong
+- 1.0–1.4: Vague awareness, no concrete action
+- 1.5–2.4: Basic practical use, some structure (most first-time users)
+- 2.5–3.4: Structured approach with specifics, demonstrates real usage
+- 3.5–4.0: Mastery — systematic, verified, role-appropriate (rare)
+
+Do not reward length. Reward specificity and structured thinking.\
+"""
+
+
+def score_byow_diagnostic(
+    responses: list[dict],
+    user_email: str = None,
+    lang: str = "en",
+) -> dict:
+    """
+    Score 6 BYOW open-ended diagnostic responses in a single LLM call.
+
+    responses: list of {
+        "item_id": str,
+        "domain_id": str,
+        "prompt_text": str,
+        "response_text": str,
+        "scoring_rubric": dict,  # {"4": "...", "3": "...", ...}
+    }
+
+    Returns same shape as score_diagnostic():
+        {
+            "item_scores":   {"byow_responsible_ai_1": float, ...},
+            "domain_scores": {"responsible_ai": float, ...},
+            "overall_score": float,
+        }
+    """
+    blocks = []
+    for r in responses:
+        rubric = r["scoring_rubric"]
+        rubric_str = " | ".join(f"{k}={v}" for k, v in rubric.items())
+        blocks.append(
+            f"ITEM: {r['item_id']} (Domain: {r['domain_id']})\n"
+            f"QUESTION: {r['prompt_text']}\n"
+            f"RESPONSE: {r['response_text']}\n"
+            f"RUBRIC: {rubric_str}"
+        )
+    user_prompt = "\n\n".join(blocks)
+
+    raw = call_llm(
+        [
+            {"role": "system", "content": _BYOW_SCORER_SYSTEM},
+            {"role": "user", "content": user_prompt},
+        ],
+        temperature=0.1,
+        user_email=user_email,
+        call_type="byow_diagnostic_scoring",
+    )
+
+    parsed = _extract_json(raw)
+    raw_scores: dict = parsed.get("scores", {})
+
+    item_scores: dict[str, float] = {}
+    for r in responses:
+        raw_val = raw_scores.get(r["item_id"], 1.0)
+        item_scores[r["item_id"]] = round(min(max(float(raw_val), 0.0), 4.0), 4)
+
+    domain_scores: dict[str, float] = {}
+    for r in responses:
+        domain_scores[r["domain_id"]] = item_scores[r["item_id"]]
+
+    overall_score = round(sum(domain_scores.values()) / len(domain_scores), 4) if domain_scores else 0.0
+
+    return {
+        "item_scores": item_scores,
+        "domain_scores": domain_scores,
+        "overall_score": overall_score,
+    }
+
+
 def generate_gap_map(
     domain_scores: dict,
     domain_descriptions: dict,

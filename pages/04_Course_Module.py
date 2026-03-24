@@ -444,7 +444,7 @@ elif active_sub == "reading":
     current_section = st.session_state["reading_section_ctrl"]
     section_idx = _SECTION_LABELS.index(current_section) if current_section in _SECTION_LABELS else 0
 
-    reading_s = get_reading_structured(course_id)
+    reading_s = get_reading_structured(course_id) if _lang == "en" else None
 
     _, content_col, _ = st.columns([1, 4, 1])
     with content_col:
@@ -977,7 +977,7 @@ elif active_sub == "evaluation":
         opt_keys = [o["label"] for o in options]
 
         selected = st.radio(
-            "Answer:",
+            t("module.eval_answer_label", _lang),
             options=opt_labels,
             key=f"eq_{item_id}",
             index=None,

@@ -25,6 +25,9 @@ Usage:
     python scripts/reset_uat_user.py --profile all-done
         → Wipe + seed RM profile with all 7 modules complete
 
+    python scripts/reset_uat_user.py --role rm --diag --lang zh
+        → Same as --diag but seeds Chinese gap map bullets
+
 Reads credentials from .env in the project root (same as run_uat.sh).
 """
 import argparse
@@ -74,6 +77,12 @@ parser.add_argument(
     "--diag",
     action="store_true",
     help="Also seed diagnostic_sessions + gap_maps (requires --role; app lands on Skills Profile)",
+)
+parser.add_argument(
+    "--lang",
+    default="en",
+    choices=["en", "zh"],
+    help="Language for seeded gap map bullets (default: en)",
 )
 args = parser.parse_args()
 
@@ -134,7 +143,7 @@ if args.diag:
     }
     overall_score = round(sum(domain_scores.values()) / len(domain_scores), 2)
 
-    bullets = [
+    _bullets_diag_en = [
         {"priority": 1, "domain_id": "critical_eval",
          "bullet": "Critical Evaluation (1.0): Practise reviewing AI outputs for accuracy before acting — challenge AI-generated summaries with at least one verification step."},
         {"priority": 2, "domain_id": "strategic_prompting",
@@ -142,6 +151,15 @@ if args.diag:
         {"priority": 3, "domain_id": "relationship_intel",
          "bullet": "Relationship Intelligence (1.5): Explore using AI to prepare personalised client briefings and surface relationship patterns across your portfolio."},
     ]
+    _bullets_diag_zh = [
+        {"priority": 1, "domain_id": "critical_eval",
+         "bullet": "批判性评估（1.0）：养成使用AI输出前核实准确性的习惯——至少进行一个验证步骤，挑战AI生成的摘要内容。"},
+        {"priority": 2, "domain_id": "strategic_prompting",
+         "bullet": "战略性提示（1.5）：为您的工作流程构建更结构化、信息更丰富的提示词——包含客户背景、期望输出格式和明确约束条件。"},
+        {"priority": 3, "domain_id": "relationship_intel",
+         "bullet": "关系智能（1.5）：尝试使用AI准备个性化客户简报，并发现您客户组合中的关系规律。"},
+    ]
+    bullets = _bullets_diag_zh if args.lang == "zh" else _bullets_diag_en
 
     save_diagnostic(session_id, EMAIL, now, json.dumps({}), json.dumps({}),
                     json.dumps(domain_scores), overall_score)
@@ -173,7 +191,7 @@ if args.profile:
     }
     overall_score = round(sum(_diag_scores.values()) / len(_diag_scores), 2)
 
-    _bullets_inprogress = [
+    _bullets_inprogress_en = [
         {"priority": 1, "domain_id": "responsible_ai",
          "bullet": "Your responses show difficulty distinguishing high-risk from low-risk AI use cases — prioritise the Responsible AI module."},
         {"priority": 2, "domain_id": "data_decision",
@@ -181,7 +199,15 @@ if args.profile:
         {"priority": 3, "domain_id": "strategic_prompting",
          "bullet": "Prompting quality improved notably in Module 1 — build on this momentum with chain-of-thought structures."},
     ]
-    _bullets_alldone = [
+    _bullets_inprogress_zh = [
+        {"priority": 1, "domain_id": "responsible_ai",
+         "bullet": "您的作答显示在区分高风险与低风险AI应用场景方面存在困难——请优先完成负责任的AI模块。"},
+        {"priority": 2, "domain_id": "data_decision",
+         "bullet": "数据解读任务中显示出一定的不确定性——数据驱动决策模块将帮助提升您的分析信心。"},
+        {"priority": 3, "domain_id": "strategic_prompting",
+         "bullet": "第1模块后提示质量明显提升——继续以思维链结构巩固这一进步。"},
+    ]
+    _bullets_alldone_en = [
         {"priority": 1, "domain_id": "critical_eval",
          "bullet": "You've reached Proficient level across all six AI domains — focus on applying structured prompting frameworks."},
         {"priority": 2, "domain_id": "strategic_prompting",
@@ -189,6 +215,16 @@ if args.profile:
         {"priority": 3, "domain_id": "augmented_comm",
          "bullet": "Augmented Communication is your strongest domain — leverage this for stakeholder reporting."},
     ]
+    _bullets_alldone_zh = [
+        {"priority": 1, "domain_id": "critical_eval",
+         "bullet": "您已在全部六个AI领域达到熟练水平——聚焦于运用结构化提示框架。"},
+        {"priority": 2, "domain_id": "strategic_prompting",
+         "bullet": "您的批判性评估能力正接近专家水平——以实时事实核查进一步提升。"},
+        {"priority": 3, "domain_id": "augmented_comm",
+         "bullet": "增强沟通是您最强的领域——将其应用于利益相关方汇报。"},
+    ]
+    _bullets_inprogress = _bullets_inprogress_zh if args.lang == "zh" else _bullets_inprogress_en
+    _bullets_alldone = _bullets_alldone_zh if args.lang == "zh" else _bullets_alldone_en
 
     _eval_scores = [3.2, 3.0, 2.8, 3.1, 2.9, 3.4, 3.1]
     _domain_scores_after = [3.1, 3.0, 2.9, 3.2, 2.8, 3.5, 3.3]
