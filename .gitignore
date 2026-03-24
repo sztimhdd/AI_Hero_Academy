@@ -28,3 +28,13 @@ nul
 
 # GCP local credentials — service-account keys must never be committed
 .gcp/
+
+# Sensitive local files — never commit
+uat_token.txt
+proxy-cert.pem
+
+# Claude Code machine-specific settings
+.claude/settings.json
+
+# Temp atom generation artifacts
+tmp_*.json
