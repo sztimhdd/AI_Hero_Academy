@@ -85,105 +85,23 @@ in the live app for the first time.
 
 ## Part 4 — Phase 4: Library Expansion
 
-### Overview
-Expand the atomic library from 15 → 20 atoms by authoring 5 new universal atoms directly
-in atomic-ready JSON format (no atomization pipeline needed — these are original atoms, not
-converted from legacy courses). Simultaneously, evolve the atom schema to support
-**inline eval items** so new atoms are fully self-contained and do not depend on
-`evaluation_items.json`.
+> Full plan: `plans/phase4-library-expansion-plan.md`
+> Kickstarter: `plans/phase4-library-expansion-kickstart.md`
 
-### Why these 5 atoms
+**Summary:** Expand the atomic library from 15 → 20 atoms by authoring 5 new universal
+atoms (meeting intelligence, email drafting, iterative prompting, hallucination patterns,
+AI tool governance). Introduces inline eval schema (`eval.items_ref: "inline"`) for atoms
+with no legacy `source_course_ids`. One runtime change to `pages/04_Course_Module.py`
+(held until Phase 3 ZH UAT closes).
 
-| Atom | Domain | Priority | Source |
-|------|--------|----------|--------|
-| `relationship_intel__meeting_intelligence` | `relationship_intel` | P1 | McKinsey #1 employee demand |
-| `augmented_comm__email_message_drafting` | `augmented_comm` | P2 | McKinsey top-3 daily time sink |
-| `strategic_prompting__iterative_refinement` | `strategic_prompting` | P3 | Turing/WEF framework gap |
-| `critical_eval__hallucination_patterns` | `critical_eval` | P4 | Credibility protection gap |
-| `responsible_ai__ai_tool_governance` | `responsible_ai` | P5 | Turing/WEF literacy gap |
-
-### Schema change: inline eval items
-
-New atoms have no `source_course_ids`, so eval items must be inline.
-Add `inline_items` array to the `eval` section of new atoms:
-
-```json
-"eval": {
-  "items_ref": "inline",
-  "inline_items": [
-    {
-      "item_id": "ev_relationship_intel__meeting_intelligence_q1",
-      "item_type": "mcq",
-      "sequence": 1,
-      "question_text": "...",
-      "scenario_text": "...",
-      "options": [{"label": "A", "text": "..."}, ...],
-      "correct_answer": "B",
-      "score_value": 1
-    },
-    ...
-    {
-      "item_id": "ev_relationship_intel__meeting_intelligence_q4",
-      "item_type": "performance_task",
-      "sequence": 4,
-      "question_text": "...",
-      "scenario_text": "...",
-      "rubric": [{"criterion": "...", "weight": 0.25}, ...]
-    }
-  ],
-  "source_course_ids": []
-}
-```
-
-Existing atoms keep `items_ref: "evaluation_items.json"` and `source_course_ids`. No migration needed.
-
-### Runtime change: eval loader in 04_Course_Module.py
-
-Current eval loading logic: `source_course_ids[0]` → lookup in `evaluation_items.json`.
-
-New logic (two lines added, backward compat preserved):
-
-```python
-# Before: always looked up from evaluation_items.json
-# After: check inline_items first
-eval_section = atom.get("eval", {})
-if eval_section.get("items_ref") == "inline":
-    eval_items = eval_section["inline_items"]
-else:
-    # legacy: source_course_ids lookup (unchanged)
-    course_id = eval_section["source_course_ids"][0]
-    eval_items = get_eval_items(course_id)
-```
-
-### Acceptance criteria
-
-| # | Criterion | Status |
-|---|-----------|--------|
-| 1 | `atomic_modules_v2.json` has 20 atoms (15 existing + 5 new) | 🔜 |
-| 2 | All 5 new atoms have `eval.items_ref == "inline"` with 4 items (3 MCQ + 1 perf task) | 🔜 |
-| 3 | All 5 new atoms pass `fill_scenario()` with zero unfilled `{placeholder}` tokens | 🔜 |
-| 4 | All 5 new atoms have `status: "canonical"` and `capability_tags` (3–6 items) | 🔜 |
-| 5 | `pages/04_Course_Module.py` loads eval from `inline_items` when `items_ref == "inline"` | 🔜 |
-| 6 | Path assembler unchanged — new atoms flow through `assemble_path()` automatically | 🔜 |
-| 7 | A new user with weak `augmented_comm` can receive either `surface_workflow` OR `email_message_drafting` | 🔜 |
-| 8 | Regression: all existing Phase 3 UAT personas (3a–3f) still load correctly | 🔜 |
-
-### Deliverables
-
-**New files:**
-
-- `scripts/generate_atom.py` — CLI tool: `python scripts/generate_atom.py --atom-id <id> --dry-run` outputs draft atom JSON via Claude/Gemini for human review before committing
-
-**Modified files:**
-
-- `content/atomic_modules_v2.json` — append 5 new atoms
-- `pages/04_Course_Module.py` — eval loader: inline_items branch
-
-### Non-goals for Phase 4
-
-- Engineer role content (Phase 5)
-- Reusable Prompt Templates atom (`strategic_prompting`) — deferred
-- Shadow AI Risk Management atom — deferred
+| # | Acceptance Criterion | Status |
+|---|---------------------|--------|
+| 1 | `atomic_modules_v2.json` has 20 atoms | 🔜 |
+| 2 | All 5 new atoms: inline eval, 4 items (3 MCQ + 1 perf task) | 🔜 |
+| 3 | All 5 new atoms: zero unfilled `{placeholder}` tokens | 🔜 |
+| 4 | All 5 new atoms: `status: "canonical"`, 3–6 tags | 🔜 |
+| 5 | `04_Course_Module.py` loads `inline_items` when `items_ref == "inline"` | 🔜 |
+| 6 | Regression: Phase 3 UAT personas (3a–3f) still load correctly | 🔜 |
 
 ---
 
