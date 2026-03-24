@@ -51,17 +51,15 @@ SIX_ATOMS = [
 # ── Tests ─────────────────────────────────────────────────────────────────────
 
 def test_assemble_path_basic():
-    """6 atoms 1 per domain, responsible_ai has lowest score → should appear early."""
+    """6 atoms 1 per domain — responsible_ai pinned last (before capstone)."""
     path = assemble_path(INTAKE_BASIC, DOMAIN_SCORES_BASIC, SIX_ATOMS)
     assert len(path) >= 1
     assert len(path) <= 7
-    # responsible_ai score 1.0 is a gap → should be in path
+    # responsible_ai should be in path regardless of its score
     assert "a_responsible_ai" in path
-    # data_decision score 2.8 is strong → filtered out if others exist
-    # (but since we have 5 other atoms, data_decision may still be included in strong bucket)
-    # Key assertion: responsible_ai appears before data_decision
+    # responsible_ai is pinned last — must appear after all other skill domains
     if "a_data_decision" in path:
-        assert path.index("a_responsible_ai") < path.index("a_data_decision")
+        assert path.index("a_responsible_ai") > path.index("a_data_decision")
 
 
 def test_assemble_path_quick_win_before_gap():

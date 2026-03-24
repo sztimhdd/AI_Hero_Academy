@@ -64,20 +64,24 @@ def compute_module_sequence(domain_scores: dict, role_id: str = "rm") -> list[st
     course_map = DOMAIN_TO_COURSE.get(role_id, DOMAIN_TO_COURSE["rm"])
     capstone = CAPSTONE_COURSE_ID.get(role_id, CAPSTONE_COURSE_ID["rm"])
 
+    # responsible_ai is pinned second-to-last — learners engage with AI skills
+    # first and encounter governance as a reflective layer before the capstone.
+    skill_scores = {d: s for d, s in domain_scores.items() if d != "responsible_ai"}
+
     quick_wins = sorted(
-        [(d, s) for d, s in domain_scores.items() if 1.5 <= s <= 2.5],
+        [(d, s) for d, s in skill_scores.items() if 1.5 <= s <= 2.5],
         key=lambda x: abs(x[1] - 2.0),
     )
     gaps = sorted(
-        [(d, s) for d, s in domain_scores.items() if s < 1.5],
+        [(d, s) for d, s in skill_scores.items() if s < 1.5],
         key=lambda x: x[1],  # lowest score first
     )
     strong = sorted(
-        [(d, s) for d, s in domain_scores.items() if s > 2.5],
+        [(d, s) for d, s in skill_scores.items() if s > 2.5],
         key=lambda x: x[1],
     )
     placed = {d for d, _ in quick_wins + gaps + strong}
-    remaining = [(d, s) for d, s in domain_scores.items() if d not in placed]
+    remaining = [(d, s) for d, s in skill_scores.items() if d not in placed]
 
     ordered_domains = [d for d, _ in quick_wins + gaps + remaining + strong]
     sequence = [
@@ -85,5 +89,7 @@ def compute_module_sequence(domain_scores: dict, role_id: str = "rm") -> list[st
         for d in ordered_domains
         if d in course_map
     ]
+    if "responsible_ai" in course_map:
+        sequence.append(course_map["responsible_ai"])
     sequence.append(capstone)
     return sequence[:7]

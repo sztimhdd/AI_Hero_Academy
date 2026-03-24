@@ -59,7 +59,7 @@ def assemble_path(
     remaining: list[tuple] = []
 
     for atom in filtered:
-        if atom.get("domain") == "capstone":
+        if atom.get("domain") in ("capstone", "responsible_ai"):
             continue  # handled separately at the end
         ds = domain_scores.get(atom["domain"], 2.0)
         s = _score(atom)
@@ -95,7 +95,16 @@ def assemble_path(
     sorted_domains = sorted(domain_first_pos.keys(), key=lambda d: domain_first_pos[d])
     result = [domain_best[d][0]["atom_id"] for d in sorted_domains[:max_atoms]]
 
-    # ── 5. Append capstone if present and there's room ────────────────────────
+    # ── 5. Append responsible_ai second-to-last, capstone last ───────────────
+    # responsible_ai is pinned after skill-building modules so learners engage
+    # with AI tools first and encounter governance as a reflective capstone layer.
+    ra_atoms = [a for a in atoms if a.get("domain") == "responsible_ai"]
+    if ra_atoms:
+        # Pick highest-scored responsible_ai atom
+        ra_id = max(ra_atoms, key=_score)["atom_id"]
+        if ra_id not in result and len(result) < max_atoms:
+            result.append(ra_id)
+
     capstone_atoms = [a for a in atoms if a.get("domain") == "capstone"]
     if capstone_atoms:
         capstone_id = capstone_atoms[0]["atom_id"]

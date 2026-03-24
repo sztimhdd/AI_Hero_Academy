@@ -85,9 +85,10 @@ def test_sequence_has_no_duplicates():
 
 
 def test_quick_win_first():
-    """Domain closest to 2.0 in [1.5, 2.5] should be module 1."""
+    """responsible_ai is pinned second-to-last regardless of score; first skill
+    module should be the best quick-win among the remaining domains."""
     scores = _make_scores(
-        responsible_ai=2.0,      # exactly 2.0 — best quick win
+        responsible_ai=2.0,      # best quick-win score — but pinned last
         strategic_prompting=0.5, # gap
         critical_eval=0.5,       # gap
         relationship_intel=0.5,  # gap
@@ -95,7 +96,11 @@ def test_quick_win_first():
         augmented_comm=0.5,      # gap
     )
     seq = compute_module_sequence(scores, "rm")
-    assert seq[0] == "rm_c1_responsible_ai"
+    # responsible_ai must NOT be first
+    assert seq[0] != "rm_c1_responsible_ai"
+    # responsible_ai must appear before capstone (index 5, capstone at index 6)
+    assert seq[5] == "rm_c1_responsible_ai"
+    assert seq[6] == "rm_c7_capstone"
 
 
 def test_gaps_before_strong():
