@@ -1,6 +1,19 @@
 {
   "app.db_error": "Unable to connect to the database. Please refresh.",
 
+  "welcome.li_url_label":          "Import from LinkedIn (paste your profile URL)",
+  "welcome.li_import_btn":         "Import →",
+  "welcome.li_spinner":            "Looking up your profile...",
+  "welcome.li_import_failed":      "Couldn't retrieve profile — please paste your details below instead.",
+  "welcome.import_or":             "or upload a file",
+  "welcome.import_label":          "Upload a file (PDF, Word, or text)",
+  "welcome.import_help":           "LinkedIn export, CV, resume, or job description",
+  "welcome.import_extract_failed": "Could not extract text — please paste your details below instead.",
+  "welcome.import_linkedin":       "How to import from LinkedIn as PDF (3 steps)",
+  "welcome.import_step_1":         "Go to your LinkedIn profile page",
+  "welcome.import_step_2":         "Click More → Save to PDF",
+  "welcome.import_step_3":         "Upload the PDF using the button above",
+
   "welcome.q1_label": "Paste your job description, or describe your role and main responsibilities",
   "welcome.q1_placeholder": "You can paste a job posting, LinkedIn summary, or write 2-3 sentences about what you do and what your biggest time sinks are.",
   "welcome.q2_label": "Which AI tools have you used at work?",
@@ -25,6 +38,7 @@
 
   "diag.title": "AI Skills Diagnostic",
   "diag.byow_intro": "Answer each question based on your own work experience. There are no right or wrong answers — your responses shape your personalised training path.",
+  "diag.char_hint": "Aim for 3–5 sentences.",
   "diag.min_chars_warning": "Please answer all 6 questions (at least 20 characters each) before submitting.",
   "diag.char_counter": "{count}/500 chars · Aim for 3–5 sentences",
   "diag.subheading": "Before we build your personalised training course, we need to understand your current AI skill level.",

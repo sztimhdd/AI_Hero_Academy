@@ -17,6 +17,39 @@ from utils.content import ROLES
 from utils.i18n import t
 from utils.ai import call_llm
 
+
+def _fetch_linkedin_via_gemini(url: str) -> str:
+    """
+    Retrieve public LinkedIn profile data using Gemini with Google Search Grounding.
+    Returns plain text (title, company, responsibilities) suitable for Q1 pre-population.
+    Returns "" on any failure — never raises.
+    """
+    try:
+        from google import genai
+        from google.genai import types as genai_types
+
+        client = genai.Client()
+        prompt = (
+            f"Find the professional profile at: {url}\n"
+            "Return a plain text summary (3-5 sentences) covering: "
+            "current job title, employer, industry, and key responsibilities. "
+            "Do not include personal contact details. Plain text only, no markdown."
+        )
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt,
+            config=genai_types.GenerateContentConfig(
+                tools=[genai_types.Tool(
+                    google_search=genai_types.GoogleSearch()
+                )],
+                temperature=0.1,
+            ),
+        )
+        return (response.text or "").strip()[:1000]
+    except Exception:
+        return ""
+
+
 st.set_page_config(
     page_title="Welcome | AI Hero Academy",
     page_icon="⚡",
@@ -298,6 +331,44 @@ _AI_TOOL_OPTIONS = [
     "AI features in enterprise software (Salesforce, ServiceNow, etc.)",
     "None yet — just getting started",
 ]
+
+# ── Profile import — Option A: LinkedIn URL ───────────────────────────────────
+_li_url = st.text_input(
+    t("welcome.li_url_label", _lang),
+    placeholder="https://www.linkedin.com/in/your-profile",
+    key="welcome_li_url",
+)
+if st.button(t("welcome.li_import_btn", _lang), key="li_import") and _li_url.strip():
+    with st.spinner(t("welcome.li_spinner", _lang)):
+        _li_text = _fetch_linkedin_via_gemini(_li_url.strip())
+    if _li_text:
+        st.session_state["welcome_q1"] = _li_text
+    else:
+        st.warning(t("welcome.li_import_failed", _lang))
+
+# ── Profile import — Option B: file upload ────────────────────────────────────
+from utils.doc_extract import extract_text as _extract_file_text
+
+st.markdown(f"— {t('welcome.import_or', _lang)} —")
+_uploaded = st.file_uploader(
+    t("welcome.import_label", _lang),
+    type=["pdf", "txt", "docx"],
+    help=t("welcome.import_help", _lang),
+    key="welcome_import",
+)
+if _uploaded is not None:
+    _extracted = _extract_file_text(_uploaded)
+    if _extracted:
+        st.session_state["welcome_q1"] = _extracted
+    else:
+        st.warning(t("welcome.import_extract_failed", _lang))
+
+with st.expander(t("welcome.import_linkedin", _lang), expanded=False):
+    st.markdown(
+        f"1. {t('welcome.import_step_1', _lang)}  \n"
+        f"2. {t('welcome.import_step_2', _lang)}  \n"
+        f"3. {t('welcome.import_step_3', _lang)}"
+    )
 
 # ── Intake form ───────────────────────────────────────────────────────────────
 _q1_text = st.text_area(

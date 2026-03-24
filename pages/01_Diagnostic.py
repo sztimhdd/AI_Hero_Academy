@@ -165,9 +165,10 @@ with st.form("byow_diagnostic_form"):
         prompt_label = prompt.get(f"prompt_text_{_lang}", prompt["prompt_text"])
         val = st.text_area(
             prompt_label,
+            placeholder=prompt.get(f"placeholder_text{'_zh' if _lang == 'zh' else ''}", ""),
             key=f"byow_{prompt['item_id']}",
             max_chars=500,
-            help="Aim for 3–5 sentences." if _lang == "en" else "建议3-5句话。",
+            help=t("diag.char_hint", _lang),
         )
         char_count = len((val or "").strip())
         st.markdown(
