@@ -2,7 +2,7 @@
 
 **Code Review Against TDD.md and PRD.md**
 Date: February 2026 | Reviewer: Claude Code
-Last validated: 2026-03-24 — Phase 18 Session 2 complete (all 8 content files translated); Phase 18 UAT (Playwright MCP) run; 4 new i18n issues logged (I18N-1–4)
+Last validated: 2026-03-24 — I18N-1, I18N-2, I18N-4 fixed (42/42 pytest green); I18N-3 deferred
 
 ---
 
@@ -34,10 +34,7 @@ Trainer review (2026-03-17) of three sampled RM scenarios surfaced two defect ca
 
 | ID | Severity | Description |
 | --- | --- | --- |
-| I18N-1 | 🟡 MEDIUM | Language toggle absent on Welcome (00) and Diagnostic (01) pages — `render_sidebar()` not called on either page, so new users cannot set language before or during the diagnostic. Toggle only appears after profile exists (pages 02–04). |
-| I18N-2 | 🟡 MEDIUM | `get_level_label()` in `utils/scoring.py` returns hardcoded English level strings ("Practitioner", "Proficient", etc.) — not routed through i18n. Level label shows in English on Skills Profile score card even when lang=zh. `LEVEL_LABELS` list and `DOMAIN_DISPLAY_NAMES` dict in `utils/scoring.py` both EN-only. |
-| I18N-3 | 🟢 LOW | Reading content body always English in ZH mode: `get_reading_structured()` has no `lang` param and always loads `reading_content_structured.json` (English-only, not translated). Structured view takes priority over the translated `reading_content.json`. Section tab labels (核心概念/示例/反面案例/关键要点) correctly show Chinese via i18n. |
-| I18N-4 | 🟢 LOW | Two hardcoded English strings in `pages/01_Diagnostic.py`: (1) orientation body paragraph "Questions include **multiple choice**..." at line 96–98 — not using `t("diag.orientation_body", lang)` which exists in zh.json; (2) `st.radio("Choose your answer:", ...)` at line 270 — label hardcoded, no i18n key exists. |
+| I18N-3 | 🟢 LOW | Reading content body always English in ZH mode: `get_reading_structured()` has no `lang` param and always loads `reading_content_structured.json` (English-only, not translated). Structured view takes priority over the translated `reading_content.json`. Section tab labels (核心概念/示例/反面案例/关键要点) correctly show Chinese via i18n. Fix requires translating `reading_content_structured.json` (8 files × ~5 sections each) — deferred to a content sprint. |
 
 ---
 
@@ -50,6 +47,7 @@ Trainer review (2026-03-17) of three sampled RM scenarios surfaced two defect ca
 | 2026-03-17 | pending | `uat-test@edc.ca` | ✅ PASS — PR-SYS/PR-RM/PR-UW/PR-AN/PR-MK MCQ rework verified: 252 labels ≤10 words (0 failures); ✅/❌ correctness signal renders on Task 2; navigation warning is red `st.error()`; "Next Task →" CTA appears after MCQ feedback |
 | 2026-03-18 | `c4c6f5b` | `uat-test@edc.ca` | ✅ PASS — LG-1b `[ADVANCE]` sentinel UAT (persona 3e, mk_c3_critical_eval, Task 1): `[ADVANCE]` emitted on Turn 7 after completing all VERIFY dimensions (Yield Final Judgment answer); page auto-advanced to Task 2 MCQ. Coach free-judgment design confirmed working — probed 7 turns then recognised mastery without forced-probe mandate. |
 | 2026-03-23 | `52ece2c` | `huhai.orion@gmail.com` | ✅ PASS — NEW-5 re-check: Q4 eval → 2001 chars → warning rendered + submit disabled; shorten to 2000 → submit re-enabled; warning cleared. |
+| 2026-03-24 | pending | `huhai.orion@gmail.com` | ✅ PASS — Baseline UAT post-I18N fixes (Playwright MCP): G1 6/6; G2c 3/3; G2a 6/6; G2b 3/3; G3 4/4; G4 14/14; G5 5/5. **Total 41/41 (100%)**. I18N-1 toggle on Welcome+Diagnostic confirmed; I18N-2 "实践者" level label ZH confirmed; I18N-4 orientation body + radio label ZH confirmed. |
 | 2026-03-23 | `236c945` | `huhai.orion@gmail.com` | ✅ PASS — ARCH-1–5 UAT (Playwright MCP + static checks). AC-1a: zero `calculate_domain_scores` hits in any .py file. AC-3a (after in-session fix): `generate_module_coach_note` uses `call_type="module_coach_note"` at line 365; `coach_response()` uses `call_type="coach_response"` at line 293. AC-4a: `an` in `DOMAIN_TO_COURSE` and `CAPSTONE_COURSE_ID`; `compute_module_sequence` returns 7 `an_`-prefixed IDs. AC-5a: 2001-char input trimmed to 2000 with `st.warning` banner; coach call succeeded. AC-5b: normal short input passes with no warning. AC-2a: `logs/ai_call_log.jsonl` unchanged at 72 lines after 2 live coach calls. AC-2b: Firestore `ai_call_log` has 2 new `coach_response` entries with `logged_at` timestamps. pytest: 40/40 green. |
 | 2026-03-23 | `b9b8d1d` | `dev@example.com` | ✅ PASS — Phase 3 UAT: 34/34 checks pass (`tests/uat_phase3.js`, 81s). Groups A/A2/B/C/D/E/F1/F2 all green. Welcome intake form (Q1+Q2+Advanced Options), atom-path Home (domain badges + sequence), legacy UW/AN/MK backward compat, empty-Q1 validation, and role-selector expander all confirmed. Demo personas 3a–3f seeded and exercised. |
 | 2026-03-17 | `6780c91` | `uat-test@edc.ca` | ⚠️ PARTIAL — LG-1 `[ADVANCE]` sentinel UAT (persona 3e, mk_c3_critical_eval, Task 1): **Strip confirmed** — `[ADVANCE]` text never visible in any displayed coach message across 9 turns. **Auto-advance NOT confirmed** — coach never emitted `[ADVANCE]` despite exemplary answers across all VERIFY dimensions; turn-limit fallback fired correctly at 3 turns per extension. Root cause: `_OPEN_TASK_MASTERY_ADDENDUM` not reliably followed by coach model — coach's "always probe deeper" discipline (from BUG-3 fix) appears to override mastery recognition. New issue logged as **LG-1b**. |
@@ -66,6 +64,9 @@ Practice-01 Coach discipline (BUG-3): Task 1 open mode — coach reply ends with
 
 | ID | Severity | Description | Resolution |
 | --- | --- | --- | --- |
+| I18N-4 | 🟢 LOW | Two hardcoded English strings in `pages/01_Diagnostic.py` | Fixed (2026-03-24) — orientation body now uses `t("diag.orientation_body", _lang)` rendered inside the HTML card (i18n values updated to use `<strong>` HTML tags); `st.radio("Choose your answer:")` label replaced with `t("diag.choose_answer_label", _lang)`; new key added to both en.json and zh.json. |
+| I18N-2 | 🟡 MEDIUM | `get_level_label()` and `DOMAIN_DISPLAY_NAMES` in `utils/scoring.py` returned hardcoded English strings | Fixed (2026-03-24) — `get_level_label(score, lang="en")` now resolves via `t("scoring.level.*", lang)`; `get_domain_display_name(domain_id, lang="en")` added using `t("scoring.domain.*", lang)`; all 5 level labels + 6 domain names added to en.json and zh.json; callers in pages 01–04 updated to pass `_lang`. 42/42 pytest green. |
+| I18N-1 | 🟡 MEDIUM | Language toggle absent on Welcome (00) and Diagnostic (01) pages | Fixed (2026-03-24) — `render_lang_sidebar(user_email, lang)` helper added to `utils/styles.py`; called from both pages before main content; `initial_sidebar_state` changed to `"auto"` on both pages so toggle is visible on first load. |
 | NEW-1 | 🟡 MEDIUM | `_load_lang` read disk on every non-English call — no cache | Fixed (2026-03-23) — added `_LANG_CACHE: dict[tuple, object]` at module level in `utils/content.py`; `_load_lang()` checks cache before opening file; results cached per `(filename, lang)` for process lifetime. |
 | NEW-2 | 🔴 HIGH | Scoring prompts always English — `lang` not threaded into `score_diagnostic`/`score_evaluation` | Fixed (2026-03-23) — added `lang: str = "en"` param to `_score_batch`, `score_diagnostic`, `score_evaluation`; `_lang_instruction(lang)` appended to LLM scoring prompt; callers in `01_Diagnostic.py` and `04_Course_Module.py` pass `lang=_lang`. |
 | NEW-3 | 🟢 LOW | `detect_browser_lang()` apparently never called | Closed as invalid (2026-03-23) — already wired in `utils/styles.py:744` inside `render_sidebar()`; called on every page's first render when `"lang"` not in session state. No action needed. |

@@ -8,6 +8,8 @@
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 3.3 | 2026-03-23 | Baseline eval harness added: `.claude/evals/baseline-uat.md` — 41 checks, 9 personas (all 4 roles + en/zh), 38/41 release gate; reset script extended to support `--role an` |
+| 3.2 | 2026-03-23 | Master-session model: Section 7 rewritten as direct-execution instructions (not copy-paste prompts); Section 1.1 corrected (removed non-existent `browser_scroll`; added `browser_evaluate` for JS scroll); Section 2.1 updated with server health check and startup sequence; Section 7.4 added for atom-path Home UAT |
 | 3.1 | 2026-03-23 | Phase 3 automated UAT added (Section 9): `tests/uat_phase3.js` — 34/34 checks pass; demo personas 3a–3f via `?demo=true&profile=X`; note on F1 validation mechanism (post-click, not disabled button) |
 | 3.0 | 2026-03 | Phase 3 intake form; remove Databricks Delta checks (app uses Firestore); fix Welcome page flow; add PM role (UAT-18); add Group E smoke test; branding pre-flight; fix --role an availability |
 | 2.0 | 2026-03 | Added Group D state variants, UW/AN/MK smoke tests |
@@ -27,18 +29,39 @@ This document is the authoritative test specification for the AI Hero Academy MV
 
 ### 1.1 Tools Required
 
-| Tool | Purpose |
-|------|---------|
-| `mcp__playwright__browser_navigate` | Open URLs |
-| `mcp__playwright__browser_snapshot` | Capture accessibility tree (use for all element discovery) |
-| `mcp__playwright__browser_click` | Click elements by `ref` from snapshot |
-| `mcp__playwright__browser_type` | Type text into inputs by `ref` |
-| `mcp__playwright__browser_select_option` | Select dropdown values |
-| `mcp__playwright__browser_wait_for` | Wait for text to appear or disappear |
-| `mcp__playwright__browser_take_screenshot` | Capture screenshot on failure or key state |
-| `mcp__playwright__browser_scroll` | Scroll to reveal content |
-| `mcp__playwright__browser_press_key` | Send keyboard events (e.g., Enter) |
-| `mcp__playwright__browser_resize` | Set viewport dimensions |
+| Tool | Key Parameters | Purpose |
+|------|----------------|---------|
+| `mcp__playwright__browser_navigate` | `url` | Open a URL in the current tab |
+| `mcp__playwright__browser_navigate_back` | — | Go back to the previous page |
+| `mcp__playwright__browser_snapshot` | `selector` (optional CSS scope), `filename` (optional save to file) | Capture accessibility tree — **always call before acting** |
+| `mcp__playwright__browser_click` | `ref`, `element` (description), `button`, `doubleClick` | Click by `ref` from snapshot |
+| `mcp__playwright__browser_type` | `ref`, `element`, `text`, `slowly`, `submit` | Type into a single input |
+| `mcp__playwright__browser_fill_form` | `fields: [{name, ref, type, value}]` — types: `textbox`, `radio`, `checkbox`, `combobox`, `slider` | **Preferred for multi-field forms** — fills all in one call |
+| `mcp__playwright__browser_select_option` | `ref`, `element`, `values` (array) | Select dropdown values |
+| `mcp__playwright__browser_press_key` | `key` (e.g., `Enter`, `Tab`, `Escape`) | Send keyboard events |
+| `mcp__playwright__browser_wait_for` | `text`, `textGone`, `time` (seconds) — mutually exclusive | Wait for text to appear/disappear or a fixed delay |
+| `mcp__playwright__browser_take_screenshot` | `filename`, `fullPage` (boolean), `ref`/`element` for element crop | Capture screenshot; `fullPage: true` captures full scrollable page |
+| `mcp__playwright__browser_evaluate` | `function` (JS string) | Execute JS in page — use for scrolling (see below) |
+| `mcp__playwright__browser_resize` | `width`, `height` | Set viewport; always `1280×800` for this project |
+| `mcp__playwright__browser_hover` | `ref`, `element` | Hover over element (triggers tooltips, expanders) |
+| `mcp__playwright__browser_drag` | `startRef`, `startElement`, `endRef`, `endElement` | Drag and drop |
+| `mcp__playwright__browser_handle_dialog` | `accept` (bool), `promptText` | Accept or dismiss alert/confirm/prompt dialogs |
+| `mcp__playwright__browser_network_requests` | `includeStatic` (bool, default false), `filename` | Inspect API calls — use to debug failed AI calls (filter to non-static) |
+| `mcp__playwright__browser_console_messages` | — | Read browser console for JS errors |
+| `mcp__playwright__browser_tabs` | `action`: `list`/`new`/`close`/`select`, `index` | Manage browser tabs |
+| `mcp__playwright__browser_close` | — | Close the browser page |
+| `mcp__playwright__browser_file_upload` | `paths` (array of absolute paths) | Upload files via file input elements |
+| `mcp__playwright__browser_install` | — | Install Chromium if missing (run once if browser not found) |
+
+> **No `browser_scroll` tool exists.** Use `browser_evaluate` to scroll:
+> ```javascript
+> // Scroll the main Streamlit content area down
+> () => window.scrollBy(0, 500)
+> // Or target the specific scrollable container
+> () => document.querySelector('[data-testid="stMain"]').scrollTop += 500
+> ```
+
+> **Snapshot mode is `incremental` by default.** The server only returns changed nodes after each interaction. After any Streamlit rerender, call `browser_snapshot` again — all `ref` values from the previous snapshot are stale and must not be reused.
 
 > **Note:** The app uses Firestore, not Databricks Delta tables. Do NOT attempt SQL queries
 > against `mdlg_ai_shared.*` — that catalog does not contain app data. All write verification
@@ -46,18 +69,41 @@ This document is the authoritative test specification for the AI Hero Academy MV
 
 ### 1.2 How to Interact with Streamlit
 
-Streamlit is a server-side-rendered app that rerenders the full DOM on every interaction. Follow this pattern for every interaction:
+Streamlit rerenders the full DOM on every interaction. The Playwright MCP snapshot mode is **incremental by default** — after any rerender, the server returns only changed nodes. This means **all `ref` values from the previous snapshot are stale and must be discarded**.
 
-1. **Always call `browser_snapshot` first** to get the current accessibility tree and element refs
+Follow this pattern for every interaction:
+
+1. **Call `browser_snapshot` first** to get the current accessibility tree and `ref` values
 2. **Use the `ref` value** from the snapshot to target `browser_click` / `browser_type` — never guess refs
-3. **After any click that should change UI state**, immediately call `browser_wait_for` with the text you expect to appear, OR `browser_wait_for textGone` if waiting for a loading indicator to disappear
-4. **Re-snapshot after each rerender** before the next interaction — refs change on every Streamlit rerender
+3. **After any click that triggers a rerender**, call `browser_wait_for` (text to appear or `textGone` for spinners), then call `browser_snapshot` again before the next action
+4. **For multi-field forms** (e.g., the Welcome page Q1 + Q2), prefer `browser_fill_form` over multiple sequential `browser_type` calls:
+
+```python
+browser_fill_form(fields=[
+  {"name": "Q1 work description", "ref": "<ref>", "type": "textbox",
+   "value": "I'm a Relationship Manager..."},
+  {"name": "Q2 AI tools multi-select", "ref": "<ref>", "type": "combobox",
+   "value": "Microsoft Copilot (M365 — Word, Excel, Teams, Outlook)"}
+])
+```
+
+5. **To scope a snapshot to the main content area** (reduces token volume on Streamlit pages with long sidebars):
+
+```python
+browser_snapshot(selector="[data-testid='stMain']")
+```
+
+6. **To scroll** (no `browser_scroll` tool exists — use `browser_evaluate`):
+
+```python
+browser_evaluate(function="() => window.scrollBy(0, 600)")
+```
 
 ### 1.3 Handling Loading States
 
 The app shows loading spinners during AI calls (scoring, gap map, coach responses). These can take 5–60 seconds depending on the call type.
 
-```
+```text
 Diagnostic scoring + gap map:   up to 60 seconds
 Module evaluation scoring:      up to 45 seconds
 AI coach response (one turn):   up to 15 seconds
@@ -67,14 +113,32 @@ Page navigation/load:           up to 10 seconds
 ```
 
 Pattern to wait for AI loading to complete:
-```
-browser_wait_for(textGone="Analyzing", timeout=60000)
-browser_wait_for(textGone="Scoring", timeout=45000)
-browser_wait_for(textGone="Building", timeout=30000)
-browser_wait_for(textGone="Personalizing", timeout=15000)
+
+```python
+browser_wait_for(textGone="Analyzing", time=60)   # diagnostic scoring
+browser_wait_for(textGone="Scoring",   time=45)   # evaluation scoring
+browser_wait_for(textGone="Building",  time=30)   # course creation
+browser_wait_for(textGone="Personalizing", time=15)  # intake parse
 ```
 
+> **`time` is in seconds, not milliseconds.** The `browser_wait_for` tool accepts `time` as a number of seconds (e.g., `time=60`), not milliseconds.
+
 If a loading state does not clear within the timeout: take a screenshot, mark the step as FAIL, and continue to the next scenario if possible.
+
+**Debugging a stuck or failed AI call:**
+
+If a spinner never clears or an `st.error` box appears, use `browser_network_requests` to inspect what the app actually sent:
+
+```python
+# Get all non-static requests (XHR, websocket, API calls) since page load
+browser_network_requests(includeStatic=False)
+```
+
+Look for requests to the Gemini/serving endpoint that returned a non-2xx status or timed out. Also check:
+
+```python
+browser_console_messages()   # JS errors or Streamlit websocket failures
+```
 
 ### 1.4 Firestore State Verification
 
@@ -115,18 +179,40 @@ browser_resize(width=1280, height=800)
 
 ### 2.1 Start the App
 
+**Step 1 — Check if already running:**
+
 ```bash
-# Start the app (sources .env, starts Streamlit on port 8501)
-bash run_uat.sh
+curl -s -o /dev/null -w "%{http_code}" http://localhost:8501/
 ```
 
-Wait for the Streamlit server to print "You can now view your Streamlit app in your browser" before beginning.
+If the response is `200`, the server is already up — skip to Step 3. If it returns nothing or an error, proceed to Step 2.
 
-**Verify app is running:**
+**Step 2 — Start the server:**
+
+```bash
+bash run_uat.sh &
 ```
-browser_navigate(url="http://localhost:8501")
+
+Then poll until it responds:
+
+```bash
+# Wait up to 30 seconds for the server to be ready
+for i in $(seq 1 15); do
+  code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8501/ 2>/dev/null)
+  [ "$code" = "200" ] && echo "Server ready" && break
+  sleep 2
+done
 ```
-Expected: A page loads (Welcome, Home, or Skills Profile depending on seeded state).
+
+**Step 3 — Verify with Playwright:**
+
+```python
+mcp__playwright__browser_resize(width=1280, height=800)
+mcp__playwright__browser_navigate(url="http://localhost:8501")
+mcp__playwright__browser_snapshot()
+```
+
+Expected: A page loads without Python traceback or red Streamlit error box. The exact page depends on the test user's Firestore state.
 
 ### 2.2 Test User Setup
 
@@ -828,91 +914,131 @@ Use this group for a fast pre-deploy sanity check. Run each persona independentl
 
 ---
 
-## 7. Kickoff Prompts
+## 7. Running UAT from the Master Session
 
-### 7.1 Full Suite (Groups A–D, all scenarios)
+> **Baseline eval harness**: The authoritative test matrix (41 checks, 9 personas, 38/41 release gate) lives at `.claude/evals/baseline-uat.md`. Read it before starting any baseline run.
+>
+> **Architecture note:** UAT is executed directly in the main Claude Code session — NOT in a
+> sub-agent or a new session. The Playwright MCP tools (`mcp__playwright__browser_*`) are only
+> available to the main session agent; the Databricks proxy strips `tool_reference` blocks before
+> sub-agents can discover them. All browser calls must happen here.
 
-Copy and paste into a **new Claude Code session** to run all 18 scenarios:
+### 7.1 Pre-run Checklist
 
-```
-You are a UAT testing agent for the AI Hero Academy MVP — a Streamlit app
-running locally at http://localhost:8501.
+Before issuing any UAT run command, verify all of the following in this session:
 
-Your job is to execute the full UAT test suite defined in UAT.md.
-Read UAT.md now and follow it exactly.
+1. **Server health** — confirm `http://localhost:8501` returns HTTP 200:
 
-CRITICAL — DATA LAYER:
-The app uses Google Cloud Firestore, NOT Databricks Delta tables.
-Do NOT attempt SQL queries against mdlg_ai_shared.* — that catalog does not
-contain app data. Write verification is done via UI state transitions only
-(see UAT.md Section 1.4).
+   ```bash
+   curl -s -o /dev/null -w "%{http_code}" http://localhost:8501/
+   ```
 
-TOOLS AVAILABLE TO YOU:
-- Playwright MCP (mcp__playwright__browser_*) — for all browser interactions
-- Bash tool — for running reset commands (python scripts/reset_uat_user.py ...)
+   If not `200`, start the server per Section 2.1 and wait for it to respond.
 
-IMPORTANT — MCP CALLS MUST BE IN THE MAIN SESSION:
-Never delegate mcp__playwright__* calls to sub-agents. Call them directly.
+2. **Viewport set** — issue once per session before any navigation:
 
-BEFORE YOU BEGIN:
-1. Read UAT.md in full — pay attention to Section 2.2 (Reset Command Reference).
-2. Set the viewport: browser_resize(width=1280, height=800)
-3. Run the pre-flight checks (UAT.md Section 3) before any group.
-4. Create folder tests/<YYYY-MM-DD>-<git-short-sha>/ for screenshots.
+   ```python
+   mcp__playwright__browser_resize(width=1280, height=800)
+   ```
 
-EXECUTION RULES:
-- Each group (A, B, C, D) has its own reset command in Section 2.2 — run it before starting
-  that group. You do NOT need to run prior groups to test a later group.
-- --role choices are: rm, uw, mk only. Use full wipe for AN and PM scenarios.
-- For every browser interaction: snapshot first → get ref → click/type using ref → wait for rerender
-- After every click that triggers a page change or AI call, call browser_wait_for before proceeding
-- If a step fails: screenshot immediately, log [FAIL] UAT-NN: Step N — expected X, got Y,
-  then continue unless there is a hard dependency noted in pre-conditions
-- Do NOT assert specific AI-generated text — only assert UI state transitions and structural elements
+3. **Screenshot folder** — create a dated folder for this run's screenshots:
 
-OUTPUT FORMAT:
-Print the Test Execution Summary from Section 8 after all scenarios complete.
+   ```bash
+   git_sha=$(git rev-parse --short HEAD)
+   mkdir -p tests/$(date +%Y-%m-%d)-${git_sha}
+   echo "Screenshot dir: tests/$(date +%Y-%m-%d)-${git_sha}"
+   ```
 
-Begin now: run pre-flight checks (Section 3), then start Group A (UAT-01).
-```
+4. **MCP constraint reminder** — never delegate `mcp__playwright__*` calls to sub-agents; call them
+   all directly in this session.
 
-### 7.2 Quick Smoke Test (Group E — 5 personas)
+---
 
-Use for fast pre-deploy regression checks (~10 minutes):
+### 7.2 Full Suite (Groups A–D + E, all 18 scenarios)
+
+Trigger a full UAT run by sending this instruction in the current session:
 
 ```
-You are a UAT smoke test agent for AI Hero Academy running at http://localhost:8501.
+Execute the full UAT suite defined in UAT.md.
 
-Execute Group E (5-Persona Smoke Test) from UAT.md.
-Read UAT.md Section 4 Group E now.
+RULES:
+- You are already in the master UAT session — call all mcp__playwright__browser_* tools directly.
+  Never delegate them to sub-agents.
+- Data layer is Firestore, NOT Databricks. Do NOT run SQL queries against mdlg_ai_shared.*.
+  Write verification is via UI state transitions (Section 1.4).
+- --role reset accepts: rm, uw, mk only. For AN and PM, use full-wipe reset.
+- Every browser interaction: snapshot → get ref → act → wait_for.
+- On failure: screenshot immediately, log [FAIL] UAT-NN: Step N — expected X, got Y, continue.
+- Do NOT assert specific AI-generated text — only assert UI state and structural elements.
 
-TOOLS: Playwright MCP (mcp__playwright__browser_*) — main session only.
-Set viewport: browser_resize(width=1280, height=800)
+SEQUENCE:
+1. Run pre-flight checks (Section 3).
+2. Group A — reset: python scripts/reset_uat_user.py → run UAT-01.
+3. Group B — reset: python scripts/reset_uat_user.py --role rm → run UAT-02, UAT-03.
+4. Group C — reset: python scripts/reset_uat_user.py --profile course-built → run UAT-04 through UAT-12.
+5. Group D — each scenario has its own reset (see Section 4) → run UAT-13 through UAT-18.
+6. Group E — each persona has its own reset → run all 5 personas.
 
-For EVERY persona:
-1. Run the reset command (python scripts/reset_uat_user.py [options])
-2. Navigate to http://localhost:8501
-3. Take a screenshot
-4. Assert: no "EDC" text visible, no Python traceback, no None/null rendered
-5. Assert the persona-specific conditions listed in UAT.md
-
-REPORT FORMAT after all 5 personas:
-| Persona | Reset cmd | Key page | Screenshot file | Pass/Fail | Issues |
-
-Flag any issue with: exact page, element, observed vs expected.
-Do NOT attempt to fix issues — document and report only.
-
-Begin now: Persona 1 (fresh user).
+OUTPUT: Fill in and print the Test Execution Summary (Section 8) when all scenarios complete.
 ```
 
-### 7.3 Single Group (targeted run)
+---
 
-To run only one group, modify the final line of the full suite prompt:
+### 7.3 Quick Smoke Test (Group E — 5 personas, ~10 min)
 
 ```
-Begin now: run pre-flight checks (Section 3), then run only Group C (UAT-04 through UAT-12).
-Use this reset first: python scripts/reset_uat_user.py --profile course-built
+Execute Group E (5-Persona Smoke Test) from UAT.md Section 4.
+
+RULES:
+- Call all mcp__playwright__browser_* tools directly in this session — not via sub-agents.
+- Viewport must be 1280×800.
+
+For EVERY persona in order:
+1. Run its reset command (python scripts/reset_uat_user.py [options]).
+2. Navigate to http://localhost:8501.
+3. Take a screenshot — save to tests/<date>-<sha>/<persona-id>.png.
+4. Assert: no "EDC" text, no Python traceback, no None/null rendered as visible text.
+5. Assert the persona-specific conditions from UAT.md Section 4 Group E.
+
+REPORT FORMAT (print after all 5):
+| Persona | Reset cmd | Key page | Screenshot | Pass/Fail | Issues |
+
+Flag issues with: exact page, element ref, observed vs expected. Do NOT fix — document only.
 ```
+
+---
+
+### 7.4 Atom-Path Home Smoke Test
+
+For the atom-path Home branch (demo persona `3f` or reset `--profile course-built` with assembled path):
+
+```
+Execute atom-path Home checks using demo persona 3f.
+
+1. mcp__playwright__browser_navigate(url="http://localhost:8501/?demo=true&profile=3f")
+2. mcp__playwright__browser_snapshot()
+3. Assert: domain badges are visible (not Read/Practice/Quiz sub-badges)
+4. Assert: modules numbered 01–07 are present
+5. Assert: "Start Module 1 →" CTA is visible and clickable
+6. Click "Start Module 1 →"
+7. Assert: reading content page loads (Concept/Example/Pitfall/Takeaway tabs visible)
+8. Assert: no Python traceback, no EDC text, no None/null
+```
+
+---
+
+### 7.5 Targeted Single Group
+
+To run one group without re-running others, issue:
+
+```
+Execute only Group C (UAT-04 through UAT-12) from UAT.md.
+Reset first: python scripts/reset_uat_user.py --profile course-built
+Run pre-flight Section 3 checks, then proceed with UAT-04.
+Call all mcp__playwright__browser_* tools directly — not via sub-agents.
+```
+
+Replace `Group C` / `UAT-04 through UAT-12` / reset command with the target group's values from Section 2.3.
 
 ---
 

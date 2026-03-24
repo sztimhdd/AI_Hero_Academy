@@ -4,6 +4,8 @@ Scoring utilities: MCQ answer checking, domain score calculation, level labels.
 
 import json
 
+from utils.i18n import t
+
 
 LEVEL_LABELS = [
     (0.0, 0.49, "Unaware"),
@@ -32,14 +34,33 @@ DOMAIN_IDS = [
 ]
 
 
-def get_level_label(score: float) -> str:
-    """Return the level label for a 0–4 score."""
-    for low, high, label in LEVEL_LABELS:
+_LEVEL_KEYS = [
+    (0.0, 0.49, "scoring.level.unaware"),
+    (0.5, 1.4,  "scoring.level.explorer"),
+    (1.5, 2.4,  "scoring.level.practitioner"),
+    (2.5, 3.4,  "scoring.level.proficient"),
+    (3.5, 4.0,  "scoring.level.champion"),
+]
+
+
+def get_level_label(score: float, lang: str = "en") -> str:
+    """Return the translated level label for a 0–4 score."""
+    for low, high, key in _LEVEL_KEYS:
         if low <= score <= high:
-            return label
+            return t(key, lang)
     if score > 4.0:
-        return "Champion"
-    return "Unaware"
+        return t("scoring.level.champion", lang)
+    return t("scoring.level.unaware", lang)
+
+
+def get_domain_display_name(domain_id: str, lang: str = "en") -> str:
+    """Return the translated display name for a domain_id."""
+    key = f"scoring.domain.{domain_id}"
+    result = t(key, lang)
+    # Fall back to DOMAIN_DISPLAY_NAMES if key not found in i18n
+    if result == key:
+        return DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id)
+    return result
 
 
 def get_score_color(score: float) -> str:

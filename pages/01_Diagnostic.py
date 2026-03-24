@@ -15,8 +15,8 @@ from utils.db import get_profile, get_latest_diagnostic, save_diagnostic, save_g
 from utils.ai import score_diagnostic, generate_gap_map
 from utils.path_assembler import assemble_path
 from utils.content import get_atomic_modules
-from utils.scoring import DOMAIN_DISPLAY_NAMES
-from utils.styles import inject_global_css
+from utils.scoring import DOMAIN_DISPLAY_NAMES, get_domain_display_name
+from utils.styles import inject_global_css, render_lang_sidebar
 from utils.content import get_diagnostic_items, get_domain_descriptions
 from utils.i18n import t
 
@@ -24,7 +24,7 @@ st.set_page_config(
     page_title="Diagnostic | AI Hero Academy",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="auto",
 )
 
 inject_global_css()
@@ -42,8 +42,11 @@ role_id: str = profile["role_id"] if profile else st.session_state.get("role_id"
 _prior_diag = get_latest_diagnostic(user_email)
 _can_exit = bool(_prior_diag)
 
-# ── Load diagnostic items (ordered) ──────────────────────────────────────────
+# ── Language toggle in sidebar (I18N-1) + load items ─────────────────────────
 _lang = st.session_state.get("lang", "en")
+render_lang_sidebar(user_email=user_email, lang=_lang)
+
+# ── Load diagnostic items (ordered) ──────────────────────────────────────────
 items = get_diagnostic_items(role_id, lang=_lang)
 domain_descriptions = get_domain_descriptions(role_id, lang=_lang)
 
@@ -92,11 +95,9 @@ if not st.session_state.get("diag_started"):
       <div style="font-family:'Inter',sans-serif; font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.08em">{t("diag.domains_label", _lang)}</div>
     </div>
   </div>
+  </div>
   <div style="font-family:'Inter',sans-serif; font-size:0.85rem; color:#8990A8; line-height:1.6">
-    Questions include <strong style="color:#E8E9EF">multiple choice</strong>,
-    <strong style="color:#E8E9EF">written responses</strong>, and
-    <strong style="color:#E8E9EF">short tasks</strong>.
-    There are no right or wrong answers — your results shape your personalised training course.
+    {t("diag.orientation_body", _lang)}
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -242,7 +243,7 @@ item_type = item["item_type"]
 question_text = item["question_text"] or ""
 scenario_text = item["scenario_text"] or ""
 
-domain_name = DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id)
+domain_name = get_domain_display_name(domain_id, _lang)
 is_last = idx == TOTAL - 1
 
 # Domain tag
@@ -267,7 +268,7 @@ if item_type == "mcq":
     opt_keys = [o["label"] for o in options]
 
     selected = st.radio(
-        "Choose your answer:",
+        t("diag.choose_answer_label", _lang),
         options=opt_labels,
         key=f"mcq_{item_id}",
         label_visibility="collapsed",

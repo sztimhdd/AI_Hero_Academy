@@ -2304,5 +2304,946 @@
     ],
     "atomized_at": "2026-03-23",
     "status": "role-variant"
+  },
+  {
+    "atom_id": "relationship_intel__meeting_intelligence",
+    "title": "Meeting Intelligence: Know Every Room Before You Walk In",
+    "domain": "relationship_intel",
+    "capability_tags": [
+      "meeting_prep",
+      "stakeholder_research",
+      "action_item_extraction",
+      "pre_meeting_synthesis",
+      "meeting_follow_up"
+    ],
+    "estimated_minutes": 30,
+    "role_variants_hint": "Suited for roles that require frequent meetings and stakeholder engagement, such as project managers, sales representatives, and team leads.",
+    "reading": {
+      "concept_text": "Imagine walking into every meeting already knowing the key players, their priorities, and potential roadblocks – saving you time and boosting your influence. Meeting intelligence is a 3-phase process: pre-meeting research, in-meeting synthesis, and post-meeting action capture. Pre-meeting, AI tools can analyze attendee profiles, past communications, and relevant documents to provide a comprehensive briefing. During the meeting, AI can assist in real-time note-taking, sentiment analysis, and action item identification. Post-meeting, AI helps summarize key decisions, assign tasks, and schedule follow-ups, ensuring nothing falls through the cracks. This systematic approach transforms meetings from potential time-wasters into productive sessions.",
+      "good_example": "At Aurora Corp, a project manager used meeting intelligence tools to prepare for a kickoff meeting with a new client. The AI identified the client's key concerns from previous interactions and highlighted potential areas of disagreement. Armed with this knowledge, the project manager proactively addressed these issues during the meeting, leading to a smoother discussion and a faster agreement on project scope, saving an estimated 5 hours of rework.",
+      "anti_pattern": "Failing to prepare adequately for meetings can lead to missed opportunities, misunderstandings, and wasted time. For example, attending a client meeting without understanding their recent challenges or priorities can result in irrelevant proposals and a damaged reputation. This lack of preparation signals a lack of respect for the client's time and can jeopardize future business opportunities, potentially costing you a promotion or even your job.",
+      "takeaway": "Mastering meeting intelligence ensures you're always prepared, informed, and effective, making you a more valuable and influential contributor."
+    },
+    "practice": {
+      "scenario_template": "As a {role} at {org_type}, you're preparing for a crucial meeting to discuss a new project proposal.",
+      "task_templates": [
+        {
+          "task_id": 1,
+          "text_template": "Using AI tools, research the meeting attendees and identify their key priorities and potential concerns.",
+          "skill_focus": "Pre-meeting research",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 2,
+          "text_template": "During a mock meeting, use AI-powered note-taking to capture key decisions and action items.",
+          "skill_focus": "In-meeting synthesis",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 3,
+          "text_template": "After the mock meeting, use AI to generate a summary of the discussion and assign tasks to relevant team members.",
+          "skill_focus": "Post-meeting action capture",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 4,
+          "text_template": "Which of the following best describes the benefit of pre-meeting research?",
+          "skill_focus": "Pre-meeting research",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "It helps you identify potential conflicts and tailor your message accordingly, leading to more productive discussions.",
+              "is_best": true
+            },
+            {
+              "label": "It allows you to dominate the conversation and assert your authority over other attendees.",
+              "is_best": false
+            },
+            {
+              "label": "It ensures you have all the answers and can avoid asking any questions during the meeting.",
+              "is_best": false
+            }
+          ]
+        }
+      ],
+      "coach_system_prompt_template": "As a meeting intelligence coach, guide the {role} at {organisation} through the 3-phase loop of pre-meeting research, in-meeting synthesis, and post-meeting action capture for the {scenario_name} scenario. Focus on practical application of AI tools within the {domain} domain."
+    },
+    "eval": {
+      "items_ref": "inline",
+      "inline_items": [
+        {
+          "item_id": "ev_relationship_intel__meeting_intelligence_q1",
+          "item_type": "mcq",
+          "sequence": 1,
+          "question_text": "Which phase of the meeting intelligence loop focuses on identifying key stakeholders and their priorities?",
+          "scenario_text": "You are preparing for a project kickoff meeting.",
+          "options": [
+            {
+              "label": "A",
+              "text": "In-meeting synthesis"
+            },
+            {
+              "label": "B",
+              "text": "Pre-meeting research"
+            },
+            {
+              "label": "C",
+              "text": "Post-meeting action capture"
+            },
+            {
+              "label": "D",
+              "text": "Meeting follow-up"
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_relationship_intel__meeting_intelligence_q2",
+          "item_type": "mcq",
+          "sequence": 2,
+          "question_text": "What is the primary goal of in-meeting synthesis?",
+          "scenario_text": "You are in the middle of a crucial negotiation meeting.",
+          "options": [
+            {
+              "label": "A",
+              "text": "To distribute pre-prepared materials to attendees."
+            },
+            {
+              "label": "B",
+              "text": "To capture key decisions, action items, and sentiment in real-time."
+            },
+            {
+              "label": "C",
+              "text": "To schedule follow-up meetings."
+            },
+            {
+              "label": "D",
+              "text": "To ensure everyone agrees with your point of view."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_relationship_intel__meeting_intelligence_q3",
+          "item_type": "mcq",
+          "sequence": 3,
+          "question_text": "Which of these tasks is best suited for the post-meeting action capture phase?",
+          "scenario_text": "The meeting has concluded, and you need to summarize the outcomes.",
+          "options": [
+            {
+              "label": "A",
+              "text": "Analyzing attendee body language to gauge their true feelings."
+            },
+            {
+              "label": "B",
+              "text": "Generating a summary of key decisions and assigning tasks."
+            },
+            {
+              "label": "C",
+              "text": "Debating the merits of different proposals."
+            },
+            {
+              "label": "D",
+              "text": "Canceling any follow-up meetings."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_relationship_intel__meeting_intelligence_q4",
+          "item_type": "performance_task",
+          "sequence": 4,
+          "question_text": "Using the 3-phase meeting intelligence loop, prepare for a meeting with a potential investor. Document your process and outcomes.",
+          "scenario_text": "You are a startup founder seeking seed funding.",
+          "rubric": [
+            {
+              "criterion": "Effectiveness of pre-meeting research in identifying investor priorities and concerns.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Accuracy and completeness of in-meeting synthesis, including key decisions and action items.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Clarity and actionability of the post-meeting summary and task assignments.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Overall application of the 3-phase meeting intelligence loop.",
+              "weight": 0.25
+            }
+          ]
+        }
+      ],
+      "source_course_ids": []
+    },
+    "source_course_ids": [],
+    "merged_from": [],
+    "atomized_at": "2026-03-24",
+    "status": "canonical"
+  },
+  {
+    "atom_id": "augmented_comm__email_message_drafting",
+    "title": "Email Intelligence: Draft, Tone, and Send in Minutes",
+    "domain": "augmented_comm",
+    "capability_tags": [
+      "email_drafting",
+      "tone_calibration",
+      "async_communication",
+      "stakeholder_messaging",
+      "follow_up_sequencing"
+    ],
+    "estimated_minutes": 30,
+    "role_variants_hint": "Suited for individual contributors and managers who communicate frequently via email.",
+    "reading": {
+      "concept_text": "AI-powered email drafting slashes the time you spend crafting messages, letting you focus on strategic tasks. By using AI to generate initial drafts and refine your tone, you can reclaim hours each week. The TONE framework ensures your emails are effective and professional. TONE stands for: Target audience (who are you writing to?), Objective (what do you want them to do?), Nuance (what tone is appropriate?), and Edit loop (review and refine). Applying TONE means considering your audience's expectations, defining a clear call to action, choosing the right level of formality, and always proofreading for clarity and impact. This structured approach guarantees efficient and impactful communication.",
+      "good_example": "A project manager at Meridian Solutions used AI to draft a weekly status update to her team. By specifying a concise, encouraging tone and highlighting key milestones, the AI generated a draft that only needed minor tweaks. This saved her 30 minutes, allowing her to address a critical roadblock in the project timeline. The email clearly outlined progress, acknowledged challenges, and motivated the team, resulting in improved team morale and faster problem-solving.",
+      "anti_pattern": "Failing to calibrate the tone of an email can lead to misunderstandings and damaged relationships. Imagine sending a terse, demanding email to a client when a more collaborative tone was needed. This could alienate the client, jeopardize the project, and reflect poorly on your professionalism. Overlooking the 'Nuance' step in the TONE framework can result in misinterpretations and negative consequences for your career.",
+      "takeaway": "Mastering AI-assisted email drafting with the TONE framework frees up valuable time and ensures your messages are always on point, boosting your productivity and professional image."
+    },
+    "practice": {
+      "scenario_template": "You are a {role} at a {org_type}. Use AI to draft an email following the TONE framework.",
+      "task_templates": [
+        {
+          "task_id": 1,
+          "text_template": "Identify the target audience and objective for an email to your team announcing a new company policy.",
+          "skill_focus": "Target audience, Objective",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 2,
+          "text_template": "Select the most appropriate tone for an email requesting urgent information from a senior executive.",
+          "skill_focus": "Nuance",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Use a formal and respectful tone, clearly stating the urgency and reason for the request.",
+              "is_best": true
+            },
+            {
+              "label": "Use a casual and friendly tone to build rapport and make the request seem less demanding.",
+              "is_best": false
+            },
+            {
+              "label": "Use an assertive and demanding tone to emphasize the importance of the information.",
+              "is_best": false
+            }
+          ]
+        },
+        {
+          "task_id": 3,
+          "text_template": "Draft an email to a client following the TONE framework, requesting feedback on a recent project deliverable.",
+          "skill_focus": "TONE framework application",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 4,
+          "text_template": "Identify the key elements to review during the 'Edit loop' to ensure clarity and impact in your email.",
+          "skill_focus": "Edit loop",
+          "task_mode": "open",
+          "mcq_options": null
+        }
+      ],
+      "coach_system_prompt_template": "You are a communication coach. Review the {role}'s email draft for adherence to the TONE framework. Provide specific feedback on the target audience, objective, nuance, and edit loop. The {organisation} values clear and effective communication. The scenario is: {scenario_name}. The domain is {domain}."
+    },
+    "eval": {
+      "items_ref": "inline",
+      "inline_items": [
+        {
+          "item_id": "ev_augmented_comm__email_message_drafting_q1",
+          "item_type": "mcq",
+          "sequence": 1,
+          "question_text": "Which element of the TONE framework focuses on understanding the recipient's background and expectations?",
+          "scenario_text": "You are about to draft an email to a new client.",
+          "options": [
+            {
+              "label": "A",
+              "text": "Objective"
+            },
+            {
+              "label": "B",
+              "text": "Target audience"
+            },
+            {
+              "label": "C",
+              "text": "Nuance"
+            },
+            {
+              "label": "D",
+              "text": "Edit loop"
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_augmented_comm__email_message_drafting_q2",
+          "item_type": "mcq",
+          "sequence": 2,
+          "question_text": "According to the TONE framework, what is the primary purpose of the 'Objective' component?",
+          "scenario_text": "You are planning an email campaign.",
+          "options": [
+            {
+              "label": "A",
+              "text": "To analyze the emotional impact of your message on the recipient."
+            },
+            {
+              "label": "B",
+              "text": "To define the specific action you want the recipient to take after reading the email."
+            },
+            {
+              "label": "C",
+              "text": "To identify potential grammatical errors in the email draft."
+            },
+            {
+              "label": "D",
+              "text": "To determine the appropriate font size and formatting for the email."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_augmented_comm__email_message_drafting_q3",
+          "item_type": "mcq",
+          "sequence": 3,
+          "question_text": "Which aspect of email communication does the 'Nuance' component of the TONE framework address?",
+          "scenario_text": "You are deciding how to phrase a sensitive request in an email.",
+          "options": [
+            {
+              "label": "A",
+              "text": "The overall tone and level of formality appropriate for the recipient and situation."
+            },
+            {
+              "label": "B",
+              "text": "The technical specifications of the email platform being used."
+            },
+            {
+              "label": "C",
+              "text": "The legal disclaimers that must be included in the email footer."
+            },
+            {
+              "label": "D",
+              "text": "The optimal time of day to send the email for maximum open rates."
+            }
+          ],
+          "correct_answer": "A",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_augmented_comm__email_message_drafting_q4",
+          "item_type": "performance_task",
+          "sequence": 4,
+          "question_text": "Using the TONE framework, draft an email to a colleague requesting their assistance on a project. Clearly identify each component of the TONE framework in your response.",
+          "scenario_text": "You need help from a colleague to meet a project deadline.",
+          "rubric": [
+            {
+              "criterion": "Target audience is clearly defined and appropriate for the email's purpose.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Objective is specific, measurable, achievable, relevant, and time-bound (SMART).",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Nuance (tone) is suitable for the recipient and the context of the request.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Edit loop demonstrates attention to detail, clarity, and conciseness.",
+              "weight": 0.25
+            }
+          ]
+        }
+      ],
+      "source_course_ids": []
+    },
+    "source_course_ids": [],
+    "merged_from": [],
+    "atomized_at": "2026-03-24",
+    "status": "canonical"
+  },
+  {
+    "atom_id": "strategic_prompting__iterative_refinement",
+    "title": "Iterative Prompting: From Good Output to Great Output",
+    "domain": "strategic_prompting",
+    "capability_tags": [
+      "multi_turn_prompting",
+      "output_refinement",
+      "prompt_iteration",
+      "critique_prompting",
+      "constraint_narrowing"
+    ],
+    "estimated_minutes": 30,
+    "role_variants_hint": "All roles benefit from refining AI outputs to meet specific needs.",
+    "reading": {
+      "concept_text": "Iterative prompting is a powerful technique that transforms initial AI outputs into polished, highly relevant results. By engaging in a cycle of review, evaluation, feedback, and iteration (the REFINE loop), you can progressively shape the AI's output to align perfectly with your objectives, saving you time and improving quality. The REFINE loop involves critically reviewing the AI's initial response, evaluating the gap between the output and your desired outcome, providing specific feedback as a constraint, iterating with a revised prompt, and then repeating the process as needed. This method allows you to leverage AI's capabilities while maintaining control over the final product, ensuring accuracy and relevance. Iterative refinement is especially useful when dealing with complex tasks or nuanced requirements, where a single prompt may not suffice.",
+      "good_example": "A marketing specialist at Meridian Solutions used iterative prompting to create compelling ad copy. The initial output was generic, but after three iterations of feedback focusing on specific target demographics and desired emotional responses, the final ad copy resulted in a 20% increase in click-through rates compared to previous campaigns. Each iteration focused on a specific aspect: first, tone; second, call to action; third, keyword density.",
+      "anti_pattern": "Failing to iterate on initial AI outputs can lead to inaccurate, irrelevant, or low-quality results. For example, a project manager who accepts the first draft of a project proposal generated by AI without further refinement risks presenting a flawed plan to stakeholders. This can damage their credibility and lead to project delays or even failure due to overlooked issues or misaligned objectives.",
+      "takeaway": "By mastering iterative prompting, you can consistently refine AI outputs to meet your exact needs, saving time and improving the quality of your work."
+    },
+    "practice": {
+      "scenario_template": "As a {role} at {org_type}, you're using AI to draft a document. The initial output is a good start, but needs refinement to meet specific requirements.",
+      "task_templates": [
+        {
+          "task_id": 1,
+          "text_template": "Review the initial AI-generated draft of the document. Identify three specific areas where the output falls short of your desired outcome.",
+          "skill_focus": "Review and evaluation",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 2,
+          "text_template": "Based on your review, formulate a revised prompt that incorporates specific constraints to address the identified shortcomings. Focus on clarity and precision in your feedback.",
+          "skill_focus": "Feedback and constraint",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 3,
+          "text_template": "Which of the following revised prompts best incorporates specific constraints to improve the AI's output?",
+          "skill_focus": "Prompt revision",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Revise the document to be more concise and engaging.",
+              "is_best": false
+            },
+            {
+              "label": "Rewrite the introduction to clearly state the document's purpose and target audience, and shorten the body paragraphs to under 75 words each.",
+              "is_best": true
+            },
+            {
+              "label": "Make the document better.",
+              "is_best": false
+            }
+          ]
+        },
+        {
+          "task_id": 4,
+          "text_template": "Iterate on the prompt at least once more, incorporating feedback from the AI's response to your revised prompt. Document the changes you made and the rationale behind them.",
+          "skill_focus": "Iteration and refinement",
+          "task_mode": "open",
+          "mcq_options": null
+        }
+      ],
+      "coach_system_prompt_template": "You are coaching a {role} at {organisation} on iterative prompting. Guide them through the REFINE loop to improve the AI's output for the {scenario_name} scenario. Focus on clear evaluation and specific feedback within the {domain} domain."
+    },
+    "eval": {
+      "items_ref": "inline",
+      "inline_items": [
+        {
+          "item_id": "ev_strategic_prompting__iterative_refinement_q1",
+          "item_type": "mcq",
+          "sequence": 1,
+          "question_text": "Which step in the REFINE loop focuses on identifying the difference between the current AI output and the desired outcome?",
+          "scenario_text": "You've received an initial draft from the AI and are ready to improve it.",
+          "options": [
+            {
+              "label": "Review",
+              "text": "Reviewing the AI's output for general understanding."
+            },
+            {
+              "label": "Evaluate gap",
+              "text": "Determining the difference between the current and desired output."
+            },
+            {
+              "label": "Feed back constraint",
+              "text": "Providing specific instructions to the AI."
+            },
+            {
+              "label": "Iterate",
+              "text": "Generating a new output based on feedback."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_strategic_prompting__iterative_refinement_q2",
+          "item_type": "mcq",
+          "sequence": 2,
+          "question_text": "What is the primary benefit of using the REFINE loop in strategic prompting?",
+          "scenario_text": "You are deciding whether to use iterative prompting or rely on a single prompt.",
+          "options": [
+            {
+              "label": "It guarantees a perfect output on the first try.",
+              "text": "Ensures perfect results immediately."
+            },
+            {
+              "label": "It allows for precise control and refinement of AI outputs.",
+              "text": "Provides greater control over the AI's output."
+            },
+            {
+              "label": "It eliminates the need for human review.",
+              "text": "Removes the need for human oversight."
+            },
+            {
+              "label": "It is faster than using a single, complex prompt.",
+              "text": "Always faster than a single prompt."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_strategic_prompting__iterative_refinement_q3",
+          "item_type": "mcq",
+          "sequence": 3,
+          "question_text": "In the REFINE loop, what does 'Feed back constraint' specifically involve?",
+          "scenario_text": "You've evaluated the AI's output and are ready to provide feedback.",
+          "options": [
+            {
+              "label": "Providing general suggestions for improvement.",
+              "text": "Giving broad, non-specific advice."
+            },
+            {
+              "label": "Offering specific, actionable instructions to guide the AI.",
+              "text": "Giving detailed, actionable instructions."
+            },
+            {
+              "label": "Ignoring the initial output and starting over.",
+              "text": "Discarding the initial output entirely."
+            },
+            {
+              "label": "Approving the output without any changes.",
+              "text": "Accepting the output as is."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_strategic_prompting__iterative_refinement_q4",
+          "item_type": "performance_task",
+          "sequence": 4,
+          "question_text": "Using the REFINE loop, improve the following AI-generated sentence: 'Our product is good.'",
+          "scenario_text": "You want to make the sentence more compelling and informative.",
+          "rubric": [
+            {
+              "criterion": "Review: Identifies weaknesses in the original sentence.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Evaluate gap: Clearly defines the desired improvement.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Feed back constraint: Provides specific and actionable instructions.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Iterate: Generates an improved sentence based on the feedback.",
+              "weight": 0.25
+            }
+          ]
+        }
+      ],
+      "source_course_ids": []
+    },
+    "source_course_ids": [],
+    "merged_from": [],
+    "atomized_at": "2026-03-24",
+    "status": "canonical"
+  },
+  {
+    "atom_id": "critical_eval__hallucination_patterns",
+    "title": "Hallucination Patterns: The 5 Most Dangerous AI Errors",
+    "domain": "critical_eval",
+    "capability_tags": [
+      "hallucination_detection",
+      "fact_verification",
+      "ai_error_patterns",
+      "source_checking",
+      "credibility_protection"
+    ],
+    "estimated_minutes": 30,
+    "role_variants_hint": "Suited for roles that involve using AI tools to generate reports, presentations, or analyses.",
+    "reading": {
+      "concept_text": "Spotting AI errors protects your reputation and ensures reliable insights, saving you from presenting incorrect information. AI models, while powerful, can generate 'hallucinations' – outputs that are factually incorrect or misleading. These errors fall into five dangerous patterns. First, **False facts:** completely fabricated information. Second, **Fabricated citations:** claims attributed to non-existent sources. Third, **Plausible-but-wrong numbers:** seemingly accurate data that is actually incorrect. Fourth, **Confident confabulation:** presenting made-up information with unwarranted certainty. Fifth, **Outdated information:** using data that is no longer current or relevant. Recognizing these patterns is crucial for responsible AI use.",
+      "good_example": "An analyst at Meridian Financial used an AI tool to summarize market trends. Initially, the AI reported a 15% growth in a specific sector, citing a reputable source. However, upon closer inspection, the analyst found the source didn't mention that figure. The analyst corrected the report, preventing a potentially misleading investment recommendation based on 'Plausible-but-wrong numbers.' This saved the firm from making a poor investment decision.",
+      "anti_pattern": "Failing to verify AI-generated content can lead to sharing inaccurate information, damaging your credibility. Imagine presenting a report with fabricated statistics ('Plausible-but-wrong numbers') or citing a non-existent study ('Fabricated citations'). This not only undermines your work but also erodes trust in your judgment, potentially leading to professional setbacks and loss of opportunities.",
+      "takeaway": "Mastering hallucination detection safeguards your professional reputation and ensures the reliability of your work."
+    },
+    "practice": {
+      "scenario_template": "As a {role} at {org_type}, you're using AI to draft a report on industry trends. Review the AI-generated content for potential hallucination patterns.",
+      "task_templates": [
+        {
+          "task_id": 1,
+          "text_template": "The AI claims, 'According to a study by Northfield Research, renewable energy investments will triple by 2027.' You cannot find this study. Which hallucination pattern is most likely?",
+          "skill_focus": "Fabricated citations",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "The AI is likely presenting outdated information, which needs to be updated.",
+              "is_best": false
+            },
+            {
+              "label": "The AI is likely fabricating citations, attributing claims to a non-existent source.",
+              "is_best": true
+            },
+            {
+              "label": "The AI is likely engaging in confident confabulation, presenting made-up information.",
+              "is_best": false
+            }
+          ]
+        },
+        {
+          "task_id": 2,
+          "text_template": "The AI states, 'The unemployment rate is 2%, according to the Bureau of Labor Statistics.' The actual rate is 4%. Which pattern is this?",
+          "skill_focus": "Plausible-but-wrong numbers",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "The AI is presenting plausible-but-wrong numbers, which require careful verification.",
+              "is_best": true
+            },
+            {
+              "label": "The AI is providing outdated information, which needs to be checked against current data.",
+              "is_best": false
+            },
+            {
+              "label": "The AI is fabricating false facts, which is a sign of a serious error.",
+              "is_best": false
+            }
+          ]
+        },
+        {
+          "task_id": 3,
+          "text_template": "The AI confidently asserts, 'Quantum computing will revolutionize the healthcare industry within the next year.' However, this claim is not supported by any credible sources and is highly speculative. What type of hallucination is this?",
+          "skill_focus": "Confident confabulation",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "The AI is providing outdated information, which needs to be updated.",
+              "is_best": false
+            },
+            {
+              "label": "The AI is fabricating false facts, which is a sign of a serious error.",
+              "is_best": false
+            },
+            {
+              "label": "The AI is engaging in confident confabulation, presenting made-up information with certainty.",
+              "is_best": true
+            }
+          ]
+        },
+        {
+          "task_id": 4,
+          "text_template": "The AI report includes the statement: 'Crestwood Industries reported a 30% increase in profits last quarter.' Upon checking Crestwood's official financial statements, you find no mention of this increase. What do you do?",
+          "skill_focus": "False facts",
+          "task_mode": "open",
+          "mcq_options": null
+        }
+      ],
+      "coach_system_prompt_template": "As an AI coach, review the {role}'s analysis of AI-generated content in the {organisation} report. Focus on identifying and correcting hallucination patterns, such as false facts, fabricated citations, plausible-but-wrong numbers, confident confabulation, and outdated information within the {scenario_name} in the domain of {domain}."
+    },
+    "eval": {
+      "items_ref": "inline",
+      "inline_items": [
+        {
+          "item_id": "ev_critical_eval__hallucination_patterns_q1",
+          "item_type": "mcq",
+          "sequence": 1,
+          "question_text": "Which hallucination pattern involves presenting information that is completely made up and untrue?",
+          "scenario_text": "You are reviewing an AI-generated summary of a scientific article.",
+          "options": [
+            {
+              "label": "A",
+              "text": "Fabricated citations, where claims are attributed to non-existent sources."
+            },
+            {
+              "label": "B",
+              "text": "False facts, where the information presented is entirely fabricated and untrue."
+            },
+            {
+              "label": "C",
+              "text": "Plausible-but-wrong numbers, where the data seems accurate but is incorrect."
+            },
+            {
+              "label": "D",
+              "text": "Outdated information, where the data is no longer current or relevant."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_critical_eval__hallucination_patterns_q2",
+          "item_type": "mcq",
+          "sequence": 2,
+          "question_text": "What type of AI hallucination is characterized by citing sources that do not exist or do not support the claim being made?",
+          "scenario_text": "An AI tool provides a list of sources to back up its claims in a market analysis report.",
+          "options": [
+            {
+              "label": "A",
+              "text": "Confident confabulation, presenting made-up information with unwarranted certainty."
+            },
+            {
+              "label": "B",
+              "text": "Fabricated citations, attributing claims to sources that don't exist or don't support the claim."
+            },
+            {
+              "label": "C",
+              "text": "Plausible-but-wrong numbers, using data that seems accurate but is actually incorrect."
+            },
+            {
+              "label": "D",
+              "text": "Outdated information, using data that is no longer current or relevant."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_critical_eval__hallucination_patterns_q3",
+          "item_type": "mcq",
+          "sequence": 3,
+          "question_text": "Which hallucination pattern involves presenting data that appears to be accurate but is, in fact, incorrect?",
+          "scenario_text": "An AI generates a financial report with specific growth percentages for various sectors.",
+          "options": [
+            {
+              "label": "A",
+              "text": "Outdated information, where the data is no longer current or relevant."
+            },
+            {
+              "label": "B",
+              "text": "Plausible-but-wrong numbers, where the data seems accurate but is actually incorrect."
+            },
+            {
+              "label": "C",
+              "text": "False facts, where the information presented is entirely fabricated and untrue."
+            },
+            {
+              "label": "D",
+              "text": "Confident confabulation, presenting made-up information with unwarranted certainty."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_critical_eval__hallucination_patterns_q4",
+          "item_type": "performance_task",
+          "sequence": 4,
+          "question_text": "You are using an AI tool to generate a report on emerging technologies. The AI confidently states, 'Lakewood Technologies has achieved a breakthrough in quantum computing, leading to a 500% increase in processing speed.' Evaluate this statement for potential hallucination patterns and describe your verification process.",
+          "scenario_text": "Review the AI-generated statement and determine if it exhibits any of the five hallucination patterns.",
+          "rubric": [
+            {
+              "criterion": "Identifies the potential hallucination pattern (Confident confabulation) correctly.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Explains the reasoning behind identifying the pattern, referencing the lack of credible sources.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Describes a verification process, including checking Lakewood Technologies' official website and reputable tech news sources.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Clearly articulates the importance of verifying AI-generated content to maintain credibility.",
+              "weight": 0.25
+            }
+          ]
+        }
+      ],
+      "source_course_ids": []
+    },
+    "source_course_ids": [],
+    "merged_from": [],
+    "atomized_at": "2026-03-24",
+    "status": "canonical"
+  },
+  {
+    "atom_id": "responsible_ai__ai_tool_governance",
+    "title": "AI Tool Governance: Choose the Right Tool, Every Time",
+    "domain": "responsible_ai",
+    "capability_tags": [
+      "tool_selection",
+      "ai_literacy",
+      "policy_compliance",
+      "tool_risk_assessment",
+      "approved_tools"
+    ],
+    "estimated_minutes": 30,
+    "role_variants_hint": "All roles benefit from understanding how to select appropriate AI tools, ensuring compliance and maximizing effectiveness.",
+    "reading": {
+      "concept_text": "Choosing the right AI tool can save you hours of rework and prevent embarrassing errors, while using unapproved tools can expose your work to security and compliance risks. The SELECT framework helps you systematically evaluate AI tools for your {org_type}, ensuring you choose the most appropriate option. SELECT stands for: Sensitivity check (assess data sensitivity), Evaluate alternatives (explore approved tools), Legal/policy check (ensure compliance), Evaluate data residency (confirm data storage location), Compare output quality (test accuracy), and Track and document (maintain records). By following SELECT, you minimize risks associated with data breaches, biased outputs, and non-compliance, while maximizing the efficiency and reliability of your AI-driven tasks. This structured approach protects both your work and your career.",
+      "good_example": "At Meridian Corp, Sarah needed to summarize customer feedback for a new product launch. Instead of using a free online tool, she used Meridian's SELECT framework. She identified that the feedback contained PII, so she used the approved internal summarization tool that met data residency requirements. This saved her from a potential data breach and ensured the insights were accurate and compliant, leading to better product positioning and a successful launch.",
+      "anti_pattern": "John, an analyst at Aurora Industries, needed to quickly generate marketing copy. He bypassed the company's approved AI tool list and used a popular but unvetted online tool. The tool's output contained biased language that damaged Aurora's brand reputation. Furthermore, the tool's terms of service granted the provider rights to Aurora's marketing content. John faced disciplinary action for violating company policy and exposing Aurora to legal and reputational risks.",
+      "takeaway": "Mastering the SELECT framework ensures you choose the right AI tool, protecting your work and career from potential risks and compliance violations."
+    },
+    "practice": {
+      "scenario_template": "As a {role} at {org_type}, you need to select an AI tool for {domain} task. Use the SELECT framework to guide your decision.",
+      "task_templates": [
+        {
+          "task_id": 1,
+          "text_template": "Your first step in the SELECT framework is the 'Sensitivity check'. Describe the key considerations when assessing the sensitivity of data used by an AI tool.",
+          "skill_focus": "Data sensitivity assessment",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 2,
+          "text_template": "You've identified several potential AI tools. Which of the following best describes the 'Evaluate alternatives' step in the SELECT framework?",
+          "skill_focus": "Tool evaluation",
+          "task_mode": "mcq",
+          "mcq_options": [
+            {
+              "label": "Quickly choosing the first tool that appears to meet the basic requirements without further investigation.",
+              "is_best": false
+            },
+            {
+              "label": "Thoroughly researching and comparing approved AI tools to find the best fit for the specific task and data sensitivity.",
+              "is_best": true
+            },
+            {
+              "label": "Selecting the most popular AI tool based on online reviews and recommendations from colleagues.",
+              "is_best": false
+            }
+          ]
+        },
+        {
+          "task_id": 3,
+          "text_template": "Explain the importance of the 'Legal/policy check' step in the SELECT framework and what resources you would consult.",
+          "skill_focus": "Policy compliance",
+          "task_mode": "open",
+          "mcq_options": null
+        },
+        {
+          "task_id": 4,
+          "text_template": "Why is 'Track and document' the AI tool selection process a crucial step in the SELECT framework?",
+          "skill_focus": "Documentation and tracking",
+          "task_mode": "open",
+          "mcq_options": null
+        }
+      ],
+      "coach_system_prompt_template": "You are a coach helping {role} at {organisation} apply the SELECT framework for AI tool governance in a {scenario_name} {domain} scenario. Guide the learner through each step of the framework, providing feedback and suggestions."
+    },
+    "eval": {
+      "items_ref": "inline",
+      "inline_items": [
+        {
+          "item_id": "ev_responsible_ai__ai_tool_governance_q1",
+          "item_type": "mcq",
+          "sequence": 1,
+          "question_text": "Which of the following is the MOST important reason to perform a 'Sensitivity check' as the first step in the SELECT framework?",
+          "scenario_text": "You are about to use an AI tool to analyze customer feedback data.",
+          "options": [
+            {
+              "label": "To ensure the AI tool is compatible with your operating system.",
+              "text": "To ensure the AI tool is compatible with your operating system."
+            },
+            {
+              "label": "To determine if the data contains Personally Identifiable Information (PII) or other sensitive data requiring specific safeguards.",
+              "text": "To determine if the data contains Personally Identifiable Information (PII) or other sensitive data requiring specific safeguards."
+            },
+            {
+              "label": "To estimate the cost of using the AI tool.",
+              "text": "To estimate the cost of using the AI tool."
+            },
+            {
+              "label": "To understand the AI tool's user interface.",
+              "text": "To understand the AI tool's user interface."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_responsible_ai__ai_tool_governance_q2",
+          "item_type": "mcq",
+          "sequence": 2,
+          "question_text": "During the 'Evaluate data residency' step of the SELECT framework, what are you primarily trying to determine?",
+          "scenario_text": "You are evaluating an AI tool that processes financial data.",
+          "options": [
+            {
+              "label": "Whether the AI tool is user-friendly and easy to learn.",
+              "text": "Whether the AI tool is user-friendly and easy to learn."
+            },
+            {
+              "label": "Where the AI tool stores and processes the data, and whether it complies with relevant data privacy regulations.",
+              "text": "Where the AI tool stores and processes the data, and whether it complies with relevant data privacy regulations."
+            },
+            {
+              "label": "How quickly the AI tool can process large datasets.",
+              "text": "How quickly the AI tool can process large datasets."
+            },
+            {
+              "label": "If the AI tool offers customer support.",
+              "text": "If the AI tool offers customer support."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_responsible_ai__ai_tool_governance_q3",
+          "item_type": "mcq",
+          "sequence": 3,
+          "question_text": "You've compared the output of two AI tools using sample data. According to the SELECT framework, what should you do next?",
+          "scenario_text": "You are choosing an AI tool to generate product descriptions.",
+          "options": [
+            {
+              "label": "Select the tool with the flashiest user interface.",
+              "text": "Select the tool with the flashiest user interface."
+            },
+            {
+              "label": "Select the tool that produces the most accurate, unbiased, and relevant results, aligning with your organization's standards.",
+              "text": "Select the tool that produces the most accurate, unbiased, and relevant results, aligning with your organization's standards."
+            },
+            {
+              "label": "Select the tool that is the cheapest.",
+              "text": "Select the tool that is the cheapest."
+            },
+            {
+              "label": "Select the tool that your manager recommends.",
+              "text": "Select the tool that your manager recommends."
+            }
+          ],
+          "correct_answer": "B",
+          "score_value": 1
+        },
+        {
+          "item_id": "ev_responsible_ai__ai_tool_governance_q4",
+          "item_type": "performance_task",
+          "sequence": 4,
+          "question_text": "Describe how you would apply the 'Track and document' step of the SELECT framework in your current role.",
+          "scenario_text": "You are responsible for selecting AI tools for your team.",
+          "rubric": [
+            {
+              "criterion": "Clearly identifies the importance of documenting the AI tool selection process.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Specifies the types of information that should be tracked (e.g., data sensitivity assessment, legal review outcomes, output quality comparison).",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Explains how the documentation will be used for future reference, auditing, and compliance purposes.",
+              "weight": 0.25
+            },
+            {
+              "criterion": "Provides a concrete example of how the 'Track and document' step would be implemented in their specific role.",
+              "weight": 0.25
+            }
+          ]
+        }
+      ],
+      "source_course_ids": []
+    },
+    "source_course_ids": [],
+    "merged_from": [],
+    "atomized_at": "2026-03-24",
+    "status": "canonical"
   }
 ]

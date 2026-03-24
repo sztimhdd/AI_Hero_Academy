@@ -181,6 +181,9 @@ def fill_scenario(atom: dict, intake_profile: dict, lang_code: str = "en") -> st
         filled = filled.replace("{key_contact_change}", "account stakeholder change")
         filled = filled.replace("{lead_aging_days}", "30")
         filled = filled.replace("{SLA_breach_days}", "5")
+        filled = filled.replace("{domain}", atom.get("domain", "ai skills"))
+        filled = filled.replace("{scenario_name}", "the scenario")
+        filled = filled.replace("{organisation}", org_type)
         return filled
     except Exception:
         try:

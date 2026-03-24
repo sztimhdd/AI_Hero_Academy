@@ -25,7 +25,8 @@
   "diag.minutes_label": "分钟",
   "diag.questions_label": "道题目",
   "diag.domains_label": "个技能领域",
-  "diag.orientation_body": "题目包含**单选题**、**书面作答**和**简短任务**。本测评无对错之分——您的作答结果将用于定制个性化培训课程。",
+  "diag.orientation_body": "题目包含<strong style=\"color:#E8E9EF\">单选题</strong>、<strong style=\"color:#E8E9EF\">书面作答</strong>和<strong style=\"color:#E8E9EF\">简短任务</strong>。本测评无对错之分——您的作答结果将用于定制个性化培训课程。",
+  "diag.choose_answer_label": "请选择您的答案：",
   "diag.start_btn": "开始测评 →",
   "diag.exit_btn": "← 退出",
   "diag.header_title": "技能测评",
@@ -145,5 +146,18 @@
   "nav.skills_profile": "🏅  技能档案",
   "nav.my_course": "📚  我的课程",
   "nav.module_label": "第 {n} 模块",
-  "nav.language_toggle": "语言"
+  "nav.language_toggle": "语言",
+
+  "scoring.level.unaware": "初识",
+  "scoring.level.explorer": "探索者",
+  "scoring.level.practitioner": "实践者",
+  "scoring.level.proficient": "熟练者",
+  "scoring.level.champion": "卓越者",
+
+  "scoring.domain.responsible_ai": "负责任的AI",
+  "scoring.domain.strategic_prompting": "战略性提示",
+  "scoring.domain.critical_eval": "批判性评估",
+  "scoring.domain.relationship_intel": "关系智能",
+  "scoring.domain.data_decision": "数据驱动决策",
+  "scoring.domain.augmented_comm": "增强沟通"
 }

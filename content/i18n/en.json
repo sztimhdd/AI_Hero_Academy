@@ -28,7 +28,8 @@
   "diag.minutes_label": "minutes",
   "diag.questions_label": "questions",
   "diag.domains_label": "skill domains",
-  "diag.orientation_body": "Questions include **multiple choice**, **written responses**, and **short tasks**. There are no right or wrong answers — your results shape your personalised training course.",
+  "diag.orientation_body": "Questions include <strong style=\"color:#E8E9EF\">multiple choice</strong>, <strong style=\"color:#E8E9EF\">written responses</strong>, and <strong style=\"color:#E8E9EF\">short tasks</strong>. There are no right or wrong answers — your results shape your personalised training course.",
+  "diag.choose_answer_label": "Choose your answer:",
   "diag.start_btn": "Start Assessment →",
   "diag.exit_btn": "← Exit",
   "diag.header_title": "Diagnostic",
@@ -152,5 +153,18 @@
   "nav.skills_profile": "🏅  Skills Profile",
   "nav.my_course": "📚  My Course",
   "nav.module_label": "Module {n}",
-  "nav.language_toggle": "Language"
+  "nav.language_toggle": "Language",
+
+  "scoring.level.unaware": "Unaware",
+  "scoring.level.explorer": "Explorer",
+  "scoring.level.practitioner": "Practitioner",
+  "scoring.level.proficient": "Proficient",
+  "scoring.level.champion": "Champion",
+
+  "scoring.domain.responsible_ai": "Responsible AI",
+  "scoring.domain.strategic_prompting": "Strategic Prompting",
+  "scoring.domain.critical_eval": "Critical Evaluation",
+  "scoring.domain.relationship_intel": "Relationship Intelligence",
+  "scoring.domain.data_decision": "Data-Driven Decision Making",
+  "scoring.domain.augmented_comm": "Augmented Communication"
 }

@@ -10,7 +10,7 @@ from datetime import datetime
 from utils.auth import get_user_email
 from utils.db import get_profile, get_latest_diagnostic, get_all_progress, get_assembled_path
 from utils.scoring import (
-    DOMAIN_DISPLAY_NAMES, get_level_label, get_score_color,
+    DOMAIN_DISPLAY_NAMES, get_level_label, get_domain_display_name, get_score_color,
     calculate_overall_score, compute_current_domain_scores,
 )
 from utils.styles import inject_global_css, section_header, render_sidebar
@@ -75,7 +75,7 @@ for row in progress_rows:
 current_domain_scores = compute_current_domain_scores(diag_domain_scores, eval_domain_scores_home)
 
 overall = calculate_overall_score(current_domain_scores)
-level_label = get_level_label(overall)
+level_label = get_level_label(overall, _lang)
 display_name = profile.get("display_name", user_email.split("@")[0].title())
 
 # ── Trend indicator: current composite score vs diagnostic baseline ────────────
@@ -192,7 +192,7 @@ if _assembled_path:
             continue  # atom removed from content — skip silently
 
         _atom_domain = _atom.get("domain", "")
-        _atom_domain_display = DOMAIN_DISPLAY_NAMES.get(_atom_domain, _atom_domain)
+        _atom_domain_display = get_domain_display_name(_atom_domain, _lang)
         _atom_minutes = _atom.get("estimated_minutes", 0)
 
         # Determine completion: any source_course_id with evaluation_completed_at
@@ -287,7 +287,7 @@ else:
         seq = int(row.get("module_sequence_order", 0))
         title = row.get("course_title", f"Module {seq}")
         domain = row.get("primary_domain", "")
-        domain_display = DOMAIN_DISPLAY_NAMES.get(domain, domain)
+        domain_display = get_domain_display_name(domain, _lang)
         is_locked = str(row.get("is_locked", "true")).lower() == "true"
         reading_done = bool(row.get("reading_completed_at"))
         practice_done = bool(row.get("practice_completed_at"))

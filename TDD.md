@@ -1,9 +1,9 @@
 # Technical Design Document (TDD)
 ## AI Hero Academy MVP
 
-**Version**: 1.3
+**Version**: 1.4
 **Date**: March 2026
-**Status**: Phase 3 Complete (2026-03-23) | Phase 4 Planned
+**Status**: Phase 18 Complete (2026-03-24) | Phase 4 Planned
 
 ---
 
@@ -14,6 +14,8 @@ AI Hero Academy is a Streamlit-based Databricks App that delivers personalized A
 The MVP launched with Relationship Manager (RM) and expanded to include Underwriter (UW), Analyst (AN), Marketing/Comms Advisor (MK), and Project Manager (PM). All five roles are fully live. Each role has 18 diagnostic questions across 6 skill domains and 7 training courses (6 domain + 1 capstone).
 
 **Phase 3 complete (2026-03-23):** Dynamic path assembler live. Intake form replaces role dropdown on Welcome page; LLM parses free-text role description into `{role_text, magic_wish, daily_tasks, ai_tools[]}`; `utils/path_assembler.py` scores and sequences atoms from `content/atomic_modules_v2.json`; assembled path written to Firestore and rendered as atom cards on Home. Backward-compatible: users without `assembled_path` continue on legacy role-based flow. 34/34 UAT checks pass (`tests/uat_phase3.js`).
+
+**Phase 18 complete (2026-03-24):** Full ZH content localization + i18n parity. (1) `render_lang_sidebar()` added to `utils/styles.py` — language toggle now available on Welcome (page 00) and Diagnostic (page 01), not just pages 02–04. (2) `get_level_label(score, lang)` and `get_domain_display_name(domain_id, lang)` added to `utils/scoring.py`; 5 level labels + 6 domain names routed through i18n in both `en.json` and `zh.json`; all callers in pages 01–04 updated. (3) Diagnostic orientation body and `st.radio` label replaced with `t()` i18n lookups (I18N-4 fix). Baseline UAT: 41/41 checks pass (100%). Open deferred: I18N-3 (reading_content_structured.json EN-only — requires content sprint).
 
 UAT v2.0 (2026-03-06): 16 scenarios across 4 independent groups (A–D). Groups B/C/D can run standalone via `python scripts/reset_uat_user.py --profile {course-built|m1-done|all-done}` without running prior groups. Phase 12 (March 2026) extended the platform to a 6-domain architecture for future role content generation. All AI scoring, coaching, and gap analysis is powered by **Google Gemini API** (`gemini-2.0-flash`). All learner state is persisted in **Google Cloud Firestore** (GCP project `banded-totality-485901`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no database queries needed for content.
 

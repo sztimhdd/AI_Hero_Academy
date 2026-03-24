@@ -872,3 +872,42 @@ def render_sidebar(
                 except Exception:
                     pass
                 st.rerun()
+
+
+def render_lang_sidebar(user_email: str = None, lang: str = "en") -> None:
+    """
+    Render a minimal sidebar with just the language toggle.
+    Used on Welcome and Diagnostic pages where full nav is not needed.
+    """
+    from utils.i18n import t, SUPPORTED_LANGS
+    with st.sidebar:
+        st.markdown("""
+<div style="padding:1rem 0.5rem">
+  <div class="aha-brand">
+    <div class="aha-brand-icon" style="width:28px;height:28px;font-size:0.9rem">⚡</div>
+    <div class="aha-brand-name" style="font-size:0.95rem">AI <span>Hero</span> Academy</div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+        st.markdown("---")
+        lang_options = list(SUPPORTED_LANGS.keys())
+        lang_labels = list(SUPPORTED_LANGS.values())
+        current_lang = st.session_state.get("lang", "en")
+        selected_idx = lang_options.index(current_lang) if current_lang in lang_options else 0
+        selected_label = st.selectbox(
+            t("nav.language_toggle", lang),
+            options=lang_labels,
+            index=selected_idx,
+            key="lang_toggle_minimal",
+            label_visibility="collapsed",
+        )
+        selected_lang = lang_options[lang_labels.index(selected_label)]
+        if selected_lang != current_lang:
+            st.session_state["lang"] = selected_lang
+            if user_email:
+                try:
+                    from utils.db import update_profile_lang
+                    update_profile_lang(user_email, selected_lang)
+                except Exception:
+                    pass
+            st.rerun()

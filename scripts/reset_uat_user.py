@@ -57,7 +57,7 @@ parser = argparse.ArgumentParser(description="Reset UAT user data in Firestore")
 _mode = parser.add_mutually_exclusive_group()
 _mode.add_argument(
     "--role",
-    choices=["rm", "uw", "mk"],
+    choices=["rm", "uw", "an", "mk"],
     help="Seed a user_profiles doc for this role after wiping (app lands on Diagnostic)",
 )
 _mode.add_argument(
@@ -112,7 +112,7 @@ print()
 # ── Seed: --role ─────────────────────────────────────────────────────────────
 
 if args.role:
-    _name_map = {"rm": "RM Tester", "uw": "UW Tester", "mk": "MK Tester"}
+    _name_map = {"rm": "RM Tester", "uw": "UW Tester", "an": "AN Tester", "mk": "MK Tester"}
     display_name = _name_map.get(args.role, f"{args.role.upper()} Tester")
     create_profile(EMAIL, display_name, args.role)
     print(f"  [ok] seeded user_profiles  (role_id={args.role}, display_name={display_name!r})")

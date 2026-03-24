@@ -26,7 +26,7 @@ from utils.ai import (
     generate_module_coach_note,
 )
 from utils.scoring import (
-    DOMAIN_DISPLAY_NAMES,
+    DOMAIN_DISPLAY_NAMES, get_domain_display_name,
     parse_options,
     parse_rubric,
     compute_current_domain_scores,
@@ -178,9 +178,13 @@ if active_atom_id:
             "task_mcq_options": [tt.get("mcq_options") for tt in _task_templates],
         }
 
-        # eval_items: try source_course_ids[0], then domain fallback, then skip
-        eval_items = []
-        if _source_ids:
+        # eval_items: inline branch (Phase 4 atoms), then source_course_ids, then domain fallback
+        _eval_section = _atom.get("eval", {})
+        if _eval_section.get("items_ref") == "inline":
+            eval_items = _eval_section.get("inline_items", [])
+        else:
+            eval_items = []
+        if not eval_items and _source_ids:
             try:
                 eval_items = get_eval_items(_source_ids[0], lang=_lang)
             except (KeyError, Exception):
@@ -246,7 +250,7 @@ render_sidebar(
     module_context={
         "seq_order": seq_order,
         "course_title": course_title,
-        "domain_display": DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain),
+        "domain_display": get_domain_display_name(primary_domain, _lang),
     },
     user_email=user_email,
     lang=_lang,
@@ -378,7 +382,7 @@ if active_sub == "overview":
     ])
 
     with st.expander(t("module.about_expander", _lang), expanded=False):
-        domain_display = DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain)
+        domain_display = get_domain_display_name(primary_domain, _lang)
         st.caption(t("module.about_domain", _lang).format(domain=domain_display))
         st.markdown(t("module.about_table_md", _lang))
 
@@ -961,7 +965,7 @@ elif active_sub == "evaluation":
     scenario_text = item.get("scenario_text") or ""
     is_last = eval_idx == EVAL_TOTAL - 1
 
-    st.caption(f"📍 {DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain).upper()}")
+    st.caption(f"📍 {get_domain_display_name(primary_domain, _lang).upper()}")
 
     if item_type == "mcq":
         if scenario_text:
@@ -1080,7 +1084,7 @@ elif active_sub == "results":
             ds = 0.0
         col_lbl, col_val = st.columns([4, 1])
         with col_lbl:
-            st.caption(DOMAIN_DISPLAY_NAMES.get(primary_domain, primary_domain))
+            st.caption(get_domain_display_name(primary_domain, _lang))
             st.progress(max(0.0, min(1.0, ds / 4.0)))
         with col_val:
             st.caption(f"{ds:.1f} / 4.0")

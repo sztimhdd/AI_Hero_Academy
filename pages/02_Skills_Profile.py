@@ -16,7 +16,7 @@ from utils.db import (
 )
 from utils.scoring import (
     DOMAIN_DISPLAY_NAMES, DOMAIN_IDS,
-    get_level_label, calculate_overall_score,
+    get_level_label, get_domain_display_name, calculate_overall_score,
     compute_current_domain_scores,
 )
 from utils.sequencing import compute_module_sequence
@@ -102,7 +102,7 @@ except (json.JSONDecodeError, TypeError):
 current_domain_scores = compute_current_domain_scores(diag_domain_scores, eval_domain_scores)
 
 overall = calculate_overall_score(current_domain_scores)
-level_label = get_level_label(overall)
+level_label = get_level_label(overall, _lang)
 has_course = len(progress_rows) > 0
 assessed_date = str(latest_diag.get("completed_at", ""))[:10] if latest_diag else "—"
 
@@ -219,7 +219,7 @@ if gap_map_row:
             except (TypeError, ValueError):
                 domain_score = 0.0
             dot_class = "high" if domain_score < 1.5 else ("medium" if domain_score < 2.5 else "low")
-            domain_name_display = DOMAIN_DISPLAY_NAMES.get(domain_id, domain_id)
+            domain_name_display = get_domain_display_name(domain_id, _lang)
             bullet_text = b.get("bullet", "")
             parts.append(
                 f'<div class="gap-bullet">'

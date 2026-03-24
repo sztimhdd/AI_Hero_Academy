@@ -12,7 +12,7 @@ import streamlit as st
 import uuid
 from utils.auth import get_user_email
 from utils.db import get_profile, get_latest_diagnostic, get_any_progress, create_profile
-from utils.styles import inject_global_css
+from utils.styles import inject_global_css, render_lang_sidebar
 from utils.content import ROLES
 from utils.i18n import t
 from utils.ai import call_llm
@@ -21,12 +21,15 @@ st.set_page_config(
     page_title="Welcome | AI Hero Academy",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="auto",
 )
 
 inject_global_css()
 
 user_email = get_user_email()
+
+# Language toggle available even before profile creation
+render_lang_sidebar(user_email=None)
 
 # Guard: if user already has a profile, route to the correct page for their state
 existing = get_profile(user_email)

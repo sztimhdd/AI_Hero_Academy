@@ -35,8 +35,11 @@ Manager (PM). Bilingual EN/ZH UI with full Chinese content translation across
 all 8 content files (8/8 complete, 0 placeholders remaining). Atomic capability
 library built (15 canonical atoms in content/atomic_modules_v2.json). Phase 3
 (dynamic path assembler + personalized atom path) is complete (2026-03-23;
-34/34 UAT checks pass). Phase 4 (library expansion to 20 atoms + inline eval
-schema) is planned.
+34/34 UAT checks pass). Phase 18 (ZH content localization + i18n parity) is
+complete (2026-03-24; 41/41 baseline UAT checks pass): language toggle added to
+Welcome and Diagnostic pages, level labels and domain names fully i18n-routed,
+all diagnostic hardcoded EN strings replaced. Phase 4 (library expansion to 20
+atoms + inline eval schema) is planned.
 
 The app delivers a four-stage learning loop:
 
