@@ -38,3 +38,4 @@ proxy-cert.pem
 
 # Temp atom generation artifacts
 tmp_*.json
+references/zh-ref-raw/
