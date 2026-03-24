@@ -1,9 +1,9 @@
 # Technical Design Document (TDD)
 ## AI Hero Academy MVP
 
-**Version**: 1.1
-**Date**: February 2026
-**Status**: In Development
+**Version**: 1.3
+**Date**: March 2026
+**Status**: Phase 3 Complete (2026-03-23) | Phase 4 Planned
 
 ---
 
@@ -11,7 +11,9 @@
 
 AI Hero Academy is a Streamlit-based Databricks App that delivers personalized AI skills training to employees. It implements a four-stage learning loop: **Diagnose → Map Gaps → Train → Score & Track**.
 
-The MVP launched with Relationship Manager (RM) and expanded to include Underwriter (UW), Analyst (AN), and Marketing/Comms Advisor (MK). All four roles are fully live. Each role has 18 diagnostic questions across 6 skill domains and 7 training courses (6 domain + 1 capstone).
+The MVP launched with Relationship Manager (RM) and expanded to include Underwriter (UW), Analyst (AN), Marketing/Comms Advisor (MK), and Project Manager (PM). All five roles are fully live. Each role has 18 diagnostic questions across 6 skill domains and 7 training courses (6 domain + 1 capstone).
+
+**Phase 3 complete (2026-03-23):** Dynamic path assembler live. Intake form replaces role dropdown on Welcome page; LLM parses free-text role description into `{role_text, magic_wish, daily_tasks, ai_tools[]}`; `utils/path_assembler.py` scores and sequences atoms from `content/atomic_modules_v2.json`; assembled path written to Firestore and rendered as atom cards on Home. Backward-compatible: users without `assembled_path` continue on legacy role-based flow. 34/34 UAT checks pass (`tests/uat_phase3.js`).
 
 UAT v2.0 (2026-03-06): 16 scenarios across 4 independent groups (A–D). Groups B/C/D can run standalone via `python scripts/reset_uat_user.py --profile {course-built|m1-done|all-done}` without running prior groups. Phase 12 (March 2026) extended the platform to a 6-domain architecture for future role content generation. All AI scoring, coaching, and gap analysis is powered by **Google Gemini API** (`gemini-2.0-flash`). All learner state is persisted in **Google Cloud Firestore** (GCP project `banded-totality-485901`). Static content (courses, diagnostic items, reading, scenarios, evaluations) is served from JSON files bundled with the app — no database queries needed for content.
 
@@ -275,7 +277,7 @@ Written once when the user clicks "Complete Practice". The `conversation_json` f
 ```sql
 log_id            STRING NOT NULL PRIMARY KEY,
 user_email        STRING,
-call_type         STRING NOT NULL,   -- 'diagnostic_scoring' | 'gap_map' | 'coach_response' | 'evaluation_scoring'
+call_type         STRING NOT NULL,   -- 'diagnostic_scoring' | 'gap_map' | 'coach_response' | 'evaluation_scoring' | 'intake_parse'
 model_endpoint    STRING NOT NULL,
 prompt_tokens     INT,
 completion_tokens INT,
@@ -310,7 +312,7 @@ All content lives in `content/` at the project root and is loaded by `utils/cont
 | `content/practice_scenarios.json` | `{course_id: {...}}` | 35 entries; includes `task_1_text`–`task_4_text` + `coach_system_prompt` + `task_modes` + `task_mcq_options` |
 | `content/evaluation_items.json` | `{course_id: [{...}]}` | 35 × 4 = 140 items |
 | `content/atomic_modules.json` | `[{atom_id, domain, capability_tags, reading, practice, ...}]` | 35 draft atoms (Phase 0.5); 1:1 with source courses; status="draft" |
-| `content/atomic_modules_v2.json` | `[{atom_id, domain, capability_tags, reading, practice, merged_from, status, ...}]` | 15 canonical atoms (Phase 2); 5 universal + 10 role-variant; status="canonical"\|"role-variant" |
+| `content/atomic_modules_v2.json` | `[{atom_id, domain, capability_tags, reading, practice, eval, merged_from, status, ...}]` | 15 canonical atoms (Phase 2); 20 planned (Phase 4); `eval.items_ref` is `"evaluation_items.json"` (legacy) or `"inline"` (Phase 4 atoms with `eval.inline_items` array) |
 | `content/atomic_overlap_report.json` | `{merge_candidates: [{domain, source_course_ids, ...}]}` | 6 merge groups from Phase 0.5 overlap detection |
 | `content/i18n/en.json` | `{key: string}` | UI strings (English); ~140 flat keys |
 | `content/i18n/zh.json` | `{key: string}` | UI strings (Chinese); matching keys |
@@ -419,17 +421,26 @@ content/
   practice_scenarios.json     # {course_id: {...}} — 35 entries with task_modes + mcq_options
   evaluation_items.json       # {course_id: [{...}]} — 140 items (35 courses × 4)
   atomic_modules.json         # list of 35 draft atoms (Phase 0.5); status="draft"
-  atomic_modules_v2.json      # list of 15 canonical atoms (Phase 2); status="canonical"|"role-variant"
+  atomic_modules_v2.json      # list of 15 canonical atoms (Phase 2); 20 planned (Phase 4); status="canonical"|"role-variant"
   atomic_overlap_report.json  # 6 merge groups from overlap detection
   i18n/
-    en.json                   # ~140 flat key-value UI string pairs (English)
-    zh.json                   # matching keys with Chinese translations
+    en.json                   # ~147 flat key-value UI string pairs (English)
+    zh.json                   # matching keys with Chinese translations (complete; 0 placeholders)
+  zh/                         # full Chinese content translations (8 files; complete 2026-03-24)
+    roles.json                # 4 role entries
+    domains.json              # 24 domain entries
+    courses.json              # 35 course entries
+    diagnostic_items.json     # 54 diagnostic item entries
+    reading_content.json      # 35 reading entries
+    evaluation_items.json     # 35 eval sets
+    practice_scenarios.json   # 35 scenario entries
 scripts/
   generate_course_content.py  # multi-agent LLM pipeline for new role content
   atomize_coursework.py       # Phase 0.5: converts role-specific courses → draft atoms
   merge_atoms.py              # Phase 2: merges draft atoms → canonical v2 library
   ingest_pm_coursework.py     # Phase 1: ingests PM design doc → content JSON files
   enrich_reading_content.py   # enriches reading_content.json → structured sub-fields
+  generate_atom.py            # [Phase 4] generates a single new atom via LLM; --dry-run flag
   reset_uat_user.py           # reset UAT user; --profile {course-built|m1-done|all-done}
 requirements.txt              # streamlit, google-genai, google-cloud-firestore, plotly, tenacity, ...
 ```

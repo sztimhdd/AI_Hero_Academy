@@ -16,6 +16,7 @@ Last updated: March 2026
 | Phase 1 | PM role content ingested; `ingest_pm_coursework.py`; 5 roles live | ✅ Complete |
 | Phase 2 | `merge_atoms.py`; `atomic_modules_v2.json` — 15 canonical atoms; patch pending | ✅ Complete (patch in progress) |
 | i18n | `utils/i18n.py`; EN/ZH bilingual UI; browser language detection; Firestore `lang` field | ✅ Complete |
+| ZH content | Full Chinese translation of all 8 content files (8/8, 0 placeholders); `scripts/translate_content.py` | ✅ Complete (2026-03-24) |
 | **Phase 3** | **Path assembler + dynamic onboarding; atom-path Home; demo personas 3a–3f; 34/34 UAT checks pass** | ✅ **Complete (2026-03-23)** |
 
 ---
@@ -82,6 +83,110 @@ in the live app for the first time.
 
 ---
 
+## Part 4 — Phase 4: Library Expansion
+
+### Overview
+Expand the atomic library from 15 → 20 atoms by authoring 5 new universal atoms directly
+in atomic-ready JSON format (no atomization pipeline needed — these are original atoms, not
+converted from legacy courses). Simultaneously, evolve the atom schema to support
+**inline eval items** so new atoms are fully self-contained and do not depend on
+`evaluation_items.json`.
+
+### Why these 5 atoms
+
+| Atom | Domain | Priority | Source |
+|------|--------|----------|--------|
+| `relationship_intel__meeting_intelligence` | `relationship_intel` | P1 | McKinsey #1 employee demand |
+| `augmented_comm__email_message_drafting` | `augmented_comm` | P2 | McKinsey top-3 daily time sink |
+| `strategic_prompting__iterative_refinement` | `strategic_prompting` | P3 | Turing/WEF framework gap |
+| `critical_eval__hallucination_patterns` | `critical_eval` | P4 | Credibility protection gap |
+| `responsible_ai__ai_tool_governance` | `responsible_ai` | P5 | Turing/WEF literacy gap |
+
+### Schema change: inline eval items
+
+New atoms have no `source_course_ids`, so eval items must be inline.
+Add `inline_items` array to the `eval` section of new atoms:
+
+```json
+"eval": {
+  "items_ref": "inline",
+  "inline_items": [
+    {
+      "item_id": "ev_relationship_intel__meeting_intelligence_q1",
+      "item_type": "mcq",
+      "sequence": 1,
+      "question_text": "...",
+      "scenario_text": "...",
+      "options": [{"label": "A", "text": "..."}, ...],
+      "correct_answer": "B",
+      "score_value": 1
+    },
+    ...
+    {
+      "item_id": "ev_relationship_intel__meeting_intelligence_q4",
+      "item_type": "performance_task",
+      "sequence": 4,
+      "question_text": "...",
+      "scenario_text": "...",
+      "rubric": [{"criterion": "...", "weight": 0.25}, ...]
+    }
+  ],
+  "source_course_ids": []
+}
+```
+
+Existing atoms keep `items_ref: "evaluation_items.json"` and `source_course_ids`. No migration needed.
+
+### Runtime change: eval loader in 04_Course_Module.py
+
+Current eval loading logic: `source_course_ids[0]` → lookup in `evaluation_items.json`.
+
+New logic (two lines added, backward compat preserved):
+
+```python
+# Before: always looked up from evaluation_items.json
+# After: check inline_items first
+eval_section = atom.get("eval", {})
+if eval_section.get("items_ref") == "inline":
+    eval_items = eval_section["inline_items"]
+else:
+    # legacy: source_course_ids lookup (unchanged)
+    course_id = eval_section["source_course_ids"][0]
+    eval_items = get_eval_items(course_id)
+```
+
+### Acceptance criteria
+
+| # | Criterion | Status |
+|---|-----------|--------|
+| 1 | `atomic_modules_v2.json` has 20 atoms (15 existing + 5 new) | 🔜 |
+| 2 | All 5 new atoms have `eval.items_ref == "inline"` with 4 items (3 MCQ + 1 perf task) | 🔜 |
+| 3 | All 5 new atoms pass `fill_scenario()` with zero unfilled `{placeholder}` tokens | 🔜 |
+| 4 | All 5 new atoms have `status: "canonical"` and `capability_tags` (3–6 items) | 🔜 |
+| 5 | `pages/04_Course_Module.py` loads eval from `inline_items` when `items_ref == "inline"` | 🔜 |
+| 6 | Path assembler unchanged — new atoms flow through `assemble_path()` automatically | 🔜 |
+| 7 | A new user with weak `augmented_comm` can receive either `surface_workflow` OR `email_message_drafting` | 🔜 |
+| 8 | Regression: all existing Phase 3 UAT personas (3a–3f) still load correctly | 🔜 |
+
+### Deliverables
+
+**New files:**
+
+- `scripts/generate_atom.py` — CLI tool: `python scripts/generate_atom.py --atom-id <id> --dry-run` outputs draft atom JSON via Claude/Gemini for human review before committing
+
+**Modified files:**
+
+- `content/atomic_modules_v2.json` — append 5 new atoms
+- `pages/04_Course_Module.py` — eval loader: inline_items branch
+
+### Non-goals for Phase 4
+
+- Engineer role content (Phase 5)
+- Reusable Prompt Templates atom (`strategic_prompting`) — deferred
+- Shadow AI Risk Management atom — deferred
+
+---
+
 ---
 
 ## Part 1 — Feature Implementation Status
@@ -117,11 +222,14 @@ Complete inventory of every PRD/TDD requirement and its current implementation s
 |-------------|----------|--------|-------|
 | App logo and brand mark | §7.1 | ✅ | |
 | Tagline and value proposition text | §7.1 | ✅ | |
-| Role selector dropdown (single: RM) | §7.1 | ✅ | |
-| CTA disabled until role selected | §7.1 | ✅ | |
+| Role selector dropdown (single: RM) | §7.1 | ✅ | Moved to "Advanced options" expander (Phase 3) |
+| CTA disabled until role selected | §7.1 | ✅ | Submit always enabled; empty-Q1 guard fires post-click via `st.error()` (Phase 3) |
 | Profile creation on CTA click | §7.1 | ✅ | Uses inline SQL + `escape()` (M2 issue) |
 | Navigate to Diagnostic after profile creation | §7.1 | ✅ | |
 | Guard: redirect if profile already exists | §7.1 | ✅ | Fixed L6: routes to correct state based on user journey |
+| Intake form: Q1 free-text role + magic wish | Phase 3 | ✅ | LLM parses into `{role_text, magic_wish, daily_tasks}`; fallback on failure |
+| Intake form: Q2 AI tools multi-select | Phase 3 | ✅ | Up to 5 tools; stored in `intake_profile.ai_tools[]` |
+| `intake_profile` stored in `user_profiles` | Phase 3 | ✅ | JSON string; written by `create_profile()` |
 
 ---
 
@@ -179,6 +287,9 @@ Complete inventory of every PRD/TDD requirement and its current implementation s
 | Locked module: lock icon + greyed styling | §7.4 | ✅ | |
 | "Continue" button resumes correct sub-module | §7.4 | ✅ | reading → practice → evaluation state machine |
 | "Review Module" button for completed modules | §7.4 | ✅ | Sets `active_submodule = "overview"` |
+| Atom-path Home: numbered atom cards with domain badge + time | Phase 3 | ✅ | `assembled_path` present → atom cards; absent → legacy |
+| Atom-path Home: Start / Continue / Review CTA per card | Phase 3 | ✅ | CTA state derived from `training_progress` rows matching atom |
+| Legacy Home unaffected for users without `assembled_path` | Phase 3 | ✅ | Backward-compat gate: `get_assembled_path()` returns `None` for legacy users |
 
 ---
 

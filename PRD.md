@@ -31,9 +31,12 @@ and AI coaching powered by Google Gemini API.
 
 **Current state (March 2026):** Five roles live — Relationship Manager (RM),
 Underwriter (UW), Analyst (AN), Marketing/Comms Advisor (MK), and Project
-Manager (PM). Bilingual EN/ZH UI with browser language auto-detection. Atomic
-capability library built (15 canonical atoms in content/atomic_modules_v2.json).
-Phase 3 (dynamic path assembler) is under active development.
+Manager (PM). Bilingual EN/ZH UI with full Chinese content translation across
+all 8 content files (8/8 complete, 0 placeholders remaining). Atomic capability
+library built (15 canonical atoms in content/atomic_modules_v2.json). Phase 3
+(dynamic path assembler + personalized atom path) is complete (2026-03-23;
+34/34 UAT checks pass). Phase 4 (library expansion to 20 atoms + inline eval
+schema) is planned.
 
 The app delivers a four-stage learning loop:
 
