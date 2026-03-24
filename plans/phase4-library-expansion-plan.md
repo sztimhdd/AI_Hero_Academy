@@ -1,7 +1,7 @@
 # Phase 4 — Atomic Library Expansion
 
-> Status: **PLANNED** — ready to start after Phase 3 ZH UAT closes
-> Last updated: March 2026
+> Status: **COMPLETE** — 2026-03-24 | 42/42 pytest green | UAT regression pass
+> Last updated: 2026-03-24
 
 ---
 
@@ -175,14 +175,14 @@ Use Playwright MCP tools to verify:
 
 | # | Criterion | Status |
 |---|-----------|--------|
-| 1 | `atomic_modules_v2.json` has 20 atoms (15 existing + 5 new) | 🔜 |
-| 2 | All 5 new atoms: `eval.items_ref == "inline"`, 4 items (3 MCQ + 1 perf task) | 🔜 |
-| 3 | All 5 new atoms: `fill_scenario()` produces zero unfilled `{placeholder}` tokens | 🔜 |
-| 4 | All 5 new atoms: `status: "canonical"`, 3–6 `capability_tags` | 🔜 |
-| 5 | `pages/04_Course_Module.py` loads eval from `inline_items` when `items_ref == "inline"` | 🔜 |
-| 6 | Path assembler unchanged — new atoms selected automatically by `assemble_path()` | 🔜 |
-| 7 | A user with weak `augmented_comm` can receive either `surface_workflow` or `email_message_drafting` | 🔜 |
-| 8 | Regression: all Phase 3 UAT personas (3a–3f) still load correctly | 🔜 |
+| 1 | `atomic_modules_v2.json` has 20 atoms (15 existing + 5 new) | ✅ Verified by validation script |
+| 2 | All 5 new atoms: `eval.items_ref == "inline"`, 4 items (3 MCQ + 1 perf task) | ✅ Verified by validation script |
+| 3 | All 5 new atoms: `fill_scenario()` produces zero unfilled `{placeholder}` tokens | ✅ Required adding `{domain}`, `{scenario_name}`, `{organisation}` to `fill_scenario()` |
+| 4 | All 5 new atoms: `status: "canonical"`, 3–6 `capability_tags` | ✅ All 5: status=canonical, 5 tags each |
+| 5 | `pages/04_Course_Module.py` loads eval from `inline_items` when `items_ref == "inline"` | ✅ Code verified + 42/42 tests green |
+| 6 | Path assembler unchanged — new atoms selected automatically by `assemble_path()` | ✅ 9/9 path assembler tests pass |
+| 7 | A user with weak `augmented_comm` can receive either `surface_workflow` or `email_message_drafting` | ✅ Both in pool; domain deduplication verified |
+| 8 | Regression: all Phase 3 UAT personas (3a–3f) still load correctly | ✅ Home + Module 1 Reading + no console errors. See PHASE4-1 for inline eval browser test gap |
 
 ---
 
