@@ -22,6 +22,8 @@
   "welcome.roadmap_expander": "学习路径 →",
   "diag.title": "AI技能测评",
   "diag.byow_intro": "请根据您自己的工作经验回答每个问题。没有对错之分——您的回答将塑造您的个性化学习路径。",
+  "diag.min_chars_warning": "请回答全部6个问题（每题至少20个字符）后再提交。",
+  "diag.char_counter": "{count}/500字符 · 建议3-5句话",
   "diag.subheading": "在为您定制个性化培训课程之前，我们需要了解您当前的AI技能水平。",
   "diag.minutes_label": "分钟",
   "diag.questions_label": "道题目",

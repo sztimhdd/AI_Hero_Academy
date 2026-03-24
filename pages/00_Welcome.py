@@ -469,7 +469,7 @@ with lc1:
   <div class="demo-stage-icon">🎯</div>
   <div class="demo-stage-num">Stage 01</div>
   <div class="demo-stage-label">Diagnose</div>
-  <div class="demo-stage-body">12-item adaptive assessment reveals exact skill gaps across 6 domains in ~5 minutes.</div>
+  <div class="demo-stage-body">6 open-ended questions scored by AI — no right answers, just your real work. Takes ~5 minutes. Reveals your skill level across all 6 domains.</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -533,7 +533,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 _BASE = _os.path.join(_os.path.dirname(__file__), "..", "assets", "screenshots")
 
 _screenshots = {
-    tab1: ("demo_01_diagnostic.png",     "demo_01_diagnostic.gif",     "A 12-item adaptive assessment. Questions mix multiple choice, prompt sandbox tasks, and micro-scenarios. Takes ~5 minutes. Scores all 6 AI skill domains simultaneously."),
+    tab1: ("demo_01_diagnostic.png",     "demo_01_diagnostic.gif",     "Six open-ended questions based on your own work. No multiple choice — you describe how you'd actually use AI. Takes ~5 minutes. Scores all 6 domains simultaneously."),
     tab2: ("demo_02_skills_profile.png", "demo_02_skills_profile.gif", "Your hexagon radar shows exactly where you stand. The AI-generated gap map turns raw scores into plain-language priorities you can act on today."),
     tab3: ("demo_03_course_module.png",  "demo_03_course_module.gif",  "Each module opens with a reading section that explains the core framework — then immediately asks you to apply it to a realistic work scenario."),
     tab4: ("demo_04_ai_coach.png",       "demo_04_ai_coach.gif",       "The AI coach responds to what you actually wrote — not a scripted flow. It asks follow-up questions, flags weak reasoning, and models better approaches in real time."),

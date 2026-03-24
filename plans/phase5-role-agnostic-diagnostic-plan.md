@@ -1,6 +1,6 @@
 # Phase 5 — Role-Agnostic Diagnostic & Intake
 
-> Status: **PLANNED** — ready to start
+> Status: **COMPLETE** — 2026-03-24 | 42/42 pytest green | G7 UAT 9/9 pass
 > Last updated: 2026-03-24
 
 ---
@@ -266,16 +266,16 @@ Key checks:
 
 | # | Criterion | Status |
 |---|-----------|--------|
-| 1 | `content/diagnostic_prompts.json` has 6 prompts, one per domain, no `role_id` field | 🔜 |
-| 2 | `01_Diagnostic.py` renders 6 text_area prompts for any user regardless of role | 🔜 |
-| 3 | Submit disabled until all 6 responses ≥ 20 chars | 🔜 |
-| 4 | `score_byow_diagnostic()` returns same dict shape as `score_diagnostic()` | 🔜 |
-| 5 | A user who pastes the Sr. Technical Advisor JD gets a valid 7-module path | 🔜 |
-| 6 | A user who selects RM shortcut still completes diagnostic successfully (regression) | 🔜 |
-| 7 | `data_decision__universal_analysis` atom in library — inline eval, zero unfilled placeholders | 🔜 |
-| 8 | Intake LLM parse extracts 6 fields including `industry` and `org_type` | 🔜 |
-| 9 | `pytest` all passing | 🔜 |
-| 10 | G7a–G7d UAT checks pass | 🔜 |
+| 1 | `content/diagnostic_prompts.json` has 6 prompts, one per domain, no `role_id` field | ✅ |
+| 2 | `01_Diagnostic.py` renders 6 text_area prompts for any user regardless of role | ✅ st.form wraps all 6 (BYOW-2 fix) |
+| 3 | Submit disabled until all 6 responses ≥ 20 chars | ✅ Works immediately — no Tab press needed |
+| 4 | `score_byow_diagnostic()` returns same dict shape as `score_diagnostic()` | ✅ |
+| 5 | A user who pastes the Sr. Technical Advisor JD gets a valid 7-module path | ✅ G7.8 UAT pass |
+| 6 | A user who selects RM shortcut still completes diagnostic successfully (regression) | ✅ G7.7 UAT pass |
+| 7 | `data_decision__universal_analysis` atom in library — inline eval, zero unfilled placeholders | ✅ |
+| 8 | Intake LLM parse extracts 6 fields including `industry` and `org_type` | ✅ |
+| 9 | `pytest` all passing | ✅ 42/42 |
+| 10 | G7a–G7d UAT checks pass | ✅ 9/9 — BYOW-1/2/3 + CONTENT-1 resolved during UAT |
 
 ---
 

@@ -41,9 +41,14 @@ def assemble_path(
     5. Cap at max_atoms; append capstone (domain == "capstone") last if room.
     """
     # ── 1. Filter ─────────────────────────────────────────────────────────────
-    filtered = [a for a in atoms if domain_scores.get(a["domain"], 2.0) <= 3.0]
-    if not filtered:
-        filtered = list(atoms)
+    # Exclude capstone/RA — handled separately at the end.
+    # No score-based pre-filter: bucket sequencing (step 3) already handles ordering
+    # by putting gap/quick-win domains first and strong domains last.
+    # A score threshold filter was previously here but caused < 7 modules for users
+    # who scored > 3.0 on most domains, because it left too few unique domains to
+    # fill the path. Bucket ordering achieves the same priority without data loss.
+    _domain_atoms = [a for a in atoms if a.get("domain") not in ("capstone", "responsible_ai")]
+    filtered = list(_domain_atoms)
 
     # ── 2. Score ──────────────────────────────────────────────────────────────
     def _score(atom: dict) -> float:

@@ -155,34 +155,40 @@ def complete_diagnostic(responses: list[dict]) -> None:
     st.switch_page("pages/02_Skills_Profile.py")
 
 
-# ── Render 6 BYOW prompts ─────────────────────────────────────────────────────
+# ── Render 6 BYOW prompts inside a form ──────────────────────────────────────
+# st.form captures all field values at submission time, bypassing the Streamlit
+# blur requirement that kept Submit disabled after the last textarea was filled.
 responses: list[dict] = []
-all_filled = True
 
-for prompt in byow_prompts:
-    val = st.text_area(
-        prompt["prompt_text"],
-        key=f"byow_{prompt['item_id']}",
-        max_chars=500,
-        help="Aim for 3–5 sentences.",
-    )
-    char_count = len((val or "").strip())
-    if char_count < 20:
-        all_filled = False
-    st.markdown(
-        f'<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.72rem; '
-        f'color:#8990A8; margin-top:-0.75rem; margin-bottom:1rem">'
-        f'{char_count}/500 chars · Aim for 3–5 sentences</div>',
-        unsafe_allow_html=True,
-    )
-    responses.append({
-        "item_id": prompt["item_id"],
-        "domain_id": prompt["domain_id"],
-        "prompt_text": prompt["prompt_text"],
-        "response_text": (val or "").strip(),
-        "scoring_rubric": prompt["scoring_rubric"],
-    })
+with st.form("byow_diagnostic_form"):
+    for prompt in byow_prompts:
+        prompt_label = prompt.get(f"prompt_text_{_lang}", prompt["prompt_text"])
+        val = st.text_area(
+            prompt_label,
+            key=f"byow_{prompt['item_id']}",
+            max_chars=500,
+            help="Aim for 3–5 sentences." if _lang == "en" else "建议3-5句话。",
+        )
+        char_count = len((val or "").strip())
+        st.markdown(
+            f'<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.72rem; '
+            f'color:#8990A8; margin-top:-0.75rem; margin-bottom:1rem">'
+            f'{t("diag.char_counter", _lang).format(count=char_count)}</div>',
+            unsafe_allow_html=True,
+        )
+        responses.append({
+            "item_id": prompt["item_id"],
+            "domain_id": prompt["domain_id"],
+            "prompt_text": prompt["prompt_text"],
+            "response_text": (val or "").strip(),
+            "scoring_rubric": prompt["scoring_rubric"],
+        })
 
-# ── Submit button ─────────────────────────────────────────────────────────────
-if st.button(t("diag.submit_btn", _lang), disabled=not all_filled, type="primary"):
-    complete_diagnostic(responses)
+    submitted = st.form_submit_button(t("diag.submit_btn", _lang), type="primary")
+
+# ── Submit handler ────────────────────────────────────────────────────────────
+if submitted:
+    if any(len(r["response_text"]) < 20 for r in responses):
+        st.warning(t("diag.min_chars_warning", _lang))
+    else:
+        complete_diagnostic(responses)

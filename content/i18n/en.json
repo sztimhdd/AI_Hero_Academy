@@ -25,6 +25,8 @@
 
   "diag.title": "AI Skills Diagnostic",
   "diag.byow_intro": "Answer each question based on your own work experience. There are no right or wrong answers — your responses shape your personalised training path.",
+  "diag.min_chars_warning": "Please answer all 6 questions (at least 20 characters each) before submitting.",
+  "diag.char_counter": "{count}/500 chars · Aim for 3–5 sentences",
   "diag.subheading": "Before we build your personalised training course, we need to understand your current AI skill level.",
   "diag.minutes_label": "minutes",
   "diag.questions_label": "questions",

@@ -4,6 +4,7 @@
     "domain_id": "responsible_ai",
     "sequence": 1,
     "prompt_text": "Describe a real or imagined work situation where you'd need to think carefully before using AI — for example, because of data sensitivity, tool approval, or professional risk. What would you consider?",
+    "prompt_text_zh": "描述一个真实或假设的工作情境，您在其中需要在使用AI之前仔细考量——例如，因为数据敏感性、工具审批或职业风险。您会考虑哪些因素？",
     "scoring_rubric": {
       "4": "Identifies specific data types or sensitivity levels; names a governance check (policy, approval, data residency); demonstrates systematic thinking",
       "3": "Raises a valid concern (sensitivity or approval) with some specificity; shows awareness of professional risk",
@@ -17,6 +18,7 @@
     "domain_id": "strategic_prompting",
     "sequence": 2,
     "prompt_text": "Pick a task you do regularly at work — a document, analysis, summary, or plan. Walk me through how you'd use AI to help you do it. Be as specific as you can about what you'd type.",
+    "prompt_text_zh": "选择一项您在工作中经常做的任务——文件、分析、总结或计划。请说明您会如何使用AI来辅助完成。请尽量具体描述您会输入的内容。",
     "scoring_rubric": {
       "4": "Writes a specific, structured prompt with context, role, constraints, and output format; shows awareness of what good output looks like",
       "3": "Provides a reasonable prompt with some specificity; missing one key element (context, format, or constraint)",
@@ -30,6 +32,7 @@
     "domain_id": "critical_eval",
     "sequence": 3,
     "prompt_text": "If an AI tool wrote a key paragraph for something important you were submitting — a proposal, report, or recommendation — what would you do before using it? Be specific.",
+    "prompt_text_zh": "如果AI工具为您正在提交的重要内容——提案、报告或建议——撰写了一个关键段落，您在使用之前会怎么做？请具体说明。",
     "scoring_rubric": {
       "4": "Names specific checks (fact verification, source citation, internal consistency, stakeholder review); articulates what could go wrong",
       "3": "Describes 2+ concrete verification steps with some reasoning about risk",
@@ -43,6 +46,7 @@
     "domain_id": "data_decision",
     "sequence": 4,
     "prompt_text": "Describe a situation where you had a lot of information to make sense of — data, documents, research — to reach a conclusion or recommendation. How would AI help with that?",
+    "prompt_text_zh": "描述一个您需要梳理大量信息——数据、文件、研究——才能得出结论或建议的情境。AI在其中会如何帮助您？",
     "scoring_rubric": {
       "4": "Describes a specific workflow: what to feed AI, how to prompt for synthesis, how to verify the output, how to translate it into a decision",
       "3": "Identifies a realistic use case and a reasonable AI approach; missing verification or decision step",
@@ -56,6 +60,7 @@
     "domain_id": "relationship_intel",
     "sequence": 5,
     "prompt_text": "Think about an important meeting or conversation coming up that you want to go well. How would or could AI help you prepare for it?",
+    "prompt_text_zh": "想一个即将到来的重要会议或对话，您希望它进展顺利。AI能如何帮助您做好准备？",
     "scoring_rubric": {
       "4": "Describes a specific pre-meeting research workflow: stakeholder background, agenda synthesis, anticipated questions, post-meeting action capture",
       "3": "Identifies 2+ concrete prep activities AI could support; some specificity",
@@ -69,6 +74,7 @@
     "domain_id": "augmented_comm",
     "sequence": 6,
     "prompt_text": "What's the most important or frequent written output in your job — a report, proposal, email, briefing? Walk me through how you'd use AI to help produce it better or faster.",
+    "prompt_text_zh": "您工作中最重要或最频繁的书面输出是什么——报告、提案、邮件、简报？请说明您会如何利用AI帮助更好或更快地完成它。",
     "scoring_rubric": {
       "4": "Names a specific output type; describes a structured AI workflow (draft → tone calibration → review → edit loop); shows awareness of audience and confidentiality",
       "3": "Names the output and describes a reasonable 2-step AI process; missing audience or confidentiality awareness",
