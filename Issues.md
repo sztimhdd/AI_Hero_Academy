@@ -2,7 +2,7 @@
 
 **Code Review Against TDD.md and PRD.md**
 Date: February 2026 | Reviewer: Claude Code
-Last validated: 2026-03-23 — ARCH-1–5 all UAT-verified (Playwright MCP + pytest 40/40); ECC architect re-review completed; 7 new issues logged (NEW-1–7); Phase 18 Session 1 i18n infrastructure UAT pass
+Last validated: 2026-03-24 — Phase 18 Session 2 complete (all 8 content files translated); Phase 18 UAT (Playwright MCP) run; 4 new i18n issues logged (I18N-1–4)
 
 ---
 
@@ -34,6 +34,10 @@ Trainer review (2026-03-17) of three sampled RM scenarios surfaced two defect ca
 
 | ID | Severity | Description |
 | --- | --- | --- |
+| I18N-1 | 🟡 MEDIUM | Language toggle absent on Welcome (00) and Diagnostic (01) pages — `render_sidebar()` not called on either page, so new users cannot set language before or during the diagnostic. Toggle only appears after profile exists (pages 02–04). |
+| I18N-2 | 🟡 MEDIUM | `get_level_label()` in `utils/scoring.py` returns hardcoded English level strings ("Practitioner", "Proficient", etc.) — not routed through i18n. Level label shows in English on Skills Profile score card even when lang=zh. `LEVEL_LABELS` list and `DOMAIN_DISPLAY_NAMES` dict in `utils/scoring.py` both EN-only. |
+| I18N-3 | 🟢 LOW | Reading content body always English in ZH mode: `get_reading_structured()` has no `lang` param and always loads `reading_content_structured.json` (English-only, not translated). Structured view takes priority over the translated `reading_content.json`. Section tab labels (核心概念/示例/反面案例/关键要点) correctly show Chinese via i18n. |
+| I18N-4 | 🟢 LOW | Two hardcoded English strings in `pages/01_Diagnostic.py`: (1) orientation body paragraph "Questions include **multiple choice**..." at line 96–98 — not using `t("diag.orientation_body", lang)` which exists in zh.json; (2) `st.radio("Choose your answer:", ...)` at line 270 — label hardcoded, no i18n key exists. |
 
 ---
 
