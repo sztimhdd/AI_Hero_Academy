@@ -1,7 +1,7 @@
 # Phase 6 — Profile Import & Onboarding Acceleration
 
-> Status: **PLANNED** — ready to start after Phase 5 UAT passes (now cleared)
-> Last updated: 2026-03-24 (rev 2 — LinkedIn URL via Gemini Search Grounding + BYOW placeholders)
+> Status: **COMPLETE** — 2026-03-24 | 42/42 pytest green | G8 UAT pass
+> Last updated: 2026-03-24
 
 ---
 
