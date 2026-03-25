@@ -508,29 +508,76 @@ Return valid JSON only. No explanation. Schema: [{"domain_id": ..., "question_te
 
 ### 2G — New function: `score_hybrid_diagnostic()` in `utils/ai.py`
 
+**Scoring decision: holistic LLM scoring across all 6 inputs.**
+
+The LLM sees the complete picture — both text answers AND the selected MCQ option texts
+(not just the score value) — and scores all 6 domains in a single batch call. This means:
+- MCQ options are **not pre-scored** with fixed weights; `generate_diagnostic_mcqs()` does
+  not need a `score` field per option
+- The scorer receives the question + the selected answer text for each MCQ domain
+- The LLM can weigh the MCQ choice in context of the user's text answers (e.g. a user who
+  demonstrated sophisticated prompting in Q1 but picked a naive MCQ option may get a
+  nuanced domain score, not a mechanical 0.5)
+
 ```python
 def score_hybrid_diagnostic(
-    q1_text: str,          # strategic_prompting
-    q2_text: str,          # critical_eval
-    mcq_answers: dict,     # {domain_id: score_float} for 4 MCQ domains
+    q1_text: str,               # strategic_prompting
+    q2_text: str,               # critical_eval
+    mcq_selections: dict,       # {domain_id: {"question": str, "selected_text": str}}
     intake_profile: dict,
     user_email: str,
     lang: str = "en",
 ) -> dict:
     """
-    Scores the full 6-domain diagnostic from mixed inputs.
-    Text answers scored by LLM (same rubric as BYOW scorer).
-    MCQ answers use pre-scored values directly.
+    Holistic LLM scoring of all 6 domains in one batch call.
+
+    Builds a combined prompt containing:
+      - intake profile context (role, industry, seniority)
+      - Q1 text answer + strategic_prompting rubric
+      - Q2 text answer + critical_eval rubric
+      - 4 MCQ questions + selected option text + domain rubric
+
+    LLM returns scores for all 6 domains simultaneously.
     Returns: {item_scores, domain_scores, overall_score}
     """
 ```
 
-**Scoring logic:**
-- Call existing `score_byow_diagnostic()` with only Q1+Q2 text answers → get scores for
-  `strategic_prompting` and `critical_eval`
-- MCQ domain scores come directly from `mcq_answers[domain_id]` — no LLM needed
-- Combine into full `domain_scores` dict and compute `overall_score`
-- Saves to Firestore exactly as before (same schema, same collections)
+**Scoring prompt structure (concept):**
+```
+You are scoring an AI skills diagnostic for a {seniority} {role_text} at a {org_type}.
+
+Score each domain on a 0.0–4.0 scale using these level anchors:
+  0.0–0.4 Unaware | 0.5–1.4 Explorer | 1.5–2.4 Practitioner | 2.5–3.4 Proficient | 3.5–4.0 Champion
+
+DOMAIN: strategic_prompting
+Question: [Q1 prompt text]
+Answer: {q1_text}
+Rubric: [rubric from diagnostic_prompts.json]
+
+DOMAIN: critical_eval
+Question: [Q2 prompt text]
+Answer: {q2_text}
+Rubric: [rubric from diagnostic_prompts.json]
+
+DOMAIN: responsible_ai
+Question: [generated MCQ question text]
+Selected answer: {selected_option_text}
+Rubric: [rubric]
+
+[...repeat for data_decision, relationship_intel, augmented_comm]
+
+Return ONLY valid JSON: {"strategic_prompting": X.X, "critical_eval": X.X,
+"responsible_ai": X.X, "data_decision": X.X, "relationship_intel": X.X,
+"augmented_comm": X.X}
+```
+
+**Temperature:** 0.1 (same as existing `score_byow_diagnostic`)
+**Token estimate:** ~1200 input tokens, ~60 output — comparable to the existing 6-question scorer
+
+**`generate_diagnostic_mcqs()` change:** Remove `score` from the options schema.
+Options only need `label` and `text`. The generation prompt instructs the LLM to write
+options that span the skill range naturally — the scorer will evaluate the choice in
+context, not by a preset weight.
 
 ---
 

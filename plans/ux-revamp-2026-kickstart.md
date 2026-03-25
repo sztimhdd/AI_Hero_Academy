@@ -469,27 +469,92 @@ Key implementation details:
 
 ### Step 2J — `score_hybrid_diagnostic()` in `utils/ai.py`
 
-```python
-def score_hybrid_diagnostic(q1_text, q2_text, mcq_answers, intake_profile, user_email, lang):
-    # Score text answers for strategic_prompting + critical_eval
-    text_responses = [
-        {"item_id": "sp_q1", "domain_id": "strategic_prompting",
-         "prompt_text": "...", "response_text": q1_text, "scoring_rubric": "..."},
-        {"item_id": "ce_q2", "domain_id": "critical_eval",
-         "prompt_text": "...", "response_text": q2_text, "scoring_rubric": "..."},
-    ]
-    text_result = score_byow_diagnostic(text_responses, user_email=user_email, lang=lang)
+**Scoring: holistic LLM — all 6 domains in one batch call.**
 
-    # Merge with MCQ scores
-    domain_scores = {**text_result["domain_scores"], **mcq_answers}
+The scorer receives the full picture: both text answers AND the selected MCQ option
+text (not a pre-scored weight). This lets the LLM contextualise a naive MCQ pick
+against a sophisticated text answer, or reward consistent behaviour across all inputs.
+
+`mcq_selections` shape:
+```python
+{
+  "responsible_ai": {"question": "...", "selected_text": "..."},
+  "data_decision":  {"question": "...", "selected_text": "..."},
+  ...
+}
+```
+
+Store this in session state during MCQ auto-advance:
+```python
+# In _render_mcq(), on button click:
+st.session_state["diag_mcq_answers"][mcq["domain_id"]] = {
+    "question": mcq["question_text"],
+    "selected_text": option["text"],   # full text of chosen option, not a score
+}
+```
+
+Build the scoring prompt (one call, all 6 domains):
+```python
+_DOMAIN_ORDER = [
+    "strategic_prompting", "critical_eval",
+    "responsible_ai", "data_decision", "relationship_intel", "augmented_comm",
+]
+
+def score_hybrid_diagnostic(q1_text, q2_text, mcq_selections, intake_profile, user_email, lang):
+    role = intake_profile.get("role_text", "professional")
+    seniority = intake_profile.get("seniority", "mid")
+    org_type = intake_profile.get("org_type", "organisation")
+
+    # Load rubrics from diagnostic_prompts.json for the 2 text domains
+    prompts_data = json.loads(Path("content/diagnostic_prompts.json").read_text(encoding="utf-8"))
+    rubric_map = {p["domain_id"]: p["scoring_rubric"] for p in prompts_data
+                  if isinstance(p, dict) and "domain_id" in p}
+
+    sections = []
+    sections.append(f"DOMAIN: strategic_prompting\nAnswer: {q1_text}\nRubric: {rubric_map.get('strategic_prompting','')}")
+    sections.append(f"DOMAIN: critical_eval\nAnswer: {q2_text}\nRubric: {rubric_map.get('critical_eval','')}")
+    for domain_id, sel in mcq_selections.items():
+        sections.append(
+            f"DOMAIN: {domain_id}\n"
+            f"Question: {sel['question']}\n"
+            f"Selected answer: {sel['selected_text']}\n"
+            f"Rubric: {rubric_map.get(domain_id,'Score based on depth and accuracy.')}"
+        )
+
+    scoring_prompt = (
+        f"Score this AI skills diagnostic for a {seniority} {role} at a {org_type}.\n"
+        f"Scale: 0.0–4.0 (0.0–0.4 Unaware, 0.5–1.4 Explorer, 1.5–2.4 Practitioner, "
+        f"2.5–3.4 Proficient, 3.5–4.0 Champion).\n\n"
+        + "\n\n".join(sections)
+        + '\n\nReturn ONLY valid JSON with exactly these keys: '
+        + '{"strategic_prompting": X.X, "critical_eval": X.X, "responsible_ai": X.X, '
+        + '"data_decision": X.X, "relationship_intel": X.X, "augmented_comm": X.X}'
+    )
+
+    raw = call_llm(
+        messages=[{"role": "user", "content": scoring_prompt}],
+        temperature=0.1,
+        user_email=user_email,
+        call_type="hybrid_diagnostic_scoring",
+    )
+    raw_clean = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+    domain_scores = json.loads(raw_clean)
     overall_score = sum(domain_scores.values()) / len(domain_scores)
 
     return {
-        "item_scores": text_result["item_scores"],
+        "item_scores": {},        # no per-item breakdown needed for MCQ in holistic mode
         "domain_scores": domain_scores,
         "overall_score": overall_score,
     }
 ```
+
+**Also update `generate_diagnostic_mcqs()`** — remove `score` from the options schema.
+Options only need `label` and `text`:
+```json
+{"label": "A", "text": "Paste the full transcript into Copilot"}
+```
+Update the generation prompt accordingly: instruct the LLM to write options spanning
+Unaware → Proficient naturally but do NOT include numeric scores.
 
 ---
 
