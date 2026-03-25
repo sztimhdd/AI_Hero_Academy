@@ -259,40 +259,341 @@ Commit: `style(foundation): JetBrains Mono, indigo tokens, a11y step strip, redu
 
 ---
 
-## Phase 2 — Diagnostic Page
+## Phase 2 — Diagnostic Page (Hybrid Redesign)
 
-**File:** `pages/01_Diagnostic.py`
-**Risk:** Low
+**Files:** `pages/01_Diagnostic.py`, `utils/ai.py`, `content/i18n/en.json`, `content/i18n/zh.json`
+**Risk:** HIGH — full architecture replacement. No existing diagnostic logic survives unchanged.
 
-### 2A — Per-field validation state
-After each `st.text_area`, compute `char_count = len((val or "").strip())`.
-Render counter in `var(--accent_red)` when `char_count < 20`, `var(--text-faint)` otherwise.
-Replace hardcoded `color:#8990A8` with `var(--text-muted)`.
+### Background: Why the current BYOW-6 design fails
 
-### 2B — Disable Submit until all valid
-```python
-_all_valid = all(len(r["response_text"]) >= 20 for r in responses)
-submitted = st.form_submit_button(..., disabled=not _all_valid)
+The audit identified the stacked-6-textarea layout as the single biggest completion risk:
+all 6 open-ended questions visible at once creates blank-page anxiety, no progress signal,
+and submit-only validation. The learning advisor's analysis confirms this and proposes a
+fundamentally better approach.
+
+### The Hybrid 2-Text + 4-MCQ Architecture
+
+**Core insight:** the Welcome page intake already captured `role_text`, `daily_tasks`,
+`industry`, `seniority`, `org_type`, and `ai_tools`. That context is enough for an LLM
+to generate fully personalized MCQs after just 2 text answers — something no static
+diagnostic can achieve.
+
+**Domain assignment:**
+
+| Domain | Mode | Rationale |
+|--------|------|-----------|
+| `strategic_prompting` | Text (Q1) | MCQ cannot measure prompt craft — we need to see how they construct it |
+| `critical_eval` | Text (Q2) | Open-ended verification behaviour is rich signal, hard to fake with MCQ |
+| `responsible_ai` | LLM-generated MCQ | Attitude/policy questions are naturally multiple-choice |
+| `data_decision` | LLM-generated MCQ | "Given this data situation..." — classic MCQ |
+| `relationship_intel` | LLM-generated MCQ | Preference/approach patterns map cleanly to 4 options |
+| `augmented_comm` | LLM-generated MCQ | "Pick the better output" style works well |
+
+**Total user effort:** ~4 sentences of typing + 4 clicks. Under 3 minutes.
+
+---
+
+### Screen Flow (7 states, all in session state)
+
+```
+diag_screen: "entry" → "q1" → "q2" → "generating" → "mcq_3" → "mcq_4" → "mcq_5" → "mcq_6" → "scoring"
 ```
 
-### 2C — "N / 6 answered" progress counter
-Above the form:
+**State management — key session keys:**
 ```python
-_answered = sum(1 for r in responses if len(r["response_text"]) >= 20)
-st.markdown(
-    f'<div class="domain-tag-pill">{_answered} / 6 {t("diag.answered_label", _lang)}</div>',
-    unsafe_allow_html=True,
+st.session_state["diag_screen"]        # current screen name
+st.session_state["diag_q1_text"]       # strategic_prompting text answer
+st.session_state["diag_q2_text"]       # critical_eval text answer
+st.session_state["diag_mcqs"]          # list of 4 generated MCQ dicts
+st.session_state["diag_mcq_answers"]   # {domain_id: selected_option_score}
+```
+
+---
+
+### 2A — Screen 0: Entry
+
+```
+┌──────────────────────────────────────────────┐
+│  AI Skills Diagnostic                        │
+│  6 questions · ~3 minutes · no right answers │
+│                                              │
+│  ████░░░░░░░░░░░░░  0 of 6                   │
+│                                              │
+│              [ Begin → ]                     │
+└──────────────────────────────────────────────┘
+```
+
+Render a full-screen entry card with headline, sub-copy, and a single Begin button.
+No form, no inputs. Sets `diag_screen = "q1"` on click.
+
+---
+
+### 2B — Screens 1–2: Text Questions (one at a time)
+
+One `st.text_area` per screen. **No `st.form` wrapper** — we need live char counting
+without form submission semantics.
+
+**Q1 (strategic_prompting):**
+> "Pick one task from your work you wish took half the time. Walk me through exactly
+> how you'd ask AI to help — be as specific as you can."
+
+**Q2 (critical_eval):**
+> "You used AI to draft something important — a proposal, email, or summary.
+> Before you send it, what specifically do you check?"
+
+**Per-question UX:**
+- `max_chars=300` with visible counter `0 / 300` in JetBrains Mono, bottom-right
+- "2–3 sentences is plenty" as persistent sub-label (not placeholder)
+- Next button **disabled** until `len(answer.strip()) >= 30`
+- Next button enables with `transition: background-color 200ms` — no jarring instant change
+- Progress pill: `<div class="domain-tag-pill">1 of 6</div>`
+
+```python
+_q1 = st.text_area(
+    t("diag.q1_label", _lang),
+    value=st.session_state.get("diag_q1_text", ""),
+    max_chars=300,
+    height=120,
+    key="diag_q1_input",
+    help=t("diag.char_hint_short", _lang),
 )
+_q1_valid = len((_q1 or "").strip()) >= 30
+st.button(t("diag.next_btn", _lang), disabled=not _q1_valid, on_click=_advance_to_q2)
 ```
-Add `diag.answered_label` to both i18n files.
 
-### 2D — Domain eyebrow per prompt
-Before each `st.text_area`, render `<div class="domain-tag-pill">{domain_display}</div>`.
+---
 
-### 2E — Replace ⚡ brand header emoji
-Use inline SVG lightning bolt in `aha-brand-icon`. Apply same fix everywhere `⚡` appears.
+### 2C — Screen 3: Transition (LLM generation)
 
-Commit: `feat(diagnostic): per-field validation, progress counter, domain labels, SVG brand icon`
+Triggered immediately when user clicks Next on Q2. Render before the LLM call completes.
+
+```
+┌──────────────────────────────────────────────┐
+│                                              │
+│   ⟳  Building your next 4 questions         │
+│                                              │
+│   Using your answers + role profile to       │
+│   tailor the rest of the assessment          │
+│   to your specific work.                     │
+│                                              │
+│   ████████████░░░░░  generating...           │
+└──────────────────────────────────────────────┘
+```
+
+This screen is a **feature, not a bug**. The 5-8 second wait signals personalisation.
+Use `st.spinner` hidden (replaced by custom HTML) + call `generate_diagnostic_mcqs()`.
+
+**Pre-generation while typing:** Start the LLM call in the background as soon as
+`diag_q2_text` reaches 30 chars using `@st.fragment` — by the time the user clicks
+Next, generation may already be complete.
+
+---
+
+### 2D — Screens 4–7: MCQ (one at a time, auto-advance)
+
+**No Next button.** Selecting an option immediately advances to the next screen.
+This creates a rhythm — click, click, click, done.
+
+```python
+for i, option in enumerate(current_mcq["options"]):
+    if st.button(
+        option["text"],
+        key=f"mcq_opt_{current_mcq['domain_id']}_{i}",
+        use_container_width=True,
+    ):
+        st.session_state["diag_mcq_answers"][current_mcq["domain_id"]] = option["score"]
+        _advance_mcq_screen()
+        st.rerun()
+```
+
+MCQ option cards use `.mcq-option` CSS from Phase 1C. Full-width stacked buttons.
+No radio widget — pure `st.button` so auto-advance is trivial.
+
+Domain label pill shown above each MCQ question. Progress counter updates: `3 of 6`, `4 of 6`, etc.
+
+---
+
+### 2E — Screen 8: Scoring / Completion
+
+```
+┌──────────────────────────────────────────────┐
+│  ████████████████████  6 of 6                │
+│                                              │
+│       ✓  All done.                           │
+│       Scoring your responses...              │
+│                                              │
+│       [ animated hexagon building... ]       │
+└──────────────────────────────────────────────┘
+```
+
+Call `score_hybrid_diagnostic()` (new function) which combines:
+- Text answer scoring for Q1 (strategic_prompting) and Q2 (critical_eval) via LLM
+- Direct MCQ scores for the 4 generated questions (pre-scored by the LLM during generation)
+
+Then navigate to Skills Profile.
+
+---
+
+### 2F — New function: `generate_diagnostic_mcqs()` in `utils/ai.py`
+
+```python
+def generate_diagnostic_mcqs(
+    q1_text: str,
+    q2_text: str,
+    intake_profile: dict,
+    user_email: str,
+    lang: str = "en",
+) -> list[dict]:
+    """
+    Generate 4 personalised MCQs (responsible_ai, data_decision,
+    relationship_intel, augmented_comm) calibrated to the user's
+    role, seniority, and org_type.
+
+    Returns list of dicts:
+    [
+      {
+        "domain_id": "responsible_ai",
+        "question_text": "...",
+        "options": [
+          {"label": "A", "text": "...", "score": 0.5},
+          {"label": "B", "text": "...", "score": 2.5},
+          {"label": "C", "text": "...", "score": 1.5},
+          {"label": "D", "text": "...", "score": 3.0},
+        ]
+      },
+      ...
+    ]
+    """
+```
+
+**LLM generation prompt (concept):**
+```
+You are generating a personalised AI skills diagnostic.
+
+User profile:
+  role: {role_text}
+  daily_tasks: {daily_tasks}
+  industry: {industry}
+  seniority: {seniority}
+  org_type: {org_type}
+  ai_tools: {ai_tools}
+
+Their answers so far:
+  Q1 (Strategic Prompting): {q1_text}
+  Q2 (Critical Evaluation): {q2_text}
+
+Generate exactly 4 MCQs, one per domain:
+- responsible_ai
+- data_decision
+- relationship_intel
+- augmented_comm
+
+Each MCQ must:
+- Feature a realistic scenario from their specific role and industry
+- Have exactly 4 options (A/B/C/D) spanning Unaware(0.5) → Explorer(1.5) →
+  Practitioner(2.5) → Proficient(3.5) naturally (shuffle order, no obvious "correct" answer)
+- Include a pre-scored float per option (0.5 / 1.5 / 2.5 / 3.5)
+- Be calibrated to {seniority} level at a {org_type}
+
+Return valid JSON only. No explanation. Schema: [{"domain_id": ..., "question_text": ...,
+"options": [{"label": ..., "text": ..., "score": ...}]}]
+```
+
+**Temperature:** 0.4 (some creativity for option diversity, not too wild)
+**Validation:** parse JSON, verify 4 domains, verify 4 options each, verify scores in
+`[0.0, 4.0]`. If validation fails → use **fallback preset MCQs** per role from
+`content/diagnostic_prompts.json` (add a `fallback_mcqs` section per role).
+
+---
+
+### 2G — New function: `score_hybrid_diagnostic()` in `utils/ai.py`
+
+```python
+def score_hybrid_diagnostic(
+    q1_text: str,          # strategic_prompting
+    q2_text: str,          # critical_eval
+    mcq_answers: dict,     # {domain_id: score_float} for 4 MCQ domains
+    intake_profile: dict,
+    user_email: str,
+    lang: str = "en",
+) -> dict:
+    """
+    Scores the full 6-domain diagnostic from mixed inputs.
+    Text answers scored by LLM (same rubric as BYOW scorer).
+    MCQ answers use pre-scored values directly.
+    Returns: {item_scores, domain_scores, overall_score}
+    """
+```
+
+**Scoring logic:**
+- Call existing `score_byow_diagnostic()` with only Q1+Q2 text answers → get scores for
+  `strategic_prompting` and `critical_eval`
+- MCQ domain scores come directly from `mcq_answers[domain_id]` — no LLM needed
+- Combine into full `domain_scores` dict and compute `overall_score`
+- Saves to Firestore exactly as before (same schema, same collections)
+
+---
+
+### 2H — Fallback strategy
+
+If `generate_diagnostic_mcqs()` fails (LLM error, JSON parse failure, timeout):
+1. Log the error to `ai_call_log`
+2. Fall back to 4 preset MCQs from `content/diagnostic_prompts.json` (add `fallback_mcqs` array per domain)
+3. Show no error to user — transition screen just takes a moment longer
+4. The fallback MCQs should be role-aware (use `intake_profile.role_id` to pick from
+   RM/UW/AN/universal presets)
+
+Never block the user. Degraded personalisation > broken flow.
+
+---
+
+### 2I — Replace ⚡ brand header emoji
+
+Use inline SVG lightning bolt in `aha-brand-icon` everywhere `⚡` appears.
+
+---
+
+### i18n additions (new keys needed)
+
+```json
+"diag.entry_headline": "AI Skills Diagnostic",
+"diag.entry_sub": "6 questions · ~3 minutes · no right answers",
+"diag.begin_btn": "Begin →",
+"diag.q1_label": "Pick one task from your work you wish took half the time. Walk me through exactly how you'd ask AI to help — be as specific as you can.",
+"diag.q2_label": "You used AI to draft something important. Before you send it, what specifically do you check?",
+"diag.char_hint_short": "2–3 sentences is plenty",
+"diag.next_btn": "Next →",
+"diag.generating_headline": "Building your next 4 questions",
+"diag.generating_sub": "Using your answers + role profile to tailor the rest of the assessment to your specific work.",
+"diag.n_of_6": "{n} of 6",
+"diag.scoring_headline": "Scoring your responses...",
+"diag.all_done": "All done."
+```
+
+Add ZH equivalents to `content/i18n/zh.json`.
+
+---
+
+### Acceptance criteria for Phase 2
+
+- [ ] Entry screen shows with Begin button (no form visible)
+- [ ] Q1 screen: Next disabled until 30+ chars; char counter updates live
+- [ ] Q2 screen: same behaviour
+- [ ] Transition screen appears and calls `generate_diagnostic_mcqs()`
+- [ ] 4 MCQ screens render, each with domain pill + question + 4 full-width option cards
+- [ ] Clicking an MCQ option auto-advances (no Next button needed)
+- [ ] Fallback MCQs activate silently if LLM generation fails
+- [ ] `score_hybrid_diagnostic()` produces valid `domain_scores` for all 6 domains
+- [ ] Firestore write schema unchanged (existing tests pass)
+- [ ] ZH language toggle works throughout all 8 screens
+- [ ] 42/42 pytest green (update test fixtures for new diagnostic format)
+
+Commit sequence:
+```
+feat(diagnostic): hybrid 2-text + 4-MCQ architecture, one-at-a-time screens
+feat(ai): generate_diagnostic_mcqs() + score_hybrid_diagnostic()
+feat(diagnostic): MCQ auto-advance, transition screen, fallback strategy
+```
 
 ---
 

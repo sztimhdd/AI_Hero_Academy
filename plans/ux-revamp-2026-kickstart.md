@@ -179,39 +179,336 @@ Commit: `style(foundation): JetBrains Mono via config.toml, indigo tokens, new C
 
 ---
 
-## Phase 2 — Diagnostic Page
+## Phase 2 — Diagnostic Page (Hybrid Redesign)
 
-**File:** `pages/01_Diagnostic.py`
+**Files:** `pages/01_Diagnostic.py`, `utils/ai.py`, `content/i18n/en.json`, `content/i18n/zh.json`
 
-### Per-field validation (D1 + D2)
-In the `st.form` loop, after each `st.text_area`:
-1. Replace hardcoded `color:#8990A8` with `var(--text-muted)` / `var(--text-faint)`
-2. Colour the char counter red (`var(--accent_red)`) when `char_count < 20`
-3. Compute `_all_valid = all(len(r["response_text"]) >= 20 for r in responses)` **before** the submit button (note: in `st.form`, responses are built inside the loop — ensure you read `st.session_state` key values, not the responses list which may still be empty at widget-render time)
-4. Pass `disabled=not _all_valid` to `st.form_submit_button`
+> **This is a full architecture replacement of the diagnostic.** Read
+> `plans/ux-revamp-2026-plan.md` Phase 2 in full before writing a line.
+> The existing `st.form` with 6 stacked text areas is removed entirely.
 
-### Progress counter (D3)
-Above the `st.form(...)`, add:
-```python
-_answered = sum(
-    1 for p in byow_prompts
-    if len((st.session_state.get(f"byow_{p['item_id']}", "") or "").strip()) >= 20
-)
-st.markdown(
-    f'<div class="domain-tag-pill">{_answered} / 6 {t("diag.answered_label", _lang)}</div>',
-    unsafe_allow_html=True,
-)
+### Before you start — run the skill
+
+```bash
+python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "progressive disclosure one question wizard step" --domain ux
+python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "MCQ option card button selection auto advance" --domain ux
 ```
 
-### Domain eyebrow per prompt (D6)
-Inside the loop, before `st.text_area`:
+Apply the Do/Don't guidance to every screen you build.
+
+---
+
+### Step 2A — Session state schema
+
+Add at the top of `pages/01_Diagnostic.py` after existing session state inits:
+
 ```python
-_domain_display = get_domain_display_name(prompt["domain_id"], _lang)
-st.markdown(f'<div class="domain-tag-pill">{_domain_display}</div>', unsafe_allow_html=True)
+# Hybrid diagnostic state machine
+_DIAG_SCREENS = ["entry", "q1", "q2", "generating", "mcq_0", "mcq_1", "mcq_2", "mcq_3", "scoring"]
+
+if "diag_screen" not in st.session_state:
+    st.session_state["diag_screen"] = "entry"
+if "diag_q1_text" not in st.session_state:
+    st.session_state["diag_q1_text"] = ""
+if "diag_q2_text" not in st.session_state:
+    st.session_state["diag_q2_text"] = ""
+if "diag_mcqs" not in st.session_state:
+    st.session_state["diag_mcqs"] = []       # list of 4 generated MCQ dicts
+if "diag_mcq_idx" not in st.session_state:
+    st.session_state["diag_mcq_idx"] = 0     # current MCQ index (0-3)
+if "diag_mcq_answers" not in st.session_state:
+    st.session_state["diag_mcq_answers"] = {} # {domain_id: score_float}
 ```
 
-### Replace ⚡ emoji (D4)
-Replace the brand header HTML `<div class="aha-brand-icon">⚡</div>` with:
+Remove the existing `st.form("byow_diagnostic_form")` block and the `responses` list construction.
+
+---
+
+### Step 2B — Progress pill helper
+
+```python
+def _progress_pill(n: int, total: int = 6) -> str:
+    return (
+        f'<div class="domain-tag-pill" style="margin-bottom:1.2rem">'
+        f'{n} of {total}</div>'
+    )
+```
+
+---
+
+### Step 2C — Screen router
+
+Replace the entire render body with a dispatch on `diag_screen`:
+
+```python
+screen = st.session_state["diag_screen"]
+
+if screen == "entry":
+    _render_entry()
+elif screen == "q1":
+    _render_text_question(q_num=1)
+elif screen == "q2":
+    _render_text_question(q_num=2)
+elif screen == "generating":
+    _render_generating()
+elif screen.startswith("mcq_"):
+    idx = int(screen.split("_")[1])
+    _render_mcq(idx)
+elif screen == "scoring":
+    _render_scoring()
+```
+
+---
+
+### Step 2D — Entry screen
+
+```python
+def _render_entry():
+    st.markdown(_progress_pill(0), unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="score-card" style="padding:3rem 0 2rem">'
+        f'<div style="font-family:\'DM Serif Display\',serif;font-size:2rem;color:var(--text)">'
+        f'{t("diag.entry_headline", _lang)}</div>'
+        f'<div style="font-size:0.9rem;color:var(--text-muted);margin-top:0.6rem">'
+        f'{t("diag.entry_sub", _lang)}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+    if st.button(t("diag.begin_btn", _lang), type="primary", use_container_width=False):
+        st.session_state["diag_screen"] = "q1"
+        st.rerun()
+```
+
+---
+
+### Step 2E — Text question screens (Q1 and Q2)
+
+```python
+def _render_text_question(q_num: int):
+    key = f"diag_q{q_num}_text"
+    label_key = f"diag.q{q_num}_label"
+    screen_next = "q2" if q_num == 1 else "generating"
+
+    st.markdown(_progress_pill(q_num), unsafe_allow_html=True)
+
+    # Domain tag pill
+    domain = "strategic_prompting" if q_num == 1 else "critical_eval"
+    st.markdown(
+        f'<div class="domain-tag-pill">{get_domain_display_name(domain, _lang)}</div>',
+        unsafe_allow_html=True,
+    )
+
+    val = st.text_area(
+        t(label_key, _lang),
+        value=st.session_state.get(key, ""),
+        max_chars=300,
+        height=120,
+        key=f"diag_ta_q{q_num}",
+    )
+    # Persist on every keystroke
+    st.session_state[key] = val or ""
+
+    # Live char counter — JetBrains Mono, right-aligned
+    char_count = len((val or "").strip())
+    counter_color = "var(--accent_green)" if char_count >= 30 else "var(--text-faint)"
+    st.markdown(
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.72rem;'
+        f'color:{counter_color};text-align:right;margin-top:-0.5rem">'
+        f'{char_count} / 300 · {t("diag.char_hint_short", _lang)}</div>',
+        unsafe_allow_html=True,
+    )
+
+    _valid = char_count >= 30
+    col_back, col_next = st.columns([1, 3])
+    with col_back:
+        if q_num == 2 and st.button(t("diag.back_btn", _lang), use_container_width=True):
+            st.session_state["diag_screen"] = "q1"
+            st.rerun()
+    with col_next:
+        if st.button(t("diag.next_btn", _lang), disabled=not _valid,
+                     type="primary", use_container_width=True):
+            st.session_state["diag_screen"] = screen_next
+            st.rerun()
+```
+
+---
+
+### Step 2F — Transition / generation screen
+
+This screen triggers the LLM call and waits. Do NOT use `st.spinner` (it blocks render).
+Instead render the custom screen first, then call the LLM, then advance.
+
+```python
+def _render_generating():
+    st.markdown(_progress_pill(3), unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="ai-card" style="text-align:center;padding:2.5rem 1.5rem">'
+        f'<div class="ai-card-label" style="text-align:center">'
+        f'{t("diag.generating_headline", _lang)}</div>'
+        f'<div style="font-size:0.88rem;color:var(--text-muted);margin-top:0.8rem;line-height:1.7">'
+        f'{t("diag.generating_sub", _lang)}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
+    # Only generate if not already done
+    if not st.session_state.get("diag_mcqs"):
+        with st.spinner(""):
+            intake_raw = profile.get("intake_profile") if profile else None
+            intake = json.loads(intake_raw) if intake_raw else {}
+            mcqs = generate_diagnostic_mcqs(
+                q1_text=st.session_state["diag_q1_text"],
+                q2_text=st.session_state["diag_q2_text"],
+                intake_profile=intake,
+                user_email=user_email,
+                lang=_lang,
+            )
+            st.session_state["diag_mcqs"] = mcqs
+
+    st.session_state["diag_screen"] = "mcq_0"
+    st.rerun()
+```
+
+---
+
+### Step 2G — MCQ screens
+
+```python
+def _render_mcq(idx: int):
+    mcqs = st.session_state.get("diag_mcqs", [])
+    if idx >= len(mcqs):
+        st.session_state["diag_screen"] = "scoring"
+        st.rerun()
+        return
+
+    mcq = mcqs[idx]
+    screen_num = idx + 3  # screens 3-6 in overall flow (0-indexed)
+    st.markdown(_progress_pill(screen_num), unsafe_allow_html=True)
+
+    # Domain tag
+    st.markdown(
+        f'<div class="domain-tag-pill">{get_domain_display_name(mcq["domain_id"], _lang)}</div>',
+        unsafe_allow_html=True,
+    )
+
+    # Question text
+    st.markdown(
+        f'<div style="font-family:\'Inter\',sans-serif;font-size:1.05rem;font-weight:600;'
+        f'color:var(--text);line-height:1.6;margin-bottom:1.2rem">'
+        f'{mcq["question_text"]}</div>',
+        unsafe_allow_html=True,
+    )
+
+    # Options — full-width buttons, auto-advance on click (NO Next button)
+    for option in mcq["options"]:
+        if st.button(
+            f'{option["label"]}.  {option["text"]}',
+            key=f'mcq_{mcq["domain_id"]}_{option["label"]}',
+            use_container_width=True,
+        ):
+            st.session_state["diag_mcq_answers"][mcq["domain_id"]] = option["score"]
+            next_idx = idx + 1
+            if next_idx < len(mcqs):
+                st.session_state["diag_screen"] = f"mcq_{next_idx}"
+            else:
+                st.session_state["diag_screen"] = "scoring"
+            st.rerun()
+```
+
+---
+
+### Step 2H — Scoring screen
+
+```python
+def _render_scoring():
+    st.markdown(_progress_pill(6, 6), unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="score-card" style="padding:2rem 0">'
+        f'<div style="font-size:1.8rem;color:var(--accent_green)">✓</div>'
+        f'<div style="font-family:\'Inter\',sans-serif;font-size:1rem;'
+        f'color:var(--text);margin-top:0.6rem">{t("diag.all_done", _lang)}</div>'
+        f'<div style="font-size:0.88rem;color:var(--text-muted);margin-top:0.3rem">'
+        f'{t("diag.scoring_headline", _lang)}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
+    with st.spinner(""):
+        intake_raw = profile.get("intake_profile") if profile else None
+        intake = json.loads(intake_raw) if intake_raw else {}
+        result = score_hybrid_diagnostic(
+            q1_text=st.session_state["diag_q1_text"],
+            q2_text=st.session_state["diag_q2_text"],
+            mcq_answers=st.session_state["diag_mcq_answers"],
+            intake_profile=intake,
+            user_email=user_email,
+            lang=_lang,
+        )
+    # Save to Firestore (same path as before)
+    # ... existing save_diagnostic / save_gap_map / assemble_path logic here ...
+    # Clear diagnostic session state
+    for k in ["diag_screen", "diag_q1_text", "diag_q2_text", "diag_mcqs",
+              "diag_mcq_idx", "diag_mcq_answers"]:
+        st.session_state.pop(k, None)
+    st.switch_page("pages/02_Skills_Profile.py")
+```
+
+---
+
+### Step 2I — `generate_diagnostic_mcqs()` in `utils/ai.py`
+
+Add after existing AI functions. Full spec in the plan doc (Phase 2F).
+
+Key implementation details:
+- Use `call_llm()` with `temperature=0.4`, `call_type="mcq_generation"`
+- Strip markdown fences from response before `json.loads()`
+- Validate: exactly 4 items, each with `domain_id` in the 4 MCQ domains, exactly 4 options, scores in `[0.0, 4.0]`
+- On any validation failure → load fallback from `content/diagnostic_prompts.json` key `"fallback_mcqs"` → never raise to caller
+
+---
+
+### Step 2J — `score_hybrid_diagnostic()` in `utils/ai.py`
+
+```python
+def score_hybrid_diagnostic(q1_text, q2_text, mcq_answers, intake_profile, user_email, lang):
+    # Score text answers for strategic_prompting + critical_eval
+    text_responses = [
+        {"item_id": "sp_q1", "domain_id": "strategic_prompting",
+         "prompt_text": "...", "response_text": q1_text, "scoring_rubric": "..."},
+        {"item_id": "ce_q2", "domain_id": "critical_eval",
+         "prompt_text": "...", "response_text": q2_text, "scoring_rubric": "..."},
+    ]
+    text_result = score_byow_diagnostic(text_responses, user_email=user_email, lang=lang)
+
+    # Merge with MCQ scores
+    domain_scores = {**text_result["domain_scores"], **mcq_answers}
+    overall_score = sum(domain_scores.values()) / len(domain_scores)
+
+    return {
+        "item_scores": text_result["item_scores"],
+        "domain_scores": domain_scores,
+        "overall_score": overall_score,
+    }
+```
+
+---
+
+### Step 2K — Fallback MCQs in `content/diagnostic_prompts.json`
+
+Add a `"fallback_mcqs"` key at the root with 4 generic (but role-aware where possible)
+MCQs covering the same 4 domains. These activate only if LLM generation fails.
+
+---
+
+### Step 2L — i18n additions
+
+Add all keys listed in the plan Phase 2I to both `content/i18n/en.json` and
+`content/i18n/zh.json`.
+
+---
+
+### Step 2M — Replace ⚡ emoji
+
 ```html
 <div class="aha-brand-icon">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--cyan)">
@@ -219,19 +516,31 @@ Replace the brand header HTML `<div class="aha-brand-icon">⚡</div>` with:
   </svg>
 </div>
 ```
-Apply same replacement in `utils/styles.py` if `⚡` appears there.
 
-### i18n additions
-Add to `content/i18n/en.json`:
-```json
-"diag.answered_label": "answered"
+---
+
+### Commit sequence
+
 ```
-Add to `content/i18n/zh.json`:
-```json
-"diag.answered_label": "已回答"
+feat(ai): generate_diagnostic_mcqs() with validation + fallback
+feat(ai): score_hybrid_diagnostic() merging text + MCQ scores
+feat(diagnostic): hybrid 2-text + 4-MCQ one-at-a-time flow
+feat(diagnostic): entry screen, text questions, MCQ auto-advance, scoring screen
+content(diagnostic): fallback_mcqs in diagnostic_prompts.json + i18n keys
 ```
 
-Commit: `feat(diagnostic): per-field validation, progress counter, domain labels, SVG brand icon`
+### UAT checklist for Phase 2
+
+- [ ] Entry screen shows, Begin → Q1
+- [ ] Q1 Next button disabled until 30+ chars; counter turns green on threshold
+- [ ] Q1 → Q2 → transition screen appears (not blank)
+- [ ] Transition generates MCQs and advances (or falls back silently)
+- [ ] MCQ screens show domain pill + question + 4 full-width option buttons
+- [ ] Clicking any MCQ option immediately advances — NO Next button
+- [ ] After MCQ 4, scoring screen shows, then navigates to Skills Profile
+- [ ] Full journey ZH works: all labels translated
+- [ ] If LLM returns invalid JSON → fallback MCQs appear, no error shown to user
+- [ ] Skills Profile shows all 6 domain scores (2 from text, 4 from MCQ)
 
 ---
 
