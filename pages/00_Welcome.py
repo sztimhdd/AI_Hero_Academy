@@ -94,8 +94,19 @@ DEMO_CSS = """
 <style>
 /* ─── LAYOUT & TYPOGRAPHY ───────────────────────────────── */
 .demo-hero {
-  padding: 5rem 0 4rem;
+  padding: 7rem 2rem 6rem;
   text-align: center;
+  background-image:
+    linear-gradient(135deg, rgba(13,15,20,0.62) 0%, rgba(13,15,20,0.88) 100%),
+    url('https://images.pexels.com/photos/5646319/pexels-photo-5646319.jpeg?auto=compress&cs=tinysrgb&w=1920&h=800&fm=webp');
+  background-size: cover;
+  background-position: center 40%;
+  border-radius: 16px;
+  min-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .demo-eyebrow {
   font-family: 'IBM Plex Mono', monospace;
@@ -285,8 +296,18 @@ DEMO_CSS = """
 }
 .demo-mastery-arrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--border); }
 .demo-mastery-note  { font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--text-faint); text-align: center; margin-top: 0.4rem; }
-/* ─── GET STARTED (Section 7) ───────────────────────────── */
-.demo-cta-header   { text-align: center; padding: 1rem 0 2rem; }
+/* ─── GET STARTED (Section 9 — CTA + form) ──────────────── */
+.demo-cta-header {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  background-image:
+    linear-gradient(rgba(13,15,20,0.82), rgba(13,15,20,0.97)),
+    url('https://images.pexels.com/photos/7562089/pexels-photo-7562089.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fm=webp');
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
 .demo-cta-headline { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--text); margin-bottom: 0.5rem; }
 .demo-cta-sub      { font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
 /* ─── PILOT NOTE (Section 7) ────────────────────────────── */
