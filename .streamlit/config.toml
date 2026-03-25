@@ -9,10 +9,3 @@ textColor                = "#EDF0F7"
 font        = "Inter:https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600&display=swap"
 headingFont = "'DM Serif Display':https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
 codeFont    = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
-# Deprecated internal tokens — set to suppress JS "Invalid color" console warnings (Streamlit
-# issue #13831). These are no-ops visually. The warnings still fire for theme.sidebar because
-# Streamlit's JS does not propagate these tokens to the sidebar theme object. This is an upstream
-# Streamlit limitation; no fix is possible from app code without patching Streamlit's JS bundle.
-widgetBackgroundColor    = "#1E2330"
-widgetBorderColor        = "#2A2F3E"
-skeletonBackgroundColor  = "#1E2330"
