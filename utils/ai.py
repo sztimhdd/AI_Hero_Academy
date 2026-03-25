@@ -63,6 +63,65 @@ def call_llm(
         raise
 
 
+def call_llm_stream(
+    messages: list[dict],
+    temperature: float = 0.4,
+    user_email: str = None,
+    call_type: str = "coach_response",
+):
+    """
+    Stream tokens from Gemini. Yields text chunks.
+
+    Usage with st.write_stream():
+        reply = st.write_stream(call_llm_stream(messages, ...))
+
+    Falls back to a single-yield non-streaming call on any error.
+    """
+    api_key = os.environ.get("GEMINI_API_KEY")
+    client = genai.Client(api_key=api_key)
+    model = "gemini-2.0-flash"
+
+    system_instruction = None
+    conversation = []
+    for m in messages:
+        if m["role"] == "system" and system_instruction is None:
+            system_instruction = m["content"]
+        else:
+            role = "model" if m["role"] == "assistant" else m["role"]
+            conversation.append(types.Content(role=role, parts=[types.Part(text=m["content"])]))
+
+    config = types.GenerateContentConfig(
+        temperature=temperature,
+        system_instruction=system_instruction,
+    )
+
+    t0 = time.time()
+    try:
+        full_text = []
+        for chunk in client.models.generate_content_stream(
+            model=model,
+            contents=conversation,
+            config=config,
+        ):
+            piece = getattr(chunk, "text", "") or ""
+            if piece:
+                full_text.append(piece)
+                yield piece
+        latency_ms = int((time.time() - t0) * 1000)
+        _log_call(user_email, call_type, model, latency_ms, success=True)
+    except Exception as e:
+        # Fallback: non-streaming call
+        import sys as _sys
+        print(f"[WARNING] call_llm_stream fallback to non-streaming: {e}", file=_sys.stderr)
+        try:
+            content = call_llm(messages, temperature=temperature, user_email=user_email, call_type=call_type)
+            yield content
+        except Exception as e2:
+            latency_ms = int((time.time() - t0) * 1000)
+            _log_call(user_email, call_type, model, latency_ms, success=False, error=str(e2))
+            raise
+
+
 def _log_call(user_email, call_type, endpoint, latency_ms, success, error=None,
               prompt_tokens=None, completion_tokens=None):
     """Write one entry to Firestore ai_call_log. Silently ignore log failures."""

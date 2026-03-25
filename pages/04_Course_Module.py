@@ -668,7 +668,12 @@ elif active_sub == "practice":
         {"label": t("module.quiz_step_label", _lang),     "state": "pending"},
     ])
 
-    st.error(t("module.practice_warning", _lang))
+    _warn_key = f"practice_warn_seen_{course_id}"
+    if not st.session_state.get(_warn_key):
+        st.error(t("module.practice_warning", _lang))
+        st.session_state[_warn_key] = True
+    else:
+        st.caption(t("module.practice_warning_short", _lang))
 
     scenario_html = (scenario.get("scenario_text") or "").replace("\n", "<br>")
     with st.expander(t("module.scenario_expander", _lang), expanded=(len(messages) == 0)):
@@ -720,11 +725,10 @@ elif active_sub == "practice":
         mcq_answered = st.session_state["mcq_answered_by_task"].get(task_idx)
 
         if not mcq_answered:
-            # Show option buttons in columns — no chat input
-            cols = st.columns(len(current_mcq_options))
+            # Show option buttons stacked vertically — full width for readability
             for i, opt in enumerate(current_mcq_options):
-                with cols[i]:
-                    if st.button(opt["label"], key=f"mcq_{task_idx}_{i}"):
+                if True:
+                    if st.button(opt["label"], key=f"mcq_{task_idx}_{i}", use_container_width=True):
                         chosen = opt["label"]
                         is_best = opt.get("is_best", False)
                         best_label = next((o["label"] for o in current_mcq_options if o.get("is_best")), chosen)
@@ -779,20 +783,26 @@ elif active_sub == "practice":
         else:
             # Show disabled MCQ buttons with ✅/❌ correctness signal
             answered_label = mcq_answered
-            cols = st.columns(len(current_mcq_options))
             for i, opt in enumerate(current_mcq_options):
-                with cols[i]:
-                    if opt.get("is_best"):
-                        display_label = f"✅ {opt['label']}"
-                    elif opt["label"] == answered_label:
-                        display_label = f"❌ {opt['label']}"
-                    else:
-                        display_label = opt["label"]
-                    st.button(display_label, key=f"mcq_done_{task_idx}_{i}", disabled=True)
+                if opt.get("is_best"):
+                    display_label = f"✅ {opt['label']}"
+                elif opt["label"] == answered_label:
+                    display_label = f"❌ {opt['label']}"
+                else:
+                    display_label = opt["label"]
+                st.button(display_label, key=f"mcq_done_{task_idx}_{i}", disabled=True, use_container_width=True)
             # Show the recorded exchange then the advance CTA
             for msg in messages:
-                with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
-                    st.markdown(msg["content"])
+                if msg["role"] == "assistant":
+                    st.markdown(
+                        f'<div class="chat-coach-bubble"><div class="chat-coach-label">AI Coach</div>{msg["content"]}</div>',
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.markdown(
+                        f'<div class="chat-user-bubble">{msg["content"]}</div>',
+                        unsafe_allow_html=True,
+                    )
             if task_idx < 3:
                 if st.button(t("module.next_task_btn", _lang), key=f"mcq_next_{task_idx}", type="primary"):
                     _advance_task()
@@ -821,16 +831,37 @@ elif active_sub == "practice":
                         _advance_task()
             # Chat history rendered below CTA so learner can review context
             for msg in messages:
-                with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
-                    st.markdown(msg["content"])
+                if msg["role"] == "assistant":
+                    st.markdown(
+                        f'<div class="chat-coach-bubble"><div class="chat-coach-label">AI Coach</div>{msg["content"]}</div>',
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.markdown(
+                        f'<div class="chat-user-bubble">{msg["content"]}</div>',
+                        unsafe_allow_html=True,
+                    )
             st.stop()
 
         # Chat history — current task only (UX-P1)
         for msg in messages:
-            with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
-                st.markdown(msg["content"])
+            if msg["role"] == "assistant":
+                st.markdown(
+                    f'<div class="chat-coach-bubble">'
+                    f'<div class="chat-coach-label">AI Coach</div>'
+                    f'{msg["content"]}'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.markdown(
+                    f'<div class="chat-user-bubble">{msg["content"]}</div>',
+                    unsafe_allow_html=True,
+                )
 
-        st.caption(t("module.turn_counter", _lang).format(n=total_turns, max=MAX_TOTAL_TURNS))
+        _remaining_turns = MAX_TOTAL_TURNS - total_turns
+        if _remaining_turns <= 3:
+            st.caption(t("module.turns_remaining_caption", _lang).format(n=_remaining_turns))
 
         # Determine if we're waiting for user input
         last_role = messages[-1]["role"] if messages else None
@@ -869,23 +900,28 @@ elif active_sub == "practice":
                     st.warning(f"Your message was trimmed to {MAX_USER_INPUT_CHARS} characters.")
                     user_input = user_input[:MAX_USER_INPUT_CHARS]
                 # Immediately show the user message — don't wait for AI to reply
-                with st.chat_message("user"):
-                    st.markdown(user_input.strip())
+                st.markdown(
+                    f'<div class="chat-user-bubble">{user_input.strip()}</div>',
+                    unsafe_allow_html=True,
+                )
 
                 try:
-                    with st.chat_message("assistant", avatar="🤖"):
-                        with st.spinner(t("module.coach_thinking", _lang)):
-                            reply = coach_response(
-                                system_prompt=coach_prompt + _OPEN_TASK_MASTERY_ADDENDUM,
-                                conversation=messages,
-                                user_input=user_input.strip(),
-                                user_email=user_email,
-                                lang=_lang,
-                            )
-                        # Strip the mastery signal before displaying
-                        auto_advance = "[ADVANCE]" in reply
-                        reply_clean = reply.replace("[ADVANCE]", "").strip()
-                        st.markdown(reply_clean)
+                    st.markdown(
+                        '<div class="chat-coach-bubble"><div class="chat-coach-label">AI Coach</div>',
+                        unsafe_allow_html=True,
+                    )
+                    with st.spinner(t("module.coach_thinking", _lang)):
+                        reply = coach_response(
+                            system_prompt=coach_prompt + _OPEN_TASK_MASTERY_ADDENDUM,
+                            conversation=messages,
+                            user_input=user_input.strip(),
+                            user_email=user_email,
+                            lang=_lang,
+                        )
+                    # Strip the mastery signal before displaying
+                    auto_advance = "[ADVANCE]" in reply
+                    reply_clean = reply.replace("[ADVANCE]", "").strip()
+                    st.markdown(reply_clean + '</div>', unsafe_allow_html=True)
                 except Exception as e:
                     st.error(t("module.coach_unavailable", _lang) + f"\n\n_{e}_")
                     st.stop()
