@@ -121,7 +121,7 @@ render_sidebar("home", has_course=True, progress_rows=progress_rows,
 
 # ── Greeting ──────────────────────────────────────────────────────────────────
 st.markdown(
-    f'<div style="font-family:\'DM Serif Display\',serif; font-size:2rem; '
+    f'<div style="font-family:\'DM Serif Display\',serif; font-size:1.5rem; '
     f'color:#EDF0F7; margin-bottom:0.2rem">{t("home.greeting", _lang).format(name=display_name)}</div>',
     unsafe_allow_html=True,
 )
@@ -144,11 +144,11 @@ with col_card:
 <div class="aha-card" style="display:flex; gap:2rem; align-items:center">
   <div>
     <div style="display:flex; align-items:baseline; gap:0.35rem">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:2.2rem;
+      <div style="font-family:'JetBrains Mono',monospace; font-size:2.2rem;
                   color:{color_hex}; line-height:1">{overall:.1f}</div>
       <div style="font-size:1.3rem; color:{trend_color}; line-height:1">{trend_arrow}</div>
     </div>
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem;
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.75rem;
                 color:#8990A8">/ 4.0</div>
     <div style="font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:600;
                 text-transform:uppercase; letter-spacing:0.08em; color:#8990A8;
@@ -159,10 +159,8 @@ with col_card:
                 margin-bottom:0.5rem">
       {_modules_progress_str}
     </div>
-    <div style="background:#1E2330; border-radius:4px; height:6px; overflow:hidden">
-      <div style="height:100%; width:{int(completed_count/total_modules*100)}%;
-                  background:linear-gradient(90deg,#00D4E8,#0099AA);
-                  border-radius:4px; transition:width 0.5s ease"></div>
+    <div class="themed-progress-track">
+      <div class="themed-progress-fill" style="width:{int(completed_count/total_modules*100)}%"></div>
     </div>
     {last_updated_html}
   </div>
@@ -185,6 +183,12 @@ if _assembled_path:
     _course_progress_map = {r.get("course_id", ""): r for r in _raw_progress}
 
     section_header(t("home.course_header", _lang))
+
+    _SVG_LOCK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>'
+    _SVG_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent_green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
+
+    def _badge(label, state):
+        return f'<span class="sub-badge {state}">{label}</span>'
 
     for _atom_seq, _atom_id in enumerate(_assembled_path, start=1):
         _atom = _atoms_by_id.get(_atom_id)
@@ -227,11 +231,19 @@ if _assembled_path:
                     unsafe_allow_html=True,
                 )
             with _col_body:
-                _done_icon = "✓ " if _atom_card_state == "completed" else ""
+                _done_icon = f'{_SVG_CHECK} ' if _atom_card_state == "completed" else ""
+                _r_state = "done" if _atom_reading_done else "current"
+                _p_state = "done" if _atom_practice_done else ("current" if _atom_reading_done else "pending")
+                _q_state = "done" if _atom_eval_done else ("current" if _atom_practice_done else "pending")
                 st.markdown(
                     f'<div>'
                     f'<div class="module-title">{_done_icon}{_atom.get("title", _atom_id)}</div>'
                     f'<div style="margin-top:0.3rem"><span class="module-domain-tag">{_atom_domain_display}</span></div>'
+                    f'<div class="sub-strip">'
+                    f'{_badge(t("home.badge_read", _lang), _r_state)}'
+                    f'{_badge(t("home.badge_practice", _lang), _p_state)}'
+                    f'{_badge(t("home.badge_quiz", _lang), _q_state)}'
+                    f'</div>'
                     f'</div>',
                     unsafe_allow_html=True,
                 )
@@ -273,8 +285,11 @@ if _assembled_path:
                     st.switch_page("pages/04_Course_Module.py")
 
 else:
-    # ── Legacy role-based course list (unchanged) ─────────────────────────────
+    # ── Legacy role-based course list ─────────────────────────────────────────
     section_header(t("home.course_header", _lang))
+
+    _SVG_LOCK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>'
+    _SVG_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent_green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
 
     def _badge(label, state):
         return f'<span class="sub-badge {state}">{label}</span>'
@@ -329,10 +344,16 @@ else:
                     unsafe_allow_html=True,
                 )
             with col_body:
-                lock_icon = "🔒 " if is_locked else ""
+                lock_icon = f'{_SVG_LOCK} ' if is_locked else ""
+                _locked_hint_html = (
+                    f'<div style="font-size:0.75rem;color:var(--text-faint);margin-top:0.2rem">'
+                    f'{t("home.locked_hint", _lang).format(n=seq-1)}</div>'
+                    if is_locked and seq > 1 else ""
+                )
                 st.markdown(
                     f'<div style="{opacity}">'
                     f'<div class="module-title">{lock_icon}{title}</div>'
+                    f'{_locked_hint_html}'
                     f'<div style="margin-top:0.3rem"><span class="module-domain-tag">{domain_display}</span></div>'
                     f'<div class="sub-strip">{_badge(_read_label, r_state)}{_badge(_practice_label, p_state)}{_badge(_quiz_label, q_state)}</div>'
                     f'</div>',

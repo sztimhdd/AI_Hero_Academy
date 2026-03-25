@@ -106,6 +106,7 @@
   "home.badge_read": "阅读",
   "home.badge_practice": "练习",
   "home.badge_quiz": "测验",
+  "home.locked_hint": "完成模块 {n} 后解锁",
   "module.back_btn": "← 我的培训",
   "module.breadcrumb": "第 {n} 模块：{title}",
   "module.overview_counter": "第 {n} 模块，共7个",

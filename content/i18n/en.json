@@ -195,6 +195,7 @@
   "home.badge_read": "Read",
   "home.badge_practice": "Practice",
   "home.badge_quiz": "Quiz",
+  "home.locked_hint": "Complete Module {n} to unlock",
 
   "module.back_btn": "← My Training",
   "module.breadcrumb": "Module {n}: {title}",
