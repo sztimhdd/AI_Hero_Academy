@@ -21,8 +21,9 @@ COLORS = {
     "accent_red":    "#E8455A",   # danger / gap
     "accent_green":  "#29CC6A",   # success / complete
     "text_primary":  "#EDF0F7",   # main text
-    "text_secondary":"#8990A8",   # muted text
-    "text_muted":    "#8990A8",   # faint text — #545B70 fails WCAG AA (3:1); minimum passing is #8990A8 (6.6:1)
+    "text_secondary":"#8990A8",   # body copy, card text, sub-headings
+    "text_muted":    "#6B7280",   # secondary labels, helper text
+    "text_faint":    "#4B5268",   # citations, source labels, footnotes
 }
 
 

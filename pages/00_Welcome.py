@@ -17,6 +17,7 @@ from utils.content import ROLES
 from utils.i18n import t
 from utils.ai import call_llm
 import utils.welcome_zh as _wzh
+import utils.icons as _icons
 
 
 def _fetch_linkedin_via_gemini(url: str) -> str:
@@ -304,10 +305,76 @@ DEMO_CSS = """
 .demo-roadmap-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
 .demo-roadmap-title { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.88rem; color: var(--text); margin-bottom: 0.35rem; }
 .demo-roadmap-body  { font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; }
+/* ─── TASK 3: SVG icon display ──────────────────────────── */
+.demo-stage-icon svg,
+.demo-diff-icon svg,
+.demo-domain-emoji svg { display: block; margin: 0 auto 0.7rem; }
+.demo-stage-icon { margin-bottom: 0; }
+.demo-diff-icon  { margin-bottom: 0; }
+.demo-domain-emoji { margin-bottom: 0; }
+/* ─── TASK 4: Sticky Get Started CTA ────────────────────── */
+.demo-sticky-cta {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  background: var(--cyan);
+  color: #0D0F14;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  box-shadow: 0 0 16px rgba(0, 212, 232, 0.35);
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+}
+.demo-sticky-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px rgba(0, 212, 232, 0.5);
+}
+html { scroll-behavior: smooth; }
+/* ─── TASK 5: Card hover micro-interactions ─────────────── */
+.demo-stat-card,
+.demo-stage-card,
+.demo-diff-card,
+.demo-roadmap-card {
+  transition: border-color 200ms ease-out, transform 200ms ease-out;
+}
+.demo-stat-card:hover,
+.demo-stage-card:hover,
+.demo-diff-card:hover,
+.demo-roadmap-card:hover {
+  border-color: rgba(0, 212, 232, 0.3);
+  transform: translateY(-2px);
+}
+.demo-domain-pill {
+  transition: border-color 200ms ease-out, background 200ms ease-out;
+}
+.demo-domain-pill:hover {
+  border-color: rgba(0, 212, 232, 0.25);
+  background: var(--bg-surface);
+}
+/* ─── TASK 6: Subtle OLED glow on accent elements ───────── */
+.demo-eyebrow,
+.demo-section-label {
+  text-shadow: 0 0 12px rgba(0, 212, 232, 0.4);
+}
+.demo-stat-number {
+  text-shadow: 0 0 16px rgba(0, 212, 232, 0.35);
+}
+.demo-roadmap-badge {
+  text-shadow: 0 0 10px rgba(245, 166, 35, 0.35);
+}
 </style>
 """
 
 st.markdown(DEMO_CSS, unsafe_allow_html=True)
+st.markdown(
+    '<a class="demo-sticky-cta" href="#cta-section">Get Started &rarr;</a>',
+    unsafe_allow_html=True,
+)
 
 
 # ── Section 1 — Hero ──────────────────────────────────────────────────────────
@@ -325,6 +392,370 @@ else:
     A diagnostic engine + personalized path + live AI coaching,
     built specifically for each role — and ready for your entire team.
   </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
+
+
+# ── Section 2 — The Challenge ─────────────────────────────────────────────────
+if _lang == "zh":
+    _wzh.render_challenge_zh()
+else:
+    st.markdown("""
+<div class="demo-section-label">The Challenge</div>
+<div class="demo-section-heading">Your people are already using AI. The question is whether they're using it well.</div>
+<div class="demo-section-sub">Three data points that make the case.</div>
+""", unsafe_allow_html=True)
+
+    sc1, sc2, sc3 = st.columns(3, gap="medium")
+
+    with sc1:
+        st.markdown("""
+<div class="demo-stat-card">
+  <div class="demo-stat-number">68%</div>
+  <div class="demo-stat-label">want AI training more than job security</div>
+  <div class="demo-stat-context">Your people are asking for this. AI skills are the top professional development priority across every function.</div>
+  <div class="demo-stat-source">Predictive Index, 2025</div>
+</div>
+""", unsafe_allow_html=True)
+
+    with sc2:
+        st.markdown("""
+<div class="demo-stat-card">
+  <div class="demo-stat-number">3×</div>
+  <div class="demo-stat-label">more AI usage than leaders expect</div>
+  <div class="demo-stat-context">Shadow AI is rampant. Employees are already using tools leaders haven't approved — without guardrails or training.</div>
+  <div class="demo-stat-source">McKinsey Superagency Report, 2025</div>
+</div>
+""", unsafe_allow_html=True)
+
+    with sc3:
+        st.markdown("""
+<div class="demo-stat-card">
+  <div class="demo-stat-number">48%</div>
+  <div class="demo-stat-label">cite lack of training as the #1 adoption blocker</div>
+  <div class="demo-stat-context">Training unlocks ROI. Without it, AI tools sit underused or get misused — both outcomes cost you.</div>
+  <div class="demo-stat-source">McKinsey Superagency Report, 2025</div>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("""
+<div class="demo-edc-callout">
+  Across the organization, over 100 employees have already submitted AI use case requests.
+  Meeting support, document summarization, and email drafting rank as the top three needs.
+  This platform builds the skills to do them right — securely, consistently, at scale.
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
+
+
+# ── Section 3 — The Learning Loop ────────────────────────────────────────────
+if _lang == "zh":
+    _wzh.render_loop_zh()
+else:
+    st.markdown("""
+<div class="demo-section-label">How It Works</div>
+<div class="demo-section-heading">The Learning Loop</div>
+<div class="demo-section-sub">Four stages. One continuous cycle. Completely personalized.</div>
+""", unsafe_allow_html=True)
+
+    lc1, lc2, lc3, lc4 = st.columns(4, gap="medium")
+
+    with lc1:
+        st.markdown(f"""
+<div class="demo-stage-card">
+  <div class="demo-stage-icon">{_icons.ICON_DIAGNOSE}</div>
+  <div class="demo-stage-num">Stage 01</div>
+  <div class="demo-stage-label">Diagnose</div>
+  <div class="demo-stage-body">6 open-ended questions scored by AI — no right answers, just your real work. Takes ~5 minutes. Reveals your skill level across all 6 domains.</div>
+</div>
+""", unsafe_allow_html=True)
+
+    with lc2:
+        st.markdown(f"""
+<div class="demo-stage-card">
+  <div class="demo-stage-icon">{_icons.ICON_MAP_GAPS}</div>
+  <div class="demo-stage-num">Stage 02</div>
+  <div class="demo-stage-label">Map Gaps</div>
+  <div class="demo-stage-body">AI generates a personalized narrative gap map and sequences your training path.</div>
+</div>
+""", unsafe_allow_html=True)
+
+    with lc3:
+        st.markdown(f"""
+<div class="demo-stage-card">
+  <div class="demo-stage-icon">{_icons.ICON_TRAIN}</div>
+  <div class="demo-stage-num">Stage 03</div>
+  <div class="demo-stage-label">Train</div>
+  <div class="demo-stage-body">Role-specific scenarios + live AI coach. You practice; the coach responds to YOUR answers.</div>
+</div>
+""", unsafe_allow_html=True)
+
+    with lc4:
+        st.markdown(f"""
+<div class="demo-stage-card">
+  <div class="demo-stage-icon">{_icons.ICON_SCORE}</div>
+  <div class="demo-stage-num">Stage 04</div>
+  <div class="demo-stage-label">Score & Track</div>
+  <div class="demo-stage-body">Hexagon skill radar updates after each module. Watch your gaps close over time.</div>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("""
+<div class="demo-loop-callout">
+  <strong>The path is yours.</strong> Module 1 unlocks immediately based on your biggest gap —
+  not a fixed curriculum everyone follows in the same order.
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
+
+
+# ── Section 4 — Inside the Platform ──────────────────────────────────────────
+if _lang == "zh":
+    _wzh.render_tour_header_zh()
+else:
+    st.markdown("""
+<div class="demo-section-label">Product Tour</div>
+<div class="demo-section-heading">Inside the Platform</div>
+<div class="demo-section-sub">Five views. One integrated experience.</div>
+""", unsafe_allow_html=True)
+
+import os as _os
+
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    t("welcome.tab_diagnostic", _lang),
+    t("welcome.tab_skills_profile", _lang),
+    t("welcome.tab_course_module", _lang),
+    t("welcome.tab_ai_coach", _lang),
+    t("welcome.tab_results", _lang),
+])
+
+_BASE = _os.path.join(_os.path.dirname(__file__), "..", "assets", "screenshots")
+
+if _lang == "zh":
+    _captions = _wzh.CAPTIONS_ZH
+else:
+    _captions = [
+        "Six open-ended questions based on your own work. No multiple choice — you describe how you'd actually use AI. Takes ~5 minutes. Scores all 6 domains simultaneously.",
+        "Your hexagon radar shows exactly where you stand. The AI-generated gap map turns raw scores into plain-language priorities you can act on today.",
+        "Each module opens with a reading section that explains the core framework — then immediately asks you to apply it to a realistic work scenario.",
+        "The AI coach responds to what you actually wrote — not a scripted flow. It asks follow-up questions, flags weak reasoning, and models better approaches in real time.",
+        "After each module, you get a score breakdown by rubric criterion and a personalized coach note. Your hexagon radar updates immediately.",
+    ]
+
+_screenshots = {
+    tab1: ("demo_01_diagnostic.png",     "demo_01_diagnostic.gif",     _captions[0]),
+    tab2: ("demo_02_skills_profile.png", "demo_02_skills_profile.gif", _captions[1]),
+    tab3: ("demo_03_course_module.png",  "demo_03_course_module.gif",  _captions[2]),
+    tab4: ("demo_04_ai_coach.png",       "demo_04_ai_coach.gif",       _captions[3]),
+    tab5: ("demo_05_results.png",        "demo_05_results.gif",        _captions[4]),
+}
+
+for tab, (png_name, gif_name, caption) in _screenshots.items():
+    with tab:
+        asset_path = None
+        is_gif = False
+        if gif_name:
+            gif_path = _os.path.join(_BASE, gif_name)
+            if _os.path.exists(gif_path):
+                asset_path = gif_path
+                is_gif = True
+        if asset_path is None:
+            png_path = _os.path.join(_BASE, png_name)
+            if _os.path.exists(png_path):
+                asset_path = png_path
+        if asset_path:
+            if is_gif:
+                import base64 as _b64
+                with open(asset_path, "rb") as _f:
+                    _data = _b64.b64encode(_f.read()).decode()
+                st.markdown(
+                    f'<img src="data:image/gif;base64,{_data}" style="width:100%;border-radius:8px;">',
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.image(asset_path, use_container_width=True)
+        else:
+            st.info(f"Screenshot not yet captured: `{png_name}`")
+        st.markdown(f'<div class="demo-screenshot-caption">{caption}</div>', unsafe_allow_html=True)
+
+st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
+
+
+# ── Section 5 — What Makes It Different ──────────────────────────────────────
+if _lang == "zh":
+    _wzh.render_differentiators_zh()
+else:
+    st.markdown("""
+<div class="demo-section-label">Differentiators</div>
+<div class="demo-section-heading">What Makes It Different</div>
+<div class="demo-section-sub">Four decisions that separate this from generic e-learning.</div>
+""", unsafe_allow_html=True)
+
+    dc1, dc2, dc3, dc4 = st.columns(4, gap="medium")
+
+    with dc1:
+        st.markdown(f"""
+<div class="demo-diff-card">
+  <div class="demo-diff-icon">{_icons.ICON_ROLE_SCENARIOS}</div>
+  <div class="demo-diff-headline">Your role. Your scenarios.</div>
+  <div class="demo-diff-body">Every practice task is built around real work situations for your specific role — RM, Underwriter, Analyst. No generic "write a prompt about dogs" exercises.</div>
+</div>
+""", unsafe_allow_html=True)
+
+    with dc2:
+        st.markdown(f"""
+<div class="demo-diff-card">
+  <div class="demo-diff-icon">{_icons.ICON_AI_COACH}</div>
+  <div class="demo-diff-headline">An AI coach that actually reads your answer.</div>
+  <div class="demo-diff-body">The coach sees exactly what you wrote and responds with contextual feedback. It can't be fooled by a vague answer — it will push back.</div>
+</div>
+""", unsafe_allow_html=True)
+
+    with dc3:
+        st.markdown(f"""
+<div class="demo-diff-card">
+  <div class="demo-diff-icon">{_icons.ICON_GAPS_DRIVE}</div>
+  <div class="demo-diff-headline">Your gaps drive the sequence.</div>
+  <div class="demo-diff-body">The diagnostic scores 6 domains. Module 1 is the domain where you need the most help — not the one that comes first alphabetically.</div>
+</div>
+""", unsafe_allow_html=True)
+
+    with dc4:
+        st.markdown(f"""
+<div class="demo-diff-card">
+  <div class="demo-diff-icon">{_icons.ICON_LOCK}</div>
+  <div class="demo-diff-headline">Your data never leaves your workspace.</div>
+  <div class="demo-diff-body">Hosted on GCP Cloud Run and served from your organization's environment. No data sent to third-party training platforms. No external user accounts.</div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
+
+
+# ── Section 6 — The Skill Model ───────────────────────────────────────────────
+if _lang == "zh":
+    _wzh.render_skill_model_zh()
+    _wzh.render_mastery_zh()
+else:
+    st.markdown("""
+<div class="demo-section-label">Skill Model</div>
+<div class="demo-section-heading">Six Domains. One Hexagon.</div>
+<div class="demo-section-sub">Every domain is scored independently. The diagnostic tells you exactly where you sit on each axis.</div>
+""", unsafe_allow_html=True)
+
+    _DOMAINS = [
+        (_icons.ICON_RESPONSIBLE_AI, "Responsible AI",           "Protect your professional reputation"),
+        (_icons.ICON_PROMPTING,      "Strategic Prompting",      "Your personal productivity superpower"),
+        (_icons.ICON_CRITICAL_EVAL,  "Critical Evaluation",      "Never be caught out by an AI error"),
+        (_icons.ICON_DATA,           "Data & Decision",          "Generate insights in minutes, not hours"),
+        (_icons.ICON_RELATIONSHIP,   "Relationship Intelligence","Know every stakeholder better than anyone"),
+        (_icons.ICON_COMM,           "Augmented Communication",  "Deliver polished outputs 3× faster"),
+    ]
+
+    row1 = st.columns(3, gap="medium")
+    row2 = st.columns(3, gap="medium")
+
+    for i, (icon_svg, label, reframe) in enumerate(_DOMAINS):
+        col = row1[i] if i < 3 else row2[i - 3]
+        with col:
+            st.markdown(f"""
+<div class="demo-domain-pill">
+  <div class="demo-domain-emoji">{icon_svg}</div>
+  <div class="demo-domain-label">{label}</div>
+  <div class="demo-domain-reframe">{reframe}</div>
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("""
+<div class="demo-attribution">
+  Aligned with the Alan Turing Institute's AI Skills Framework for Knowledge Workers (2024).
+</div>
+""", unsafe_allow_html=True)
+
+    st.markdown("""
+<div class="demo-mastery-row">
+  <span class="demo-mastery-pill">Unaware</span>
+  <span class="demo-mastery-arrow">→</span>
+  <span class="demo-mastery-pill">Explorer</span>
+  <span class="demo-mastery-arrow">→</span>
+  <span class="demo-mastery-pill active">Practitioner</span>
+  <span class="demo-mastery-arrow">→</span>
+  <span class="demo-mastery-pill">Proficient</span>
+  <span class="demo-mastery-arrow">→</span>
+  <span class="demo-mastery-pill">Champion</span>
+</div>
+<div class="demo-mastery-note">Every domain is scored independently. The diagnostic tells you exactly where you sit on each axis.</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
+
+
+# ── Section 8 — What's Coming ─────────────────────────────────────────────────
+if _lang == "zh":
+    _wzh.render_roadmap_header_zh()
+else:
+    st.markdown("""
+<div class="demo-section-label">Roadmap</div>
+<div class="demo-section-heading">What's Coming</div>
+<div class="demo-section-sub">This is version 1. Three roles are live today.<br>The roadmap below reflects what's already being built.</div>
+""", unsafe_allow_html=True)
+
+with st.expander(t("welcome.roadmap_expander", _lang), expanded=False):
+    if _lang == "zh":
+        _wzh.render_roadmap_content_zh()
+    else:
+        rc1, rc2 = st.columns(2, gap="medium")
+
+        with rc1:
+            st.markdown("""
+<div class="demo-roadmap-card" style="margin-bottom:1rem">
+  <div class="demo-roadmap-badge">🔜 Phase 1</div>
+  <div class="demo-roadmap-title">More roles</div>
+  <div class="demo-roadmap-body">PM, Engineer, Legal, Finance — same methodology, role-specific scenarios built on the same 6-domain skill model.</div>
+</div>
+""", unsafe_allow_html=True)
+            st.markdown("""
+<div class="demo-roadmap-card">
+  <div class="demo-roadmap-badge">🔜 Phase 3+</div>
+  <div class="demo-roadmap-title">Board-ready metrics</div>
+  <div class="demo-roadmap-body">% workforce at Practitioner+ per domain; exportable for quarterly reporting and board packs.</div>
+</div>
+""", unsafe_allow_html=True)
+
+        with rc2:
+            st.markdown("""
+<div class="demo-roadmap-card" style="margin-bottom:1rem">
+  <div class="demo-roadmap-badge">🔜 Phase 3+</div>
+  <div class="demo-roadmap-title">Org-level dashboard</div>
+  <div class="demo-roadmap-body">Admin view: completion rates, average scores by department, skill gap heatmap across the workforce.</div>
+</div>
+""", unsafe_allow_html=True)
+            st.markdown("""
+<div class="demo-roadmap-card">
+  <div class="demo-roadmap-badge">🔜 Phase 1+</div>
+  <div class="demo-roadmap-title">Microsoft Copilot track</div>
+  <div class="demo-roadmap-body">A dedicated module covering M365 Copilot — the tool most frequently requested by employees.</div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
+
+
+# ── Section 9 — Get Started (CTA + intake form) ───────────────────────────────
+st.markdown('<div id="cta-section"></div>', unsafe_allow_html=True)
+
+if _lang == "zh":
+    _wzh.render_cta_zh()
+else:
+    st.markdown("""
+<div class="demo-cta-header">
+  <div class="demo-section-label">Get Started</div>
+  <div class="demo-cta-headline">Ready to find out where you stand?</div>
+  <div class="demo-cta-sub">6 open-ended questions. ~5 minutes.<br>No right answers — your responses shape your path.</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -481,350 +912,3 @@ if st.button(
                 st.switch_page("pages/01_Diagnostic.py")
             except Exception as err:
                 st.error(t("welcome.error_create_profile", _lang) + f"\n\n_{err}_")
-
-st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
-
-
-# ── Section 2 — The Challenge ─────────────────────────────────────────────────
-if _lang == "zh":
-    _wzh.render_challenge_zh()
-else:
-    st.markdown("""
-<div class="demo-section-label">The Challenge</div>
-<div class="demo-section-heading">Your people are already using AI. The question is whether they're using it well.</div>
-<div class="demo-section-sub">Three data points that make the case.</div>
-""", unsafe_allow_html=True)
-
-    sc1, sc2, sc3 = st.columns(3, gap="medium")
-
-    with sc1:
-        st.markdown("""
-<div class="demo-stat-card">
-  <div class="demo-stat-number">68%</div>
-  <div class="demo-stat-label">want AI training more than job security</div>
-  <div class="demo-stat-context">Your people are asking for this. AI skills are the top professional development priority across every function.</div>
-  <div class="demo-stat-source">Predictive Index, 2025</div>
-</div>
-""", unsafe_allow_html=True)
-
-    with sc2:
-        st.markdown("""
-<div class="demo-stat-card">
-  <div class="demo-stat-number">3×</div>
-  <div class="demo-stat-label">more AI usage than leaders expect</div>
-  <div class="demo-stat-context">Shadow AI is rampant. Employees are already using tools leaders haven't approved — without guardrails or training.</div>
-  <div class="demo-stat-source">McKinsey Superagency Report, 2025</div>
-</div>
-""", unsafe_allow_html=True)
-
-    with sc3:
-        st.markdown("""
-<div class="demo-stat-card">
-  <div class="demo-stat-number">48%</div>
-  <div class="demo-stat-label">cite lack of training as the #1 adoption blocker</div>
-  <div class="demo-stat-context">Training unlocks ROI. Without it, AI tools sit underused or get misused — both outcomes cost you.</div>
-  <div class="demo-stat-source">McKinsey Superagency Report, 2025</div>
-</div>
-""", unsafe_allow_html=True)
-
-    st.markdown("""
-<div class="demo-edc-callout">
-  Across the organization, over 100 employees have already submitted AI use case requests.
-  Meeting support, document summarization, and email drafting rank as the top three needs.
-  This platform builds the skills to do them right — securely, consistently, at scale.
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
-
-
-# ── Section 3 — The Learning Loop ────────────────────────────────────────────
-if _lang == "zh":
-    _wzh.render_loop_zh()
-else:
-    st.markdown("""
-<div class="demo-section-label">How It Works</div>
-<div class="demo-section-heading">The Learning Loop</div>
-<div class="demo-section-sub">Four stages. One continuous cycle. Completely personalized.</div>
-""", unsafe_allow_html=True)
-
-    lc1, lc2, lc3, lc4 = st.columns(4, gap="medium")
-
-    with lc1:
-        st.markdown("""
-<div class="demo-stage-card">
-  <div class="demo-stage-icon">🎯</div>
-  <div class="demo-stage-num">Stage 01</div>
-  <div class="demo-stage-label">Diagnose</div>
-  <div class="demo-stage-body">6 open-ended questions scored by AI — no right answers, just your real work. Takes ~5 minutes. Reveals your skill level across all 6 domains.</div>
-</div>
-""", unsafe_allow_html=True)
-
-    with lc2:
-        st.markdown("""
-<div class="demo-stage-card">
-  <div class="demo-stage-icon">🗺️</div>
-  <div class="demo-stage-num">Stage 02</div>
-  <div class="demo-stage-label">Map Gaps</div>
-  <div class="demo-stage-body">AI generates a personalized narrative gap map and sequences your training path.</div>
-</div>
-""", unsafe_allow_html=True)
-
-    with lc3:
-        st.markdown("""
-<div class="demo-stage-card">
-  <div class="demo-stage-icon">🤖</div>
-  <div class="demo-stage-num">Stage 03</div>
-  <div class="demo-stage-label">Train</div>
-  <div class="demo-stage-body">Role-specific scenarios + live AI coach. You practice; the coach responds to YOUR answers.</div>
-</div>
-""", unsafe_allow_html=True)
-
-    with lc4:
-        st.markdown("""
-<div class="demo-stage-card">
-  <div class="demo-stage-icon">📊</div>
-  <div class="demo-stage-num">Stage 04</div>
-  <div class="demo-stage-label">Score & Track</div>
-  <div class="demo-stage-body">Hexagon skill radar updates after each module. Watch your gaps close over time.</div>
-</div>
-""", unsafe_allow_html=True)
-
-    st.markdown("""
-<div class="demo-loop-callout">
-  <strong>The path is yours.</strong> Module 1 unlocks immediately based on your biggest gap —
-  not a fixed curriculum everyone follows in the same order.
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
-
-
-# ── Section 4 — Inside the Platform ──────────────────────────────────────────
-if _lang == "zh":
-    _wzh.render_tour_header_zh()
-else:
-    st.markdown("""
-<div class="demo-section-label">Product Tour</div>
-<div class="demo-section-heading">Inside the Platform</div>
-<div class="demo-section-sub">Five views. One integrated experience.</div>
-""", unsafe_allow_html=True)
-
-import os as _os
-
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    t("welcome.tab_diagnostic", _lang),
-    t("welcome.tab_skills_profile", _lang),
-    t("welcome.tab_course_module", _lang),
-    t("welcome.tab_ai_coach", _lang),
-    t("welcome.tab_results", _lang),
-])
-
-_BASE = _os.path.join(_os.path.dirname(__file__), "..", "assets", "screenshots")
-
-if _lang == "zh":
-    _captions = _wzh.CAPTIONS_ZH
-else:
-    _captions = [
-        "Six open-ended questions based on your own work. No multiple choice — you describe how you'd actually use AI. Takes ~5 minutes. Scores all 6 domains simultaneously.",
-        "Your hexagon radar shows exactly where you stand. The AI-generated gap map turns raw scores into plain-language priorities you can act on today.",
-        "Each module opens with a reading section that explains the core framework — then immediately asks you to apply it to a realistic work scenario.",
-        "The AI coach responds to what you actually wrote — not a scripted flow. It asks follow-up questions, flags weak reasoning, and models better approaches in real time.",
-        "After each module, you get a score breakdown by rubric criterion and a personalized coach note. Your hexagon radar updates immediately.",
-    ]
-
-_screenshots = {
-    tab1: ("demo_01_diagnostic.png",     "demo_01_diagnostic.gif",     _captions[0]),
-    tab2: ("demo_02_skills_profile.png", "demo_02_skills_profile.gif", _captions[1]),
-    tab3: ("demo_03_course_module.png",  "demo_03_course_module.gif",  _captions[2]),
-    tab4: ("demo_04_ai_coach.png",       "demo_04_ai_coach.gif",       _captions[3]),
-    tab5: ("demo_05_results.png",        "demo_05_results.gif",        _captions[4]),
-}
-
-for tab, (png_name, gif_name, caption) in _screenshots.items():
-    with tab:
-        asset_path = None
-        is_gif = False
-        if gif_name:
-            gif_path = _os.path.join(_BASE, gif_name)
-            if _os.path.exists(gif_path):
-                asset_path = gif_path
-                is_gif = True
-        if asset_path is None:
-            png_path = _os.path.join(_BASE, png_name)
-            if _os.path.exists(png_path):
-                asset_path = png_path
-        if asset_path:
-            if is_gif:
-                import base64 as _b64
-                with open(asset_path, "rb") as _f:
-                    _data = _b64.b64encode(_f.read()).decode()
-                st.markdown(
-                    f'<img src="data:image/gif;base64,{_data}" style="width:100%;border-radius:8px;">',
-                    unsafe_allow_html=True,
-                )
-            else:
-                st.image(asset_path, use_container_width=True)
-        else:
-            st.info(f"Screenshot not yet captured: `{png_name}`")
-        st.markdown(f'<div class="demo-screenshot-caption">{caption}</div>', unsafe_allow_html=True)
-
-st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
-
-
-# ── Section 5 — What Makes It Different ──────────────────────────────────────
-if _lang == "zh":
-    _wzh.render_differentiators_zh()
-else:
-    st.markdown("""
-<div class="demo-section-label">Differentiators</div>
-<div class="demo-section-heading">What Makes It Different</div>
-<div class="demo-section-sub">Four decisions that separate this from generic e-learning.</div>
-""", unsafe_allow_html=True)
-
-    dc1, dc2, dc3, dc4 = st.columns(4, gap="medium")
-
-    with dc1:
-        st.markdown("""
-<div class="demo-diff-card">
-  <div class="demo-diff-icon">🎯</div>
-  <div class="demo-diff-headline">Your role. Your scenarios.</div>
-  <div class="demo-diff-body">Every practice task is built around real work situations for your specific role — RM, Underwriter, Analyst. No generic "write a prompt about dogs" exercises.</div>
-</div>
-""", unsafe_allow_html=True)
-
-    with dc2:
-        st.markdown("""
-<div class="demo-diff-card">
-  <div class="demo-diff-icon">🤖</div>
-  <div class="demo-diff-headline">An AI coach that actually reads your answer.</div>
-  <div class="demo-diff-body">The coach sees exactly what you wrote and responds with contextual feedback. It can't be fooled by a vague answer — it will push back.</div>
-</div>
-""", unsafe_allow_html=True)
-
-    with dc3:
-        st.markdown("""
-<div class="demo-diff-card">
-  <div class="demo-diff-icon">🗺️</div>
-  <div class="demo-diff-headline">Your gaps drive the sequence.</div>
-  <div class="demo-diff-body">The diagnostic scores 6 domains. Module 1 is the domain where you need the most help — not the one that comes first alphabetically.</div>
-</div>
-""", unsafe_allow_html=True)
-
-    with dc4:
-        st.markdown("""
-<div class="demo-diff-card">
-  <div class="demo-diff-icon">🔒</div>
-  <div class="demo-diff-headline">Your data never leaves your workspace.</div>
-  <div class="demo-diff-body">Hosted on GCP Cloud Run and served from your organization's environment. No data sent to third-party training platforms. No external user accounts.</div>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
-
-
-# ── Section 6 — The Skill Model ───────────────────────────────────────────────
-if _lang == "zh":
-    _wzh.render_skill_model_zh()
-    _wzh.render_mastery_zh()
-else:
-    st.markdown("""
-<div class="demo-section-label">Skill Model</div>
-<div class="demo-section-heading">Six Domains. One Hexagon.</div>
-<div class="demo-section-sub">Every domain is scored independently. The diagnostic tells you exactly where you sit on each axis.</div>
-""", unsafe_allow_html=True)
-
-    _DOMAINS = [
-        ("🛡️", "Responsible AI",           "Protect your professional reputation"),
-        ("⚡",  "Strategic Prompting",      "Your personal productivity superpower"),
-        ("🔍",  "Critical Evaluation",      "Never be caught out by an AI error"),
-        ("📊",  "Data & Decision",          "Generate insights in minutes, not hours"),
-        ("🤝",  "Relationship Intelligence","Know every stakeholder better than anyone"),
-        ("✍️",  "Augmented Communication",  "Deliver polished outputs 3× faster"),
-    ]
-
-    row1 = st.columns(3, gap="medium")
-    row2 = st.columns(3, gap="medium")
-
-    for i, (emoji, label, reframe) in enumerate(_DOMAINS):
-        col = row1[i] if i < 3 else row2[i - 3]
-        with col:
-            st.markdown(f"""
-<div class="demo-domain-pill">
-  <div class="demo-domain-emoji">{emoji}</div>
-  <div class="demo-domain-label">{label}</div>
-  <div class="demo-domain-reframe">{reframe}</div>
-</div>
-""", unsafe_allow_html=True)
-
-    st.markdown("""
-<div class="demo-attribution">
-  Aligned with the Alan Turing Institute's AI Skills Framework for Knowledge Workers (2024).
-</div>
-""", unsafe_allow_html=True)
-
-    st.markdown("""
-<div class="demo-mastery-row">
-  <span class="demo-mastery-pill">Unaware</span>
-  <span class="demo-mastery-arrow">→</span>
-  <span class="demo-mastery-pill">Explorer</span>
-  <span class="demo-mastery-arrow">→</span>
-  <span class="demo-mastery-pill active">Practitioner</span>
-  <span class="demo-mastery-arrow">→</span>
-  <span class="demo-mastery-pill">Proficient</span>
-  <span class="demo-mastery-arrow">→</span>
-  <span class="demo-mastery-pill">Champion</span>
-</div>
-<div class="demo-mastery-note">Every domain is scored independently. The diagnostic tells you exactly where you sit on each axis.</div>
-""", unsafe_allow_html=True)
-
-st.markdown('<hr class="demo-divider">', unsafe_allow_html=True)
-
-
-# ── Section 8 — What's Coming ─────────────────────────────────────────────────
-if _lang == "zh":
-    _wzh.render_roadmap_header_zh()
-else:
-    st.markdown("""
-<div class="demo-section-label">Roadmap</div>
-<div class="demo-section-heading">What's Coming</div>
-<div class="demo-section-sub">This is version 1. Three roles are live today.<br>The roadmap below reflects what's already being built.</div>
-""", unsafe_allow_html=True)
-
-with st.expander(t("welcome.roadmap_expander", _lang), expanded=False):
-    if _lang == "zh":
-        _wzh.render_roadmap_content_zh()
-    else:
-        rc1, rc2 = st.columns(2, gap="medium")
-
-        with rc1:
-            st.markdown("""
-<div class="demo-roadmap-card" style="margin-bottom:1rem">
-  <div class="demo-roadmap-badge">🔜 Phase 1</div>
-  <div class="demo-roadmap-title">More roles</div>
-  <div class="demo-roadmap-body">PM, Engineer, Legal, Finance — same methodology, role-specific scenarios built on the same 6-domain skill model.</div>
-</div>
-""", unsafe_allow_html=True)
-            st.markdown("""
-<div class="demo-roadmap-card">
-  <div class="demo-roadmap-badge">🔜 Phase 3+</div>
-  <div class="demo-roadmap-title">Board-ready metrics</div>
-  <div class="demo-roadmap-body">% workforce at Practitioner+ per domain; exportable for quarterly reporting and board packs.</div>
-</div>
-""", unsafe_allow_html=True)
-
-        with rc2:
-            st.markdown("""
-<div class="demo-roadmap-card" style="margin-bottom:1rem">
-  <div class="demo-roadmap-badge">🔜 Phase 3+</div>
-  <div class="demo-roadmap-title">Org-level dashboard</div>
-  <div class="demo-roadmap-body">Admin view: completion rates, average scores by department, skill gap heatmap across the workforce.</div>
-</div>
-""", unsafe_allow_html=True)
-            st.markdown("""
-<div class="demo-roadmap-card">
-  <div class="demo-roadmap-badge">🔜 Phase 1+</div>
-  <div class="demo-roadmap-title">Microsoft Copilot track</div>
-  <div class="demo-roadmap-body">A dedicated module covering M365 Copilot — the tool most frequently requested by employees.</div>
-</div>
-""", unsafe_allow_html=True)

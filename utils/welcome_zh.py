@@ -6,6 +6,7 @@ Called from pages/00_Welcome.py when session lang == "zh".
 """
 
 import streamlit as st
+import utils.icons as _icons
 
 
 def render_hero_zh() -> None:
@@ -82,9 +83,9 @@ def render_loop_zh() -> None:
     lc1, lc2, lc3, lc4 = st.columns(4, gap="medium")
 
     with lc1:
-        st.markdown("""
+        st.markdown(f"""
 <div class="demo-stage-card">
-  <div class="demo-stage-icon">🎯</div>
+  <div class="demo-stage-icon">{_icons.ICON_DIAGNOSE}</div>
   <div class="demo-stage-num">第01阶段</div>
   <div class="demo-stage-label">诊断</div>
   <div class="demo-stage-body">6道开放性问题，由AI评分——没有标准答案，只有您的真实工作。约需5分钟，同步评估全部6个技能域。</div>
@@ -92,9 +93,9 @@ def render_loop_zh() -> None:
 """, unsafe_allow_html=True)
 
     with lc2:
-        st.markdown("""
+        st.markdown(f"""
 <div class="demo-stage-card">
-  <div class="demo-stage-icon">🗺️</div>
+  <div class="demo-stage-icon">{_icons.ICON_MAP_GAPS}</div>
   <div class="demo-stage-num">第02阶段</div>
   <div class="demo-stage-label">差距图谱</div>
   <div class="demo-stage-body">AI生成个性化叙述式差距图谱，并排列您的培训路径顺序。</div>
@@ -102,9 +103,9 @@ def render_loop_zh() -> None:
 """, unsafe_allow_html=True)
 
     with lc3:
-        st.markdown("""
+        st.markdown(f"""
 <div class="demo-stage-card">
-  <div class="demo-stage-icon">🤖</div>
+  <div class="demo-stage-icon">{_icons.ICON_TRAIN}</div>
   <div class="demo-stage-num">第03阶段</div>
   <div class="demo-stage-label">训练</div>
   <div class="demo-stage-body">岗位专属场景 + 实时AI辅导员。您来练习；辅导员针对您的作答给出反馈。</div>
@@ -112,9 +113,9 @@ def render_loop_zh() -> None:
 """, unsafe_allow_html=True)
 
     with lc4:
-        st.markdown("""
+        st.markdown(f"""
 <div class="demo-stage-card">
-  <div class="demo-stage-icon">📊</div>
+  <div class="demo-stage-icon">{_icons.ICON_SCORE}</div>
   <div class="demo-stage-num">第04阶段</div>
   <div class="demo-stage-label">评分与追踪</div>
   <div class="demo-stage-body">每完成一个模块，六边形技能雷达图即时更新。见证差距逐步缩小。</div>
@@ -157,36 +158,36 @@ def render_differentiators_zh() -> None:
     dc1, dc2, dc3, dc4 = st.columns(4, gap="medium")
 
     with dc1:
-        st.markdown("""
+        st.markdown(f"""
 <div class="demo-diff-card">
-  <div class="demo-diff-icon">🎯</div>
+  <div class="demo-diff-icon">{_icons.ICON_ROLE_SCENARIOS}</div>
   <div class="demo-diff-headline">您的岗位。您的场景。</div>
   <div class="demo-diff-body">每项练习任务均围绕您特定岗位的真实工作情境设计——客户经理、核保人、分析师。告别"写一段关于狗的提示词"此类通用练习。</div>
 </div>
 """, unsafe_allow_html=True)
 
     with dc2:
-        st.markdown("""
+        st.markdown(f"""
 <div class="demo-diff-card">
-  <div class="demo-diff-icon">🤖</div>
+  <div class="demo-diff-icon">{_icons.ICON_AI_COACH}</div>
   <div class="demo-diff-headline">真正读懂您回答的AI辅导员。</div>
   <div class="demo-diff-body">辅导员看到您写下的确切内容，并给出有针对性的反馈。含糊的回答无法蒙混过关——它会直接指出问题。</div>
 </div>
 """, unsafe_allow_html=True)
 
     with dc3:
-        st.markdown("""
+        st.markdown(f"""
 <div class="demo-diff-card">
-  <div class="demo-diff-icon">🗺️</div>
+  <div class="demo-diff-icon">{_icons.ICON_GAPS_DRIVE}</div>
   <div class="demo-diff-headline">差距驱动学习顺序。</div>
   <div class="demo-diff-body">诊断评估6个技能域。第1模块针对您最需要提升的领域——而非按字母顺序排在最前面的那个。</div>
 </div>
 """, unsafe_allow_html=True)
 
     with dc4:
-        st.markdown("""
+        st.markdown(f"""
 <div class="demo-diff-card">
-  <div class="demo-diff-icon">🔒</div>
+  <div class="demo-diff-icon">{_icons.ICON_LOCK}</div>
   <div class="demo-diff-headline">您的数据永不离开工作环境。</div>
   <div class="demo-diff-body">托管在GCP Cloud Run，从您组织的环境内部署。数据不发送至第三方培训平台，无需外部用户账户。</div>
 </div>
@@ -201,23 +202,23 @@ def render_skill_model_zh() -> None:
 """, unsafe_allow_html=True)
 
     _DOMAINS_ZH = [
-        ("🛡️", "负责任的AI",   "守护您的职业声誉"),
-        ("⚡",  "战略性提示",   "您的个人生产力超能力"),
-        ("🔍",  "批判性评估",   "永不因AI错误被动陷入困境"),
-        ("📊",  "数据驱动决策", "数分钟内生成洞察，而非数小时"),
-        ("🤝",  "关系智能",     "比任何人都更了解每位利益相关方"),
-        ("✍️",  "增强沟通",     "以3倍速交付精致成果"),
+        (_icons.ICON_RESPONSIBLE_AI, "负责任的AI",   "守护您的职业声誉"),
+        (_icons.ICON_PROMPTING,      "战略性提示",   "您的个人生产力超能力"),
+        (_icons.ICON_CRITICAL_EVAL,  "批判性评估",   "永不因AI错误被动陷入困境"),
+        (_icons.ICON_DATA,           "数据驱动决策", "数分钟内生成洞察，而非数小时"),
+        (_icons.ICON_RELATIONSHIP,   "关系智能",     "比任何人都更了解每位利益相关方"),
+        (_icons.ICON_COMM,           "增强沟通",     "以3倍速交付精致成果"),
     ]
 
     row1 = st.columns(3, gap="medium")
     row2 = st.columns(3, gap="medium")
 
-    for i, (emoji, label, reframe) in enumerate(_DOMAINS_ZH):
+    for i, (icon_svg, label, reframe) in enumerate(_DOMAINS_ZH):
         col = row1[i] if i < 3 else row2[i - 3]
         with col:
             st.markdown(f"""
 <div class="demo-domain-pill">
-  <div class="demo-domain-emoji">{emoji}</div>
+  <div class="demo-domain-emoji">{icon_svg}</div>
   <div class="demo-domain-label">{label}</div>
   <div class="demo-domain-reframe">{reframe}</div>
 </div>
@@ -288,5 +289,16 @@ def render_roadmap_content_zh() -> None:
   <div class="demo-roadmap-badge">🔜 第一阶段+</div>
   <div class="demo-roadmap-title">Microsoft Copilot专题模块</div>
   <div class="demo-roadmap-body">专为M365 Copilot设计的模块——员工需求最多的工具。</div>
+</div>
+""", unsafe_allow_html=True)
+
+
+def render_cta_zh() -> None:
+    """Render the ZH CTA section header (Get Started)."""
+    st.markdown("""
+<div class="demo-cta-header">
+  <div class="demo-section-label">开始使用</div>
+  <div class="demo-cta-headline">准备好了解您的AI技能水平了吗？</div>
+  <div class="demo-cta-sub">6道开放性问题。约5分钟。<br>没有标准答案——您的回答塑造您的路径。</div>
 </div>
 """, unsafe_allow_html=True)
