@@ -23,6 +23,63 @@ The result is one plan that makes the app noticeably better — not just cleaner
 
 ---
 
+## Mandatory: ui-ux-pro-max Skill Usage During Implementation
+
+The skill was used upfront to generate this plan. It must also be used **throughout
+implementation** — not just at the planning stage.
+
+The agent working this sprint has access to the skill at:
+```
+~/.claude/skills/ui-ux-pro-max/scripts/search.py
+```
+
+### When to query during implementation
+
+The agent MUST run the skill before making any design decision not already specified
+by this plan. This includes:
+
+| Situation | Command to run |
+|-----------|---------------|
+| Choosing padding / spacing for a new element | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "spacing padding touch target" --domain ux` |
+| Deciding hover / focus state behaviour | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "hover state transition interactive" --domain ux` |
+| Picking a colour for a new state (error, disabled, selected) | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<state> colour dark mode" --domain ux` |
+| Choosing border-radius for a new card or button | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "border radius card button dark" --domain style` |
+| Designing any icon or replacing any emoji | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "icon SVG stroke consistency" --domain ux` |
+| Deciding animation duration or easing curve | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "animation duration easing micro-interaction" --domain ux` |
+| Adding any form element (input, radio, checkbox, textarea) | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "form label input feedback" --domain ux` |
+| Adding a loading or empty state | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "loading skeleton empty state" --domain ux` |
+| Choosing a chart type or data display | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<data type>" --domain chart` |
+| Any component not covered by this plan | `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<component description>" --design-system -p "AI Hero Academy"` |
+
+### How to apply skill output
+
+1. Run the query and read the result
+2. Apply the **Do** guidance; avoid the **Don't** patterns
+3. If the result conflicts with this plan, **this plan takes precedence** — the plan
+   already incorporates the skill's audit findings
+4. If the result reveals a consideration not in this plan, apply it and note it in
+   the commit message
+
+### Quick reference — decisions already settled by the skill
+
+These were resolved during planning. Do not re-query, just apply:
+
+| Decision | Resolved answer |
+|----------|----------------|
+| Animation duration | 150–300ms ease-out (micro), 400ms ease (progress rail) |
+| Touch target minimum | 44×44px — all interactive elements |
+| Card border-radius | 8–12px (smaller cards), 12–16px (larger content cards) |
+| Body text line-height | 1.7 for reading content, 1.5 for UI labels |
+| Body text max-width | 65ch for reading; unrestricted for UI |
+| Icon style | Heroicons outline, 24×24, stroke-width 1.5 |
+| Disabled opacity | 0.38–0.5 + `cursor: not-allowed` |
+| Error colour | `var(--accent_red)` (#E8455A) |
+| Success colour | `var(--accent_green)` (#29CC6A) |
+| AI-generated content accent | `var(--indigo)` (#6366F1) — left border 3px |
+| User-action accent | `var(--cyan)` (#00D4E8) |
+
+---
+
 ## Streamlit 1.55.0 SDK — What's Available
 
 The app is already on 1.55.0. These features are confirmed available:

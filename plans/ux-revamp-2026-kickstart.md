@@ -20,6 +20,85 @@ Every design decision either reinforces that or gets removed.
 
 ---
 
+## Your Active Design Tool: ui-ux-pro-max
+
+The skill is installed and working at:
+```
+~/.claude/skills/ui-ux-pro-max/scripts/search.py
+```
+
+**You must use it throughout this sprint — not just at the start.**
+The plan covers the major design decisions upfront. For everything else — every
+button, every spacing value, every animation, every new state — query the skill first.
+
+### The rule: query before you guess
+
+If the plan does not specify a detail, do NOT default to your own judgement.
+Run the skill, read the output, then implement.
+
+```bash
+# Any UX decision not covered by the plan
+python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<what you're designing>" --domain ux
+
+# Choosing a style or visual treatment
+python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<description>" --domain style
+
+# Chart or data display
+python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<data type>" --domain chart
+
+# Full design system for a new component type
+python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<component> dark enterprise" --design-system -p "AI Hero Academy" -f markdown
+```
+
+### Mandatory query triggers
+
+You MUST run the skill before implementing any of these:
+
+| Trigger | Domain flag |
+| ------- | ----------- |
+| New button style (not already in plan) | `--domain ux` |
+| New spacing / padding value | `--domain ux` |
+| Hover, focus, or disabled state for any element | `--domain ux` |
+| Any animation or transition | `--domain ux` |
+| Any icon (choosing stroke, size, style) | `--domain ux` |
+| Any form element (label, input, textarea) | `--domain ux` |
+| Any loading, skeleton, or empty state | `--domain ux` |
+| Any card border-radius, shadow, or border | `--domain style` |
+| Any colour not in the existing token set | `--domain ux` + `--domain style` |
+| Any chart or data visualisation change | `--domain chart` |
+| Any component with no spec in this plan | `--design-system` |
+
+### Decisions already settled — do NOT re-query
+
+These were resolved in planning. Apply directly:
+
+| Decision | Answer |
+| -------- | ------ |
+| Micro-interaction duration | 150–300ms ease-out |
+| Progress rail transition | 400ms ease |
+| Minimum touch target | 44×44px |
+| Card border-radius (small) | 8–12px |
+| Card border-radius (large content) | 12–16px |
+| Reading body line-height | 1.7 |
+| Reading max-width | 65ch |
+| Icon style | Heroicons outline, 24×24, stroke-width 1.5 |
+| Disabled opacity | 0.38–0.5 |
+| Error colour | `var(--accent_red)` #E8455A |
+| Success colour | `var(--accent_green)` #29CC6A |
+| AI content accent | `var(--indigo)` #6366F1, left border 3px |
+| User action accent | `var(--cyan)` #00D4E8 |
+
+### How to apply skill output
+
+1. Run the query
+2. Apply the **Do** guidance; avoid the **Don't** examples
+3. If output conflicts with this plan, **the plan wins** — it already incorporates the skill audit
+4. If output reveals something the plan missed, apply it and note it in the commit message body
+
+---
+
+---
+
 ## Pre-flight Checks
 
 ```bash
