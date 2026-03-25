@@ -283,86 +283,113 @@ with _bc_info_col:
 
 def _render_concept(rs: dict) -> None:
     """Renders concept_text_structured as an acronym card grid."""
-    st.caption(rs.get("framework_acronym", ""))
-    if rs.get("intro"):
-        st.markdown(rs["intro"])
-
+    intro_html = f'<div style="font-size:0.95rem;line-height:1.7;color:var(--text);margin-bottom:1rem">{rs["intro"]}</div>' if rs.get("intro") else ""
     cards = rs.get("cards", [])
-    LETTER_ICONS = ["🔵", "🟣", "🔴", "🟢", "🟡", "🟠"]
-    if cards:
-        cols = st.columns(2)
-        for i, card in enumerate(cards):
-            with cols[i % 2]:
-                with st.container(border=True):
-                    icon = LETTER_ICONS[i % len(LETTER_ICONS)]
-                    st.markdown(f"**{icon} {card['letter']} — {card['title']}**")
-                    st.markdown(card["body"])
-
+    cards_html = ""
+    for card in cards:
+        cards_html += (
+            f'<div style="padding:0.5rem 0;border-bottom:1px solid var(--border)">'
+            f'<div style="font-weight:600;font-size:0.88rem;color:var(--cyan)">{card.get("letter", "")} — {card.get("title", "")}</div>'
+            f'<div style="font-size:0.88rem;color:var(--text);margin-top:0.2rem;line-height:1.6">{card.get("body", "")}</div>'
+            f'</div>'
+        )
+    st.markdown(
+        f'<div class="read-concept-card">'
+        f'<div class="ai-card-label">{rs.get("framework_acronym", "Framework")}</div>'
+        f'{intro_html}{cards_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
     if rs.get("guardrails"):
-        items = "\n".join(f"- {g}" for g in rs["guardrails"])
-        st.info(f"**Essential guardrails**\n\n{items}")
+        items_html = "".join(f'<div style="padding:0.2rem 0;font-size:0.88rem;color:var(--text)">· {g}</div>' for g in rs["guardrails"])
+        st.markdown(
+            f'<div class="read-principle-callout">'
+            f'<div class="ai-card-label">Essential guardrails</div>{items_html}'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
 
 def _render_good_example(rs: dict) -> None:
-    """Renders good_example_structured as a Before/After comparison."""
+    """Renders good_example_structured as a Before/After comparison using themed cards."""
     if rs.get("scenario"):
-        with st.container(border=True):
-            st.caption("📋 Scenario")
-            st.markdown(rs["scenario"])
+        st.markdown(
+            f'<div class="read-concept-card" style="margin-bottom:1rem">'
+            f'<div class="ai-card-label">Scenario</div>'
+            f'<div style="font-size:0.9rem;line-height:1.7;color:var(--text)">{rs["scenario"]}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
-    col_b, col_a = st.columns(2)
-    with col_b:
-        st.caption("❌ Before")
-        with st.container(border=True):
-            st.code(rs.get("before_prompt", ""), language=None)
-            if rs.get("before_issue"):
-                st.caption(f"⚠️ {rs['before_issue']}")
-    with col_a:
-        st.caption("✅ After")
-        with st.container(border=True):
-            st.code(rs.get("after_prompt", ""), language=None)
-            if rs.get("after_benefit"):
-                st.caption(f"✓ {rs['after_benefit']}")
-
+    before_html = (
+        f'<div class="read-split-label" style="color:var(--red)">Without</div>'
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.82rem;color:var(--text);white-space:pre-wrap">{rs.get("before_prompt", "")}</div>'
+        + (f'<div style="font-size:0.75rem;color:var(--red);margin-top:0.5rem">⚠ {rs["before_issue"]}</div>' if rs.get("before_issue") else "")
+    )
+    after_html = (
+        f'<div class="read-split-label" style="color:var(--green)">With</div>'
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.82rem;color:var(--text);white-space:pre-wrap">{rs.get("after_prompt", "")}</div>'
+        + (f'<div style="font-size:0.75rem;color:var(--green);margin-top:0.5rem">✓ {rs["after_benefit"]}</div>' if rs.get("after_benefit") else "")
+    )
+    st.markdown(
+        f'<div class="read-split">'
+        f'<div class="read-split-bad">{before_html}</div>'
+        f'<div class="read-split-good">{after_html}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
     if rs.get("outcome"):
-        st.success(rs["outcome"])
+        st.markdown(
+            f'<div class="read-principle-callout">{rs["outcome"]}</div>',
+            unsafe_allow_html=True,
+        )
 
 
 def _render_anti_pattern(rs: dict) -> None:
-    """Renders anti_pattern_structured as an incident report with cascade chain."""
+    """Renders anti_pattern_structured as a pitfall card with cascade chain."""
+    parts = ['<div class="read-pitfall-card">']
+    parts.append('<div class="ai-card-label" style="color:var(--red)">Common Mistake</div>')
     if rs.get("failure_scenario"):
-        with st.container(border=True):
-            st.caption("⚠️ What went wrong")
-            st.markdown(rs["failure_scenario"])
-
+        parts.append(f'<div style="font-size:0.9rem;line-height:1.7;color:var(--text);margin-bottom:0.8rem">{rs["failure_scenario"]}</div>')
     chain = rs.get("chain", [])
     if chain:
-        st.markdown("**The cascade:**")
+        parts.append('<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.4rem">The cascade:</div>')
         for i, step in enumerate(chain, 1):
-            st.markdown(f"{i}. {step}")
-
+            parts.append(f'<div style="font-size:0.88rem;color:var(--text);padding:0.15rem 0">{i}. {step}</div>')
     if rs.get("root_lesson"):
-        st.error(f"**Root lesson:** {rs['root_lesson']}")
+        parts.append(f'<div style="margin-top:0.8rem;font-size:0.88rem;font-weight:600;color:var(--red)">Root lesson: {rs["root_lesson"]}</div>')
+    parts.append('</div>')
+    st.markdown("".join(parts), unsafe_allow_html=True)
 
 
 def _render_takeaway(rs: dict) -> None:
-    """Renders takeaway_structured as a focal card with two action points."""
-    if rs.get("statement"):
-        st.markdown(f"## {rs['statement']}")
-        st.divider()
-
+    """Renders takeaway_structured as a full-width cyan takeaway card."""
+    statement = rs.get("statement", "")
     a1 = rs.get("action_1", {})
     a2 = rs.get("action_2", {})
+    actions_html = ""
     if a1 or a2:
-        col1, col2 = st.columns(2)
-        with col1:
-            with st.container(border=True):
-                st.markdown(f"**{a1.get('title', '')}**")
-                st.markdown(a1.get("body", ""))
-        with col2:
-            with st.container(border=True):
-                st.markdown(f"**{a2.get('title', '')}**")
-                st.markdown(a2.get("body", ""))
+        a1_html = (
+            f'<div style="flex:1;background:rgba(0,0,0,0.2);border-radius:8px;padding:0.75rem">'
+            f'<div style="font-weight:600;font-size:0.88rem;color:var(--cyan);margin-bottom:0.3rem">{a1.get("title","")}</div>'
+            f'<div style="font-size:0.88rem;line-height:1.6;color:var(--text)">{a1.get("body","")}</div>'
+            f'</div>'
+        )
+        a2_html = (
+            f'<div style="flex:1;background:rgba(0,0,0,0.2);border-radius:8px;padding:0.75rem">'
+            f'<div style="font-weight:600;font-size:0.88rem;color:var(--cyan);margin-bottom:0.3rem">{a2.get("title","")}</div>'
+            f'<div style="font-size:0.88rem;line-height:1.6;color:var(--text)">{a2.get("body","")}</div>'
+            f'</div>'
+        )
+        actions_html = f'<div style="display:flex;gap:0.75rem;margin-top:0.8rem">{a1_html}{a2_html}</div>'
+    st.markdown(
+        f'<div class="read-takeaway-card">'
+        f'<div class="ai-card-label" style="color:var(--cyan)">Key Takeaway</div>'
+        f'<div style="font-size:1rem;font-weight:600;color:var(--text);line-height:1.5">{statement}</div>'
+        f'{actions_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -389,10 +416,27 @@ if active_sub == "overview":
         {"label": t("module.quiz_step_label", _lang),     "state": _step(eval_done,     practice_done and not eval_done)},
     ])
 
-    with st.expander(t("module.about_expander", _lang), expanded=False):
-        domain_display = get_domain_display_name(primary_domain, _lang)
-        st.caption(t("module.about_domain", _lang).format(domain=domain_display))
-        st.markdown(t("module.about_table_md", _lang))
+    # Always-visible capability tags (atom-path only)
+    _tags = (_atom.get("capability_tags", []) if active_atom_id and _atom else [])[:4]
+    if _tags:
+        _tag_html = "".join(
+            f'<div style="padding:0.25rem 0;font-size:0.88rem;color:var(--text);'
+            f'border-bottom:1px solid var(--border)">· {tag}</div>'
+            for tag in _tags
+        )
+        st.markdown(
+            f'<div class="read-concept-card" style="margin-bottom:1.2rem">'
+            f'<div class="ai-card-label">{t("module.what_youll_learn_label", _lang)}</div>'
+            f'{_tag_html}</div>',
+            unsafe_allow_html=True,
+        )
+
+    # Module info popover (replaces expander)
+    domain_display = get_domain_display_name(primary_domain, _lang)
+    with st.popover(t("module.about_popover_label", _lang)):
+        st.caption(f"{t('module.about_domain_label', _lang)}: {domain_display}")
+        if active_atom_id and _atom and _atom.get("estimated_minutes"):
+            st.caption(f"{t('module.about_time_label', _lang)}: {_atom.get('estimated_minutes', '?')} min")
 
     if eval_done:
         if st.button(t("module.review_results_btn", _lang), type="primary"):
@@ -461,28 +505,62 @@ elif active_sub == "reading":
             if rs:
                 _render_concept(rs)
             elif reading.get("concept_text"):
-                with st.container(border=True):
-                    st.markdown(reading["concept_text"])
+                st.markdown(
+                    f'<div class="read-concept-card">'
+                    f'<div class="ai-card-label">Concept</div>'
+                    f'<div style="font-size:0.95rem;line-height:1.7;color:var(--text)">{reading["concept_text"]}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
         elif section_idx == 1:
             rs = reading_s.get("good_example_structured") if reading_s else None
             if rs:
                 _render_good_example(rs)
             elif reading.get("good_example"):
-                st.success(f"**Good example** — {reading['good_example']}")
+                _ex_text = reading["good_example"]
+                if " → " in _ex_text or "vs " in _ex_text.lower():
+                    _parts = _ex_text.split(" → ", 1) if " → " in _ex_text else _ex_text.split(" vs ", 1)
+                    st.markdown(
+                        f'<div class="read-split">'
+                        f'<div class="read-split-bad"><div class="read-split-label" style="color:var(--red)">Without</div><div style="font-size:0.9rem;color:var(--text)">{_parts[0]}</div></div>'
+                        f'<div class="read-split-good"><div class="read-split-label" style="color:var(--green)">With</div><div style="font-size:0.9rem;color:var(--text)">{_parts[1] if len(_parts)>1 else ""}</div></div>'
+                        f'</div>',
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.markdown(
+                        f'<div class="read-split-good" style="border-radius:8px;padding:1rem">'
+                        f'<div class="read-split-label" style="color:var(--green)">Good Example</div>'
+                        f'<div style="font-size:0.9rem;color:var(--text)">{_ex_text}</div>'
+                        f'</div>',
+                        unsafe_allow_html=True,
+                    )
         elif section_idx == 2:
             rs = reading_s.get("anti_pattern_structured") if reading_s else None
             if rs:
                 _render_anti_pattern(rs)
             elif reading.get("anti_pattern"):
-                st.warning(f"**Common mistake** — {reading['anti_pattern']}")
+                st.markdown(
+                    f'<div class="read-pitfall-card">'
+                    f'<div class="ai-card-label" style="color:var(--red)">Common Mistake</div>'
+                    f'<div style="font-size:0.9rem;line-height:1.7;color:var(--text)">{reading["anti_pattern"]}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
         elif section_idx == 3:
             rs = reading_s.get("takeaway_structured") if reading_s else None
             if rs:
                 _render_takeaway(rs)
             elif reading.get("takeaway"):
-                st.info(f"**Key takeaway** — {reading['takeaway']}")
-            # Milestone flair — balloons fire once per reading session
-            _celebrate_key = f"reading_takeaway_celebrated_{course_id}"
+                st.markdown(
+                    f'<div class="read-takeaway-card">'
+                    f'<div class="ai-card-label" style="color:var(--cyan)">Key Takeaway</div>'
+                    f'<div style="font-size:1rem;font-weight:600;color:var(--text);line-height:1.5">{reading["takeaway"]}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+            # Milestone flair — balloons fire once per reading session (scoped to diag session)
+            _celebrate_key = f"reading_takeaway_celebrated_{course_id}_{st.session_state.get('diag_session_started', 'default')}"
             if not st.session_state.get(_celebrate_key):
                 st.balloons()
                 st.session_state[_celebrate_key] = True
@@ -492,19 +570,17 @@ elif active_sub == "reading":
     st.divider()
     _rn_prev, _rn_ctrl, _rn_next = st.columns([1, 4, 1])
     with _rn_ctrl:
-        # options= uses translated display labels; session state stores English internal key via index
-        _selected_display = st.segmented_control(
-            "Reading section",
+        _pill_selected = st.pills(
+            label="Section",
             options=_SECTION_DISPLAY,
             default=_SECTION_DISPLAY[section_idx],
-            key="reading_section_ctrl_display",
             label_visibility="collapsed",
+            key=f"reading_pills_{course_id}",
         )
-        # Keep internal key in sync
-        if _selected_display and _selected_display in _SECTION_DISPLAY:
-            _new_internal = _SECTION_LABELS[_SECTION_DISPLAY.index(_selected_display)]
-            if _new_internal != st.session_state.get("reading_section_ctrl"):
-                st.session_state["reading_section_ctrl"] = _new_internal
+        if _pill_selected and _pill_selected in _SECTION_DISPLAY:
+            _new_idx = _SECTION_DISPLAY.index(_pill_selected)
+            if _new_idx != section_idx:
+                st.session_state["reading_section_ctrl"] = _SECTION_LABELS[_new_idx]
                 st.rerun()
     with _rn_prev:
         if section_idx > 0:
@@ -525,7 +601,8 @@ elif active_sub == "reading":
                     st.error(f"Could not save progress.\n\n_{e}_")
                     st.stop()
                 for k in ("reading_section_idx", "reading_section_ctrl",
-                          f"reading_takeaway_celebrated_{course_id}"):
+                          f"reading_pills_{course_id}",
+                          f"reading_takeaway_celebrated_{course_id}_{st.session_state.get('diag_session_started', 'default')}"):
                     st.session_state.pop(k, None)
                 st.session_state.update({
                     "coach_messages_by_task": {0: [], 1: [], 2: [], 3: []},
