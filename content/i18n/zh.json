@@ -85,6 +85,7 @@
   "profile.gap_generating_card": "您的个性化差距图谱正在生成，请稍后刷新页面查看。",
   "profile.gap_generating_info": "差距图谱生成中，请稍后刷新页面。",
   "profile.history_header": "测评历史",
+  "profile.chart_alt_label": "以表格查看",
   "profile.actions_header": "操作",
   "profile.retake_btn": "↩  重新测评",
   "profile.build_course_btn": "🗺️  生成我的培训课程",

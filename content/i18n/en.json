@@ -173,6 +173,7 @@
   "profile.gap_generating_card": "Your personalised gap map is being generated. Refresh in a moment.",
   "profile.gap_generating_info": "Gap map is being generated. Refresh the page in a moment.",
   "profile.history_header": "ASSESSMENT HISTORY",
+  "profile.chart_alt_label": "View as table",
   "profile.actions_header": "ACTIONS",
   "profile.retake_btn": "↩  Retake Diagnostic",
   "profile.build_course_btn": "🗺️  Build My Training Course",
