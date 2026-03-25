@@ -26,7 +26,7 @@ from utils.ai import (
     generate_module_coach_note,
 )
 from utils.scoring import (
-    DOMAIN_DISPLAY_NAMES, get_domain_display_name,
+    DOMAIN_DISPLAY_NAMES, get_domain_display_name, get_level_label,
     parse_options,
     parse_rubric,
     compute_current_domain_scores,
@@ -1066,14 +1066,21 @@ elif active_sub == "evaluation":
             st.session_state.pop(k, None)
         st.rerun()
 
+    # Top progress rail (fixed, 3px)
+    _eval_pct = int((eval_idx / EVAL_TOTAL * 100) if EVAL_TOTAL > 0 else 0)
+    st.markdown(
+        f'<div class="eval-progress-rail-track">'
+        f'<div class="eval-progress-rail-fill" style="width:{_eval_pct}%"></div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
     st.title(t("module.quiz_title", _lang).format(title=course_title))
-    st.caption(t("module.quiz_counter", _lang).format(n=min(eval_idx + 1, EVAL_TOTAL), total=EVAL_TOTAL))
     step_progress_strip([
         {"label": t("module.read_step_label", _lang),     "state": "done"},
         {"label": t("module.practice_step_label", _lang), "state": "done"},
         {"label": t("module.quiz_step_label", _lang),     "state": "current"},
     ])
-    st.progress(eval_idx / EVAL_TOTAL if EVAL_TOTAL > 0 else 0)
 
     if eval_idx >= EVAL_TOTAL:
         complete_evaluation(st.session_state["eval_responses"])
@@ -1086,7 +1093,15 @@ elif active_sub == "evaluation":
     scenario_text = item.get("scenario_text") or ""
     is_last = eval_idx == EVAL_TOTAL - 1
 
-    st.caption(f"📍 {get_domain_display_name(primary_domain, _lang).upper()}")
+    # Domain tag pill + question counter (replacing st.caption "📍 ...")
+    st.markdown(
+        f'<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">'
+        f'<div class="domain-tag-pill" style="margin-bottom:0">{get_domain_display_name(primary_domain, _lang).upper()}</div>'
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.72rem;color:var(--text-muted)">'
+        f'{t("module.quiz_counter", _lang).format(n=min(eval_idx+1,EVAL_TOTAL), total=EVAL_TOTAL)}'
+        f'</div></div>',
+        unsafe_allow_html=True,
+    )
 
     if item_type == "mcq":
         if scenario_text:
@@ -1094,25 +1109,20 @@ elif active_sub == "evaluation":
         st.markdown(f'<div class="question-text">{question_text}</div>', unsafe_allow_html=True)
 
         options = parse_options(item.get("options") or "[]")
-        opt_labels = [f"{o['label']}. {o['text']}" for o in options]
-        opt_keys = [o["label"] for o in options]
 
-        selected = st.radio(
-            t("module.eval_answer_label", _lang),
-            options=opt_labels,
-            key=f"eq_{item_id}",
-            index=None,
-            label_visibility="collapsed",
-        )
-
-        btn_label = t("module.eval_submit_quiz_btn", _lang) if is_last else t("module.eval_next_btn", _lang)
-        if st.button(btn_label, disabled=(selected is None), key=f"eb_{item_id}", type="primary"):
-            st.session_state["eval_responses"].append({
-                "item_id": item_id,
-                "response": opt_keys[opt_labels.index(selected)],
-            })
-            st.session_state["eval_item_index"] += 1
-            st.rerun()
+        # Full-width MCQ button stack — auto-advance on selection
+        for opt in options:
+            btn_text = f'{opt["label"]}.  {opt["text"]}'
+            if st.button(btn_text, key=f"eq_{item_id}_{opt['label']}", use_container_width=True):
+                st.session_state["eval_responses"].append({
+                    "item_id": item_id,
+                    "response": opt["label"],
+                })
+                st.session_state["eval_item_index"] += 1
+                if eval_idx + 1 >= EVAL_TOTAL:
+                    complete_evaluation(st.session_state["eval_responses"])
+                else:
+                    st.rerun()
 
     elif item_type == "performance_task":
         if scenario_text:
@@ -1120,8 +1130,14 @@ elif active_sub == "evaluation":
             st.markdown(f'<div class="scenario-box">{scenario_text}</div>', unsafe_allow_html=True)
 
         st.markdown(f'<div class="question-text">{question_text}</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.72rem;'
+            f'text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.4rem">'
+            f'{t("module.eval_your_response_label", _lang)}</div>',
+            unsafe_allow_html=True,
+        )
         user_text = st.text_area(
-            "Response:",
+            t("module.eval_your_response_label", _lang),
             key=f"ep_{item_id}",
             height=160,
             placeholder=t("module.eval_response_placeholder", _lang),
@@ -1183,6 +1199,14 @@ elif active_sub == "results":
         {"label": t("module.quiz_step_label", _lang),     "state": "done"},
     ])
 
+    # Load progress early — needed for all_complete check used in success banner below
+    all_prog = load_all_progress()
+    next_module = next(
+        (r for r in all_prog if int(r.get("module_sequence_order", 0)) == seq_order + 1),
+        None,
+    )
+    all_complete = all(r.get("evaluation_completed_at") for r in all_prog)
+
     try:
         rs = float(result_score or 0)
     except (TypeError, ValueError):
@@ -1196,33 +1220,76 @@ elif active_sub == "results":
         except (TypeError, ValueError):
             pass
 
-    st.metric(label=course_title, value=f"{rs:.1f} / 4.0", delta=delta_str)
+    # Custom score card
+    _level_rs = get_level_label(rs, _lang)
+    _delta_html = ""
+    if delta_str:
+        try:
+            delta_val = rs - float(diag_baseline)
+            _delta_class = "score-delta-pos" if delta_val >= 0 else "score-delta-neg"
+            _delta_html = f'<div class="{_delta_class}">{delta_str}</div>'
+        except Exception:
+            pass
+    st.markdown(
+        f'<div class="score-card">'
+        f'<div class="score-number">{rs:.1f}</div>'
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.9rem;color:var(--text-muted)">/ 4.0</div>'
+        f'<div class="score-level">{_level_rs}</div>'
+        f'{_delta_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
+    # Themed domain progress bar
     if result_domain_score is not None:
         try:
             ds = float(result_domain_score)
         except (TypeError, ValueError):
             ds = 0.0
-        col_lbl, col_val = st.columns([4, 1])
-        with col_lbl:
-            st.caption(get_domain_display_name(primary_domain, _lang))
-            st.progress(max(0.0, min(1.0, ds / 4.0)))
-        with col_val:
-            st.caption(f"{ds:.1f} / 4.0")
+        _domain_pct = max(0, min(100, int(ds / 4.0 * 100)))
+        st.markdown(
+            f'<div style="margin:0.5rem 0">'
+            f'<div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.3rem">'
+            f'{get_domain_display_name(primary_domain, _lang)}</div>'
+            f'<div class="themed-progress-track">'
+            f'<div class="themed-progress-fill" style="width:{_domain_pct}%"></div>'
+            f'</div>'
+            f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.72rem;color:var(--text-muted);text-align:right">{ds:.1f} / 4.0</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
+    # Coach note with signal grammar
     if coach_note:
-        with st.container(border=True):
-            st.caption(t("module.results_coach_note_label", _lang))
-            st.markdown(coach_note)
+        st.markdown(
+            f'<div class="ai-card" style="margin:1.5rem 0">'
+            f'<div class="ai-card-label">{t("module.results_coach_note_label", _lang)}</div>'
+            f'{coach_note}'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
-    st.success(t("module.results_updated_success", _lang))
-
-    all_prog = load_all_progress()
-    next_module = next(
-        (r for r in all_prog if int(r.get("module_sequence_order", 0)) == seq_order + 1),
-        None,
-    )
-    all_complete = all(r.get("evaluation_completed_at") for r in all_prog)
+    # Themed success banner (not st.success widget)
+    if all_complete:
+        st.balloons()
+        st.markdown(
+            f'<div class="aha-card-success" style="text-align:center;padding:1.5rem">'
+            f'<div style="font-size:1.5rem">🏆</div>'
+            f'<div style="font-family:\'DM Serif Display\',serif;font-size:1.2rem;color:var(--text)">'
+            f'{t("module.results_all_complete_headline", _lang)}</div>'
+            f'<div style="font-size:0.88rem;color:var(--text-muted);margin-top:0.4rem">'
+            f'{t("module.results_all_complete_sub", _lang)}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            f'<div class="aha-card-success">'
+            f'<div style="font-size:0.9rem;color:var(--text)">'
+            f'✓ {t("module.results_updated_success", _lang)}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
     col_a, col_b = st.columns(2)
     with col_a:
