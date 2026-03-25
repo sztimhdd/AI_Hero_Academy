@@ -1,98 +1,206 @@
-[
-  {
-    "item_id": "byow_responsible_ai_1",
-    "domain_id": "responsible_ai",
-    "sequence": 1,
-    "prompt_text": "Describe a real or imagined work situation where you'd need to think carefully before using AI — for example, because of data sensitivity, tool approval, or professional risk. What would you consider?",
-    "prompt_text_zh": "描述一个真实或假设的工作情境，您在其中需要在使用AI之前仔细考量——例如，因为数据敏感性、工具审批或职业风险。您会考虑哪些因素？",
-    "placeholder_text": "e.g. I'd check which tools are approved for client data before starting — not everything we use is cleared for sensitive content.",
-    "placeholder_text_zh": "例如：用AI处理客户文件前，先确认该工具是否经过审批——并非所有工具都适用于敏感数据。",
-    "scoring_rubric": {
-      "4": "Identifies specific data types or sensitivity levels; names a governance check (policy, approval, data residency); demonstrates systematic thinking",
-      "3": "Raises a valid concern (sensitivity or approval) with some specificity; shows awareness of professional risk",
-      "2": "Mentions general privacy or risk concerns but without specificity or a structured response",
-      "1": "Vague answer (e.g. 'be careful') with no concrete consideration",
-      "0": "No answer, irrelevant, or 'I would just use it'"
+{
+  "prompts": [
+    {
+      "item_id": "byow_responsible_ai_1",
+      "domain_id": "responsible_ai",
+      "sequence": 1,
+      "prompt_text": "Describe a real or imagined work situation where you'd need to think carefully before using AI — for example, because of data sensitivity, tool approval, or professional risk. What would you consider?",
+      "prompt_text_zh": "描述一个真实或假设的工作情境，您在其中需要在使用AI之前仔细考量——例如，因为数据敏感性、工具审批或职业风险。您会考虑哪些因素？",
+      "placeholder_text": "e.g. I'd check which tools are approved for client data before starting — not everything we use is cleared for sensitive content.",
+      "placeholder_text_zh": "例如：用AI处理客户文件前，先确认该工具是否经过审批——并非所有工具都适用于敏感数据。",
+      "scoring_rubric": {
+        "4": "Identifies specific data types or sensitivity levels; names a governance check (policy, approval, data residency); demonstrates systematic thinking",
+        "3": "Raises a valid concern (sensitivity or approval) with some specificity; shows awareness of professional risk",
+        "2": "Mentions general privacy or risk concerns but without specificity or a structured response",
+        "1": "Vague answer (e.g. 'be careful') with no concrete consideration",
+        "0": "No answer, irrelevant, or 'I would just use it'"
+      }
+    },
+    {
+      "item_id": "byow_strategic_prompting_1",
+      "domain_id": "strategic_prompting",
+      "sequence": 2,
+      "prompt_text": "Pick a task you do regularly at work — a document, analysis, summary, or plan. Walk me through how you'd use AI to help you do it. Be as specific as you can about what you'd type.",
+      "prompt_text_zh": "选择一项您在工作中经常做的任务——文件、分析、总结或计划。请说明您会如何使用AI来辅助完成。请尽量具体描述您会输入的内容。",
+      "placeholder_text": "e.g. Weekly report: 'Turn these 5 bullet points into a 3-paragraph update for a non-technical audience. Lead with the biggest risk. Under 200 words.'",
+      "placeholder_text_zh": "例如：周报提示词：「将以下5个要点整理为面向非技术受众的3段摘要，以最大风险开头，不超过200字」",
+      "scoring_rubric": {
+        "4": "Writes a specific, structured prompt with context, role, constraints, and output format; shows awareness of what good output looks like",
+        "3": "Provides a reasonable prompt with some specificity; missing one key element (context, format, or constraint)",
+        "2": "Describes using AI but prompt is vague (e.g. 'ask it to write a summary'); no structure",
+        "1": "Mentions AI but no prompt attempt; or very generic (e.g. 'type my question')",
+        "0": "No answer or 'I don't use AI'"
+      }
+    },
+    {
+      "item_id": "byow_critical_eval_1",
+      "domain_id": "critical_eval",
+      "sequence": 3,
+      "prompt_text": "If an AI tool wrote a key paragraph for something important you were submitting — a proposal, report, or recommendation — what would you do before using it? Be specific.",
+      "prompt_text_zh": "如果AI工具为您正在提交的重要内容——提案、报告或建议——撰写了一个关键段落，您在使用之前会怎么做？请具体说明。",
+      "placeholder_text": "e.g. I'd check every number against the source doc and ask a colleague to review key claims before the report goes out.",
+      "placeholder_text_zh": "例如：对照原始文档逐项核查数字，请同事审阅关键论断，确认无误后再提交。",
+      "scoring_rubric": {
+        "4": "Names specific checks (fact verification, source citation, internal consistency, stakeholder review); articulates what could go wrong",
+        "3": "Describes 2+ concrete verification steps with some reasoning about risk",
+        "2": "Says 'I'd review it' or 'check for errors' without specificity",
+        "1": "Would use it with minimal or no check",
+        "0": "No answer or 'trust the AI'"
+      }
+    },
+    {
+      "item_id": "byow_data_decision_1",
+      "domain_id": "data_decision",
+      "sequence": 4,
+      "prompt_text": "Describe a situation where you had a lot of information to make sense of — data, documents, research — to reach a conclusion or recommendation. How would AI help with that?",
+      "prompt_text_zh": "描述一个您需要梳理大量信息——数据、文件、研究——才能得出结论或建议的情境。AI在其中会如何帮助您？",
+      "placeholder_text": "e.g. Comparing vendor bids: paste the evaluation criteria, ask AI to score each one and flag gaps, then verify the top 3 myself.",
+      "placeholder_text_zh": "例如：比较供应商报价时，粘贴评估标准，让AI打分并标记缺失信息，最后手动核实前3名。",
+      "scoring_rubric": {
+        "4": "Describes a specific workflow: what to feed AI, how to prompt for synthesis, how to verify the output, how to translate it into a decision",
+        "3": "Identifies a realistic use case and a reasonable AI approach; missing verification or decision step",
+        "2": "Mentions AI could summarize or analyze but no structured workflow",
+        "1": "Vague ('AI could help me understand the data') with no specifics",
+        "0": "No answer or not relevant"
+      }
+    },
+    {
+      "item_id": "byow_relationship_intel_1",
+      "domain_id": "relationship_intel",
+      "sequence": 5,
+      "prompt_text": "Think about an important meeting or conversation coming up that you want to go well. How would or could AI help you prepare for it?",
+      "prompt_text_zh": "想一个即将到来的重要会议或对话，您希望它进展顺利。AI能如何帮助您做好准备？",
+      "placeholder_text": "e.g. Before a client review: ask AI for their recent news, 3 questions they'll likely raise, and draft talking points to adapt.",
+      "placeholder_text_zh": "例如：客户会议前，让AI整理近期动态，列出3个可能被问到的问题，并起草可调整的发言要点。",
+      "scoring_rubric": {
+        "4": "Describes a specific pre-meeting research workflow: stakeholder background, agenda synthesis, anticipated questions, post-meeting action capture",
+        "3": "Identifies 2+ concrete prep activities AI could support; some specificity",
+        "2": "Mentions AI could help with preparation but only one generic use (e.g. 'get background')",
+        "1": "Vague or 'read their LinkedIn'",
+        "0": "No answer or 'I don't prepare with AI'"
+      }
+    },
+    {
+      "item_id": "byow_augmented_comm_1",
+      "domain_id": "augmented_comm",
+      "sequence": 6,
+      "prompt_text": "What's the most important or frequent written output in your job — a report, proposal, email, briefing? Walk me through how you'd use AI to help produce it better or faster.",
+      "prompt_text_zh": "您工作中最重要或最频繁的书面输出是什么——报告、提案、邮件、简报？请说明您会如何利用AI帮助更好或更快地完成它。",
+      "placeholder_text": "e.g. Briefing notes: I draft the key points, ask AI to tighten the language and flag jargon, then do a final read before sending.",
+      "placeholder_text_zh": "例如：简报：先自己整理要点，让AI精简语言并标记术语，最后通读一遍再发出。",
+      "scoring_rubric": {
+        "4": "Names a specific output type; describes a structured AI workflow (draft → tone calibration → review → edit loop); shows awareness of audience and confidentiality",
+        "3": "Names the output and describes a reasonable 2-step AI process; missing audience or confidentiality awareness",
+        "2": "Mentions using AI to draft something but no workflow structure",
+        "1": "Vague ('have AI write it for me') with no process",
+        "0": "No answer or 'I write everything myself'"
+      }
     }
-  },
-  {
-    "item_id": "byow_strategic_prompting_1",
-    "domain_id": "strategic_prompting",
-    "sequence": 2,
-    "prompt_text": "Pick a task you do regularly at work — a document, analysis, summary, or plan. Walk me through how you'd use AI to help you do it. Be as specific as you can about what you'd type.",
-    "prompt_text_zh": "选择一项您在工作中经常做的任务——文件、分析、总结或计划。请说明您会如何使用AI来辅助完成。请尽量具体描述您会输入的内容。",
-    "placeholder_text": "e.g. Weekly report: 'Turn these 5 bullet points into a 3-paragraph update for a non-technical audience. Lead with the biggest risk. Under 200 words.'",
-    "placeholder_text_zh": "例如：周报提示词：「将以下5个要点整理为面向非技术受众的3段摘要，以最大风险开头，不超过200字」",
-    "scoring_rubric": {
-      "4": "Writes a specific, structured prompt with context, role, constraints, and output format; shows awareness of what good output looks like",
-      "3": "Provides a reasonable prompt with some specificity; missing one key element (context, format, or constraint)",
-      "2": "Describes using AI but prompt is vague (e.g. 'ask it to write a summary'); no structure",
-      "1": "Mentions AI but no prompt attempt; or very generic (e.g. 'type my question')",
-      "0": "No answer or 'I don't use AI'"
+  ],
+  "fallback_mcqs": [
+    {
+      "domain_id": "responsible_ai",
+      "question_text": "Your manager asks you to use AI to draft a summary of a client meeting that included sensitive financial details. What do you do first?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Draft the summary using the AI tool immediately — speed is important.",
+          "score": 0.0
+        },
+        {
+          "label": "B",
+          "text": "Check whether the AI tool is approved for processing sensitive client data before proceeding.",
+          "score": 4.0
+        },
+        {
+          "label": "C",
+          "text": "Draft it, but remove client names from the final version.",
+          "score": 1.5
+        },
+        {
+          "label": "D",
+          "text": "Ask a colleague to review the output before sending.",
+          "score": 2.5
+        }
+      ]
+    },
+    {
+      "domain_id": "data_decision",
+      "question_text": "You receive an AI-generated analysis showing a surprising trend in your team's data. What is your most important next step?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Share it with the team right away — the AI analysis speaks for itself.",
+          "score": 0.0
+        },
+        {
+          "label": "B",
+          "text": "Verify the underlying data and assumptions before drawing conclusions.",
+          "score": 4.0
+        },
+        {
+          "label": "C",
+          "text": "Ask the AI to explain why the trend occurred.",
+          "score": 1.5
+        },
+        {
+          "label": "D",
+          "text": "Compare it with previous reports to see if it is consistent.",
+          "score": 2.5
+        }
+      ]
+    },
+    {
+      "domain_id": "relationship_intel",
+      "question_text": "You are preparing for a client call. Which approach best uses AI to enhance your relationship intelligence?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ask AI to write a generic agenda for a client meeting.",
+          "score": 0.0
+        },
+        {
+          "label": "B",
+          "text": "Use AI to summarize recent interactions and flag topics the client cares about, then prepare tailored talking points.",
+          "score": 4.0
+        },
+        {
+          "label": "C",
+          "text": "Search for public news about the client before the call.",
+          "score": 1.5
+        },
+        {
+          "label": "D",
+          "text": "Ask AI to draft follow-up questions based on the last meeting notes.",
+          "score": 2.5
+        }
+      ]
+    },
+    {
+      "domain_id": "augmented_comm",
+      "question_text": "You use AI to draft an important client-facing email. Before sending, what is the most important review step?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Run a spell check and send.",
+          "score": 0.0
+        },
+        {
+          "label": "B",
+          "text": "Read it aloud to check tone, verify all factual claims, and confirm it matches your professional voice.",
+          "score": 4.0
+        },
+        {
+          "label": "C",
+          "text": "Ask a colleague to proofread it.",
+          "score": 1.5
+        },
+        {
+          "label": "D",
+          "text": "Check that the AI did not include any confidential information and adjust the tone if needed.",
+          "score": 2.5
+        }
+      ]
     }
-  },
-  {
-    "item_id": "byow_critical_eval_1",
-    "domain_id": "critical_eval",
-    "sequence": 3,
-    "prompt_text": "If an AI tool wrote a key paragraph for something important you were submitting — a proposal, report, or recommendation — what would you do before using it? Be specific.",
-    "prompt_text_zh": "如果AI工具为您正在提交的重要内容——提案、报告或建议——撰写了一个关键段落，您在使用之前会怎么做？请具体说明。",
-    "placeholder_text": "e.g. I'd check every number against the source doc and ask a colleague to review key claims before the report goes out.",
-    "placeholder_text_zh": "例如：对照原始文档逐项核查数字，请同事审阅关键论断，确认无误后再提交。",
-    "scoring_rubric": {
-      "4": "Names specific checks (fact verification, source citation, internal consistency, stakeholder review); articulates what could go wrong",
-      "3": "Describes 2+ concrete verification steps with some reasoning about risk",
-      "2": "Says 'I'd review it' or 'check for errors' without specificity",
-      "1": "Would use it with minimal or no check",
-      "0": "No answer or 'trust the AI'"
-    }
-  },
-  {
-    "item_id": "byow_data_decision_1",
-    "domain_id": "data_decision",
-    "sequence": 4,
-    "prompt_text": "Describe a situation where you had a lot of information to make sense of — data, documents, research — to reach a conclusion or recommendation. How would AI help with that?",
-    "prompt_text_zh": "描述一个您需要梳理大量信息——数据、文件、研究——才能得出结论或建议的情境。AI在其中会如何帮助您？",
-    "placeholder_text": "e.g. Comparing vendor bids: paste the evaluation criteria, ask AI to score each one and flag gaps, then verify the top 3 myself.",
-    "placeholder_text_zh": "例如：比较供应商报价时，粘贴评估标准，让AI打分并标记缺失信息，最后手动核实前3名。",
-    "scoring_rubric": {
-      "4": "Describes a specific workflow: what to feed AI, how to prompt for synthesis, how to verify the output, how to translate it into a decision",
-      "3": "Identifies a realistic use case and a reasonable AI approach; missing verification or decision step",
-      "2": "Mentions AI could summarize or analyze but no structured workflow",
-      "1": "Vague ('AI could help me understand the data') with no specifics",
-      "0": "No answer or not relevant"
-    }
-  },
-  {
-    "item_id": "byow_relationship_intel_1",
-    "domain_id": "relationship_intel",
-    "sequence": 5,
-    "prompt_text": "Think about an important meeting or conversation coming up that you want to go well. How would or could AI help you prepare for it?",
-    "prompt_text_zh": "想一个即将到来的重要会议或对话，您希望它进展顺利。AI能如何帮助您做好准备？",
-    "placeholder_text": "e.g. Before a client review: ask AI for their recent news, 3 questions they'll likely raise, and draft talking points to adapt.",
-    "placeholder_text_zh": "例如：客户会议前，让AI整理近期动态，列出3个可能被问到的问题，并起草可调整的发言要点。",
-    "scoring_rubric": {
-      "4": "Describes a specific pre-meeting research workflow: stakeholder background, agenda synthesis, anticipated questions, post-meeting action capture",
-      "3": "Identifies 2+ concrete prep activities AI could support; some specificity",
-      "2": "Mentions AI could help with preparation but only one generic use (e.g. 'get background')",
-      "1": "Vague or 'read their LinkedIn'",
-      "0": "No answer or 'I don't prepare with AI'"
-    }
-  },
-  {
-    "item_id": "byow_augmented_comm_1",
-    "domain_id": "augmented_comm",
-    "sequence": 6,
-    "prompt_text": "What's the most important or frequent written output in your job — a report, proposal, email, briefing? Walk me through how you'd use AI to help produce it better or faster.",
-    "prompt_text_zh": "您工作中最重要或最频繁的书面输出是什么——报告、提案、邮件、简报？请说明您会如何利用AI帮助更好或更快地完成它。",
-    "placeholder_text": "e.g. Briefing notes: I draft the key points, ask AI to tighten the language and flag jargon, then do a final read before sending.",
-    "placeholder_text_zh": "例如：简报：先自己整理要点，让AI精简语言并标记术语，最后通读一遍再发出。",
-    "scoring_rubric": {
-      "4": "Names a specific output type; describes a structured AI workflow (draft → tone calibration → review → edit loop); shows awareness of audience and confidentiality",
-      "3": "Names the output and describes a reasonable 2-step AI process; missing audience or confidentiality awareness",
-      "2": "Mentions using AI to draft something but no workflow structure",
-      "1": "Vague ('have AI write it for me') with no process",
-      "0": "No answer or 'I write everything myself'"
-    }
-  }
-]
+  ]
+}

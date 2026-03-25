@@ -415,6 +415,184 @@ def score_evaluation(responses_with_rubrics: list[dict], user_email: str = None,
     }
 
 
+_MCQ_DOMAINS = ["responsible_ai", "data_decision", "relationship_intel", "augmented_comm"]
+
+_MCQ_GENERATOR_SYSTEM = """\
+You are an AI skills assessor. Generate exactly 4 multiple-choice questions to assess a professional's
+AI skills across 4 specific domains. Use their two text answers and role profile to make the questions
+feel tailored to their actual work context.
+
+Return ONLY valid JSON — no markdown fences, no explanation.
+
+Format:
+[
+  {
+    "domain_id": "<domain_id>",
+    "question_text": "<question>",
+    "options": [
+      {"label": "A", "text": "<option text>", "score": <0.0|1.5|2.5|4.0>},
+      {"label": "B", "text": "<option text>", "score": <0.0|1.5|2.5|4.0>},
+      {"label": "C", "text": "<option text>", "score": <0.0|1.5|2.5|4.0>},
+      {"label": "D", "text": "<option text>", "score": <0.0|1.5|2.5|4.0>}
+    ]
+  },
+  ...
+]
+
+Rules:
+- Exactly 4 items, one per domain_id in this order: responsible_ai, data_decision, relationship_intel, augmented_comm
+- Each item has exactly 4 options labeled A, B, C, D
+- Scores: one option scores 4.0, one scores 2.5, one scores 1.5, one scores 0.0 (in any order)
+- Questions should reference the learner's work context where natural
+- Options should be plausible and avoid obviously wrong answers\
+"""
+
+
+def generate_diagnostic_mcqs(
+    q1_text: str,
+    q2_text: str,
+    intake_profile: dict,
+    user_email: str = None,
+    lang: str = "en",
+) -> list[dict]:
+    """
+    Generate 4 personalized MCQ questions (one per MCQ domain) based on the learner's
+    two open-ended text answers and their role intake profile.
+
+    Returns a list of 4 MCQ dicts. Falls back to content/diagnostic_prompts.json
+    fallback_mcqs on any error — never raises to the caller.
+    """
+    import json as _json
+    from pathlib import Path
+
+    def _load_fallback() -> list[dict]:
+        try:
+            data = _json.loads(Path("content/diagnostic_prompts.json").read_text(encoding="utf-8"))
+            # Support both {"prompts":[], "fallback_mcqs":[]} and legacy bare list
+            if isinstance(data, dict):
+                return data.get("fallback_mcqs", [])
+            return []
+        except Exception:
+            return []
+
+    role_context = ""
+    if intake_profile:
+        role_text = intake_profile.get("role_text") or intake_profile.get("role_id", "")
+        daily_tasks = intake_profile.get("daily_tasks", "")
+        if role_text:
+            role_context = f"Role: {role_text}\n"
+        if daily_tasks:
+            role_context += f"Daily work: {daily_tasks}\n"
+
+    user_prompt = (
+        f"{role_context}\n"
+        f"Text Answer 1 (strategic prompting): {q1_text}\n\n"
+        f"Text Answer 2 (critical evaluation): {q2_text}\n\n"
+        f"Generate 4 MCQ questions for domains: {', '.join(_MCQ_DOMAINS)}"
+        f"{_lang_instruction(lang)}"
+    )
+
+    try:
+        raw = call_llm(
+            [
+                {"role": "system", "content": _MCQ_GENERATOR_SYSTEM},
+                {"role": "user", "content": user_prompt},
+            ],
+            temperature=0.4,
+            user_email=user_email,
+            call_type="mcq_generation",
+        )
+        # Strip markdown fences
+        raw = raw.strip()
+        if raw.startswith("```"):
+            raw = "\n".join(raw.split("\n")[1:]).strip()
+        if raw.endswith("```"):
+            raw = raw.rsplit("```", 1)[0].strip()
+        mcqs = json.loads(raw)
+
+        # Validate structure
+        if (
+            not isinstance(mcqs, list)
+            or len(mcqs) != 4
+            or not all(
+                isinstance(m, dict)
+                and m.get("domain_id") in _MCQ_DOMAINS
+                and isinstance(m.get("options"), list)
+                and len(m["options"]) == 4
+                and all(o.get("score") in (0.0, 1.5, 2.5, 4.0) for o in m["options"])
+                for m in mcqs
+            )
+        ):
+            raise ValueError("MCQ validation failed")
+
+        return mcqs
+    except Exception:
+        return _load_fallback()
+
+
+def score_hybrid_diagnostic(
+    q1_text: str,
+    q2_text: str,
+    mcq_answers: dict,
+    intake_profile: dict,
+    user_email: str = None,
+    lang: str = "en",
+) -> dict:
+    """
+    Score the hybrid diagnostic: 2 open-ended text answers + 4 MCQ answers.
+
+    mcq_answers: {domain_id: score_float} for the 4 MCQ domains
+
+    Returns:
+        {
+            "item_scores":   {"sp_q1": float, "ce_q2": float, ...mcq_items...},
+            "domain_scores": {domain_id: float, ...},
+            "overall_score": float,
+        }
+    """
+    from pathlib import Path as _Path
+    import json as _json
+
+    _raw = _json.loads(_Path("content/diagnostic_prompts.json").read_text(encoding="utf-8"))
+    _prompt_list = _raw.get("prompts", _raw) if isinstance(_raw, dict) else _raw
+    _sp_prompt = next((p for p in _prompt_list if isinstance(p, dict) and p.get("domain_id") == "strategic_prompting"), {})
+    _ce_prompt = next((p for p in _prompt_list if isinstance(p, dict) and p.get("domain_id") == "critical_eval"), {})
+
+    text_responses = [
+        {
+            "item_id": "hybrid_strategic_prompting",
+            "domain_id": "strategic_prompting",
+            "prompt_text": _sp_prompt.get("prompt_text", "Describe how you would use AI for a work task."),
+            "response_text": q1_text,
+            "scoring_rubric": _sp_prompt.get("scoring_rubric", {"4": "Specific structured prompt", "0": "No answer"}),
+        },
+        {
+            "item_id": "hybrid_critical_eval",
+            "domain_id": "critical_eval",
+            "prompt_text": _ce_prompt.get("prompt_text", "What do you check before using AI output?"),
+            "response_text": q2_text,
+            "scoring_rubric": _ce_prompt.get("scoring_rubric", {"4": "Systematic verification", "0": "No answer"}),
+        },
+    ]
+
+    text_result = score_byow_diagnostic(text_responses, user_email=user_email, lang=lang)
+
+    # Merge: text domain scores + MCQ domain scores
+    domain_scores = {**text_result["domain_scores"], **mcq_answers}
+    overall_score = round(sum(domain_scores.values()) / len(domain_scores), 4) if domain_scores else 0.0
+
+    # Build item_scores including MCQ items
+    item_scores = {**text_result["item_scores"]}
+    for domain_id, score in mcq_answers.items():
+        item_scores[f"mcq_{domain_id}"] = score
+
+    return {
+        "item_scores": item_scores,
+        "domain_scores": domain_scores,
+        "overall_score": overall_score,
+    }
+
+
 def generate_module_coach_note(
     module_title: str,
     evaluation_score: float,
