@@ -2,7 +2,7 @@
 Shared visual design system for AI Hero Academy.
 
 Aesthetic direction: Deep-space command centre — dark obsidian backgrounds,
-electric cyan/amber accents, IBM Plex Mono for data, DM Serif Display for
+electric cyan/amber accents, JetBrains Mono for data, DM Serif Display for
 editorial headings. Feels like an internal dashboard built for professionals
 who take their craft seriously.
 """
@@ -24,18 +24,20 @@ COLORS = {
     "text_secondary":"#8990A8",   # body copy, card text, sub-headings
     "text_muted":    "#6B7280",   # secondary labels, helper text
     "text_faint":    "#4B5268",   # citations, source labels, footnotes
+    # Signal grammar — AI-generated content accent
+    "accent_indigo":        "#6366F1",
+    "accent_indigo_glow":   "rgba(99,102,241,0.12)",
+    "accent_indigo_border": "rgba(99,102,241,0.30)",
 }
 
 
 def inject_global_css():
     """Inject the full design system CSS once per page."""
     st.markdown(f"""
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
 /* ─── RESET & ROOT ─────────────────────────────────────────── */
+/* Fonts loaded natively via .streamlit/config.toml (Streamlit 1.55+):
+   Inter (body), DM Serif Display (heading), JetBrains Mono (code) */
 :root {{
   --bg-primary:   {COLORS['bg_primary']};
   --bg-surface:   {COLORS['bg_surface']};
@@ -47,7 +49,12 @@ def inject_global_css():
   --green:        {COLORS['accent_green']};
   --text:         {COLORS['text_primary']};
   --text-muted:   {COLORS['text_secondary']};
-  --text-faint:   {COLORS['text_muted']};
+  --text-faint:   {COLORS['text_faint']};
+  --indigo:        {COLORS['accent_indigo']};
+  --indigo-glow:   {COLORS['accent_indigo_glow']};
+  --indigo-border: {COLORS['accent_indigo_border']};
+  --accent_green:  {COLORS['accent_green']};
+  --accent_red:    {COLORS['accent_red']};
 }}
 
 /* ─── STREAMLIT GLOBAL OVERRIDES ───────────────────────────── */
@@ -251,7 +258,7 @@ hr {{
 }}
 .stMetricValue {{
   color: {COLORS['text_primary']} !important;
-  font-family: 'IBM Plex Mono', monospace !important;
+  font-family: 'JetBrains Mono', monospace !important;
   font-size: 2rem !important;
 }}
 
@@ -406,7 +413,7 @@ div[data-testid="stError"] {{
 
 /* ─── DIAGNOSTIC / QUIZ QUESTION AREA ──────────────────────── */
 .question-counter {{
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.78rem;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -449,7 +456,7 @@ div[data-testid="stError"] {{
 }}
 .scenario-box pre {{
   white-space: pre-wrap;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.82rem;
   color: var(--text);
 }}
@@ -509,7 +516,7 @@ td {{
   padding: 0.65rem 0.9rem;
   color: var(--text);
   border-bottom: 1px solid var(--border);
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.82rem;
 }}
 tr:last-child td {{ border-bottom: none; }}
@@ -571,7 +578,7 @@ tr:last-child td {{ border-bottom: none; }}
   padding: 3rem 0 2rem;
 }}
 .welcome-eyebrow {{
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.15em;
@@ -609,7 +616,7 @@ tr:last-child td {{ border-bottom: none; }}
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 4px;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   color: var(--text-muted);
   padding: 0.2rem 0.55rem;
@@ -641,12 +648,14 @@ tr:last-child td {{ border-bottom: none; }}
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   color: var(--text-faint);
 }}
-.step-circle.done    {{ border-color: var(--green); background: rgba(41,204,106,0.15); color: var(--green); }}
-.step-circle.current {{ border-color: var(--cyan);  background: rgba(0,212,232,0.15);  color: var(--cyan); }}
+.step-circle.done    {{ border-color: var(--cyan); background: var(--cyan); color: #0D0F14; }}
+.step-circle.done::after {{ content: '✓'; font-size: 0.6rem; }}
+.step-circle.current {{ border-color: var(--cyan); background: var(--cyan); color: #0D0F14; box-shadow: 0 0 0 3px rgba(0,212,232,0.25); }}
+.step-circle.pending {{ background: transparent; border: 2px solid var(--border); color: var(--text-faint); }}
 .step-label {{
   font-family: 'Inter', sans-serif;
   font-size: 0.68rem;
@@ -662,7 +671,103 @@ tr:last-child td {{ border-bottom: none; }}
   margin-top: -1.2rem;
 }}
 
-/* Chat bubbles removed — replaced with st.chat_message() (NX1 resolved) */
+/* ── Signal grammar ─────────────────────────────── */
+.ai-card {{
+  background: var(--indigo-glow);
+  border-left: 3px solid var(--indigo-border);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.2rem;
+}}
+.ai-card-label {{
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--indigo);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}}
+
+/* ── Reading content cards ───────────────────────── */
+.read-concept-card {{ background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.6rem; }}
+.read-principle-callout {{ background: var(--bg-elevated); border-left: 3px solid var(--indigo); border-radius: 0 6px 6px 0; padding: 0.9rem 1.1rem; margin-top: 1rem; font-size: 0.88rem; color: var(--text); }}
+.read-split {{ display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.8rem; }}
+.read-split-bad  {{ background: rgba(232,69,90,0.08); border: 1px solid rgba(232,69,90,0.25); border-radius: 8px; padding: 1rem; }}
+.read-split-good {{ background: rgba(41,204,106,0.08); border: 1px solid rgba(41,204,106,0.25); border-radius: 8px; padding: 1rem; }}
+.read-split-label {{ font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }}
+.read-pitfall-card {{ background: rgba(232,69,90,0.06); border-left: 3px solid var(--red); border-radius: 0 8px 8px 0; padding: 1.2rem 1.4rem; }}
+.read-takeaway-card {{ background: rgba(0,212,232,0.07); border: 1px solid rgba(0,212,232,0.25); border-radius: 12px; padding: 1.4rem; text-align: center; }}
+
+/* ── Chat bubbles ────────────────────────────────── */
+.chat-user-bubble {{
+  margin-left: auto; max-width: 78%;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 16px 16px 4px 16px; padding: 0.75rem 1rem;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text);
+}}
+.chat-coach-bubble {{
+  max-width: 88%;
+  background: var(--indigo-glow); border-left: 3px solid var(--indigo-border);
+  border-radius: 4px 16px 16px 16px; padding: 0.75rem 1rem;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text);
+}}
+.chat-coach-label {{
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  color: var(--indigo); text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 0.4rem;
+}}
+
+/* ── MCQ option cards ────────────────────────────── */
+.mcq-option {{
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 0.85rem 1.1rem; margin-bottom: 0.5rem;
+  cursor: pointer; transition: border-color 150ms ease-out, background 150ms ease-out;
+  font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text);
+}}
+.mcq-option:hover {{ border-color: var(--cyan); background: rgba(0,212,232,0.06); }}
+.mcq-option.selected {{ border-color: var(--cyan); background: rgba(0,212,232,0.10); }}
+
+/* ── Eval top progress rail ──────────────────────── */
+.eval-progress-rail-track {{
+  position: fixed; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--border); z-index: 999;
+}}
+.eval-progress-rail-fill {{
+  height: 100%; background: var(--cyan);
+  transition: width 400ms ease;
+  box-shadow: 0 0 8px rgba(0,212,232,0.5);
+}}
+
+/* ── Score card ──────────────────────────────────── */
+.score-card {{ text-align: center; padding: 2rem 0 1.5rem; }}
+.score-number {{ font-family: 'JetBrains Mono', monospace; font-size: 3.5rem; font-weight: 500; color: var(--cyan); line-height: 1; }}
+.score-level {{ font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cyan); margin-top: 0.4rem; }}
+.score-delta-pos {{ font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent_green); margin-top: 0.3rem; }}
+.score-delta-neg {{ font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent_red); margin-top: 0.3rem; }}
+
+/* ── Themed progress bar ─────────────────────────── */
+.themed-progress-track {{ background: var(--bg-elevated); border-radius: 4px; height: 6px; overflow: hidden; margin: 0.4rem 0; }}
+.themed-progress-fill  {{ height: 100%; background: linear-gradient(90deg, var(--cyan), #0099AA); border-radius: 4px; transition: width 0.5s ease; }}
+
+/* ── Domain tag pill ─────────────────────────────── */
+.domain-tag-pill {{
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--cyan); background: rgba(0,212,232,0.08);
+  border: 1px solid rgba(0,212,232,0.2); border-radius: 4px;
+  padding: 0.2rem 0.6rem; margin-bottom: 1rem;
+}}
+
+/* ── Global accessibility ────────────────────────── */
+html {{ scroll-behavior: smooth; }}
+@media (prefers-reduced-motion: reduce) {{
+  *, *::before, *::after {{
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }}
+}}
+
+
 
 /* ─── SEGMENTED CONTROL CENTERING ──────────────────────────── */
 /* stVerticalBlock is a column-flex; stElementContainer children
@@ -705,7 +810,7 @@ tr:last-child td {{ border-bottom: none; }}
         _uat_email = os.environ.get("DEV_USER_EMAIL", "dev@example.com")
         st.sidebar.markdown(
             f"""<div style="background:rgba(245,166,35,0.10);border:1px solid #F5A623;"""
-            f"""border-radius:6px;padding:0.5rem 0.75rem;font-family:'IBM Plex Mono',"""
+            f"""border-radius:6px;padding:0.5rem 0.75rem;font-family:'JetBrains Mono',"""
             f"""monospace;font-size:0.72rem;color:#F5A623;margin-bottom:0.5rem;">"""
             f"""⚠ UAT MODE<br>"""
             f"""<span style="color:#8990A8;font-size:0.68rem;">{_uat_email}</span>"""
@@ -805,7 +910,7 @@ def render_sidebar(
         st.markdown("""
 <div style="padding:1rem 0.5rem">
   <div class="aha-brand">
-    <div class="aha-brand-icon" style="width:28px;height:28px;font-size:0.9rem">⚡</div>
+    <div class="aha-brand-icon" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="var(--cyan)"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
     <div class="aha-brand-name" style="font-size:0.95rem">AI <span>Hero</span> Academy</div>
   </div>
 </div>
@@ -885,7 +990,7 @@ def render_lang_sidebar(user_email: str = None, lang: str = "en") -> None:
         st.markdown("""
 <div style="padding:1rem 0.5rem">
   <div class="aha-brand">
-    <div class="aha-brand-icon" style="width:28px;height:28px;font-size:0.9rem">⚡</div>
+    <div class="aha-brand-icon" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="var(--cyan)"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
     <div class="aha-brand-name" style="font-size:0.95rem">AI <span>Hero</span> Academy</div>
   </div>
 </div>
