@@ -21,6 +21,7 @@ def render_hero_zh() -> None:
     而是诊断引擎 + 个性化路径 + 实时AI辅导，
     专为每个岗位量身打造——适合您的整个团队。
   </div>
+  <a class="demo-hero-cta" href="#cta-section">立即开始 &rarr;</a>
 </div>
 """, unsafe_allow_html=True)
 

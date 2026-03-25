@@ -312,27 +312,25 @@ DEMO_CSS = """
 .demo-stage-icon { margin-bottom: 0; }
 .demo-diff-icon  { margin-bottom: 0; }
 .demo-domain-emoji { margin-bottom: 0; }
-/* ─── TASK 4: Sticky Get Started CTA ────────────────────── */
-.demo-sticky-cta {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 100;
+/* ─── Hero inline CTA (replaces fixed sticky) ───────────── */
+.demo-hero-cta {
+  display: inline-block;
+  margin-top: 2rem;
   background: var(--cyan);
   color: #0D0F14;
   font-family: 'Inter', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  padding: 0.6rem 1.2rem;
+  padding: 0.8rem 2.2rem;
   border-radius: 999px;
   text-decoration: none;
-  letter-spacing: 0.03em;
-  box-shadow: 0 0 16px rgba(0, 212, 232, 0.35);
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 20px rgba(0, 212, 232, 0.4);
   transition: transform 150ms ease-out, box-shadow 150ms ease-out;
 }
-.demo-sticky-cta:hover {
+.demo-hero-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 24px rgba(0, 212, 232, 0.5);
+  box-shadow: 0 0 32px rgba(0, 212, 232, 0.6);
 }
 html { scroll-behavior: smooth; }
 /* ─── TASK 5: Card hover micro-interactions ─────────────── */
@@ -371,10 +369,6 @@ html { scroll-behavior: smooth; }
 """
 
 st.markdown(DEMO_CSS, unsafe_allow_html=True)
-st.markdown(
-    '<a class="demo-sticky-cta" href="#cta-section">Get Started &rarr;</a>',
-    unsafe_allow_html=True,
-)
 
 
 # ── Section 1 — Hero ──────────────────────────────────────────────────────────
@@ -392,6 +386,7 @@ else:
     A diagnostic engine + personalized path + live AI coaching,
     built specifically for each role — and ready for your entire team.
   </div>
+  <a class="demo-hero-cta" href="#cta-section">Get Started &rarr;</a>
 </div>
 """, unsafe_allow_html=True)
 
