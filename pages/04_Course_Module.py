@@ -149,13 +149,20 @@ if active_atom_id:
 
         # course dict — same keys used by the rendering code
         course = {
-            "title": _atom.get("title", active_atom_id),
+            "title": (_atom.get("title_zh") if _lang == "zh" else None) or _atom.get("title", active_atom_id),
             "tagline": "",
             "primary_domain": _atom.get("domain", ""),
         }
 
-        # reading dict — atom["reading"] uses same keys (concept_text, good_example, anti_pattern, takeaway)
-        reading = _atom.get("reading") or {}
+        # reading dict — atom["reading"] uses same keys with optional _zh suffix
+        _sfx = "_zh" if _lang == "zh" else ""
+        _r = _atom.get("reading") or {}
+        reading = {
+            "concept_text": _r.get(f"concept_text{_sfx}") or _r.get("concept_text", ""),
+            "good_example":  _r.get(f"good_example{_sfx}")  or _r.get("good_example", ""),
+            "anti_pattern":  _r.get(f"anti_pattern{_sfx}")  or _r.get("anti_pattern", ""),
+            "takeaway":      _r.get(f"takeaway{_sfx}")       or _r.get("takeaway", ""),
+        }
 
         # scenario dict — map atom practice structure to legacy expected format
         _practice = _atom.get("practice") or {}
@@ -167,12 +174,13 @@ if active_atom_id:
             .replace("{organisation}", "your organization")
             .replace("{scenario_name}", _atom.get("title") or "the module")
         )
+        _t_key = "text_template_zh" if _lang == "zh" else "text_template"
         scenario = {
             "scenario_text": _fill_scenario(_atom, _intake, _lang),
-            "task_1_text": _task_templates[0]["text_template"] if len(_task_templates) > 0 else "",
-            "task_2_text": _task_templates[1]["text_template"] if len(_task_templates) > 1 else "",
-            "task_3_text": _task_templates[2]["text_template"] if len(_task_templates) > 2 else "",
-            "task_4_text": _task_templates[3]["text_template"] if len(_task_templates) > 3 else "",
+            "task_1_text": (_task_templates[0].get(_t_key) or _task_templates[0]["text_template"]) if len(_task_templates) > 0 else "",
+            "task_2_text": (_task_templates[1].get(_t_key) or _task_templates[1]["text_template"]) if len(_task_templates) > 1 else "",
+            "task_3_text": (_task_templates[2].get(_t_key) or _task_templates[2]["text_template"]) if len(_task_templates) > 2 else "",
+            "task_4_text": (_task_templates[3].get(_t_key) or _task_templates[3]["text_template"]) if len(_task_templates) > 3 else "",
             "coach_system_prompt": _coach_prompt,
             "task_modes": [tt.get("task_mode", "open") for tt in _task_templates],
             "task_mcq_options": [tt.get("mcq_options") for tt in _task_templates],

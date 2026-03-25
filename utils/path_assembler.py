@@ -138,7 +138,8 @@ def fill_scenario(atom: dict, intake_profile: dict, lang_code: str = "en") -> st
     Never raises — catches all exceptions and returns the raw template.
     """
     try:
-        template: str = atom["practice"]["scenario_template"]
+        _t_key = "scenario_template_zh" if lang_code == "zh" else "scenario_template"
+        template: str = atom["practice"].get(_t_key) or atom["practice"]["scenario_template"]
     except Exception:
         return ""
 
