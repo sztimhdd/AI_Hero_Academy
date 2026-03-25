@@ -2322,7 +2322,11 @@
       "concept_text": "Imagine walking into every meeting already knowing the key players, their priorities, and potential roadblocks – saving you time and boosting your influence. Meeting intelligence is a 3-phase process: pre-meeting research, in-meeting synthesis, and post-meeting action capture. Pre-meeting, AI tools can analyze attendee profiles, past communications, and relevant documents to provide a comprehensive briefing. During the meeting, AI can assist in real-time note-taking, sentiment analysis, and action item identification. Post-meeting, AI helps summarize key decisions, assign tasks, and schedule follow-ups, ensuring nothing falls through the cracks. This systematic approach transforms meetings from potential time-wasters into productive sessions.",
       "good_example": "At Aurora Corp, a project manager used meeting intelligence tools to prepare for a kickoff meeting with a new client. The AI identified the client's key concerns from previous interactions and highlighted potential areas of disagreement. Armed with this knowledge, the project manager proactively addressed these issues during the meeting, leading to a smoother discussion and a faster agreement on project scope, saving an estimated 5 hours of rework.",
       "anti_pattern": "Failing to prepare adequately for meetings can lead to missed opportunities, misunderstandings, and wasted time. For example, attending a client meeting without understanding their recent challenges or priorities can result in irrelevant proposals and a damaged reputation. This lack of preparation signals a lack of respect for the client's time and can jeopardize future business opportunities, potentially costing you a promotion or even your job.",
-      "takeaway": "Mastering meeting intelligence ensures you're always prepared, informed, and effective, making you a more valuable and influential contributor."
+      "takeaway": "Mastering meeting intelligence ensures you're always prepared, informed, and effective, making you a more valuable and influential contributor.",
+      "concept_text_zh": "想象一下：每次开会前，您已了解与会关键人物、他们的优先事项和潜在阻碍——既节省时间，又提升您的影响力。会议情报是一个三阶段流程：会前调研、会中综合和会后行动记录。会前，AI工具可分析与会者档案、历史沟通记录和相关文件，提供全面的简报。会议期间，AI可协助实时记录、情绪分析和行动事项识别。会后，AI帮助总结关键决策、分配任务并安排后续跟进，确保无一遗漏。这一系统化方法将会议从潜在的时间浪费转变为高效的会议。",
+      "good_example_zh": "在Aurora Corp，一位项目经理使用会议情报工具为与新客户的启动会议做准备。AI从过往互动中识别出客户的核心关切，并标注了潜在的分歧点。掌握这些信息后，项目经理在会议中主动回应了这些问题，促成了更顺畅的讨论，并更快速地就项目范围达成一致，节省了约5小时的返工时间。",
+      "anti_pattern_zh": "会议准备不足会导致错失机会、产生误解和浪费时间。例如，在不了解客户近期挑战或优先事项的情况下参加客户会议，可能导致提案脱节、声誉受损。这种缺乏准备的态度表明对客户时间的不尊重，可能危及未来的业务合作，甚至影响晋升机会乃至工作岗位。",
+      "takeaway_zh": "掌握会议情报，确保您始终准备充分、信息完备、效率出众，使您成为更有价值、更具影响力的贡献者。"
     },
     "practice": {
       "scenario_template": "As a {role} at {org_type}, you're preparing for a crucial meeting to discuss a new project proposal.",
@@ -2332,21 +2336,24 @@
           "text_template": "Using AI tools, research the meeting attendees and identify their key priorities and potential concerns.",
           "skill_focus": "Pre-meeting research",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "使用AI工具调研与会者，识别其核心优先事项和潜在关切。"
         },
         {
           "task_id": 2,
           "text_template": "During a mock meeting, use AI-powered note-taking to capture key decisions and action items.",
           "skill_focus": "In-meeting synthesis",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "在模拟会议中，使用AI辅助记录，捕捉关键决策和行动事项。"
         },
         {
           "task_id": 3,
           "text_template": "After the mock meeting, use AI to generate a summary of the discussion and assign tasks to relevant team members.",
           "skill_focus": "Post-meeting action capture",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "模拟会议结束后，使用AI生成讨论摘要，并将任务分配给相关团队成员。"
         },
         {
           "task_id": 4,
@@ -2366,10 +2373,12 @@
               "label": "It ensures you have all the answers and can avoid asking any questions during the meeting.",
               "is_best": false
             }
-          ]
+          ],
+          "text_template_zh": "以下哪项最能描述会前调研的核心价值？"
         }
       ],
-      "coach_system_prompt_template": "As a meeting intelligence coach, guide the {role} at {organisation} through the 3-phase loop of pre-meeting research, in-meeting synthesis, and post-meeting action capture for the {scenario_name} scenario. Focus on practical application of AI tools within the {domain} domain."
+      "coach_system_prompt_template": "As a meeting intelligence coach, guide the {role} at {organisation} through the 3-phase loop of pre-meeting research, in-meeting synthesis, and post-meeting action capture for the {scenario_name} scenario. Focus on practical application of AI tools within the {domain} domain.",
+      "scenario_template_zh": "作为{org_type}的{role}，您正在为一次讨论新项目提案的重要会议做准备。"
     },
     "eval": {
       "items_ref": "inline",
@@ -2486,7 +2495,8 @@
     "source_course_ids": [],
     "merged_from": [],
     "atomized_at": "2026-03-24",
-    "status": "canonical"
+    "status": "canonical",
+    "title_zh": "会议情报：走进每间会议室前，先掌握全局"
   },
   {
     "atom_id": "augmented_comm__email_message_drafting",
@@ -2505,7 +2515,11 @@
       "concept_text": "AI-powered email drafting slashes the time you spend crafting messages, letting you focus on strategic tasks. By using AI to generate initial drafts and refine your tone, you can reclaim hours each week. The TONE framework ensures your emails are effective and professional. TONE stands for: Target audience (who are you writing to?), Objective (what do you want them to do?), Nuance (what tone is appropriate?), and Edit loop (review and refine). Applying TONE means considering your audience's expectations, defining a clear call to action, choosing the right level of formality, and always proofreading for clarity and impact. This structured approach guarantees efficient and impactful communication.",
       "good_example": "A project manager at Meridian Solutions used AI to draft a weekly status update to her team. By specifying a concise, encouraging tone and highlighting key milestones, the AI generated a draft that only needed minor tweaks. This saved her 30 minutes, allowing her to address a critical roadblock in the project timeline. The email clearly outlined progress, acknowledged challenges, and motivated the team, resulting in improved team morale and faster problem-solving.",
       "anti_pattern": "Failing to calibrate the tone of an email can lead to misunderstandings and damaged relationships. Imagine sending a terse, demanding email to a client when a more collaborative tone was needed. This could alienate the client, jeopardize the project, and reflect poorly on your professionalism. Overlooking the 'Nuance' step in the TONE framework can result in misinterpretations and negative consequences for your career.",
-      "takeaway": "Mastering AI-assisted email drafting with the TONE framework frees up valuable time and ensures your messages are always on point, boosting your productivity and professional image."
+      "takeaway": "Mastering AI-assisted email drafting with the TONE framework frees up valuable time and ensures your messages are always on point, boosting your productivity and professional image.",
+      "concept_text_zh": "AI辅助邮件起草大幅压缩撰写邮件所需的时间，让您专注于战略性工作。借助AI生成初稿并优化语气，每周可节省数小时。TONE框架确保您的邮件既高效又专业。TONE代表：Target audience（目标受众——您在写给谁？）、Objective（目标——您希望对方做什么？）、Nuance（细微差别——什么语气最合适？）和Edit loop（编辑循环——审阅与完善）。运用TONE框架意味着：考量受众期望、明确行动号召、选择合适的正式程度，并始终审校以确保清晰度和影响力。这一结构化方法保障了高效且有影响力的沟通。",
+      "good_example_zh": "Meridian Solutions的一位项目经理使用AI为团队起草每周进度更新邮件。通过指定简洁、鼓励的语气并突出关键里程碑，AI生成的草稿只需少量修改即可使用。这节省了她30分钟，让她得以处理项目进度中的一个关键瓶颈。邮件清晰呈现了进展、认可了挑战并激励了团队，最终改善了团队士气，加速了问题解决。",
+      "anti_pattern_zh": "邮件语气把握不当可能导致误解和关系受损。试想向客户发送一封语气简短、带有要求意味的邮件，而对方其实需要更具协作性的沟通方式。这可能疏远客户、危及项目，并对您的职业形象造成负面影响。忽视TONE框架中的“细微差别”步骤，可能导致误读，进而对您的职业发展产生不利后果。",
+      "takeaway_zh": "掌握基于TONE框架的AI辅助邮件起草，既释放宝贵时间，又确保每封邮件都恰到好处，全面提升您的工作效率和职业形象。"
     },
     "practice": {
       "scenario_template": "You are a {role} at a {org_type}. Use AI to draft an email following the TONE framework.",
@@ -2515,7 +2529,8 @@
           "text_template": "Identify the target audience and objective for an email to your team announcing a new company policy.",
           "skill_focus": "Target audience, Objective",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "为向团队宣布新公司政策的邮件，识别目标受众和沟通目标。"
         },
         {
           "task_id": 2,
@@ -2535,24 +2550,28 @@
               "label": "Use an assertive and demanding tone to emphasize the importance of the information.",
               "is_best": false
             }
-          ]
+          ],
+          "text_template_zh": "为向高级管理人员请求紧急信息的邮件，选择最合适的语气。"
         },
         {
           "task_id": 3,
           "text_template": "Draft an email to a client following the TONE framework, requesting feedback on a recent project deliverable.",
           "skill_focus": "TONE framework application",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "遵循TONE框架，向客户起草一封邮件，请求对方对近期项目交付物提供反馈。"
         },
         {
           "task_id": 4,
           "text_template": "Identify the key elements to review during the 'Edit loop' to ensure clarity and impact in your email.",
           "skill_focus": "Edit loop",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "识别在“编辑循环”阶段需要审查的关键要素，以确保邮件的清晰度和影响力。"
         }
       ],
-      "coach_system_prompt_template": "You are a communication coach. Review the {role}'s email draft for adherence to the TONE framework. Provide specific feedback on the target audience, objective, nuance, and edit loop. The {organisation} values clear and effective communication. The scenario is: {scenario_name}. The domain is {domain}."
+      "coach_system_prompt_template": "You are a communication coach. Review the {role}'s email draft for adherence to the TONE framework. Provide specific feedback on the target audience, objective, nuance, and edit loop. The {organisation} values clear and effective communication. The scenario is: {scenario_name}. The domain is {domain}.",
+      "scenario_template_zh": "您是{org_type}的{role}。请运用TONE框架，使用AI起草一封邮件。"
     },
     "eval": {
       "items_ref": "inline",
@@ -2669,7 +2688,8 @@
     "source_course_ids": [],
     "merged_from": [],
     "atomized_at": "2026-03-24",
-    "status": "canonical"
+    "status": "canonical",
+    "title_zh": "邮件智能：数分钟内完成起草、调整语气与发送"
   },
   {
     "atom_id": "strategic_prompting__iterative_refinement",
@@ -2688,7 +2708,11 @@
       "concept_text": "Iterative prompting is a powerful technique that transforms initial AI outputs into polished, highly relevant results. By engaging in a cycle of review, evaluation, feedback, and iteration (the REFINE loop), you can progressively shape the AI's output to align perfectly with your objectives, saving you time and improving quality. The REFINE loop involves critically reviewing the AI's initial response, evaluating the gap between the output and your desired outcome, providing specific feedback as a constraint, iterating with a revised prompt, and then repeating the process as needed. This method allows you to leverage AI's capabilities while maintaining control over the final product, ensuring accuracy and relevance. Iterative refinement is especially useful when dealing with complex tasks or nuanced requirements, where a single prompt may not suffice.",
       "good_example": "A marketing specialist at Meridian Solutions used iterative prompting to create compelling ad copy. The initial output was generic, but after three iterations of feedback focusing on specific target demographics and desired emotional responses, the final ad copy resulted in a 20% increase in click-through rates compared to previous campaigns. Each iteration focused on a specific aspect: first, tone; second, call to action; third, keyword density.",
       "anti_pattern": "Failing to iterate on initial AI outputs can lead to inaccurate, irrelevant, or low-quality results. For example, a project manager who accepts the first draft of a project proposal generated by AI without further refinement risks presenting a flawed plan to stakeholders. This can damage their credibility and lead to project delays or even failure due to overlooked issues or misaligned objectives.",
-      "takeaway": "By mastering iterative prompting, you can consistently refine AI outputs to meet your exact needs, saving time and improving the quality of your work."
+      "takeaway": "By mastering iterative prompting, you can consistently refine AI outputs to meet your exact needs, saving time and improving the quality of your work.",
+      "concept_text_zh": "迭代提示是一项强大的技术，能将AI的初始输出转化为精练、高度相关的结果。通过回顾、评估、反馈和迭代的循环（REFINE循环），您可以逐步引导AI输出完全符合您目标的内容，节省时间并提升质量。REFINE循环包括：批判性审查AI的初始回应、评估输出与预期结果之间的差距、以约束条件形式提供具体反馈、使用修订后的提示重新迭代，然后根据需要重复上述过程。这一方法让您在充分利用AI能力的同时，保持对最终成果的掌控，确保准确性和相关性。迭代优化在处理复杂任务或细致要求时尤为有效，因为单一提示往往难以达到预期效果。",
+      "good_example_zh": "Meridian Solutions的一位市场专员使用迭代提示创作了引人注目的广告文案。初始输出较为泛泛，但经过三轮针对特定目标受众和预期情感反应的反馈迭代后，最终广告文案的点击率比此前的活动提高了20%。每次迭代各有侧重：第一次关注语气，第二次关注行动号召，第三次关注关键词密度。",
+      "anti_pattern_zh": "不对AI初始输出进行迭代，可能导致结果不准确、不相关或质量低下。例如，项目经理若直接接受AI生成的项目提案初稿而不加细化，就可能向利益相关方呈递存在缺陷的方案。这不仅损害其个人信誉，还可能因忽视问题或目标偏差而导致项目延期甚至失败。",
+      "takeaway_zh": "掌握迭代提示，您将能够持续优化AI输出，使其精准满足您的需求，节省时间并提升工作质量。"
     },
     "practice": {
       "scenario_template": "As a {role} at {org_type}, you're using AI to draft a document. The initial output is a good start, but needs refinement to meet specific requirements.",
@@ -2698,14 +2722,16 @@
           "text_template": "Review the initial AI-generated draft of the document. Identify three specific areas where the output falls short of your desired outcome.",
           "skill_focus": "Review and evaluation",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "审查AI生成的文件初稿。识别三个具体方面，说明输出在哪里未能达到预期效果。"
         },
         {
           "task_id": 2,
           "text_template": "Based on your review, formulate a revised prompt that incorporates specific constraints to address the identified shortcomings. Focus on clarity and precision in your feedback.",
           "skill_focus": "Feedback and constraint",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "根据您的审查，拟定一个修订后的提示，纳入具体约束条件以解决已识别的不足。注重反馈的清晰性和精确性。"
         },
         {
           "task_id": 3,
@@ -2725,17 +2751,20 @@
               "label": "Make the document better.",
               "is_best": false
             }
-          ]
+          ],
+          "text_template_zh": "以下哪个修订后的提示最有效地纳入了具体约束条件以改善AI输出？"
         },
         {
           "task_id": 4,
           "text_template": "Iterate on the prompt at least once more, incorporating feedback from the AI's response to your revised prompt. Document the changes you made and the rationale behind them.",
           "skill_focus": "Iteration and refinement",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "至少再迭代一次，将AI对您修订提示的回应中的反馈纳入考量。记录您所做的修改及其背后的逻辑。"
         }
       ],
-      "coach_system_prompt_template": "You are coaching a {role} at {organisation} on iterative prompting. Guide them through the REFINE loop to improve the AI's output for the {scenario_name} scenario. Focus on clear evaluation and specific feedback within the {domain} domain."
+      "coach_system_prompt_template": "You are coaching a {role} at {organisation} on iterative prompting. Guide them through the REFINE loop to improve the AI's output for the {scenario_name} scenario. Focus on clear evaluation and specific feedback within the {domain} domain.",
+      "scenario_template_zh": "作为{org_type}的{role}，您正在使用AI起草一份文件。初始输出有一定基础，但需要进一步精炼以满足特定要求。"
     },
     "eval": {
       "items_ref": "inline",
@@ -2852,7 +2881,8 @@
     "source_course_ids": [],
     "merged_from": [],
     "atomized_at": "2026-03-24",
-    "status": "canonical"
+    "status": "canonical",
+    "title_zh": "迭代提示：从良好输出到卓越输出"
   },
   {
     "atom_id": "critical_eval__hallucination_patterns",
@@ -2871,7 +2901,11 @@
       "concept_text": "Spotting AI errors protects your reputation and ensures reliable insights, saving you from presenting incorrect information. AI models, while powerful, can generate 'hallucinations' – outputs that are factually incorrect or misleading. These errors fall into five dangerous patterns. First, **False facts:** completely fabricated information. Second, **Fabricated citations:** claims attributed to non-existent sources. Third, **Plausible-but-wrong numbers:** seemingly accurate data that is actually incorrect. Fourth, **Confident confabulation:** presenting made-up information with unwarranted certainty. Fifth, **Outdated information:** using data that is no longer current or relevant. Recognizing these patterns is crucial for responsible AI use.",
       "good_example": "An analyst at Meridian Financial used an AI tool to summarize market trends. Initially, the AI reported a 15% growth in a specific sector, citing a reputable source. However, upon closer inspection, the analyst found the source didn't mention that figure. The analyst corrected the report, preventing a potentially misleading investment recommendation based on 'Plausible-but-wrong numbers.' This saved the firm from making a poor investment decision.",
       "anti_pattern": "Failing to verify AI-generated content can lead to sharing inaccurate information, damaging your credibility. Imagine presenting a report with fabricated statistics ('Plausible-but-wrong numbers') or citing a non-existent study ('Fabricated citations'). This not only undermines your work but also erodes trust in your judgment, potentially leading to professional setbacks and loss of opportunities.",
-      "takeaway": "Mastering hallucination detection safeguards your professional reputation and ensures the reliability of your work."
+      "takeaway": "Mastering hallucination detection safeguards your professional reputation and ensures the reliability of your work.",
+      "concept_text_zh": "识别AI错误可保护您的声誉，确保洞察可靠，避免呈现错误信息带来的负面影响。AI模型尽管强大，但可能产生“幻觉”——即事实错误或具有误导性的输出。这些错误分为五种危险模式。第一，**虚假事实**：完全捏造的信息。第二，**伪造引用**：将声明归因于不存在的来源。第三，**似是而非的错误数据**：表面准确但实际错误的数据。第四，**自信的臆造**：以不当的确定性呈现编造的信息。第五，**过时信息**：使用不再准确或相关的数据。识别这些模式对于负责任地使用AI至关重要。",
+      "good_example_zh": "Meridian Financial的一位分析师使用AI工具汇总市场趋势。AI最初报告某特定板块增长了15%，并引用了一个知名来源。然而经仔细核查，分析师发现该来源中并未提及这一数字。分析师更正了报告，避免了基于“似是而非的错误数据”而产生的潜在误导性投资建议，从而为公司避免了一项错误投资决策。",
+      "anti_pattern_zh": "不核实AI生成内容可能导致分享不准确信息，损害您的可信度。试想在报告中呈现捏造的统计数据（“似是而非的错误数据”）或引用不存在的研究（“伪造引用”）。这不仅会削弱您工作的可信度，还会侵蚀他人对您判断力的信任，可能导致职业发展受阻和机会流失。",
+      "takeaway_zh": "掌握幻觉识别技能，保护您的职业声誉，确保工作成果的可靠性。"
     },
     "practice": {
       "scenario_template": "As a {role} at {org_type}, you're using AI to draft a report on industry trends. Review the AI-generated content for potential hallucination patterns.",
@@ -2894,7 +2928,8 @@
               "label": "The AI is likely engaging in confident confabulation, presenting made-up information.",
               "is_best": false
             }
-          ]
+          ],
+          "text_template_zh": "AI声称：“根据Northfield Research的一项研究，可再生能源投资到2027年将增长三倍。”您无法找到这项研究。最可能属于哪种幻觉模式？"
         },
         {
           "task_id": 2,
@@ -2914,7 +2949,8 @@
               "label": "The AI is fabricating false facts, which is a sign of a serious error.",
               "is_best": false
             }
-          ]
+          ],
+          "text_template_zh": "AI表示：“根据劳工统计局数据，失业率为2%。”实际失业率为4%。这属于哪种幻觉模式？"
         },
         {
           "task_id": 3,
@@ -2934,17 +2970,20 @@
               "label": "The AI is engaging in confident confabulation, presenting made-up information with certainty.",
               "is_best": true
             }
-          ]
+          ],
+          "text_template_zh": "AI自信地断言：“量子计算将在明年彻底变革医疗行业。”然而，这一说法缺乏任何可信来源支撑，且高度推测性。这是哪种类型的幻觉？"
         },
         {
           "task_id": 4,
           "text_template": "The AI report includes the statement: 'Crestwood Industries reported a 30% increase in profits last quarter.' Upon checking Crestwood's official financial statements, you find no mention of this increase. What do you do?",
           "skill_focus": "False facts",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "AI报告中包含以下表述：“Crestwood Industries上季度利润增长30%。”查阅Crestwood官方财务报表后，您发现并无此增长记录。您该如何处理？"
         }
       ],
-      "coach_system_prompt_template": "As an AI coach, review the {role}'s analysis of AI-generated content in the {organisation} report. Focus on identifying and correcting hallucination patterns, such as false facts, fabricated citations, plausible-but-wrong numbers, confident confabulation, and outdated information within the {scenario_name} in the domain of {domain}."
+      "coach_system_prompt_template": "As an AI coach, review the {role}'s analysis of AI-generated content in the {organisation} report. Focus on identifying and correcting hallucination patterns, such as false facts, fabricated citations, plausible-but-wrong numbers, confident confabulation, and outdated information within the {scenario_name} in the domain of {domain}.",
+      "scenario_template_zh": "作为{org_type}的{role}，您正在使用AI起草一份行业趋势报告。请审查AI生成的内容，识别潜在的幻觉模式。"
     },
     "eval": {
       "items_ref": "inline",
@@ -3061,7 +3100,8 @@
     "source_course_ids": [],
     "merged_from": [],
     "atomized_at": "2026-03-24",
-    "status": "canonical"
+    "status": "canonical",
+    "title_zh": "幻觉模式：5种最危险的AI错误"
   },
   {
     "atom_id": "responsible_ai__ai_tool_governance",
@@ -3080,7 +3120,11 @@
       "concept_text": "Choosing the right AI tool can save you hours of rework and prevent embarrassing errors, while using unapproved tools can expose your work to security and compliance risks. The SELECT framework helps you systematically evaluate AI tools for your {org_type}, ensuring you choose the most appropriate option. SELECT stands for: Sensitivity check (assess data sensitivity), Evaluate alternatives (explore approved tools), Legal/policy check (ensure compliance), Evaluate data residency (confirm data storage location), Compare output quality (test accuracy), and Track and document (maintain records). By following SELECT, you minimize risks associated with data breaches, biased outputs, and non-compliance, while maximizing the efficiency and reliability of your AI-driven tasks. This structured approach protects both your work and your career.",
       "good_example": "At Meridian Corp, Sarah needed to summarize customer feedback for a new product launch. Instead of using a free online tool, she used Meridian's SELECT framework. She identified that the feedback contained PII, so she used the approved internal summarization tool that met data residency requirements. This saved her from a potential data breach and ensured the insights were accurate and compliant, leading to better product positioning and a successful launch.",
       "anti_pattern": "John, an analyst at Aurora Industries, needed to quickly generate marketing copy. He bypassed the company's approved AI tool list and used a popular but unvetted online tool. The tool's output contained biased language that damaged Aurora's brand reputation. Furthermore, the tool's terms of service granted the provider rights to Aurora's marketing content. John faced disciplinary action for violating company policy and exposing Aurora to legal and reputational risks.",
-      "takeaway": "Mastering the SELECT framework ensures you choose the right AI tool, protecting your work and career from potential risks and compliance violations."
+      "takeaway": "Mastering the SELECT framework ensures you choose the right AI tool, protecting your work and career from potential risks and compliance violations.",
+      "concept_text_zh": "选择正确的AI工具可以节省数小时的返工时间，避免尴尬错误；而使用未经批准的工具则可能使您的工作面临安全和合规风险。SELECT框架帮助您系统地评估适合您{org_type}的AI工具，确保选择最合适的方案。SELECT代表：Sensitivity check（敏感性检查——评估数据敏感度）、Evaluate alternatives（评估替代方案——探索已批准工具）、Legal/policy check（法规/政策检查——确保合规性）、Evaluate data residency（评估数据驻留——确认数据存储位置）、Compare output quality（比较输出质量——测试准确性）和Track and document（追踪与记录——保存记录）。遵循SELECT框架可最大限度降低数据泄露、偏差输出和不合规相关风险，同时最大化AI驱动任务的效率和可靠性。这一结构化方法保护您的工作和职业发展。",
+      "good_example_zh": "在Meridian Corp，Sarah需要汇总新产品发布的客户反馈。她没有使用免费在线工具，而是运用了Meridian的SELECT框架。她识别到反馈中包含个人身份信息（PII），因此使用了符合数据驻留要求的内部批准汇总工具。这避免了潜在的数据泄露，确保了洞察的准确性和合规性，最终促成了更精准的产品定位和成功的产品发布。",
+      "anti_pattern_zh": "Aurora Industries的分析师John需要快速生成营销文案。他绕过公司批准的AI工具列表，使用了一款热门但未经审核的在线工具。该工具的输出包含带有偏见的语言，损害了Aurora的品牌声誉。此外，该工具的服务条款授予了提供商使用Aurora营销内容的权利。John因违反公司政策并使Aurora面临法律和声誉风险而受到纪律处分。",
+      "takeaway_zh": "掌握SELECT框架，确保每次都选择正确的AI工具，保护您的工作和职业发展免受潜在风险和合规违规的影响。"
     },
     "practice": {
       "scenario_template": "As a {role} at {org_type}, you need to select an AI tool for {domain} task. Use the SELECT framework to guide your decision.",
@@ -3090,7 +3134,8 @@
           "text_template": "Your first step in the SELECT framework is the 'Sensitivity check'. Describe the key considerations when assessing the sensitivity of data used by an AI tool.",
           "skill_focus": "Data sensitivity assessment",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "SELECT框架的第一步是“敏感性检查”。请描述评估AI工具所使用数据敏感度时的关键考量因素。"
         },
         {
           "task_id": 2,
@@ -3110,24 +3155,28 @@
               "label": "Selecting the most popular AI tool based on online reviews and recommendations from colleagues.",
               "is_best": false
             }
-          ]
+          ],
+          "text_template_zh": "您已识别出若干候选AI工具。以下哪项最能描述SELECT框架中的“评估替代方案”步骤？"
         },
         {
           "task_id": 3,
           "text_template": "Explain the importance of the 'Legal/policy check' step in the SELECT framework and what resources you would consult.",
           "skill_focus": "Policy compliance",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "解释SELECT框架中“法规/政策检查”步骤的重要性，以及您将参阅哪些资源。"
         },
         {
           "task_id": 4,
           "text_template": "Why is 'Track and document' the AI tool selection process a crucial step in the SELECT framework?",
           "skill_focus": "Documentation and tracking",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "为什么在SELECT框架中，“追踪与记录”AI工具选择过程是至关重要的步骤？"
         }
       ],
-      "coach_system_prompt_template": "You are a coach helping {role} at {organisation} apply the SELECT framework for AI tool governance in a {scenario_name} {domain} scenario. Guide the learner through each step of the framework, providing feedback and suggestions."
+      "coach_system_prompt_template": "You are a coach helping {role} at {organisation} apply the SELECT framework for AI tool governance in a {scenario_name} {domain} scenario. Guide the learner through each step of the framework, providing feedback and suggestions.",
+      "scenario_template_zh": "作为{org_type}的{role}，您需要为{domain}任务选择合适的AI工具。运用SELECT框架指导您的决策。"
     },
     "eval": {
       "items_ref": "inline",
@@ -3244,7 +3293,8 @@
     "source_course_ids": [],
     "merged_from": [],
     "atomized_at": "2026-03-24",
-    "status": "canonical"
+    "status": "canonical",
+    "title_zh": "AI工具治理：每次都选对工具"
   },
   {
     "atom_id": "data_decision__universal_analysis",
@@ -3263,7 +3313,11 @@
       "concept_text": "The SIGNAL framework transforms raw data into actionable decisions, saving you time and improving decision quality. By using AI to rapidly analyze information, you can quickly identify key insights and make informed choices, regardless of your role. The SIGNAL framework consists of six steps: Source (identify your inputs), Interrogate (prompt AI to surface patterns), Generate (produce structured insight), Narrate (translate to plain language), Act (link insight to decision), and Log (record for audit trail). This structured approach ensures that every decision is data-informed, transparent, and auditable. Mastering SIGNAL empowers you to confidently navigate complex information landscapes and drive better outcomes for your {org_type}.",
       "good_example": "At Meridian Corp, a marketing specialist used the SIGNAL framework to analyze customer feedback data. By using AI to interrogate the data, they quickly identified a previously unnoticed trend: customers were increasingly requesting sustainable packaging. They generated a report highlighting this trend, narrated the findings to the product team, and recommended a shift towards eco-friendly packaging. This led to a 15% increase in customer satisfaction and a positive impact on Meridian's brand image.",
       "anti_pattern": "Failing to use a structured approach like SIGNAL can lead to biased or incomplete analysis, resulting in poor decisions. Imagine a project manager at Aurora Industries relying solely on gut feeling to allocate resources. Without interrogating relevant project data, they might misallocate resources, leading to project delays, budget overruns, and ultimately, damage to their professional reputation and career prospects.",
-      "takeaway": "By mastering the SIGNAL framework, you'll gain the ability to transform data into clear, actionable decisions, saving time and improving your decision-making effectiveness."
+      "takeaway": "By mastering the SIGNAL framework, you'll gain the ability to transform data into clear, actionable decisions, saving time and improving your decision-making effectiveness.",
+      "concept_text_zh": "SIGNAL框架将原始数据转化为可行决策，节省时间并提升决策质量。借助AI快速分析信息，无论您的岗位如何，都能迅速识别关键洞察并做出明智选择。SIGNAL框架包含六个步骤：Source（来源——识别输入数据）、Interrogate（审问——提示AI挖掘规律）、Generate（生成——产出结构化洞察）、Narrate（叙述——转化为通俗语言）、Act（行动——将洞察与决策关联）和Log（记录——建立审计追踪）。这一结构化方法确保每项决策都有数据支撑、透明且可审计。掌握SIGNAL框架，将使您自信地驾驭复杂的信息环境，为您的{org_type}推动更好的结果。",
+      "good_example_zh": "在Meridian Corp，一位市场专员使用SIGNAL框架分析客户反馈数据。通过AI审问数据，他们迅速发现了一个此前被忽视的趋势：客户对可持续包装的需求日益增长。他们生成了一份突出这一趋势的报告，向产品团队阐述了调查结果，并建议向环保包装转型。这一举措使客户满意度提升了15%，并对Meridian的品牌形象产生了积极影响。",
+      "anti_pattern_zh": "不使用SIGNAL等结构化方法可能导致分析存在偏差或不完整，从而做出错误决策。设想Aurora Industries的一位项目经理仅凭直觉来分配资源。若不审问相关项目数据，可能会导致资源错配，进而引发项目延期、预算超支，并最终损害其职业声誉和发展前景。",
+      "takeaway_zh": "掌握SIGNAL框架，您将获得将数据转化为清晰、可行决策的能力，节省时间并提升决策效果。"
     },
     "practice": {
       "scenario_template": "As a {role} at {organisation}, you need to make a decision based on a collection of data. Use the SIGNAL framework to analyze the information and recommend a course of action.",
@@ -3273,7 +3327,8 @@
           "text_template": "You are starting the 'Source' step of the SIGNAL framework. Describe the data sources you will use for your analysis in this {scenario_name} scenario.",
           "skill_focus": "Source identification",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "您正在执行SIGNAL框架的“来源”步骤。请描述您将在此{scenario_name}场景中使用的数据来源。"
         },
         {
           "task_id": 2,
@@ -3293,24 +3348,28 @@
               "label": "Provide a detailed description of each data point and its individual characteristics.",
               "is_best": false
             }
-          ]
+          ],
+          "text_template_zh": "您正处于“审问”步骤。以下哪个AI提示最有助于您从数据中识别关键规律和洞察？"
         },
         {
           "task_id": 3,
           "text_template": "You've completed the 'Generate' step and have structured insights. Now, in the 'Narrate' step, translate these insights into plain language for stakeholders.",
           "skill_focus": "Communicating insights clearly",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "您已完成“生成”步骤并获得了结构化洞察。现在，在“叙述”步骤中，将这些洞察转化为面向利益相关方的通俗语言。"
         },
         {
           "task_id": 4,
           "text_template": "You've reached the 'Act' step. Based on your analysis, what specific action do you recommend?",
           "skill_focus": "Decision recommendation",
           "task_mode": "open",
-          "mcq_options": null
+          "mcq_options": null,
+          "text_template_zh": "您已到达“行动”步骤。基于您的分析，您建议采取什么具体行动？"
         }
       ],
-      "coach_system_prompt_template": "As an AI coach, provide feedback to the {role} at {organisation} on their use of the SIGNAL framework in the {scenario_name} scenario. Focus on the clarity and effectiveness of their analysis and recommendations within the {domain} domain."
+      "coach_system_prompt_template": "As an AI coach, provide feedback to the {role} at {organisation} on their use of the SIGNAL framework in the {scenario_name} scenario. Focus on the clarity and effectiveness of their analysis and recommendations within the {domain} domain.",
+      "scenario_template_zh": "作为{organisation}的{role}，您需要根据一组数据做出决策。运用SIGNAL框架分析信息并提出行动建议。"
     },
     "eval": {
       "items_ref": "inline",
@@ -3427,6 +3486,7 @@
     "source_course_ids": [],
     "merged_from": [],
     "atomized_at": "2026-03-24",
-    "status": "canonical"
+    "status": "canonical",
+    "title_zh": "从信号到决策：适用于所有岗位的AI辅助分析"
   }
 ]
