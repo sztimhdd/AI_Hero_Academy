@@ -565,6 +565,102 @@ def translate_practice_scenarios(w, dry_run, role_filter):
     print(f"  ✓ practice_scenarios.json complete")
 
 
+def translate_atomic_modules(w, dry_run, role_filter):
+    """Translate user-visible fields of inline atoms in atomic_modules_v2.json.
+
+    Writes _zh suffix variants back in-place (no separate output file).
+    Atoms with source_course_ids are skipped — they delegate to reading_content.
+    Filterable by domain via --role (reused as domain prefix, e.g. 'responsible_ai').
+    """
+    atoms_path = CONTENT_DIR / "atomic_modules_v2.json"
+    atoms = json.loads(atoms_path.read_text(encoding="utf-8"))
+
+    # Only translate inline atoms (no source_course_ids) that match the filter
+    inline_atoms = [
+        a for a in atoms
+        if not a.get("source_course_ids")
+        and (not role_filter or a.get("domain", "").startswith(role_filter))
+    ]
+    print(f"[atomic_modules] {len(inline_atoms)} inline atoms to translate (of {len(atoms)} total)...")
+
+    # Build atom_id→index map for in-place update
+    atom_index = {a["atom_id"]: i for i, a in enumerate(atoms)}
+
+    # Process in batches of 2
+    for b in range(0, len(inline_atoms), 2):
+        batch_atoms = inline_atoms[b:b + 2]
+        # Flatten to a single dict per atom_id: all translatable text fields
+        batch: dict = {}
+        for a in batch_atoms:
+            r = a.get("reading") or {}
+            p = a.get("practice") or {}
+            tasks = p.get("task_templates") or []
+            batch[a["atom_id"]] = {
+                "title": a.get("title", ""),
+                "concept_text": r.get("concept_text", ""),
+                "good_example": r.get("good_example", ""),
+                "anti_pattern": r.get("anti_pattern", ""),
+                "takeaway": r.get("takeaway", ""),
+                "scenario_template": p.get("scenario_template", ""),
+                "task_0": tasks[0]["text_template"] if len(tasks) > 0 else "",
+                "task_1": tasks[1]["text_template"] if len(tasks) > 1 else "",
+                "task_2": tasks[2]["text_template"] if len(tasks) > 2 else "",
+                "task_3": tasks[3]["text_template"] if len(tasks) > 3 else "",
+            }
+
+        fields = [
+            "title", "concept_text", "good_example", "anti_pattern", "takeaway",
+            "scenario_template", "task_0", "task_1", "task_2", "task_3",
+        ]
+        desc = (
+            "Translate atom reading content, practice scenario, and task prompts for an "
+            "AI skills learning platform. Keep {placeholder} tokens unchanged. "
+            "Preserve bold **text** and markdown formatting."
+        )
+        try:
+            translated = _translate_batch(w, batch, fields, desc, dry_run)
+        except Exception as e:
+            print(f"  [WARN] batch {b // 2 + 1} failed ({e}), retrying individually...")
+            translated = {}
+            for a in batch_atoms:
+                try:
+                    single = _translate_batch(w, {a["atom_id"]: batch[a["atom_id"]]}, fields, desc, dry_run)
+                    translated.update(single)
+                except Exception as e2:
+                    print(f"  [ERROR] {a['atom_id']}: {e2}", file=sys.stderr)
+
+        if dry_run:
+            print(json.dumps(translated, ensure_ascii=False, indent=2)[:800])
+            print("...")
+            continue
+
+        # Merge _zh fields back into atoms list
+        for a in batch_atoms:
+            aid = a["atom_id"]
+            if aid not in translated:
+                continue
+            tr = translated[aid]
+            idx = atom_index[aid]
+            atoms[idx]["title_zh"] = tr.get("title", "")
+            r = atoms[idx].setdefault("reading", {})
+            r["concept_text_zh"] = tr.get("concept_text", "")
+            r["good_example_zh"] = tr.get("good_example", "")
+            r["anti_pattern_zh"] = tr.get("anti_pattern", "")
+            r["takeaway_zh"] = tr.get("takeaway", "")
+            p = atoms[idx].setdefault("practice", {})
+            p["scenario_template_zh"] = tr.get("scenario_template", "")
+            task_zh_vals = [tr.get(f"task_{n}", "") for n in range(4)]
+            for n, task in enumerate(p.get("task_templates") or []):
+                if n < len(task_zh_vals):
+                    task["text_template_zh"] = task_zh_vals[n]
+
+        print(f"  batch {b // 2 + 1}/{-(-len(inline_atoms) // 2)} done")
+
+    if not dry_run:
+        atoms_path.write_text(json.dumps(atoms, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"  atomic_modules_v2.json updated in place")
+
+
 # ---------------------------------------------------------------------------
 # File registry + main
 # ---------------------------------------------------------------------------
@@ -578,11 +674,13 @@ FILE_MAP = {
     "reading_content": translate_reading_content,
     "evaluation_items": translate_evaluation_items,
     "practice_scenarios": translate_practice_scenarios,
+    "atomic_modules": translate_atomic_modules,
 }
 
 FILE_ORDER = [
     "roles", "domains", "courses", "i18n",
     "diagnostic_items", "reading_content", "evaluation_items", "practice_scenarios",
+    "atomic_modules",
 ]
 
 
