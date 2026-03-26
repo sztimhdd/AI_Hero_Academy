@@ -159,12 +159,6 @@ layer on top of existing email auth?
 
 ---
 
-### Phase 8 — Engineer / IT / Specialist Role Atoms
-> Status: FUTURE
-
-- Add role-variant atoms or universal atoms for technical roles
-- `data_decision__technical_analysis` covering engineering data workflows
-- `responsible_ai__technical_governance` for regulated technical environments
 
 ---
 

@@ -1,6 +1,16 @@
 ================================================================================
-PRD.md — AI Hero Academy — MVP Product Requirements Document
-Version 1.0 | June 2025
+PRD.md — AI Hero Academy — Product Requirements Document
+Version 2.0 | March 2026 — B2C TRANSFORMATION
+================================================================================
+
+⚠️  VERSION 2.0 NOTE (2026-03-26)
+This document has been updated to reflect the B2C transformation pivot.
+The authoritative design reference is: plans/b2c-transformation-roadmap.md
+The AI coach design reference is: plans/b2c-ai-coach-gap-analysis.md
+The sections below reflect the NEW B2C product direction.
+Legacy B2B content (Streamlit, role-based courses, Firestore-only auth) is
+superseded and retained only for historical reference.
+
 ================================================================================
 
 TABLE OF CONTENTS
@@ -25,29 +35,31 @@ TABLE OF CONTENTS
 1. EXECUTIVE SUMMARY
 ================================================================================
 
-AI Hero Academy is an internal Streamlit app (GCP Cloud Run) that evaluates, trains, and
-benchmarks employees on AI skills through real-life, job-specific use cases
-and AI coaching powered by Google Gemini API.
+AI Hero Academy is a B2C personal AI transformation platform. It transforms
+any individual — job seeker, new graduate, or mid-career worker — into an
+HR-desired "AI-supercharged intermediate" in 7 days, through personalized
+AI coaching, scenario-based practice, and a shareable credential.
 
-**Current state (March 2026):** Five roles live — Relationship Manager (RM),
-Underwriter (UW), Analyst (AN), Marketing/Comms Advisor (MK), and Project
-Manager (PM). Bilingual EN/ZH UI with full Chinese content translation across
-all 8 content files (8/8 complete, 0 placeholders remaining). Atomic capability
-library built (15 canonical atoms in content/atomic_modules_v2.json). Phase 3
-(dynamic path assembler + personalized atom path) is complete (2026-03-23;
-34/34 UAT checks pass). Phase 18 (ZH content localization + i18n parity) is
-complete (2026-03-24; 41/41 baseline UAT checks pass): language toggle added to
-Welcome and Diagnostic pages, level labels and domain names fully i18n-routed,
-all diagnostic hardcoded EN strings replaced. Phase 4 (library expansion to 20
-atoms + inline eval schema) is planned.
+PRODUCT: Personal AI transformation tool. Not an LMS. Not a course platform.
+PROMISE: 7-day transformation, role and industry agnostic, permanently free.
+BUSINESS MODEL: Free product as top-of-funnel for paid online courses.
+AUDIENCE: Job seekers · New graduates · Workforce facing AI displacement.
 
-The app delivers a four-stage learning loop:
+**B2C pivot decided (2026-03-26):** Full transformation from B2B internal tool
+(Streamlit, role-specific banking content, Firestore auth) to B2C consumer app
+(Next.js, universal 6-pillar content, Firebase Auth, social login). All design
+decisions are recorded in plans/b2c-transformation-roadmap.md.
 
-  1. DIAGNOSE the employee's AI skill level through a role-specific assessment
-  2. MAP GAPS using AI-generated personalized gap analysis
-  3. TRAIN through structured courses combining reading, hands-on practice
-     with an AI coach, and post-module evaluation
-  4. SCORE AND TRACK progress as employees complete modules and retake
+**Legacy B2B state (superseded):** Five roles live (RM/UW/AN/MK/PM). 35
+role-specific courses. Streamlit on GCP Cloud Run. Phase 3 (path assembler)
+and Phase 18 (ZH i18n) complete. This codebase is the migration starting point.
+
+The new product delivers a 7-day learning loop:
+
+  1. ONBOARD — personalization conversation (role, industry, daily work context)
+  2. DIAGNOSE — 6-item snapshot (1 AI-generated text + 5 MCQs, ~5 min)
+  3. TRAIN — 6 daily pillar modules (reading + AI-coached practice + quiz + artifact)
+  4. CERTIFY — Day 7 capstone → "AI-Supercharged Intermediate" credential issued
      assessments
 
 The app is NOT a Learning Management System. It is a skills-plus-scenario-

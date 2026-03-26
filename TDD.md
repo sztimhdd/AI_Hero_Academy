@@ -1,17 +1,46 @@
 # Technical Design Document (TDD)
-## AI Hero Academy MVP
+## AI Hero Academy — B2C Platform
 
-**Version**: 1.4
+**Version**: 2.0
 **Date**: March 2026
-**Status**: Phase 18 Complete (2026-03-24) | Phase 4 Planned
+**Status**: B2C Transformation Planned | Legacy B2B (v1.4) superseded
+
+⚠️  VERSION 2.0 NOTE (2026-03-26)
+Full B2C tech stack pivot decided. See plans/b2c-transformation-roadmap.md §4.
+Legacy Streamlit + Databricks architecture is superseded by Next.js + GCP stack below.
 
 ---
 
 ## 1. Overview
 
-AI Hero Academy is a Streamlit-based Databricks App that delivers personalized AI skills training to employees. It implements a four-stage learning loop: **Diagnose → Map Gaps → Train → Score & Track**.
+AI Hero Academy is a B2C personal AI transformation platform delivering a 7-day program across 6 AI skill pillars, with an ultra-personalized AI coach, scenario-based practice, and a shareable credential. Full product design: plans/b2c-transformation-roadmap.md.
 
-The MVP launched with Relationship Manager (RM) and expanded to include Underwriter (UW), Analyst (AN), Marketing/Comms Advisor (MK), and Project Manager (PM). All five roles are fully live. Each role has 18 diagnostic questions across 6 skill domains and 7 training courses (6 domain + 1 capstone).
+**NEW TECH STACK (B2C — decided 2026-03-26):**
+
+| Layer | Technology | Notes |
+|-------|-----------|-------|
+| Frontend | Next.js (App Router, React Server Components) | Replaces Streamlit; deploys to Cloud Run |
+| Auth | Firebase Authentication (GCP-native) | Google + Facebook + LinkedIn (OIDC); WeChat post-MVP |
+| Database | Google Cloud Firestore | Keep for MVP; Cloud SQL post-MVP if analytics needs grow |
+| File Storage | Google Cloud Storage + Cloud CDN | Capstone uploads, badge images, PDF certificates |
+| AI — Coach/Scoring | Google Gemini 2.0 Flash | Called from Next.js API routes; streaming via SSE |
+| AI — Vision | Google Gemini multimodal | Capstone screenshot scoring |
+| AI — Content gen | Gemini 3.1 Pro + Tavily/Google Search | 7-agent pipeline; offline content generation |
+| Deployment | GCP Cloud Run | Same pipeline; Docker; Next.js instead of Streamlit |
+| CDN | Firebase Hosting | Fronts Cloud Run; global including Asia-Pacific |
+| Notifications | Firebase Extensions (Trigger Email) + Web Push | Streak reminders |
+
+**NEW FIRESTORE COLLECTIONS:**
+user_profiles (extended: declared_role, daily_work_tasks, primary_motivation, streak_days)
+diagnostic_sessions (pillar_scores replaces domain_scores)
+training_progress (pillar_id, quiz_passed, build_artifact fields added)
+coach_sessions (role_context, day_number fields added)
+learner_model (NEW: natural_strengths, recurring_gaps, preferred_framing, daily_summaries)
+build_artifacts (NEW: per-pillar artifacts produced by learner)
+credentials (NEW: issued credential record with Open Badge data)
+ai_call_log (unchanged)
+
+**LEGACY STACK (superseded, B2B):**
 
 **Phase 3 complete (2026-03-23):** Dynamic path assembler live. Intake form replaces role dropdown on Welcome page; LLM parses free-text role description into `{role_text, magic_wish, daily_tasks, ai_tools[]}`; `utils/path_assembler.py` scores and sequences atoms from `content/atomic_modules_v2.json`; assembled path written to Firestore and rendered as atom cards on Home. Backward-compatible: users without `assembled_path` continue on legacy role-based flow. 34/34 UAT checks pass (`tests/uat_phase3.js`).
 
