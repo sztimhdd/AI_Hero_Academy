@@ -26,7 +26,7 @@ from utils.ai import (
     generate_module_coach_note,
 )
 from utils.scoring import (
-    DOMAIN_DISPLAY_NAMES, get_domain_display_name,
+    DOMAIN_DISPLAY_NAMES, get_domain_display_name, get_level_label,
     parse_options,
     parse_rubric,
     compute_current_domain_scores,
@@ -36,7 +36,7 @@ from utils.i18n import t
 
 st.set_page_config(
     page_title="Course Module | AI Hero Academy",
-    page_icon="⚡",
+    page_icon=":zap:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -283,86 +283,113 @@ with _bc_info_col:
 
 def _render_concept(rs: dict) -> None:
     """Renders concept_text_structured as an acronym card grid."""
-    st.caption(rs.get("framework_acronym", ""))
-    if rs.get("intro"):
-        st.markdown(rs["intro"])
-
+    intro_html = f'<div style="font-size:0.95rem;line-height:1.7;color:var(--text);margin-bottom:1rem">{rs["intro"]}</div>' if rs.get("intro") else ""
     cards = rs.get("cards", [])
-    LETTER_ICONS = ["🔵", "🟣", "🔴", "🟢", "🟡", "🟠"]
-    if cards:
-        cols = st.columns(2)
-        for i, card in enumerate(cards):
-            with cols[i % 2]:
-                with st.container(border=True):
-                    icon = LETTER_ICONS[i % len(LETTER_ICONS)]
-                    st.markdown(f"**{icon} {card['letter']} — {card['title']}**")
-                    st.markdown(card["body"])
-
+    cards_html = ""
+    for card in cards:
+        cards_html += (
+            f'<div style="padding:0.5rem 0;border-bottom:1px solid var(--border)">'
+            f'<div style="font-weight:600;font-size:0.88rem;color:var(--cyan)">{card.get("letter", "")} — {card.get("title", "")}</div>'
+            f'<div style="font-size:0.88rem;color:var(--text);margin-top:0.2rem;line-height:1.6">{card.get("body", "")}</div>'
+            f'</div>'
+        )
+    st.markdown(
+        f'<div class="read-concept-card">'
+        f'<div class="ai-card-label">{rs.get("framework_acronym", "Framework")}</div>'
+        f'{intro_html}{cards_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
     if rs.get("guardrails"):
-        items = "\n".join(f"- {g}" for g in rs["guardrails"])
-        st.info(f"**Essential guardrails**\n\n{items}")
+        items_html = "".join(f'<div style="padding:0.2rem 0;font-size:0.88rem;color:var(--text)">· {g}</div>' for g in rs["guardrails"])
+        st.markdown(
+            f'<div class="read-principle-callout">'
+            f'<div class="ai-card-label">Essential guardrails</div>{items_html}'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
 
 def _render_good_example(rs: dict) -> None:
-    """Renders good_example_structured as a Before/After comparison."""
+    """Renders good_example_structured as a Before/After comparison using themed cards."""
     if rs.get("scenario"):
-        with st.container(border=True):
-            st.caption("📋 Scenario")
-            st.markdown(rs["scenario"])
+        st.markdown(
+            f'<div class="read-concept-card" style="margin-bottom:1rem">'
+            f'<div class="ai-card-label">Scenario</div>'
+            f'<div style="font-size:0.9rem;line-height:1.7;color:var(--text)">{rs["scenario"]}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
-    col_b, col_a = st.columns(2)
-    with col_b:
-        st.caption("❌ Before")
-        with st.container(border=True):
-            st.code(rs.get("before_prompt", ""), language=None)
-            if rs.get("before_issue"):
-                st.caption(f"⚠️ {rs['before_issue']}")
-    with col_a:
-        st.caption("✅ After")
-        with st.container(border=True):
-            st.code(rs.get("after_prompt", ""), language=None)
-            if rs.get("after_benefit"):
-                st.caption(f"✓ {rs['after_benefit']}")
-
+    before_html = (
+        f'<div class="read-split-label" style="color:var(--red)">Without</div>'
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.82rem;color:var(--text);white-space:pre-wrap">{rs.get("before_prompt", "")}</div>'
+        + (f'<div style="font-size:0.75rem;color:var(--red);margin-top:0.5rem">⚠ {rs["before_issue"]}</div>' if rs.get("before_issue") else "")
+    )
+    after_html = (
+        f'<div class="read-split-label" style="color:var(--green)">With</div>'
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.82rem;color:var(--text);white-space:pre-wrap">{rs.get("after_prompt", "")}</div>'
+        + (f'<div style="font-size:0.75rem;color:var(--green);margin-top:0.5rem">✓ {rs["after_benefit"]}</div>' if rs.get("after_benefit") else "")
+    )
+    st.markdown(
+        f'<div class="read-split">'
+        f'<div class="read-split-bad">{before_html}</div>'
+        f'<div class="read-split-good">{after_html}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
     if rs.get("outcome"):
-        st.success(rs["outcome"])
+        st.markdown(
+            f'<div class="read-principle-callout">{rs["outcome"]}</div>',
+            unsafe_allow_html=True,
+        )
 
 
 def _render_anti_pattern(rs: dict) -> None:
-    """Renders anti_pattern_structured as an incident report with cascade chain."""
+    """Renders anti_pattern_structured as a pitfall card with cascade chain."""
+    parts = ['<div class="read-pitfall-card">']
+    parts.append('<div class="ai-card-label" style="color:var(--red)">Common Mistake</div>')
     if rs.get("failure_scenario"):
-        with st.container(border=True):
-            st.caption("⚠️ What went wrong")
-            st.markdown(rs["failure_scenario"])
-
+        parts.append(f'<div style="font-size:0.9rem;line-height:1.7;color:var(--text);margin-bottom:0.8rem">{rs["failure_scenario"]}</div>')
     chain = rs.get("chain", [])
     if chain:
-        st.markdown("**The cascade:**")
+        parts.append('<div style="font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:0.4rem">The cascade:</div>')
         for i, step in enumerate(chain, 1):
-            st.markdown(f"{i}. {step}")
-
+            parts.append(f'<div style="font-size:0.88rem;color:var(--text);padding:0.15rem 0">{i}. {step}</div>')
     if rs.get("root_lesson"):
-        st.error(f"**Root lesson:** {rs['root_lesson']}")
+        parts.append(f'<div style="margin-top:0.8rem;font-size:0.88rem;font-weight:600;color:var(--red)">Root lesson: {rs["root_lesson"]}</div>')
+    parts.append('</div>')
+    st.markdown("".join(parts), unsafe_allow_html=True)
 
 
 def _render_takeaway(rs: dict) -> None:
-    """Renders takeaway_structured as a focal card with two action points."""
-    if rs.get("statement"):
-        st.markdown(f"## {rs['statement']}")
-        st.divider()
-
+    """Renders takeaway_structured as a full-width cyan takeaway card."""
+    statement = rs.get("statement", "")
     a1 = rs.get("action_1", {})
     a2 = rs.get("action_2", {})
+    actions_html = ""
     if a1 or a2:
-        col1, col2 = st.columns(2)
-        with col1:
-            with st.container(border=True):
-                st.markdown(f"**{a1.get('title', '')}**")
-                st.markdown(a1.get("body", ""))
-        with col2:
-            with st.container(border=True):
-                st.markdown(f"**{a2.get('title', '')}**")
-                st.markdown(a2.get("body", ""))
+        a1_html = (
+            f'<div style="flex:1;background:rgba(0,0,0,0.2);border-radius:8px;padding:0.75rem">'
+            f'<div style="font-weight:600;font-size:0.88rem;color:var(--cyan);margin-bottom:0.3rem">{a1.get("title","")}</div>'
+            f'<div style="font-size:0.88rem;line-height:1.6;color:var(--text)">{a1.get("body","")}</div>'
+            f'</div>'
+        )
+        a2_html = (
+            f'<div style="flex:1;background:rgba(0,0,0,0.2);border-radius:8px;padding:0.75rem">'
+            f'<div style="font-weight:600;font-size:0.88rem;color:var(--cyan);margin-bottom:0.3rem">{a2.get("title","")}</div>'
+            f'<div style="font-size:0.88rem;line-height:1.6;color:var(--text)">{a2.get("body","")}</div>'
+            f'</div>'
+        )
+        actions_html = f'<div style="display:flex;gap:0.75rem;margin-top:0.8rem">{a1_html}{a2_html}</div>'
+    st.markdown(
+        f'<div class="read-takeaway-card">'
+        f'<div class="ai-card-label" style="color:var(--cyan)">Key Takeaway</div>'
+        f'<div style="font-size:1rem;font-weight:600;color:var(--text);line-height:1.5">{statement}</div>'
+        f'{actions_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -389,10 +416,27 @@ if active_sub == "overview":
         {"label": t("module.quiz_step_label", _lang),     "state": _step(eval_done,     practice_done and not eval_done)},
     ])
 
-    with st.expander(t("module.about_expander", _lang), expanded=False):
-        domain_display = get_domain_display_name(primary_domain, _lang)
-        st.caption(t("module.about_domain", _lang).format(domain=domain_display))
-        st.markdown(t("module.about_table_md", _lang))
+    # Always-visible capability tags (atom-path only)
+    _tags = (_atom.get("capability_tags", []) if active_atom_id and _atom else [])[:4]
+    if _tags:
+        _tag_html = "".join(
+            f'<div style="padding:0.25rem 0;font-size:0.88rem;color:var(--text);'
+            f'border-bottom:1px solid var(--border)">· {tag}</div>'
+            for tag in _tags
+        )
+        st.markdown(
+            f'<div class="read-concept-card" style="margin-bottom:1.2rem">'
+            f'<div class="ai-card-label">{t("module.what_youll_learn_label", _lang)}</div>'
+            f'{_tag_html}</div>',
+            unsafe_allow_html=True,
+        )
+
+    # Module info popover (replaces expander)
+    domain_display = get_domain_display_name(primary_domain, _lang)
+    with st.popover(t("module.about_popover_label", _lang)):
+        st.caption(f"{t('module.about_domain_label', _lang)}: {domain_display}")
+        if active_atom_id and _atom and _atom.get("estimated_minutes"):
+            st.caption(f"{t('module.about_time_label', _lang)}: {_atom.get('estimated_minutes', '?')} min")
 
     if eval_done:
         if st.button(t("module.review_results_btn", _lang), type="primary"):
@@ -445,7 +489,11 @@ elif active_sub == "reading":
 
     # Apply pending navigation from Prev/Next buttons BEFORE the widget renders
     if "_reading_nav_target" in st.session_state:
-        st.session_state["reading_section_ctrl"] = st.session_state.pop("_reading_nav_target")
+        _nav_target = st.session_state.pop("_reading_nav_target")
+        st.session_state["reading_section_ctrl"] = _nav_target
+        # Also sync the pills widget key so it doesn't override the nav on rerender
+        _nav_idx = _SECTION_LABELS.index(_nav_target) if _nav_target in _SECTION_LABELS else 0
+        st.session_state[f"reading_pills_{course_id}"] = _SECTION_DISPLAY[_nav_idx]
     elif "reading_section_ctrl" not in st.session_state:
         st.session_state["reading_section_ctrl"] = _SECTION_LABELS[0]
 
@@ -461,28 +509,62 @@ elif active_sub == "reading":
             if rs:
                 _render_concept(rs)
             elif reading.get("concept_text"):
-                with st.container(border=True):
-                    st.markdown(reading["concept_text"])
+                st.markdown(
+                    f'<div class="read-concept-card">'
+                    f'<div class="ai-card-label">Concept</div>'
+                    f'<div style="font-size:0.95rem;line-height:1.7;color:var(--text)">{reading["concept_text"]}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
         elif section_idx == 1:
             rs = reading_s.get("good_example_structured") if reading_s else None
             if rs:
                 _render_good_example(rs)
             elif reading.get("good_example"):
-                st.success(f"**Good example** — {reading['good_example']}")
+                _ex_text = reading["good_example"]
+                if " → " in _ex_text or "vs " in _ex_text.lower():
+                    _parts = _ex_text.split(" → ", 1) if " → " in _ex_text else _ex_text.split(" vs ", 1)
+                    st.markdown(
+                        f'<div class="read-split">'
+                        f'<div class="read-split-bad"><div class="read-split-label" style="color:var(--red)">Without</div><div style="font-size:0.9rem;color:var(--text)">{_parts[0]}</div></div>'
+                        f'<div class="read-split-good"><div class="read-split-label" style="color:var(--green)">With</div><div style="font-size:0.9rem;color:var(--text)">{_parts[1] if len(_parts)>1 else ""}</div></div>'
+                        f'</div>',
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.markdown(
+                        f'<div class="read-split-good" style="border-radius:8px;padding:1rem">'
+                        f'<div class="read-split-label" style="color:var(--green)">Good Example</div>'
+                        f'<div style="font-size:0.9rem;color:var(--text)">{_ex_text}</div>'
+                        f'</div>',
+                        unsafe_allow_html=True,
+                    )
         elif section_idx == 2:
             rs = reading_s.get("anti_pattern_structured") if reading_s else None
             if rs:
                 _render_anti_pattern(rs)
             elif reading.get("anti_pattern"):
-                st.warning(f"**Common mistake** — {reading['anti_pattern']}")
+                st.markdown(
+                    f'<div class="read-pitfall-card">'
+                    f'<div class="ai-card-label" style="color:var(--red)">Common Mistake</div>'
+                    f'<div style="font-size:0.9rem;line-height:1.7;color:var(--text)">{reading["anti_pattern"]}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
         elif section_idx == 3:
             rs = reading_s.get("takeaway_structured") if reading_s else None
             if rs:
                 _render_takeaway(rs)
             elif reading.get("takeaway"):
-                st.info(f"**Key takeaway** — {reading['takeaway']}")
-            # Milestone flair — balloons fire once per reading session
-            _celebrate_key = f"reading_takeaway_celebrated_{course_id}"
+                st.markdown(
+                    f'<div class="read-takeaway-card">'
+                    f'<div class="ai-card-label" style="color:var(--cyan)">Key Takeaway</div>'
+                    f'<div style="font-size:1rem;font-weight:600;color:var(--text);line-height:1.5">{reading["takeaway"]}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+            # Milestone flair — balloons fire once per reading session (scoped to diag session)
+            _celebrate_key = f"reading_takeaway_celebrated_{course_id}_{st.session_state.get('diag_session_started', 'default')}"
             if not st.session_state.get(_celebrate_key):
                 st.balloons()
                 st.session_state[_celebrate_key] = True
@@ -492,19 +574,17 @@ elif active_sub == "reading":
     st.divider()
     _rn_prev, _rn_ctrl, _rn_next = st.columns([1, 4, 1])
     with _rn_ctrl:
-        # options= uses translated display labels; session state stores English internal key via index
-        _selected_display = st.segmented_control(
-            "Reading section",
+        _pill_selected = st.pills(
+            label="Section",
             options=_SECTION_DISPLAY,
             default=_SECTION_DISPLAY[section_idx],
-            key="reading_section_ctrl_display",
             label_visibility="collapsed",
+            key=f"reading_pills_{course_id}",
         )
-        # Keep internal key in sync
-        if _selected_display and _selected_display in _SECTION_DISPLAY:
-            _new_internal = _SECTION_LABELS[_SECTION_DISPLAY.index(_selected_display)]
-            if _new_internal != st.session_state.get("reading_section_ctrl"):
-                st.session_state["reading_section_ctrl"] = _new_internal
+        if _pill_selected and _pill_selected in _SECTION_DISPLAY:
+            _new_idx = _SECTION_DISPLAY.index(_pill_selected)
+            if _new_idx != section_idx:
+                st.session_state["reading_section_ctrl"] = _SECTION_LABELS[_new_idx]
                 st.rerun()
     with _rn_prev:
         if section_idx > 0:
@@ -525,7 +605,8 @@ elif active_sub == "reading":
                     st.error(f"Could not save progress.\n\n_{e}_")
                     st.stop()
                 for k in ("reading_section_idx", "reading_section_ctrl",
-                          f"reading_takeaway_celebrated_{course_id}"):
+                          f"reading_pills_{course_id}",
+                          f"reading_takeaway_celebrated_{course_id}_{st.session_state.get('diag_session_started', 'default')}"):
                     st.session_state.pop(k, None)
                 st.session_state.update({
                     "coach_messages_by_task": {0: [], 1: [], 2: [], 3: []},
@@ -591,7 +672,14 @@ elif active_sub == "practice":
         {"label": t("module.quiz_step_label", _lang),     "state": "pending"},
     ])
 
-    st.error(t("module.practice_warning", _lang))
+    _warn_key = f"practice_warn_seen_{course_id}"
+    if not st.session_state.get(_warn_key):
+        # First visit: show privacy + navigation warning together
+        st.error(t("module.practice_privacy_warning", _lang))
+        st.session_state[_warn_key] = True
+    else:
+        # Subsequent visits: quiet caption only
+        st.caption(t("module.practice_warning_short", _lang))
 
     scenario_html = (scenario.get("scenario_text") or "").replace("\n", "<br>")
     with st.expander(t("module.scenario_expander", _lang), expanded=(len(messages) == 0)):
@@ -643,11 +731,10 @@ elif active_sub == "practice":
         mcq_answered = st.session_state["mcq_answered_by_task"].get(task_idx)
 
         if not mcq_answered:
-            # Show option buttons in columns — no chat input
-            cols = st.columns(len(current_mcq_options))
+            # Show option buttons stacked vertically — full width for readability
             for i, opt in enumerate(current_mcq_options):
-                with cols[i]:
-                    if st.button(opt["label"], key=f"mcq_{task_idx}_{i}"):
+                if True:
+                    if st.button(opt["label"], key=f"mcq_{task_idx}_{i}", use_container_width=True):
                         chosen = opt["label"]
                         is_best = opt.get("is_best", False)
                         best_label = next((o["label"] for o in current_mcq_options if o.get("is_best")), chosen)
@@ -702,20 +789,26 @@ elif active_sub == "practice":
         else:
             # Show disabled MCQ buttons with ✅/❌ correctness signal
             answered_label = mcq_answered
-            cols = st.columns(len(current_mcq_options))
             for i, opt in enumerate(current_mcq_options):
-                with cols[i]:
-                    if opt.get("is_best"):
-                        display_label = f"✅ {opt['label']}"
-                    elif opt["label"] == answered_label:
-                        display_label = f"❌ {opt['label']}"
-                    else:
-                        display_label = opt["label"]
-                    st.button(display_label, key=f"mcq_done_{task_idx}_{i}", disabled=True)
+                if opt.get("is_best"):
+                    display_label = f"✅ {opt['label']}"
+                elif opt["label"] == answered_label:
+                    display_label = f"❌ {opt['label']}"
+                else:
+                    display_label = opt["label"]
+                st.button(display_label, key=f"mcq_done_{task_idx}_{i}", disabled=True, use_container_width=True)
             # Show the recorded exchange then the advance CTA
             for msg in messages:
-                with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
-                    st.markdown(msg["content"])
+                if msg["role"] == "assistant":
+                    st.markdown(
+                        f'<div class="chat-coach-bubble"><div class="chat-coach-label">AI Coach</div>{msg["content"]}</div>',
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.markdown(
+                        f'<div class="chat-user-bubble">{msg["content"]}</div>',
+                        unsafe_allow_html=True,
+                    )
             if task_idx < 3:
                 if st.button(t("module.next_task_btn", _lang), key=f"mcq_next_{task_idx}", type="primary"):
                     _advance_task()
@@ -744,16 +837,37 @@ elif active_sub == "practice":
                         _advance_task()
             # Chat history rendered below CTA so learner can review context
             for msg in messages:
-                with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
-                    st.markdown(msg["content"])
+                if msg["role"] == "assistant":
+                    st.markdown(
+                        f'<div class="chat-coach-bubble"><div class="chat-coach-label">AI Coach</div>{msg["content"]}</div>',
+                        unsafe_allow_html=True,
+                    )
+                else:
+                    st.markdown(
+                        f'<div class="chat-user-bubble">{msg["content"]}</div>',
+                        unsafe_allow_html=True,
+                    )
             st.stop()
 
         # Chat history — current task only (UX-P1)
         for msg in messages:
-            with st.chat_message(msg["role"], avatar="🤖" if msg["role"] == "assistant" else None):
-                st.markdown(msg["content"])
+            if msg["role"] == "assistant":
+                st.markdown(
+                    f'<div class="chat-coach-bubble">'
+                    f'<div class="chat-coach-label">AI Coach</div>'
+                    f'{msg["content"]}'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.markdown(
+                    f'<div class="chat-user-bubble">{msg["content"]}</div>',
+                    unsafe_allow_html=True,
+                )
 
-        st.caption(t("module.turn_counter", _lang).format(n=total_turns, max=MAX_TOTAL_TURNS))
+        _remaining_turns = MAX_TOTAL_TURNS - total_turns
+        if _remaining_turns <= 3:
+            st.caption(t("module.turns_remaining_caption", _lang).format(n=_remaining_turns))
 
         # Determine if we're waiting for user input
         last_role = messages[-1]["role"] if messages else None
@@ -792,23 +906,28 @@ elif active_sub == "practice":
                     st.warning(f"Your message was trimmed to {MAX_USER_INPUT_CHARS} characters.")
                     user_input = user_input[:MAX_USER_INPUT_CHARS]
                 # Immediately show the user message — don't wait for AI to reply
-                with st.chat_message("user"):
-                    st.markdown(user_input.strip())
+                st.markdown(
+                    f'<div class="chat-user-bubble">{user_input.strip()}</div>',
+                    unsafe_allow_html=True,
+                )
 
                 try:
-                    with st.chat_message("assistant", avatar="🤖"):
-                        with st.spinner(t("module.coach_thinking", _lang)):
-                            reply = coach_response(
-                                system_prompt=coach_prompt + _OPEN_TASK_MASTERY_ADDENDUM,
-                                conversation=messages,
-                                user_input=user_input.strip(),
-                                user_email=user_email,
-                                lang=_lang,
-                            )
-                        # Strip the mastery signal before displaying
-                        auto_advance = "[ADVANCE]" in reply
-                        reply_clean = reply.replace("[ADVANCE]", "").strip()
-                        st.markdown(reply_clean)
+                    st.markdown(
+                        '<div class="chat-coach-bubble"><div class="chat-coach-label">AI Coach</div>',
+                        unsafe_allow_html=True,
+                    )
+                    with st.spinner(t("module.coach_thinking", _lang)):
+                        reply = coach_response(
+                            system_prompt=coach_prompt + _OPEN_TASK_MASTERY_ADDENDUM,
+                            conversation=messages,
+                            user_input=user_input.strip(),
+                            user_email=user_email,
+                            lang=_lang,
+                        )
+                    # Strip the mastery signal before displaying
+                    auto_advance = "[ADVANCE]" in reply
+                    reply_clean = reply.replace("[ADVANCE]", "").strip()
+                    st.markdown(reply_clean + '</div>', unsafe_allow_html=True)
                 except Exception as e:
                     st.error(t("module.coach_unavailable", _lang) + f"\n\n_{e}_")
                     st.stop()
@@ -953,14 +1072,21 @@ elif active_sub == "evaluation":
             st.session_state.pop(k, None)
         st.rerun()
 
+    # Top progress rail (fixed, 3px)
+    _eval_pct = int((eval_idx / EVAL_TOTAL * 100) if EVAL_TOTAL > 0 else 0)
+    st.markdown(
+        f'<div class="eval-progress-rail-track">'
+        f'<div class="eval-progress-rail-fill" style="width:{_eval_pct}%"></div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
+
     st.title(t("module.quiz_title", _lang).format(title=course_title))
-    st.caption(t("module.quiz_counter", _lang).format(n=min(eval_idx + 1, EVAL_TOTAL), total=EVAL_TOTAL))
     step_progress_strip([
         {"label": t("module.read_step_label", _lang),     "state": "done"},
         {"label": t("module.practice_step_label", _lang), "state": "done"},
         {"label": t("module.quiz_step_label", _lang),     "state": "current"},
     ])
-    st.progress(eval_idx / EVAL_TOTAL if EVAL_TOTAL > 0 else 0)
 
     if eval_idx >= EVAL_TOTAL:
         complete_evaluation(st.session_state["eval_responses"])
@@ -973,7 +1099,15 @@ elif active_sub == "evaluation":
     scenario_text = item.get("scenario_text") or ""
     is_last = eval_idx == EVAL_TOTAL - 1
 
-    st.caption(f"📍 {get_domain_display_name(primary_domain, _lang).upper()}")
+    # Domain tag pill + question counter (replacing st.caption "📍 ...")
+    st.markdown(
+        f'<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">'
+        f'<div class="domain-tag-pill" style="margin-bottom:0">{get_domain_display_name(primary_domain, _lang).upper()}</div>'
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.72rem;color:var(--text-muted)">'
+        f'{t("module.quiz_counter", _lang).format(n=min(eval_idx+1,EVAL_TOTAL), total=EVAL_TOTAL)}'
+        f'</div></div>',
+        unsafe_allow_html=True,
+    )
 
     if item_type == "mcq":
         if scenario_text:
@@ -981,25 +1115,20 @@ elif active_sub == "evaluation":
         st.markdown(f'<div class="question-text">{question_text}</div>', unsafe_allow_html=True)
 
         options = parse_options(item.get("options") or "[]")
-        opt_labels = [f"{o['label']}. {o['text']}" for o in options]
-        opt_keys = [o["label"] for o in options]
 
-        selected = st.radio(
-            t("module.eval_answer_label", _lang),
-            options=opt_labels,
-            key=f"eq_{item_id}",
-            index=None,
-            label_visibility="collapsed",
-        )
-
-        btn_label = t("module.eval_submit_quiz_btn", _lang) if is_last else t("module.eval_next_btn", _lang)
-        if st.button(btn_label, disabled=(selected is None), key=f"eb_{item_id}", type="primary"):
-            st.session_state["eval_responses"].append({
-                "item_id": item_id,
-                "response": opt_keys[opt_labels.index(selected)],
-            })
-            st.session_state["eval_item_index"] += 1
-            st.rerun()
+        # Full-width MCQ button stack — auto-advance on selection
+        for opt in options:
+            btn_text = f'{opt["label"]}.  {opt["text"]}'
+            if st.button(btn_text, key=f"eq_{item_id}_{opt['label']}", use_container_width=True):
+                st.session_state["eval_responses"].append({
+                    "item_id": item_id,
+                    "response": opt["label"],
+                })
+                st.session_state["eval_item_index"] += 1
+                if eval_idx + 1 >= EVAL_TOTAL:
+                    complete_evaluation(st.session_state["eval_responses"])
+                else:
+                    st.rerun()
 
     elif item_type == "performance_task":
         if scenario_text:
@@ -1007,8 +1136,14 @@ elif active_sub == "evaluation":
             st.markdown(f'<div class="scenario-box">{scenario_text}</div>', unsafe_allow_html=True)
 
         st.markdown(f'<div class="question-text">{question_text}</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.72rem;'
+            f'text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.4rem">'
+            f'{t("module.eval_your_response_label", _lang)}</div>',
+            unsafe_allow_html=True,
+        )
         user_text = st.text_area(
-            "Response:",
+            t("module.eval_your_response_label", _lang),
             key=f"ep_{item_id}",
             height=160,
             placeholder=t("module.eval_response_placeholder", _lang),
@@ -1070,6 +1205,14 @@ elif active_sub == "results":
         {"label": t("module.quiz_step_label", _lang),     "state": "done"},
     ])
 
+    # Load progress early — needed for all_complete check used in success banner below
+    all_prog = load_all_progress()
+    next_module = next(
+        (r for r in all_prog if int(r.get("module_sequence_order", 0)) == seq_order + 1),
+        None,
+    )
+    all_complete = all(r.get("evaluation_completed_at") for r in all_prog)
+
     try:
         rs = float(result_score or 0)
     except (TypeError, ValueError):
@@ -1083,33 +1226,76 @@ elif active_sub == "results":
         except (TypeError, ValueError):
             pass
 
-    st.metric(label=course_title, value=f"{rs:.1f} / 4.0", delta=delta_str)
+    # Custom score card
+    _level_rs = get_level_label(rs, _lang)
+    _delta_html = ""
+    if delta_str:
+        try:
+            delta_val = rs - float(diag_baseline)
+            _delta_class = "score-delta-pos" if delta_val >= 0 else "score-delta-neg"
+            _delta_html = f'<div class="{_delta_class}">{delta_str}</div>'
+        except Exception:
+            pass
+    st.markdown(
+        f'<div class="score-card">'
+        f'<div class="score-number">{rs:.1f}</div>'
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.9rem;color:var(--text-muted)">/ 4.0</div>'
+        f'<div class="score-level">{_level_rs}</div>'
+        f'{_delta_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
+    # Themed domain progress bar
     if result_domain_score is not None:
         try:
             ds = float(result_domain_score)
         except (TypeError, ValueError):
             ds = 0.0
-        col_lbl, col_val = st.columns([4, 1])
-        with col_lbl:
-            st.caption(get_domain_display_name(primary_domain, _lang))
-            st.progress(max(0.0, min(1.0, ds / 4.0)))
-        with col_val:
-            st.caption(f"{ds:.1f} / 4.0")
+        _domain_pct = max(0, min(100, int(ds / 4.0 * 100)))
+        st.markdown(
+            f'<div style="margin:0.5rem 0">'
+            f'<div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.3rem">'
+            f'{get_domain_display_name(primary_domain, _lang)}</div>'
+            f'<div class="themed-progress-track">'
+            f'<div class="themed-progress-fill" style="width:{_domain_pct}%"></div>'
+            f'</div>'
+            f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.72rem;color:var(--text-muted);text-align:right">{ds:.1f} / 4.0</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
+    # Coach note with signal grammar
     if coach_note:
-        with st.container(border=True):
-            st.caption(t("module.results_coach_note_label", _lang))
-            st.markdown(coach_note)
+        st.markdown(
+            f'<div class="ai-card" style="margin:1.5rem 0">'
+            f'<div class="ai-card-label">{t("module.results_coach_note_label", _lang)}</div>'
+            f'{coach_note}'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
-    st.success(t("module.results_updated_success", _lang))
-
-    all_prog = load_all_progress()
-    next_module = next(
-        (r for r in all_prog if int(r.get("module_sequence_order", 0)) == seq_order + 1),
-        None,
-    )
-    all_complete = all(r.get("evaluation_completed_at") for r in all_prog)
+    # Themed success banner (not st.success widget)
+    if all_complete:
+        st.balloons()
+        st.markdown(
+            f'<div class="aha-card-success" style="text-align:center;padding:1.5rem">'
+            f'<div style="font-size:1.5rem">🏆</div>'
+            f'<div style="font-family:\'DM Serif Display\',serif;font-size:1.2rem;color:var(--text)">'
+            f'{t("module.results_all_complete_headline", _lang)}</div>'
+            f'<div style="font-size:0.88rem;color:var(--text-muted);margin-top:0.4rem">'
+            f'{t("module.results_all_complete_sub", _lang)}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            f'<div class="aha-card-success">'
+            f'<div style="font-size:0.9rem;color:var(--text)">'
+            f'✓ {t("module.results_updated_success", _lang)}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
     col_a, col_b = st.columns(2)
     with col_a:

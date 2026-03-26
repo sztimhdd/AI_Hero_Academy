@@ -26,7 +26,7 @@ from utils.i18n import t
 
 st.set_page_config(
     page_title="Skills Profile | AI Hero Academy",
-    page_icon="⚡",
+    page_icon=":zap:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -128,7 +128,7 @@ with col_h:
     )
 with col_date:
     st.markdown(
-        f'<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.75rem; '
+        f'<div style="font-family:\'JetBrains Mono\',monospace; font-size:0.75rem; '
         f'color:#8990A8; text-align:right; margin-top:1.2rem">{t("profile.last_assessed_label", _lang)}<br>{assessed_date}</div>',
         unsafe_allow_html=True,
     )
@@ -136,7 +136,16 @@ with col_date:
 # ── Overall score hero + domain scores ────────────────────────────────────────
 col_score, col_domains = st.columns([2, 3])
 with col_score:
-    st.metric(label=level_label, value=f"{overall:.1f} / 4.0")
+    from utils.scoring import get_level_label as _get_level
+    _level_str = _get_level(overall, _lang)
+    st.markdown(
+        f'<div class="score-card">'
+        f'<div class="score-number">{overall:.1f}</div>'
+        f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:1rem;color:var(--text-muted)">/ 4.0</div>'
+        f'<div class="score-level">{_level_str}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
 with col_domains:
     section_header(t("profile.domain_scores_header", _lang))
@@ -154,7 +163,7 @@ with col_domains:
         r=_vals + [_vals[0]],
         theta=_cats + [_cats[0]],
         fill="toself",
-        fillcolor="rgba(0,212,232,0.12)",
+        fillcolor="rgba(0,212,232,0.22)",
         line=dict(color="#00D4E8", width=2),
         mode="lines+markers",
         marker=dict(color="#00D4E8", size=6),
@@ -182,6 +191,13 @@ with col_domains:
         showlegend=False,
     )
     st.plotly_chart(_fig, use_container_width=True, config={"displayModeBar": False})
+    with st.expander(t("profile.chart_alt_label", _lang), expanded=False):
+        import pandas as _pd_alt
+        _alt_rows = [
+            {"Domain": get_domain_display_name(d, _lang), "Score": f"{current_domain_scores.get(d, 0.0):.1f}"}
+            for d in DOMAIN_IDS
+        ]
+        st.dataframe(_pd_alt.DataFrame(_alt_rows), hide_index=True, use_container_width=True)
 
 # ── Gap Map ───────────────────────────────────────────────────────────────────
 section_header(t("profile.gap_map_header", _lang))
@@ -195,7 +211,7 @@ if gap_map_row:
     if bullets:
         # Build all HTML in one st.markdown() call — splitting across multiple calls causes
         # Streamlit to auto-close the opening <div> immediately, leaving an empty card box.
-        parts = ['<div class="aha-card">']
+        parts = ['<div class="ai-card">']
         parts.append(
             '<div style="display:flex; gap:1.25rem; margin-bottom:1rem; font-family:\'Inter\',sans-serif;'
             ' font-size:0.72rem; color:#8990A8; text-transform:uppercase; letter-spacing:0.06em">'
@@ -233,7 +249,7 @@ else:
     )
 
 # ── Assessment History ─────────────────────────────────────────────────────────
-if len(all_diags) > 0:
+if len(all_diags) > 1:
     section_header(t("profile.history_header", _lang))
     rows = []
     for diag in all_diags:
@@ -262,7 +278,7 @@ section_header(t("profile.actions_header", _lang))
 col_a, col_b = st.columns([1, 1])
 
 with col_a:
-    if st.button(t("profile.retake_btn", _lang), use_container_width=True):
+    if st.button(t("profile.retake_btn", _lang), type="secondary"):
         # Clear any lingering diagnostic session state
         for k in ["diag_item_index", "diag_responses", "diag_session_started", "diag_started"]:
             st.session_state.pop(k, None)
