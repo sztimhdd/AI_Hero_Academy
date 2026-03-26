@@ -34,7 +34,7 @@ from utils.i18n import t
 
 st.set_page_config(
     page_title="Diagnostic | AI Hero Academy",
-    page_icon="⚡",
+    page_icon=":zap:",
     layout="wide",
     initial_sidebar_state="auto",
 )

@@ -26,7 +26,7 @@ from utils.i18n import t
 
 st.set_page_config(
     page_title="Skills Profile | AI Hero Academy",
-    page_icon="⚡",
+    page_icon=":zap:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -128,7 +128,7 @@ with col_h:
     )
 with col_date:
     st.markdown(
-        f'<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.75rem; '
+        f'<div style="font-family:\'JetBrains Mono\',monospace; font-size:0.75rem; '
         f'color:#8990A8; text-align:right; margin-top:1.2rem">{t("profile.last_assessed_label", _lang)}<br>{assessed_date}</div>',
         unsafe_allow_html=True,
     )

@@ -60,7 +60,7 @@ def _fetch_linkedin_via_gemini(url: str) -> str:
 
 st.set_page_config(
     page_title="Welcome | AI Hero Academy",
-    page_icon="⚡",
+    page_icon=":zap:",
     layout="wide",
     initial_sidebar_state="auto",
 )
@@ -109,7 +109,7 @@ DEMO_CSS = """
   justify-content: center;
 }
 .demo-eyebrow {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -137,7 +137,7 @@ DEMO_CSS = """
   margin: 0 auto 2.4rem;
 }
 .demo-section-label {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.68rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -172,7 +172,7 @@ DEMO_CSS = """
   height: 100%;
 }
 .demo-stat-number {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 3rem;
   font-weight: 500;
   color: var(--cyan);
@@ -193,7 +193,7 @@ DEMO_CSS = """
   line-height: 1.6;
 }
 .demo-stat-source {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;
   color: var(--text-faint);
   margin-top: 0.8rem;
@@ -221,7 +221,7 @@ DEMO_CSS = """
   height: 100%;
 }
 .demo-stage-icon  { font-size: 1.8rem; margin-bottom: 0.7rem; }
-.demo-stage-num   { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--cyan); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.demo-stage-num   { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--cyan); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
 .demo-stage-label { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--text); margin-bottom: 0.5rem; }
 .demo-stage-body  { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
 .demo-loop-callout {
@@ -268,7 +268,7 @@ DEMO_CSS = """
 .demo-domain-emoji  { font-size: 1.3rem; margin-bottom: 0.4rem; }
 .demo-domain-label  { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--text); margin-bottom: 0.25rem; }
 .demo-domain-reframe { font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--cyan); line-height: 1.5; }
-.demo-attribution   { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--text-faint); text-align: center; margin-top: 1rem; }
+.demo-attribution   { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-faint); text-align: center; margin-top: 1rem; }
 /* ─── MASTERY PROGRESSION (Section 6) ──────────────────── */
 .demo-mastery-row {
   display: flex;
@@ -279,7 +279,7 @@ DEMO_CSS = """
   margin: 1.4rem 0 0.6rem;
 }
 .demo-mastery-pill {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
   font-weight: 500;
   padding: 0.35rem 0.9rem;
@@ -294,7 +294,7 @@ DEMO_CSS = """
   color: var(--text);
   background: var(--bg-surface);
 }
-.demo-mastery-arrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--border); }
+.demo-mastery-arrow { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--border); }
 .demo-mastery-note  { font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--text-faint); text-align: center; margin-top: 0.4rem; }
 /* ─── GET STARTED (Section 9 — CTA + form) ──────────────── */
 .demo-cta-header {
@@ -323,7 +323,7 @@ DEMO_CSS = """
 }
 /* ─── ROADMAP CARDS (Section 8) ─────────────────────────── */
 .demo-roadmap-card  { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; height: 100%; }
-.demo-roadmap-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+.demo-roadmap-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
 .demo-roadmap-title { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.88rem; color: var(--text); margin-bottom: 0.35rem; }
 .demo-roadmap-body  { font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; }
 /* ─── TASK 3: SVG icon display ──────────────────────────── */

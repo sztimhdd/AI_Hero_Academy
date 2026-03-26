@@ -36,7 +36,7 @@ from utils.i18n import t
 
 st.set_page_config(
     page_title="Course Module | AI Hero Academy",
-    page_icon="⚡",
+    page_icon=":zap:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -489,7 +489,11 @@ elif active_sub == "reading":
 
     # Apply pending navigation from Prev/Next buttons BEFORE the widget renders
     if "_reading_nav_target" in st.session_state:
-        st.session_state["reading_section_ctrl"] = st.session_state.pop("_reading_nav_target")
+        _nav_target = st.session_state.pop("_reading_nav_target")
+        st.session_state["reading_section_ctrl"] = _nav_target
+        # Also sync the pills widget key so it doesn't override the nav on rerender
+        _nav_idx = _SECTION_LABELS.index(_nav_target) if _nav_target in _SECTION_LABELS else 0
+        st.session_state[f"reading_pills_{course_id}"] = _SECTION_DISPLAY[_nav_idx]
     elif "reading_section_ctrl" not in st.session_state:
         st.session_state["reading_section_ctrl"] = _SECTION_LABELS[0]
 
@@ -670,9 +674,11 @@ elif active_sub == "practice":
 
     _warn_key = f"practice_warn_seen_{course_id}"
     if not st.session_state.get(_warn_key):
-        st.error(t("module.practice_warning", _lang))
+        # First visit: show privacy + navigation warning together
+        st.error(t("module.practice_privacy_warning", _lang))
         st.session_state[_warn_key] = True
     else:
+        # Subsequent visits: quiet caption only
         st.caption(t("module.practice_warning_short", _lang))
 
     scenario_html = (scenario.get("scenario_text") or "").replace("\n", "<br>")

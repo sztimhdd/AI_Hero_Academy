@@ -130,6 +130,7 @@
   "module.reading_complete_msg": "您已完成本模块的全部阅读内容，准备好开始练习了吗？",
   "module.complete_reading_btn": "完成阅读 →",
   "module.practice_warning": "⚠️ 离开此页面将结束本次练习。请点击**完成练习 →**以保存进度。",
+  "module.practice_privacy_warning": "⚠️ **请勿输入真实客户姓名、账户号码或保密信息**，仅使用虚构示例。离开此页面将结束本次练习——请点击**完成练习 →**以保存进度。",
   "module.practice_warning_short": "练习进行中——离开前请先完成。",
   "module.turns_remaining_caption": "本次会话还剩 {n} 次对话。",
   "module.scenario_expander": "📋 场景",

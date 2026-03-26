@@ -19,7 +19,7 @@ from utils.i18n import t
 
 st.set_page_config(
     page_title="My Training | AI Hero Academy",
-    page_icon="⚡",
+    page_icon=":zap:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -225,7 +225,7 @@ if _assembled_path:
             _col_num, _col_body, _col_time = st.columns([1, 7, 2])
             with _col_num:
                 st.markdown(
-                    f'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:0.9rem;'
+                    f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.9rem;'
                     f'font-weight:700;color:{_num_color};padding-top:0.3rem">'
                     f'{str(_atom_seq).zfill(2)}</div>',
                     unsafe_allow_html=True,
@@ -250,7 +250,7 @@ if _assembled_path:
             with _col_time:
                 if _atom_minutes:
                     st.markdown(
-                        f'<div style="text-align:right;font-family:\'IBM Plex Mono\',monospace;'
+                        f'<div style="text-align:right;font-family:\'JetBrains Mono\',monospace;'
                         f'font-size:0.75rem;color:#8990A8">{_atom_minutes} min</div>',
                         unsafe_allow_html=True,
                     )
@@ -266,7 +266,7 @@ if _assembled_path:
                     st.session_state["active_atom_id"] = _atom_id
                     st.session_state.pop("active_course_id", None)
                     if not _atom_reading_done:
-                        st.session_state["active_submodule"] = "reading"
+                        st.session_state["active_submodule"] = "overview"
                     elif not _atom_practice_done:
                         st.session_state["active_submodule"] = "practice"
                     else:
@@ -338,7 +338,7 @@ else:
             col_num, col_body, col_score = st.columns([1, 7, 2])
             with col_num:
                 st.markdown(
-                    f'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:0.9rem;'
+                    f'<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.9rem;'
                     f'font-weight:700;color:{num_color};padding-top:0.3rem;{opacity}">'
                     f'{str(seq).zfill(2)}</div>',
                     unsafe_allow_html=True,
@@ -363,7 +363,7 @@ else:
                 if card_state == "completed" and eval_score is not None:
                     try:
                         st.markdown(
-                            f'<div style="text-align:right;font-family:\'IBM Plex Mono\',monospace;'
+                            f'<div style="text-align:right;font-family:\'JetBrains Mono\',monospace;'
                             f'font-size:0.82rem;color:#29CC6A">{float(eval_score):.1f} / 4.0</div>',
                             unsafe_allow_html=True,
                         )
@@ -380,7 +380,7 @@ else:
                 if st.button(btn_label, key=f"module_btn_{seq}", use_container_width=True, type="primary"):
                     st.session_state["active_course_id"] = course_id
                     if not reading_done:
-                        st.session_state["active_submodule"] = "reading"
+                        st.session_state["active_submodule"] = "overview"
                     elif not practice_done:
                         st.session_state["active_submodule"] = "practice"
                     else:

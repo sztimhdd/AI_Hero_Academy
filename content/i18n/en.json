@@ -220,6 +220,7 @@
   "module.reading_complete_msg": "You've covered all the reading material for this module. Ready to practice?",
   "module.complete_reading_btn": "Complete Reading →",
   "module.practice_warning": "⚠️ Navigating away will end this practice session. Use **Complete Practice →** to save your progress.",
+  "module.practice_privacy_warning": "⚠️ **Do not enter real client names, account numbers, or confidential data** in this coach. Use fictional examples only. Navigating away will end your session — use **Complete Practice →** to save progress.",
   "module.practice_warning_short": "Session in progress — complete before navigating away.",
   "module.turns_remaining_caption": "{n} turns remaining in this session.",
   "module.scenario_expander": "📋 Scenario",
