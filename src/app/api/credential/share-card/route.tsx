@@ -23,6 +23,7 @@ export async function GET(req: NextRequest) {
   const PILLARS = ["P1", "P2", "P3", "P4", "P5", "P6"] as const;
   const pillarScores = credential.pillar_scores;
 
+  try {
   const img = new ImageResponse(
     (
       <div
@@ -131,10 +132,9 @@ export async function GET(req: NextRequest) {
     { width: 1200, height: 630 }
   );
 
-  return new Response(img.body, {
-    headers: {
-      "Content-Type": "image/png",
-      "Cache-Control": "public, max-age=86400",
-    },
-  });
+  return img;
+  } catch (err) {
+    console.error("share-card render error:", err);
+    return new Response("Share card generation failed", { status: 500 });
+  }
 }

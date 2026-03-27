@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { Timestamp } from "firebase-admin/firestore";
-import { getAdminAuth } from "@/lib/firebase/admin";
+import { getAuthFromCookies } from "@/lib/auth/verify";
 import {
   upsertUser,
   createDiagnosticSession,
@@ -25,22 +25,16 @@ interface ScorePayload {
 }
 
 export async function POST(req: NextRequest) {
-  const sessionCookie = (await cookies()).get("__session")?.value;
-  if (!sessionCookie) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
   let uid: string;
   let userEmail: string;
   let displayName: string;
-  let photoURL: string;
+  const photoURL = "";
 
   try {
-    const decoded = await getAdminAuth().verifySessionCookie(sessionCookie, true);
-    uid = decoded.uid;
-    userEmail = decoded.email ?? "";
-    displayName = decoded.name ?? "";
-    photoURL = decoded.picture ?? "";
+    const auth = await getAuthFromCookies(await cookies());
+    uid = auth.uid;
+    userEmail = auth.email;
+    displayName = auth.displayName;
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

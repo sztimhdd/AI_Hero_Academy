@@ -9,8 +9,9 @@
  *
  * Users:
  *  1. fresh@dev.test      — just signed up, no onboarding
- *  2. day3@dev.test       — mid-program (Day 3, P2 in progress)
- *  3. complete@dev.test   — Day 7 complete, credential issued
+ *  2. day3@dev.test       — mid-program (Days 1–2 complete, P3 unlocked), streak 3
+ *  3. day6@dev.test       — Days 1–6 complete, capstone unlocked, streak 6
+ *  4. complete@dev.test   — Day 7 complete, credential issued
  */
 
 import * as dotenv from "dotenv";
@@ -152,7 +153,61 @@ async function seedDay3User() {
   );
 }
 
-// ── User 3: complete — Day 7 done, credential issued ─────────────────────────
+// ── User 3: day6 — Days 1–6 complete, capstone unlocked ──────────────────────
+
+async function seedDay6User() {
+  const uid = "dev-day6-003";
+  const started = daysAgo(6);
+
+  await seedUser({
+    uid,
+    user_email: "day6@dev.test",
+    display_name: "Day 6 User",
+    profile_photo_url: "",
+    auth_provider: "google",
+    lang: "en",
+    declared_role: "analyst",
+    declared_industry: "consulting",
+    daily_work_desc: "Data analysis, client reports, presentation decks",
+    current_ai_usage: "ChatGPT for research summaries, Copilot for spreadsheets",
+    primary_motivation: "save_time",
+    program_started_at: started,
+    streak_days: 6,
+    last_active_date: new Date().toISOString().slice(0, 10),
+    created_at: daysAgo(7),
+  });
+
+  await seedDiagnostic({
+    session_id: "diag-day6-003",
+    uid,
+    user_email: "day6@dev.test",
+    completed_at: started,
+    pillar_scores: { p1: 58, p2: 45, p3: 52, p4: 38, p5: 48, p6: 42 },
+    overall_score: 47,
+    item_scores: {},
+    session_number: 1,
+  });
+
+  const pillarsInOrder: PillarId[] = [...PILLAR_IDS, "capstone" as PillarId];
+  await seedTrainingProgress(
+    pillarsInOrder.map((pillarId, idx) => ({
+      uid,
+      user_email: "day6@dev.test",
+      pillar_id: pillarId,
+      day_number: idx + 1,
+      sequence_order: idx,
+      is_locked: idx > 5, // P1–P6 complete, capstone unlocked (idx 6), nothing beyond
+      reading_completed_at: idx < 6 ? daysAgo(6 - idx) : undefined,
+      practice_completed_at: idx < 6 ? daysAgo(6 - idx) : undefined,
+      quiz_completed_at: idx < 6 ? daysAgo(6 - idx) : undefined,
+      quiz_score: idx < 6 ? 78 : undefined,
+      quiz_passed: idx < 6 ? true : undefined,
+      build_completed_at: idx < 6 ? daysAgo(6 - idx) : undefined,
+    }))
+  );
+}
+
+// ── User 4: complete — Day 7 done, credential issued ─────────────────────────
 
 async function seedCompleteUser() {
   const uid = "dev-complete-003";
@@ -228,6 +283,7 @@ async function main() {
   console.log("Seeding dev users into Firestore…\n");
   await seedFreshUser();
   await seedDay3User();
+  await seedDay6User();
   await seedCompleteUser();
   console.log("\nDone.");
   process.exit(0);

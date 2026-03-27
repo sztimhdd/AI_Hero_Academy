@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { getAdminAuth } from "@/lib/firebase/admin";
+import { getAuthFromCookies } from "@/lib/auth/verify";
 import { logAiCall } from "@/lib/firestore/db";
 
 const FALLBACK_QUESTION =
@@ -9,18 +9,12 @@ const FALLBACK_QUESTION =
 const GEMINI_MODEL = "gemini-2.0-flash";
 
 export async function POST(req: NextRequest) {
-  // Verify session
-  const sessionCookie = (await cookies()).get("__session")?.value;
-  if (!sessionCookie) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
   let uid: string;
   let userEmail: string;
   try {
-    const decoded = await getAdminAuth().verifySessionCookie(sessionCookie, true);
-    uid = decoded.uid;
-    userEmail = decoded.email ?? "";
+    const auth = await getAuthFromCookies(await cookies());
+    uid = auth.uid;
+    userEmail = auth.email;
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

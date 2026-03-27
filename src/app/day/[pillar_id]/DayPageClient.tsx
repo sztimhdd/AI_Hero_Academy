@@ -86,14 +86,14 @@ export function DayPageClient({
               {pillarContent.pillar_name}
             </h1>
           </div>
-          <a href="/dashboard" className="text-slate-500 hover:text-slate-300 text-sm transition-colors">
+          <a href="/dashboard" className="text-slate-500 hover:text-slate-300 text-sm transition-colors py-3 px-3 -mr-3 inline-flex items-center min-h-[44px]">
             ← Dashboard
           </a>
         </div>
       </header>
 
       {/* Tab nav */}
-      <nav className="border-b border-white/10 px-4">
+      <nav className="border-b border-white/10 px-2 sm:px-4">
         <div className="max-w-4xl mx-auto flex gap-0">
           {tabs.map((tab) => (
             <button
@@ -101,7 +101,7 @@ export function DayPageClient({
               onClick={() => !tab.locked && setActiveTab(tab.id)}
               disabled={tab.locked}
               className={[
-                "relative px-5 py-3 text-sm font-medium transition-colors border-b-2 -mb-px",
+                "relative flex-1 sm:flex-none px-2 sm:px-5 py-3 text-xs sm:text-sm font-medium transition-colors border-b-2 -mb-px text-center",
                 activeTab === tab.id
                   ? "text-blue-400 border-blue-400"
                   : tab.locked

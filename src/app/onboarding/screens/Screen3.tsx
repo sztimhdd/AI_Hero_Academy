@@ -32,6 +32,7 @@ interface Screen3Props {
 
 export default function Screen3({ copy, profile, values, onChange, onNext, onBack }: Screen3Props) {
   const [aiQuestionLoading, setAiQuestionLoading] = useState(false);
+  const [aiQuestionSource, setAiQuestionSource] = useState<"gemini" | "fallback" | null>(null);
   const questions: MCQQuestion[] = diagnosticData.questions;
 
   // Fetch AI question on mount if not already loaded
@@ -45,8 +46,14 @@ export default function Screen3({ copy, profile, values, onChange, onNext, onBac
       body: JSON.stringify(profile),
     })
       .then((r) => r.json())
-      .then((data) => onChange("ai_question_text", data.question ?? ""))
-      .catch(() => onChange("ai_question_text", copy["onboarding.s3.fallback_question"]))
+      .then((data) => {
+        onChange("ai_question_text", data.question ?? "");
+        setAiQuestionSource(data.source === "gemini" ? "gemini" : "fallback");
+      })
+      .catch(() => {
+        onChange("ai_question_text", copy["onboarding.s3.fallback_question"]);
+        setAiQuestionSource("fallback");
+      })
       .finally(() => setAiQuestionLoading(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -97,11 +104,19 @@ export default function Screen3({ copy, profile, values, onChange, onNext, onBac
           {copy["onboarding.s3.ai_question_label"]}
         </p>
         {aiQuestionLoading ? (
-          <div className="text-slate-400 text-sm animate-pulse">{copy["common.loading"]}</div>
+          <div className="flex items-center gap-2 text-slate-400 text-sm">
+            <span className="animate-pulse">●</span>
+            <span>Generating your personalised question…</span>
+          </div>
         ) : (
-          <p className="text-white text-sm leading-relaxed">
-            {values.ai_question_text || copy["onboarding.s3.fallback_question"]}
-          </p>
+          <>
+            <p className="text-white text-sm leading-relaxed">
+              {values.ai_question_text || copy["onboarding.s3.fallback_question"]}
+            </p>
+            {aiQuestionSource === "fallback" && (
+              <p className="text-xs text-slate-500">Using a standard question</p>
+            )}
+          </>
         )}
         <textarea
           value={values.ai_question_answer}

@@ -67,7 +67,7 @@ export function ReadingSection({ reading, pillarId, alreadyRead, onComplete }: P
   }
 
   return (
-    <div className="space-y-10 pb-8">
+    <div className="space-y-10 pb-8 max-w-[72ch]">
       {/* Core concept */}
       <section>
         <ConceptText text={reading.concept_text} />
@@ -75,8 +75,8 @@ export function ReadingSection({ reading, pillarId, alreadyRead, onComplete }: P
 
       {/* Good example */}
       <section>
-        <h2 className="text-xs font-semibold text-green-400 uppercase tracking-widest mb-3">
-          Good Example
+        <h2 className="text-sm font-semibold text-green-400 mb-3 flex items-center gap-2">
+          <span aria-hidden="true">✅</span> Good Example
         </h2>
         <div className="bg-green-950/30 border border-green-800/40 rounded-xl p-5">
           <Paragraph text={reading.good_example} />
@@ -85,8 +85,8 @@ export function ReadingSection({ reading, pillarId, alreadyRead, onComplete }: P
 
       {/* Anti-pattern */}
       <section>
-        <h2 className="text-xs font-semibold text-red-400 uppercase tracking-widest mb-3">
-          Anti-Pattern
+        <h2 className="text-sm font-semibold text-red-400 mb-3 flex items-center gap-2">
+          <span aria-hidden="true">❌</span> Anti-Pattern
         </h2>
         <div className="bg-red-950/30 border border-red-800/40 rounded-xl p-5">
           <Paragraph text={reading.anti_pattern} />
@@ -95,8 +95,8 @@ export function ReadingSection({ reading, pillarId, alreadyRead, onComplete }: P
 
       {/* Takeaway */}
       <section className="bg-blue-950/40 border border-blue-700/30 rounded-xl p-6">
-        <h2 className="text-xs font-semibold text-blue-400 uppercase tracking-widest mb-2">
-          Key Takeaway
+        <h2 className="text-sm font-semibold text-blue-400 mb-2 flex items-center gap-2">
+          <span aria-hidden="true">💡</span> Key Takeaway
         </h2>
         <p className="text-white font-medium text-[15px] leading-relaxed">
           <InlineMarkdown text={reading.takeaway} />

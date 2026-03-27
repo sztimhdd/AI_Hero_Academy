@@ -74,7 +74,7 @@ export function ProfilePill({ displayName, profilePhotoUrl, lang, userEmail }: P
           type="button"
           onClick={toggleLang}
           disabled={langLoading}
-          className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-slate-300 hover:text-white transition-colors disabled:opacity-50"
+          className="text-xs font-semibold px-4 py-2.5 min-h-[44px] min-w-[44px] rounded-lg bg-white/10 hover:bg-white/15 text-slate-300 hover:text-white transition-colors disabled:opacity-50"
           aria-label="Toggle language"
         >
           {langLoading ? "…" : currentLang === "en" ? t("toggleLang") : t("toggleLangZh")}
@@ -84,7 +84,7 @@ export function ProfilePill({ displayName, profilePhotoUrl, lang, userEmail }: P
         <form action="/api/auth/logout" method="POST">
           <button
             type="submit"
-            className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+            className="text-xs text-slate-500 hover:text-slate-300 transition-colors px-3 py-2.5 min-h-[44px] rounded-lg hover:bg-white/5"
           >
             {tCommon("signOut")}
           </button>
