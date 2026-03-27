@@ -153,7 +153,7 @@
       left: var(--pad-x); z-index: 200;
       font-family: var(--font-disp); font-size: var(--small-size);
       font-weight: 700; letter-spacing: 0.08em;
-      color: var(--ink-3); user-select: none;
+      color: var(--ink-3); -webkit-user-select: none; user-select: none;
     }
     .slide-counter span { color: var(--ink); }
 
@@ -256,7 +256,63 @@
     /* ================================================
        SLIDE 01 — HERO
        ================================================ */
-    #s1 { background: var(--bg); }
+    /* === S1 — PHOTO SPLIT LAYOUT === */
+    #s1 { background: var(--bg); overflow: hidden; }
+    #s1 .s1-split {
+      display: flex; height: 100%; width: 100%;
+    }
+    #s1 .s1-text {
+      flex: 0 0 56%; max-width: 56%;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: var(--pad-x); overflow: hidden;
+    }
+    #s1 .s1-photo {
+      flex: 1; position: relative; overflow: hidden;
+    }
+    #s1 .s1-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 20%;
+      display: block; max-height: 100vh;
+    }
+    #s1 .s1-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,0.25) 0%, transparent 25%);
+    }
+    #s1 .s1-accent {
+      position: absolute; top: var(--pad-x); bottom: var(--pad-x);
+      left: 0; width: 3px; background: var(--accent); z-index: 2;
+    }
+    @media (max-width: 768px) {
+      #s1 .s1-split { flex-direction: column; }
+      #s1 .s1-text { flex: 1; max-width: 100%; }
+      #s1 .s1-photo { display: none; }
+    }
+
+    /* === S6 — SUBTLE NETWORK TEXTURE === */
+    #s6 { position: relative; }
+    #s6::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1400&q=50&auto=format&fit=crop');
+      background-size: cover; background-position: center;
+      opacity: 0.04; z-index: 0; pointer-events: none;
+    }
+    #s6 .slide-content { position: relative; z-index: 1; }
+
+    /* === S12 — FULL-BLEED PHOTO BACKGROUND === */
+    #s12 { position: relative; overflow: hidden; }
+    .s12-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1400&q=80&auto=format&fit=crop');
+      background-size: cover; background-position: center 30%;
+    }
+    .s12-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(10,10,10,0.78);
+    }
+    #s12 .big-text,
+    #s12 .slide-content { position: relative; z-index: 1; }
+
     #s1 .slide-num { right: var(--pad-x); top: var(--pad-x); }
     #s1 .hero-eyebrow {
       font-family: var(--font-disp); font-size: var(--small-size);
@@ -490,6 +546,7 @@
       position: absolute; inset: 0; border-radius: 50%;
       border: 1.5px dashed var(--accent);
       animation: fw-spin 16s linear infinite;
+      will-change: transform;
     }
     @keyframes fw-spin { to { transform: rotate(360deg); } }
     .fw-center {
@@ -716,7 +773,7 @@
       font-weight: 900; letter-spacing: -0.05em; line-height: 1;
       color: rgba(255,255,255,0.04); position: absolute;
       bottom: calc(-1 * clamp(0.5rem, 2vh, 1.5rem));
-      right: var(--pad-x); user-select: none; pointer-events: none;
+      right: var(--pad-x); -webkit-user-select: none; user-select: none; pointer-events: none;
     }
   </style>
 </head>
@@ -748,35 +805,44 @@
        SLIDE 01 — HERO
        ================================================ -->
   <section class="slide" id="s1">
-    <div class="slide-num">01</div>
-    <div class="slide-content">
-      <p class="hero-eyebrow reveal d1">AI Hero Academy · 2026</p>
-      <h1 class="reveal d2">From AI-curious<br>to <em>AI-supercharged.</em><br>In 7 days.</h1>
-      <p class="hero-sub reveal d3">Personal AI transformation for every professional — regardless of role or industry. Scenario-based practice, real coaching, a toolkit you keep.</p>
-      <div class="hero-metrics reveal d4">
-        <div class="metric-item">
-          <div class="metric-val">7</div>
-          <div class="metric-lbl">Days</div>
+    <div class="s1-split">
+      <div class="s1-text">
+        <p class="hero-eyebrow reveal d1">AI Hero Academy · 2026</p>
+        <h1 class="reveal d2">From AI-curious<br>to <em>AI-supercharged.</em><br>In 7 days.</h1>
+        <p class="hero-sub reveal d3">Personal AI transformation for every professional — regardless of role or industry. Scenario-based practice, real coaching, a toolkit you keep.</p>
+        <div class="hero-metrics reveal d4">
+          <div class="metric-item">
+            <div class="metric-val">7</div>
+            <div class="metric-lbl">Days</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">6</div>
+            <div class="metric-lbl">Skill Pillars</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">90</div>
+            <div class="metric-lbl">Min / Day</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val red">Free</div>
+            <div class="metric-lbl">Forever</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">EN+ZH</div>
+            <div class="metric-lbl">Bilingual</div>
+          </div>
         </div>
-        <div class="metric-item">
-          <div class="metric-val">6</div>
-          <div class="metric-lbl">Skill Pillars</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-val">90</div>
-          <div class="metric-lbl">Min / Day</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-val red">Free</div>
-          <div class="metric-lbl">Forever</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-val">EN+ZH</div>
-          <div class="metric-lbl">Bilingual</div>
+        <div class="reveal d5">
+          <a class="cta-btn" href="#">Start Day 1 <em class="arrow">→</em></a>
         </div>
       </div>
-      <div class="reveal d5">
-        <a class="cta-btn" href="#">Start Day 1 <em class="arrow">→</em></a>
+      <div class="s1-photo reveal-scale d2">
+        <div class="s1-accent"></div>
+        <img
+          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=85&auto=format&fit=crop&crop=faces,center"
+          alt="Professional using AI tools at work"
+          loading="eager"
+        >
       </div>
     </div>
     <div class="bottom-rule"></div>
@@ -1279,6 +1345,7 @@
        SLIDE 12 — CTA
        ================================================ -->
   <section class="slide" id="s12">
+    <div class="s12-bg"></div>
     <div class="big-text">AHA</div>
     <div class="slide-content">
       <p class="label reveal-left d1">Get Started</p>
