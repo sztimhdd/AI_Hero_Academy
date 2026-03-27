@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Hero Academy — Vision</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
+
+  <style>
+    /* ================================================
+       VIEWPORT BASE — MANDATORY (from viewport-base.css)
+       ================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; overflow-x: hidden; }
+
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-height: 100%;
+      overflow: hidden;
+      padding: var(--pad-x);
+    }
+
+    :root {
+      --title-size:  clamp(1.5rem, 5vw, 4rem);
+      --h2-size:     clamp(1.2rem, 3.2vw, 2.4rem);
+      --h3-size:     clamp(1rem, 2.2vw, 1.6rem);
+      --body-size:   clamp(0.75rem, 1.4vw, 1.05rem);
+      --small-size:  clamp(0.65rem, 0.9vw, 0.82rem);
+      --pad-x:       clamp(2rem, 7vw, 6rem);
+      --content-gap: clamp(0.5rem, 2vw, 1.8rem);
+      --el-gap:      clamp(0.25rem, 0.9vw, 0.85rem);
+    }
+
+    .card, .container, .content-box {
+      max-width: min(90vw, 1000px);
+      max-height: min(80vh, 700px);
+    }
+
+    .feature-list, .bullet-list { gap: clamp(0.4rem, 1vh, 1rem); }
+    .feature-list li, .bullet-list li { font-size: var(--body-size); line-height: 1.4; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+      gap: clamp(0.5rem, 1.5vw, 1rem);
+    }
+
+    img, .image-container {
+      max-width: 100%;
+      max-height: min(50vh, 400px);
+      object-fit: contain;
+    }
+
+    @media (max-height: 700px) {
+      :root {
+        --pad-x: clamp(1rem, 4vw, 3rem);
+        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+        --h2-size: clamp(1rem, 3vw, 1.75rem);
+      }
+    }
+    @media (max-height: 600px) {
+      :root {
+        --pad-x: clamp(0.75rem, 3vw, 2rem);
+        --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+        --title-size: clamp(1.1rem, 4vw, 2rem);
+        --body-size: clamp(0.7rem, 1.2vw, 0.9rem);
+      }
+      .nav-dots, .slide-counter { display: none; }
+    }
+    @media (max-height: 500px) {
+      :root {
+        --pad-x: clamp(0.5rem, 2.5vw, 1.5rem);
+        --title-size: clamp(1rem, 3.5vw, 1.5rem);
+        --h2-size: clamp(0.9rem, 2.5vw, 1.2rem);
+        --body-size: clamp(0.65rem, 1vw, 0.82rem);
+      }
+    }
+    @media (max-width: 600px) {
+      :root { --title-size: clamp(1.25rem, 7vw, 2.5rem); }
+      .grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.15s !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ================================================
+       SWISS MODERN — AI HERO ACADEMY
+       Palette: #ffffff · #0a0a0a · #dc2626 (signal red)
+       Fonts: Archivo (display) · Nunito (body)
+       ================================================ */
+    :root {
+      --bg:          #ffffff;
+      --ink:         #0a0a0a;
+      --ink-2:       #4a4a4a;
+      --ink-3:       #a0a0a0;
+      --accent:      #dc2626;
+      --accent-pale: #fff1f1;
+      --border:      #e8e8e8;
+      --grid-line:   #f4f4f4;
+      --font-disp:   'Archivo', sans-serif;
+      --font-body:   'Nunito', sans-serif;
+      --ease:        cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* === PROGRESS BAR === */
+    .progress-bar {
+      position: fixed; top: 0; left: 0; z-index: 200;
+      height: 2px; background: var(--accent);
+      transition: width 0.35s var(--ease);
+      width: 0%;
+    }
+
+    /* === SLIDE COUNTER === */
+    .slide-counter {
+      position: fixed; bottom: clamp(1rem, 2.5vh, 2rem);
+      left: var(--pad-x); z-index: 200;
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.08em;
+      color: var(--ink-3); -webkit-user-select: none; user-select: none;
+    }
+    .slide-counter span { color: var(--ink); }
+
+    /* === NAV DOTS === */
+    .nav-dots {
+      position: fixed; right: clamp(1rem, 2.5vw, 2rem);
+      top: 50%; transform: translateY(-50%);
+      z-index: 200; display: flex; flex-direction: column; gap: 8px;
+    }
+    .nav-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border); cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      border: none; padding: 0;
+    }
+    .nav-dot.active { background: var(--accent); transform: scale(1.5); }
+
+    /* === REVEAL ANIMATIONS === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(calc(-1 * 28px));
+      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+    }
+    .reveal-scale {
+      opacity: 0; transform: scale(0.93);
+      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+    }
+    .slide.visible .reveal,
+    .slide.visible .reveal-left,
+    .slide.visible .reveal-scale { opacity: 1; transform: none; }
+    .slide.visible .d1 { transition-delay: 0.05s; }
+    .slide.visible .d2 { transition-delay: 0.13s; }
+    .slide.visible .d3 { transition-delay: 0.21s; }
+    .slide.visible .d4 { transition-delay: 0.29s; }
+    .slide.visible .d5 { transition-delay: 0.37s; }
+    .slide.visible .d6 { transition-delay: 0.45s; }
+    .slide.visible .d7 { transition-delay: 0.53s; }
+    .slide.visible .d8 { transition-delay: 0.61s; }
+
+    /* === SHARED COMPONENTS === */
+    .label {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); display: flex; align-items: center; gap: 10px;
+    }
+    .label::before {
+      content: ''; display: block; width: 28px; height: 2px; background: var(--accent);
+    }
+    .slide-num {
+      font-family: var(--font-disp); font-weight: 900;
+      font-size: clamp(4rem, 12vw, 10rem); line-height: 1;
+      color: var(--grid-line); -webkit-user-select: none; user-select: none; pointer-events: none;
+      position: absolute;
+    }
+    h1 {
+      font-family: var(--font-disp); font-size: var(--title-size);
+      font-weight: 900; line-height: 1.08; letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+    h2 {
+      font-family: var(--font-disp); font-size: var(--h2-size);
+      font-weight: 800; line-height: 1.12; letter-spacing: -0.025em;
+      color: var(--ink);
+    }
+    h3 {
+      font-family: var(--font-disp); font-size: var(--h3-size);
+      font-weight: 700; letter-spacing: -0.01em; color: var(--ink);
+    }
+    p { font-size: var(--body-size); color: var(--ink-2); line-height: 1.65; }
+    .accent { color: var(--accent); }
+    .rule { width: 100%; height: 1px; background: var(--border); }
+    .rule-accent { width: 40px; height: 2px; background: var(--accent); margin: 0.6em 0; }
+    .tag {
+      display: inline-block; font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      background: var(--accent-pale); color: var(--accent);
+      padding: 3px 9px; border-radius: 3px;
+    }
+    .tag-dark {
+      display: inline-block; font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      background: var(--ink); color: #fff;
+      padding: 3px 9px; border-radius: 3px;
+    }
+    .two-col {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 4vw, 4rem); align-items: center;
+    }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(0.75rem, 2vw, 1.5rem); }
+    @media (max-width: 768px) {
+      .two-col { grid-template-columns: 1fr; gap: 1.2rem; }
+      .three-col { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ================================================
+       SLIDE 01 — HERO
+       ================================================ */
+    /* === S1 — PHOTO SPLIT LAYOUT === */
+    #s1 { background: var(--bg); overflow: hidden; }
+    #s1 .s1-split {
+      display: flex; height: 100%; width: 100%;
+    }
+    #s1 .s1-text {
+      flex: 0 0 56%; max-width: 56%;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: var(--pad-x); overflow: hidden;
+    }
+    #s1 .s1-photo {
+      flex: 1; position: relative; overflow: hidden;
+      /* Explicit height so img height:100% resolves correctly */
+      height: 100%;
+    }
+    /* Override the base img rule (max-height: min(50vh,400px); object-fit:contain) */
+    #s1 .s1-photo img {
+      width: 100% !important; height: 100% !important;
+      object-fit: cover !important; object-position: center 20%;
+      display: block; max-height: 100vh !important;
+    }
+    #s1 .s1-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,0.25) 0%, transparent 25%);
+    }
+    #s1 .s1-accent {
+      position: absolute; top: var(--pad-x); bottom: var(--pad-x);
+      left: 0; width: 3px; background: var(--accent); z-index: 2;
+    }
+    @media (max-width: 768px) {
+      #s1 .s1-split { flex-direction: column; }
+      #s1 .s1-text { flex: 1; max-width: 100%; }
+      #s1 .s1-photo { display: none; }
+    }
+
+    /* === S6 — FULL-BLEED BACKGROUND TEXTURE (true bg layer, no layout interaction) === */
+    #s6 { position: relative; }
+    /* Dedicated div — position:absolute means it cannot affect flex layout or diagram nodes */
+    .s6-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=1400&q=80&auto=format&fit=crop');
+      background-size: cover; background-position: center;
+      filter: grayscale(1);
+      opacity: 0.055;
+      pointer-events: none;
+    }
+    /* All content floats above the texture */
+    #s6 .slide-content { position: relative; z-index: 1; }
+
+    /* === S12 — FULL-BLEED PHOTO BACKGROUND === */
+    #s12 { position: relative; overflow: hidden; }
+    .s12-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1400&q=80&auto=format&fit=crop');
+      background-size: cover; background-position: center 30%;
+    }
+    .s12-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(10,10,10,0.78);
+    }
+    #s12 .big-text,
+    #s12 .slide-content { position: relative; z-index: 1; }
+
+    #s1 .slide-num { right: var(--pad-x); top: var(--pad-x); }
+    #s1 .hero-eyebrow {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: clamp(0.6rem, 1.5vh, 1.2rem);
+    }
+    #s1 h1 {
+      max-width: 14ch; margin-bottom: clamp(0.75rem, 2vh, 1.5rem);
+      /* Smaller cap than global 4rem — keeps "to AI-supercharged." on one line in 56% column */
+      font-size: clamp(1.4rem, 3.5vw, 3rem);
+      hyphens: none; word-break: keep-all;
+    }
+    #s1 h1 em { font-style: normal; color: var(--accent); white-space: nowrap; }
+    #s1 .hero-sub {
+      font-size: var(--body-size); color: var(--ink-2);
+      max-width: 46ch; line-height: 1.7;
+      margin-bottom: clamp(1rem, 2.5vh, 2.2rem);
+    }
+    #s1 .hero-metrics {
+      display: flex; gap: clamp(0.75rem, 2vw, 2rem); flex-wrap: wrap;
+      margin-bottom: clamp(1.2rem, 3vh, 2.5rem);
+    }
+    #s1 .metric-item {
+      display: flex; flex-direction: column;
+    }
+    #s1 .metric-val {
+      font-family: var(--font-disp); font-size: clamp(1.3rem, 2.8vw, 2.2rem);
+      font-weight: 900; line-height: 1; color: var(--ink);
+    }
+    #s1 .metric-val.red { color: var(--accent); }
+    #s1 .metric-lbl {
+      font-size: var(--small-size); color: var(--ink-3);
+      font-weight: 600; margin-top: 2px;
+    }
+    #s1 .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--ink); color: #fff;
+      font-family: var(--font-disp); font-size: var(--body-size);
+      font-weight: 700; padding: 0.65em 1.4em; border-radius: 4px;
+      text-decoration: none; transition: background 0.18s;
+    }
+    #s1 .cta-btn:hover { background: var(--accent); }
+    #s1 .cta-btn .arrow { font-style: normal; transition: transform 0.2s; }
+    #s1 .cta-btn:hover .arrow { transform: translateX(4px); }
+    #s1 .bottom-rule {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--accent);
+    }
+
+    /* ================================================
+       SLIDE 02 — PROBLEM
+       ================================================ */
+    #s2 { background: var(--bg); }
+    #s2 .slide-num { right: var(--pad-x); top: var(--pad-x); }
+    .compare-table { width: 100%; border-collapse: collapse; }
+    .compare-table th {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      text-align: left; padding-bottom: 0.6em; color: var(--ink-3);
+    }
+    .compare-table th.red { color: var(--accent); }
+    .compare-table td {
+      padding: 0.5em 0; border-top: 1px solid var(--border);
+      font-size: var(--body-size); vertical-align: middle;
+    }
+    .compare-table td:first-child { color: var(--ink-3); padding-right: 1.5em; }
+    .compare-table td:last-child { color: var(--ink); font-weight: 600; }
+    .check { color: var(--accent); font-weight: 900; margin-right: 6px; }
+
+    /* ================================================
+       SLIDE 03 — 7-DAY ARC
+       ================================================ */
+    #s3 { background: var(--bg); }
+    .arc-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 0; border: 1px solid var(--border); border-radius: 6px;
+      overflow: hidden; margin-top: clamp(0.75rem, 2vh, 1.5rem);
+    }
+    @media (max-width: 900px) { .arc-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 500px) { .arc-grid { grid-template-columns: repeat(2, 1fr); } }
+    .arc-cell {
+      padding: clamp(0.5rem, 1.5vw, 1rem) clamp(0.4rem, 1vw, 0.8rem);
+      border-right: 1px solid var(--border);
+      background: var(--bg);
+      transition: background 0.15s;
+    }
+    .arc-cell:hover { background: var(--grid-line); }
+    .arc-cell:last-child { border-right: none; }
+    .arc-cell.day0 { background: var(--grid-line); }
+    .arc-cell.capstone { background: var(--accent-pale); }
+    .arc-day-n {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 4px;
+    }
+    .arc-cell.capstone .arc-day-n { color: var(--accent); }
+    .arc-title {
+      font-family: var(--font-disp); font-size: clamp(0.6rem, 1.1vw, 0.82rem);
+      font-weight: 700; line-height: 1.25; color: var(--ink);
+      margin-bottom: 5px;
+    }
+    .arc-fw {
+      font-family: var(--font-disp); font-size: clamp(0.55rem, 0.9vw, 0.7rem);
+      font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      background: var(--accent-pale); color: var(--accent);
+      padding: 2px 6px; border-radius: 2px; display: inline-block;
+    }
+    .arc-cell.capstone .arc-fw { background: var(--accent); color: #fff; }
+    .daily-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: clamp(0.5rem, 1.5vw, 1rem);
+      margin-top: clamp(0.6rem, 1.5vh, 1.2rem);
+    }
+    @media (max-width: 600px) { .daily-row { grid-template-columns: repeat(2, 1fr); } }
+    .daily-block {
+      border-left: 2px solid var(--border);
+      padding: clamp(0.4rem, 1vw, 0.75rem) clamp(0.5rem, 1.2vw, 1rem);
+    }
+    .daily-block:first-child { border-left-color: var(--accent); }
+    .daily-t { font-family: var(--font-disp); font-size: var(--small-size); font-weight: 800; color: var(--ink); }
+    .daily-min { font-size: var(--small-size); color: var(--accent); font-weight: 700; }
+    .daily-d { font-size: var(--small-size); color: var(--ink-2); margin-top: 2px; }
+
+    /* ================================================
+       SLIDE 04 — 6 PILLARS + ARTIFACTS
+       ================================================ */
+    #s4 { background: var(--bg); }
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(0.5rem, 1.2vw, 1rem);
+      margin-top: clamp(0.6rem, 1.5vh, 1.2rem);
+    }
+    @media (max-width: 768px) { .pillars-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .pillars-grid { grid-template-columns: 1fr; } }
+    .pillar-card {
+      border: 1px solid var(--border); border-radius: 5px;
+      padding: clamp(0.6rem, 1.5vw, 1rem) clamp(0.6rem, 1.5vw, 1rem);
+      transition: border-color 0.18s;
+    }
+    .pillar-card:hover { border-color: var(--accent); }
+    .pillar-top {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .pillar-day-n {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-3);
+    }
+    .pillar-name {
+      font-family: var(--font-disp); font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+      font-weight: 800; color: var(--ink); line-height: 1.2; margin-bottom: 4px;
+    }
+    .pillar-desc {
+      font-size: clamp(0.62rem, 0.95vw, 0.78rem); color: var(--ink-2); line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .pillar-artifact {
+      font-size: clamp(0.6rem, 0.9vw, 0.75rem); color: var(--accent);
+      font-weight: 700; font-family: var(--font-disp);
+      border-top: 1px solid var(--border); padding-top: 5px;
+    }
+    .pillar-artifact::before { content: '↳ '; }
+
+    /* ================================================
+       SLIDE 05 — PACE COACH
+       ================================================ */
+    #s5 { background: var(--bg); }
+    .pace-grid {
+      display: flex; flex-direction: column;
+      gap: clamp(0.5rem, 1.5vh, 1rem);
+      margin-top: clamp(0.4rem, 1.2vh, 1rem);
+    }
+    .pace-row {
+      display: flex; gap: clamp(0.75rem, 2vw, 1.5rem); align-items: flex-start;
+    }
+    .pace-letter {
+      font-family: var(--font-disp); font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900; color: var(--accent); line-height: 1; flex-shrink: 0;
+      width: clamp(1.8rem, 4vw, 3rem); text-align: center;
+    }
+    .pace-body h3 { font-size: clamp(0.8rem, 1.5vw, 1.1rem); margin-bottom: 3px; }
+    .pace-body p { font-size: clamp(0.65rem, 1.1vw, 0.85rem); color: var(--ink-2); line-height: 1.5; }
+    .q-budget-box {
+      background: var(--grid-line); border-radius: 5px;
+      padding: clamp(0.6rem, 1.5vw, 1rem);
+      border-left: 3px solid var(--accent);
+    }
+    .q-budget-title {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 0.5em;
+    }
+    .q-row {
+      display: flex; align-items: center; gap: 0.6em;
+      font-size: clamp(0.65rem, 1.1vw, 0.85rem);
+      margin-bottom: 0.35em; color: var(--ink-2);
+    }
+    .q-row:last-child { margin-bottom: 0; color: var(--ink-3); text-decoration: line-through; }
+    .q-badge {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      font-family: var(--font-disp); font-size: 0.65rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .q-badge.blocked { background: var(--border); color: var(--ink-3); }
+    .emotion-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.35em; margin-top: clamp(0.5rem, 1.2vh, 0.85rem);
+    }
+    @media (max-width: 500px) { .emotion-grid { grid-template-columns: 1fr; } }
+    .emotion-cell {
+      font-size: clamp(0.6rem, 0.95vw, 0.78rem);
+      border: 1px solid var(--border); border-radius: 4px;
+      padding: 0.35em 0.5em; line-height: 1.35; color: var(--ink-2);
+    }
+    .emotion-cell strong { display: block; font-weight: 700; color: var(--ink); }
+
+    /* ================================================
+       SLIDE 06 — DATA FLYWHEEL
+       ================================================ */
+    #s6 { background: var(--bg); }
+    .flywheel-wrap {
+      display: flex; align-items: center; justify-content: center;
+      flex: 1; gap: clamp(2rem, 5vw, 5rem); flex-wrap: wrap;
+    }
+    .fw-diagram {
+      position: relative;
+      width: clamp(180px, 30vw, 280px);
+      height: clamp(180px, 30vw, 280px);
+      flex-shrink: 0;
+    }
+    .fw-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 1.5px dashed var(--accent);
+      animation: fw-spin 16s linear infinite;
+      will-change: transform;
+    }
+    @keyframes fw-spin { to { transform: rotate(360deg); } }
+    .fw-center {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 35%; height: 35%; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; font-family: var(--font-disp);
+      font-size: clamp(0.5rem, 1.2vw, 0.8rem); font-weight: 700;
+      line-height: 1.2;
+    }
+    .fw-node {
+      position: absolute;
+      width: clamp(60px, 10vw, 88px);
+      height: clamp(60px, 10vw, 88px);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 4px; font-family: var(--font-disp);
+      font-size: clamp(0.52rem, 0.9vw, 0.7rem); font-weight: 600;
+      color: var(--ink); line-height: 1.25;
+    }
+    .fw-node .fw-icon { font-size: clamp(1rem, 2vw, 1.4rem); margin-bottom: 3px; }
+    /* Position N/E/S/W using calc to avoid negating clamp */
+    .fw-n { top: 0; left: 50%; transform: translateX(-50%) translateY(-40%); }
+    .fw-e { right: 0; top: 50%; transform: translateY(-50%) translateX(40%); }
+    .fw-s { bottom: 0; left: 50%; transform: translateX(-50%) translateY(40%); }
+    .fw-w { left: 0; top: 50%; transform: translateY(-50%) translateX(-40%); }
+    .fw-copy { max-width: 420px; }
+    .fw-copy h2 { margin-bottom: clamp(0.5rem, 1.5vh, 1rem); }
+    .fw-copy p { margin-bottom: 0.75em; }
+    .moat-list {
+      display: flex; flex-direction: column; gap: 0.4em;
+      margin-top: clamp(0.5rem, 1.5vh, 1rem);
+    }
+    .moat-item {
+      display: flex; gap: 0.6em; align-items: center;
+      font-size: clamp(0.65rem, 1.1vw, 0.85rem); color: var(--ink-2);
+    }
+    .moat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+    /* ================================================
+       SLIDE 07 — CREDENTIAL
+       ================================================ */
+    #s7 { background: var(--bg); }
+    .cred-card {
+      background: var(--ink); color: #fff; border-radius: 10px;
+      padding: clamp(1rem, 2.5vw, 2rem);
+    }
+    .cred-badge-circle {
+      width: clamp(44px, 6vw, 64px); height: clamp(44px, 6vw, 64px);
+      border-radius: 50%; background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: clamp(1.2rem, 2.5vw, 2rem);
+      margin-bottom: clamp(0.5rem, 1.5vh, 1rem);
+    }
+    .cred-title {
+      font-family: var(--font-disp); font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+      font-weight: 800; margin-bottom: 4px;
+    }
+    .cred-issuer { font-size: var(--small-size); color: #9a9a9a; margin-bottom: clamp(0.5rem, 1.5vh, 1rem); }
+    .cred-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: clamp(0.6rem, 1.5vh, 1rem); }
+    .cred-tag {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; background: rgba(255,255,255,0.1); color: #d1d5db;
+      padding: 3px 8px; border-radius: 3px;
+    }
+    .cred-assets { display: flex; flex-direction: column; gap: 0.4em; }
+    .cred-asset {
+      display: flex; align-items: center; gap: 0.5em;
+      font-size: var(--small-size); color: #9ca3af;
+    }
+    .cred-asset-icon {
+      width: 22px; height: 22px; border-radius: 4px;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; flex-shrink: 0;
+    }
+    /* === ICON BASE — Phosphor Icons === */
+    i[class*="ph-"] {
+      display: inline-block; line-height: 1;
+      vertical-align: middle;
+    }
+    .fw-icon i, .engage-icon i { display: block; }
+    .cred-badge-circle i { font-size: clamp(1.4rem, 2.8vw, 2.2rem); }
+    .daily-t i { margin-right: 5px; }
+    .cred-features { display: flex; flex-direction: column; gap: clamp(0.75rem, 2vh, 1.4rem); }
+    .cred-feature { border-left: 2px solid var(--border); padding-left: 1em; }
+    .cred-feature.hi { border-left-color: var(--accent); }
+    .cred-feature h3 { font-size: clamp(0.8rem, 1.5vw, 1.05rem); margin-bottom: 3px; }
+    .cred-feature.hi h3 { color: var(--accent); }
+    .cred-feature p { font-size: clamp(0.65rem, 1.1vw, 0.85rem); color: var(--ink-2); line-height: 1.5; }
+
+    /* ================================================
+       SLIDE 08 — BUSINESS MODEL
+       ================================================ */
+    #s8 { background: var(--bg); }
+    .funnel {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0; margin-top: clamp(0.6rem, 1.5vh, 1.2rem);
+    }
+    .funnel-layer {
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-disp); font-weight: 700;
+      font-size: clamp(0.7rem, 1.3vw, 1rem); text-align: center;
+      border-radius: 4px; padding: clamp(0.5rem, 1.2vw, 0.9rem) 1.5em;
+      line-height: 1.3;
+    }
+    .funnel-arrow { font-size: 1.1rem; color: var(--border); line-height: 1.2; }
+    .fl-1 { background: var(--grid-line); color: var(--ink); width: 100%; }
+    .fl-2 { background: #f5f5f5; color: var(--ink); width: 82%; }
+    .fl-3 { background: var(--accent-pale); color: var(--accent); width: 65%; }
+    .fl-4 { background: var(--accent); color: #fff; width: 48%; font-size: clamp(0.75rem, 1.4vw, 1.05rem); }
+    .funnel-sub { font-size: var(--small-size); font-weight: 500; opacity: 0.75; }
+    .model-note {
+      margin-top: clamp(0.75rem, 2vh, 1.4rem);
+      border: 1px solid var(--border); border-radius: 4px;
+      padding: clamp(0.5rem, 1.2vw, 0.85rem); font-size: var(--small-size);
+      color: var(--ink-2); line-height: 1.55;
+    }
+    .model-note strong { color: var(--ink); font-weight: 700; }
+
+    /* ================================================
+       SLIDE 09 — TECH STACK
+       ================================================ */
+    #s9 { background: var(--bg); }
+    .tech-chips {
+      display: flex; flex-wrap: wrap; gap: 0.5em;
+      margin-top: clamp(0.6rem, 1.5vh, 1.2rem);
+    }
+    .chip {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; border: 1px solid var(--border);
+      border-radius: 3px; padding: 4px 10px; color: var(--ink-2);
+      background: var(--bg);
+    }
+    .chip.red { border-color: var(--accent); color: var(--accent); background: var(--accent-pale); }
+    .stack-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: clamp(0.5rem, 1.5vw, 1rem);
+      margin-top: clamp(0.6rem, 1.5vh, 1.2rem);
+    }
+    @media (max-width: 600px) { .stack-grid { grid-template-columns: 1fr 1fr; } }
+    .stack-block {
+      border-top: 2px solid var(--border); padding-top: 0.6em;
+    }
+    .stack-block.red { border-top-color: var(--accent); }
+    .stack-cat {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink-3); margin-bottom: 4px;
+    }
+    .stack-block.red .stack-cat { color: var(--accent); }
+    .stack-items {
+      font-size: clamp(0.65rem, 1.1vw, 0.82rem); color: var(--ink-2); line-height: 1.6;
+      font-weight: 500;
+    }
+    .stack-items strong { color: var(--ink); font-weight: 700; }
+
+    /* ================================================
+       SLIDE 10 — BILINGUAL + ENGAGEMENT
+       ================================================ */
+    #s10 { background: var(--bg); }
+    .engage-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: clamp(0.5rem, 1.5vw, 1.2rem);
+      margin-top: clamp(0.6rem, 1.5vh, 1.2rem);
+    }
+    @media (max-width: 600px) { .engage-grid { grid-template-columns: 1fr 1fr; } }
+    .engage-card {
+      border: 1px solid var(--border); border-radius: 5px;
+      padding: clamp(0.6rem, 1.5vw, 1rem);
+    }
+    .engage-icon { font-size: clamp(1.2rem, 2.5vw, 1.8rem); margin-bottom: 0.4em; }
+    .engage-title { font-family: var(--font-disp); font-size: clamp(0.75rem, 1.3vw, 0.95rem); font-weight: 800; margin-bottom: 4px; }
+    .engage-desc { font-size: clamp(0.62rem, 1vw, 0.78rem); color: var(--ink-2); line-height: 1.45; }
+
+    /* ================================================
+       SLIDE 11 — TEAM + ROADMAP (PLACEHOLDER)
+       ================================================ */
+    #s11 { background: var(--bg); }
+    .roadmap-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: clamp(0.5rem, 1.2vw, 0.9rem);
+      margin-top: clamp(0.6rem, 1.5vh, 1.2rem);
+    }
+    @media (max-width: 600px) { .roadmap-row { grid-template-columns: 1fr 1fr; } }
+    .roadmap-block {
+      padding: clamp(0.5rem, 1.2vw, 0.85rem);
+      background: var(--grid-line); border-radius: 4px;
+    }
+    .roadmap-block.active { background: var(--accent-pale); border-left: 3px solid var(--accent); }
+    .roadmap-sprint {
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; letter-spacing: 0.1em; color: var(--ink-3);
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .roadmap-block.active .roadmap-sprint { color: var(--accent); }
+    .roadmap-title { font-family: var(--font-disp); font-size: clamp(0.7rem, 1.2vw, 0.88rem); font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+    .roadmap-items { font-size: clamp(0.6rem, 0.95vw, 0.75rem); color: var(--ink-2); line-height: 1.55; }
+
+    /* ================================================
+       SLIDE 12 — CTA
+       ================================================ */
+    #s12 { background: var(--ink); color: #fff; }
+    #s12 .label { color: #dc2626; }
+    #s12 .label::before { background: #dc2626; }
+    #s12 h1 { color: #fff; }
+    #s12 h1 em { font-style: normal; color: var(--accent); }
+    #s12 .cta-sub { font-size: var(--body-size); color: #6b6b6b; margin-bottom: clamp(1.5rem, 3vh, 2.5rem); max-width: 48ch; }
+    #s12 .cta-btn-lg {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: #fff;
+      font-family: var(--font-disp); font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+      font-weight: 800; padding: 0.7em 1.8em; border-radius: 4px;
+      text-decoration: none; transition: background 0.18s, transform 0.18s;
+      letter-spacing: -0.01em;
+    }
+    #s12 .cta-btn-lg:hover { background: #b91c1c; transform: translateY(-2px); }
+    #s12 .cta-note { font-size: var(--small-size); color: #4a4a4a; margin-top: 0.8em; }
+    #s12 .big-text {
+      font-family: var(--font-disp); font-size: clamp(3rem, 10vw, 9rem);
+      font-weight: 900; letter-spacing: -0.05em; line-height: 1;
+      color: rgba(255,255,255,0.04); position: absolute;
+      bottom: calc(-1 * clamp(0.5rem, 2vh, 1.5rem));
+      right: var(--pad-x); -webkit-user-select: none; user-select: none; pointer-events: none;
+    }
+    /* ================================================
+       LANGUAGE TOGGLE — EN / ZH
+       ================================================ */
+    .lang-toggle {
+      position: fixed; bottom: clamp(1rem, 2.5vh, 2rem);
+      right: clamp(1.5rem, 3vw, 2.5rem); z-index: 200;
+      display: flex; align-items: center; gap: 2px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 100px; padding: 5px 12px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      font-family: var(--font-disp); font-size: var(--small-size);
+      font-weight: 700; color: var(--ink-3); padding: 2px 5px;
+      line-height: 1; border-radius: 3px; min-height: 24px;
+      transition: color 0.15s;
+    }
+    .lang-btn.active { color: var(--accent); }
+    .lang-sep { color: var(--border); font-size: var(--small-size); line-height: 1; }
+
+    /* ZH typography — system CJK font stack, zero letter-spacing on headings */
+    .lang-zh {
+      font-family: 'PingFang SC', 'Noto Sans SC', 'Hiragino Sans GB',
+                   'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+    }
+    .lang-zh h1, .lang-zh h2, .lang-zh h3 {
+      font-family: 'PingFang SC', 'Noto Sans SC', 'Hiragino Sans GB',
+                   'Microsoft YaHei', 'Archivo', sans-serif;
+      letter-spacing: 0.01em;
+    }
+    .lang-zh p, .lang-zh li, .lang-zh td,
+    .lang-zh .pillar-desc, .lang-zh .engage-desc,
+    .lang-zh .roadmap-items, .lang-zh .stack-items { line-height: 1.75; }
+    /* ZH hero headline — Chinese chars are compact, allow slightly larger size */
+    .lang-zh #s1 h1 {
+      font-size: clamp(1.6rem, 4vw, 3.6rem);
+      hyphens: auto; word-break: break-all; white-space: normal;
+    }
+    .lang-zh #s1 h1 em { white-space: normal; }
+
+  </style>
+</head>
+<body>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- SLIDE COUNTER -->
+  <div class="slide-counter"><span id="curSlide">01</span> / 12</div>
+
+  <!-- NAV DOTS -->
+  <nav class="nav-dots" aria-label="Slide navigation">
+    <button type="button" class="nav-dot active" data-slide="0" aria-label="Slide 1"></button>
+    <button type="button" class="nav-dot" data-slide="1"  aria-label="Slide 2"></button>
+    <button type="button" class="nav-dot" data-slide="2"  aria-label="Slide 3"></button>
+    <button type="button" class="nav-dot" data-slide="3"  aria-label="Slide 4"></button>
+    <button type="button" class="nav-dot" data-slide="4"  aria-label="Slide 5"></button>
+    <button type="button" class="nav-dot" data-slide="5"  aria-label="Slide 6"></button>
+    <button type="button" class="nav-dot" data-slide="6"  aria-label="Slide 7"></button>
+    <button type="button" class="nav-dot" data-slide="7"  aria-label="Slide 8"></button>
+    <button type="button" class="nav-dot" data-slide="8"  aria-label="Slide 9"></button>
+    <button type="button" class="nav-dot" data-slide="9"  aria-label="Slide 10"></button>
+    <button type="button" class="nav-dot" data-slide="10" aria-label="Slide 11"></button>
+    <button type="button" class="nav-dot" data-slide="11" aria-label="Slide 12"></button>
+  </nav>
+
+  <!-- Language toggle — EN | 中 — bottom-right, mirrors slide counter position -->
+  <div class="lang-toggle" id="langToggle" aria-label="Language / 语言">
+    <button type="button" class="lang-btn active" data-lang="en" aria-label="Switch to English">EN</button>
+    <span class="lang-sep" aria-hidden="true">|</span>
+    <button type="button" class="lang-btn" data-lang="zh" aria-label="切换到中文">中</button>
+  </div>
+
+  <!-- ================================================
+       SLIDE 01 — HERO
+       ================================================ -->
+  <section class="slide" id="s1">
+    <div class="s1-split">
+      <div class="s1-text">
+        <p class="hero-eyebrow reveal d1">AI Hero Academy · 2026</p>
+        <h1 class="reveal d2">From AI-curious<br>to <em>AI-supercharged.</em><br>In 7 days.</h1>
+        <p class="hero-sub reveal d3">Personal AI transformation for every professional — regardless of role or industry. Scenario-based practice, real coaching, a toolkit you keep.</p>
+        <div class="hero-metrics reveal d4">
+          <div class="metric-item">
+            <div class="metric-val">7</div>
+            <div class="metric-lbl">Days</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">6</div>
+            <div class="metric-lbl">Skill Pillars</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">90</div>
+            <div class="metric-lbl">Min / Day</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val red">Free</div>
+            <div class="metric-lbl">Forever</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">EN+ZH</div>
+            <div class="metric-lbl">Bilingual</div>
+          </div>
+        </div>
+        <div class="reveal d5">
+          <a class="cta-btn" href="#">Start Day 1 <em class="arrow">→</em></a>
+        </div>
+      </div>
+      <div class="s1-photo reveal-scale d2">
+        <div class="s1-accent"></div>
+        <img
+          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=85&auto=format&fit=crop&crop=faces,center"
+          alt="Professional using AI tools at work"
+          loading="eager"
+        >
+      </div>
+    </div>
+    <div class="bottom-rule"></div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 02 — THE PROBLEM
+       ================================================ -->
+  <section class="slide" id="s2">
+    <div class="slide-num">02</div>
+    <div class="slide-content">
+      <div class="two-col">
+        <div>
+          <p class="label reveal-left d1">The Problem</p>
+          <div class="rule-accent reveal d2"></div>
+          <h2 class="reveal d3">AI training is everywhere.<br>None of it sticks.</h2>
+          <div style="margin-top: clamp(0.6rem, 2vh, 1.2rem);" class="reveal d4">
+            <p>Video lectures leave learners passive. Certificates prove nothing. Generic prompts don't survive contact with real work.</p>
+          </div>
+          <div style="margin-top: clamp(0.5rem, 1.5vh, 1rem);" class="reveal d5">
+            <p>The gap isn't <em>knowledge</em> — it's <strong>practice under pressure, with a coach who knows your context.</strong></p>
+          </div>
+        </div>
+        <div class="reveal-scale d3">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Other platforms</th>
+                <th class="red">AI Hero Academy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Watch videos</td>
+                <td><span class="check">✦</span>Practice with AI coach</td>
+              </tr>
+              <tr>
+                <td>Generic content</td>
+                <td><span class="check">✦</span>Your role, your industry</td>
+              </tr>
+              <tr>
+                <td>A certificate</td>
+                <td><span class="check">✦</span>A toolkit you built and own</td>
+              </tr>
+              <tr>
+                <td>EN only</td>
+                <td><span class="check">✦</span>EN + ZH from day one</td>
+              </tr>
+              <tr>
+                <td>Freemium → paywall</td>
+                <td><span class="check">✦</span>Free. Always.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 03 — 7-DAY ARC
+       ================================================ -->
+  <section class="slide" id="s3">
+    <div class="slide-content" style="padding-top: calc(var(--pad-x) * 0.7); padding-bottom: calc(var(--pad-x) * 0.7);">
+      <p class="label reveal-left d1">Learning Model</p>
+      <h2 class="reveal d2">The 7-Day Transformation Arc</h2>
+      <div class="arc-grid reveal d3">
+        <div class="arc-cell day0">
+          <div class="arc-day-n">Day 0</div>
+          <div class="arc-title">Onboarding &amp; Diagnostic</div>
+          <span class="arc-fw">Gap Map</span>
+        </div>
+        <div class="arc-cell">
+          <div class="arc-day-n">Day 1</div>
+          <div class="arc-title">AI Conceptual Foundation</div>
+          <span class="arc-fw">MAPS</span>
+        </div>
+        <div class="arc-cell">
+          <div class="arc-day-n">Day 2</div>
+          <div class="arc-title">Prompting &amp; Context Engineering</div>
+          <span class="arc-fw">CRAF</span>
+        </div>
+        <div class="arc-cell">
+          <div class="arc-day-n">Day 3</div>
+          <div class="arc-title">AI Tool Fluency</div>
+          <span class="arc-fw">CAST</span>
+        </div>
+        <div class="arc-cell">
+          <div class="arc-day-n">Day 4</div>
+          <div class="arc-title">Configuration &amp; Control</div>
+          <span class="arc-fw">BRIEF</span>
+        </div>
+        <div class="arc-cell">
+          <div class="arc-day-n">Day 5</div>
+          <div class="arc-title">Multi-AI Workflow Design</div>
+          <span class="arc-fw">Workflow</span>
+        </div>
+        <div class="arc-cell">
+          <div class="arc-day-n">Day 6</div>
+          <div class="arc-title">Agentic System Design</div>
+          <span class="arc-fw">CREW</span>
+        </div>
+        <div class="arc-cell capstone">
+          <div class="arc-day-n">Day 7</div>
+          <div class="arc-title">Capstone Challenge</div>
+          <span class="arc-fw">Credential</span>
+        </div>
+      </div>
+      <div class="daily-row reveal d4">
+        <div class="daily-block">
+          <div class="daily-t"><i class="ph ph-book-open"></i> Reading</div>
+          <div class="daily-min">20 min</div>
+          <div class="daily-d">Concept · Example · Anti-pattern</div>
+        </div>
+        <div class="daily-block">
+          <div class="daily-t"><i class="ph ph-robot"></i> Practice</div>
+          <div class="daily-min">40 min</div>
+          <div class="daily-d">4 tasks + live AI coaching</div>
+        </div>
+        <div class="daily-block">
+          <div class="daily-t"><i class="ph ph-pencil-simple"></i> Quiz</div>
+          <div class="daily-min">15 min</div>
+          <div class="daily-d">Pass ≥ 2.5/4 to unlock next day</div>
+        </div>
+        <div class="daily-block">
+          <div class="daily-t"><i class="ph ph-wrench"></i> Build</div>
+          <div class="daily-min">15 min</div>
+          <div class="daily-d">1 artifact you own forever</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 04 — 6 PILLARS + ARTIFACTS
+       ================================================ -->
+  <section class="slide" id="s4">
+    <div class="slide-content" style="padding-top: calc(var(--pad-x) * 0.7); padding-bottom: calc(var(--pad-x) * 0.7);">
+      <p class="label reveal-left d1">Core IP — Knowledge Model</p>
+      <h2 class="reveal d2">Six pillars. One complete AI professional.</h2>
+      <div class="pillars-grid">
+        <div class="pillar-card reveal d3">
+          <div class="pillar-top">
+            <span class="pillar-day-n">Day 1</span>
+            <span class="tag">MAPS</span>
+          </div>
+          <div class="pillar-name">AI Conceptual Foundation</div>
+          <div class="pillar-desc">How LLMs actually work. The 5 hallucination patterns. Model selection. Governance.</div>
+          <div class="pillar-artifact">Personal AI tool selection checklist</div>
+        </div>
+        <div class="pillar-card reveal d4">
+          <div class="pillar-top">
+            <span class="pillar-day-n">Day 2</span>
+            <span class="tag">CRAF</span>
+          </div>
+          <div class="pillar-name">Prompting &amp; Context Engineering</div>
+          <div class="pillar-desc">Context · Role · Action · Format. From shallow requests to structured prompts.</div>
+          <div class="pillar-artifact">Reusable prompt template for your job</div>
+        </div>
+        <div class="pillar-card reveal d5">
+          <div class="pillar-top">
+            <span class="pillar-day-n">Day 3</span>
+            <span class="tag">CAST</span>
+          </div>
+          <div class="pillar-name">AI Tool Fluency</div>
+          <div class="pillar-desc">Capability · Access · Source-to-destination · Tradeoff. Navigate the 2026 landscape.</div>
+          <div class="pillar-artifact">Personal AI tool decision framework</div>
+        </div>
+        <div class="pillar-card reveal d4">
+          <div class="pillar-top">
+            <span class="pillar-day-n">Day 4</span>
+            <span class="tag">BRIEF</span>
+          </div>
+          <div class="pillar-name">Configuration &amp; Control</div>
+          <div class="pillar-desc">System prompts, temperature, JSON schemas — configure AI to serve you reliably.</div>
+          <div class="pillar-artifact">A system prompt you deploy today</div>
+        </div>
+        <div class="pillar-card reveal d5">
+          <div class="pillar-top">
+            <span class="pillar-day-n">Day 5</span>
+            <span class="tag-dark">Workflow</span>
+          </div>
+          <div class="pillar-name">Multi-AI Workflow Design</div>
+          <div class="pillar-desc">Human orchestrates AI tools across a multi-step pipeline. Handoffs. Human checkpoints.</div>
+          <div class="pillar-artifact">3-step AI workflow for a real task you do</div>
+        </div>
+        <div class="pillar-card reveal d6">
+          <div class="pillar-top">
+            <span class="pillar-day-n">Day 6</span>
+            <span class="tag">CREW</span>
+          </div>
+          <div class="pillar-name">Agentic System Design</div>
+          <div class="pillar-desc">Components · Roles · Edge cases · Workflow map. AI orchestrates AI. Design the failure modes.</div>
+          <div class="pillar-artifact">Agent workflow design for automation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 05 — PACE COACH
+       ================================================ -->
+  <section class="slide" id="s5">
+    <div class="slide-content" style="padding-top: calc(var(--pad-x) * 0.7); padding-bottom: calc(var(--pad-x) * 0.7);">
+      <p class="label reveal-left d1">Core IP — AI Coach</p>
+      <h2 class="reveal d2">Not a chatbot. A coach.</h2>
+      <div class="two-col" style="margin-top: clamp(0.5rem, 1.5vh, 1rem);">
+        <div>
+          <div class="pace-grid">
+            <div class="pace-row reveal d3">
+              <div class="pace-letter">P</div>
+              <div class="pace-body">
+                <h3>Purpose</h3>
+                <p>Declare the learning objective before generating a question. No question without a purpose.</p>
+              </div>
+            </div>
+            <div class="pace-row reveal d4">
+              <div class="pace-letter">A</div>
+              <div class="pace-body">
+                <h3>Assess</h3>
+                <p>Read both the intellectual signal (what they understood) <em>and</em> the emotional signal (how they feel).</p>
+              </div>
+            </div>
+            <div class="pace-row reveal d5">
+              <div class="pace-letter">C</div>
+              <div class="pace-body">
+                <h3>Choose</h3>
+                <p>Select the right coaching move — <strong>Challenge · Clarify · Celebrate · Support</strong> — based on the assessment.</p>
+              </div>
+            </div>
+            <div class="pace-row reveal d6">
+              <div class="pace-letter">E</div>
+              <div class="pace-body">
+                <h3>Exit</h3>
+                <p>Close the task the moment the objective is met. Never ask an unnecessary question. Never linger.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-scale d3">
+          <div class="q-budget-box">
+            <div class="q-budget-title">3-Question Budget — Hard Ceiling</div>
+            <div class="q-row"><div class="q-badge">1</div>Open probe — surface current thinking (always)</div>
+            <div class="q-row"><div class="q-badge">2</div>Adaptive — challenge if shallow / affirm if good</div>
+            <div class="q-row"><div class="q-badge">3</div>Synthesis — consolidate + bridge to build artifact</div>
+            <div class="q-row"><div class="q-badge blocked">4</div>Blocked. Budget exhausted → give insight directly.</div>
+          </div>
+          <div style="margin-top: clamp(0.6rem, 1.5vh, 1rem);">
+            <div class="q-budget-title" style="color: var(--ink-3); font-family: var(--font-disp); font-size: var(--small-size); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4em;">Emotional Detection — 5 Patterns</div>
+            <div class="emotion-grid">
+              <div class="emotion-cell"><strong>Short / dismissive</strong>Reframe without pressure</div>
+              <div class="emotion-cell"><strong>Frustrated</strong>Stop. Give insight directly.</div>
+              <div class="emotion-cell"><strong>Overconfident</strong>Gentle challenge: push deeper</div>
+              <div class="emotion-cell"><strong>Genuine insight</strong>Celebrate + close. No more Qs.</div>
+            </div>
+            <div class="emotion-cell" style="margin-top: 0.35em; font-size: clamp(0.6rem, 0.95vw, 0.78rem); border: 1px solid var(--border); border-radius: 4px; padding: 0.35em 0.5em; color: var(--ink-2);">
+              <strong style="display:block; font-weight: 700; color: var(--ink);">Confused / lost</strong>Simplify + ground in their work context
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 06 — DATA FLYWHEEL
+       ================================================ -->
+  <section class="slide" id="s6">
+    <!-- Photo texture — absolute positioned, zero layout impact on flywheel diagram -->
+    <div class="s6-bg" aria-hidden="true"></div>
+    <div class="slide-content">
+      <div class="flywheel-wrap">
+        <div class="fw-copy">
+          <p class="label reveal-left d1">Defensible Moat</p>
+          <div class="rule-accent reveal d2"></div>
+          <h2 class="reveal d3">The data flywheel<br>that compounds<br>with every learner.</h2>
+          <p class="reveal d4" style="margin-top: clamp(0.6rem, 1.5vh, 1rem); font-size: clamp(0.7rem, 1.2vw, 0.9rem);">
+            Every coaching session generates a learner model: strengths extracted, gaps identified, preferred framing logged. That model makes the next session smarter — for that learner and across the collective.
+          </p>
+          <div class="moat-list reveal d5">
+            <div class="moat-item"><div class="moat-dot"></div>Role × industry coaching patterns</div>
+            <div class="moat-item"><div class="moat-dot"></div>Individual learner model per user</div>
+            <div class="moat-item"><div class="moat-dot"></div>7-day arc context continuity</div>
+            <div class="moat-item"><div class="moat-dot"></div>Synthesis agent fires after every session</div>
+          </div>
+        </div>
+        <div class="fw-diagram reveal-scale d3">
+          <div class="fw-ring"></div>
+          <div class="fw-node fw-n"><div class="fw-icon"><i class="ph ph-books"></i></div>Learner<br>completes</div>
+          <div class="fw-node fw-e"><div class="fw-icon"><i class="ph ph-lightning"></i></div>Synthesis<br>agent</div>
+          <div class="fw-node fw-s"><div class="fw-icon"><i class="ph ph-graph"></i></div>Learner<br>model updated</div>
+          <div class="fw-node fw-w"><div class="fw-icon"><i class="ph ph-robot"></i></div>Coach<br>smarter</div>
+          <div class="fw-center">Data<br>Flywheel</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 07 — CREDENTIAL
+       ================================================ -->
+  <section class="slide" id="s7">
+    <div class="slide-content">
+      <div class="two-col">
+        <div class="reveal-scale d2">
+          <div class="cred-card">
+            <div class="cred-badge-circle"><i class="ph ph-trophy"></i></div>
+            <div class="cred-title">AI-Supercharged Intermediate</div>
+            <div class="cred-issuer">Issued by AI Hero Academy · Valid indefinitely</div>
+            <div class="cred-tags">
+              <span class="cred-tag">MAPS</span><span class="cred-tag">CRAF</span>
+              <span class="cred-tag">CAST</span><span class="cred-tag">BRIEF</span>
+              <span class="cred-tag">Workflow</span><span class="cred-tag">CREW</span>
+              <span class="cred-tag">Day 7 Capstone ✓</span>
+            </div>
+            <div class="cred-assets">
+              <div class="cred-asset"><div class="cred-asset-icon"><i class="ph ph-medal"></i></div>Open Badge 3.0 — machine-verifiable</div>
+              <div class="cred-asset"><div class="cred-asset-icon"><i class="ph ph-file-text"></i></div>PDF certificate with pillar breakdown</div>
+              <div class="cred-asset"><div class="cred-asset-icon"><i class="ph ph-linkedin-logo"></i></div>LinkedIn one-click add</div>
+              <div class="cred-asset"><div class="cred-asset-icon"><i class="ph ph-device-mobile"></i></div>Social share card — LinkedIn · WeChat</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="label reveal-left d1">Credential</p>
+          <div class="rule-accent reveal d2"></div>
+          <h2 class="reveal d3">A credential worth sharing.<br>A toolkit worth keeping.</h2>
+          <div class="cred-features" style="margin-top: clamp(0.75rem, 2vh, 1.5rem);">
+            <div class="cred-feature hi reveal d4">
+              <h3>Open Badge 3.0</h3>
+              <p>Machine-verifiable. Works in LinkedIn, email signatures, resumes. Same standard as Google, Coursera, Credly.</p>
+            </div>
+            <div class="cred-feature reveal d5">
+              <h3>Built-in viral loop</h3>
+              <p>Every issued credential generates a shareable social card. Each share is a word-of-mouth referral — zero ad spend.</p>
+            </div>
+            <div class="cred-feature reveal d6">
+              <h3>No expiry. No renewal fees.</h3>
+              <p>The credential represents what you built, not when you took a course.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 08 — BUSINESS MODEL
+       ================================================ -->
+  <section class="slide" id="s8">
+    <div class="slide-content">
+      <div class="two-col">
+        <div>
+          <p class="label reveal-left d1">Business Model</p>
+          <div class="rule-accent reveal d2"></div>
+          <h2 class="reveal d3">Free as a<br>distribution strategy.</h2>
+          <p class="reveal d4" style="margin-top: clamp(0.5rem, 1.5vh, 1rem); font-size: clamp(0.7rem, 1.2vw, 0.9rem);">
+            The 7-day program is permanently free. No paywalls. No freemium tier. Learners who complete it are self-identified AI skill builders — the highest-intent B2C education audience in the market.
+          </p>
+          <p class="reveal d5" style="margin-top: 0.5em; font-size: clamp(0.7rem, 1.2vw, 0.9rem);">
+            Post-completion: curated offer for paid advanced courses. Conversion is high because trust is earned over 7 days, not bought with a discount code.
+          </p>
+          <div class="model-note reveal d6">
+            <strong>Viral coefficient:</strong> Every badge share includes the issuer + a CTA. Each credential is a performance ad — permanently, for free.
+          </div>
+        </div>
+        <div class="reveal-scale d3">
+          <div class="funnel">
+            <div class="funnel-layer fl-1">
+              Any professional curious about AI
+              <span class="funnel-sub"> · Bilingual (EN+ZH) · Role-agnostic</span>
+            </div>
+            <div class="funnel-arrow">↓</div>
+            <div class="funnel-layer fl-2">Completes 7-day program<br><span class="funnel-sub">High-intent · Credential earned</span></div>
+            <div class="funnel-arrow">↓</div>
+            <div class="funnel-layer fl-3">Shares badge · Refers others<br><span class="funnel-sub">Organic distribution — every badge is a referral</span></div>
+            <div class="funnel-arrow">↓</div>
+            <div class="funnel-layer fl-4">Converts to paid advanced course</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 09 — TECH STACK
+       ================================================ -->
+  <section class="slide" id="s9">
+    <div class="slide-content">
+      <p class="label reveal-left d1">Built to Scale</p>
+      <h2 class="reveal d2">100% GCP. Bilingual by design.</h2>
+      <p class="reveal d3" style="margin-top: clamp(0.4rem, 1vh, 0.75rem);">Production architecture on Google Cloud from day one. Containerized, portable, no third-party auth lock-in.</p>
+      <div class="stack-grid reveal d4">
+        <div class="stack-block red">
+          <div class="stack-cat">Frontend</div>
+          <div class="stack-items"><strong>Next.js 15</strong> App Router<br>TypeScript · Tailwind CSS v4<br>next-intl (EN + ZH)</div>
+        </div>
+        <div class="stack-block">
+          <div class="stack-cat">Auth &amp; Data</div>
+          <div class="stack-items"><strong>Firebase Auth</strong> (Google / LinkedIn / Facebook)<br><strong>Cloud Firestore</strong> (flat collections)<br>HTTP-only session cookies</div>
+        </div>
+        <div class="stack-block">
+          <div class="stack-cat">AI / Coaching</div>
+          <div class="stack-items"><strong>Gemini 2.0 Flash</strong> — coaching, scoring, synthesis<br><strong>Gemini 3.1 Pro</strong> — content generation<br>SSE streaming · PACE model enforced in code</div>
+        </div>
+        <div class="stack-block">
+          <div class="stack-cat">Infrastructure</div>
+          <div class="stack-items"><strong>Cloud Run</strong> (containerized)<br><strong>GCS</strong> — credential assets<br>Artifact Registry · GitHub Actions CI/CD</div>
+        </div>
+        <div class="stack-block">
+          <div class="stack-cat">Credentials</div>
+          <div class="stack-items"><strong>Open Badges 3.0</strong><br>sharp (PNG) · puppeteer (PDF)<br>LinkedIn deep link standard</div>
+        </div>
+        <div class="stack-block">
+          <div class="stack-cat">Content Pipeline</div>
+          <div class="stack-items"><strong>7-agent pipeline</strong> (Gemini Pro + Claude)<br>Tavily live research<br>JSON schema · perishable content flags</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 10 — ENGAGEMENT + BILINGUAL
+       ================================================ -->
+  <section class="slide" id="s10">
+    <div class="slide-content">
+      <p class="label reveal-left d1">Engagement &amp; Retention</p>
+      <h2 class="reveal d2">Designed to be finished.<br>Not abandoned.</h2>
+      <p class="reveal d3" style="margin-top: clamp(0.4rem, 1vh, 0.75rem);">Informed by Duolingo, Uxcel, and gamification research. Every mechanic is deliberate — no punitive patterns.</p>
+      <div class="engage-grid">
+        <div class="engage-card reveal d3">
+          <div class="engage-icon"><i class="ph ph-flame"></i></div>
+          <div class="engage-title">Daily Streak</div>
+          <div class="engage-desc">Visible streak counter with "at risk" nudge if day not started by evening.</div>
+        </div>
+        <div class="engage-card reveal d4">
+          <div class="engage-icon"><i class="ph ph-seal-check"></i></div>
+          <div class="engage-title">Pillar Badges</div>
+          <div class="engage-desc">Awarded on quiz pass. Shareable. Visible on profile. Six to collect.</div>
+        </div>
+        <div class="engage-card reveal d5">
+          <div class="engage-icon"><i class="ph ph-toolbox"></i></div>
+          <div class="engage-title">Build Gallery</div>
+          <div class="engage-desc">Cumulative toolkit. Six artifacts. Review, copy, and reuse at any time.</div>
+        </div>
+        <div class="engage-card reveal d4">
+          <div class="engage-icon"><i class="ph ph-chart-bar"></i></div>
+          <div class="engage-title">Gap Map Delta</div>
+          <div class="engage-desc">After Day 7: re-run diagnostic. See score improvement vs Day 0 baseline.</div>
+        </div>
+        <div class="engage-card reveal d5">
+          <div class="engage-icon"><i class="ph ph-clock"></i></div>
+          <div class="engage-title">Micro-pacing</div>
+          <div class="engage-desc">90 min/day ceiling. Modules designed to complete in a lunch break.</div>
+        </div>
+        <div class="engage-card reveal d6">
+          <div class="engage-icon"><i class="ph ph-globe"></i></div>
+          <div class="engage-title">EN + ZH</div>
+          <div class="engage-desc">Full bilingual parity. Coach streams in ZH. All UI strings translated. Toggle in-session.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 11 — ROADMAP
+       ================================================ -->
+  <section class="slide" id="s11">
+    <div class="slide-content">
+      <p class="label reveal-left d1">Execution Plan</p>
+      <h2 class="reveal d2">Four sprints to launch.</h2>
+      <p class="reveal d3" style="margin-top: clamp(0.4rem, 1vh, 0.75rem);">Two parallel tracks. Content generation starts Day 1 with no code dependency. Engineering builds sequentially on a firm GCP foundation.</p>
+      <div class="roadmap-row">
+        <div class="roadmap-block active reveal d3">
+          <div class="roadmap-sprint">Sprint 1</div>
+          <div class="roadmap-title">Content Generation</div>
+          <div class="roadmap-items">7-agent AI pipeline · All 6 pillars + diagnostic + capstone · Role context library · P1 pilot gate</div>
+        </div>
+        <div class="roadmap-block reveal d4">
+          <div class="roadmap-sprint">Sprint 2</div>
+          <div class="roadmap-title">App Foundation</div>
+          <div class="roadmap-items">Next.js scaffold · Firebase Auth · Firestore schema · 4-screen onboarding · CI/CD to Cloud Run</div>
+        </div>
+        <div class="roadmap-block reveal d5">
+          <div class="roadmap-sprint">Sprint 3</div>
+          <div class="roadmap-title">Core Learning Loop</div>
+          <div class="roadmap-items">Coach engine (PACE, SSE) · Daily module UX · Quiz · Build artifact · Synthesis agent</div>
+        </div>
+        <div class="roadmap-block reveal d6">
+          <div class="roadmap-sprint">Sprint 4</div>
+          <div class="roadmap-title">Program Completion</div>
+          <div class="roadmap-items">Dashboard + streak · Day 7 capstone · Credential generation · EN/ZH i18n</div>
+        </div>
+      </div>
+      <div class="reveal d7" style="margin-top: clamp(0.6rem, 1.5vh, 1.2rem); border: 1px solid var(--border); border-radius: 4px; padding: clamp(0.5rem, 1.2vw, 0.85rem); font-size: clamp(0.65rem, 1.1vw, 0.82rem); color: var(--ink-2);">
+        <strong style="color: var(--accent);">Critical path:</strong> Sprint 1 ∥ Sprint 2 start simultaneously. Sprint 3 unlocks after Sprint 2 complete + Sprint 1 P1 content ready. Sprint 4 closes the arc.
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       SLIDE 12 — CTA
+       ================================================ -->
+  <section class="slide" id="s12">
+    <div class="s12-bg"></div>
+    <div class="big-text">AHA</div>
+    <div class="slide-content">
+      <p class="label reveal-left d1">Get Started</p>
+      <h1 class="reveal d2" style="max-width: 14ch; margin-top: clamp(0.4rem, 1.5vh, 1rem);">Become<br><em>AI-supercharged.</em><br>In 7 days.</h1>
+      <p class="cta-sub reveal d3" style="margin-top: clamp(0.6rem, 1.5vh, 1.2rem);">7 days. 90 minutes a day. A personal AI toolkit you built + a shareable credential. Free. Forever.</p>
+      <div class="reveal d4">
+        <a class="cta-btn-lg" href="#">Start Day 1 <em class="arrow" style="font-style:normal;">→</em></a>
+        <div class="cta-note">No credit card · No trial · EN + ZH · Free forever</div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* ================================================
+       PRESENTATION CONTROLLER
+       Keyboard · Touch/Swipe · Wheel · Nav dots
+       Intersection Observer for reveal animations
+       ================================================ */
+    (function () {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const dots = Array.from(document.querySelectorAll('.nav-dot'));
+      const progressBar = document.getElementById('progressBar');
+      const curSlideEl = document.getElementById('curSlide');
+      const total = slides.length;
+      let current = 0;
+      let isScrolling = false;
+
+      /* — Scroll to slide — */
+      function goTo(idx) {
+        if (idx < 0 || idx >= total) return;
+        current = idx;
+        slides[idx].scrollIntoView({ behavior: 'smooth' });
+        update();
+      }
+
+      /* — Update UI — */
+      function update() {
+        const pct = total <= 1 ? 100 : (current / (total - 1)) * 100;
+        progressBar.style.width = pct + '%';
+        curSlideEl.textContent = String(current + 1).padStart(2, '0');
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+      }
+
+      /* — Intersection Observer — */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            const idx = slides.indexOf(entry.target);
+            if (idx !== -1) { current = idx; update(); }
+          }
+        });
+      }, { threshold: 0.55 });
+      slides.forEach(s => observer.observe(s));
+
+      /* — Keyboard — */
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+          e.preventDefault(); goTo(current + 1);
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+          e.preventDefault(); goTo(current - 1);
+        } else if (e.key === 'Home') {
+          e.preventDefault(); goTo(0);
+        } else if (e.key === 'End') {
+          e.preventDefault(); goTo(total - 1);
+        }
+      });
+
+      /* — Nav dots — */
+      dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+      /* — Mouse wheel — */
+      let wheelTimer;
+      window.addEventListener('wheel', e => {
+        clearTimeout(wheelTimer);
+        wheelTimer = setTimeout(() => {
+          if (e.deltaY > 30) goTo(current + 1);
+          else if (e.deltaY < -30) goTo(current - 1);
+        }, 50);
+      }, { passive: true });
+
+      /* — Touch swipe — */
+      let touchY = 0;
+      window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
+      window.addEventListener('touchend', e => {
+        const diff = touchY - e.changedTouches[0].clientY;
+        if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+      }, { passive: true });
+
+      /* — Init — */
+      update();
+    })();
+
+    /* ================================================
+       i18n — EN / ZH
+       Strategy: CSS-selector keyed map; snapshot EN on load; swap innerHTML.
+       Tech names, framework acronyms (MAPS/CRAF/etc.), and tool names stay EN.
+       ================================================ */
+    (function () {
+      const ZH = {
+        /* ── S1 Hero ─────────────────────────────── */
+        '#s1 .hero-eyebrow': 'AI Hero Academy · 2026',
+        '#s1 h1': '从AI小白<br>到<em>AI超能职场人。</em><br>7天蜕变。',
+        '#s1 .hero-sub': '为每一位职场人打造的AI转型计划——不限职位与行业。场景化实战练习，真实AI教练，专属工具包永久保留。',
+        '#s1 .metric-item:nth-child(1) .metric-lbl': '天',
+        '#s1 .metric-item:nth-child(2) .metric-lbl': '技能支柱',
+        '#s1 .metric-item:nth-child(3) .metric-lbl': '分钟/天',
+        '#s1 .metric-item:nth-child(4) .metric-lbl': '永久免费',
+        '#s1 .metric-item:nth-child(5) .metric-lbl': '中英双语',
+        '#s1 .cta-btn': '开始第一天 <em class="arrow">→</em>',
+
+        /* ── S2 Problem ──────────────────────────── */
+        '#s2 .label': '问题所在',
+        '#s2 h2': 'AI培训满地都是，<br>却没有一个真正有效。',
+        '#s2 .reveal.d4 p': '视频课让学习者被动接受。证书毫无意义。通用提示词在真实工作中根本用不上。',
+        '#s2 .reveal.d5 p': '差距不在于知识——而在于在压力下实战，需要一个<strong>了解你工作场景的AI教练。</strong>',
+        '#s2 .compare-table thead th:nth-child(1)': '其他平台',
+        '#s2 .compare-table tbody tr:nth-child(1) td:nth-child(1)': '看视频',
+        '#s2 .compare-table tbody tr:nth-child(1) td:nth-child(2)': '<span class="check">✦</span>AI教练陪练',
+        '#s2 .compare-table tbody tr:nth-child(2) td:nth-child(1)': '通用内容',
+        '#s2 .compare-table tbody tr:nth-child(2) td:nth-child(2)': '<span class="check">✦</span>你的职位，你的行业',
+        '#s2 .compare-table tbody tr:nth-child(3) td:nth-child(1)': '一张证书',
+        '#s2 .compare-table tbody tr:nth-child(3) td:nth-child(2)': '<span class="check">✦</span>你亲手构建的专属工具包',
+        '#s2 .compare-table tbody tr:nth-child(4) td:nth-child(1)': '仅英语',
+        '#s2 .compare-table tbody tr:nth-child(4) td:nth-child(2)': '<span class="check">✦</span>中英双语，从第一天起',
+        '#s2 .compare-table tbody tr:nth-child(5) td:nth-child(1)': '免费增值→付费墙',
+        '#s2 .compare-table tbody tr:nth-child(5) td:nth-child(2)': '<span class="check">✦</span>永久免费。',
+
+        /* ── S3 Arc ──────────────────────────────── */
+        '#s3 .label': '学习模式',
+        '#s3 h2': '7天蜕变旅程',
+        '#s3 .arc-grid .arc-cell:nth-child(1) .arc-day-n': '第0天',
+        '#s3 .arc-grid .arc-cell:nth-child(1) .arc-title': '入门与诊断',
+        '#s3 .arc-grid .arc-cell:nth-child(1) .arc-fw': '差距图谱',
+        '#s3 .arc-grid .arc-cell:nth-child(2) .arc-day-n': '第1天',
+        '#s3 .arc-grid .arc-cell:nth-child(2) .arc-title': 'AI概念基础',
+        '#s3 .arc-grid .arc-cell:nth-child(3) .arc-day-n': '第2天',
+        '#s3 .arc-grid .arc-cell:nth-child(3) .arc-title': '提示词与上下文工程',
+        '#s3 .arc-grid .arc-cell:nth-child(4) .arc-day-n': '第3天',
+        '#s3 .arc-grid .arc-cell:nth-child(4) .arc-title': 'AI工具熟练度',
+        '#s3 .arc-grid .arc-cell:nth-child(5) .arc-day-n': '第4天',
+        '#s3 .arc-grid .arc-cell:nth-child(5) .arc-title': 'AI配置与控制',
+        '#s3 .arc-grid .arc-cell:nth-child(6) .arc-day-n': '第5天',
+        '#s3 .arc-grid .arc-cell:nth-child(6) .arc-title': '多AI工作流设计',
+        '#s3 .arc-grid .arc-cell:nth-child(7) .arc-day-n': '第6天',
+        '#s3 .arc-grid .arc-cell:nth-child(7) .arc-title': '智能体系统设计',
+        '#s3 .arc-grid .arc-cell:nth-child(8) .arc-day-n': '第7天',
+        '#s3 .arc-grid .arc-cell:nth-child(8) .arc-title': '综合挑战',
+        '#s3 .arc-grid .arc-cell:nth-child(8) .arc-fw': '证书',
+        '#s3 .daily-row .daily-block:nth-child(1) .daily-t': '<i class="ph ph-book-open"></i> 精读',
+        '#s3 .daily-row .daily-block:nth-child(1) .daily-min': '20分钟',
+        '#s3 .daily-row .daily-block:nth-child(1) .daily-d': '概念 · 案例 · 反例',
+        '#s3 .daily-row .daily-block:nth-child(2) .daily-t': '<i class="ph ph-robot"></i> 实战',
+        '#s3 .daily-row .daily-block:nth-child(2) .daily-min': '40分钟',
+        '#s3 .daily-row .daily-block:nth-child(2) .daily-d': '4个任务 + 实时AI教练',
+        '#s3 .daily-row .daily-block:nth-child(3) .daily-t': '<i class="ph ph-pencil-simple"></i> 测验',
+        '#s3 .daily-row .daily-block:nth-child(3) .daily-min': '15分钟',
+        '#s3 .daily-row .daily-block:nth-child(3) .daily-d': '≥2.5/4分解锁下一天',
+        '#s3 .daily-row .daily-block:nth-child(4) .daily-t': '<i class="ph ph-wrench"></i> 构建',
+        '#s3 .daily-row .daily-block:nth-child(4) .daily-min': '15分钟',
+        '#s3 .daily-row .daily-block:nth-child(4) .daily-d': '1件永属于你的成果',
+
+        /* ── S4 Pillars ──────────────────────────── */
+        '#s4 .label': '核心知识产权 — 知识体系',
+        '#s4 h2': '六大支柱。一名完整的AI职场专家。',
+        '#s4 .pillars-grid .pillar-card:nth-child(1) .pillar-day-n': '第1天',
+        '#s4 .pillars-grid .pillar-card:nth-child(1) .pillar-name': 'AI概念基础',
+        '#s4 .pillars-grid .pillar-card:nth-child(1) .pillar-desc': 'LLM的真实工作原理。5种幻觉模式。模型选择与使用规范。',
+        '#s4 .pillars-grid .pillar-card:nth-child(1) .pillar-artifact': 'AI工具选择清单',
+        '#s4 .pillars-grid .pillar-card:nth-child(2) .pillar-day-n': '第2天',
+        '#s4 .pillars-grid .pillar-card:nth-child(2) .pillar-name': '提示词与上下文工程',
+        '#s4 .pillars-grid .pillar-card:nth-child(2) .pillar-desc': '上下文·角色·行动·格式。从简单请求到结构化提示词。',
+        '#s4 .pillars-grid .pillar-card:nth-child(2) .pillar-artifact': '可复用提示词模板',
+        '#s4 .pillars-grid .pillar-card:nth-child(3) .pillar-day-n': '第3天',
+        '#s4 .pillars-grid .pillar-card:nth-child(3) .pillar-name': 'AI工具熟练度',
+        '#s4 .pillars-grid .pillar-card:nth-child(3) .pillar-desc': '能力·访问·来源目标·权衡取舍。掌握2026年AI工具全景。',
+        '#s4 .pillars-grid .pillar-card:nth-child(3) .pillar-artifact': '个人AI工具决策框架',
+        '#s4 .pillars-grid .pillar-card:nth-child(4) .pillar-day-n': '第4天',
+        '#s4 .pillars-grid .pillar-card:nth-child(4) .pillar-name': 'AI配置与控制',
+        '#s4 .pillars-grid .pillar-card:nth-child(4) .pillar-desc': '系统提示词、温度参数、JSON模式——让AI稳定地为你服务。',
+        '#s4 .pillars-grid .pillar-card:nth-child(4) .pillar-artifact': '今天就能部署的系统提示词',
+        '#s4 .pillars-grid .pillar-card:nth-child(5) .pillar-day-n': '第5天',
+        '#s4 .pillars-grid .pillar-card:nth-child(5) .pillar-name': '多AI工作流设计',
+        '#s4 .pillars-grid .pillar-card:nth-child(5) .pillar-desc': '人工统筹多AI工具完成多步骤流程。交接节点。人工检查点。',
+        '#s4 .pillars-grid .pillar-card:nth-child(5) .pillar-artifact': '3步AI工作流设计',
+        '#s4 .pillars-grid .pillar-card:nth-child(6) .pillar-day-n': '第6天',
+        '#s4 .pillars-grid .pillar-card:nth-child(6) .pillar-name': '智能体系统设计',
+        '#s4 .pillars-grid .pillar-card:nth-child(6) .pillar-desc': '组件·角色·边界情况·流程图。AI统筹AI。设计故障模式。',
+        '#s4 .pillars-grid .pillar-card:nth-child(6) .pillar-artifact': '自动化智能体工作流设计',
+
+        /* ── S5 PACE Coach ───────────────────────── */
+        '#s5 .label': '核心知识产权 — AI教练',
+        '#s5 h2': '不是聊天机器人。是教练。',
+        '#s5 .pace-row:nth-child(1) h3': '目的',
+        '#s5 .pace-row:nth-child(1) p': '提问前先明确学习目标。没有目的，不出题。',
+        '#s5 .pace-row:nth-child(2) h3': '评估',
+        '#s5 .pace-row:nth-child(2) p': '同时读取认知信号（理解了什么）和情绪信号（感受如何）。',
+        '#s5 .pace-row:nth-child(3) h3': '选择',
+        '#s5 .pace-row:nth-child(3) p': '基于评估选择教练动作——<strong>挑战 · 澄清 · 庆祝 · 支持</strong>。',
+        '#s5 .pace-row:nth-child(4) h3': '退出',
+        '#s5 .pace-row:nth-child(4) p': '目标达成即刻收尾。不问多余的问题。不拖延。',
+        '#s5 .q-budget-box .q-budget-title': '3问上限——不可突破',
+        '#s5 .q-budget-box .q-row:nth-child(2)': '<div class="q-badge">1</div>开放式探问 — 引出当前思路（必问）',
+        '#s5 .q-budget-box .q-row:nth-child(3)': '<div class="q-badge">2</div>自适应 — 浅则挑战，好则肯定',
+        '#s5 .q-budget-box .q-row:nth-child(4)': '<div class="q-badge">3</div>综合总结 — 巩固并衔接成果构建',
+        '#s5 .q-budget-box .q-row:nth-child(5)': '<div class="q-badge blocked">4</div>已封锁。问题额度耗尽→直接给出洞见。',
+        '#s5 .reveal-scale > div:last-child .q-budget-title': '情绪识别 — 5种模式',
+        '#s5 .emotion-grid .emotion-cell:nth-child(1)': '<strong>简短/敷衍</strong>无压力重新引导',
+        '#s5 .emotion-grid .emotion-cell:nth-child(2)': '<strong>沮丧</strong>停问。直接给出洞见。',
+        '#s5 .emotion-grid .emotion-cell:nth-child(3)': '<strong>过于自信</strong>温和挑战：引导深入',
+        '#s5 .emotion-grid .emotion-cell:nth-child(4)': '<strong>真正洞见</strong>庆祝+收尾。不再追问。',
+        '#s5 .emotion-grid + .emotion-cell': '<strong style="display:block;font-weight:700;color:var(--ink)">困惑/迷失</strong>简化并结合工作场景重新引导',
+
+        /* ── S6 Flywheel ─────────────────────────── */
+        '#s6 .label': '可防御的护城河',
+        '#s6 h2': '随每位学员<br>不断复利增长的<br>数据飞轮。',
+        '#s6 .fw-copy p.reveal': '每次教练辅导都会生成学员模型：提取优势、识别差距、记录偏好框架。该模型让下一次辅导更智能——对个人和整体均如此。',
+        '#s6 .moat-list .moat-item:nth-child(1)': '<div class="moat-dot"></div>职位×行业辅导模式',
+        '#s6 .moat-list .moat-item:nth-child(2)': '<div class="moat-dot"></div>每位用户的个性化学员模型',
+        '#s6 .moat-list .moat-item:nth-child(3)': '<div class="moat-dot"></div>7天旅程上下文连续性',
+        '#s6 .moat-list .moat-item:nth-child(4)': '<div class="moat-dot"></div>每次辅导后自动触发综合智能体',
+        '#s6 .fw-node.fw-n': '<div class="fw-icon"><i class="ph ph-books"></i></div>学员<br>完成',
+        '#s6 .fw-node.fw-e': '<div class="fw-icon"><i class="ph ph-lightning"></i></div>综合<br>智能体',
+        '#s6 .fw-node.fw-s': '<div class="fw-icon"><i class="ph ph-graph"></i></div>学员模型<br>更新',
+        '#s6 .fw-node.fw-w': '<div class="fw-icon"><i class="ph ph-robot"></i></div>教练<br>更智能',
+        '#s6 .fw-center': '数据<br>飞轮',
+
+        /* ── S7 Credential ───────────────────────── */
+        '#s7 .label': '证书认证',
+        '#s7 h2': '值得分享的证书。<br>值得珍藏的工具包。',
+        '#s7 .cred-title': 'AI超能中级认证',
+        '#s7 .cred-issuer': '由AI Hero Academy颁发 · 永久有效',
+        '#s7 .cred-tag:last-child': '第7天综合挑战 ✓',
+        '#s7 .cred-asset:nth-child(1)': '<div class="cred-asset-icon"><i class="ph ph-medal"></i></div>Open Badge 3.0 — 机器可验证',
+        '#s7 .cred-asset:nth-child(2)': '<div class="cred-asset-icon"><i class="ph ph-file-text"></i></div>PDF证书含支柱详情',
+        '#s7 .cred-asset:nth-child(3)': '<div class="cred-asset-icon"><i class="ph ph-linkedin-logo"></i></div>LinkedIn一键添加',
+        '#s7 .cred-asset:nth-child(4)': '<div class="cred-asset-icon"><i class="ph ph-device-mobile"></i></div>社交分享卡 — LinkedIn · 微信',
+        '#s7 .cred-feature:nth-child(1) h3': 'Open Badge 3.0',
+        '#s7 .cred-feature:nth-child(1) p': '机器可验证。适用于LinkedIn、邮件签名、简历。与Google、Coursera、Credly相同标准。',
+        '#s7 .cred-feature:nth-child(2) h3': '内置病毒传播机制',
+        '#s7 .cred-feature:nth-child(2) p': '每张证书都会生成可分享的社交卡片。每次分享即一次口碑推荐——零广告费用。',
+        '#s7 .cred-feature:nth-child(3) h3': '永不过期。无续费。',
+        '#s7 .cred-feature:nth-child(3) p': '证书代表你构建了什么，而非你何时上了课。',
+
+        /* ── S8 Business Model ───────────────────── */
+        '#s8 .label': '商业模式',
+        '#s8 h2': '免费，是<br>一种分发战略。',
+        '#s8 p.reveal.d4': '7天项目永久免费。无付费墙。无增值服务。完成项目的学员是自我认定的AI技能构建者——市场上B2C教育领域意向最强的受众。',
+        '#s8 p.reveal.d5': '完成后：推荐付费进阶课程。转化率高，因为信任是7天积累的，而非用折扣码买来的。',
+        '#s8 .model-note': '<strong>病毒系数：</strong>每次徽章分享均包含发行方+行动号召。每张证书都是永久免费的效果广告。',
+        '#s8 .funnel-layer.fl-1': '任何对AI感兴趣的职场人<span class="funnel-sub"> · 中英双语 · 不限职位</span>',
+        '#s8 .funnel-layer.fl-2': '完成7天项目<br><span class="funnel-sub">高意向 · 获得证书</span>',
+        '#s8 .funnel-layer.fl-3': '分享徽章 · 引荐他人<br><span class="funnel-sub">自然传播 — 每枚徽章即一次引荐</span>',
+        '#s8 .funnel-layer.fl-4': '转化为付费进阶课程',
+
+        /* ── S9 Tech Stack ───────────────────────── */
+        '#s9 .label': '为规模化而生',
+        '#s9 h2': '100% GCP。双语原生设计。',
+        '#s9 p.reveal.d3': '从第一天起就在Google Cloud上的生产架构。容器化、可移植，无第三方认证锁定。',
+        '#s9 .stack-block:nth-child(1) .stack-cat': '前端',
+        '#s9 .stack-block:nth-child(2) .stack-cat': '认证与数据',
+        '#s9 .stack-block:nth-child(3) .stack-cat': 'AI / 教练',
+        '#s9 .stack-block:nth-child(4) .stack-cat': '基础设施',
+        '#s9 .stack-block:nth-child(5) .stack-cat': '证书',
+        '#s9 .stack-block:nth-child(6) .stack-cat': '内容流水线',
+
+        /* ── S10 Engagement ──────────────────────── */
+        '#s10 .label': '参与度与留存',
+        '#s10 h2': '为完成而设计，<br>不为放弃而生。',
+        '#s10 .slide-content > p.reveal.d3': '借鉴Duolingo、Uxcel及游戏化研究。每个机制都经过深思熟虑——无惩罚性设计。',
+        '#s10 .engage-grid .engage-card:nth-child(1) .engage-title': '每日连击',
+        '#s10 .engage-grid .engage-card:nth-child(1) .engage-desc': '可见连击计数，若当天晚间未开始学习则显示"风险"提示。',
+        '#s10 .engage-grid .engage-card:nth-child(2) .engage-title': '支柱徽章',
+        '#s10 .engage-grid .engage-card:nth-child(2) .engage-desc': '通过测验后颁发。可分享。个人主页可见。共六枚可收集。',
+        '#s10 .engage-grid .engage-card:nth-child(3) .engage-title': '构建画廊',
+        '#s10 .engage-grid .engage-card:nth-child(3) .engage-desc': '累积工具包。六件成果。随时查阅、复制和复用。',
+        '#s10 .engage-grid .engage-card:nth-child(4) .engage-title': '差距图谱变化',
+        '#s10 .engage-grid .engage-card:nth-child(4) .engage-desc': '第7天后重新运行诊断，查看相对第0天基准的得分提升。',
+        '#s10 .engage-grid .engage-card:nth-child(5) .engage-title': '微节奏',
+        '#s10 .engage-grid .engage-card:nth-child(5) .engage-desc': '每天上限90分钟。模块设计可在午休时间完成。',
+        '#s10 .engage-grid .engage-card:nth-child(6) .engage-title': '中英双语',
+        '#s10 .engage-grid .engage-card:nth-child(6) .engage-desc': '完整双语对等。教练支持中文输出。所有界面文字已翻译。会话内可切换。',
+
+        /* ── S11 Roadmap ─────────────────────────── */
+        '#s11 .label': '执行计划',
+        '#s11 h2': '四个冲刺，走向发布。',
+        '#s11 .slide-content > p.reveal.d3': '两条并行轨道。内容生成第一天即启动，无需依赖代码。工程在稳固的GCP基础上顺序构建。',
+        '#s11 .roadmap-row .roadmap-block:nth-child(1) .roadmap-sprint': '冲刺 1',
+        '#s11 .roadmap-row .roadmap-block:nth-child(1) .roadmap-title': '内容生成',
+        '#s11 .roadmap-row .roadmap-block:nth-child(1) .roadmap-items': '7智能体AI流水线 · 全6支柱+诊断+综合挑战 · 角色场景库 · P1试点验证',
+        '#s11 .roadmap-row .roadmap-block:nth-child(2) .roadmap-sprint': '冲刺 2',
+        '#s11 .roadmap-row .roadmap-block:nth-child(2) .roadmap-title': '应用基础',
+        '#s11 .roadmap-row .roadmap-block:nth-child(2) .roadmap-items': 'Next.js脚手架 · Firebase Auth · Firestore模式 · 4屏入门引导 · CI/CD至Cloud Run',
+        '#s11 .roadmap-row .roadmap-block:nth-child(3) .roadmap-sprint': '冲刺 3',
+        '#s11 .roadmap-row .roadmap-block:nth-child(3) .roadmap-title': '核心学习循环',
+        '#s11 .roadmap-row .roadmap-block:nth-child(3) .roadmap-items': '教练引擎（PACE, SSE）· 日常模块UI · 测验 · 构建成果 · 综合智能体',
+        '#s11 .roadmap-row .roadmap-block:nth-child(4) .roadmap-sprint': '冲刺 4',
+        '#s11 .roadmap-row .roadmap-block:nth-child(4) .roadmap-title': '项目收尾',
+        '#s11 .roadmap-row .roadmap-block:nth-child(4) .roadmap-items': '仪表盘+连击 · 第7天综合挑战 · 证书生成 · 中英双语国际化',
+        '#s11 .reveal.d7': '<strong style="color:var(--accent)">关键路径：</strong>冲刺1 ∥ 冲刺2同时启动。冲刺2完成+冲刺1 P1内容就绪后解锁冲刺3。冲刺4收尾。',
+
+        /* ── S12 CTA ─────────────────────────────── */
+        '#s12 .label': '立即开始',
+        '#s12 h1': '成为<br><em>AI超能职场人。</em><br>只需7天。',
+        '#s12 .cta-sub': '7天。每天90分钟。你亲手搭建的AI工具包+可分享证书。免费。永久。',
+        '#s12 .cta-btn-lg': '开始第一天 <em class="arrow" style="font-style:normal">→</em>',
+        '#s12 .cta-note': '无需信用卡 · 无试用期 · 中英双语 · 永久免费',
+      };
+
+      /* Snapshot EN innerHTML on load — enables clean round-trip back to EN */
+      const EN = {};
+      const SELS = Object.keys(ZH);
+
+      function snapEN() {
+        SELS.forEach(sel => {
+          const el = document.querySelector(sel);
+          if (el) EN[sel] = el.innerHTML;
+        });
+      }
+
+      function applyLang(lang) {
+        SELS.forEach(sel => {
+          const el = document.querySelector(sel);
+          if (!el) return;
+          el.innerHTML = lang === 'zh' ? ZH[sel] : (EN[sel] !== undefined ? EN[sel] : el.innerHTML);
+        });
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.body.classList.toggle('lang-zh', lang === 'zh');
+        document.querySelectorAll('.lang-btn').forEach(btn =>
+          btn.classList.toggle('active', btn.dataset.lang === lang)
+        );
+        try { localStorage.setItem('aha-lang', lang); } catch (_) {}
+      }
+
+      /* Init on DOM ready */
+      document.addEventListener('DOMContentLoaded', () => {
+        snapEN();
+        const stored = (() => { try { return localStorage.getItem('aha-lang'); } catch (_) { return null; } })();
+        const auto = (navigator.language || navigator.userLanguage || '').startsWith('zh') ? 'zh' : 'en';
+        applyLang(stored || auto);
+      });
+
+      /* Toggle click handler */
+      document.addEventListener('click', e => {
+        const btn = e.target.closest('.lang-btn[data-lang]');
+        if (btn) applyLang(btn.dataset.lang);
+      });
+    })();
+
+  </script>
+</body>
+</html>
