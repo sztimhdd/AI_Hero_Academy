@@ -11,7 +11,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { FieldValue } from "firebase-admin/firestore";
 import { getFirestore } from "firebase-admin/firestore";
-import { getAdminAuth } from "@/lib/firebase/admin";
+import { getAuthFromCookies } from "@/lib/auth/verify";
 import { getCoachSession, upsertLearnerModel, logAiCall, getLearnerModel } from "@/lib/firestore/db";
 import { COLLECTIONS } from "@/lib/firestore/types";
 import type { PillarId } from "@/lib/firestore/types";
@@ -107,9 +107,9 @@ export async function POST(req: NextRequest) {
   let uid: string;
   let userEmail: string;
   try {
-    const decoded = await getAdminAuth().verifySessionCookie(sessionCookie, true);
-    uid = decoded.uid;
-    userEmail = decoded.email ?? "";
+    const auth = await getAuthFromCookies(await cookies());
+    uid = auth.uid;
+    userEmail = auth.email;
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
