@@ -326,8 +326,13 @@
       font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--ink-3); margin-bottom: clamp(0.6rem, 1.5vh, 1.2rem);
     }
-    #s1 h1 { max-width: 14ch; margin-bottom: clamp(0.75rem, 2vh, 1.5rem); }
-    #s1 h1 em { font-style: normal; color: var(--accent); }
+    #s1 h1 {
+      max-width: 14ch; margin-bottom: clamp(0.75rem, 2vh, 1.5rem);
+      /* Smaller cap than global 4rem — keeps "to AI-supercharged." on one line in 56% column */
+      font-size: clamp(1.4rem, 3.5vw, 3rem);
+      hyphens: none; word-break: keep-all;
+    }
+    #s1 h1 em { font-style: normal; color: var(--accent); white-space: nowrap; }
     #s1 .hero-sub {
       font-size: var(--body-size); color: var(--ink-2);
       max-width: 46ch; line-height: 1.7;
