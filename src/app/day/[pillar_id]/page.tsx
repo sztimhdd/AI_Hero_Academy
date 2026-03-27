@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getAdminAuth } from "@/lib/firebase/admin";
+import { getAuthFromCookies } from "@/lib/auth/verify";
 import { getUser, getTrainingProgressDoc } from "@/lib/firestore/db";
 import { loadPillarContent } from "@/lib/content/loadPillar";
 import { DayPageClient } from "./DayPageClient";
@@ -38,9 +38,9 @@ export default async function DayPage({ params }: PageProps) {
   let uid: string;
   let userEmail: string;
   try {
-    const decoded = await getAdminAuth().verifySessionCookie(sessionCookie, true);
-    uid = decoded.uid;
-    userEmail = decoded.email ?? "";
+    const auth = await getAuthFromCookies(await cookies());
+    uid = auth.uid;
+    userEmail = auth.email;
   } catch {
     redirect("/");
   }
