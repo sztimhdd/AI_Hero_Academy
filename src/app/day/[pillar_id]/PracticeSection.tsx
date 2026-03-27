@@ -11,7 +11,7 @@ interface Props {
   pillarId: string;
   userEmail: string;
   alreadyCompleted: boolean;
-  onComplete: (artifact: string) => void;
+  onComplete: (artifact: string, sessionId: string) => void;
 }
 
 interface Message {
@@ -221,7 +221,7 @@ export function PracticeSection({
       setSaving(false);
     }
 
-    onComplete(artifactText);
+    onComplete(artifactText, sessionId ?? "");
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {

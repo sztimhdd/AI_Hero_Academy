@@ -144,32 +144,35 @@ export async function POST(req: NextRequest) {
     const modelRef = db.collection(COLLECTIONS.LEARNER_MODEL).doc(uid);
     const existing = await getLearnerModel(uid);
 
-    const updates: Record<string, unknown> = {
+    // Top-level fields: set+merge works correctly (no dot-notation paths)
+    const topLevel: Record<string, unknown> = {
       uid,
       user_email: userEmail,
-      [`daily_summaries.${pillar_id}`]: synthesis.daily_summary,
       last_updated: FieldValue.serverTimestamp(),
     };
 
     if (synthesis.natural_strengths?.length) {
-      updates.natural_strengths = FieldValue.arrayUnion(...synthesis.natural_strengths);
+      topLevel.natural_strengths = FieldValue.arrayUnion(...synthesis.natural_strengths);
     }
     if (synthesis.recurring_gaps?.length) {
-      updates.recurring_gaps = FieldValue.arrayUnion(...synthesis.recurring_gaps);
+      topLevel.recurring_gaps = FieldValue.arrayUnion(...synthesis.recurring_gaps);
     }
     if (synthesis.memorable_quote) {
-      updates.memorable_quotes = FieldValue.arrayUnion(synthesis.memorable_quote);
+      topLevel.memorable_quotes = FieldValue.arrayUnion(synthesis.memorable_quote);
     }
 
     // Consolidate preferred_framing after 2+ consistent days
     if (synthesis.preferred_framing) {
       const currentFraming = existing?.preferred_framing;
       if (!currentFraming || currentFraming === synthesis.preferred_framing) {
-        updates.preferred_framing = synthesis.preferred_framing;
+        topLevel.preferred_framing = synthesis.preferred_framing;
       }
     }
 
-    await modelRef.set(updates, { merge: true });
+    // set+merge for top-level fields (creates doc if not exists)
+    await modelRef.set(topLevel, { merge: true });
+    // update() correctly interprets dot notation as a nested path
+    await modelRef.update({ [`daily_summaries.${pillar_id}`]: synthesis.daily_summary });
 
     return NextResponse.json({ ok: true });
   } catch {

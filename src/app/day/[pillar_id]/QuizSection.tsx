@@ -6,6 +6,7 @@ import type { PillarQuiz, QuizItem } from "@/lib/content/loadPillar";
 interface Props {
   quiz: PillarQuiz;
   pillarId: string;
+  sessionId?: string;
   alreadyPassed: boolean;
   onPass: () => void;
 }
@@ -89,7 +90,7 @@ function OpenItem({
   );
 }
 
-export function QuizSection({ quiz, pillarId, alreadyPassed, onPass }: Props) {
+export function QuizSection({ quiz, pillarId, sessionId, alreadyPassed, onPass }: Props) {
   const [mcqAnswers, setMcqAnswers] = useState<Record<string, string>>({});
   const [openAnswer, setOpenAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -208,6 +209,7 @@ export function QuizSection({ quiz, pillarId, alreadyPassed, onPass }: Props) {
           pillar_id: pillarId,
           mcq_answers: mcqAnswers,
           open_answer: openAnswer,
+          ...(sessionId ? { session_id: sessionId } : {}),
         }),
       });
       const data: QuizResult = await res.json();

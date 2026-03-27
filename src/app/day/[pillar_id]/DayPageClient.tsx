@@ -35,6 +35,7 @@ export function DayPageClient({
   const [progress, setProgress] = useState(initialProgress);
   const [activeTab, setActiveTab] = useState<Tab>(deriveInitialTab(initialProgress));
   const [practiceArtifact, setPracticeArtifact] = useState("");
+  const [practiceSessionId, setPracticeSessionId] = useState("");
 
   const tabs: { id: Tab; label: string; locked: boolean }[] = [
     { id: "reading", label: "Reading", locked: false },
@@ -60,9 +61,10 @@ export function DayPageClient({
     setActiveTab("practice");
   }
 
-  function handlePracticeComplete(artifact: string) {
+  function handlePracticeComplete(artifact: string, sessionId: string) {
     setProgress((p) => ({ ...p, practice_completed_at: new Date().toISOString() }));
     setPracticeArtifact(artifact);
+    setPracticeSessionId(sessionId);
     setActiveTab("quiz");
   }
 
@@ -149,6 +151,7 @@ export function DayPageClient({
           <QuizSection
             quiz={pillarContent.quiz}
             pillarId={pillarId}
+            sessionId={practiceSessionId}
             alreadyPassed={progress.quiz_passed}
             onPass={handleQuizPass}
           />
