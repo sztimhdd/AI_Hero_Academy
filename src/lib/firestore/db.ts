@@ -206,6 +206,69 @@ export async function issueCredential(
     .set(credential);
 }
 
+// ── LearnerModel (read) ────────────────────────────────────────────────────────
+
+export async function getLearnerModel(uid: string): Promise<LearnerModel | null> {
+  const snap = await db().collection(COLLECTIONS.LEARNER_MODEL).doc(uid).get();
+  return snap.exists ? (snap.data() as LearnerModel) : null;
+}
+
+// ── CoachSession (read + update) ───────────────────────────────────────────────
+
+export async function getCoachSession(sessionId: string): Promise<Record<string, unknown> | null> {
+  const snap = await db().collection(COLLECTIONS.COACH_SESSIONS).doc(sessionId).get();
+  return snap.exists ? snap.data() as Record<string, unknown> : null;
+}
+
+/**
+ * Atomically increments task_turn_counts[taskId] in the session doc.
+ * Returns the NEW count after the increment.
+ * Uses a transaction so we can read the new value atomically.
+ */
+export async function updateCoachSessionTurns(
+  sessionId: string,
+  taskId: string
+): Promise<number> {
+  const ref = db().collection(COLLECTIONS.COACH_SESSIONS).doc(sessionId);
+  const newCount = await db().runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    const data = snap.data() as Record<string, unknown>;
+    const counts = (data.task_turn_counts as Record<string, number>) ?? {};
+    const current = counts[taskId] ?? 0;
+    const updated = current + 1;
+    tx.update(ref, { [`task_turn_counts.${taskId}`]: updated });
+    return updated;
+  });
+  return newCount;
+}
+
+/**
+ * Writes the full practice transcript and marks practice complete.
+ */
+export async function completeCoachSession(
+  sessionId: string,
+  transcript: Array<{ role: string; content: string }>,
+  practiceCompletedAt: import("firebase-admin/firestore").Timestamp
+): Promise<void> {
+  const ref = db().collection(COLLECTIONS.COACH_SESSIONS).doc(sessionId);
+  await ref.update({
+    transcript,
+    turn_count: transcript.length,
+    practice_completed_at: practiceCompletedAt,
+  });
+}
+
+// ── TrainingProgress (single doc) ─────────────────────────────────────────────
+
+export async function getTrainingProgressDoc(
+  uid: string,
+  pillarId: PillarId
+): Promise<TrainingProgress | null> {
+  const docId = `${uid}_${pillarId}`;
+  const snap = await db().collection(COLLECTIONS.TRAINING_PROGRESS).doc(docId).get();
+  return snap.exists ? (snap.data() as TrainingProgress) : null;
+}
+
 // ── AiCallLog ─────────────────────────────────────────────────────────────────
 
 export async function logAiCall(
