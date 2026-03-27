@@ -18,33 +18,33 @@ Legacy phases 0–18 are complete and archived below for reference.
 
 ---
 
-## B2C Transformation — Phase Overview (To Be Sprint-Planned)
+## B2C Transformation — Sprint Plan
 
-Two parallel tracks. Content can run alongside all engineering work.
+4 sprints. Sprint 1 (content) runs in parallel with Sprints 2–4 (engineering).
 
-### Track A — Content Generation (No code dependency, start immediately)
-| Phase | Scope |
-|-------|-------|
-| B2C-C1 | Multi-agent content pipeline setup + P1 pilot generation (MAPS framework) |
-| B2C-C2 | P2 content generation (CRAF) + P5 (existing atoms adapted) |
-| B2C-C3 | P3 content generation (CAST framework + tool landscape research) |
-| B2C-C4 | P4 content generation (BRIEF framework) |
-| B2C-C5 | P6 content generation (CREW framework) |
-| B2C-C6 | Diagnostic items (6 items: 1 text + 5 MCQ) + Day 7 capstone |
+| Sprint | Scope | Effort | Depends on | Plan | Kickstart |
+|--------|-------|--------|-----------|------|-----------|
+| **S1 — Content Generation** | All 6 pillar modules + diagnostic + capstone + role library. 7-agent pipeline. | L | Nothing — start immediately | [plan](b2c-s1-content-generation-plan.md) | [kickstart](b2c-s1-content-generation-kickstart.md) |
+| **S2 — App Foundation** | Next.js scaffold + Firebase Auth + Firestore schema + onboarding flow (4 screens, AI diagnostic, gap map) | M | Nothing in engineering | [plan](b2c-s2-app-foundation-plan.md) | [kickstart](b2c-s2-app-foundation-kickstart.md) |
+| **S3 — Core Learning Loop** | Coach engine (PACE, SSE streaming) + daily module UX (reading/practice/quiz/build) + synthesis agent | L | S2 + S1 P1 content | [plan](b2c-s3-core-learning-loop-plan.md) | [kickstart](b2c-s3-core-learning-loop-kickstart.md) |
+| **S4 — Program Completion** | Dashboard + streak + Day 7 capstone + credential (Open Badge/PDF/LinkedIn) + EN/ZH i18n | L | S3 + S1 capstone content | [plan](b2c-s4-program-completion-plan.md) | [kickstart](b2c-s4-program-completion-kickstart.md) |
 
-### Track B — Engineering (Sequential by dependency)
-| Phase | Scope | Depends on |
-|-------|-------|-----------|
-| B2C-E1 | Next.js scaffold + Firebase Auth + Cloud Run deploy | — |
-| B2C-E2 | Firestore schema migration + new collections (learner_model, build_artifacts, credentials) | B2C-E1 |
-| B2C-E3 | Onboarding flow (11 screens, personalization conversation, scenario seed generator) | B2C-E1, B2C-E2 |
-| B2C-E4 | Coach engine port (Python → TypeScript API routes, PACE model, streaming) | B2C-E2 |
-| B2C-E5 | Daily module UX (reading + practice + quiz + build artifact mechanic) | B2C-E4, B2C-C1 |
-| B2C-E6 | Synthesis agent (learner model update after each day) | B2C-E4 |
-| B2C-E7 | Dashboard + streak mechanics | B2C-E5 |
-| B2C-E8 | Credential generation (Open Badge + PDF + LinkedIn deep link + social card) | B2C-E5 |
-| B2C-E9 | Day 7 capstone (mixed input: text + file upload + MCQ, Gemini vision scoring) | B2C-E5, B2C-C6 |
-| B2C-E10 | EN/ZH i18n port to Next.js (all new pillar keys + onboarding keys) | B2C-E3, B2C-E5 |
+---
+
+## Critical Path
+
+```
+S1 (content) ─────────────────────────────────────────────┐
+                                                            │
+S2 (foundation) ──────────────────────────────────────────┤
+                                                            ▼
+                                     S3 (learning loop) → S4 (completion)
+```
+
+- S1 and S2 start on **Day 1** in parallel — zero dependencies between them
+- S3 starts when S2 is done + S1 has at least P1 content available
+- S4 starts when S3 is done + S1 has capstone content available
+- **Fastest path to "Day 1 playable":** S1 (P1 only) ∥ S2 → S3 (coach + module)
 
 ---
 
