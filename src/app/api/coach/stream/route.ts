@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { getAuthFromCookies } from "@/lib/auth/verify";
-import { getCoachSession, updateCoachSessionTurns, logAiCall } from "@/lib/firestore/db";
+import { getCoachSession, updateCoachSessionTurns, logAiCall, getUser } from "@/lib/firestore/db";
 import {
   isTurnBlocked,
   hasMasterySignal,
@@ -68,8 +68,13 @@ export async function POST(req: NextRequest) {
   // Increment the turn count in Firestore (atomic)
   const newCount = await updateCoachSessionTurns(session_id, task_id);
 
-  // Build Gemini request messages
-  const systemPrompt = sessionDoc.system_prompt as string;
+  // Build Gemini request messages — prepend ZH instruction if user lang is zh
+  const userProfile = await getUser(uid);
+  const isZh = userProfile?.lang === "zh";
+  const ZH_INSTRUCTION =
+    "回应时请使用简体中文。以下AI专业术语保持英文不翻译：LLM、GPT、Claude、API、JSON、system prompt、temperature、token、embedding、fine-tuning、prompt、tool、agent。\n\n";
+  const rawSystemPrompt = sessionDoc.system_prompt as string;
+  const systemPrompt = isZh ? ZH_INSTRUCTION + rawSystemPrompt : rawSystemPrompt;
   const contents = [
     ...conversation_history.map((m) => ({
       role: m.role,

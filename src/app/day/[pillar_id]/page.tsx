@@ -3,7 +3,10 @@ import { redirect } from "next/navigation";
 import { getAuthFromCookies } from "@/lib/auth/verify";
 import { getUser, getTrainingProgressDoc } from "@/lib/firestore/db";
 import { loadPillarContent } from "@/lib/content/loadPillar";
+import { loadCapstoneContent } from "@/lib/content/loadCapstone";
+import { fillScenario } from "@/lib/content/capstoneUtils";
 import { DayPageClient } from "./DayPageClient";
+import { CapstonePageClient } from "./CapstonePageClient";
 import type { Timestamp } from "firebase-admin/firestore";
 import type { TrainingProgress } from "@/lib/firestore/types";
 
@@ -45,17 +48,11 @@ export default async function DayPage({ params }: PageProps) {
     redirect("/");
   }
 
-  // Load pillar content (server-side file read — throws if not found)
-  let pillarContent;
-  try {
-    pillarContent = loadPillarContent(pillar_id);
-  } catch {
-    // Pillar doesn't exist or content not yet authored
-    redirect("/dashboard");
-  }
-
-  // Load training progress
-  const progress = await getTrainingProgressDoc(uid, pillar_id as import("@/lib/firestore/types").PillarId);
+  // Load training progress (applies to both regular days and capstone)
+  const progress = await getTrainingProgressDoc(
+    uid,
+    pillar_id as import("@/lib/firestore/types").PillarId
+  );
   if (!progress || progress.is_locked) {
     redirect("/dashboard");
   }
@@ -66,14 +63,62 @@ export default async function DayPage({ params }: PageProps) {
     redirect("/onboarding");
   }
 
+  // ── Capstone branch ─────────────────────────────────────────────────────────
+  if (pillar_id === "capstone") {
+    const capstone = loadCapstoneContent();
+    const scenario = fillScenario(
+      capstone.scenario_template,
+      user.declared_role ?? "professional",
+      user.declared_industry ?? "their industry",
+      user.daily_work_desc
+    );
+    const alreadyPassed = progress.quiz_passed ?? false;
+
+    return (
+      <CapstonePageClient
+        uid={uid}
+        userEmail={userEmail}
+        displayName={user.display_name}
+        declaredRole={user.declared_role ?? "professional"}
+        declaredIndustry={user.declared_industry ?? "their industry"}
+        scenario={scenario}
+        capstone={capstone}
+        alreadyPassed={alreadyPassed}
+      />
+    );
+  }
+
+  // ── Regular day branch ──────────────────────────────────────────────────────
+  let pillarContent;
+  try {
+    pillarContent = loadPillarContent(pillar_id);
+  } catch {
+    redirect("/dashboard");
+  }
+
   const serializedProgress: SerializedProgress = {
     is_locked: progress.is_locked,
-    reading_completed_at: tsToIso((progress as TrainingProgress & { reading_completed_at?: Timestamp }).reading_completed_at),
-    practice_completed_at: tsToIso((progress as TrainingProgress & { practice_completed_at?: Timestamp }).practice_completed_at),
-    quiz_completed_at: tsToIso((progress as TrainingProgress & { quiz_completed_at?: Timestamp }).quiz_completed_at),
+    reading_completed_at: tsToIso(
+      (progress as TrainingProgress & { reading_completed_at?: Timestamp })
+        .reading_completed_at
+    ),
+    practice_completed_at: tsToIso(
+      (
+        progress as TrainingProgress & {
+          practice_completed_at?: Timestamp;
+        }
+      ).practice_completed_at
+    ),
+    quiz_completed_at: tsToIso(
+      (progress as TrainingProgress & { quiz_completed_at?: Timestamp })
+        .quiz_completed_at
+    ),
     quiz_passed: progress.quiz_passed ?? false,
     quiz_score: progress.quiz_score ?? null,
-    build_completed_at: tsToIso((progress as TrainingProgress & { build_completed_at?: Timestamp }).build_completed_at),
+    build_completed_at: tsToIso(
+      (progress as TrainingProgress & { build_completed_at?: Timestamp })
+        .build_completed_at
+    ),
   };
 
   return (

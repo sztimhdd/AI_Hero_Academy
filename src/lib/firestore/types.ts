@@ -130,6 +130,7 @@ export interface BuildArtifact {
 export interface Credential {
   uid: string;
   user_email: string;
+  display_name: string; // for badge/PDF rendering
   credential_id: string; // e.g. "ai_supercharged_intermediate"
   issued_at: Timestamp;
   pillar_scores: PillarScores;

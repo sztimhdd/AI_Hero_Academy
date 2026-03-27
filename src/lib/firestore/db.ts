@@ -20,10 +20,22 @@ import {
 } from "./types";
 
 // Lazy Firestore instance — mirrors admin.ts lazy pattern
+let _db: ReturnType<typeof getFirestore> | null = null;
 function db() {
+  if (_db) return _db;
   // Calling getAdminAuth() ensures the admin app is initialized first
   getAdminAuth();
-  return getFirestore();
+  _db = getFirestore();
+  // preferRest: true — use HTTP/1.1 REST instead of gRPC.
+  // Required when a corporate TLS proxy blocks gRPC (HTTP/2 ALPN).
+  // Wrapped in try-catch: in dev, HMR resets the module but the Firestore
+  // singleton persists, so settings() may already have been called.
+  try {
+    _db.settings({ preferRest: true });
+  } catch {
+    // Already initialized — preferRest is already set, safe to ignore.
+  }
+  return _db;
 }
 
 // ── UserProfile ────────────────────────────────────────────────────────────────
@@ -267,6 +279,58 @@ export async function getTrainingProgressDoc(
   const docId = `${uid}_${pillarId}`;
   const snap = await db().collection(COLLECTIONS.TRAINING_PROGRESS).doc(docId).get();
   return snap.exists ? (snap.data() as TrainingProgress) : null;
+}
+
+// ── BuildArtifact (read) ───────────────────────────────────────────────────────
+
+export async function getBuildArtifacts(uid: string): Promise<BuildArtifact[]> {
+  const snap = await db()
+    .collection(COLLECTIONS.BUILD_ARTIFACTS)
+    .where("uid", "==", uid)
+    .orderBy("day_number")
+    .get();
+  return snap.docs.map((d) => d.data() as BuildArtifact);
+}
+
+// ── Credential (read) ─────────────────────────────────────────────────────────
+
+export async function getCredential(uid: string): Promise<Credential | null> {
+  const snap = await db()
+    .collection(COLLECTIONS.CREDENTIALS)
+    .where("uid", "==", uid)
+    .orderBy("issued_at", "desc")
+    .limit(1)
+    .get();
+  if (snap.empty) return null;
+  return snap.docs[0].data() as Credential;
+}
+
+// ── UserProfile (lang update) ─────────────────────────────────────────────────
+
+export async function updateUserLang(
+  uid: string,
+  lang: "en" | "zh"
+): Promise<void> {
+  await db().collection(COLLECTIONS.USER_PROFILES).doc(uid).update({ lang });
+}
+
+// ── Streak update ─────────────────────────────────────────────────────────────
+
+export async function updateStreak(uid: string): Promise<void> {
+  const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+  const snap = await db().collection(COLLECTIONS.USER_PROFILES).doc(uid).get();
+  if (!snap.exists) return;
+  const data = snap.data() as UserProfile;
+  if (data.last_active_date === today) return; // already counted today
+
+  const yesterday = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
+  const newStreak =
+    data.last_active_date === yesterday ? (data.streak_days ?? 0) + 1 : 1;
+
+  await db()
+    .collection(COLLECTIONS.USER_PROFILES)
+    .doc(uid)
+    .update({ streak_days: newStreak, last_active_date: today });
 }
 
 // ── AiCallLog ─────────────────────────────────────────────────────────────────

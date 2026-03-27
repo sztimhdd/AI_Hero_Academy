@@ -210,6 +210,7 @@ async function seedCompleteUser() {
   await seedCredential({
     uid,
     user_email: "complete@dev.test",
+    display_name: "Complete Dev",
     credential_id: "ai_hero_intermediate",
     issued_at: now(),
     pillar_scores: finalScores,

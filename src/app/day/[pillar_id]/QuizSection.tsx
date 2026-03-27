@@ -102,7 +102,7 @@ export function QuizSection({ quiz, pillarId, sessionId, alreadyPassed, onPass }
       <div className="text-center py-16 space-y-4">
         <div className="text-5xl">🏅</div>
         <h2 className="text-white text-xl font-semibold">Quiz Passed!</h2>
-        <p className="text-slate-400">You've unlocked the Build section. Create your artifact below.</p>
+        <p className="text-slate-400">You&apos;ve unlocked the Build section. Create your artifact below.</p>
         <button
           onClick={onPass}
           className="bg-green-600 hover:bg-green-500 text-white font-semibold px-8 py-3 rounded-xl transition-colors"
