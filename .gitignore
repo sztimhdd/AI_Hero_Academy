@@ -40,3 +40,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI / IDE tool directories (local only)
+.agents/
+.claude/
+.gcp/
+.playwright-mcp/
+.vscode/
+
+# Legacy Streamlit completed plans (not relevant to this branch)
+plans/\[C*
