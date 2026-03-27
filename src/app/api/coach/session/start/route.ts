@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { Timestamp } from "firebase-admin/firestore";
-import { getAdminAuth } from "@/lib/firebase/admin";
+import { getAuthFromCookies } from "@/lib/auth/verify";
 import { getUser, getLearnerModel, createCoachSession } from "@/lib/firestore/db";
 import { loadPillarContent } from "@/lib/content/loadPillar";
 import { assembleCoachPrompt } from "@/lib/coach/assembler";
@@ -16,9 +16,9 @@ export async function POST(req: NextRequest) {
   let uid: string;
   let userEmail: string;
   try {
-    const decoded = await getAdminAuth().verifySessionCookie(sessionCookie, true);
-    uid = decoded.uid;
-    userEmail = decoded.email ?? "";
+    const auth = await getAuthFromCookies(await cookies());
+    uid = auth.uid;
+    userEmail = auth.email;
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
