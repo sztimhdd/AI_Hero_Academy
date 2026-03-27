@@ -1,76 +1,83 @@
 {
-  "version": "1.0",
-  "description": "5 MCQ diagnostic questions — one per AI skill pillar. Used in onboarding Screen 3.",
+  "diagnostic_id": "onboarding_baseline",
+  "version": "2.0",
+  "last_updated": "2026-03",
+  "description": "5 role-agnostic diagnostic MCQs administered at onboarding (Day 0, Screen 3) to establish baseline pillar gap scores. One item per pillar P1–P5. Items test applied judgment in realistic professional scenarios — not framework recall, not terminology. Scores configure AI coach emphasis for each day and populate the gap map visualization. They do not block access to any pillar. Gap scores are framed as growth areas, not failures.",
+  "scoring": {
+    "per_item": 1.0,
+    "max_total": 5.0,
+    "pillar_score_mapping": "each correct answer = 1.0 for that pillar; incorrect = 0.0; displayed on gap map as percentage (0–100)"
+  },
   "questions": [
     {
       "id": "q_p1",
       "pillar": "p1",
       "pillar_name": "AI Conceptual Foundation",
-      "text": "You ask an AI tool to summarise a 10-page report and it confidently includes a statistic that isn't in the document. What is the most likely cause?",
+      "text": "A colleague used AI to research a topic and shared this with you: 'According to the 2025 Industry AI Report by a major research firm (page 12), 74% of professionals now use AI tools daily — up 41% from last year.' You want to include this in a stakeholder presentation. What is the most professionally sound response?",
       "options": [
-        { "id": "a", "text": "The AI searched the internet for additional data" },
-        { "id": "b", "text": "The AI generated plausible-sounding text based on patterns, not facts" },
-        { "id": "c", "text": "The report was too long and the AI skipped sections" },
-        { "id": "d", "text": "The AI misread a number in the document" }
+        { "id": "a", "text": "Use it — the specific page reference makes it credible" },
+        { "id": "b", "text": "Use it but label it as AI-generated data" },
+        { "id": "c", "text": "Search for the actual report before using it — AI tools can fabricate specific-sounding citations that don't exist" },
+        { "id": "d", "text": "Avoid using AI for any research involving statistics" }
       ],
-      "correct": "b",
-      "explanation": "AI language models generate statistically likely text — they don't verify facts. This is called hallucination and is a fundamental property of current LLMs."
+      "correct": "c",
+      "explanation": "AI language models can generate confident, specific-sounding citations — including page numbers, report titles, and firm names — that don't actually exist. Specificity is not a reliability signal. The professional habit is to verify any AI-sourced citation before presenting it to stakeholders, regardless of how credible it appears."
     },
     {
       "id": "q_p2",
       "pillar": "p2",
       "pillar_name": "Prompting & Context Engineering",
-      "text": "You need an AI to write a project status email. Which prompt is most likely to produce a useful first draft?",
+      "text": "You need an AI to write a project status email for senior stakeholders. Which prompt is most likely to produce a useful first draft?",
       "options": [
         { "id": "a", "text": "Write a project status email" },
-        { "id": "b", "text": "Write a 150-word project status email for a stakeholder who doesn't know the technical details. The project is on track, key win this week was completing the API integration, one risk is the vendor deadline next Friday." },
-        { "id": "c", "text": "I need an email. Make it professional and clear." },
-        { "id": "d", "text": "Here is my draft, please improve it: [no draft provided]" }
+        { "id": "b", "text": "Write a 150-word project status email for a senior stakeholder who doesn't know the technical details. The project is on track. Key win this week: API integration completed. One risk: vendor deadline next Friday. Tone: professional but direct." },
+        { "id": "c", "text": "Write a professional email about my project. Make it clear and concise." },
+        { "id": "d", "text": "Here is my rough draft — please improve it: [no draft provided]" }
       ],
       "correct": "b",
-      "explanation": "Effective prompts specify the role, format, length, audience, and key content. Vague prompts produce generic output; specific prompts produce useful drafts."
+      "explanation": "Effective prompts specify the audience, length, key content, and tone. Option B gives the AI everything it needs to produce a targeted first draft. Options A and C lack context about the audience, content, and constraints — the AI will fill the gaps with generic language that doesn't match your stakeholders."
     },
     {
       "id": "q_p3",
       "pillar": "p3",
       "pillar_name": "AI Tool Fluency",
-      "text": "You need to analyse 50 research papers and identify common themes. Which type of AI tool is best suited for this?",
+      "text": "You need to research what your top 3 competitors announced in the last 30 days — and the summary needs to include verifiable sources. Which type of AI tool is most appropriate?",
       "options": [
-        { "id": "a", "text": "An image generation tool like Midjourney" },
-        { "id": "b", "text": "A conversational chat tool like ChatGPT with a single paste" },
-        { "id": "c", "text": "A deep research tool like Perplexity or NotebookLM that handles long documents" },
-        { "id": "d", "text": "A workflow automation tool like Zapier" }
+        { "id": "a", "text": "A conversational AI like ChatGPT or Claude — they have broad knowledge" },
+        { "id": "b", "text": "A deep research tool like Perplexity or Gemini Deep Research — these query live web sources and return cited results" },
+        { "id": "c", "text": "An image generation tool — for creating a visual competitive comparison" },
+        { "id": "d", "text": "A productivity AI embedded in your document tool — for convenient integration" }
       ],
-      "correct": "c",
-      "explanation": "Matching capability to task is key. Deep research / document analysis tools are designed for long-context synthesis across many sources — chat tools have context limits and no document management."
+      "correct": "b",
+      "explanation": "The task requires two things conversational AI cannot reliably provide: live web data from the last 30 days (beyond many models' training cutoffs) and cited, verifiable sources. Deep research tools actively query the web and return citations — the right category for this capability requirement."
     },
     {
       "id": "q_p4",
       "pillar": "p4",
       "pillar_name": "AI Configuration & Control",
-      "text": "You want an AI assistant to always respond in bullet points and never exceed 100 words. Where is the best place to set this instruction?",
+      "text": "You use AI for a specific task every day. At the start of each session, you spend 3–5 minutes re-establishing the same context, format requirements, and constraints. What is the most efficient solution?",
       "options": [
-        { "id": "a", "text": "Repeat it at the start of every message" },
-        { "id": "b", "text": "In the system prompt, so it applies to every response automatically" },
-        { "id": "c", "text": "At the end of each message as a reminder" },
-        { "id": "d", "text": "You cannot control response format — the AI decides" }
+        { "id": "a", "text": "Switch to a different AI tool that saves preferences automatically" },
+        { "id": "b", "text": "Keep your setup notes in a document and paste them at the start of each session" },
+        { "id": "c", "text": "Write a system prompt that pre-loads all persistent context, format, and constraints — so each session begins with them already configured" },
+        { "id": "d", "text": "Accept per-session setup as a fundamental limitation of current AI tools" }
       ],
-      "correct": "b",
-      "explanation": "System prompts are persistent instructions that shape all responses in a session or deployment. They're the primary tool for configuring consistent AI behaviour without repeating yourself."
+      "correct": "c",
+      "explanation": "A system prompt is a persistent configuration layer that runs before every conversation. Writing your context, format requirements, and constraints into a system prompt once means they apply automatically every session — eliminating the setup overhead entirely. This is the core value proposition of AI configuration."
     },
     {
       "id": "q_p5",
       "pillar": "p5",
       "pillar_name": "Multi-AI Workflow Design",
-      "text": "You regularly need to: research a topic → draft a report → translate to Chinese. You do each step manually with separate AI tools. What would make this workflow most efficient?",
+      "text": "You need AI to produce a comprehensive report requiring: (1) research synthesis, (2) multi-source analysis, and (3) professional writing. You sent one prompt asking for all three at once, but the output was shallow across all three areas. What is the most likely cause and best fix?",
       "options": [
-        { "id": "a", "text": "Use a single AI tool for all three steps" },
-        { "id": "b", "text": "Design a chained prompt sequence where each output feeds the next step automatically" },
-        { "id": "c", "text": "Hire someone to do the translation step" },
-        { "id": "d", "text": "Do the research manually and only use AI for translation" }
+        { "id": "a", "text": "The AI model isn't powerful enough — switch to a more capable model" },
+        { "id": "b", "text": "Multi-step tasks produce shallow output when treated as a single prompt — redesign as a sequential pipeline: step 1 produces research synthesis, step 2 analyzes it, step 3 writes from the analysis" },
+        { "id": "c", "text": "The problem is the format instruction — add more detailed structure requirements" },
+        { "id": "d", "text": "Use three separate AI tools, each with the same combined prompt" }
       ],
       "correct": "b",
-      "explanation": "Prompt chaining — where the output of one AI step becomes the structured input of the next — is the foundation of multi-AI workflow design. It turns a manual 3-step process into a repeatable pipeline."
+      "explanation": "Asking one prompt to do three distinct jobs forces the model to trade depth for breadth. A sequential pipeline gives each step full attention: step 1's output becomes step 2's input, which becomes step 3's input. This consistently produces deeper output than single-prompt approaches for multi-step tasks — regardless of which model you use."
     }
   ]
 }

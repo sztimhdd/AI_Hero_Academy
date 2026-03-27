@@ -1,0 +1,107 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-03",
+  "description": "10 role archetypes used to seed the onboarding personalization and populate scenario context variables. Each archetype provides typical values for declared_role, suggested industries, daily_work_desc seed text, and primary_motivation pattern. These are starting points — the learner's actual onboarding input overrides all fields.",
+  "archetypes": [
+    {
+      "archetype_id": "marketer",
+      "declared_role": "Marketing professional",
+      "role_display": "Marketer",
+      "suggested_industries": ["tech", "retail", "healthcare", "education", "creative", "finance"],
+      "daily_work_desc_seed": "I create content, run campaigns, write copy for ads and emails, and track what resonates with our audience. A lot of my time goes into producing materials across multiple channels and figuring out what message will land.",
+      "current_ai_usage_seed": "I've used ChatGPT to write first drafts of emails and social posts, but I usually have to edit a lot. I've tried image generation a couple of times.",
+      "primary_motivation_typical": ["upskill", "job_seeker", "career_change"],
+      "coach_calibration_notes": "Likely has the most hands-on AI tool experience of any archetype. Strong on content generation; often weak on tool selection and data governance. CRAF (P2) will resonate immediately — frame around campaign briefs and copy refinement."
+    },
+    {
+      "archetype_id": "teacher",
+      "declared_role": "Educator",
+      "role_display": "Teacher / Educator",
+      "suggested_industries": ["education", "public_sector", "healthcare"],
+      "daily_work_desc_seed": "I plan and deliver lessons, create learning materials, assess student work, and communicate with students and parents. I'm constantly designing activities for different ability levels and dealing with administrative paperwork.",
+      "current_ai_usage_seed": "I've heard a lot about AI but mostly use it to create quiz questions or lesson plan outlines. I'm cautious about students using it and unsure what's appropriate.",
+      "primary_motivation_typical": ["upskill", "curiosity"],
+      "coach_calibration_notes": "Often has ethical concerns about AI in education — acknowledge these without dismissing. Strong intrinsic motivation once they see AI as a teacher-support tool, not a replacement. Differentiated instruction scenarios work well for P2 and P4."
+    },
+    {
+      "archetype_id": "pm",
+      "declared_role": "Product or project manager",
+      "role_display": "PM / Project Manager",
+      "suggested_industries": ["tech", "finance", "healthcare", "retail", "ops"],
+      "daily_work_desc_seed": "I coordinate across teams, write specs and briefs, run planning meetings, track progress, and communicate status to stakeholders. A lot of my time is spent synthesizing information from multiple sources and turning it into clear decisions or next steps.",
+      "current_ai_usage_seed": "I use AI to summarize meeting notes and draft status updates, but the outputs always need a lot of editing. I've started using it to write user stories but I'm inconsistent.",
+      "primary_motivation_typical": ["upskill", "job_seeker"],
+      "coach_calibration_notes": "Natural fit for P5 (workflow design) and P2 (CRAF for specs and briefs). High pain point: per-session AI setup overhead — P4 BRIEF will be immediately high-value. Frame everything around stakeholder communication and cross-team coordination."
+    },
+    {
+      "archetype_id": "analyst",
+      "declared_role": "Analyst",
+      "role_display": "Analyst",
+      "suggested_industries": ["finance", "tech", "healthcare", "ops", "retail", "public_sector"],
+      "daily_work_desc_seed": "I gather and analyze data, identify patterns and trends, and produce reports and presentations that inform decisions. I work with spreadsheets, databases, and visualization tools. A significant part of my job is explaining what numbers mean to non-technical stakeholders.",
+      "current_ai_usage_seed": "I've used AI to help write the narrative sections of reports and to summarize large datasets, but I'm always worried about accuracy. I don't use it for the data work itself.",
+      "primary_motivation_typical": ["upskill", "curiosity"],
+      "coach_calibration_notes": "High hallucination awareness because of data accuracy stakes — P1 will resonate strongly. P4 (structured output/JSON schema) is particularly high-value: frame around connecting AI to spreadsheets and BI tools. P3 (tool selection) should focus on deep research vs. conversational AI."
+    },
+    {
+      "archetype_id": "nurse",
+      "declared_role": "Healthcare professional",
+      "role_display": "Nurse / Healthcare Worker",
+      "suggested_industries": ["healthcare", "public_sector"],
+      "daily_work_desc_seed": "I provide direct patient care, document patient interactions, communicate with the broader care team, and handle a significant administrative workload alongside clinical responsibilities. Time pressure is constant — there's always more to do than time to do it.",
+      "current_ai_usage_seed": "I haven't used AI much at work — I'm not sure what's appropriate given patient privacy rules. I've used it personally for things like recipe planning.",
+      "primary_motivation_typical": ["curiosity", "upskill"],
+      "coach_calibration_notes": "Strong data privacy sensitivity — P1 (governance/safety baseline) and P3 (Access dimension of CAST) are highest priority. Frame AI as administrative burden reduction, not clinical decision support. Documentation, handover notes, and communication tasks are appropriate use cases."
+    },
+    {
+      "archetype_id": "hr",
+      "declared_role": "HR professional",
+      "role_display": "HR / People Ops",
+      "suggested_industries": ["tech", "finance", "retail", "healthcare", "ops", "public_sector"],
+      "daily_work_desc_seed": "I recruit, manage employee relations, handle performance processes, write policies and communications, and help managers navigate people challenges. I deal with sensitive and confidential information constantly and need to communicate clearly with people across all seniority levels.",
+      "current_ai_usage_seed": "I've used AI to draft job descriptions and policy documents, but I always remove any identifying information first. I'm very cautious about data privacy.",
+      "primary_motivation_typical": ["upskill", "job_seeker"],
+      "coach_calibration_notes": "Excellent built-in data safety instincts — P1 safety baseline will feel like validation, not new information. High value in P2 (CRAF for comms and policies) and P4 (configured system prompt for consistent HR communication tone). Frame everything around employee communication and policy writing."
+    },
+    {
+      "archetype_id": "ops",
+      "declared_role": "Operations professional",
+      "role_display": "Operations / Ops Manager",
+      "suggested_industries": ["logistics", "retail", "manufacturing", "healthcare", "finance", "tech"],
+      "daily_work_desc_seed": "I manage processes, coordinate teams and vendors, troubleshoot operational issues, and produce reports and SOPs. A lot of my time goes into documentation, communication, and solving problems that cross multiple teams or systems.",
+      "current_ai_usage_seed": "I've tried ChatGPT for writing procedures and emails, but my usage is inconsistent — I don't have a system for it.",
+      "primary_motivation_typical": ["upskill", "curiosity"],
+      "coach_calibration_notes": "High affinity for P4 (configuration) and P5 (workflow automation). SOPs and process documentation are excellent AI use cases — frame BRIEF around writing a configured assistant for documentation tasks. P6 (agentic design) will resonate if framed around automating routine operational reporting or monitoring."
+    },
+    {
+      "archetype_id": "freelancer",
+      "declared_role": "Freelancer / Independent professional",
+      "role_display": "Freelancer",
+      "suggested_industries": ["creative", "tech", "marketing", "education", "consulting"],
+      "daily_work_desc_seed": "I work directly with clients on projects in my area of specialty, handle my own business development and client communications, and manage all the administrative overhead that comes with running independently. Time efficiency is critical — I only get paid for delivered work.",
+      "current_ai_usage_seed": "I use AI heavily for first drafts and research, but I'm inconsistent about which tools I use and when. I'm always looking for ways to work faster.",
+      "primary_motivation_typical": ["upskill", "job_seeker", "career_change"],
+      "coach_calibration_notes": "Likely the most pragmatic learner — motivated by time savings and competitive advantage. High tolerance for tool exploration. P3 (CAST) will feel like a framework for what they're already trying to do intuitively. P5 and P6 are high-value for client deliverables. Frame around billable time efficiency."
+    },
+    {
+      "archetype_id": "developer",
+      "declared_role": "Software developer",
+      "role_display": "Developer / Engineer",
+      "suggested_industries": ["tech", "finance", "healthcare", "retail", "ops"],
+      "daily_work_desc_seed": "I write and review code, debug issues, design technical solutions, and communicate with non-technical stakeholders about what we're building and why. I spend a significant amount of time reading code I didn't write and understanding systems I didn't design.",
+      "current_ai_usage_seed": "I use Cursor or GitHub Copilot for code completion and I've experimented with using Claude for architecture planning. I'm fairly comfortable with AI tools for technical work but less so for communication tasks.",
+      "primary_motivation_typical": ["curiosity", "upskill"],
+      "coach_calibration_notes": "Most technically fluent archetype — skip basics in P1 and P3, focus on nuance. P2 (CRAF) should focus on communicating with non-technical stakeholders, not just technical prompting. P6 (agentic design) is where developers often have the highest engagement — they already understand automation architecture."
+    },
+    {
+      "archetype_id": "student",
+      "declared_role": "Student",
+      "role_display": "Student",
+      "suggested_industries": ["education"],
+      "daily_work_desc_seed": "I complete coursework and assignments across multiple subjects, do research and writing, prepare for exams, and manage the time pressure of multiple deadlines. I'm building skills that I hope will transfer into a career.",
+      "current_ai_usage_seed": "I've used ChatGPT to help with writing assignments, but I feel guilty about it and I'm not sure what's acceptable. I want to use AI as a learning tool, not a shortcut.",
+      "primary_motivation_typical": ["job_seeker", "curiosity", "upskill"],
+      "coach_calibration_notes": "Often has the most anxiety about 'using AI correctly' — P1 safety baseline and ethical framing are important for psychological safety. Frame AI as a study and research tool, not a writing substitute. The P2 few-shot and iterative refinement techniques work well for academic research and argument development."
+    }
+  ]
+}
