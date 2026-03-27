@@ -289,13 +289,23 @@
       #s1 .s1-photo { display: none; }
     }
 
-    /* === S6 — SUBTLE NETWORK TEXTURE === */
+    /* === S6 — RIGHT-PANEL EDITORIAL PHOTO (behind flywheel diagram) === */
     #s6 { position: relative; }
+    /* Right-half photo — fiber optic, heavily desaturated + white washed */
     #s6::before {
-      content: ''; position: absolute; inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1400&q=50&auto=format&fit=crop');
+      content: ''; position: absolute;
+      top: 0; right: 0; bottom: 0; width: 50%;
+      background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&q=80&auto=format&fit=crop');
       background-size: cover; background-position: center;
-      opacity: 0.04; z-index: 0; pointer-events: none;
+      filter: saturate(0.12) brightness(1.08);
+      z-index: 0; pointer-events: none;
+    }
+    /* White wash over the photo — keeps Swiss Modern lightness */
+    #s6::after {
+      content: ''; position: absolute;
+      top: 0; right: 0; bottom: 0; width: 50%;
+      background: rgba(255,255,255,0.68);
+      z-index: 0; pointer-events: none;
     }
     #s6 .slide-content { position: relative; z-index: 1; }
 
