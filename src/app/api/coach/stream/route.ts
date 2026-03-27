@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { getAdminAuth } from "@/lib/firebase/admin";
+import { getAuthFromCookies } from "@/lib/auth/verify";
 import { getCoachSession, updateCoachSessionTurns, logAiCall } from "@/lib/firestore/db";
 import {
   isTurnBlocked,
@@ -18,17 +18,12 @@ const GEMINI_STREAM_URL = (apiKey: string) =>
 
 export async function POST(req: NextRequest) {
   // Auth
-  const sessionCookie = (await cookies()).get("__session")?.value;
-  if (!sessionCookie) {
-    return errorSse("Unauthorized");
-  }
-
   let uid: string;
   let userEmail: string;
   try {
-    const decoded = await getAdminAuth().verifySessionCookie(sessionCookie, true);
-    uid = decoded.uid;
-    userEmail = decoded.email ?? "";
+    const auth = await getAuthFromCookies(await cookies());
+    uid = auth.uid;
+    userEmail = auth.email;
   } catch {
     return errorSse("Unauthorized");
   }
