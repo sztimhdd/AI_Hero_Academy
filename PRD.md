@@ -1251,5 +1251,30 @@ that anticipate them unless doing so costs zero additional effort.
 
 
 ================================================================================
+DEPLOYMENT & DEMO ACCESS
+================================================================================
+
+Production Service
+  Cloud Run (GCP project banded-totality-485901, region us-central1)
+  Service name : ai-hero-academy-b2c
+  Base URL     : https://ai-hero-academy-b2c-r5uua4chza-uc.a.run.app
+
+Demo Site (stakeholder preview — no account required)
+  URL          : https://ai-hero-academy-b2c-r5uua4chza-uc.a.run.app/demo?t=07b731f4f039ff5740d366e909b84f8e
+  Token        : 07b731f4f039ff5740d366e909b84f8e  (maps to DEMO_TOKEN secret in Cloud Run)
+  Expiry       : demo sessions last 2 hours; data is re-seeded fresh on each selection
+
+  Available personas:
+    onboarding  → /onboarding          New user, 4-screen onboarding + diagnostic
+    day1        → /day/p1              Day 1 just started, reading tab open
+    day3        → /dashboard           Days 1–3 complete, mid-program dashboard
+    day6        → /dashboard           Days 1–6 complete, pre-capstone dashboard
+    credential  → /credential          All done, shareable credential + badge
+
+  Security note: DEMO_TOKEN is stored as a Cloud Run secret. Rotate it if the
+  demo URL is shared beyond internal stakeholders.
+
+
+================================================================================
 END OF PRD.md
 ================================================================================
