@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
                 color: "#4ade80",
               }}
             >
-              Score: {scoreText}
+              {`Score: ${scoreText}`}
             </div>
             <div style={{ fontSize: 16, color: "#64748b" }}>{issuedDate}</div>
           </div>
@@ -126,7 +126,7 @@ export async function GET(req: NextRequest) {
                 >
                   <div style={{ fontSize: 11, color: "#64748b" }}>{p}</div>
                   <div style={{ fontSize: 16, fontWeight: 700, color: score >= 1 ? "#818cf8" : "#475569" }}>
-                    {score}/2
+                    {`${score}/2`}
                   </div>
                 </div>
               );
@@ -144,8 +144,7 @@ export async function GET(req: NextRequest) {
   const buffer = await img.arrayBuffer();
   return new Response(buffer, { headers: { "Content-Type": "image/png" } });
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error("share-card render error:", msg);
-    return new Response(`Share card generation failed: ${msg}`, { status: 500 });
+    console.error("share-card render error:", err);
+    return new Response("Share card generation failed", { status: 500 });
   }
 }
