@@ -65,6 +65,8 @@ jobs:
             --concurrency=80
           env_vars: |
             FIREBASE_ADMIN_PROJECT_ID=${{ env.GCP_PROJECT }}
+            FIREBASE_ADMIN_CLIENT_EMAIL=${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
+            FIREBASE_ADMIN_PRIVATE_KEY=${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
             GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
             DEMO_TOKEN=${{ secrets.DEMO_TOKEN }}
 
