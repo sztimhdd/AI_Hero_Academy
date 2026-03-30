@@ -62,42 +62,48 @@ export async function POST(req: NextRequest) {
 
   const now = Timestamp.now();
 
-  // ── Write UserProfile ──────────────────────────────────────────────────────
-  await upsertUser(uid, {
-    uid,
-    user_email: userEmail,
-    display_name: displayName,
-    profile_photo_url: photoURL,
-    declared_role: body.declared_role,
-    declared_industry: body.declared_industry,
-    daily_work_desc: body.daily_work_desc,
-    current_ai_usage: body.current_ai_usage,
-    primary_motivation: body.primary_motivation,
-    program_started_at: now,
-    streak_days: 1,
-    last_active_date: new Date().toISOString().slice(0, 10),
-  });
+  try {
+    // ── Write UserProfile ────────────────────────────────────────────────────
+    await upsertUser(uid, {
+      uid,
+      user_email: userEmail,
+      display_name: displayName,
+      profile_photo_url: photoURL,
+      declared_role: body.declared_role,
+      declared_industry: body.declared_industry,
+      daily_work_desc: body.daily_work_desc,
+      current_ai_usage: body.current_ai_usage,
+      primary_motivation: body.primary_motivation,
+      program_started_at: now,
+      streak_days: 1,
+      last_active_date: new Date().toISOString().slice(0, 10),
+    });
 
-  // ── Write DiagnosticSession ────────────────────────────────────────────────
-  const sessionId = await createDiagnosticSession({
-    uid,
-    user_email: userEmail,
-    completed_at: now,
-    pillar_scores: pillarScores,
-    overall_score: overallScore,
-    item_scores: itemScores,
-    session_number: 1,
-    ai_question_used: body.ai_question_text,
-    ai_question_answer: body.ai_question_answer,
-  });
+    // ── Write DiagnosticSession ──────────────────────────────────────────────
+    const sessionId = await createDiagnosticSession({
+      uid,
+      user_email: userEmail,
+      completed_at: now,
+      pillar_scores: pillarScores,
+      overall_score: overallScore,
+      item_scores: itemScores,
+      session_number: 1,
+      ai_question_used: body.ai_question_text,
+      ai_question_answer: body.ai_question_answer,
+    });
 
-  // ── Write TrainingProgress (p1 unlocked, rest locked) ─────────────────────
-  await initTrainingProgress(uid, userEmail);
+    // ── Write TrainingProgress (p1 unlocked, rest locked) ────────────────────
+    await initTrainingProgress(uid, userEmail);
 
-  return NextResponse.json({
-    status: "ok",
-    session_id: sessionId,
-    pillar_scores: pillarScores,
-    overall_score: overallScore,
-  });
+    return NextResponse.json({
+      status: "ok",
+      session_id: sessionId,
+      pillar_scores: pillarScores,
+      overall_score: overallScore,
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[score] Firestore write failed:", err);
+    return NextResponse.json({ error: "score_failed", detail: message }, { status: 500 });
+  }
 }
