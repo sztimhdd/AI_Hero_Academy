@@ -39,6 +39,17 @@ export async function getAuthFromCookies(
     };
   }
 
+  // DEMO bypass — active when DEMO_TOKEN is configured (private beta demo mode)
+  if (process.env.DEMO_TOKEN && sessionCookie === "demo-bypass") {
+    const demoUid = (cookies as { get: (name: string) => { value: string } | undefined })
+      .get("__demo_uid")?.value ?? "demo-day3";
+    return {
+      uid: demoUid,
+      email: `${demoUid}@demo.ai-hero.academy`,
+      displayName: "Demo User",
+    };
+  }
+
   const decoded = await getAdminAuth().verifySessionCookie(sessionCookie, true);
   return {
     uid: decoded.uid,

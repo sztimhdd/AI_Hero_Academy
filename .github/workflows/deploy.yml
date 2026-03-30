@@ -26,20 +26,17 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
+        id: auth
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: ${{ env.GCP_PROJECT }}
-
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
       - name: Build and push Docker image
+        id: build
         run: |
           IMAGE="${{ env.REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.AR_REPO }}/b2c:${{ github.sha }}"
           docker build \
@@ -51,29 +48,31 @@ jobs:
             -t "$IMAGE" \
             .
           docker push "$IMAGE"
-          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+          echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
 
       - name: Deploy to Cloud Run
-        run: |
-          gcloud run deploy ${{ env.SERVICE }} \
-            --image "$IMAGE" \
-            --region ${{ env.REGION }} \
-            --platform managed \
-            --allow-unauthenticated \
-            --port 8080 \
-            --memory 1Gi \
-            --cpu 1 \
-            --min-instances 0 \
-            --max-instances 3 \
-            --set-secrets=FIREBASE_ADMIN_CLIENT_EMAIL=firebase-admin-client-email:latest \
-            --set-secrets=FIREBASE_ADMIN_PRIVATE_KEY=firebase-admin-private-key:latest \
-            --set-secrets=GEMINI_API_KEY=gemini-api-key:latest \
-            --set-env-vars=FIREBASE_ADMIN_PROJECT_ID=${{ env.GCP_PROJECT }} \
-            --set-env-vars=NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }} \
-            --quiet
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE }}
+          image: ${{ steps.build.outputs.image }}
+          region: ${{ env.REGION }}
+          flags: >-
+            --allow-unauthenticated
+            --port=8080
+            --memory=1Gi
+            --cpu=1
+            --min-instances=0
+            --max-instances=3
+            --concurrency=80
+          env_vars: |
+            FIREBASE_ADMIN_PROJECT_ID=${{ env.GCP_PROJECT }}
+            NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
+          secrets: |
+            FIREBASE_ADMIN_CLIENT_EMAIL=firebase-admin-client-email:latest
+            FIREBASE_ADMIN_PRIVATE_KEY=firebase-admin-private-key:latest
+            GEMINI_API_KEY=gemini-api-key:latest
+            DEMO_TOKEN=demo-token:latest
 
       - name: Print service URL
-        run: |
-          gcloud run services describe ${{ env.SERVICE }} \
-            --region ${{ env.REGION }} \
-            --format "value(status.url)"
+        run: echo "Deployed to ${{ steps.deploy.outputs.url }}"

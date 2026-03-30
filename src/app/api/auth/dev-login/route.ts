@@ -23,7 +23,8 @@ const UAT_EMAIL = process.env.DEV_USER_EMAIL ?? "uat@dev.local";
 const UAT_NAME = "UAT Test User";
 
 export async function POST(req: Request) {
-  if (process.env.LOCAL_UAT !== "true") {
+  // Double guard: env var check + production build check
+  if (process.env.NODE_ENV === "production" || process.env.LOCAL_UAT !== "true") {
     return NextResponse.json({ error: "Not available" }, { status: 404 });
   }
   const url = new URL(req.url);

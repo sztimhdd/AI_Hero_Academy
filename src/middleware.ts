@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const SESSION_COOKIE_NAME = "__session";
 
 // Routes that don't need auth
-const PUBLIC_PATHS = ["/", "/api/auth/session", "/api/auth/logout", "/api/auth/dev-login"];
+const PUBLIC_PATHS = ["/", "/api/auth/session", "/api/auth/logout", "/api/auth/dev-login", "/demo", "/api/auth/demo-login"];
 
 /**
  * Lightweight Edge-compatible middleware.
@@ -19,6 +19,7 @@ export function middleware(req: NextRequest) {
   // Always allow public routes and Next.js internals
   if (
     PUBLIC_PATHS.includes(pathname) ||
+    pathname.startsWith("/demo") ||
     pathname.startsWith("/_next/") ||
     pathname.startsWith("/favicon")
   ) {
