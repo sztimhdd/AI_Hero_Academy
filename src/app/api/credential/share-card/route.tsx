@@ -144,7 +144,8 @@ export async function GET(req: NextRequest) {
   const buffer = await img.arrayBuffer();
   return new Response(buffer, { headers: { "Content-Type": "image/png" } });
   } catch (err) {
-    console.error("share-card render error:", err);
-    return new Response("Share card generation failed", { status: 500 });
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("share-card render error:", msg);
+    return new Response(`Share card generation failed: ${msg}`, { status: 500 });
   }
 }
