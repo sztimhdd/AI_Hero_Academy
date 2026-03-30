@@ -1,6 +1,6 @@
 # AI Hero Academy — B2C Transformation Roadmap
-**Status:** Working Document | **Session started:** 2026-03-26
-**Owner:** Product / Strategy | **Last updated:** 2026-03-26 (decisions batch 1)
+**Status:** Sprints S1–S5 complete ✅ | Private beta ready
+**Owner:** Product / Strategy | **Last updated:** 2026-03-30
 
 > This is a living document. Update in-session as decisions are made.
 > Unresolved items are marked ⬜. Confirmed decisions are marked ✅.
