@@ -11,12 +11,18 @@ function buildCredential() {
   if (
     process.env.FIREBASE_ADMIN_PROJECT_ID &&
     process.env.FIREBASE_ADMIN_CLIENT_EMAIL &&
-    process.env.FIREBASE_ADMIN_PRIVATE_KEY
+    (process.env.FIREBASE_ADMIN_PRIVATE_KEY_B64 || process.env.FIREBASE_ADMIN_PRIVATE_KEY)
   ) {
+    // Prefer B64-encoded key (safe across YAML/env var newline handling);
+    // fall back to the raw key with \n → newline conversion.
+    const privateKey = process.env.FIREBASE_ADMIN_PRIVATE_KEY_B64
+      ? Buffer.from(process.env.FIREBASE_ADMIN_PRIVATE_KEY_B64, "base64").toString("utf8")
+      : process.env.FIREBASE_ADMIN_PRIVATE_KEY!.replace(/\\n/g, "\n");
+
     return cert({
       projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
       clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      privateKey,
     });
   }
 

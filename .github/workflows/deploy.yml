@@ -33,6 +33,15 @@ jobs:
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
+      - name: Base64-encode Firebase private key (safe multi-line env var transport)
+        id: encode_key
+        run: |
+          printf '%s' "$FIREBASE_PRIVATE_KEY" | base64 -w 0 > /tmp/pk_b64
+          echo "value=$(cat /tmp/pk_b64)" >> "$GITHUB_OUTPUT"
+          rm /tmp/pk_b64
+        env:
+          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
+
       - name: Build and push Docker image
         id: build
         run: |
@@ -73,7 +82,7 @@ jobs:
           env_vars: |
             FIREBASE_ADMIN_PROJECT_ID=${{ env.GCP_PROJECT }}
             FIREBASE_ADMIN_CLIENT_EMAIL=${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
-            FIREBASE_ADMIN_PRIVATE_KEY=${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
+            FIREBASE_ADMIN_PRIVATE_KEY_B64=${{ steps.encode_key.outputs.value }}
             GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
             DEMO_TOKEN=${{ secrets.DEMO_TOKEN }}
 
