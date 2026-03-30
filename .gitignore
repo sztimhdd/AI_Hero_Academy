@@ -39,3 +39,10 @@ proxy-cert.pem
 # Temp atom generation artifacts
 tmp_*.json
 references/zh-ref-raw/
+node_modules/
+
+# Next.js build output
+.next/
+out/
+next-env.d.ts
+tsconfig.tsbuildinfo
