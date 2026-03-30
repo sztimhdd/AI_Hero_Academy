@@ -9,6 +9,7 @@ import {
 import type { Timestamp } from "firebase-admin/firestore";
 import type { TrainingProgress, BuildArtifact } from "@/lib/firestore/types";
 import { DashboardClient } from "./DashboardClient";
+import { NextIntlClientProvider } from "next-intl";
 
 /** Strips Firestore Timestamps so data is serialisable across the RSC boundary. */
 function serializeProgress(p: TrainingProgress) {
@@ -59,24 +60,29 @@ export default async function DashboardPage() {
   const user = await getUser(uid);
   if (!user?.program_started_at) redirect("/onboarding");
 
+  const locale = (jar.get("NEXT_LOCALE")?.value === "zh" ? "zh" : "en") as "en" | "zh";
+  const messages = (await import(`@/i18n/messages/${locale}.json`)).default;
+
   const [progressDocs, artifactDocs] = await Promise.all([
     getTrainingProgress(uid),
     getBuildArtifacts(uid),
   ]);
 
   return (
-    <DashboardClient
-      uid={uid}
-      userEmail={userEmail}
-      user={{
-        display_name: user.display_name,
-        profile_photo_url: user.profile_photo_url,
-        streak_days: user.streak_days ?? 0,
-        last_active_date: user.last_active_date ?? null,
-        lang: user.lang,
-      }}
-      progress={progressDocs.map(serializeProgress)}
-      artifacts={artifactDocs.map(serializeArtifact)}
-    />
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <DashboardClient
+        uid={uid}
+        userEmail={userEmail}
+        user={{
+          display_name: user.display_name,
+          profile_photo_url: user.profile_photo_url,
+          streak_days: user.streak_days ?? 0,
+          last_active_date: user.last_active_date ?? null,
+          lang: user.lang,
+        }}
+        progress={progressDocs.map(serializeProgress)}
+        artifacts={artifactDocs.map(serializeArtifact)}
+      />
+    </NextIntlClientProvider>
   );
 }

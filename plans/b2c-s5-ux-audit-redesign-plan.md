@@ -73,7 +73,7 @@ Implement all approved CRITICAL and HIGH issues. MEDIUM issues implemented only 
 
 E-learning UX patterns to apply where flagged (sourced from industry research):
 - **Reading tab:** Content hierarchy with `h2`/`h3` landmarks, `good-example` / `anti-pattern` clearly visually distinguished (color + icon), key takeaway visually prominent, sufficient line-height (1.6+), `max-width: 72ch` for readability column
-- **Practice (coach chat):** Message bubbles clearly separated user vs. coach, streaming indicator (typing animation), task progress "Task N of 4" always above-fold, mastery exit confirmation animation, input field ≥ 44px touch height, send button always visible (not hidden behind keyboard on mobile)
+- **Practice (coach chat):** Message bubbles clearly separated user vs. coach, streaming indicator (typing animation), task progress "Task N of 4" always above-fold, question budget indicator "Question N of 3" visible per task (PACE model — removes anxiety about endless questioning), explicit visual closure moment when task exits early on mastery (brief beat before advancing — learner feels completion, not truncation), bridge statement at task end always visible (one-line coach close linking to what's next — never ends mid-air), input field ≥ 44px touch height, send button always visible (not hidden behind keyboard on mobile)
 - **Quiz tab:** One question visible at a time (progressive disclosure) or clearly numbered, MCQ options ≥ 44px tap height, selected state unambiguous (not color-only), score feedback below each question on submit (not only at top), retry CTA visually prominent on fail
 - **Dashboard:** Day arc timeline scannable left-to-right, locked/available/complete states use icon + color + label (not color-only), streak counter uses `aria-label`, artifact gallery empty state is helpful ("Complete Day 1 to save your first artifact")
 - **Onboarding:** One question per screen (no cognitive overload), progress indicator always visible, back navigation never loses input, CTA always above fold on mobile
@@ -103,7 +103,7 @@ Dedicated pass at 375px in Chinese for all redesigned screens. Checks:
 5. 0 HIGH issues remain in re-audit run after E13 ✅
 6. All MEDIUM issues documented in post-launch backlog ✅
 7. Reading tab: content hierarchy landmarks, example/anti-pattern distinguished, `max-width: 72ch` ✅
-8. Coach chat: user/coach bubbles distinct, streaming indicator, task progress always visible ✅
+8. Coach chat: user/coach bubbles distinct, streaming indicator, task + question progress indicators always visible, visual closure on mastery exit ✅
 9. Quiz: progressive disclosure or clear numbering, MCQ ≥ 44px, selected state not color-only ✅
 10. Dashboard: locked/available/complete uses icon + color + label (not color-only) ✅
 11. All interactive elements ≥ 44×44px touch target on mobile ✅
@@ -138,7 +138,7 @@ UAT-S5-7:  All MEDIUM issues present in post-launch-backlog.md
 UAT-S5-8:  Reading tab: content sections have visible h2/h3 landmarks (a11y snapshot)
 UAT-S5-9:  Reading tab: good-example and anti-pattern visually distinct at 375px (screenshot)
 UAT-S5-10: Coach chat: user vs coach message bubbles visually distinct (screenshot)
-UAT-S5-11: Coach chat: "Task N of 4" indicator visible without scrolling at 375px
+UAT-S5-11: Coach chat: "Task N of 4" AND "Question N of 3" indicators both visible without scrolling at 375px
 UAT-S5-12: Quiz: MCQ options bounding box ≥ 44px height (evaluate snapshot)
 UAT-S5-13: Quiz: selected MCQ state uses icon or label, not color alone (screenshot)
 UAT-S5-14: Dashboard: locked/available/complete state uses icon + text (not color-only) (snapshot)

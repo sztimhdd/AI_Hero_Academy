@@ -79,11 +79,11 @@ export async function getLatestDiagnosticSession(
   const snap = await db()
     .collection(COLLECTIONS.DIAGNOSTIC_SESSIONS)
     .where("uid", "==", uid)
-    .orderBy("completed_at", "desc")
-    .limit(1)
     .get();
   if (snap.empty) return null;
-  return snap.docs[0].data() as DiagnosticSession;
+  const docs = snap.docs.map((d) => d.data() as DiagnosticSession);
+  docs.sort((a, b) => b.completed_at.toMillis() - a.completed_at.toMillis());
+  return docs[0];
 }
 
 // ── TrainingProgress ──────────────────────────────────────────────────────────
@@ -103,12 +103,15 @@ export async function upsertTrainingProgress(
 export async function getTrainingProgress(
   uid: string
 ): Promise<TrainingProgress[]> {
-  const snap = await db()
-    .collection(COLLECTIONS.TRAINING_PROGRESS)
-    .where("uid", "==", uid)
-    .orderBy("sequence_order")
-    .get();
-  return snap.docs.map((d) => d.data() as TrainingProgress);
+  // Fetch by known doc IDs to avoid requiring a composite index on (uid, sequence_order).
+  const pillarOrder: PillarId[] = ["p1", "p2", "p3", "p4", "p5", "p6", "capstone"];
+  const refs = pillarOrder.map((p) =>
+    db().collection(COLLECTIONS.TRAINING_PROGRESS).doc(`${uid}_${p}`)
+  );
+  const snaps = await db().getAll(...refs);
+  return snaps
+    .filter((s) => s.exists)
+    .map((s) => s.data() as TrainingProgress);
 }
 
 /**
@@ -287,9 +290,10 @@ export async function getBuildArtifacts(uid: string): Promise<BuildArtifact[]> {
   const snap = await db()
     .collection(COLLECTIONS.BUILD_ARTIFACTS)
     .where("uid", "==", uid)
-    .orderBy("day_number")
     .get();
-  return snap.docs.map((d) => d.data() as BuildArtifact);
+  return snap.docs
+    .map((d) => d.data() as BuildArtifact)
+    .sort((a, b) => (a.day_number ?? 0) - (b.day_number ?? 0));
 }
 
 // ── Credential (read) ─────────────────────────────────────────────────────────
@@ -298,11 +302,12 @@ export async function getCredential(uid: string): Promise<Credential | null> {
   const snap = await db()
     .collection(COLLECTIONS.CREDENTIALS)
     .where("uid", "==", uid)
-    .orderBy("issued_at", "desc")
-    .limit(1)
     .get();
   if (snap.empty) return null;
-  return snap.docs[0].data() as Credential;
+  // Sort descending by issued_at client-side to avoid composite index requirement
+  const docs = snap.docs.map((d) => d.data() as Credential);
+  docs.sort((a, b) => b.issued_at.toMillis() - a.issued_at.toMillis());
+  return docs[0];
 }
 
 // ── UserProfile (lang update) ─────────────────────────────────────────────────

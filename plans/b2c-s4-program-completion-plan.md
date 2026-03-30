@@ -137,12 +137,17 @@ UAT-S4-19: No text overflow at 375px viewport in ZH (screenshot check)
 UAT-S4-20: AI technical terms (LLM, API, JSON, temperature) kept in EN within ZH copy
 ```
 
-**Part E — Legacy Streamlit final regression (Playwright MCP, local port 8501)**
-Run `.claude/evals/baseline-uat.md` — must pass **38/41**.
-This is the final legacy check before public launch. G2a or G4 failure blocks launch.
+**Part E — Legacy Streamlit regression**
+> **Scope decision (2026-03-27):** Part E is scoped to the `main` branch (Streamlit app) only.
+> It is **not a gate for B2C Next.js sprint UAT** going forward. The B2C product runs on a
+> separate Cloud Run service (`ai-hero-academy-b2c`) and a separate code path. Legacy
+> regression is owned by the `main` branch release process, not B2C sprints.
+> Part E will be SKIP in all future B2C UAT runs.
 
-**Release gate: 18/20 B2C tests + 38/41 legacy tests.**
-Any failure in UAT-S4-11 (credential issue), UAT-S4-9 (file upload), or UAT-S4-18 (ZH coach) blocks launch regardless of total score.
+
+
+**Release gate (B2C sprints): 18/20 B2C tests (Parts A–D).**
+Hard blockers: UAT-S4-9 (file upload), UAT-S4-11 (credential issue), UAT-S4-18 (ZH coach).
 
 ## Key Constraints
 

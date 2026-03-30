@@ -26,7 +26,7 @@
     "pillarBadgesTitle": "技能徽章",
     "artifactsTitle": "学习成果",
     "artifactsCount": "学习成果 ({count})",
-    "artifactsEmpty": "完成每天的"构建"部分后，你的成果将显示在这里。",
+    "artifactsEmpty": "完成每天的「构建」部分后，你的成果将显示在这里。",
     "dayState": {
       "locked": "未解锁",
       "available": "开始",
@@ -97,13 +97,13 @@
     "reading": {
       "markComplete": "标记阅读完成 →",
       "alreadyComplete": "阅读已完成",
-      "headToNext": "前往"实践"将所学付诸应用。"
+      "headToNext": "前往「实践」将所学付诸应用。"
     },
     "practice": {
       "startingCoach": "正在启动AI教练…",
       "sessionError": "无法启动辅导会话，请刷新页面。",
       "alreadyComplete": "实践已完成",
-      "headToQuiz": "前往"测验"检验你的理解程度。",
+      "headToQuiz": "前往「测验」检验你的理解程度。",
       "taskOf": "任务 {current}/{total}",
       "questionsOf": "{current}/3",
       "lastQuestion": "最后一个问题",
@@ -113,7 +113,7 @@
     },
     "quiz": {
       "alreadyPassed": "测验已通过 ✓",
-      "headToBuild": "前往"构建"创建你的成果。",
+      "headToBuild": "前往「构建」创建你的成果。",
       "submit": "提交测验",
       "submitting": "评分中…",
       "passed": "测验通过！",

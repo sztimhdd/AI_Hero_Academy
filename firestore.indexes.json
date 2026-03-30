@@ -1,0 +1,37 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "b2c_training_progress",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "sequence_order", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "b2c_build_artifacts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "day_number", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "b2c_credentials",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "issued_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "b2c_diagnostic_sessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "completed_at", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
