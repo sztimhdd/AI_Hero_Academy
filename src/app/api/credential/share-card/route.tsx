@@ -12,7 +12,13 @@ export async function GET(req: NextRequest) {
   const uid = req.nextUrl.searchParams.get("uid");
   if (!uid) return new Response("uid required", { status: 400 });
 
-  const credential = await getCredential(uid);
+  let credential;
+  try {
+    credential = await getCredential(uid);
+  } catch (err) {
+    console.error("share-card: Firestore error", err);
+    return new Response("Firestore error", { status: 500 });
+  }
   if (!credential) return new Response("Credential not found", { status: 404 });
 
   const issuedDate = credential.issued_at.toDate().toLocaleDateString("en-US", {
@@ -85,8 +91,8 @@ export async function GET(req: NextRequest) {
           <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
             <div
               style={{
-                background: "#4ade8033",
-                border: "1px solid #4ade8066",
+                background: "rgba(74, 222, 128, 0.2)",
+                border: "1px solid rgba(74, 222, 128, 0.4)",
                 borderRadius: 8,
                 padding: "8px 20px",
                 fontSize: 20,
@@ -108,8 +114,8 @@ export async function GET(req: NextRequest) {
                 <div
                   key={p}
                   style={{
-                    background: score >= 1 ? "#4f46e522" : "#1e293b",
-                    border: `1px solid ${score >= 1 ? "#4f46e566" : "#334155"}`,
+                    background: score >= 1 ? "rgba(79, 70, 229, 0.13)" : "#1e293b",
+                    border: `1px solid ${score >= 1 ? "rgba(79, 70, 229, 0.4)" : "#334155"}`,
                     borderRadius: 8,
                     padding: "6px 12px",
                     textAlign: "center",
@@ -132,7 +138,11 @@ export async function GET(req: NextRequest) {
     { width: 1200, height: 630 }
   );
 
-  return img;
+  // Force Satori rendering to complete inside the try/catch.
+  // ImageResponse renders lazily during streaming; awaiting arrayBuffer() here
+  // ensures any resvg/Satori crash is caught rather than killing the process.
+  const buffer = await img.arrayBuffer();
+  return new Response(buffer, { headers: { "Content-Type": "image/png" } });
   } catch (err) {
     console.error("share-card render error:", err);
     return new Response("Share card generation failed", { status: 500 });
