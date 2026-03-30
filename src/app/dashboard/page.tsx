@@ -60,7 +60,10 @@ export default async function DashboardPage() {
   const user = await getUser(uid);
   if (!user?.program_started_at) redirect("/onboarding");
 
-  const locale = (jar.get("NEXT_LOCALE")?.value === "zh" ? "zh" : "en") as "en" | "zh";
+  // Use Firestore user.lang as authoritative; it is always kept in sync by the
+  // language toggle (PATCH /api/user/lang). Avoids stale NEXT_LOCALE cookie
+  // from a prior session overriding the user's actual preference.
+  const locale = (user.lang ?? "en") as "en" | "zh";
   const messages = (await import(`@/i18n/messages/${locale}.json`)).default;
 
   const [progressDocs, artifactDocs] = await Promise.all([
