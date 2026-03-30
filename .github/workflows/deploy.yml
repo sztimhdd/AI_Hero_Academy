@@ -33,33 +33,6 @@ jobs:
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
-      - name: Sync secrets to Secret Manager
-        run: |
-          CR_SA="387141525919-compute@developer.gserviceaccount.com"
-          PROJECT="${{ env.GCP_PROJECT }}"
-
-          sync_secret() {
-            local name="$1" value="$2"
-            if ! gcloud secrets describe "$name" --project="$PROJECT" --format=none 2>/dev/null; then
-              gcloud secrets create "$name" --project="$PROJECT" --replication-policy=automatic --format=none
-            fi
-            printf '%s' "$value" | gcloud secrets versions add "$name" --project="$PROJECT" --data-file=- --format=none
-            gcloud secrets add-iam-policy-binding "$name" \
-              --project="$PROJECT" \
-              --member="serviceAccount:${CR_SA}" \
-              --role=roles/secretmanager.secretAccessor \
-              --format=none
-          }
-
-          sync_secret "gemini-api-key" "${{ secrets.GEMINI_API_KEY }}"
-
-          # Grant Cloud Run SA access to demo-token (already exists)
-          gcloud secrets add-iam-policy-binding demo-token \
-            --project="$PROJECT" \
-            --member="serviceAccount:${CR_SA}" \
-            --role=roles/secretmanager.secretAccessor \
-            --format=none
-
       - name: Build and push Docker image
         id: build
         run: |
@@ -92,9 +65,8 @@ jobs:
             --concurrency=80
           env_vars: |
             FIREBASE_ADMIN_PROJECT_ID=${{ env.GCP_PROJECT }}
-          secrets: |
-            GEMINI_API_KEY=gemini-api-key:latest
-            DEMO_TOKEN=demo-token:latest
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+            DEMO_TOKEN=${{ secrets.DEMO_TOKEN }}
 
       - name: Print service URL
         run: echo "Deployed to ${{ steps.deploy.outputs.url }}"
