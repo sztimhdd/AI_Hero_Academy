@@ -44,7 +44,7 @@ git push origin main
       region:   us-central1
       flags:    --allow-unauthenticated --port=8080 --memory=1Gi --min-instances=0 --max-instances=3
       env_vars: FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL,
-                FIREBASE_ADMIN_PRIVATE_KEY, GEMINI_API_KEY, DEMO_TOKEN
+                FIREBASE_ADMIN_PRIVATE_KEY_B64, GEMINI_API_KEY, DEMO_TOKEN
 ```
 
 Monitor builds: [GitHub Actions](https://github.com/sztimhdd/AI_Hero_Academy/actions)
@@ -70,7 +70,15 @@ Build typically completes in 5–8 minutes. The job uses `concurrency: deploy-pr
 | Mode | URL | When to use |
 |------|-----|-------------|
 | **Local** | `http://localhost:3000` | Dev iteration, mid-feature testing |
-| **Remote (Cloud Run)** | `$(gcloud run services describe ai-hero-academy-b2c --region us-central1 --format "value(status.url)")` | Pre-release gate, post-deploy smoke test |
+| **Remote (Cloud Run)** | `https://ai-hero-academy-b2c-r5uua4chza-uc.a.run.app` | Pre-release gate, post-deploy smoke test |
+
+**Demo mode (private beta):**
+
+```text
+https://ai-hero-academy-b2c-r5uua4chza-uc.a.run.app/demo?t=07b731f4f039ff5740d366e909b84f8e
+```
+
+Personas available: `onboarding`, `day1`, `day3`, `day6`, `credential`
 
 **Local startup:**
 
