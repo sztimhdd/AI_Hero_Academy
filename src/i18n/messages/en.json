@@ -1,0 +1,195 @@
+{
+  "common": {
+    "signOut": "Sign out",
+    "loading": "Loading…",
+    "error": "Something went wrong. Please try again.",
+    "back": "Back",
+    "continue": "Continue",
+    "submit": "Submit",
+    "send": "Send",
+    "save": "Save",
+    "cancel": "Cancel",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "view": "View",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "dashboard": {
+    "welcomeBack": "Welcome back, {name}",
+    "subtitle": "Your AI transformation journey continues.",
+    "streakDays": "{count} day streak",
+    "streakActiveToday": "Active today ✓",
+    "streakAtRisk": "⚠ Complete a module today to keep your streak",
+    "journeyTitle": "Your 7-Day Journey",
+    "pillarBadgesTitle": "Pillar Badges",
+    "artifactsTitle": "Build Artifacts",
+    "artifactsCount": "Build Artifacts ({count})",
+    "artifactsEmpty": "Your artifacts will appear here as you complete each day's Build section.",
+    "dayState": {
+      "locked": "Locked",
+      "available": "Start",
+      "inProgress": "Continue",
+      "complete": "Complete"
+    },
+    "pillar": {
+      "p1": "AI Foundations",
+      "p2": "Precision Prompting",
+      "p3": "Tool Fluency",
+      "p4": "AI Configuration",
+      "p5": "AI Workflows",
+      "p6": "Agentic Systems",
+      "capstone": "Capstone"
+    },
+    "badgeComplete": "Completed",
+    "badgeLocked": "Locked — complete previous days first",
+    "badgeInProgress": "In progress",
+    "badgeQuizScore": "Quiz score: {score}%",
+    "artifactViewPrompt": "View →",
+    "toggleLang": "中文",
+    "toggleLangZh": "EN"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Tell us about your work",
+      "roleLabel": "What is your role?",
+      "rolePlaceholder": "e.g. Marketing Manager, Software Engineer, Teacher",
+      "industryLabel": "What industry are you in?",
+      "industryPlaceholder": "e.g. Healthcare, Finance, Education",
+      "dailyWorkLabel": "Describe your typical daily work",
+      "dailyWorkPlaceholder": "e.g. I write reports, analyze data, manage a team…",
+      "next": "Next →"
+    },
+    "step2": {
+      "title": "Your AI journey",
+      "aiUsageLabel": "How do you currently use AI?",
+      "motivationLabel": "What's your primary motivation?",
+      "motivation": {
+        "save_time": "Save time",
+        "quality": "Improve quality",
+        "career": "Advance my career",
+        "explore": "Just exploring"
+      },
+      "next": "Next →",
+      "back": "← Back"
+    },
+    "step3": {
+      "title": "Quick AI skills check",
+      "subtitle": "5 questions + 1 personalized AI challenge",
+      "submit": "Submit",
+      "generating": "Generating your personalized question…"
+    },
+    "step4": {
+      "title": "Your personalized gap map",
+      "startDay1": "Start Day 1 →",
+      "pillarReady": "Ready",
+      "pillarGap": "Gap identified"
+    }
+  },
+  "module": {
+    "tabs": {
+      "reading": "Reading",
+      "practice": "Practice",
+      "quiz": "Quiz",
+      "build": "Build"
+    },
+    "reading": {
+      "markComplete": "Mark Reading Complete →",
+      "alreadyComplete": "Reading complete",
+      "headToNext": "Head to Practice to apply what you learned."
+    },
+    "practice": {
+      "startingCoach": "Starting your AI coach…",
+      "sessionError": "Could not start coaching session. Please refresh.",
+      "alreadyComplete": "Practice complete",
+      "headToQuiz": "Head to the Quiz to test your understanding.",
+      "taskOf": "Task {current} of {total}",
+      "questionsOf": "{current} of 3",
+      "lastQuestion": "Last question",
+      "finishPractice": "Finish Practice → Take Quiz",
+      "saving": "Saving…",
+      "sendPlaceholder": "Your response… (Enter to send, Shift+Enter for new line)"
+    },
+    "quiz": {
+      "alreadyPassed": "Quiz passed ✓",
+      "headToBuild": "Head to Build to create your artifact.",
+      "submit": "Submit Quiz",
+      "submitting": "Scoring…",
+      "passed": "Quiz passed!",
+      "failed": "Not quite — review the hints and try again.",
+      "score": "Score: {score}/{max}",
+      "retake": "Retake Quiz"
+    },
+    "build": {
+      "alreadyComplete": "Build artifact saved ✓",
+      "savingArtifact": "Saving…",
+      "saveButton": "Save Artifact",
+      "savedSuccess": "Saved! Head back to the dashboard.",
+      "backToDashboard": "← Back to Dashboard"
+    }
+  },
+  "capstone": {
+    "intro": {
+      "title": "The AI-Supercharged Challenge",
+      "day": "Day 7 · ~{minutes} minutes",
+      "scenarioLabel": "Your Scenario",
+      "tasksLabel": "4 Tasks",
+      "encouragement": "💡 You are explicitly encouraged to use your own AI tools during this challenge — it tests judgment about when and how to use AI, not recall under pressure.",
+      "begin": "Begin Challenge →"
+    },
+    "challenge": {
+      "taskBadge": "Task {n}/{total}",
+      "coachComplete": "✓ Section complete — your coach has recorded your response.",
+      "mcqTitle": "Applied Judgment: MCQ Cluster",
+      "mcqSubtitle": "Select the best answer for each scenario. No coach — this is assessment mode.",
+      "mcqSubmit": "Submit Answers ({answered}/{total} answered)",
+      "mcqDone": "✓ Answers recorded — {correct}/{total} correct.",
+      "designTitle": "Design Challenge",
+      "designPlaceholder": "Paste your design documentation here, or describe your workflow/agent system…",
+      "uploadLabel": "Optionally upload a diagram or screenshot of your AI output (PNG, JPG, PDF)",
+      "uploadReady": "✓ File ready for submission",
+      "uploadLoading": "Loading…",
+      "submitDesign": "Submit Design",
+      "designScoring": "✓ Design submitted — scoring in progress…",
+      "allDone": "All tasks complete! 🎉",
+      "allDoneSubtitle": "Submit your work for AI scoring and credential review.",
+      "submitAll": "Submit & Get Results →",
+      "scoring": "Scoring your work…"
+    },
+    "results": {
+      "passed": "You passed!",
+      "score": "Score: {score} / 4.0",
+      "passedSubtitle": "You've demonstrated real AI skills across all 6 pillars. Your credential is being generated — you'll be redirected shortly.",
+      "viewCredential": "View Credential →",
+      "failed": "Not quite there yet",
+      "failedThreshold": "Score: {score} / 4.0 (pass threshold: 2.5)",
+      "retake": "Retake Challenge",
+      "startingCoach": "Starting AI coach…",
+      "sessionError": "Could not start coaching session. Please refresh."
+    }
+  },
+  "credential": {
+    "congrats": "Congratulations, {name}!",
+    "subtitle": "You've earned the AI-Supercharged Intermediate credential.",
+    "credentialTitle": "AI-Supercharged Intermediate",
+    "issued": "AI Hero Academy · {date}",
+    "overallScore": "Overall Score",
+    "pillarScoresTitle": "Pillar Scores",
+    "shareCardTitle": "Share Card",
+    "shareTitle": "Share & Download",
+    "addLinkedIn": "Add to LinkedIn",
+    "downloadPdf": "Download PDF",
+    "copyLink": "Copy Link",
+    "backToDashboard": "← Back to Dashboard",
+    "credentialId": "Credential ID: {id} · Issued {date}",
+    "pillar": {
+      "p1": "AI Foundations",
+      "p2": "Precision Prompting",
+      "p3": "Tool Fluency",
+      "p4": "AI Configuration",
+      "p5": "AI Workflows",
+      "p6": "Agentic Systems"
+    }
+  }
+}

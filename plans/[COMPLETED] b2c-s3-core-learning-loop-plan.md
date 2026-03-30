@@ -89,6 +89,43 @@ fetch('/api/synthesis/run', { method: 'POST', body: JSON.stringify({...}) }).cat
 14. `learner_model` updated; Day 2 coach injection includes Day 1 summary ✅
 15. Mobile-responsive at 375px ✅
 
+## UAT Checkpoint
+
+**Type: Full learning loop UAT (Playwright MCP, local) + PACE unit tests + legacy regression**
+
+**Part A — PACE unit tests (must pass before Playwright UAT)**
+```bash
+npm test src/lib/coach/pace.test.ts
+# Required: Q4 blocked, early exit on mastery, budget exhausted → direct insight
+```
+All tests must pass. If any fail, do not proceed to Playwright UAT.
+
+**Part B — Learning loop UAT (Playwright MCP, local `http://localhost:3000`)**
+```
+Persona: test user, Day 1 unlocked (seed via scripts/seed-dev.ts)
+
+UAT-S3-1:  /day/p1 renders all 4 sub-sections (Reading / Practice / Quiz / Build)
+UAT-S3-2:  Reading content renders from p1_foundation.json (not Firestore)
+UAT-S3-3:  "Mark as read" writes reading_completed_at to Firestore → Practice unlocks
+UAT-S3-4:  Practice loads Task 1 with scenario text and chat input
+UAT-S3-5:  "Question 1 of 3" indicator visible
+UAT-S3-6:  Submit coach message → SSE stream renders response character-by-character
+UAT-S3-7:  Q4 blocked server-side — 4th message in same task returns task_complete event
+UAT-S3-8:  Early mastery exit — coach emits task_complete before Q3 when mastery signal present
+UAT-S3-9:  Build artifact editor appears after Task 4 completes
+UAT-S3-10: "Save to My Toolkit" writes build_artifacts doc to Firestore
+UAT-S3-11: Quiz: 4 questions render (3 MCQ + 1 open)
+UAT-S3-12: Quiz pass (≥2.5): quiz_passed=true, P2 unlocked, badge shown
+UAT-S3-13: Quiz fail (<2.5): hints rendered, retake works without reload
+UAT-S3-14: After quiz pass: learner_model updated in Firestore (synthesis fired)
+UAT-S3-15: /day/p2 coach system prompt includes Day 1 daily_summary from learner_model
+```
+Gate: **14/15** pass. UAT-S3-8 (early mastery) acceptable as deferred if edge case hard to trigger.
+
+**Part C — Legacy Streamlit regression (Playwright MCP, local port 8501)**
+Run `.claude/evals/baseline-uat.md` — must pass **38/41**.
+Failures in G2a or G4 block this sprint.
+
 ## Key Constraints
 
 - Gemini 2.0 Flash only — no other model for coaching/scoring/synthesis

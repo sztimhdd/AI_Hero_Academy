@@ -1,0 +1,157 @@
+{
+  "capstone_id": "capstone",
+  "title": "The AI-Supercharged Challenge",
+  "day_number": 7,
+  "estimated_minutes": 15,
+  "perishable_content": false,
+  "last_updated": "2026-03",
+  "pillars_exercised": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "format": {
+    "sections": 4,
+    "section_types": ["text_input", "text_input", "mcq_cluster", "open_design"],
+    "note": "Learner is explicitly encouraged to use their own AI tools to complete this challenge — it tests judgment about when and how to use AI, not recall under pressure."
+  },
+  "description": "The Day 7 capstone is a single integrated challenge spanning all 6 pillars. It is AI-coached in real time — not auto-graded. The AI coach guides the learner through each section, provides feedback, and determines pass/fail based on demonstrated judgment quality across all 6 pillar skills. Passing the capstone issues the 'AI-Supercharged Intermediate' credential.",
+  "pass_criteria": "The AI coach scores the learner's responses across all 4 sections. Pass threshold: demonstrated competence (score ≥ 3 out of 4 on the coach's rubric) in at least 5 of the 6 pillars exercised. Failing sections can be retaken with coach guidance before the final credential decision.",
+
+  "scenario_template": "You are a {declared_role} working in {declared_industry}. {daily_work_desc}. Your organization has just approved a new AI initiative for your team, and you've been asked to lead the first month of implementation. You have one week to produce a launch package. The AI coach will guide you through 4 tasks that together demonstrate your AI-supercharged skills.",
+
+  "sections": [
+    {
+      "section_id": "cap_s1",
+      "section_number": 1,
+      "title": "AI Triage: Spot the Risk, Fix the Prompt",
+      "pillars_tested": ["p1", "p2"],
+      "type": "text_input",
+      "estimated_minutes": 4,
+      "prompt_template": "Your colleague used AI to draft an announcement email introducing the new AI initiative to your team. Here it is:\n\n---\n*\"Subject: Exciting News — We're Going AI!\n\nHi team,\n\nGreat news — we're launching an AI program for our department starting next month. According to a 2025 McKinsey Digital Transformation Report, companies using AI see a 47% productivity increase on average in the first year. We'll be using AI for all our major workflows going forward.\n\nPlease start exploring AI tools this week. We'll discuss next steps in our Monday meeting.\n\n[Sender name]\"*\n---\n\nYour task (use your own AI tools if helpful):\n\n1. Identify the biggest risk in this email — what specific claim should not be sent to your team without verification, and what type of AI error does it represent?\n\n2. Rewrite the email using CRAF principles so it is: accurate (no unverified claims), specific about what's actually happening, and addresses a real stakeholder audience for a {declared_role} in {declared_industry}.",
+      "coach_rubric": {
+        "p1_score": {
+          "0": "Does not identify any hallucination risk; accepts all claims as accurate",
+          "1": "Identifies that the McKinsey stat is a risk but cannot name the hallucination pattern",
+          "2": "Identifies the fabricated citation pattern and explains why this specific claim is dangerous to send to a team"
+        },
+        "p2_score": {
+          "0": "Rewrite is similarly generic or retains the unverified claim",
+          "1": "Rewrite removes the unverified claim but is still vague about audience, format, or specifics",
+          "2": "Rewrite applies CRAF — specific audience, concrete action items, appropriate tone, and no unverified claims — demonstrating that precision and accuracy are compatible"
+        }
+      }
+    },
+    {
+      "section_id": "cap_s2",
+      "section_number": 2,
+      "title": "Tool Selection + System Prompt",
+      "pillars_tested": ["p3", "p4"],
+      "type": "text_input",
+      "estimated_minutes": 4,
+      "prompt_template": "As the lead for your team's AI initiative, you need to set up two things:\n\n**Part A — Tool Selection (CAST)**\nYour team will regularly need to:\n(a) Research industry developments to inform your AI strategy — with cited, verifiable sources\n(b) Generate first drafts of internal communications, proposals, and reports\n(c) Automate a weekly data-collection process that currently takes 2 hours manually\n\nFor each task, apply CAST and recommend the tool category (and, if you know it, a specific tool). Note any Access concerns.\n\n**Part B — System Prompt (BRIEF)**\nWrite a complete BRIEF-structured system prompt for your team's most common AI use case — the one that will save the most time or produce the most consistent results. Label each BRIEF element.",
+      "coach_rubric": {
+        "p3_score": {
+          "0": "Recommends the same tool for all three tasks, or cannot apply CAST",
+          "1": "Applies CAST to 2 of 3 tasks with appropriate tool categories; Access consideration present for at least 1 task",
+          "2": "Applies CAST to all 3 tasks with correct tool categories (deep research for (a), conversational AI for (b), workflow automation for (c)); notes at least one Access concern relevant to {declared_industry}"
+        },
+        "p4_score": {
+          "0": "System prompt is generic ('be helpful and accurate') with no BRIEF structure",
+          "1": "Has 3+ BRIEF elements labeled; content is role-specific but Format or Edge cases are weak",
+          "2": "Complete BRIEF system prompt with all 5 elements labeled; Role is specific to {declared_role}/{declared_industry}; at least 2 Edge cases with concrete handling instructions; Format specifies a persistent output structure"
+        }
+      }
+    },
+    {
+      "section_id": "cap_s3",
+      "section_number": 3,
+      "title": "Applied Judgment: MCQ Cluster",
+      "pillars_tested": ["p1", "p2", "p3", "p4", "p5", "p6"],
+      "type": "mcq_cluster",
+      "estimated_minutes": 3,
+      "items": [
+        {
+          "item_id": "cap_mcq_1",
+          "pillar": "p1",
+          "question": "Your team member asks an AI to fact-check a claim in a competitor's press release. The AI returns: 'This claim is accurate based on publicly available data.' Should you rely on this?",
+          "options": {
+            "A": "Yes — the AI reviewed public data",
+            "B": "No — AI tools cannot reliably fact-check external claims; they generate plausible assessments, not verified ones. Use a deep research tool or check the primary source directly.",
+            "C": "Only if the AI is a premium model",
+            "D": "Yes, if the claim seems reasonable"
+          },
+          "correct_answer": "B"
+        },
+        {
+          "item_id": "cap_mcq_2",
+          "pillar": "p2",
+          "question": "You ask AI to 'summarize the feedback from today's team meeting.' The output doesn't capture the key decisions. The fastest fix is:",
+          "options": {
+            "A": "Regenerate with the same prompt — sometimes it produces better output on a second try",
+            "B": "Specify what you need: 'Extract key decisions made, action items assigned (with owners), and unresolved questions from the following meeting notes: [paste notes]'",
+            "C": "Switch to a more powerful AI model",
+            "D": "Accept the summary as a starting point and manually add the missing decisions"
+          },
+          "correct_answer": "B"
+        },
+        {
+          "item_id": "cap_mcq_3",
+          "pillar": "p3",
+          "question": "A team member wants to use a free consumer AI chatbot to analyze a document containing employee performance reviews. What is the primary concern?",
+          "options": {
+            "A": "Free tools are less accurate at document analysis",
+            "B": "Performance review data is sensitive personal information — free consumer tools are not appropriate for this type of content; use an enterprise-approved tool or local model",
+            "C": "The document might be too long for the tool's context window",
+            "D": "The output won't integrate with your HR systems"
+          },
+          "correct_answer": "B"
+        },
+        {
+          "item_id": "cap_mcq_4",
+          "pillar": "p5",
+          "question": "Your team is building a 4-step AI workflow that ends with automatically sending a summary email to leadership. Where must the mandatory human checkpoint be placed?",
+          "options": {
+            "A": "After step 1 — always review early in the pipeline",
+            "B": "After step 2 — halfway through, to catch errors before they compound",
+            "C": "Immediately before the email is sent — before any irreversible external action",
+            "D": "No checkpoint needed if the earlier steps are well-designed"
+          },
+          "correct_answer": "C"
+        },
+        {
+          "item_id": "cap_mcq_5",
+          "pillar": "p6",
+          "question": "You're designing a 3-agent system where Agent 1 researches, Agent 2 analyzes, and Agent 3 writes. Agent 2 receives an unexpected input format from Agent 1. What is the correct design response?",
+          "options": {
+            "A": "Expand Agent 2's capabilities so it can handle any input format",
+            "B": "This is an Edge case — Agent 2 should have an explicit handling instruction: if input format is unexpected, request clarification from orchestrator rather than proceeding with bad data",
+            "C": "Give all agents access to all tools so they can adapt",
+            "D": "Restart the entire workflow from Agent 1"
+          },
+          "correct_answer": "B"
+        }
+      ],
+      "pass_threshold_within_section": 4,
+      "coach_rubric_note": "Each correct answer = 1 point. Pass threshold for this section: 4 of 5. Wrong answers on P5/P6 items should prompt targeted coach feedback — these are the most critical judgment items for professional AI use."
+    },
+    {
+      "section_id": "cap_s4",
+      "section_number": 4,
+      "title": "Design Challenge: Workflow or Agent System",
+      "pillars_tested": ["p5", "p6"],
+      "type": "open_design",
+      "estimated_minutes": 4,
+      "prompt_template": "For the final task, design either:\n\n**Option A — AI Workflow (P5)**: A documented 3-step AI workflow for a recurring task in your work as a {declared_role} in {declared_industry}. For each step: tool type, input, structured output format, and checkpoint decision. Include an honest limitation.\n\n**Option B — Agentic System (P6)**: A 2–3 agent system design using CREW for a process you'd like to automate. Include: Components (agents + tools), Roles (specific jobs + stopping condition), Edge cases (2 failure modes with handling specs), and a Workflow map.\n\nYou may use your own AI tools to help design and document this. Upload a diagram, photo, or paste your documentation in the text field.\n\nThe AI coach will review your design and provide feedback before issuing the credential.",
+      "coach_rubric": {
+        "p5_score_if_option_a": {
+          "0": "Describes a single AI task, not a pipeline; or all steps are the same tool",
+          "1": "3 steps with distinct scopes; at least 1 structured output; checkpoint reasoning present",
+          "2": "3 steps, distinct tools, structured outputs at each handoff, human checkpoint before any external action, honest limitation — demonstrating production-quality workflow thinking"
+        },
+        "p6_score_if_option_b": {
+          "0": "Describes a single configured AI assistant, not a multi-agent system",
+          "1": "2 agents with distinct roles; orchestrator identified; 1 edge case specified",
+          "2": "Complete CREW design: distinct Components with scoped tools, non-overlapping Roles with stopping condition, 2+ Edge cases with concrete handling specs, sequential Workflow map — demonstrating that the learner can design an autonomous system, not just describe one"
+        }
+      },
+      "coach_closing_prompt": "You are assessing the learner's complete capstone submission for the 'AI-Supercharged Intermediate' credential. Your goal is to provide genuine, calibrated feedback — not automatic praise.\n\nAfter reviewing all 4 sections:\n\n1. **Identify the strongest moment**: Find the single best demonstration of pillar knowledge across the 4 sections and name it explicitly. 'Your CRAF rewrite in Section 1 was production-ready — the stakeholder audience was specific and the unverified claim was cleanly removed without weakening the announcement.'\n\n2. **Identify the growth edge**: Find one genuine gap — a section where the learner's response revealed an incomplete understanding — and name it with specificity and warmth. 'Your system prompt in Section 2 is almost there — the Role and Format are strong, but the Edge cases are still generic. One specific scenario for each edge case would make this deployable today.'\n\n3. **Credential decision**: If 5 of 6 pillars are demonstrated at the passing level (score ≥ 1 on coach rubric):\n   - 'You've earned the AI-Supercharged Intermediate credential. You can now recognize AI risks, communicate with precision, select the right tools, configure persistent assistants, design pipelines, and think architecturally about agentic systems. That's a real transformation.'\n\n   If fewer than 5 pillars pass:\n   - Identify the specific section(s) that need improvement, explain exactly what's needed to pass, and offer a targeted retry. 'You're close — one more pass at [Section X] and this credential is yours. Here's specifically what needs to change: [precise feedback].'\n\n4. **Bridge to the program's promise**: End with a one-line connection to what this credential means for the learner's work: 'What you built this week isn't a certificate — it's a toolkit. Every artifact you created across 7 days is reusable, improvable, and already more valuable than anything you had a week ago.'\n\nRemember: PACE applies here too. Maximum 3 questions across the entire capstone review, not per section. The credential decision should come after the review, not before."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+## Diagnostic Question Generator — Gemini Flash Prompt Template
+
+### Purpose
+Generate one personalized, scenario-based open diagnostic question for the Day 0 onboarding Screen 3.
+The question reveals how the learner currently uses AI tools — without using jargon or signalling the "correct" answer.
+The generated question supplements the 5 MCQs in diagnostic_pillar.json and informs the AI coach's Day 1 depth calibration.
+
+---
+
+### Prompt Template (send to Gemini Flash)
+
+```
+You are designing a single diagnostic question for an AI literacy program.
+
+The learner is a {declared_role} working in {declared_industry}.
+Their day-to-day work involves: {daily_work_desc}
+
+Generate exactly ONE scenario-based open-ended question that:
+- Describes a realistic, concrete task this person might actually face in their work
+- Asks how they would use AI tools to help with it (or whether they would)
+- Does NOT use AI jargon (no "LLM", "hallucination", "prompt", "model", "system prompt")
+- Does NOT signal what a "good" answer looks like — it should surface honest current behavior
+- Is under 50 words
+- Is written in plain, conversational English
+
+Output only the question text. No preamble, no explanation, no punctuation after the question mark.
+```
+
+---
+
+### Gemini Flash Configuration (API call)
+- Model: gemini-2.0-flash
+- Temperature: 0.7 (moderate variation so personalized questions don't all sound identical)
+- Max tokens: 100
+- Endpoint: POST /api/diagnostic/generate-question (Next.js route)
+
+---
+
+### Static Fallback
+Use this question verbatim if Gemini Flash generation fails (timeout > 5s, error, or empty response):
+
+"You have an important meeting tomorrow and you want to prepare as thoroughly as possible in the time you have. How would you use any AI tools you have access to — if at all — to help you get ready?"
+
+The fallback is intentionally role-agnostic, universally relatable, and surfaces AI tool usage patterns without suggesting what the "right" answer is.
+
+---
+
+### Example Outputs by Role (for QA and testing)
+
+Teacher:
+"You're preparing a lesson plan for a mixed-ability class next week on a topic you've never taught before. How would you use AI tools to help — if at all?"
+
+Marketing professional:
+"You need to launch a product campaign in 3 days with a tight budget and no agency support. Walk me through how you'd use AI to help."
+
+Project manager:
+"Your sprint planning meeting is tomorrow and the team is misaligned on priorities. How would you use AI tools to prepare?"
+
+Nurse / healthcare professional:
+"You have 10 minutes before a shift handover and need to brief the incoming team on 4 patients. How would you use any AI tools available to you?"
+
+HR professional:
+"You need to write a job description for a new role by end of day — you've never hired for this function before. How would you approach using AI to help?"
+
+Developer:
+"You've inherited a codebase with no documentation and you need to add a new feature by Friday. How would you use AI tools to get up to speed?"
+
+Student:
+"You have a major assignment due in 4 days on a topic you're not confident about. How would you use AI tools — if at all — to help you complete it?"
+
+---
+
+### Scoring Note
+The generated question is NOT auto-scored. It is stored with the diagnostic_session record and used by:
+1. The onboarding gap map visualization (shown on Screen 4) to calibrate Day 1 coach depth
+2. The Day 1 coach as context for the learner's current AI fluency level
+The learner's open-text response is passed to the Day 1 coach as {current_ai_usage} context.

@@ -104,6 +104,30 @@ All coach prompts must implement PACE: 3-question budget per task, emotional det
 - PACE model is non-negotiable: 3Q budget, mastery exit, no 4th question.
 - P1 QA must pass before running P2–P6.
 
+## UAT Checkpoint
+
+**Type: Content validation (no Playwright — no UI exists yet)**
+
+After all pillar JSONs are generated and Agent 7 approved, run:
+
+```bash
+# 1. Schema validation — every pillar JSON must conform
+python scripts/validate_pillar_schema.py content/pillars/
+
+# 2. Slot integrity — no hardcoded roles anywhere in practice/coach fields
+grep -r "Relationship Manager\|Underwriter\|Analyst\|bank\|financial institution" content/pillars/
+
+# 3. PACE slot check — every coach_system_prompt_template must have required slots
+grep -L "prior_pillar_scores\|prior_pillar_summaries\|declared_role" content/pillars/*.json
+
+# 4. P3 perishable flag
+python -c "import json; d=json.load(open('content/pillars/p3_tool_fluency.json')); assert d.get('perishable_content') == True"
+```
+
+All 4 checks must pass before this sprint is marked done. If any grep returns hits or any assert fails, fix before handing off to Sprint 3.
+
+**P1 pilot gate (before running P2–P6):** Agent 7 must explicitly output `APPROVED` for P1. No implicit approval.
+
 ## Out of Scope
 
 - ZH translation of pillar content (future content sprint after EN is stable)

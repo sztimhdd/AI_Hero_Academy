@@ -19,9 +19,132 @@
 
 ## Purpose
 
-This document is the authoritative test specification for the AI Hero Academy MVP UAT. It is intended to be read and executed by a dedicated **Claude Code UAT Agent** using the Playwright MCP browser control tools against a locally running instance of the app.
+This document is the authoritative test specification for the AI Hero Academy MVP UAT. It is intended to be read and executed by a dedicated **Claude Code UAT Agent** using the Playwright MCP browser control tools — against either a **locally running instance** or the **live Cloud Run deployment**.
 
 **Data layer:** The app persists to **Google Cloud Firestore** (GCP project `banded-totality-485901`). There are no Databricks Delta tables to query. Write verification is performed via UI state transitions — if the app navigates to the next expected page, the write succeeded.
+
+---
+
+## 0. Deployment & CI/CD
+
+### 0.1 CI/CD Pipeline
+
+Pushes to `main` trigger `.github/workflows/deploy.yml` (GitHub Actions):
+
+```
+git push origin main
+  → GitHub Actions: build & deploy job
+  → google-github-actions/auth@v2  (credentials_json: GCP_SA_KEY secret)
+  → gcloud auth configure-docker us-central1-docker.pkg.dev
+  → docker build  --build-arg NEXT_PUBLIC_FIREBASE_* (from GitHub Secrets)
+  → docker push   us-central1-docker.pkg.dev/banded-totality-485901/ai-hero-academy/b2c:{sha}
+  → gcloud run services delete ai-hero-academy-b2c  (clears stale secret-ref env vars)
+  → google-github-actions/deploy-cloudrun@v2
+      service:  ai-hero-academy-b2c
+      region:   us-central1
+      flags:    --allow-unauthenticated --port=8080 --memory=1Gi --min-instances=0 --max-instances=3
+      env_vars: FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL,
+                FIREBASE_ADMIN_PRIVATE_KEY, GEMINI_API_KEY, DEMO_TOKEN
+```
+
+Monitor builds: [GitHub Actions](https://github.com/sztimhdd/AI_Hero_Academy/actions)
+
+Build typically completes in 5–8 minutes. The job uses `concurrency: deploy-production` — concurrent pushes cancel the older run.
+
+**Required GitHub Secrets:**
+
+| Secret | Purpose |
+|--------|---------|
+| `GCP_SA_KEY` | Service account JSON key for `google-github-actions/auth@v2` |
+| `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase client SDK (build-time `--build-arg`) |
+| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | Firebase client SDK |
+| `NEXT_PUBLIC_FIREBASE_APP_ID` | Firebase client SDK |
+| `NEXT_PUBLIC_APP_URL` | Canonical app URL injected at build |
+| `FIREBASE_ADMIN_CLIENT_EMAIL` | Firebase Admin SDK (runtime `env_vars`) |
+| `FIREBASE_ADMIN_PRIVATE_KEY` | Firebase Admin SDK |
+| `GEMINI_API_KEY` | Gemini API calls from API routes |
+| `DEMO_TOKEN` | Private beta `/demo?t=TOKEN` route |
+
+### 0.2 Two UAT Modes
+
+| Mode | URL | When to use |
+|------|-----|-------------|
+| **Local** | `http://localhost:3000` | Dev iteration, mid-feature testing |
+| **Remote (Cloud Run)** | `$(gcloud run services describe ai-hero-academy-b2c --region us-central1 --format "value(status.url)")` | Pre-release gate, post-deploy smoke test |
+
+**Local startup:**
+
+```bash
+npm run dev   # Next.js dev server → http://localhost:3000
+```
+
+Then seed test personas if not already present:
+
+```bash
+npx ts-node scripts/seed-dev.ts
+```
+
+**Remote UAT — get the URL first:**
+
+```bash
+SERVICE_URL=$(gcloud run services describe ai-hero-academy-b2c \
+  --region us-central1 --project banded-totality-485901 \
+  --format "value(status.url)")
+echo "$SERVICE_URL"
+```
+
+Then navigate Playwright:
+
+```javascript
+mcp__playwright__browser_navigate(url=SERVICE_URL)
+mcp__playwright__browser_wait_for(text="AI Hero", time=20)
+```
+
+> **Cold start warning:** Cloud Run scales to zero when idle. First request after an idle period takes 10–20 seconds. Always use `browser_wait_for(time=20)` before interacting on remote.
+
+### 0.3 Post-Deploy Smoke Test
+
+After any push to `main`, verify the deployment before running Tier 2 UAT:
+
+```bash
+SERVICE_URL=$(gcloud run services describe ai-hero-academy-b2c \
+  --region us-central1 --project banded-totality-485901 \
+  --format "value(status.url)")
+
+# Landing page loads
+curl -sf "$SERVICE_URL" -o /dev/null -w "%{http_code}\n" && echo "T-CR-0 PASS" || echo "T-CR-0 FAIL"
+
+# API health (session endpoint returns 401 without cookie — that's correct)
+curl -sf "$SERVICE_URL/api/auth/session" -o /dev/null -w "%{http_code}\n"
+# Expected: 401 or 405 (not 500 — server is up and routing)
+
+# Tier 3 — share card (Linux/Cloud Run only, font rendering):
+curl -sf "$SERVICE_URL/api/credential/share-card?uid=dev-complete-004" \
+  -o /dev/null -w "%{http_code} %{content_type}\n" && echo "T-CR-1 PASS" || echo "T-CR-1 FAIL"
+```
+
+Or via Playwright:
+
+```javascript
+mcp__playwright__browser_navigate(url=SERVICE_URL)
+mcp__playwright__browser_wait_for(text="AI Hero", time=20)
+mcp__playwright__browser_take_screenshot(filename="post_deploy_smoke.png", type="png")
+```
+
+Landing page renders → deployment succeeded. Hangs or 500 errors → check [GitHub Actions logs](https://github.com/sztimhdd/AI_Hero_Academy/actions).
+
+### 0.4 Dev Login (LOCAL_DEV only)
+
+The app exposes `/api/auth/dev-login` and `/api/auth/demo-login` when `LOCAL_DEV=true` (set in `.env.local`). These routes are **blocked in production** (Cloud Run does not set `LOCAL_DEV`).
+
+Dev personas seeded by `scripts/seed-dev.ts`:
+
+| Email | State |
+|-------|-------|
+| `day1@dev.test` | Fresh — no onboarding complete |
+| `day3@dev.test` | Days 1–3 done |
+| `day6@dev.test` | Days 1–6 done, capstone unlocked |
+| `complete@dev.test` | Graduated — credential issued |
 
 ---
 
@@ -154,7 +277,7 @@ The app persists to Firestore. Direct SQL queries are not possible. Use these ve
 
 ### 1.5 AI Call Assertions
 
-The app makes real LLM calls to Databricks Foundation Model endpoints. **Do NOT assert specific AI-generated text content** — it varies per call. Assert only:
+The app makes real LLM calls to **Google Gemini API** (`gemini-2.0-flash`). **Do NOT assert specific AI-generated text content** — it varies per call. Assert only:
 - That the UI transitioned to the expected state (new heading, score visible, next section loaded)
 - That structural elements appear (score is a number, gap map has bullets, coach replied)
 

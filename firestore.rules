@@ -1,0 +1,96 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Legacy Streamlit collections (b2c app never writes these) ─────────────
+    // Owned by the service account on main branch — deny all client-side access.
+    match /user_profiles/{doc} {
+      allow read, write: if false;
+    }
+    match /diagnostic_sessions/{doc} {
+      allow read, write: if false;
+    }
+    match /gap_maps/{doc} {
+      allow read, write: if false;
+    }
+    match /training_progress/{doc} {
+      allow read, write: if false;
+    }
+    match /coach_sessions/{doc} {
+      allow read, write: if false;
+    }
+    match /ai_call_log/{doc} {
+      allow read, write: if false;
+    }
+
+    // ── B2C collections — authenticated users can only access their own docs ──
+
+    // Helper: caller's Firebase Auth UID matches the uid field in the document
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // b2c_user_profiles — doc ID is uid
+    match /b2c_user_profiles/{uid} {
+      allow read, write: if isOwner(uid);
+    }
+
+    // b2c_diagnostic_sessions — doc has uid field
+    match /b2c_diagnostic_sessions/{sessionId} {
+      allow read: if request.auth != null
+                  && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if false; // immutable after creation
+    }
+
+    // b2c_training_progress — doc ID is {uid}_{pillarId}
+    match /b2c_training_progress/{docId} {
+      allow read, write: if request.auth != null
+                         && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid;
+    }
+
+    // b2c_coach_sessions — doc has uid field
+    match /b2c_coach_sessions/{sessionId} {
+      allow read: if request.auth != null
+                  && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid;
+      allow update: if request.auth != null
+                    && resource.data.uid == request.auth.uid;
+      allow delete: if false;
+    }
+
+    // b2c_learner_model — doc ID is uid
+    match /b2c_learner_model/{uid} {
+      allow read, write: if isOwner(uid);
+    }
+
+    // b2c_build_artifacts — doc ID is {uid}_{pillarId}
+    match /b2c_build_artifacts/{docId} {
+      allow read, write: if request.auth != null
+                         && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid;
+    }
+
+    // b2c_credentials — doc ID is {uid}_{credentialId}; read-only after issuance
+    match /b2c_credentials/{docId} {
+      allow read: if request.auth != null
+                  && resource.data.uid == request.auth.uid;
+      allow write: if false; // issued server-side only via Admin SDK
+    }
+
+    // b2c_ai_call_log — server-side only
+    match /b2c_ai_call_log/{logId} {
+      allow read, write: if false;
+    }
+
+    // Deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

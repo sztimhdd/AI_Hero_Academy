@@ -1,0 +1,164 @@
+{
+  "pillar_id": "p2",
+  "pillar_name": "Prompting & Context Engineering",
+  "pillar_slug": "prompting",
+  "day_number": 2,
+  "framework": "CRAF",
+  "coaching_vocabulary": {
+    "C": "Context — what you're working with, who reads the output, what's in scope",
+    "R": "Role — the expertise or perspective the AI should bring to the task",
+    "A": "Action — precisely what needs to be done (not 'summarize', but what to surface and how)",
+    "F": "Format — what the output should look like: structure, length, tone, audience"
+  },
+  "estimated_minutes": 90,
+  "perishable_content": false,
+  "last_updated": "2026-03",
+  "reading": {
+    "concept_text": "Day 1 gave you the mental model: AI is a probability engine that completes patterns, not a knowledge database that retrieves facts. Day 2 gives you the language — the precise way to communicate with AI so that the pattern it completes is exactly the one you need.\n\n**Why vague prompts produce generic output**\n\nEvery AI response is shaped entirely by its input. A vague prompt is not a starting point — it is a signal to the model that almost anything is appropriate. 'Write me a summary of this report' gives the model no information about length, audience, tone, or what to include. The output will be technically correct and professionally useless.\n\nThe most common AI frustration pattern: someone submits a short prompt, receives a generic output, tries a second time, concludes AI doesn't work for their type of work, and stops. Almost every one of those failures is a prompting problem, not a model limitation.\n\n**The CRAF Framework**\n\nCRAF is a four-element structure that produces usable, audience-ready output on the first attempt.\n\n- **C — Context**: What are you working with? Who will read the output? What's the purpose? ('I have a 3-page customer complaint thread for a software product. The output goes to our Head of Support.')\n- **R — Role**: What perspective or expertise should the AI bring? ('Act as a customer experience analyst focused on root cause identification.')\n- **A — Action**: What exactly needs to be done? Not 'summarize' — 'Extract the top 3 distinct issues, ranked by frequency, each with a one-sentence proposed resolution.'\n- **F — Format**: What should the output look like? ('A numbered list, one issue per line, maximum 25 words per item.')\n\nThe difference between a CRAF-structured prompt and a vague one is the difference between a deliverable and a starting point.\n\n**Context engineering: beyond the skeleton**\n\nCRAF is the skeleton. Context engineering is the discipline of designing the complete information environment before the model responds — treating the prompt not as a question but as a briefing document.\n\nThree techniques that extend CRAF into more demanding tasks:\n\n- **Few-shot examples**: Instead of describing what you want, show it. 'Here are two outputs in the exact format I need: [example 1] [example 2]. Now produce the same for: [new input].' Models match demonstrated patterns more reliably than described ones. For any task with a specific style, structure, or voice — show, don't just tell.\n- **Chain-of-thought (CoT) prompting**: Ask the model to reason before concluding. 'Before giving your recommendation, walk through the tradeoffs step by step.' This produces measurably better output on judgment-heavy tasks where reasoning quality determines answer quality.\n- **Constraint prompting**: Make the boundaries explicit. 'Do not mention pricing. Do not use the word \"innovative.\" Keep the tone professional but direct, not corporate.' Constraints prevent the model from defaulting to its average — which is rarely what you need.\n\n**Reverse prompting (meta-prompting)**\n\nOne of the most underused techniques: ask the AI to write the prompt for you.\n\n'I need to use AI to [describe your goal in plain language]. Write the best CRAF-structured prompt I should use for this.'\n\nThis works because the model has more pattern exposure to good prompts than most users have written. Use the output as your starting draft, then customize. Particularly useful for task types you've never prompted for before.\n\n**Iterative refinement as a discipline**\n\nThe best prompts are not written in one pass — they are developed through targeted iteration. After the first output, don't ask 'is this good enough?' Ask: what did the model interpret differently than I intended? Give specific feedback: 'The structure is right but the tone is too formal — rewrite at a conversational register while keeping the numbered format.' Three rounds of targeted refinement routinely outperform one long initial prompt.",
+
+    "good_example": "A professional needed to write a technical specification for an upcoming product feature. First attempt: 'Write a spec for a data export feature.' The output was generic, missed the target audience entirely, and used a format the team didn't recognize. They rebuilt using CRAF: Context (the product type, the audience — an engineering team reading this to build the feature), Role (a technical writer familiar with user story format), Action (write a spec with sections: problem statement, user stories, acceptance criteria, out-of-scope), Format (the team's standard template structure). The second attempt was 90% ready to share. One targeted refinement pass sharpened the acceptance criteria. Total prompting time: 9 minutes. Previous approach: 40 minutes editing a generic output.",
+
+    "anti_pattern": "A team member needed to draft a weekly stakeholder update. They opened Claude and typed: 'Write a status update for our Q2 analytics project.' The output was a five-paragraph generic business update that used none of the project's terminology, addressed no specific stakeholders, and had no actionable next steps. They spent 20 minutes editing it, then discarded it and wrote from scratch — taking longer than if they hadn't used AI at all. Their conclusion: 'AI isn't useful for written communication.' The actual problem: no Context (which project? what audience?), no Role (what tone?), no specific Action (what sections?), no Format (what length?). A CRAF-structured prompt with the project background, the stakeholder audience, required sections, and a defined format would have produced a usable first draft in under a minute.",
+
+    "takeaway": "Vague prompts produce generic outputs — not because AI is limited, but because the model had nothing precise to work from. CRAF gives you the structure. Context engineering — few-shot examples, chain-of-thought, constraints — extends it to complex tasks. Reverse prompting gives you an expert collaborator to write the brief when you're unsure where to start. The habit to build: treat every prompt like a briefing document, not a search query."
+  },
+
+  "practice": {
+    "scenario_template": "You are a {declared_role} working in {declared_industry}. {daily_work_desc}. Today you're rebuilding how you communicate with AI tools — moving from first-attempt generic outputs to precise, usable first drafts.",
+
+    "tasks": [
+      {
+        "task_id": "p2_t1",
+        "task_number": 1,
+        "title": "CRAF Diagnostic",
+        "mode": "open",
+        "learning_objective": "Diagnose which CRAF elements are missing from a weak prompt and produce a fully CRAF-structured version for a specific role context.",
+        "prompt_template": "Here is a prompt submitted by a {declared_role} to an AI tool:\n\n*'Write a report on our new product launch.'*\n\nYour task:\n1. Rate each CRAF element (C, R, A, F) on a scale of 0 (missing) to 2 (complete) and explain what's missing.\n2. Rewrite it as a fully CRAF-structured prompt for a {declared_role} in {declared_industry} who needs to communicate a product launch to the stakeholders most relevant to their work. Make it specific enough that the AI output would be immediately usable.",
+        "rubric": {
+          "0": "Cannot identify missing elements, or rewrite is still generic with no role/industry specificity",
+          "1": "Correctly rates 2+ CRAF elements and produces a rewrite that adds some specificity, but is still incomplete in 1+ dimensions",
+          "2": "Correctly rates all 4 elements, produces a rewrite with role-specific Context, appropriate Role, precise Action, and explicit Format",
+          "3": "All above, plus the rewrite reflects genuine understanding of what a {declared_role} in {declared_industry} would actually need — not a template but a real prompt",
+          "4": "All above, plus learner articulates WHY each element they added changes the output quality — connecting the CRAF element to the specific problem it solves"
+        }
+      },
+      {
+        "task_id": "p2_t2",
+        "task_number": 2,
+        "title": "Few-Shot Engineering",
+        "mode": "open",
+        "learning_objective": "Construct a few-shot prompt for a recurring work task and articulate what demonstration adds that instruction alone cannot.",
+        "prompt_template": "Think of a recurring communication or writing task in your work as a {declared_role} in {declared_industry}. Something you do at least weekly where the output needs to match a specific style, tone, or format.\n\nWrite two versions of a prompt for this task:\n- **Version A**: A plain instruction prompt — describe what you want in words only.\n- **Version B**: A few-shot version — provide 2 examples of the output format you want, then ask for the same.\n\nThen in 2–3 sentences: what does Version B communicate that Version A cannot?",
+        "rubric": {
+          "0": "Produces only one version, or both versions are identical, or cannot explain the difference",
+          "1": "Produces both versions but few-shot examples are vague or misaligned with the task; explanation is superficial",
+          "2": "Produces both versions with concrete, realistic examples; articulates that demonstration matches patterns more reliably than verbal description",
+          "3": "Both versions are production-quality; explanation connects to a specific limitation of verbal instruction (e.g., tone, structure, vocabulary density) that examples resolve",
+          "4": "All above, plus learner identifies a specific failure mode of Version A that Version B prevents — showing they understand when few-shot is most valuable vs. when instructions alone suffice"
+        }
+      },
+      {
+        "task_id": "p2_t3",
+        "task_number": 3,
+        "title": "Context Engineering",
+        "mode": "open",
+        "learning_objective": "Design a complete context-engineered prompt for a high-stakes task, incorporating CRAF plus at least two advanced techniques (few-shot, CoT, or constraints).",
+        "prompt_template": "Choose one high-stakes task from your work as a {declared_role} in {declared_industry} — something where a generic AI output would be embarrassing or unusable. {daily_work_desc}.\n\nDesign the complete context-engineered prompt for it:\n1. The CRAF skeleton (all four elements filled in)\n2. At least two of these advanced elements: a few-shot example, a chain-of-thought instruction, or a constraint list\n3. A one-sentence explanation of what each advanced element prevents\n\nPresent the complete prompt as you would actually use it — not a description of it.",
+        "rubric": {
+          "0": "Describes the prompt rather than writing it; or produces only a CRAF skeleton with no advanced elements",
+          "1": "Produces a CRAF skeleton plus 1 advanced element; explanation is generic",
+          "2": "Produces a complete CRAF skeleton plus 2 advanced elements with role-relevant specificity",
+          "3": "Complete prompt is production-quality for the stated task; explanations are precise about what each element prevents",
+          "4": "Complete prompt is immediately usable for the stated {declared_role} task; learner explains the tradeoffs made (e.g., why they chose CoT over few-shot for this specific task) — demonstrating that the choices were deliberate, not formulaic"
+        }
+      },
+      {
+        "task_id": "p2_t4",
+        "task_number": 4,
+        "title": "Reverse Prompting",
+        "mode": "open",
+        "learning_objective": "Use meta-prompting to generate a prompt for an unfamiliar task type, then critically evaluate the result.",
+        "prompt_template": "Pick a task in your {declared_role} work that you've never used AI for before — or a task type where your previous AI prompts have produced disappointing results.\n\nStep 1: Write the meta-prompt: 'I need to use AI to [describe the task in plain language]. Write the best CRAF-structured prompt I should use for this.'\n\nStep 2: Share what came back.\n\nStep 3: Evaluate it critically: what did the generated prompt include that you wouldn't have thought to specify yourself? What, if anything, would you change before using it?",
+        "rubric": {
+          "0": "Cannot complete the meta-prompt step, or simply copies the generated prompt without critical evaluation",
+          "1": "Completes all three steps but evaluation is uncritical ('it looks good') with no specific observations",
+          "2": "Completes all three steps; identifies at least one element the generated prompt included that adds value; notes one thing they'd change",
+          "3": "Evaluation is substantive: identifies 2+ valuable additions from the generated prompt AND proposes specific, role-relevant improvements",
+          "4": "All above, plus learner articulates when reverse prompting is most useful vs. when they'd write the prompt directly — showing they understand the technique as a tool with a context, not a universal substitute"
+        }
+      }
+    ],
+
+    "coach_system_prompt_template": "You are a personal AI transformation coach. Your learner is a {declared_role} working in {declared_industry}. Their daily work involves: {daily_work_desc}. They are completing Day 2 of their 7-day AI transformation program: the Prompting & Context Engineering module.\n\n## Prior Program Context\n{prior_pillar_summaries}\nPillar scores to date: {prior_pillar_scores}\n(If P1 is completed: the learner understands that AI is a probability engine, not a knowledge database. Use this as the bridge: 'You already know how AI generates text — now we're designing what we give it.')\n\n## Your Coaching Framework: CRAF\nGuide the learner through four elements:\n- **C — Context**: The information environment — what the AI is working with, who reads the output, what's in scope. Missing Context = generic output.\n- **R — Role**: The perspective or expertise the AI should adopt. Role injection shapes tone, vocabulary, and analytical lens. A missing Role = AI defaults to its average voice, which is usually no one's preferred voice.\n- **A — Action**: Precise task specification — not 'summarize' but 'extract the top 3 issues ranked by frequency, each with a proposed resolution under 25 words.' Vague Action = vague output.\n- **F — Format**: Output structure, length, tone, audience. Format determines whether the output can be used immediately or requires complete reformatting.\n\nExtended techniques to coach on when learners are ready:\n- **Few-shot examples**: Demonstration beats description for style, tone, and structure matching.\n- **Chain-of-thought**: Asking for reasoning steps before conclusions improves judgment-heavy outputs.\n- **Constraint prompting**: Explicit exclusions prevent generic defaults.\n- **Reverse prompting / meta-prompting**: Using AI to draft the prompt — most useful for unfamiliar task types.\n- **Iterative refinement**: Targeted feedback on specific gaps, not wholesale rewrites.\n\n## PACE Protocol — Non-Negotiable\nEvery task coaching interaction follows PACE:\n\n**P — Purpose**: Open each task by stating the learning objective in one sentence. Example: 'The goal here is to see if your CRAF rewrite would actually produce a usable output — not just a more detailed prompt.'\n\n**A — Assess**: After the learner responds, read two signals:\n1. Intellectual: did they correctly identify the CRAF element? did their rewrite actually solve the problem?\n2. Emotional: confident, confused, frustrated, or checked-out?\n\n**C — Choose** the right coaching move:\n- Default / Q1 → **Curious**: 'Walk me through your thinking here — which element do you think is doing the most work in your rewrite?' (Open, exploratory, no pressure.)\n- Insightful response → **Celebratory**: 'That's exactly it — you spotted the one element that changes everything about this output.' Then close or add one light extension.\n- Surface-level from a capable learner → **Challenging**: 'Your CRAF skeleton is there — but your Action is still ambiguous. What would the AI actually do with that instruction?'\n- Confusion → **Supportive**: 'Let me anchor this in your work. Think about the last time an AI gave you a useless output — what element of CRAF was missing from that prompt?'\n- Dismissive or short → **Reframe** (a sub-move of Challenging): 'Forget the framework for a moment. If you were briefing a junior colleague to draft this for you, what would you tell them that you'd never put in a prompt?'\n\n**E — Exit**: The moment the task's learning objective is met, close with a one-line bridge and move on. Never summarize what the learner already said back to them.\n\n## 3-Question Budget Per Task (Hard Ceiling)\n- Q1 — Open probe: Surface the learner's current thinking. Always asked.\n- Q2 — Adaptive: Challenge if shallow; affirm and lightly extend if strong.\n- Q3 — Synthesis: Consolidate + bridge to the next task or build artifact.\n\nEarly exit: Learning objective met after Q1 or Q2 → skip remaining questions, close immediately.\nBudget exhausted: Objective not met after Q3 → give the insight directly with warmth and close. NEVER ask a 4th question.\n\n## Emotional State Detection\n| Signal | Response |\n|--------|----------|\n| 1-sentence answer, no reasoning | Reframe without pressure: 'Let me try a different angle...' |\n| Repeated incorrect attempts | Stop questioning. Give the insight with warmth. |\n| Overconfident or surface-level | Gentle challenge: 'The CRAF elements are there — but would a colleague reading only your Action know exactly what to do?' |\n| Genuinely insightful answer | Explicit celebration + close immediately. No more questions. |\n| Confused or lost | Simplify + ground: 'Think about the last prompt you submitted that gave you a disappointing output. Which of the four CRAF elements was missing?' |\n\n## Per-Task Coaching Guidance\n\n### Task 1 — CRAF Diagnostic\nLearning objective: Learner correctly rates CRAF elements and produces a rewrite with role-specific Context, appropriate Role, precise Action, and explicit Format.\nQ1: 'Walk me through how you'd rate this prompt — which CRAF elements are present and which are missing? And what does your rewrite add?'\nMastery signal: Learner correctly identifies at least 2 missing elements AND the rewrite adds specific, role-relevant detail to those elements.\nBridge close: 'Good — you can now see the gap between what a prompt says and what it gives the model to work with. That's the foundation. Let's see how you apply it when you control the full context.'\n\n### Task 2 — Few-Shot Engineering\nLearning objective: Learner constructs a few-shot version with concrete examples and articulates what demonstration adds that instruction cannot.\nQ1: 'Show me both versions — and then tell me: what specifically does Version B communicate that Version A cannot express in words?'\nMastery signal: Few-shot examples are concrete and realistic for the task; explanation references the specific mismatch between verbal description and demonstrated pattern (tone, structure, vocabulary, etc.).\nBridge close: 'You now have a technique that short-circuits the most common revision loop. Let's take it one level further — designing for a complex, high-stakes task.'\n\n### Task 3 — Context Engineering\nLearning objective: Learner produces a complete context-engineered prompt with CRAF plus 2 advanced elements, with role-relevant specificity.\nQ1: 'Share your complete prompt — including the CRAF skeleton and the advanced elements. Walk me through why you chose those specific techniques for this task.'\nMastery signal: Prompt is production-quality, advanced elements are labeled, explanations are specific about what each element prevents rather than generic ('few-shot because style matching').\nBridge close: 'That prompt is ready to use. You made deliberate choices — that's what separates a craftsperson from someone following a template. One more task, then your build.'\n\n### Task 4 — Reverse Prompting\nLearning objective: Learner completes the meta-prompt cycle and critically evaluates the result — identifying what the generated prompt added and what they'd improve.\nQ1: 'Share the meta-prompt you used, what came back, and your evaluation. What did the generated prompt include that surprised you?'\nMastery signal: Learner identifies at least one genuinely valuable element from the generated prompt AND proposes a specific role-relevant improvement.\nBridge to build: 'You now have four techniques in your toolkit: CRAF, few-shot, CoT/constraints, and reverse prompting. Your build today is the one prompt template you'd actually use every day. Let's make it yours.'\n\n## P1–P2 Bridge\nIf {prior_pillar_scores} shows P1 completed: 'In Day 1 you learned that AI generates the most statistically plausible continuation of your input. Today you're designing what that input looks like — so the most plausible continuation is exactly what you need.'\n\n## Data Safety Guardrail\nIf the learner inputs what appears to be real personal data (full names, addresses, medical information, employer proprietary content, financial credentials, or system access details):\nStop immediately and respond: 'I noticed this might contain real sensitive information. For this exercise, please use fictional equivalents — for example, replace client names with generic descriptors, real figures with approximate ranges. The prompting exercise works just as well with fictional content.'\nDo not engage with or build on any input that contains real sensitive data.\n\n## Identity and Scope Boundaries\n- You are a personal AI transformation coach — not an AI tool trainer, not a writing coach, not a technical expert.\n- Your role is to help the learner master CRAF and context engineering in their own work context.\n- Stay within this module's scope. Do not teach Pillar 3–6 techniques in depth unless directly needed to illustrate a CRAF principle.\n- Never write the prompt for them. You may offer structural scaffolds after Q3 — never before.\n- One question per turn. Always."
+  },
+
+  "quiz": {
+    "items": [
+      {
+        "item_id": "p2_q1",
+        "type": "mcq",
+        "question": "A colleague submits this prompt to an AI tool: 'Act as a marketing expert. Write a campaign brief for our new mobile app launch.' Which CRAF element is most critically missing?",
+        "options": {
+          "A": "Role — no expertise framing has been provided",
+          "B": "Context — no information about the app, the target audience, the market, or what the brief needs to cover",
+          "C": "Action — 'write a campaign brief' is not specific enough about required sections",
+          "D": "Format — no indication of length or structural requirements"
+        },
+        "correct_answer": "B",
+        "explanation": "Role is present ('marketing expert'). Action is underspecified but functional. Format is missing but recoverable. Context is the critical gap: the model has no information about what the app does, who it targets, what market it enters, what constraints apply, or what the brief needs to accomplish. Without Context, Role alone cannot produce targeted output — the 'expert' has nothing to be expert about.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p2_q2",
+        "type": "mcq",
+        "question": "You need AI to generate 10 product descriptions that match a very specific style you've developed — particular tone, sentence length, and vocabulary. Which prompting approach is most likely to produce descriptions that match your style without significant editing?",
+        "options": {
+          "A": "A detailed written description of the style rules in the prompt",
+          "B": "Providing 2–3 examples of descriptions you've already written, then asking for 10 more in the same style",
+          "C": "A longer prompt with increasingly detailed style instructions",
+          "D": "Generate all 10 first, then ask for corrections on each one individually"
+        },
+        "correct_answer": "B",
+        "explanation": "Few-shot examples demonstrate the target pattern directly. The model matches demonstrated output more reliably than it interprets verbal style rules — because verbal descriptions of tone and style are inherently ambiguous, while examples are concrete. Option A produces better-than-nothing results but consistently loses nuances that examples capture precisely. Option D works but is inefficient compared to getting it right in the first pass.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p2_q3",
+        "type": "mcq",
+        "question": "For which task type is chain-of-thought (CoT) prompting — asking AI to reason step-by-step before concluding — most likely to improve output quality?",
+        "options": {
+          "A": "Drafting a first-pass email to a client",
+          "B": "Summarizing a 5-page document into bullet points",
+          "C": "Evaluating three vendor proposals with different strengths and recommending one",
+          "D": "Generating 20 social media captions in a consistent brand voice"
+        },
+        "correct_answer": "C",
+        "explanation": "CoT is most beneficial for multi-factor judgment tasks where reasoning quality determines output quality — comparing vendors, weighing tradeoffs, making recommendations under uncertainty. For generation tasks (captions, drafts) or transformation tasks (summarization), the challenge is format and style, not reasoning depth. CoT adds overhead without improving those outputs.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p2_q4",
+        "type": "open_rubric",
+        "question": "Here is a weak prompt: 'Help me prepare for a meeting.' Rewrite it as a fully CRAF-structured prompt for your specific context as a {declared_role} preparing for a meeting typical in your {declared_industry} work. Label each CRAF element in your rewrite.",
+        "rubric": {
+          "0": "No meaningful improvement; or rewrite is generic with no role or industry specificity; or CRAF elements are not labeled",
+          "0.5": "Uses CRAF structure with generic content rather than role-specific detail; or labels 2 out of 4 elements correctly; or the Action is still vague",
+          "1": "Produces a CRAF-structured prompt with specific, role-relevant Context; appropriate Role framing; a precise Action that goes beyond 'help me prepare'; and an explicit Format — all four elements labeled correctly"
+        },
+        "score_weight": 1.0,
+        "max_score": 1.0
+      }
+    ],
+    "pass_threshold": 2.5,
+    "max_score": 4.0,
+    "fail_guidance": "Review the CRAF framework section in the reading — focus on the difference between a vague Action ('summarize') and a precise one ('extract the top 3 issues, ranked by frequency, with a proposed resolution'). Retake available immediately with coach hints surfaced alongside each question."
+  },
+
+  "build_artifact": {
+    "artifact_type": "prompt_template",
+    "artifact_name": "My Reusable Prompt Template",
+    "artifact_description": "A CRAF-structured prompt template the learner builds for the most common high-value task in their declared role and industry. Designed to be reused daily, refined over time, and adapted for related tasks. Stored permanently in their AI Toolkit.",
+    "prompt": "Based on what you practiced in Day 2, build your reusable prompt template for your most common high-value AI task as a {declared_role} in {declared_industry}.\n\nYour template should:\n1. **Be CRAF-complete**: all four elements filled in with your real work context — not placeholders, not generic descriptions\n2. **Include at least one advanced element**: a few-shot example, a chain-of-thought instruction, or a constraint list — whichever is most useful for your chosen task\n3. **Be parameterizable**: identify the parts that change each time you use it (mark them with [FILL: description]) vs. the parts that stay constant\n4. **Be immediately usable**: paste this into an AI tool today and get an output you'd be willing to share with a colleague\n\nName your template and describe in one sentence when you'd use it.",
+    "coach_closing_prompt": "Your goal is to help the learner produce a prompt template they would genuinely use in their daily work as a {declared_role} in {declared_industry} — not a demonstration of CRAF knowledge but a practical tool built for their {daily_work_desc}.\n\nAfter they share a draft, probe using your 3-question budget:\n1. **Specificity check**: Is the Context specific enough for a {declared_role} task in {declared_industry}, or is it still generic? If generic: 'A colleague reading your Context section — do they know what the audience is, what the constraints are, what's in scope for your {declared_industry} context? What's missing?'\n2. **Action precision**: Would the Action instruction produce a usable output for {daily_work_desc}, or is it still at the 'summarize this' level? If vague: 'What would someone unfamiliar with your work do wrong with this Action instruction? Whatever they'd do wrong is what you need to make explicit.'\n3. **Parameterization**: Has the learner identified which parts change per use? If not: 'Which parts of this template will be different every time you use it in your work? Mark those — they're your fill-in variables.'\n\nWhen the template has all three qualities — close with genuine celebration and bridge to Day 3:\n'That template is yours now. Every time you use it and refine it, it gets better. Day 3 is about something different — not how to talk to AI, but which AI tool to reach for. You've mastered the language; tomorrow you learn the landscape.'\n\nNever write the template for them. If stuck after Q2: 'Start with the CRAF skeleton and fill in just the Context and Action for your chosen task in {declared_industry}. We can add the advanced element in the next step.'"
+  }
+}

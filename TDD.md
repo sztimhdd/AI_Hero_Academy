@@ -3,7 +3,7 @@
 
 **Version**: 2.0
 **Date**: March 2026
-**Status**: B2C Transformation Planned | Legacy B2B (v1.4) superseded
+**Status**: B2C Live — S1–S5 shipped (b2c-sprint2) | Legacy B2B (v1.4) superseded
 
 ⚠️  VERSION 2.0 NOTE (2026-03-26)
 Full B2C tech stack pivot decided. See plans/b2c-transformation-roadmap.md §4.
@@ -52,66 +52,212 @@ UAT v2.0 (2026-03-06): 16 scenarios across 4 independent groups (A–D). Groups 
 
 ## 2. Architecture
 
-### 2.1 Stack
+### 2.1 Stack (B2C Next.js)
 
 | Layer | Technology | Notes |
 |-------|-----------|-------|
-| **Frontend** | Streamlit (multi-page) | Local: port 8502; Phase C target: GCP Cloud Run |
-| **Database** | Google Cloud Firestore | GCP project `banded-totality-485901`; flat top-level collections; credentials via service account key |
-| **AI** | Google Gemini API (`gemini-2.0-flash`) | `google-genai` SDK; `GEMINI_API_KEY` env var; `call_llm()` signature unchanged |
-| **State** | Firestore collections (flat, top-level) | `user_profiles`, `diagnostic_sessions`, `gap_maps`, `training_progress`, `coach_sessions`, `ai_call_log` |
-| **Auth** | `GCP_USER_EMAIL` / `DEV_USER_EMAIL` env var | Phase C: GCP Identity-Aware Proxy header injection |
-| **Hosting** | Local Streamlit / Phase C: GCP Cloud Run | `Dockerfile` + `cloudbuild.yaml` pending (Phase C) |
+| **Frontend** | Next.js 15 App Router + React Server Components | `src/app/` — no Pages Router; TypeScript throughout |
+| **Auth** | Firebase Authentication | HTTP-only `__session` cookie; Google + LinkedIn OIDC; server-verified via `firebase-admin` |
+| **Session guard** | `middleware.ts` | Every request checked; no cookie → redirect to `/`; valid cookie → pass through |
+| **Database** | Google Cloud Firestore | Project `banded-totality-485901`; flat `b2c_` collections (see Section 3) |
+| **AI — coach/scoring** | Google Gemini 2.0 Flash | API routes only; SSE streaming on `/api/coach/stream` |
+| **AI — vision** | Gemini multimodal | Capstone screenshot scoring; `/api/capstone/score` |
+| **File storage** | GCS signed URLs | Capstone uploads; `/api/capstone/score-upload` |
+| **Deployment** | Docker → GCP Cloud Run | `next.config.ts: output: "standalone"`; `node:20-alpine` base |
+| **CI/CD** | GitHub Actions → Artifact Registry → Cloud Run | `us-central1`; service `ai-hero-academy-b2c`; see UAT.md §0 |
 
-### 2.2 Component Diagram
+### 2.2 Request Lifecycle
 
 ```
-┌────────────────────────────────────────────────────────────┐
-│                    Streamlit Frontend                       │
-│  (Welcome / Diagnostic / Skills Profile / Home / Module)   │
-└──────────────────────┬─────────────────────────────────────┘
-                       │ st.session_state (in-memory)
-        ┌──────────────┼───────────────────┐
-        │              │                   │
- ┌──────▼──────┐ ┌──────▼──────────┐ ┌────▼──────────────┐
- │ utils/db.py  │ │  utils/ai.py    │ │ utils/content.py  │
- │ Firestore    │ │ Gemini API      │ │ JSON file loader  │
- │ domain fns   │ │ google-genai    │ │                   │
- └──────┬──────┘ └──────┬──────────┘ └────┬──────────────┘
-        │               │                  │
- ┌──────▼──────┐  ┌──────▼──────┐  ┌──────▼────────────┐
- │  Firestore  │  │ Gemini API  │  │  content/*.json   │
- │  GCP project│  │ gemini-2.0  │  │  (bundled with    │
- │  user_prof  │  │ -flash      │  │  app) roles,      │
- │  diag_sess  │  │             │  │  domains, courses │
- │  gap_maps   │  └─────────────┘  │  diagnostic items │
- │  train_prog │                   │  reading,         │
- │  coach_sess │                   │  scenarios,       │
- │  ai_call_log│                   │  eval items       │
- └─────────────┘                   └───────────────────┘
+Browser request
+  │
+  ├─ middleware.ts (edge)
+  │    reads __session cookie → firebase-admin.verifySessionCookie()
+  │    no cookie / invalid → redirect to /
+  │    valid → attach {uid, email} to request headers
+  │
+  ├─ React Server Component  (GET /dashboard, /day/[pillar_id], etc.)
+  │    └─ server-side Firestore reads via firebase-admin
+  │
+  └─ API Route  (POST /api/*)
+       └─ getAuthFromCookies() → validates session
+            ├─ Firestore reads/writes (firebase-admin)
+            ├─ Gemini calls (GEMINI_API_KEY, server-only)
+            └─ SSE stream (coach, /api/coach/stream)
 ```
 
-### 2.3 AI Model
+### 2.3 AI Routes
 
-All LLM calls go through `utils/ai.py`:`call_llm()`. The active model is Google Gemini via the `google-genai` SDK. The API key is injected via the `GEMINI_API_KEY` environment variable.
+All Gemini calls are made exclusively from `src/app/api/` routes — the API key never reaches the client bundle.
 
-| Model | Use case |
-|-------|----------|
-| `gemini-2.0-flash` | **Default** — scoring, gap maps, coach responses, evaluation |
+| Route | Method | AI pattern |
+|-------|--------|------------|
+| `/api/coach/stream` | POST | SSE — `ReadableStream` + Gemini streaming |
+| `/api/coach/session/start` | POST | Sync — scenario seed from `role_contexts.json` + Gemini |
+| `/api/diagnostic/generate-question` | POST | Sync — personalised MCQ |
+| `/api/capstone/score` | POST | Sync — Gemini multimodal vision |
+| `/api/synthesis/run` | POST | Async trigger — updates `b2c_learner_model` |
+
+All AI routes: validate auth → call Gemini → write to `b2c_ai_call_log` → return result.
+
+---
+
+## 4. AI Coach Design
+
+### 4.1 PACE Coaching Model
+
+Every coach interaction follows PACE — not free-form Q&A:
+
+- **P — Purpose:** Declare the learning objective before generating a question. No question without a purpose.
+- **A — Assess:** Read both intellectual signal (what they understood) AND emotional signal (frustration, confidence, confusion) in the response.
+- **C — Choose:** Select the coaching move — Challenge / Clarify / Celebrate / Support.
+- **E — Exit:** Close the task the moment the learning objective is met. Never linger.
+
+**3-question budget per task (hard ceiling):**
+- Q1: Open probe — surface current thinking
+- Q2: Adaptive — challenge if shallow, affirm and extend if good
+- Q3: Synthesis — consolidate + bridge to build artifact
+- Early exit: objective met after Q1/Q2 → close immediately
+- Budget exhausted: give direct insight + close. NEVER a 4th question.
+
+**Emotional state detection:**
+
+| Signal | Response |
+|--------|----------|
+| Short / dismissive | Reframe without pressure: "Let me try a different angle..." |
+| Frustrated / wrong repeatedly | Stop questioning. Give insight directly with warmth. |
+| Overconfident / surface-level | Gentle challenge: "Push one level deeper..." |
+| Genuinely insightful | Explicit celebration + close. Never ask another question. |
+| Confused / lost | Simplify + ground in their specific work context from onboarding. |
+
+### 4.2 Coaching Frameworks Per Pillar
+
+| Pillar | Framework | Mental model shift |
+|--------|-----------|-------------------|
+| P1 | **MAPS** (Mechanism / Accuracy / Probabilistic / Spectrum) | "AI is a lookup" → "AI is probabilistic, spectrum from response to agent" |
+| P2 | **CRAF** (Context / Role / Action / Format) | "AI understands me" → "I need to communicate precisely" |
+| P3 | **CAST** (Capability / Access / Source-to-destination / Tradeoff) | "I use one tool" → "right tool for right task" |
+| P4 | **BRIEF** (Background / Role / Instructions / Expected output / Fence) | "I prompt fresh each time" → "I set up AI like briefing a team member" |
+| P5 | Workflow atoms (TRACE + capstone patterns) | "I use AI for tasks" → "I chain AI into pipelines" |
+| P6 | **CREW** (Capabilities / Roles / Escalation / Workflow) | "I orchestrate AI" → "I design a team of AI workers" |
+
+### 4.3 Coach Session Lifecycle
+
+```
+[1] SCENARIO SEED GENERATOR  (sync, ~2s, Gemini Flash)
+    Input: declared_role + daily_work_tasks + pillar + learner_model summary
+    Output: {scenario_text, task_context, fictional_entity}
+    Fallback: role_contexts.json archetype
+
+[2] TASK LOOP  (PACE, 3 questions max per task × 4 tasks)
+
+[3] BUILD ARTIFACT MECHANIC  (after Task 4)
+    Coach bridge statement → pillar-specific artifact prompt
+    → learner submits → ONE coach review pass → close
+    → saved to build_artifacts/{user_email}_{pillar_id}
+
+[4] SYNTHESIS AGENT  (async, Gemini Flash, temp=0.1)
+    Input: full session transcript + existing learner_model
+    Output: updated learner_model fields (additive merge)
+    Failure: log + skip silently
+```
+
+### 4.4 Learner Model Schema (Firestore: `learner_model/{user_email}`)
+
+```json
+{
+  "natural_strengths":    ["array — appended per session"],
+  "recurring_gaps":       ["array — appended per session"],
+  "mental_model_notes":   "string — replaced per session",
+  "preferred_framing":    "examples | challenge | abstract | concrete",
+  "memorable_quotes":     ["verbatim quotes from transcripts"],
+  "daily_summaries": {
+    "p1": "one-line performance summary",
+    "p2": "...",
+    "p3": "...", "p4": "...", "p5": "...", "p6": "..."
+  },
+  "diagnostic_band":      "new | casual | fluent",
+  "last_updated":         "ISO timestamp"
+}
+```
 
 The `call_llm(messages, temperature, user_email, call_type) → str` signature is frozen — all callers (`score_diagnostic`, `coach_response`, `generate_gap_map`, `score_evaluation`, `generate_module_coach_note`) depend on it unchanged.
 
 ---
 
-## 3. Data Schema
+## 3. Data Schema (B2C Firestore)
+
+> **B2C collections only.** All schemas are TypeScript interfaces from `src/lib/firestore/types.ts`.
+> Legacy Streamlit/Databricks schema reference is preserved as [Appendix A](#appendix-a-legacy-schema-superseded) below.
 
 ### 3.1 Design Principles
 
-- **JSON strings over complex types**: Structured data (options, rubrics, responses, scores) is stored as plain JSON strings and parsed in Python. This keeps Firestore documents simple and avoids serialisation friction.
-- **`user_email` as identity key**: `user_email` is used directly as the Firestore document ID in `user_profiles` and as the primary filter in all learner queries. No UUID layer needed for MVP.
-- **Flat top-level collections**: All Firestore collections are top-level (not nested). `training_progress` docs use a composite key `{user_email}_{course_id}`. All compound queries use a single `where("user_email", "==", ...)` filter; additional filtering and sorting done in Python to avoid composite index requirements.
+- **`uid` as identity key** — Firebase Auth UID is the document ID in `b2c_user_profiles`, `b2c_learner_model`, `b2c_build_artifacts`. No email-as-key pattern.
+- **Flat top-level collections** — all `b2c_` prefixed; no subcollections. Composite doc keys for per-user-per-pillar records: `{uid}_{pillar_id}`.
+- **`b2c_` prefix** — all collections prefixed to avoid collision with legacy Streamlit collections in the shared Firestore database (`banded-totality-485901`).
+- **TypeScript-first** — source of truth is `src/lib/firestore/types.ts`; helper CRUD in `src/lib/firestore/db.ts`.
 
-### 3.2 Content Schema
+### 3.2 Collections
+
+| Collection | Doc ID | Description |
+|------------|--------|-------------|
+| `b2c_user_profiles` | `uid` | Auth + onboarding profile + streak |
+| `b2c_diagnostic_sessions` | auto | Pillar scores from diagnostic MCQ |
+| `b2c_training_progress` | `{uid}_{pillar_id}` | Per-pillar day progress, quiz, build artifact |
+| `b2c_coach_sessions` | auto | Full coach transcript per pillar session |
+| `b2c_learner_model` | `uid` | Synthesis agent output — strengths, gaps, framing |
+| `b2c_build_artifacts` | `{uid}_{pillar_id}` | Learner-produced artifact per pillar |
+| `b2c_credentials` | `{uid}_{credential_id}` | Issued credential record (Open Badge data) |
+| `b2c_ai_call_log` | auto | Token usage + latency per AI call |
+
+### 3.3 Key Interfaces (from `src/lib/firestore/types.ts`)
+
+**UserProfile** (`b2c_user_profiles/{uid}`)
+```typescript
+uid, user_email, display_name, auth_provider, lang: "en"|"zh"
+declared_role?, declared_industry?, daily_work_desc?   // onboarding Screen 1
+current_ai_usage?, primary_motivation?                  // onboarding Screen 2
+program_started_at?, streak_days, last_active_date, created_at
+```
+
+**TrainingProgress** (`b2c_training_progress/{uid}_{pillar_id}`)
+```typescript
+uid, pillar_id: PillarId, day_number, sequence_order, is_locked
+reading_completed_at?, practice_completed_at?
+quiz_completed_at?, quiz_score?, quiz_passed?
+build_artifact?, build_completed_at?, pillar_score_after?
+```
+
+**CoachSession** (`b2c_coach_sessions/{auto}`)
+```typescript
+session_id, uid, pillar_id, day_number, role_context
+transcript: CoachTurn[], turn_count, created_at
+// CoachTurn: { role: "user"|"assistant", content, timestamp }
+```
+
+**LearnerModel** (`b2c_learner_model/{uid}`)
+```typescript
+uid, natural_strengths[], recurring_gaps[], mental_model_notes
+preferred_framing: "examples"|"challenge"|"abstract"|"concrete"
+memorable_quotes[], daily_summaries: Partial<Record<PillarId, string>>
+last_updated
+```
+
+**Credential** (`b2c_credentials/{uid}_{credential_id}`)
+```typescript
+uid, user_email, display_name, credential_id, issued_at
+pillar_scores: Record<"p1"|...|"p6", number>, overall_score
+```
+
+**Types**: `PillarId = "p1"|"p2"|"p3"|"p4"|"p5"|"p6"|"capstone"`
+
+---
+
+## Appendix A: Legacy Schema (superseded)
+
+> ⚠️ The Streamlit B2B app (on `main`) used Databricks Delta tables. These schemas are **retired** — the B2C Next.js app does not query them. Preserved here for historical reference only.
+
+### A.1 Content Schema
 
 > **Architecture note (Feb 2026):** All `content.*` Delta tables have been retired. Static content is now served from `content/*.json` files bundled with the app and loaded at startup by `utils/content.py`. The Delta DDL below is preserved as reference for the data shape; the app no longer queries these tables.
 

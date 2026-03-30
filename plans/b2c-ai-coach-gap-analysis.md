@@ -1,5 +1,18 @@
 # AI Coach Gap Analysis — B2C Redesign
 **Date:** 2026-03-26 | **Context:** B2C pivot from banking B2B app
+**Status:** Partially merged — 2026-03-27
+
+> **Merged into S5:** PACE model UX Counterparts (question budget indicator "Q N of 3", visual closure on mastery exit, bridge statement visibility) → `plans/b2c-s5-ux-audit-redesign-plan.md` E13 Practice tab patterns + UAT-S5-11.
+>
+> **Closed in S2/S3/S4:**
+> - Gap 1 (employer identity) — closed S3: `assembler.ts` uses "personal AI transformation coach… Day N of 7-day program"
+> - Gap 2 (P1/P4/P6 coaching logic) — closed S3: pillar-generic coach engine + per-pillar system prompts from S1 content
+> - Gap 3 (7-day arc continuity) — closed S2+S3: `learner_model` schema + `prior_pillar_scores`/`summaries` injected at session start by synthesis agent
+> - Gap 5 (data safety guardrail) — closed S3: PII-aware B2C guardrail replaces banking-specific version
+> - Gap 6 (build artifact mechanic) — closed S3+S4: Build tab + artifact editor in daily module; capstone file upload task
+> - Gap 7 (ZH lang instruction) — closed S3+S4: `_LANG_INSTRUCTION` updated to AI-native terms (LLM, GPT, API, JSON, system prompt, temperature)
+>
+> **Open — Gap 4 (reasoning quality scoring):** Option B (dedicated "explain your reasoning" quiz item) is **rejected — UX anti-pattern**, forces learners to narrate their own cognition mid-flow. Option A is correct: coach conversation transcript already contains the reasoning signal; `assembler.ts` or `/api/quiz/score` should extract a reasoning quality modifier from the session transcript and weight it in the scorer. Assign to **backend scoring sprint** — no UI change required.
 
 ---
 

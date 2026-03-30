@@ -1,0 +1,164 @@
+{
+  "pillar_id": "p1",
+  "pillar_name": "AI Conceptual Foundation",
+  "pillar_slug": "foundation",
+  "day_number": 1,
+  "framework": "MAPS",
+  "coaching_vocabulary": {
+    "M": "Model behavior — How LLMs actually work (probability, not knowledge)",
+    "A": "Awareness of limits — Where and why AI fails; the 5 hallucination patterns",
+    "P": "Practical application — Selecting the right model type; verifying output before acting",
+    "S": "Safety baseline — What to abstract before prompting; 3 governance questions"
+  },
+  "estimated_minutes": 90,
+  "perishable_content": false,
+  "last_updated": "2026-03",
+  "reading": {
+    "concept_text": "Most people start using AI tools the same way they use Google: ask a question, expect a fact. That mismatch — between what AI is and what we expect it to be — is where most professional mistakes begin.\n\n**What an LLM actually is**\n\nA large language model (LLM) is a probability engine. It trained on billions of text examples to learn one thing: given this sequence of words, what comes next? It does not retrieve stored facts. It generates the most statistically plausible continuation of your input.\n\nFor common knowledge, this works beautifully — \"Paris\" follows \"the capital of France is\" in almost every text it trained on. But for specific statistics, recent events, niche research, or anything requiring the model to know what it doesn't know, the output can be confident, fluent, and completely wrong. A 2025 practitioner test of 200 AI prompts asking factual questions found 34% contained false details — and 67% of those false claims sounded fully confident. This is not a bug to be fixed. Probabilistic generation is how these systems work. The models are getting better — but \"more convincing\" is not the same as \"more accurate.\"\n\n**Model families and when to use each**\n\nIn 2026, you're choosing between four types:\n\n- **Reasoning models** (e.g., Claude Opus, Gemini 3.1 Pro, GPT-5 Thinking variants): slower, more expensive, built for complex multi-step problems, research synthesis, and ambiguous judgment calls. Use when depth matters more than speed.\n- **Fast models** (e.g., Claude Haiku, Gemini Flash, GPT-4o mini): near-instant, low cost, strong for summarization, drafting, classification, and routine generation. Use when volume or turnaround matters most.\n- **Multimodal models**: accept images, PDFs, audio, and video alongside text. Use when your input isn't only text.\n- **Embedded/specialized AI**: tools like GitHub Copilot, Cursor, Notion AI, and M365 Copilot are LLMs built into specific workflows. They trade generality for deep integration.\n\nCommunity practice in 2026: experienced users maintain two or three subscriptions and route tasks by strength — Gemini for research, Claude for structured thinking and writing, GPT-5 for broad analysis. No single model is best at everything. The right choice depends on the task, the stakes, and the sensitivity of the data.\n\n**The 5 hallucination patterns**\n\nHallucination happens because models are rewarded during training for fluent, confident output — not for expressing calibrated uncertainty. Knowing the five patterns protects you:\n\n1. **False facts**: Entirely invented statistics, outcomes, or events — delivered with the same confidence as accurate claims.\n2. **Fabricated citations**: Real-looking but nonexistent sources: papers, reports, URLs, case names. The 2023 case *Mata v. Avianca* is the canonical example — a lawyer submitted ChatGPT-fabricated case citations to a federal court. None of the cited cases existed.\n3. **Plausible-but-wrong numbers**: Figures in the right ballpark but not accurate. Especially dangerous in financial, medical, or technical contexts where precision matters.\n4. **Outdated information**: Models have a training cutoff. They don't know what changed afterward — and won't tell you unless you ask.\n5. **Context confusion**: In long conversations, models can blend earlier constraints with later ones, or lose track of a rule stated earlier in the session.\n\nThe mitigation: treat AI output the way you'd treat a report from a smart but sometimes overconfident colleague. Trust the structure and reasoning pattern. Verify the specific claims.\n\n**The agentic shift**\n\nUntil recently, AI was reactive: you asked, it answered, you reviewed. The 2025–2026 shift is that AI systems can now plan and act across multi-step tasks — searching the web, writing and running code, sending emails, managing files — without a human approving each step. This is agentic AI. It amplifies both capability and risk: an agent that makes an error on step 3 of a 10-step process has already executed steps 1 and 2. Human checkpoints become architectural decisions, not just good habits.\n\n**Governance: three questions before you prompt**\n\n1. Is this tool approved for this type of data in my context?\n2. Am I comfortable if this input appears in the model's future training data?\n3. Does this input contain personal data, medical information, financial credentials, or proprietary employer content?\n\nIf yes to question 3: abstract it first. Replace real names with \"the client,\" real figures with \"a mid-range estimate,\" real companies with generic descriptors. The AI doesn't need the real data to help you think — it needs the structure of the problem.",
+
+    "good_example": "Nadia, a project manager, needed to summarize 150 customer feedback responses before a quarterly review. She pasted a sample into Claude and asked it to identify the top themes. The output looked sharp — it even quantified one finding: \"approximately 68% of respondents mentioned onboarding friction.\" Before putting that number in her slide deck, she spot-checked it manually against a random sample. Her count came to 54%, not 68%. She adjusted the slide and noted a personal rule: AI is reliable for identifying themes; unreliable for generating percentages. She also noticed one survey response contained a customer's full name and email address — she stripped both before her next prompt. Two habits formed in one session. That's what Day 1 looks like applied.",
+
+    "anti_pattern": "A marketing analyst needed competitive research for a board presentation. Under deadline pressure, he asked ChatGPT to summarize industry trends and cite sources. The model returned five confident data points, each attributed to a named research firm and report title. He copied them directly into his slides — deadline met, no time to check. In the presentation, an executive asked for the source on one claim. He searched for it live. The report didn't exist. A second claim turned out to be accurate but four years old. The meeting ended with an action item: revalidate all AI-sourced data before the next session. The mistake wasn't using AI. It was treating AI output as a reference source rather than a first draft. The confidence of the delivery masked the risk of the content.",
+
+    "takeaway": "The mental model that unlocks everything else in this program: AI is a first-draft engine, not a knowledge database. It excels at structure, synthesis, and generation. It fails unpredictably on specifics. Carry that distinction into every pillar from here — get AI to do the heavy lifting, then bring your judgment to the things it cannot verify."
+  },
+
+  "practice": {
+    "scenario_template": "You are a {declared_role} working in {declared_industry}. {daily_work_desc}. Today you're stress-testing your AI mental model — not just using AI tools, but understanding why they behave the way they do so you can use them more reliably.",
+
+    "tasks": [
+      {
+        "task_id": "p1_t1",
+        "task_number": 1,
+        "title": "Hallucination Hunt",
+        "mode": "open",
+        "learning_objective": "Identify hallucination patterns in an AI-generated text and name the specific risk each represents.",
+        "prompt_template": "Your colleague used AI to draft a background brief for a project in {declared_industry}. Here it is:\n\n---\n*\"According to the 2025 Industry Transformation Report published by Deloitte Digital (Q3 edition, page 31), approximately 74% of {declared_industry} professionals now use AI tools daily — a 41% increase from 2023. A landmark study by Dr. Maya Osei at MIT's Future of Work Lab (published March 2025) found that professionals in roles like {declared_role} save an average of 3.8 hours per week using AI. The same research notes that Claude Opus 4.6 delivers measurably better results for {declared_industry} use cases specifically, with error rates below 1.2%. Industry consensus holds that AI will automate approximately 45% of {declared_role} tasks by 2028.\"*\n---\n\nYour task: identify which specific claims you would NOT present to a senior stakeholder without independent verification. For each claim you flag, name the hallucination pattern it represents and explain why that pattern is risky in professional work.",
+        "rubric": {
+          "0": "Accepts all claims as reliable, or does not identify any specific risks",
+          "1": "Flags at least one claim but cannot name the pattern or explain the professional risk",
+          "2": "Flags 2+ claims and correctly names at least one pattern",
+          "3": "Flags 3+ claims, names 2+ patterns correctly, explains the professional risk of at least one",
+          "4": "Identifies all major risks (fabricated citation for Deloitte report; fabricated researcher/study; false model-performance claim; unverifiable future prediction), names each pattern, and articulates why the professional delivery style amplifies the risk"
+        }
+      },
+      {
+        "task_id": "p1_t2",
+        "task_number": 2,
+        "title": "Model Matchmaker",
+        "mode": "open",
+        "learning_objective": "Select the appropriate AI model type for three different task profiles, with reasoning that references depth, volume, or data governance.",
+        "prompt_template": "Based on your work as a {declared_role} in {declared_industry}, here are three tasks you might need AI for:\n\n(a) You need to analyze a complex, ambiguous situation involving multiple competing factors and produce a recommendation that goes to senior stakeholders. The quality of the reasoning matters more than speed.\n\n(b) You need to process 80 similar items — draft responses, classify inputs, or generate routine summaries — where volume is high and each individual output is relatively low-stakes.\n\n(c) You want AI help, but the input contains content from your employer's internal systems or client data.\n\nFor each scenario, name the model type you'd use — reasoning model / fast model / embedded AI / avoid AI entirely — and explain your reasoning. You don't need to name a specific product, just the type and the key factor driving your choice.",
+        "rubric": {
+          "0": "Cannot distinguish model types, or gives the same answer for all three scenarios",
+          "1": "Correctly identifies 1 of 3 with a valid reason",
+          "2": "Correctly identifies 2 of 3 with reasons that reference a relevant decision factor",
+          "3": "Correctly identifies all 3 with reasoning that references depth vs. speed, cost, or data governance",
+          "4": "Correctly identifies all 3, articulates the underlying tradeoff logic (not just the right answer), and mentions at least one factor from their own {declared_role} work — demonstrating the framework has transferred to real decision-making"
+        }
+      },
+      {
+        "task_id": "p1_t3",
+        "task_number": 3,
+        "title": "Data Safety Scenario",
+        "mode": "open",
+        "learning_objective": "Apply data abstraction before using an AI tool — identifying what to change and why — and produce an abstracted version that preserves the structure of the problem.",
+        "prompt_template": "You're a {declared_role} and you want to use AI to help think through a work challenge. Here's the scenario you're about to paste directly into an AI tool:\n\n---\n*\"I need help preparing for a difficult conversation with James Chen, our biggest client at Meridian Dynamics. He's frustrated because our Q1 delivery was 3 weeks late and the project came in $47,000 over budget. He's threatening to move to a competitor. I need talking points that acknowledge the failure without admitting legal liability.\"*\n---\n\nBefore you paste this: what would you change, and why? Write the abstracted version you would actually use.",
+        "rubric": {
+          "0": "Would paste as-is, or proposes no meaningful changes, or refuses to engage with the scenario",
+          "1": "Identifies one category of sensitive data (e.g., the client name) but misses others",
+          "2": "Identifies 2+ categories (client name, company name, financial figure) and replaces or removes them",
+          "3": "Produces a clean abstracted version with all real identifiers replaced, explains the reasoning for key changes",
+          "4": "Produces a clean abstracted version, explains the reasoning, AND demonstrates understanding that the abstracted version is equally useful for getting AI help — showing they grasp that the goal is to preserve the problem structure, not the specific details"
+        }
+      },
+      {
+        "task_id": "p1_t4",
+        "task_number": 4,
+        "title": "MAPS Synthesis",
+        "mode": "open",
+        "learning_objective": "Articulate the core LLM mental model and its practical implications using the MAPS framework, grounded in the learner's own work context.",
+        "prompt_template": "You've now worked through all four MAPS dimensions:\n- **M** — Model behavior (probabilistic generation, not knowledge retrieval)\n- **A** — Awareness of limits (5 hallucination patterns, training cutoff, context confusion)\n- **P** — Practical application (model selection, output verification)\n- **S** — Safety baseline (data abstraction, 3 governance questions)\n\nIn 3–5 sentences, using a real example from your work as a {declared_role} in {declared_industry}: what is the single most important thing a colleague who has never used AI tools needs to understand about how AI actually works — and what would you tell them to do differently as a result?",
+        "rubric": {
+          "0": "Generic AI description with no connection to work context or any MAPS dimension",
+          "1": "Mentions one MAPS dimension but not grounded in their specific role or industry context",
+          "2": "Uses a work-relevant example and references 2 MAPS dimensions",
+          "3": "Delivers a clear, work-grounded explanation touching 3+ MAPS dimensions with actionable guidance",
+          "4": "Articulates the core mental model shift (probabilistic ≠ factual) in their own voice, grounds it in a concrete {declared_industry} scenario, and gives actionable guidance a colleague could act on immediately — without jargon"
+        }
+      }
+    ],
+
+    "coach_system_prompt_template": "You are a personal AI transformation coach. Your learner is a {declared_role} working in {declared_industry}. Their daily work involves: {daily_work_desc}. They are completing Day 1 of their 7-day AI transformation program: the AI Conceptual Foundation module.\n\n## Prior Program Context\n{prior_pillar_summaries}\nPillar scores to date: {prior_pillar_scores}\n(On Day 1, these fields will be empty. Use the learner's declared role and work context above to calibrate coaching depth.)\n\n## Your Coaching Framework: MAPS\nGuide the learner through four dimensions:\n- **M — Model behavior**: LLMs are probability engines, not knowledge databases. They generate the most statistically plausible next sequence. This is why they can be simultaneously confident and wrong.\n- **A — Awareness of limits**: Five hallucination patterns — false facts, fabricated citations, plausible-but-wrong numbers, outdated information, context confusion. Risk scales with how credible the delivery sounds.\n- **P — Practical application**: Matching model types (reasoning / fast / embedded) to task requirements using depth, volume, and data sensitivity as criteria. Multi-model workflows are the professional norm, not the exception.\n- **S — Safety baseline**: Abstracting sensitive data before prompting. Three governance questions before every AI interaction. The goal is not to avoid AI — it is to use it safely and without exposing others.\n\n## PACE Protocol — Non-Negotiable\nEvery task coaching interaction follows PACE:\n\n**P — Purpose**: Open each task by stating the learning objective in one sentence. Example: \"The goal here is to see which claims in that brief you'd flag — and why that pattern is risky.\"\n\n**A — Assess**: After the learner responds, read two signals:\n1. Intellectual signal: did they identify the right concept? did they reason through the right distinction?\n2. Emotional signal: are they engaged, confused, dismissive, or frustrated?\n\n**C — Choose** the right coaching move:\n- Insightful response → **Celebrate**: \"That's exactly it — you caught the one most people miss.\" Then close or extend lightly with one follow-up maximum.\n- Surface-level from a capable learner → **Challenge**: \"You're close — push one level deeper. What makes a fabricated citation more dangerous than a simple factual error?\"\n- Confusion detected → **Support**: \"This trips most people up. Let me try a different angle — in your {declared_role} work, when would a wrong number in an AI output do the most damage?\"\n- Dismissive or very short → **Reframe**: \"Let me try differently. Forget AI for a moment — if a colleague confidently cited a statistic they hadn't checked, what would you want to know before repeating it?\"\n\n**E — Exit**: The moment the task's learning objective is met, close with a one-line bridge statement and move to the next task. Never linger. Never summarize back what the learner already said.\n\n## 3-Question Budget Per Task (Hard Ceiling)\n- Q1 — Open probe: Surface current thinking. Always asked.\n- Q2 — Adaptive: Challenge if shallow. Affirm and lightly extend if strong.\n- Q3 — Synthesis: Consolidate understanding + bridge to next task or build artifact.\n\nEarly exit: Learning objective met after Q1 or Q2 → skip remaining questions, close immediately with bridge.\nBudget exhausted: Objective not met after Q3 → give the insight directly, with warmth, and close. NEVER ask a 4th question.\n\n## Emotional State Detection\n| Signal in learner response | Your response |\n|---------------------------|---------------|\n| 1-sentence answer, no reasoning | Reframe without pressure: \"Let me try a different angle...\" |\n| Repeated incorrect attempts | Stop questioning. Give the insight with warmth. |\n| Overconfident or surface-level | Gentle challenge: \"You're close — what happens if you push one level further?\" |\n| Genuinely insightful answer | Explicit celebration + close immediately. No more questions after this. |\n| Confused or lost | Simplify + ground in {daily_work_desc}: \"Think about a specific moment in your work where...\" |\n\n## Per-Task Coaching Guidance\n\n### Task 1 — Hallucination Hunt\nLearning objective: Learner names at least two hallucination patterns from the sample text and explains the professional risk.\nQ1: \"Looking at that brief your colleague sent — which claims would you pause on before presenting to someone senior? What is it about them that gives you pause?\"\nMastery signal: Learner flags a specific claim AND connects it to a named pattern (not just says \"it might be wrong\").\nBridge close: \"Good — that instinct is now a professional habit. You've moved from 'this looks fine' to 'what type of error is this?' Let's apply the same thinking to model selection.\"\n\n### Task 2 — Model Matchmaker\nLearning objective: Learner distinguishes at least two model types and selects appropriately based on task profile.\nQ1: \"Walk me through how you'd approach each of those three scenarios. Which type of AI would you reach for — and what's driving that choice?\"\nMastery signal: Learner uses different model types for different scenarios AND gives at least one reason referencing depth vs. speed, or data governance.\nBridge close: \"You're thinking like someone who selects tools, not just someone who uses them. That distinction shows up in every pillar from here.\"\n\n### Task 3 — Data Safety Scenario\nLearning objective: Learner produces an abstracted version with real identifiers replaced and articulates why.\nQ1: \"Before you paste that into any AI tool — what, if anything, would you change about it? Walk me through your thinking.\"\nMastery signal: Learner replaces at least 2 identifier categories (name, company, financial figure) and explains the reason.\nBridge close: \"Notice that your abstracted version works just as well for getting AI help — it preserved the structure of the problem. That's the insight. One more task, then we build your checklist.\"\n\n### Task 4 — MAPS Synthesis\nLearning objective: Learner articulates the core mental model (probabilistic ≠ factual) in their own voice, grounded in their work context.\nQ1: \"In your own words — and drawing from something real in your work as a {declared_role} — what's the one thing someone needs to understand before they start relying on AI tools?\"\nMastery signal: Learner references probabilistic behavior OR a specific hallucination risk AND grounds it in a {declared_industry} scenario.\nBridge to build artifact: \"You just said Day 1's core insight in your own voice. That's exactly what belongs in your checklist — not AI advice you read somewhere, but principles you'd actually trust. Let's build it.\"\n\n## Data Safety Guardrail\nIf the learner inputs what appears to be real personal data (full names, addresses, medical information, employer proprietary content, financial credentials, or system access details):\nStop immediately and respond: \"I noticed this might contain real sensitive information. For this exercise, please use fictional equivalents — for example, 'Alex' instead of a real name, or 'the client company' instead of a real firm name. The scenario works just as well with fictional details, and this protects both you and the people whose data it is.\"\nDo not engage with, analyze, or build on any input that contains real sensitive data.\n\n## Identity and Scope Boundaries\n- You are a personal AI transformation coach — not a company trainer, not a technical AI expert, not a support agent.\n- Your role is to help the learner understand and apply MAPS — not to teach AI comprehensively, not to demonstrate technical depth.\n- Stay within this module's scope. Do not address Pillar 2–6 topics in depth unless directly needed to answer a MAPS question.\n- Never write the learner's answer for them. You may offer hints, reframes, and direct insights after Q3 is exhausted — never before.\n- One question per turn. Always."
+  },
+
+  "quiz": {
+    "items": [
+      {
+        "item_id": "p1_q1",
+        "type": "mcq",
+        "question": "A colleague pastes a confidential client report into a free online AI tool and asks it to summarize the key risks. The summary looks accurate. What is the PRIMARY concern with this approach?",
+        "options": {
+          "A": "The summary might miss some risks in the document",
+          "B": "Free tools are generally less accurate than paid alternatives",
+          "C": "Confidential client data was sent to an external AI service, potentially without data governance authorization",
+          "D": "The AI might add risks that aren't present in the original document"
+        },
+        "correct_answer": "C",
+        "explanation": "Accuracy concerns are real but secondary. The primary issue is data governance: confidential client content was sent to an external system, possibly without authorization. A perfectly accurate summary does not fix the exposure. This is the 'S — Safety baseline' dimension of MAPS.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p1_q2",
+        "type": "mcq",
+        "question": "An AI tool generates this output: 'According to the 2025 Global Workforce Intelligence Report by KPMG Future of Work (Table 4.2), 72% of knowledge workers now use AI agents autonomously in their daily work.' You search for the report and cannot find it anywhere. What hallucination pattern does this represent?",
+        "options": {
+          "A": "False fact — an invented claim with no basis in reality",
+          "B": "Fabricated citation — a credible-looking but nonexistent source",
+          "C": "Plausible-but-wrong number — a real source with a misremembered figure",
+          "D": "Outdated information — accurate at one point, but no longer current"
+        },
+        "correct_answer": "B",
+        "explanation": "The citation looks completely credible — a named firm, a specific report, a table reference. But the report doesn't exist. This is the fabricated citation pattern. It is especially dangerous because the specificity (firm name, year, table number) signals reliability without providing any. The 2023 Mata v. Avianca case — in which fabricated AI-generated case citations were submitted to a federal court — illustrates the professional stakes.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p1_q3",
+        "type": "mcq",
+        "question": "You need to draft 200 routine acknowledgement emails for customer inquiries — standard language, no sensitive data, low individual stakes. Which model type fits this task?",
+        "options": {
+          "A": "A reasoning model — customer communication always warrants analytical depth",
+          "B": "A fast, low-cost model — the task is high-volume, routine, and cost accumulates at scale",
+          "C": "No AI at all — email is too important to automate",
+          "D": "A multimodal model — to ensure the full email thread is processed correctly"
+        },
+        "correct_answer": "B",
+        "explanation": "High volume, low stakes per item, no sensitive data, no ambiguity — this is exactly the profile fast models are built for. Using a reasoning model here is the wrong tradeoff: you pay more in cost and latency for depth you don't need. Model selection is a resource allocation decision: match the model to the actual demands of the task.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p1_q4",
+        "type": "open_rubric",
+        "question": "An AI tool gives you this output: 'Research shows professionals who use AI tools for their core work report a 31% improvement in output quality and a 2.4-hour weekly time saving on average.' In 2–3 sentences: would you use this statistic in a professional document? What would you do before acting on it — and why?",
+        "rubric": {
+          "0": "Would use the statistic without verification; or dismisses AI entirely; or gives a one-word answer",
+          "0.5": "Expresses appropriate skepticism but cannot name a specific verification step or hallucination pattern",
+          "1": "Names a specific hallucination risk (plausible-but-wrong number or fabricated citation) AND describes a concrete verification action — e.g., search for the original study, identify the source, verify the date"
+        },
+        "score_weight": 1.0,
+        "max_score": 1.0
+      }
+    ],
+    "pass_threshold": 2.5,
+    "max_score": 4.0,
+    "fail_guidance": "Review the reading section on hallucination patterns and the MAPS safety baseline. Retake is available immediately — your coach will surface targeted hints alongside each question."
+  },
+
+  "build_artifact": {
+    "artifact_type": "checklist",
+    "artifact_name": "My Personal AI Tool Selection Checklist",
+    "artifact_description": "A practical decision checklist the learner creates for their own daily AI tool decisions — calibrated to their specific role and industry. Covers when to use AI, which model type to reach for, how to handle sensitive data, and how to verify output before acting. Stored permanently in the learner's AI Toolkit.",
+    "prompt": "Based on what you practiced in Day 1, create your personal AI tool selection checklist. This is not a generic AI guide — it's a decision tool built for your work as a {declared_role} in {declared_industry}.\n\nYour checklist should answer three questions for any AI task you're about to do:\n1. **Should I use AI for this?** (When yes; when no; your personal rule for the edge cases)\n2. **Which type of AI should I use?** (Your criteria for reasoning vs. fast vs. embedded — based on today's model matchmaker task)\n3. **How do I use it safely?** (Your data abstraction habit and your output verification step)\n\nWrite it in whatever format you'd actually use — a numbered list, a quick mental checklist, a short decision tree. Your coach will help you refine it until it passes the colleague test: could someone on your team use this without needing you to explain it?",
+    "coach_closing_prompt": "Your goal is to help the learner produce a checklist they would genuinely use in their daily work as a {declared_role} — not a textbook summary of AI best practices.\n\nAfter they share a draft, probe on three things using your 3-question budget:\n\n1. **Data safety**: Does the checklist include a step about sensitive data? If missing: \"You handled data abstraction well in the practice tasks — does this checklist capture that habit anywhere?\"\n2. **Output verification**: Is there a step for verifying AI output before acting on it? If missing: \"You caught the hallucination in Task 1 — where does that instinct live in this checklist?\"\n3. **Colleague test**: Is it specific enough that a colleague could follow it without your explanation? If not: \"Read this back as if you've never seen it. What's the first step you'd be uncertain about?\"\n\nWhen the checklist has all three qualities — close with genuine celebration and bridge to Day 2:\n\"That checklist is now yours. It's the first artifact in your AI toolkit — and every day from here adds to it. Tomorrow in Day 2, you'll learn how to communicate with AI so precisely that you almost never need to revise its output. Day 1 gave you the mental model; Day 2 gives you the language.\"\n\nNever write the checklist for them. If they're stuck after Q2, offer a structural scaffold only: 'Here are three headings to start from — When to use AI / Which type / How to stay safe — fill in your own answers under each.'"
+  }
+}

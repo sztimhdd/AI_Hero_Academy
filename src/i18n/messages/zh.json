@@ -1,0 +1,195 @@
+{
+  "common": {
+    "signOut": "退出登录",
+    "loading": "加载中…",
+    "error": "出现错误，请重试。",
+    "back": "返回",
+    "continue": "继续",
+    "submit": "提交",
+    "send": "发送",
+    "save": "保存",
+    "cancel": "取消",
+    "copy": "复制",
+    "copied": "已复制！",
+    "view": "查看",
+    "close": "关闭",
+    "yes": "是",
+    "no": "否"
+  },
+  "dashboard": {
+    "welcomeBack": "欢迎回来，{name}",
+    "subtitle": "你的AI转型之旅仍在继续。",
+    "streakDays": "连续 {count} 天",
+    "streakActiveToday": "今日已学习 ✓",
+    "streakAtRisk": "⚠ 今天完成一个模块以保持连续记录",
+    "journeyTitle": "7天学习之旅",
+    "pillarBadgesTitle": "技能徽章",
+    "artifactsTitle": "学习成果",
+    "artifactsCount": "学习成果 ({count})",
+    "artifactsEmpty": "完成每天的「构建」部分后，你的成果将显示在这里。",
+    "dayState": {
+      "locked": "未解锁",
+      "available": "开始",
+      "inProgress": "继续",
+      "complete": "已完成"
+    },
+    "pillar": {
+      "p1": "AI 基础认知",
+      "p2": "精准 Prompting",
+      "p3": "工具选择能力",
+      "p4": "AI 配置能力",
+      "p5": "AI 工作流",
+      "p6": "智能体系统",
+      "capstone": "综合挑战"
+    },
+    "badgeComplete": "已完成",
+    "badgeLocked": "未解锁 — 请先完成前几天的学习",
+    "badgeInProgress": "进行中",
+    "badgeQuizScore": "测验得分：{score}%",
+    "artifactViewPrompt": "查看 →",
+    "toggleLang": "中文",
+    "toggleLangZh": "EN"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "介绍一下你的工作",
+      "roleLabel": "你的职位是什么？",
+      "rolePlaceholder": "例如：市场经理、软件工程师、教师",
+      "industryLabel": "你所在的行业是？",
+      "industryPlaceholder": "例如：医疗、金融、教育",
+      "dailyWorkLabel": "描述你日常的工作内容",
+      "dailyWorkPlaceholder": "例如：我撰写报告、分析数据、管理团队…",
+      "next": "下一步 →"
+    },
+    "step2": {
+      "title": "你的AI使用现状",
+      "aiUsageLabel": "你目前如何使用AI？",
+      "motivationLabel": "你的主要动力是什么？",
+      "motivation": {
+        "save_time": "节省时间",
+        "quality": "提升工作质量",
+        "career": "推进职业发展",
+        "explore": "只是探索了解"
+      },
+      "next": "下一步 →",
+      "back": "← 返回"
+    },
+    "step3": {
+      "title": "快速AI技能评估",
+      "subtitle": "5道选择题 + 1道个性化AI挑战",
+      "submit": "提交",
+      "generating": "正在生成你的个性化问题…"
+    },
+    "step4": {
+      "title": "你的个性化能力图谱",
+      "startDay1": "开始第1天 →",
+      "pillarReady": "已就绪",
+      "pillarGap": "已识别差距"
+    }
+  },
+  "module": {
+    "tabs": {
+      "reading": "阅读",
+      "practice": "实践",
+      "quiz": "测验",
+      "build": "构建"
+    },
+    "reading": {
+      "markComplete": "标记阅读完成 →",
+      "alreadyComplete": "阅读已完成",
+      "headToNext": "前往「实践」将所学付诸应用。"
+    },
+    "practice": {
+      "startingCoach": "正在启动AI教练…",
+      "sessionError": "无法启动辅导会话，请刷新页面。",
+      "alreadyComplete": "实践已完成",
+      "headToQuiz": "前往「测验」检验你的理解程度。",
+      "taskOf": "任务 {current}/{total}",
+      "questionsOf": "{current}/3",
+      "lastQuestion": "最后一个问题",
+      "finishPractice": "完成实践 → 进入测验",
+      "saving": "保存中…",
+      "sendPlaceholder": "你的回复…（回车发送，Shift+回车换行）"
+    },
+    "quiz": {
+      "alreadyPassed": "测验已通过 ✓",
+      "headToBuild": "前往「构建」创建你的成果。",
+      "submit": "提交测验",
+      "submitting": "评分中…",
+      "passed": "测验通过！",
+      "failed": "还差一点 — 查看提示后重试。",
+      "score": "得分：{score}/{max}",
+      "retake": "重新测验"
+    },
+    "build": {
+      "alreadyComplete": "构建成果已保存 ✓",
+      "savingArtifact": "保存中…",
+      "saveButton": "保存成果",
+      "savedSuccess": "已保存！返回控制台查看。",
+      "backToDashboard": "← 返回控制台"
+    }
+  },
+  "capstone": {
+    "intro": {
+      "title": "AI超能挑战赛",
+      "day": "第7天 · 约{minutes}分钟",
+      "scenarioLabel": "你的挑战情境",
+      "tasksLabel": "4个任务",
+      "encouragement": "💡 本次挑战鼓励你使用自己的AI工具 — 考查的是你判断何时、如何使用AI的能力，而非在压力下的记忆力。",
+      "begin": "开始挑战 →"
+    },
+    "challenge": {
+      "taskBadge": "任务 {n}/{total}",
+      "coachComplete": "✓ 本节完成 — AI教练已记录你的回答。",
+      "mcqTitle": "应用判断：多选题组",
+      "mcqSubtitle": "为每个情境选择最佳答案。无AI教练辅助 — 这是评估模式。",
+      "mcqSubmit": "提交答案（已回答 {answered}/{total}）",
+      "mcqDone": "✓ 答案已记录 — {correct}/{total} 正确。",
+      "designTitle": "设计挑战",
+      "designPlaceholder": "在此粘贴你的设计文档，或描述你的工作流/智能体系统…",
+      "uploadLabel": "可选：上传AI输出的截图或流程图（PNG、JPG、PDF）",
+      "uploadReady": "✓ 文件准备就绪",
+      "uploadLoading": "加载中…",
+      "submitDesign": "提交设计",
+      "designScoring": "✓ 设计已提交 — 正在评分中…",
+      "allDone": "所有任务已完成！🎉",
+      "allDoneSubtitle": "提交你的作品进行AI评分和证书审核。",
+      "submitAll": "提交并查看结果 →",
+      "scoring": "正在评分…"
+    },
+    "results": {
+      "passed": "恭喜，通过了！",
+      "score": "得分：{score} / 4.0",
+      "passedSubtitle": "你已在全部6个AI技能柱上展现出真实能力。证书正在生成 — 即将跳转。",
+      "viewCredential": "查看证书 →",
+      "failed": "还差一点点",
+      "failedThreshold": "得分：{score} / 4.0（通过线：2.5）",
+      "retake": "重新挑战",
+      "startingCoach": "正在启动AI教练…",
+      "sessionError": "无法启动辅导会话，请刷新页面。"
+    }
+  },
+  "credential": {
+    "congrats": "恭喜，{name}！",
+    "subtitle": "你已获得「AI超能中级」证书。",
+    "credentialTitle": "AI超能中级",
+    "issued": "AI Hero Academy · {date}",
+    "overallScore": "综合得分",
+    "pillarScoresTitle": "技能柱得分",
+    "shareCardTitle": "分享图片",
+    "shareTitle": "分享与下载",
+    "addLinkedIn": "添加到 LinkedIn",
+    "downloadPdf": "下载 PDF 证书",
+    "copyLink": "复制链接",
+    "backToDashboard": "← 返回控制台",
+    "credentialId": "证书编号：{id} · 颁发日期：{date}",
+    "pillar": {
+      "p1": "AI 基础认知",
+      "p2": "精准 Prompting",
+      "p3": "工具选择能力",
+      "p4": "AI 配置能力",
+      "p5": "AI 工作流",
+      "p6": "智能体系统"
+    }
+  }
+}

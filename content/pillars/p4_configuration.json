@@ -1,0 +1,165 @@
+{
+  "pillar_id": "p4",
+  "pillar_name": "AI Configuration & Control",
+  "pillar_slug": "configuration",
+  "day_number": 4,
+  "framework": "BRIEF",
+  "coaching_vocabulary": {
+    "B": "Behavior — the standing rules for what this AI should always do and never do",
+    "R": "Role — the persistent persona or expertise the AI embodies for this configuration",
+    "I": "Instructions — the specific procedures and task logic for this assistant",
+    "E": "Edge cases — how to handle ambiguity, out-of-scope requests, and unexpected inputs",
+    "F": "Format — persistent output structure, length, tone, and audience specification"
+  },
+  "estimated_minutes": 90,
+  "perishable_content": false,
+  "last_updated": "2026-03",
+  "reading": {
+    "concept_text": "In Days 1 and 2, you learned two things: how AI generates output, and how to communicate precisely with it. Day 4 adds a third layer: shaping how AI behaves before you ever type a message.\n\nA system prompt is a configuration layer that runs before the conversation begins. Instead of establishing context in every prompt, you encode it once — and the AI applies it persistently. This is the difference between a tool you communicate with and a tool you configure.\n\n**The BRIEF Framework**\n\nSystem prompts have five layers, each doing a distinct job:\n\n- **B — Behavior**: The standing rules. What this AI assistant should always do. What it should never do. 'Always respond in concise bullet points.' 'Never speculate beyond what the user has told you.' 'When you don't know something, say so explicitly.' Behavior rules apply to every interaction — not just this one.\n\n- **R — Role**: The persistent persona. 'You are a plain-language writing coach for non-technical professionals.' 'You are an expert in {declared_industry} operations who communicates in clear, jargon-free language.' The role shapes vocabulary, expertise level, and analytical lens without requiring re-establishment in each message.\n\n- **I — Instructions**: The specific procedures. What to do step-by-step for this task. Which steps to complete, in what order, and what to check before responding. Instructions are task-specific — they tell the AI how to handle the work, not just who to be.\n\n- **E — Edge cases**: How to handle ambiguity, out-of-scope requests, and inputs that don't fit the expected pattern. 'If the input doesn't specify a timeline, ask for one before proceeding.' 'If asked for legal or medical advice, decline and recommend professional consultation.' Edge cases prevent the AI from making confident assumptions when the right answer depends on information you haven't provided.\n\n- **F — Format**: Persistent output structure, length, tone, and audience. 'Respond in three sections: summary / key points / recommended action.' 'Use plain language appropriate for a non-technical reader.' Format in a system prompt means you never have to specify it again.\n\n**The P2-to-P4 bridge**\n\nIn Day 2 (CRAF), you built prompts with precision: Context, Role, Action, Format — every time. A system prompt pre-loads your CRAF intelligence into the AI so you never repeat it. Your R and F from CRAF become the BRIEF Role and Format. Your C and A become the BRIEF Instructions and Behavior rules. You've traded per-prompt precision for persistent configuration.\n\n**Temperature and sampling**\n\nBeyond the system prompt, one setting shapes the consistency vs. creativity tradeoff:\n\n- **Temperature**: Controls how much randomness enters the output. Community-derived rule of thumb that holds up in practice: temperature 0 (or near 0) for structured or machine-readable output — JSON, tables, data extraction, tool calls. Temperature 0.2–0.3 for analytical tasks requiring accuracy — research synthesis, document review, factual questions. Temperature 0.7–0.9 for creative or brainstorming tasks where variation is valuable.\n\nHigher temperature produces more varied and unexpected output. Lower temperature produces more deterministic and consistent output. For any task where you'd rerun the output and need the same answer, use a lower temperature.\n\n**Structured output and JSON schema**\n\nDesigning AI responses as data objects rather than prose is one of the highest-leverage configuration skills. Instead of 'give me a summary', ask for: 'Return JSON with fields: title (string), summary (under 100 words), key_points (array of strings, max 5), confidence (High/Medium/Low).'\n\nStructured output connects AI to downstream tools, workflows, and databases without translation. It's the format layer of BRIEF applied at maximum specificity.\n\n**Memory management**\n\nWhat you put in context shapes what you get out. Too much context dilutes focus. Rule of thumb: include what's necessary for this task; exclude what's noise. For multi-turn conversations: when the AI starts losing track of earlier instructions in a long thread, restart with a clean context — don't add more instructions on top of a degraded one.",
+
+    "good_example": "A professional who handles weekly briefings configured a system prompt for their AI writing assistant using BRIEF: Behavior ('Always cite the source of any statistic you include; flag if a claim cannot be verified'), Role ('You are a senior communications writer who specializes in translating complex updates into executive-level summaries'), Instructions ('Take the raw notes I provide and produce a 3-section briefing: situation summary, key decisions needed, and recommended actions'), Edge cases ('If the notes are incomplete or contradictory, flag the gap before writing'), Format ('Maximum 400 words. Three clearly labeled sections. Plain language, no jargon.'). First briefing produced with this configuration: 95% ready to share with zero revisions to structure. Weekly time saving: 45 minutes. The configuration was written once and has been used every week since.",
+
+    "anti_pattern": "A professional set up a system prompt for their AI assistant that read: 'You are a helpful professional assistant. Be accurate and concise.' Three weeks later, every session started with multiple rounds of context-setting: the audience, the format, the tone, the scope constraints. The system prompt existed but did it no work. It had no Role specificity (any professional doing what?), no Instructions (what task, what steps?), no Edge cases (what to do when inputs are incomplete?), and no Format persistence (concise according to what standard?). The fix was 20 minutes of BRIEF work that eliminated the per-session setup entirely. The original prompt wasn't wrong — it was incomplete. Behavior and role alone, without instructions, edge cases, and format, is a personality, not a configuration.",
+
+    "takeaway": "A system prompt is not a single line description — it's a five-layer configuration that does work so your prompts don't have to. BRIEF gives you the structure: Behavior, Role, Instructions, Edge cases, Format. Write it once; deploy it persistently. The result is an AI assistant that behaves consistently, handles edge cases predictably, and outputs in the format you need — without re-establishing any of it each session."
+  },
+
+  "practice": {
+    "scenario_template": "You are a {declared_role} working in {declared_industry}. {daily_work_desc}. Today you're moving from per-prompt precision to persistent configuration — building an AI assistant that knows how to work with you before you say a word.",
+
+    "tasks": [
+      {
+        "task_id": "p4_t1",
+        "task_number": 1,
+        "title": "BRIEF Diagnostic",
+        "mode": "open",
+        "learning_objective": "Identify which BRIEF elements are missing or weak in an existing system prompt and explain what each gap causes.",
+        "prompt_template": "Here is a system prompt currently in use by a {declared_role} in {declared_industry}:\n\n*'You are a helpful professional assistant. Help the user with their tasks. Be accurate, concise, and professional. Do not make things up.'*\n\nYour task:\n1. Rate each BRIEF element (B, R, I, E, F) on a scale of 0 (missing) to 2 (complete)\n2. For each element rated 0 or 1, explain what the missing configuration causes in practice — what specific problem does the user encounter each session because this element isn't there?\n3. Rewrite the system prompt as a complete BRIEF-structured configuration for a {declared_role} working in {declared_industry}",
+        "rubric": {
+          "0": "Cannot identify missing BRIEF elements; rewrite is similar to the original with minor additions",
+          "1": "Correctly rates 3+ BRIEF elements; rewrite adds specificity but is incomplete in 2+ dimensions",
+          "2": "Correctly rates all 5 elements; rewrite has all 5 BRIEF layers with role-specific content",
+          "3": "All above, plus each missing-element explanation ties directly to a concrete practical problem (not just 'the AI won't know X' but 'the user will have to re-establish X every session, causing Y time overhead')",
+          "4": "All above, plus the rewrite is genuinely specific to the {declared_role}/{declared_industry} context — not a generic BRIEF template but a configuration that would work for that specific professional's tasks"
+        }
+      },
+      {
+        "task_id": "p4_t2",
+        "task_number": 2,
+        "title": "Temperature Calibration",
+        "mode": "open",
+        "learning_objective": "Select appropriate temperature settings for three different task types with correct reasoning about the tradeoff.",
+        "prompt_template": "Based on your work as a {declared_role} in {declared_industry}, here are three tasks you might use AI for:\n\n(a) Extracting specific data fields from a document and returning them as a structured table — the output will feed into a spreadsheet.\n\n(b) Analyzing three competing approaches to a problem and recommending one, with clear reasoning.\n\n(c) Generating 10 different opening sentences for a presentation, each with a distinct tone or angle — you'll pick the best one.\n\nFor each task, recommend a temperature setting (use a scale of 0 to 1) and explain your reasoning. What does your temperature choice trade off for this specific task?",
+        "rubric": {
+          "0": "Cannot explain temperature tradeoffs; or recommends the same setting for all three tasks",
+          "1": "Different settings for 2 of 3 tasks; at least one explanation references the accuracy vs. creativity tradeoff",
+          "2": "Different settings for all 3 tasks; (a) correctly identifies low temperature for structured extraction; (c) correctly identifies higher temperature for creative variation",
+          "3": "All above, plus reasoning explicitly names what would go wrong at the wrong temperature (e.g., 'high temperature for (a) would introduce inconsistencies in the data extraction that corrupt the spreadsheet import')",
+          "4": "All above, plus learner connects temperature calibration to a real {declared_role} task — showing the temperature concept has transferred to their own work, not just the exercise scenarios"
+        }
+      },
+      {
+        "task_id": "p4_t3",
+        "task_number": 3,
+        "title": "Structured Output Design",
+        "mode": "open",
+        "learning_objective": "Design a system prompt instruction that produces structured JSON output for a task the learner does regularly.",
+        "prompt_template": "Choose a recurring task in your work as a {declared_role} in {declared_industry} where you currently get AI output as prose and then manually reorganize it. Something you do regularly where the output format matters.\n\nWrite the Format and Instructions sections of a BRIEF system prompt that would produce structured output directly usable for your downstream task. Specify:\n1. The exact JSON schema (field names, types, constraints)\n2. The Instructions that tell the AI how to populate each field\n3. One example of what a correctly formatted output would look like for your task\n\nExplain what you currently have to do manually that this structured output would eliminate.",
+        "rubric": {
+          "0": "Cannot define a JSON schema; or produces prose formatting instructions rather than structured output specification",
+          "1": "Defines a partial schema with 2-3 fields; instructions are vague; example output is missing",
+          "2": "Defines a complete schema relevant to the stated task; instructions are specific; example output is provided",
+          "3": "All above, plus the schema is genuinely useful for the stated {declared_role} task — fields are named and typed to match what a downstream spreadsheet or tool would actually need",
+          "4": "All above, plus the learner's explanation of what the structured output eliminates is specific and honest — it names the exact manual step that currently consumes time, showing they understand that structured output is about workflow integration, not just output aesthetics"
+        }
+      },
+      {
+        "task_id": "p4_t4",
+        "task_number": 4,
+        "title": "Full System Prompt Build",
+        "mode": "open",
+        "learning_objective": "Produce a complete BRIEF-structured system prompt for the learner's most important recurring AI task that they can deploy today.",
+        "prompt_template": "Choose the single most important recurring AI task in your work as a {declared_role} in {declared_industry} — one that you currently spend significant time on per-session setup, or one where AI output is inconsistent from session to session.\n\nBuild a complete BRIEF system prompt for it:\n- **B**: 2–3 behavior rules that apply to every interaction\n- **R**: The specific role and expertise the AI should embody for this task\n- **I**: Step-by-step instructions for how the AI should handle this task\n- **E**: At least 2 edge cases with explicit handling instructions\n- **F**: Complete format specification\n\nLabel each section. This system prompt should be production-ready — copy it into an AI tool today and it should immediately produce better-calibrated output than you currently get.",
+        "rubric": {
+          "0": "System prompt has fewer than 3 BRIEF layers; or is too generic to be useful for the stated task",
+          "1": "Has 3-4 BRIEF layers; at least 2 are role/task-specific; Edge cases or Format are missing or vague",
+          "2": "Has all 5 BRIEF layers; content is specific to the stated {declared_role}/{declared_industry} task",
+          "3": "All 5 BRIEF layers are specific and production-quality; Edge cases address real failure modes; Format is precise enough to eliminate per-session repetition",
+          "4": "The system prompt is immediately deployable — if you copied it into an AI tool right now, it would produce consistently better-calibrated output for the stated task without any modification. Learner can demonstrate why each BRIEF element does specific work."
+        }
+      }
+    ],
+
+    "coach_system_prompt_template": "You are a personal AI transformation coach. Your learner is a {declared_role} working in {declared_industry}. Their daily work involves: {daily_work_desc}. They are completing Day 4 of their 7-day AI transformation program: the AI Configuration & Control module.\n\n## Prior Program Context\n{prior_pillar_summaries}\nPillar scores to date: {prior_pillar_scores}\n(P4 is a direct extension of P2 CRAF. If P2 is completed: use the bridge immediately — 'You already know how to build a precise prompt with CRAF. Today we're going to pre-load that precision into a system prompt so you never have to repeat it.' If P1 is completed: 'You know AI generates probabilistically. Today you're learning to constrain that probability space before the conversation begins.')\n\n## Your Coaching Framework: BRIEF\nGuide the learner through five system prompt layers:\n- **B — Behavior**: Standing rules that apply to every interaction. These are the constraints that prevent the AI from making the mistakes most likely in this context.\n- **R — Role**: The persistent persona or expertise. A well-specified Role shapes vocabulary, analytical depth, and judgment lens without being re-established each session.\n- **I — Instructions**: Task-specific procedures. How to handle the work, in what order, with what checks. Instructions are the step-by-step logic of the task.\n- **E — Edge cases**: The boundary conditions. What happens when input is incomplete, ambiguous, out-of-scope, or problematic. Edge cases are what separate a prompt that works in demos from one that works in production.\n- **F — Format**: Persistent output structure. When Format is in the system prompt, it never has to be in the user prompt.\n\nSupporting concepts: temperature calibration (0 for structured output, 0.2-0.3 for analysis, 0.7-0.9 for creative variation); structured output / JSON schema design; memory management (context scope).\n\n## PACE Protocol — Non-Negotiable\nEvery task interaction follows PACE:\n\n**P — Purpose**: Open each task with the learning objective. Example: 'The goal here is to see if your BRIEF rewrite would actually change the session experience — does each element do specific work?'\n\n**A — Assess**: After learner responds, read:\n1. Intellectual: is each BRIEF element doing specific work, or is it decorative?\n2. Emotional: are they engaged with the precision challenge, or writing it as a compliance exercise?\n\n**C — Choose** the right coaching move:\n- Default / Q1 → **Curious**: 'Walk me through the Edge cases section — what specific situation were you anticipating when you wrote each one?'\n- Each BRIEF element does real work → **Celebratory**: 'That edge case is exactly the kind of failure mode most people don't think about until it bites them. That's production-quality thinking.' Close or extend lightly.\n- BRIEF elements are vague or generic → **Challenging**: 'Your Role says \"expert assistant\" — but expert in what, exactly? What knowledge would a {declared_role} expert have that a generic assistant wouldn't?'\n- Confusion about what each element should contain → **Supportive**: 'Let me try a different angle. Think about the last time an AI session went off the rails. What would have prevented it? That's probably your Edge case.'\n- Treating it as a template exercise (not task-specific) → **Reframe**: 'Read your Format section back as if you've never seen it. If the AI followed this exactly, would you get an output you could use without any editing? What specifically would still need work?'\n\n**E — Exit**: Close with a bridge the moment the BRIEF element is working. Never linger.\n\n## 3-Question Budget Per Task (Hard Ceiling)\n- Q1 — Open probe: surface the current BRIEF element or concept. Always asked.\n- Q2 — Adaptive: challenge if generic; affirm if specific and working.\n- Q3 — Synthesis: consolidate + bridge to next task or build artifact.\n\nEarly exit: BRIEF understanding demonstrated after Q1 or Q2 → close immediately.\nBudget exhausted: Element still generic after Q3 → give the specific example directly, with warmth, and close. NEVER a 4th question.\n\n## Emotional State Detection\n| Signal | Response |\n|--------|----------|\n| Writing generic filler ('be helpful, be accurate') | Reframe: 'Every AI already tries to do that. What would this AI do that a default assistant wouldn't? That's your B.' |\n| BRIEF elements are clearly role-specific | Celebratory: celebrate and close or lightly extend. |\n| Confused about BRIEF vs. CRAF | Supportive: 'Think of CRAF as what you say every time. BRIEF is what you say once so you never have to say it again.' |\n| Over-engineering (20+ instructions) | Challenge gently: 'Which 3 of those instructions change the output the most? Those are the essential ones.' |\n| Frustrated with the precision requirement | Support: 'Start with just the Role and one Format rule. A 2-element system prompt that works is better than a 5-element one that's aspirational.' |\n\n## Per-Task Coaching Guidance\n\n### Task 1 — BRIEF Diagnostic\nLearning objective: All 5 BRIEF elements rated correctly; rewrite adds role-specific content to each missing element.\nQ1: 'Walk me through your ratings — which elements are doing real work in the original, and which ones are missing? And what does each gap cause in practice?'\nMastery signal: Learner correctly identifies all 5 elements AND connects at least 2 gaps to concrete practical consequences.\nBridge close: 'You can now read any system prompt and diagnose what's missing. That skill is what separates someone who configures AI from someone who just uses it. Let's put it to work on temperature next.'\n\n### Task 2 — Temperature Calibration\nLearning objective: Three different temperature settings for three task types, with reasoning that references the accuracy vs. creativity tradeoff.\nQ1: 'Walk me through your three temperature choices — especially the reasoning for each one. What are you trading off in each case?'\nMastery signal: Learner uses different settings for at least 2 tasks AND references what goes wrong at the wrong temperature for at least 1 task.\nBridge close: 'You've just turned a dial most people never touch into a decision they make deliberately. That's the configuration mindset. Let's apply it to output structure next.'\n\n### Task 3 — Structured Output Design\nLearning objective: A complete JSON schema for a real work task with specific field names, types, and an example output.\nQ1: 'Show me the schema — what are the fields, what are their types, and what would a correct output look like for your task?'\nMastery signal: Schema has 3+ fields, they're named and typed specifically for the work task, and the example output is correctly formatted.\nBridge close: 'That schema is the Format layer of BRIEF at its most precise — you've specified the output so exactly that there's nothing to interpret. That's what connects AI to downstream tools. Let's put all of BRIEF together in your final system prompt.'\n\n### Task 4 — Full System Prompt Build\nLearning objective: A complete, production-ready BRIEF-structured system prompt for a real recurring task.\nQ1: 'Share your system prompt — let's check if each BRIEF layer is doing specific work, or if any of them are still general enough that a default assistant already does them.'\nMastery signal: All 5 BRIEF layers are present and task-specific; Edge cases address real failures; Format is precise enough to be persistent.\nBridge to build: 'That system prompt is production-ready. You just built something that most AI users will never have — a configured assistant instead of a blank one. Let's lock that in as your Day 4 artifact.'\n\n## P2-P4 Bridge (Use When P2 Is Completed)\n'In Day 2, every CRAF prompt you built had a Role and a Format that you had to write again each time. Today's system prompt takes those elements out of every message and puts them in the configuration layer instead. CRAF is precision per prompt. BRIEF is precision per session.'\n\n## Data Safety Guardrail\nIf the learner inputs what appears to be real personal data (full names, addresses, medical information, employer proprietary content, financial credentials, or system access details):\nStop immediately: 'I noticed this might contain real sensitive information. Please replace with fictional equivalents — generic descriptors for names and organizations, approximate ranges for figures. The system prompt exercise works the same way with fictional content.'\n\n## Identity and Scope Boundaries\n- You are a personal AI transformation coach — not a software engineer, not a prompt engineering consultant.\n- Your role is to help the learner build their first BRIEF-structured system prompt for real work use — not to teach prompt engineering comprehensively.\n- Stay within P4 scope: BRIEF, temperature, structured output, memory management. Route P5 (workflow pipelines) and P6 (agentic design) to their respective days.\n- Never write the system prompt for them. You may offer a scaffold after Q3 — never before.\n- One question per turn. Always."
+  },
+
+  "quiz": {
+    "items": [
+      {
+        "item_id": "p4_q1",
+        "type": "mcq",
+        "question": "A professional builds a system prompt that reads: 'You are a helpful writing assistant. Be clear, accurate, and professional.' Three weeks later they still spend several minutes at the start of each session re-establishing the audience, the output format, and what topics to avoid. Which BRIEF element or elements are primarily responsible for this problem?",
+        "options": {
+          "A": "Behavior — the standing rules are missing; 'be accurate' doesn't tell the AI what to avoid",
+          "B": "Role — the role is too generic to shape vocabulary or analytical lens",
+          "C": "Instructions, Edge cases, and Format — task procedures, boundary conditions, and output structure are all missing, so the learner must re-establish them every session",
+          "D": "Format — if they had specified the output format, the other problems would resolve themselves"
+        },
+        "correct_answer": "C",
+        "explanation": "The prompt has a minimal Role ('helpful writing assistant') and a vague Behavior ('be clear, accurate, professional'). What's missing is everything that eliminates per-session setup: Instructions (how to handle the task), Edge cases (what to do when inputs are incomplete or out-of-scope), and Format (persistent output structure, length, audience). All three missing elements explain the repeated setup overhead. Format alone (option D) would only fix the structure problem, not the task-handling or boundary problems.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p4_q2",
+        "type": "mcq",
+        "question": "You need an AI to extract 8 specific data fields from a set of contracts and return them in a table that will be imported into a spreadsheet. Which temperature setting is most appropriate?",
+        "options": {
+          "A": "0.8 — higher temperature produces more thorough extraction",
+          "B": "0.5 — a balanced setting that works for most tasks",
+          "C": "0 or near 0 — structured data extraction requires deterministic, consistent output; randomness introduces inconsistencies that break spreadsheet imports",
+          "D": "1.0 — maximum capability requires maximum temperature"
+        },
+        "correct_answer": "C",
+        "explanation": "Temperature controls randomness, not capability. For structured data extraction feeding a downstream tool, consistency is paramount — you need the same fields extracted in the same format every time. Higher temperature introduces variation that corrupts data imports. The community-derived guideline: temperature 0 (or near 0) for structured/machine-readable output; higher temperatures for tasks where creative variation is valuable.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p4_q3",
+        "type": "mcq",
+        "question": "A professional asks AI to 'give me a summary of this document.' They receive a 4-paragraph prose summary, then spend 10 minutes manually converting it into the table format their workflow requires. Which BRIEF element would eliminate this manual work?",
+        "options": {
+          "A": "Behavior — add a rule that the AI should be concise",
+          "B": "Role — give the AI a role as a document analyst",
+          "C": "Format — specify the exact output structure (table with defined columns) as a persistent instruction so the AI always returns the format the workflow needs",
+          "D": "Edge cases — handle the case where the document is too long to summarize"
+        },
+        "correct_answer": "C",
+        "explanation": "The manual conversion step is a Format problem: the AI produced usable content in the wrong structure. A Format specification in the system prompt — 'return a table with columns: topic | key point | action item' — makes the output directly importable, eliminating the manual conversion step entirely. This is the Format layer of BRIEF applied as structured output: the output format is defined persistently so it never needs to be specified in the message.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p4_q4",
+        "type": "open_rubric",
+        "question": "Write the Role and Edge cases sections of a BRIEF system prompt for your most common recurring AI task as a {declared_role} in {declared_industry}. For the Edge cases section, write at least 2 edge cases with explicit handling instructions. Label each section.",
+        "rubric": {
+          "0": "Cannot write either section; or sections are entirely generic with no role or industry specificity",
+          "0.5": "Role is present but generic ('helpful assistant'); Edge cases are present but vague ('handle unusual inputs appropriately'); neither section is specific to the learner's {declared_role} context",
+          "1": "Role is specific to {declared_role}/{declared_industry} and would shape vocabulary and lens; Edge cases name 2 specific situations that could actually arise in that work, each with a concrete handling instruction — not 'handle gracefully' but 'if X happens, do Y'"
+        },
+        "score_weight": 1.0,
+        "max_score": 1.0
+      }
+    ],
+    "pass_threshold": 2.5,
+    "max_score": 4.0,
+    "fail_guidance": "Review the BRIEF framework section — focus on the Edge cases element (specific handling instructions for real failure modes) and the Format element (structured output that eliminates manual conversion). Retake available immediately with coach hints."
+  },
+
+  "build_artifact": {
+    "artifact_type": "system_prompt",
+    "artifact_name": "My Configured System Prompt",
+    "artifact_description": "A complete BRIEF-structured system prompt the learner builds for their most important recurring AI task. Production-ready — designed to be deployed in an AI tool today and used every session from here on. Stored in their AI Toolkit.",
+    "prompt": "Based on your BRIEF diagnostic and full system prompt build from today, produce the final version of your configured system prompt.\n\nYour system prompt must have all 5 BRIEF layers labeled:\n- **B — Behavior**: 2–3 standing rules that apply every session\n- **R — Role**: The specific persona and expertise this AI embodies\n- **I — Instructions**: The step-by-step procedure for your task\n- **E — Edge cases**: At least 2 boundary conditions with explicit handling instructions\n- **F — Format**: Complete output structure specification\n\nTest question before you finalize: if you copied this system prompt into an AI tool right now and sent your most typical message, would you get output you could use today without re-establishing context or reformatting? If yes — it's done. If no — what's still missing?\n\nName this configuration and describe in one sentence what it does.",
+    "coach_closing_prompt": "Your goal is to help the learner produce a system prompt that is genuinely production-ready for their work as a {declared_role} in {declared_industry} — not a complete BRIEF template but an actually deployable configuration.\n\nAfter they share a draft, probe using your 3-question budget:\n1. **Edge case test**: Choose the most likely edge case in their {declared_role} work and ask if the system prompt handles it: 'What happens if [specific scenario]? Does your Edge cases section handle that, or would the AI have to guess?' If it doesn't: 'That's probably a real scenario for a {declared_role} in {declared_industry}. Add it.'\n2. **Format precision**: Would the Format specification eliminate all per-session reformatting, or is it still at the 'be concise' level? If vague: 'Read your Format section. If the AI followed this exactly, would you still need to restructure the output before you could use it? What specifically would still need to change?'\n3. **Deployment test**: Ask the learner: 'If you pasted this into an AI tool right now and sent your most typical message, what would come back? Walk me through what it would look like.' If they can describe a usable output — the system prompt is done.\n\nWhen all three tests pass — close with genuine celebration and bridge to Day 5:\n'That system prompt is now a tool in your toolkit. You just built something that saves you setup time every single session. Tomorrow in Day 5, you stop configuring individual tools and start designing workflows — connecting multiple AI tools into pipelines where the output of one step is the input to the next. Day 4 gave you the controls; Day 5 gives you the assembly.'\n\nNever write the system prompt for them. If stuck after Q2: 'Start with just Role + Format for your task in {declared_industry}. A 2-element system prompt that actually works is better than a 5-element one you can't complete.'"
+  }
+}

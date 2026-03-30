@@ -1,48 +1,52 @@
-.claude/settings.local.json
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-.databricks
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Local dev environment variables
-.env
+# testing
+/coverage
 
-# Python
-.venv/
-__pycache__/
-*.pyc
+# next.js
+/.next/
+/out/
 
-# Playwright browser cache
-.playwright-mcp/
+# production
+/build
 
-# AI call logs (local fallback for Phase A)
-logs/
+# misc
+.DS_Store
+*.pem
 
-# Debug / test artifacts
-_setup_result.json
-*.png
-!assets/screenshots/*.png
-content_test/
-console-warnings.log
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# Windows shell artifacts
-nul
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
 
-# GCP local credentials — service-account keys must never be committed
-.gcp/
+# vercel
+.vercel
 
-# Sensitive local files — never commit
-uat_token.txt
-proxy-cert.pem
-
-# Claude Code machine-specific settings
-.claude/settings.json
-
-# Temp atom generation artifacts
-tmp_*.json
-references/zh-ref-raw/
-node_modules/
-
-# Next.js build output
-.next/
-out/
+# typescript
+*.tsbuildinfo
 next-env.d.ts
-tsconfig.tsbuildinfo
+
+# AI / IDE tool directories (local only)
+.agents/
+.claude/
+.gcp/
+.playwright-mcp/
+.vscode/
+
+# Legacy Streamlit completed plans (not relevant to this branch)
+plans/\[C*

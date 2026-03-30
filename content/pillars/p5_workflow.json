@@ -1,0 +1,164 @@
+{
+  "pillar_id": "p5",
+  "pillar_name": "Multi-AI Workflow Design",
+  "pillar_slug": "workflow",
+  "day_number": 5,
+  "framework": "Pipeline",
+  "coaching_vocabulary": {
+    "Pipeline node": "A discrete step in a workflow — one AI tool, one scoped task, one defined output format",
+    "Handoff": "The explicit passing of a step's output as structured input to the next step — never implicit, always designed",
+    "Human checkpoint": "A structural gate where a human must review and approve before the workflow continues — especially before irreversible or external actions",
+    "Structured output": "AI output designed as data (table, numbered list, JSON schema) that feeds the next step directly, without interpretation"
+  },
+  "estimated_minutes": 90,
+  "perishable_content": false,
+  "last_updated": "2026-03",
+  "reading": {
+    "concept_text": "The way most people use AI tools in 2026 is one task at a time: draft this, summarize that, research this other thing. Each interaction is independent. This works — but it leaves the biggest productivity gains untouched. Those gains live in workflow design: connecting AI tools into repeatable pipelines where the output of one step becomes the structured input to the next.\n\n**From tasks to pipelines**\n\nA pipeline is a sequence of discrete steps where each step has a defined AI tool, a specific input, a specific output, and a handoff instruction to the next step. The difference between 'using AI for a task' and 'running an AI pipeline' is explicitness: the pipeline is documented, repeatable, and improvable.\n\nThree core workflow patterns:\n\n- **Sequential chain**: Step 1 produces output A → Step 2 uses A as input to produce B → Step 3 uses B to produce the final deliverable. Each step is narrowly scoped; no single step tries to do the whole job.\n- **Parallel branches + merge**: Multiple AI tasks run independently, then a merge step synthesizes the outputs. Example: a research agent and a data analysis agent run simultaneously, then a synthesis agent combines both results.\n- **Human checkpoint gate**: A point in the pipeline where a human must review and approve before the workflow continues. Not every step needs one — but irreversible actions (sending, publishing, submitting) always do.\n\n**Human-in-the-loop as architecture, not habit**\n\nThe most common workflow design mistake: treating human review as something you do at the end. In a 5-step pipeline with an error at step 2, you've built three more steps on a flawed foundation. Human checkpoints should be placed where error propagation risk is highest — after any step that involves judgment, interpretation, or data transformation — and structurally before any action that reaches external audiences.\n\nRule of thumb: before any output from your pipeline reaches a client, a stakeholder, or a published surface, a human has approved it — not just reviewed it, approved it.\n\n**AI output as structured data**\n\nThe most powerful upgrade to workflow thinking: prompt each step to produce structured output. Unstructured prose requires interpretation before it can be used as input to the next step. Structured outputs — tables, numbered lists, JSON objects, defined schemas — feed directly into the next step without ambiguity.\n\nThe difference: instead of 'summarize this customer feedback,' write 'extract feedback into a table with columns: theme | frequency | representative quote | suggested action.' The table is immediately usable as input to a decision step, a prioritization step, or a drafting step — without translation.\n\n**Workflow documentation**\n\nA documented workflow is a reusable asset. An undocumented one is a one-time operation. Document each workflow with: the task it handles, each step's tool/input/output/checkpoint decision, and a one-line rule for when to use it vs. doing the task manually. Your Day 5 build artifact is the first entry in your personal AI operating system.\n\n**P5 vs P6: the key distinction**\n\nIn P5, you are the orchestrator. You design the pipeline, choose the tools, run each step, and place the checkpoints. AI tools are powerful workers executing under your explicit direction.\n\nIn P6 (Day 6), the AI becomes the orchestrator. You define the goal and constraints; the AI plans its own steps, assigns sub-tasks, and executes. P6 builds directly on P5: you cannot design for AI orchestration if you have not first mastered human orchestration of AI tools. The complexity difference is not speed or accuracy — it is who designs the steps.",
+
+    "good_example": "A content strategist used to spend 4 hours each week on a competitive AI landscape newsletter. Her old approach: one long ChatGPT session asking for everything at once. The output was shallow — it could only go as deep as one prompt allowed. She redesigned it as a 3-step pipeline: Step 1, a research tool (Perplexity) produces a structured list of the week's notable AI developments with one-sentence summaries; Step 2, Claude analyzes the list and produces a 5-item prioritized ranking with brief 'why this matters' annotations; Step 3, Claude drafts the newsletter section in her established voice from the annotated list. One human checkpoint: she reviews and approves the Step 2 prioritization before Step 3 runs. Total AI time: 25 minutes. Her editing time dropped from 90 minutes to 15.",
+
+    "anti_pattern": "A marketing manager needed to produce a full campaign brief — market context, audience analysis, messaging framework, and channel plan. He opened Claude and submitted one prompt: 'Write a complete campaign brief covering market context, audience analysis, messaging, and channel strategy for a new product launch.' The output covered all four sections but at a shallow depth that was unusable without rewriting each section from scratch. He spent 90 minutes editing a document that was wrong in four different ways simultaneously. The fix was not a better prompt — it was redesigning the task as four sequential pipeline steps, each narrowly scoped, with review between them. Four focused prompts at depth outperformed one comprehensive prompt every time.",
+
+    "takeaway": "The shift from task-by-task AI use to workflow design is the shift from a better tool to a different way of working. Design your pipeline explicitly: each step's scope, output format, and handoff instruction. Place human checkpoints before irreversible actions and before outputs that reach external audiences. Your Day 5 build artifact — a documented 3-step workflow — is the first entry in your personal AI operating system."
+  },
+
+  "practice": {
+    "scenario_template": "You are a {declared_role} working in {declared_industry}. {daily_work_desc}. Today you're moving from task-by-task AI use to deliberate pipeline design — building repeatable workflows that produce better outputs than any single prompt could.",
+
+    "tasks": [
+      {
+        "task_id": "p5_t1",
+        "task_number": 1,
+        "title": "Workflow Mapping",
+        "mode": "open",
+        "learning_objective": "Decompose a recurring complex task into a pipeline of 3–5 discrete nodes, each with a defined scope, tool type, output format, and checkpoint decision.",
+        "prompt_template": "Choose a recurring task in your work as a {declared_role} in {declared_industry} that currently takes 30+ minutes and involves multiple distinct sub-tasks. {daily_work_desc}.\n\nBreak it down into a pipeline of 3–5 discrete steps. For each step, specify:\n- What AI tool or model type you'd use (reasoning model / fast model / embedded AI / specialized tool)\n- What the input is (what goes in)\n- What the structured output looks like (what format comes out)\n- Whether a human checkpoint is needed before the next step runs — and why or why not",
+        "rubric": {
+          "0": "Cannot decompose the task; treats it as a single AI interaction; or all steps are the same tool doing similar things",
+          "1": "Identifies 2+ steps but outputs are unstructured prose; checkpoint decisions are either all-or-nothing without reasoning",
+          "2": "3+ steps with distinct scopes; at least 1 structured output format specified; at least 1 checkpoint decision with reasoning",
+          "3": "3–5 steps with distinct scopes, different tool types used appropriately, structured outputs specified, checkpoint placement reasoning tied to irreversibility or error propagation",
+          "4": "All above, plus learner explains the overall workflow logic — why they ordered steps this way, why they chose structured outputs at specific steps, and what the pipeline enables that individual tasks cannot"
+        }
+      },
+      {
+        "task_id": "p5_t2",
+        "task_number": 2,
+        "title": "Human Checkpoint Placement",
+        "mode": "open",
+        "learning_objective": "Identify where human review is structurally required in a pipeline, distinguishing between optional quality checks and mandatory gates before irreversible or external actions.",
+        "prompt_template": "Here is a 4-step AI pipeline built for a {declared_role} in {declared_industry}:\n\nStep 1: AI researches and summarizes 5 recent developments relevant to {declared_industry}\nStep 2: AI analyzes the summaries and identifies the 2 most relevant to your work based on {daily_work_desc}\nStep 3: AI drafts a briefing email to a senior stakeholder based on the Step 2 analysis\nStep 4: AI sends the briefing email to the stakeholder automatically\n\nYour task:\n1. Where would you place mandatory human checkpoints — and where is a checkpoint optional or unnecessary?\n2. Where would you remove AI from the loop entirely, if anywhere?\n3. Explain your reasoning for each decision.",
+        "rubric": {
+          "0": "Places a checkpoint after every step with no differentiation; or places no checkpoints at all; or cannot explain why",
+          "1": "Identifies that Step 4 (sending) requires human approval but cannot articulate why that specific step is structurally different from the others",
+          "2": "Correctly identifies Step 3→4 as the mandatory gate (before external action); explains irreversibility as the criterion; optionally flags Step 2 as a quality checkpoint",
+          "3": "All above, plus argues for removing Step 4 entirely from AI execution (AI drafts, human sends) and explains why the 'send' action should never be fully automated for stakeholder communication",
+          "4": "All above, plus articulates a general principle: human checkpoints belong at two structural positions — (a) before irreversible external actions, (b) after judgment/interpretation steps where AI is most likely to be wrong in non-obvious ways — and applies this principle to the pipeline"
+        }
+      },
+      {
+        "task_id": "p5_t3",
+        "task_number": 3,
+        "title": "Structured Output Design",
+        "mode": "open",
+        "learning_objective": "Redesign a prompt to produce structured output that feeds directly into the next pipeline step without interpretation.",
+        "prompt_template": "Look at the workflow you designed in Task 1. Choose one step where the AI output needs to feed into a subsequent step.\n\nWrite two versions of the prompt for that step:\n- **Version A**: How you would naturally write it — likely producing unstructured prose\n- **Version B**: The structured-output version — redesigned to produce a table, numbered list, or defined schema that the next step can consume directly\n\nThen explain:\n1. What specifically changes between Version A and Version B\n2. Why the structured format makes the handoff to the next step more reliable",
+        "rubric": {
+          "0": "Cannot produce both versions; or both versions produce the same type of output; or structured version is still unstructured prose",
+          "1": "Produces both versions; Version B adds some structure but the schema is vague or incomplete",
+          "2": "Version B has a clear structured format (table with defined columns, or numbered list with consistent schema); explanation correctly identifies what the next step would do with it",
+          "3": "Version B is production-quality and immediately usable as pipeline input; explanation articulates why structure eliminates interpretation overhead at the handoff",
+          "4": "All above, plus learner identifies the specific type of error that unstructured handoffs introduce — e.g., the next step interprets key terms inconsistently, or misses items that are implicit in prose but explicit in a schema — showing they understand the structural benefit, not just the aesthetic one"
+        }
+      },
+      {
+        "task_id": "p5_t4",
+        "task_number": 4,
+        "title": "Full Workflow Documentation",
+        "mode": "open",
+        "learning_objective": "Produce a complete, documented AI workflow that a colleague could follow and that serves as a reusable asset.",
+        "prompt_template": "Document your complete workflow from Tasks 1–3 in a format you could hand to a colleague tomorrow.\n\nYour documentation should include:\n1. **Workflow name** and a one-sentence description of what it produces\n2. **When to use it** (and when to do the task manually instead)\n3. **Each step**: tool type → input → output format → checkpoint decision\n4. **Total estimated time** with AI vs. without AI\n5. **One known limitation**: where could this workflow produce a bad output, and what's your mitigation?\n\nThis becomes your Day 5 build artifact — the first entry in your personal AI operating system.",
+        "rubric": {
+          "0": "Informal notes rather than a usable document; or missing 3+ required sections",
+          "1": "Covers most sections but steps are underspecified; a colleague would need significant clarification",
+          "2": "Complete documentation with all 5 sections; steps are specific enough to follow; time estimate is present",
+          "3": "All above, plus the 'when to use it vs. manually' guidance is specific and shows real judgment; the known limitation is honest and the mitigation is practical",
+          "4": "All above, plus the document is genuinely ready to hand to a colleague — each step's input/output is unambiguous, the checkpoint decisions have explicit criteria, and the limitation/mitigation shows the learner has already run this workflow and learned from it"
+        }
+      }
+    ],
+
+    "coach_system_prompt_template": "You are a personal AI transformation coach. Your learner is a {declared_role} working in {declared_industry}. Their daily work involves: {daily_work_desc}. They are completing Day 5 of their 7-day AI transformation program: the Multi-AI Workflow Design module.\n\n## Prior Program Context\n{prior_pillar_summaries}\nPillar scores to date: {prior_pillar_scores}\n(P5 builds on P2 CRAF skills — each pipeline step requires a well-structured prompt. If P2 is completed: reference it. If P4 is completed: reference configured system prompts as a pipeline accelerator. Calibrate depth accordingly.)\n\n## Your Coaching Framework: Pipeline Design\nGuide the learner through four pipeline vocabulary concepts:\n- **Pipeline node**: A discrete step — one AI tool, one narrowly scoped task, one defined output format. A step that tries to do multiple things is a design smell.\n- **Handoff**: The explicit passing of structured output from one step as the input to the next. Handoffs should never be implicit — the output format of step N must match the expected input format of step N+1.\n- **Human checkpoint**: A structural gate — not a quality aspiration — placed before irreversible actions (sending, publishing, submitting, acting) and after high-judgment steps where AI is most likely to produce errors that compound.\n- **Structured output**: AI output designed as data — table, numbered list, JSON schema — that feeds the next step without interpretation. Structured outputs make handoffs deterministic.\n\n## PACE Protocol — Non-Negotiable\nEvery task coaching interaction follows PACE:\n\n**P — Purpose**: Open each task by stating the learning objective. Example: 'The goal is to see if your pipeline has steps that are truly discrete — each with its own scope, output, and handoff.'\n\n**A — Assess**: After the learner responds, read:\n1. Intellectual: have they genuinely decomposed the task, or is it still one task with labels on it?\n2. Emotional: are they engaged with the design problem, or just listing steps?\n\n**C — Choose** the right coaching move:\n- Default / Q1 → **Curious**: 'Walk me through the pipeline — what does each step hand off to the next?' (Open, exploratory, no pressure.)\n- Pipeline shows real decomposition → **Celebratory**: 'Each step has its own job — that's exactly what makes this reusable. Let's look at your checkpoints next.'\n- Steps are too broad or poorly differentiated → **Challenging**: 'Step 2 is doing three things — analysis, prioritization, and formatting. Which of those is the actual job of this step?'\n- Confusion about structure → **Supportive**: 'Let me anchor this differently. Think of the last time you got a bad AI output. What was the step before it that didn't give the next step what it needed?'\n- Generic or abstract workflow → **Reframe** (sub-move of Challenging): 'This describes a workflow but doesn't name the tools or the output formats. What would you actually open — which tool — to run Step 1?'\n\n**E — Exit**: The moment the task's learning objective is met, close with a bridge and move on. Never linger.\n\n## 3-Question Budget Per Task (Hard Ceiling)\n- Q1 — Open probe: Surface the design. Always asked.\n- Q2 — Adaptive: Challenge a design flaw if shallow; affirm and extend if strong.\n- Q3 — Synthesis: Consolidate + bridge to next task or build artifact.\n\nEarly exit: Objective met after Q1 or Q2 → skip remaining questions, close immediately.\nBudget exhausted: Objective not met after Q3 → give the design insight directly with warmth and close. NEVER ask a 4th question.\n\n## Emotional State Detection\n| Signal | Response |\n|--------|----------|\n| Short answer, no step detail | Reframe: 'What would you literally open first to start this workflow? Name the tool.' |\n| All steps use the same AI tool | Challenge gently: 'Every step uses the same tool — what would have to be true for one step to use a different one?' |\n| Genuinely good pipeline design | Explicit celebration + close. No more questions. |\n| Confused about decomposition | Simplify: 'Take just the first 15 minutes of this task. What's the single thing AI does in those 15 minutes, and what does it hand you?' |\n| Frustrated or overwhelmed | Support: 'Start smaller — a 3-step workflow for one specific sub-task you already know well. We can expand from there.' |\n\n## Per-Task Coaching Guidance\n\n### Task 1 — Workflow Mapping\nLearning objective: 3–5 discrete steps with scoped tasks, appropriate tool types, structured outputs, and checkpoint reasoning.\nQ1: 'Walk me through your pipeline — what are the steps, what does each step produce, and where did you place checkpoints?'\nMastery signal: Steps have distinct scopes using different tool types where appropriate; at least one structured output format is specified; at least one checkpoint has a reason tied to error propagation or irreversibility.\nBridge close: 'You've moved from a task to a pipeline — those steps are now reusable. Let's test how you handle the hardest design question: where does the human go in?'\n\n### Task 2 — Human Checkpoint Placement\nLearning objective: Mandatory checkpoint before external/irreversible action; optional checkpoint after high-judgment step; AI removed from the send action.\nQ1: 'Walk me through your checkpoint decisions — where are they mandatory, where are they optional, and is there anywhere you'd remove AI from the loop entirely?'\nMastery signal: Learner identifies Step 4 (send) as the mandatory gate, reasons from irreversibility, and argues for keeping the send action human-controlled.\nBridge close: 'Human checkpoints before irreversible actions is a structural rule, not a habit — build it into every workflow you design. Now let's look at what makes the handoff between steps reliable.'\n\n### Task 3 — Structured Output Design\nLearning objective: Version B produces a structured format that feeds step N+1 without interpretation; explanation articulates the handoff benefit.\nQ1: 'Show me both versions and explain what changes — specifically, how does Version B make the next step more reliable?'\nMastery signal: Version B has a concrete schema (table with defined columns, or numbered list with consistent fields); explanation references the handoff mechanics, not just 'it looks cleaner.'\nBridge close: 'Structured outputs are what make a pipeline repeatable rather than one-time — the next step always knows what it's getting. Let's bring this into your documented workflow.'\n\n### Task 4 — Full Workflow Documentation\nLearning objective: Complete, colleague-ready documentation with all 5 required sections including honest limitation and mitigation.\nQ1: 'Share your documented workflow — is it ready to hand to a colleague who has never seen it before?'\nMastery signal: All 5 sections present; steps are specific enough to follow; limitation section is honest, not defensive.\nBridge to build: 'That document is now an asset — not a note from today, but a reusable tool. This is what your AI operating system looks like. Let's formalize it as your Day 5 artifact.'\n\n## P5 vs P6 Distinction (Use When Relevant)\nIf the learner asks about autonomous AI or agents: 'What you're designing in P5 is a workflow where you orchestrate each step — you choose the tools, you run the steps, you place the checkpoints. In P6 tomorrow, the AI becomes the orchestrator: you define the goal, and the AI designs the steps itself. P5 is the foundation for P6 — you need to know how pipelines work before you can design systems where AI runs them.'\n\n## Data Safety Guardrail\nIf the learner inputs what appears to be real personal data (full names, addresses, medical information, employer proprietary content, financial credentials, or system access details):\nStop immediately: 'I noticed this might contain real sensitive information. Please replace with fictional equivalents — use generic descriptors for names and organizations, and approximate ranges for figures. The workflow exercise works the same way with fictional content.'\n\n## Identity and Scope Boundaries\n- You are a personal AI transformation coach — not a process consultant, not a software architect.\n- Your role is to help the learner design their first real AI workflow, not to optimize enterprise processes.\n- Stay within P5 scope: pipeline design, handoffs, checkpoints, structured output. Route P6 (autonomous agents) to tomorrow.\n- Never design the workflow for them. You may offer a scaffold after Q3 — never before.\n- One question per turn. Always."
+  },
+
+  "quiz": {
+    "items": [
+      {
+        "item_id": "p5_q1",
+        "type": "mcq",
+        "question": "A 5-step AI pipeline produces a report that will be sent to a client. Where should the mandatory human checkpoint be placed?",
+        "options": {
+          "A": "At the end of Step 1 — always review early outputs before proceeding",
+          "B": "At Step 3 — halfway through the pipeline before the final steps are built on top",
+          "C": "Immediately before any output reaches the external client — before the send or deliver action occurs",
+          "D": "Distributed evenly — checkpoints after Steps 2 and 4"
+        },
+        "correct_answer": "C",
+        "explanation": "Human checkpoints should be placed before irreversible external actions, not at fixed positions. Where exactly that occurs depends on the pipeline structure. For external delivery, the mandatory gate is the step before the output leaves your control — not the middle or the beginning. Options A, B, and D describe quality practices, not structural requirements. A structural checkpoint is mandatory, non-negotiable, and positioned relative to the action that cannot be undone.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p5_q2",
+        "type": "mcq",
+        "question": "You want AI to produce a market analysis that will be used as input to a pricing decision step. Which prompt approach produces the most useful output for that downstream step?",
+        "options": {
+          "A": "'Write a comprehensive market analysis of the competitive landscape in our industry.'",
+          "B": "'Analyze the competitive landscape and return a table with columns: competitor | price range | key differentiator | threat level (High/Medium/Low).'",
+          "C": "'Summarize the key insights from the market in a clear and actionable way.'",
+          "D": "'What should I know about competition in our space?'"
+        },
+        "correct_answer": "B",
+        "explanation": "Option B produces structured output with a defined schema (columns, values, threat levels) that feeds directly into a pricing decision step as data. Options A, C, and D produce prose that requires interpretation before it can be used as pipeline input — adding translation work at the handoff. Structured outputs make handoffs deterministic: the next step always knows what it's receiving and in what format.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p5_q3",
+        "type": "mcq",
+        "question": "What is the most important distinction between a P5 Multi-AI Workflow and a P6 Agentic System?",
+        "options": {
+          "A": "P5 uses multiple AI tools; P6 uses a single more powerful model",
+          "B": "P5 workflows are faster; P6 workflows produce higher quality output",
+          "C": "In P5, the human designs and runs each step; in P6, the AI plans and executes the steps autonomously",
+          "D": "P5 is for individual contributors; P6 is for team-level or organizational workflows"
+        },
+        "correct_answer": "C",
+        "explanation": "The definitional difference is orchestration. In P5, you are the orchestrator — you design the pipeline, choose the tools, run each step, and place the checkpoints. AI tools execute under your direction. In P6, the AI is the orchestrator — you define the goal and the AI designs the steps, assigns sub-tasks, and executes. Speed, quality, and team vs. individual are not the distinguishing factors. Orchestration ownership is.",
+        "score_weight": 1.0
+      },
+      {
+        "item_id": "p5_q4",
+        "type": "open_rubric",
+        "question": "Describe a 3-step AI workflow you could realistically use in your work as a {declared_role}. For each step, specify the input, the output format, and whether a human checkpoint is required. In 2–3 sentences, explain why you placed the human checkpoints where you did.",
+        "rubric": {
+          "0": "Describes a single task rather than a pipeline; or all steps have the same unstructured output; or cannot explain checkpoint placement",
+          "0.5": "Describes 2+ steps but outputs are not structured; checkpoint placement has no reasoning; or checkpoints are placed at every step or at no steps without justification",
+          "1": "Describes 3 distinct steps with defined inputs and structured output formats; places at least one checkpoint with a reason tied to irreversibility, error propagation, or external audience exposure"
+        },
+        "score_weight": 1.0,
+        "max_score": 1.0
+      }
+    ],
+    "pass_threshold": 2.5,
+    "max_score": 4.0,
+    "fail_guidance": "Review the pipeline design section — focus on the difference between 'using AI for a task' and designing a pipeline where each step has a distinct scope, a structured output, and an explicit handoff to the next step. Retake available immediately with coach hints."
+  },
+
+  "build_artifact": {
+    "artifact_type": "workflow_doc",
+    "artifact_name": "My 3-Step AI Workflow",
+    "artifact_description": "A documented, colleague-ready AI workflow the learner builds for a recurring task in their declared role and industry. Includes all steps with tool/input/output/checkpoint specifications, a time estimate, and a known limitation with mitigation. Stored in their AI Toolkit as the foundation of their personal AI operating system.",
+    "prompt": "Based on your workflow design from today's practice, produce the final documentation for your 3-step AI workflow.\n\nYour document should include:\n1. **Workflow name**: a clear, specific name (not 'AI workflow' — the specific task it handles)\n2. **One-sentence description**: what this workflow produces and for whom\n3. **When to use it**: the specific trigger or context — and when to do the task manually instead\n4. **Step-by-step breakdown**: for each step — tool type | input | output format | checkpoint (Yes/No + reason)\n5. **Time comparison**: estimated time with this workflow vs. without AI\n6. **Known limitation**: one scenario where this workflow would produce a bad output, and your mitigation\n\nThis document should be complete enough that a colleague who trusts you could run this workflow without asking you a single question.",
+    "coach_closing_prompt": "Your goal is to help the learner produce a workflow document that is genuinely ready to hand to a colleague — not a design exercise but an operational asset.\n\nAfter they share a draft, probe using your 3-question budget:\n1. **Step specificity**: Are the steps specific enough to execute? Could a colleague run Step 2 without asking which tool to use and what output format to produce? If not: 'Read Step 2 as if you've never seen it. What's the first thing you'd be unsure about?'\n2. **Checkpoint logic**: Is the checkpoint placement reasoned, not reflexive? If checkpoints are everywhere or nowhere without reasoning: 'You placed a checkpoint after Step 1 — what specific type of error are you catching there that wouldn't be caught later?'\n3. **Honest limitation**: Is the known limitation genuine, or is it defensive? If defensive: 'What's the most embarrassing output this workflow could produce — the one that would make you wish you'd reviewed it before it went out? That's your limitation.'\n\nWhen the workflow documentation has all six sections and the checkpoint placement reasoning is solid — close with genuine celebration and bridge to Day 6:\n'That workflow is now an asset. Tomorrow in Day 6, you flip the orchestration: instead of you running each step, the AI designs and runs the steps while you architect the system. Everything you built today is what Day 6 builds on.'\n\nNever write the documentation for them. If stuck after Q2: offer the scaffold — 'Fill in just Step 1 first: tool, input, output format. We'll build from there.'"
+  }
+}
