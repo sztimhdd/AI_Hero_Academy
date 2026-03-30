@@ -48,6 +48,13 @@ jobs:
           docker push "$IMAGE"
           echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
 
+      - name: Reset Cloud Run service (clear any stale secret-ref env vars)
+        run: |
+          gcloud run services delete ${{ env.SERVICE }} \
+            --region=${{ env.REGION }} \
+            --project=${{ env.GCP_PROJECT }} \
+            --quiet 2>/dev/null || true
+
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
