@@ -54,13 +54,13 @@ export async function GET(req: NextRequest) {
               width: 200,
               height: 200,
               background: "linear-gradient(135deg, #4f46e5, #7c3aed)",
-              clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
+              borderRadius: "50%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <div style={{ fontSize: 80 }}>🏆</div>
+            <div style={{ fontSize: 64, fontWeight: 900, color: "white" }}>AI</div>
           </div>
           <div style={{ fontSize: 16, color: "#818cf8", letterSpacing: 2, textTransform: "uppercase" }}>
             AI Hero Academy

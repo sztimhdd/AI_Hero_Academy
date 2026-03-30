@@ -126,6 +126,38 @@ export async function POST(req: Request) {
       });
     }
 
+    // ── Build artifacts (day3, day6, credential personas) ────────────────────
+    type ArtifactType = "checklist" | "prompt_template" | "system_prompt" | "workflow_doc" | "agent_design";
+    const PILLAR_ARTIFACTS: Record<string, { type: ArtifactType; title: string; content: string }> = {
+      p1: { type: "checklist",       title: "AI Mindset Readiness Checklist",    content: "- [ ] Identify 3 repetitive tasks to automate\n- [ ] List current AI tools in use\n- [ ] Define one outcome to improve with AI this week" },
+      p2: { type: "prompt_template", title: "Role-Based Prompt Template",         content: "# Prompt Template\n**Role:** You are a [role] at [company].\n**Task:** [specific task]\n**Constraints:** [limits]\n**Output format:** [format]" },
+      p3: { type: "system_prompt",   title: "Custom AI Assistant System Prompt",  content: "You are a product management assistant.\nAlways structure output as: Summary → Key Points → Next Steps.\nKeep responses concise and actionable." },
+      p4: { type: "workflow_doc",    title: "AI-Augmented Meeting Prep Workflow", content: "1. Pre-meeting: Ask AI to summarise background docs\n2. During: Use AI to capture action items in real-time\n3. Post-meeting: AI drafts follow-up email from notes" },
+      p5: { type: "agent_design",    title: "Stakeholder Update Agent Design",    content: "**Goal:** Automate weekly stakeholder updates\n**Inputs:** JIRA tickets, Slack messages\n**Steps:** Extract blockers → Summarise progress → Draft email\n**Output:** Formatted status update" },
+      p6: { type: "prompt_template", title: "Advanced Multi-Step Prompt Library", content: "## Chain-of-Thought Template\nStep 1: Analyse the problem → [input]\nStep 2: List constraints → [constraints]\nStep 3: Generate 3 options → compare\nStep 4: Recommend best option with rationale" },
+    };
+
+    if (daysComplete > 0) {
+      const completedPillars = pillars.slice(0, daysComplete).filter((pid) => pid !== "capstone");
+      completedPillars.forEach((pillarId, idx) => {
+        const artifactDef = PILLAR_ARTIFACTS[pillarId];
+        if (!artifactDef) return;
+        const artRef = db.collection(COLLECTIONS.BUILD_ARTIFACTS).doc(`${uid}_${pillarId}`);
+        const daysBack = Timestamp.fromMillis(Date.now() - (daysComplete - 1 - idx) * 86400000);
+        batch.set(artRef, {
+          uid,
+          user_email: email,
+          pillar_id: pillarId,
+          day_number: idx + 1,
+          artifact_type: artifactDef.type,
+          artifact_title: artifactDef.title,
+          artifact_content: artifactDef.content,
+          created_at: daysBack,
+          updated_at: daysBack,
+        });
+      });
+    }
+
     // ── Credential (credential persona only) ─────────────────────────────────
     if (p === "credential") {
       const credRef = db.collection(COLLECTIONS.CREDENTIALS).doc(`${uid}_ai_supercharged_intermediate`);
