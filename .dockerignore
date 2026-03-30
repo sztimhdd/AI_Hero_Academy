@@ -1,3 +1,8 @@
+# Legacy Streamlit app (Python files — must not enter Docker context or Next.js
+# will detect pages/ alongside src/app/ and fail with "pages and app directories
+# should be under the same folder")
+pages/
+
 # Git / CI
 .git/
 .github/
