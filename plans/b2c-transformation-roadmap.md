@@ -757,7 +757,42 @@ COMING UP
 ## 6. AI Coach — Core Competitiveness
 
 > The AI coach is the primary differentiator of the product. Not the content, not the credential — the coach.
-> Full gap analysis + PACE model: see `plans/b2c-ai-coach-gap-analysis.md`
+
+### 6.0 Coach Foundation — What Works and What Was Fixed
+
+**Analysis sources (2026-03-26):** `content/practice_scenarios.json` (35 coach prompts) · `content/atomic_modules_v2.json` (21 coach templates) · `utils/ai.py` (scoring + streaming engine)
+
+**Coach strengths preserved from B2B (non-negotiable carry-forwards):**
+
+| Strength | Where it lives |
+|----------|---------------|
+| One-question-per-turn discipline | All coach prompts, explicitly enforced |
+| Task-by-task guidance with specific triggers | Per-pillar system prompts |
+| "Do not write for them" no-answers rule | All prompts |
+| Data safety guardrail pattern | All prompts |
+| Scope boundary enforcement | All prompts |
+| Parameterized template structure `{role}`, `{org_type}`, `{scenario_name}` | Coach system prompt templates |
+| Affirm → probe coaching rhythm | All prompts |
+
+> The core coaching engine (streaming, one-question discipline, task guidance, scope enforcement) is production-quality and fully reusable. Only the content wrapper needed replacing.
+
+**B2C gap analysis — status (analyzed 2026-03-26, resolved through S2–S5):**
+
+| # | Gap | Severity | Status |
+|---|-----|----------|--------|
+| 1 | Employer-anchored identity ("You are an AI coach for Apex Trade Finance…") | High | ✅ Closed S3 — learner-anchored: "personal AI transformation coach… Day N of 7-day program" |
+| 2 | No coaching logic for P1 / P4 / P6 (zero framework coverage) | Critical | ✅ Closed S3 — pillar-generic engine + per-pillar system prompts; MAPS / BRIEF / CREW frameworks (§6.6) |
+| 3 | Fully stateless — Day 4 coach has no knowledge of Days 1–3 | High | ✅ Closed S2+S3 — `learner_model` schema; `prior_pillar_scores` + `summaries` injected at session start |
+| 4 | Scoring is output-rubric only — reasoning quality undetected | Medium | ⬜ **Open** — backend scoring sprint (see ruling below) |
+| 5 | Data safety guardrail calibrated for banking compliance only | Medium | ✅ Closed S3 — universal B2C PII guardrail (personal data / employer IP / medical info) |
+| 6 | No build artifact mechanic — sessions end with nothing tangible | High | ✅ Closed S3+S4 — Build tab + artifact editor in daily module; capstone file upload task |
+| 7 | `_LANG_INSTRUCTION` hardcoded to financial acronyms | Low | ✅ Closed S3+S4 — updated to AI-native terms (LLM, GPT, API, JSON, system prompt, temperature) |
+
+**Gap 4 ruling — reasoning quality scoring:**
+- **Option B rejected** (add "explain your reasoning" quiz item) — UX anti-pattern; forces learners to narrate their own cognition mid-flow.
+- **Option A is correct:** coach conversation transcript already contains the reasoning signal. `/api/quiz/score` or the synthesis agent should extract a reasoning quality modifier from the session transcript and weight the pillar score. No UI change required. Assign to **backend scoring sprint**.
+
+---
 
 ### 6.1 The PACE Coaching Model
 
