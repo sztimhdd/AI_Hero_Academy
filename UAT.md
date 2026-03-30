@@ -29,49 +29,122 @@ This document is the authoritative test specification for the AI Hero Academy MV
 
 ### 0.1 CI/CD Pipeline
 
-Pushes to `main` automatically trigger a Cloud Build → Cloud Run deployment:
+Pushes to `main` trigger `.github/workflows/deploy.yml` (GitHub Actions):
 
 ```
 git push origin main
-  → GitHub webhook → GCP Cloud Build
-  → Docker build (Dockerfile: Python 3.11-slim + Streamlit)
-  → Push image to Artifact Registry
-  → Deploy to Cloud Run service: ai-hero-academy (northamerica-northeast1)
+  → GitHub Actions: build & deploy job
+  → google-github-actions/auth@v2  (credentials_json: GCP_SA_KEY secret)
+  → gcloud auth configure-docker us-central1-docker.pkg.dev
+  → docker build  --build-arg NEXT_PUBLIC_FIREBASE_* (from GitHub Secrets)
+  → docker push   us-central1-docker.pkg.dev/banded-totality-485901/ai-hero-academy/b2c:{sha}
+  → gcloud run services delete ai-hero-academy-b2c  (clears stale secret-ref env vars)
+  → google-github-actions/deploy-cloudrun@v2
+      service:  ai-hero-academy-b2c
+      region:   us-central1
+      flags:    --allow-unauthenticated --port=8080 --memory=1Gi --min-instances=0 --max-instances=3
+      env_vars: FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL,
+                FIREBASE_ADMIN_PRIVATE_KEY, GEMINI_API_KEY, DEMO_TOKEN
 ```
 
-Monitor builds: [GCP Cloud Build Console](https://console.cloud.google.com/cloud-build/builds?project=banded-totality-485901)
+Monitor builds: [GitHub Actions](https://github.com/sztimhdd/AI_Hero_Academy/actions)
 
-Build typically completes in 3–5 minutes.
+Build typically completes in 5–8 minutes. The job uses `concurrency: deploy-production` — concurrent pushes cancel the older run.
+
+**Required GitHub Secrets:**
+
+| Secret | Purpose |
+|--------|---------|
+| `GCP_SA_KEY` | Service account JSON key for `google-github-actions/auth@v2` |
+| `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase client SDK (build-time `--build-arg`) |
+| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | Firebase client SDK |
+| `NEXT_PUBLIC_FIREBASE_APP_ID` | Firebase client SDK |
+| `NEXT_PUBLIC_APP_URL` | Canonical app URL injected at build |
+| `FIREBASE_ADMIN_CLIENT_EMAIL` | Firebase Admin SDK (runtime `env_vars`) |
+| `FIREBASE_ADMIN_PRIVATE_KEY` | Firebase Admin SDK |
+| `GEMINI_API_KEY` | Gemini API calls from API routes |
+| `DEMO_TOKEN` | Private beta `/demo?t=TOKEN` route |
 
 ### 0.2 Two UAT Modes
 
 | Mode | URL | When to use |
 |------|-----|-------------|
-| **Local** | `http://localhost:8501` | Dev iteration, mid-feature testing |
-| **Remote (Cloud Run)** | `https://ai-hero-academy-387141525919.northamerica-northeast1.run.app` | Pre-release gate, post-deploy smoke test |
+| **Local** | `http://localhost:3000` | Dev iteration, mid-feature testing |
+| **Remote (Cloud Run)** | `$(gcloud run services describe ai-hero-academy-b2c --region us-central1 --format "value(status.url)")` | Pre-release gate, post-deploy smoke test |
 
 **Local startup:**
+
 ```bash
-bash run_uat.sh   # sources .env, starts Streamlit on port 8501 with LOCAL_UAT=true
+npm run dev   # Next.js dev server → http://localhost:3000
 ```
 
-**Remote UAT — no setup needed.** Navigate Playwright directly to the Cloud Run URL:
-```python
-browser_navigate(url="https://ai-hero-academy-387141525919.northamerica-northeast1.run.app")
-browser_wait_for(text="AI Hero Academy", time=15)
+Then seed test personas if not already present:
+
+```bash
+npx ts-node scripts/seed-dev.ts
 ```
 
-> **Cold start warning:** Cloud Run scales to zero when idle. First request after idle period takes 10–15 seconds. Always use `browser_wait_for(text="AI Hero Academy", time=15)` before any interaction on remote.
+**Remote UAT — get the URL first:**
+
+```bash
+SERVICE_URL=$(gcloud run services describe ai-hero-academy-b2c \
+  --region us-central1 --project banded-totality-485901 \
+  --format "value(status.url)")
+echo "$SERVICE_URL"
+```
+
+Then navigate Playwright:
+
+```javascript
+mcp__playwright__browser_navigate(url=SERVICE_URL)
+mcp__playwright__browser_wait_for(text="AI Hero", time=20)
+```
+
+> **Cold start warning:** Cloud Run scales to zero when idle. First request after an idle period takes 10–20 seconds. Always use `browser_wait_for(time=20)` before interacting on remote.
 
 ### 0.3 Post-Deploy Smoke Test
 
-After any push to main, run this before full UAT:
-```python
-browser_navigate(url="https://ai-hero-academy-387141525919.northamerica-northeast1.run.app")
-browser_wait_for(text="AI Hero Academy", time=20)
-browser_take_screenshot(filename="post_deploy_smoke.png")
+After any push to `main`, verify the deployment before running Tier 2 UAT:
+
+```bash
+SERVICE_URL=$(gcloud run services describe ai-hero-academy-b2c \
+  --region us-central1 --project banded-totality-485901 \
+  --format "value(status.url)")
+
+# Landing page loads
+curl -sf "$SERVICE_URL" -o /dev/null -w "%{http_code}\n" && echo "T-CR-0 PASS" || echo "T-CR-0 FAIL"
+
+# API health (session endpoint returns 401 without cookie — that's correct)
+curl -sf "$SERVICE_URL/api/auth/session" -o /dev/null -w "%{http_code}\n"
+# Expected: 401 or 405 (not 500 — server is up and routing)
+
+# Tier 3 — share card (Linux/Cloud Run only, font rendering):
+curl -sf "$SERVICE_URL/api/credential/share-card?uid=dev-complete-004" \
+  -o /dev/null -w "%{http_code} %{content_type}\n" && echo "T-CR-1 PASS" || echo "T-CR-1 FAIL"
 ```
-Welcome page renders → deployment succeeded. Hangs or errors → check Cloud Build logs.
+
+Or via Playwright:
+
+```javascript
+mcp__playwright__browser_navigate(url=SERVICE_URL)
+mcp__playwright__browser_wait_for(text="AI Hero", time=20)
+mcp__playwright__browser_take_screenshot(filename="post_deploy_smoke.png", type="png")
+```
+
+Landing page renders → deployment succeeded. Hangs or 500 errors → check [GitHub Actions logs](https://github.com/sztimhdd/AI_Hero_Academy/actions).
+
+### 0.4 Dev Login (LOCAL_DEV only)
+
+The app exposes `/api/auth/dev-login` and `/api/auth/demo-login` when `LOCAL_DEV=true` (set in `.env.local`). These routes are **blocked in production** (Cloud Run does not set `LOCAL_DEV`).
+
+Dev personas seeded by `scripts/seed-dev.ts`:
+
+| Email | State |
+|-------|-------|
+| `day1@dev.test` | Fresh — no onboarding complete |
+| `day3@dev.test` | Days 1–3 done |
+| `day6@dev.test` | Days 1–6 done, capstone unlocked |
+| `complete@dev.test` | Graduated — credential issued |
 
 ---
 
