@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const SESSION_COOKIE_NAME = "__session";
 
 // Routes that don't need auth
-const PUBLIC_PATHS = ["/", "/api/auth/session", "/api/auth/logout", "/api/auth/dev-login", "/demo", "/api/auth/demo-login"];
+const PUBLIC_PATHS = ["/", "/login", "/api/auth/session", "/api/auth/logout", "/api/auth/dev-login", "/demo", "/api/auth/demo-login"];
 
 /**
  * Lightweight Edge-compatible middleware.
@@ -23,9 +23,9 @@ export function middleware(req: NextRequest) {
     pathname.startsWith("/_next/") ||
     pathname.startsWith("/favicon")
   ) {
-    // Optimistic redirect: if cookie exists, send logged-in users away from /
+    // Optimistic redirect: if cookie exists, send logged-in users away from / and /login
     // If the cookie turns out to be invalid, /dashboard will redirect back to /
-    if (pathname === "/") {
+    if (pathname === "/" || pathname === "/login") {
       const sessionCookie = req.cookies.get(SESSION_COOKIE_NAME)?.value;
       if (sessionCookie) {
         return NextResponse.redirect(new URL("/dashboard", req.url));

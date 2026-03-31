@@ -8,6 +8,14 @@ export const en = {
   "landing.signin_linkedin": "Continue with LinkedIn",
   "landing.terms": "By signing in you agree to our Terms of Service and Privacy Policy.",
   "landing.lang_toggle": "中文",
+  "landing.cta": "Start Free Today",
+  "landing.free_badge": "Free · Bilingual · Credentialed",
+  "landing.feature_pillars": "6 AI Pillars",
+  "landing.feature_pillars_desc": "Structured skill-building across the full AI stack",
+  "landing.feature_coach": "AI Coach",
+  "landing.feature_coach_desc": "Personalized coaching after every practice session",
+  "landing.feature_credential": "Credential",
+  "landing.feature_credential_desc": "Earn a shareable, verifiable AI certificate",
 
   // Onboarding
   "onboarding.step": "Step {current} of {total}",

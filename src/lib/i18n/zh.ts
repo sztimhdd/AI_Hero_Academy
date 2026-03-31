@@ -1,12 +1,20 @@
 // Sprint 2: placeholder ZH copy. Full translation in Sprint 4.
 export const zh = {
-  "landing.tagline": "7天掌握AI",
-  "landing.subtitle": "一个结构化的计划，帮助你将AI融入日常工作——从基础到自信实践。",
+  "landing.tagline": "7天掌握职场AI",
+  "landing.subtitle": "结构化项目，帮你将AI真正融入日常工作——从零基础到自信实践。",
   "landing.signin_google": "使用 Google 登录",
   "landing.signin_facebook": "使用 Facebook 登录",
   "landing.signin_linkedin": "使用 LinkedIn 登录",
   "landing.terms": "登录即表示您同意我们的服务条款和隐私政策。",
   "landing.lang_toggle": "English",
+  "landing.cta": "免费开始",
+  "landing.free_badge": "免费 · 中英双语 · 颁发证书",
+  "landing.feature_pillars": "6大AI技能支柱",
+  "landing.feature_pillars_desc": "覆盖AI全栈能力的结构化技能体系",
+  "landing.feature_coach": "AI学习教练",
+  "landing.feature_coach_desc": "每次练习后均有个性化AI辅导",
+  "landing.feature_credential": "职业认证",
+  "landing.feature_credential_desc": "获得可分享、可验证的AI技能证书",
 
   "onboarding.step": "第 {current} 步，共 {total} 步",
   "onboarding.next": "下一步 →",

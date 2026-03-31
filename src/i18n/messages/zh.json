@@ -19,7 +19,7 @@
   "dashboard": {
     "welcomeBack": "欢迎回来，{name}",
     "subtitle": "你的AI转型之旅仍在继续。",
-    "streakDays": "连续 {count} 天",
+    "streakDays": "天连续打卡",
     "streakActiveToday": "今日已学习 ✓",
     "streakAtRisk": "⚠ 今天完成一个模块以保持连续记录",
     "journeyTitle": "7天学习之旅",
@@ -48,7 +48,8 @@
     "badgeQuizScore": "测验得分：{score}%",
     "artifactViewPrompt": "查看 →",
     "toggleLang": "中文",
-    "toggleLangZh": "EN"
+    "toggleLangZh": "EN",
+    "viewSkillsProfile": "查看技能图谱"
   },
   "onboarding": {
     "step1": {
@@ -190,6 +191,29 @@
       "p4": "AI 配置能力",
       "p5": "AI 工作流",
       "p6": "智能体系统"
+    }
+  },
+  "profile": {
+    "title": "我的AI技能图谱",
+    "backToDashboard": "← 返回学习面板",
+    "role": "职位",
+    "industry": "行业",
+    "lastAssessed": "最近测评",
+    "noDiagnostic": "完成入学诊断后，你的技能图谱将显示在这里。",
+    "overallScoreTitle": "综合评分",
+    "radarTitle": "各领域得分",
+    "gapMapTitle": "技能缺口分析",
+    "historyTitle": "测评历史",
+    "gapCritical": "亟待提升",
+    "gapNeedsWork": "有待加强",
+    "gapOnTrack": "表现良好",
+    "radarLabel": {
+      "p1": "AI基础",
+      "p2": "Prompting",
+      "p3": "工具",
+      "p4": "配置",
+      "p5": "工作流",
+      "p6": "智能体"
     }
   }
 }

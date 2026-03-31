@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { DayArcTimeline } from "./components/DayArcTimeline";
-import { PillarBadges } from "./components/PillarBadges";
 import { StreakCounter } from "./components/StreakCounter";
 import { ArtifactGallery } from "./components/ArtifactGallery";
 import { ProfilePill } from "./components/ProfilePill";
@@ -58,19 +58,23 @@ export function DashboardClient({
             {t("welcomeBack", { name: user.display_name || userEmail.split("@")[0] })}
           </h1>
           <p className="text-slate-400 mt-1 text-sm">{t("subtitle")}</p>
+          <Link
+            href="/profile"
+            className="inline-flex items-center gap-1 text-xs text-teal-400 hover:text-teal-300 mt-2 transition-colors"
+          >
+            {t("viewSkillsProfile")} →
+          </Link>
         </div>
 
-        {/* Streak */}
+        {/* Streak + Pillar Badges */}
         <StreakCounter
           streakDays={user.streak_days}
           lastActiveDate={user.last_active_date}
+          progress={progress}
         />
 
         {/* 7-Day Arc */}
         <DayArcTimeline progress={progress} />
-
-        {/* Pillar Badges */}
-        <PillarBadges progress={progress} />
 
         {/* Build Artifacts */}
         <ArtifactGallery artifacts={artifacts} />

@@ -19,7 +19,7 @@
   "dashboard": {
     "welcomeBack": "Welcome back, {name}",
     "subtitle": "Your AI transformation journey continues.",
-    "streakDays": "{count} day streak",
+    "streakDays": "day streak",
     "streakActiveToday": "Active today ✓",
     "streakAtRisk": "⚠ Complete a module today to keep your streak",
     "journeyTitle": "Your 7-Day Journey",
@@ -48,7 +48,8 @@
     "badgeQuizScore": "Quiz score: {score}%",
     "artifactViewPrompt": "View →",
     "toggleLang": "中文",
-    "toggleLangZh": "EN"
+    "toggleLangZh": "EN",
+    "viewSkillsProfile": "View Skills Profile"
   },
   "onboarding": {
     "step1": {
@@ -190,6 +191,29 @@
       "p4": "AI Configuration",
       "p5": "AI Workflows",
       "p6": "Agentic Systems"
+    }
+  },
+  "profile": {
+    "title": "Your AI Skills Profile",
+    "backToDashboard": "← Back to Dashboard",
+    "role": "Role",
+    "industry": "Industry",
+    "lastAssessed": "Last assessed",
+    "noDiagnostic": "Complete the onboarding diagnostic to see your skill profile.",
+    "overallScoreTitle": "Overall Score",
+    "radarTitle": "Domain Scores",
+    "gapMapTitle": "Your Gap Map",
+    "historyTitle": "Assessment History",
+    "gapCritical": "Critical Gap",
+    "gapNeedsWork": "Needs Work",
+    "gapOnTrack": "On Track",
+    "radarLabel": {
+      "p1": "Foundations",
+      "p2": "Prompting",
+      "p3": "Tools",
+      "p4": "Config",
+      "p5": "Workflows",
+      "p6": "Agentic"
     }
   }
 }
