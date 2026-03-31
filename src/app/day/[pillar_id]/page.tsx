@@ -4,7 +4,7 @@ import { getAuthFromCookies } from "@/lib/auth/verify";
 import { getUser, getTrainingProgressDoc } from "@/lib/firestore/db";
 import { loadPillarContent } from "@/lib/content/loadPillar";
 import { loadCapstoneContent } from "@/lib/content/loadCapstone";
-import { fillScenario } from "@/lib/content/capstoneUtils";
+import { fillScenario, fillSectionPrompt } from "@/lib/content/capstoneUtils";
 import { DayPageClient } from "./DayPageClient";
 import { CapstonePageClient } from "./CapstonePageClient";
 import type { Timestamp } from "firebase-admin/firestore";
@@ -98,6 +98,21 @@ export default async function DayPage({ params }: PageProps) {
     redirect("/dashboard");
   }
 
+  // Fill user-specific placeholders in practice scenario and task prompts
+  const role = user.declared_role ?? "professional";
+  const industry = user.declared_industry ?? "their industry";
+  const dailyWork = user.daily_work_desc;
+  const filledScenario = fillScenario(
+    pillarContent.practice.scenario_template,
+    role,
+    industry,
+    dailyWork
+  );
+  const filledTasks = pillarContent.practice.tasks.map((task) => ({
+    ...task,
+    prompt_template: fillSectionPrompt(task.prompt_template, role, industry),
+  }));
+
   const serializedProgress: SerializedProgress = {
     is_locked: progress.is_locked,
     reading_completed_at: tsToIso(
@@ -131,6 +146,8 @@ export default async function DayPage({ params }: PageProps) {
       uid={uid}
       userEmail={userEmail}
       displayName={user.display_name}
+      practiceScenario={filledScenario}
+      practiceTasks={filledTasks}
     />
   );
 }

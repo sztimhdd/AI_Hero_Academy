@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { PillarContent } from "@/lib/content/loadPillar";
+import type { PillarContent, PracticeTask } from "@/lib/content/loadPillar";
 import type { SerializedProgress } from "./page";
 import { ReadingSection } from "./ReadingSection";
 import { PracticeSection } from "./PracticeSection";
@@ -17,6 +17,8 @@ interface Props {
   uid: string;
   userEmail: string;
   displayName: string;
+  practiceScenario: string;
+  practiceTasks: PracticeTask[];
 }
 
 function deriveInitialTab(p: SerializedProgress): Tab {
@@ -31,6 +33,8 @@ export function DayPageClient({
   initialProgress,
   pillarId,
   userEmail,
+  practiceScenario,
+  practiceTasks,
 }: Props) {
   const [progress, setProgress] = useState(initialProgress);
   const [activeTab, setActiveTab] = useState<Tab>(deriveInitialTab(initialProgress));
@@ -139,7 +143,8 @@ export function DayPageClient({
         )}
         {activeTab === "practice" && (
           <PracticeSection
-            tasks={pillarContent.practice.tasks}
+            scenario={practiceScenario}
+            tasks={practiceTasks}
             buildArtifactConfig={pillarContent.build_artifact}
             pillarId={pillarId}
             userEmail={userEmail}

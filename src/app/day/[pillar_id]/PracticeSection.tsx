@@ -6,6 +6,7 @@ import type { CoachMessage } from "@/lib/coach/types";
 import type { CoachStreamEvent } from "@/lib/coach/types";
 
 interface Props {
+  scenario: string;
   tasks: PracticeTask[];
   buildArtifactConfig: BuildArtifactConfig;
   pillarId: string;
@@ -28,6 +29,7 @@ function nextId() {
 }
 
 export function PracticeSection({
+  scenario,
   tasks,
   buildArtifactConfig,
   pillarId,
@@ -262,6 +264,14 @@ export function PracticeSection({
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Scenario context card — always visible */}
+      <div className="rounded-xl border border-amber-500/25 bg-amber-500/8 p-4">
+        <p className="text-xs text-amber-400/80 uppercase tracking-widest font-semibold mb-2">
+          Your Scenario
+        </p>
+        <p className="text-slate-200 text-sm leading-relaxed italic">{scenario}</p>
+      </div>
+
       {/* Task stepper */}
       <div className="flex gap-2 flex-wrap">
         {tasks.map((task, idx) => (
@@ -282,23 +292,35 @@ export function PracticeSection({
         ))}
       </div>
 
-      {/* Current task info + turn counter */}
+      {/* Current task: objective + full prompt (the concrete instructions/content) */}
       {currentTask && !allTasksDone && (
-        <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-start justify-between gap-4">
-          <div>
-            <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
-              Task {currentTaskIdx + 1} of {tasks.length}
-            </p>
-            <p className="text-slate-200 text-sm font-medium">{currentTask.learning_objective}</p>
+        <div className="border border-white/10 rounded-xl overflow-hidden">
+          {/* Header row: objective + turn counter */}
+          <div className="bg-white/5 px-4 py-3 flex items-start justify-between gap-4">
+            <div>
+              <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">
+                Task {currentTaskIdx + 1} of {tasks.length}
+              </p>
+              <p className="text-slate-200 text-sm font-medium">{currentTask.learning_objective}</p>
+            </div>
+            <div className="shrink-0 text-right">
+              <p className="text-xs text-slate-500">Questions</p>
+              <p className="text-blue-400 font-semibold text-sm">
+                {currentTurnCount + 1} of 3
+              </p>
+              {questionsRemaining === 0 && (
+                <p className="text-xs text-amber-400 mt-0.5">Last question</p>
+              )}
+            </div>
           </div>
-          <div className="shrink-0 text-right">
-            <p className="text-xs text-slate-500">Questions</p>
-            <p className="text-blue-400 font-semibold text-sm">
-              {currentTurnCount + 1} of 3
+          {/* Task prompt — the concrete instructions and sample content to work with */}
+          <div className="border-t border-white/8 bg-slate-900/40 px-4 py-3">
+            <p className="text-xs text-slate-500 uppercase tracking-widest font-semibold mb-2">
+              Task Instructions
             </p>
-            {questionsRemaining === 0 && (
-              <p className="text-xs text-amber-400 mt-0.5">Last question</p>
-            )}
+            <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+              {currentTask.prompt_template}
+            </p>
           </div>
         </div>
       )}
@@ -320,6 +342,7 @@ export function PracticeSection({
             className="w-full bg-slate-900/60 border border-white/10 rounded-lg p-4 text-slate-200 text-sm placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-y"
           />
           <button
+            type="button"
             onClick={handleFinishPractice}
             disabled={saving}
             className="bg-blue-600 hover:bg-blue-500 disabled:opacity-60 text-white font-semibold px-8 py-3 rounded-xl transition-colors"
@@ -366,6 +389,7 @@ export function PracticeSection({
             className="flex-1 bg-slate-900/60 border border-white/10 rounded-xl px-4 py-3 text-slate-200 text-sm placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none disabled:opacity-50"
           />
           <button
+            type="button"
             onClick={sendMessage}
             disabled={isStreaming || !inputValue.trim()}
             className="shrink-0 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-medium px-5 py-3 rounded-xl transition-colors h-fit"
