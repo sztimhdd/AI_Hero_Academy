@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { Timestamp } from "firebase-admin/firestore";
 import { getAuthFromCookies } from "@/lib/auth/verify";
-import { upsertTrainingProgress } from "@/lib/firestore/db";
+import { upsertTrainingProgress, getUser } from "@/lib/firestore/db";
 import { loadCapstoneContent } from "@/lib/content/loadCapstone";
 
 const GEMINI_MODEL = "gemini-2.0-flash";
@@ -144,7 +144,8 @@ export async function POST(req: NextRequest) {
     declared_industry?: string;
   };
 
-  const capstone = loadCapstoneContent();
+  const userProfile = await getUser(uid);
+  const capstone = loadCapstoneContent(userProfile?.lang ?? "en");
   const rubric1 = capstone.sections[0]?.coach_rubric ?? {};
   const rubric2 = capstone.sections[1]?.coach_rubric ?? {};
 

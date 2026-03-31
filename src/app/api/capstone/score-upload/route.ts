@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getAuthFromCookies } from "@/lib/auth/verify";
+import { getUser } from "@/lib/firestore/db";
 import { loadCapstoneContent } from "@/lib/content/loadCapstone";
 
 const GEMINI_MODEL = "gemini-2.0-flash";
@@ -14,8 +15,10 @@ const GEMINI_URL = (key: string) =>
   `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${key}`;
 
 export async function POST(req: NextRequest) {
+  let uid: string;
   try {
-    await getAuthFromCookies(await cookies());
+    const auth = await getAuthFromCookies(await cookies());
+    uid = auth.uid;
   } catch {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -37,7 +40,8 @@ export async function POST(req: NextRequest) {
     declared_industry?: string;
   };
 
-  const capstone = loadCapstoneContent();
+  const userProfile = await getUser(uid);
+  const capstone = loadCapstoneContent(userProfile?.lang ?? "en");
   const task4 = capstone.sections[3]!;
   const rubric = task4.coach_rubric ?? {};
 

@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { Timestamp } from "firebase-admin/firestore";
 import { getAuthFromCookies } from "@/lib/auth/verify";
-import { createCoachSession } from "@/lib/firestore/db";
+import { createCoachSession, getUser } from "@/lib/firestore/db";
 import { loadCapstoneContent } from "@/lib/content/loadCapstone";
 
 const CAPSTONE_SYSTEM_PROMPT = (role: string, industry: string) => `
@@ -46,7 +46,8 @@ export async function POST(req: NextRequest) {
   const { declaredRole = "professional", declaredIndustry = "their industry" } =
     (await req.json()) as { declaredRole?: string; declaredIndustry?: string };
 
-  const capstone = loadCapstoneContent();
+  const userProfile = await getUser(uid);
+  const capstone = loadCapstoneContent(userProfile?.lang ?? "en");
   const systemPrompt = CAPSTONE_SYSTEM_PROMPT(declaredRole, declaredIndustry);
   const roleContext = `${declaredRole} in ${declaredIndustry}`;
 

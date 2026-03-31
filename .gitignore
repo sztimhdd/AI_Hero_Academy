@@ -50,3 +50,10 @@ next-env.d.ts
 
 # Legacy Streamlit completed plans (not relevant to this branch)
 plans/\[C*
+
+# UAT / Playwright screenshot artifacts (test run outputs, not source)
+uat-*.png
+uat-*.jpg
+
+# Test / scratch assets
+public/test-diagram.png
