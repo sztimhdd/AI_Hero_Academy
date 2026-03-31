@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Reading module gradient utilities */
+.reading-progress-fill {
+  background: linear-gradient(90deg, #38bdf8, #8b5cf6, #f43f5e);
+}
+.reading-temp-scale {
+  background: linear-gradient(90deg, #38bdf8 0%, #8b5cf6 40%, #f43f5e 100%);
+}
+.reading-cta-btn {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
