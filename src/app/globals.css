@@ -35,3 +35,20 @@ body {
 .reading-cta-btn {
   background: linear-gradient(135deg, #3b82f6, #8b5cf6);
 }
+
+/* Day card entrance animation */
+@keyframes daycard-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.daycard-enter {
+  animation: daycard-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+/* Staggered delays for 7 cards */
+.daycard-delay-0 { animation-delay: 0ms; }
+.daycard-delay-1 { animation-delay: 55ms; }
+.daycard-delay-2 { animation-delay: 110ms; }
+.daycard-delay-3 { animation-delay: 165ms; }
+.daycard-delay-4 { animation-delay: 220ms; }
+.daycard-delay-5 { animation-delay: 275ms; }
+.daycard-delay-6 { animation-delay: 330ms; }
