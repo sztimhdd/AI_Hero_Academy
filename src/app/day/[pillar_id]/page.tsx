@@ -63,9 +63,11 @@ export default async function DayPage({ params }: PageProps) {
     redirect("/onboarding");
   }
 
+  const lang = user.lang ?? "en";
+
   // ── Capstone branch ─────────────────────────────────────────────────────────
   if (pillar_id === "capstone") {
-    const capstone = loadCapstoneContent();
+    const capstone = loadCapstoneContent(lang);
     const scenario = fillScenario(
       capstone.scenario_template,
       user.declared_role ?? "professional",
@@ -91,7 +93,7 @@ export default async function DayPage({ params }: PageProps) {
   // ── Regular day branch ──────────────────────────────────────────────────────
   let pillarContent;
   try {
-    pillarContent = loadPillarContent(pillar_id);
+    pillarContent = loadPillarContent(pillar_id, lang);
   } catch {
     redirect("/dashboard");
   }

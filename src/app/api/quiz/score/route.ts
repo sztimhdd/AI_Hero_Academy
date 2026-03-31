@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { Timestamp } from "firebase-admin/firestore";
 import { getAuthFromCookies } from "@/lib/auth/verify";
-import { upsertTrainingProgress, logAiCall } from "@/lib/firestore/db";
+import { upsertTrainingProgress, logAiCall, getUser } from "@/lib/firestore/db";
 import { loadPillarContent } from "@/lib/content/loadPillar";
 import type { PillarId } from "@/lib/firestore/types";
 
@@ -102,7 +102,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "pillar_id and mcq_answers required" }, { status: 400 });
   }
 
-  const pillarContent = loadPillarContent(pillar_id);
+  const userProfile = await getUser(uid);
+  const pillarContent = loadPillarContent(pillar_id, userProfile?.lang ?? "en");
   const { items, pass_threshold, max_score, fail_guidance } = pillarContent.quiz;
 
   let totalScore = 0;

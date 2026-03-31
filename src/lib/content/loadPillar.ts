@@ -85,20 +85,37 @@ const PILLAR_FILE_MAP: Partial<Record<PillarId, string>> = {
 
 /**
  * Loads and returns the content for a given pillar.
- * Throws if the pillar JSON does not exist (i.e. Sprint 3 only ships p1).
+ * When lang is "zh", loads from content/zh/pillars/ with silent EN fallback.
+ * Throws if the EN pillar JSON does not exist.
  */
-export function loadPillarContent(pillarId: string): PillarContent {
+export function loadPillarContent(
+  pillarId: string,
+  lang: "en" | "zh" = "en"
+): PillarContent {
   const slug = PILLAR_FILE_MAP[pillarId as PillarId];
   if (!slug) {
     throw new Error(`Unknown pillar: ${pillarId}`);
   }
 
-  const filePath = path.join(process.cwd(), "content", "pillars", `${slug}.json`);
+  const enPath = path.join(process.cwd(), "content", "pillars", `${slug}.json`);
 
-  if (!fs.existsSync(filePath)) {
+  if (!fs.existsSync(enPath)) {
     throw new Error(`Pillar content not yet available: ${pillarId}`);
   }
 
-  const raw = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(raw) as PillarContent;
+  if (lang === "zh") {
+    const zhPath = path.join(
+      process.cwd(),
+      "content",
+      "zh",
+      "pillars",
+      `${slug}.json`
+    );
+    if (fs.existsSync(zhPath)) {
+      return JSON.parse(fs.readFileSync(zhPath, "utf-8")) as PillarContent;
+    }
+    // ZH file not yet available — fall back to EN silently
+  }
+
+  return JSON.parse(fs.readFileSync(enPath, "utf-8")) as PillarContent;
 }

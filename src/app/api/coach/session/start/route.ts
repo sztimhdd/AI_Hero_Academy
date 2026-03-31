@@ -28,19 +28,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "pillar_id required" }, { status: 400 });
   }
 
-  // Load pillar content
-  let pillarContent;
-  try {
-    pillarContent = loadPillarContent(pillar_id);
-  } catch {
-    return NextResponse.json({ error: "Pillar not available" }, { status: 404 });
-  }
-
-  // Load user profile and learner model in parallel
+  // Load user profile and learner model first (need lang for content selection)
   const [profile, learnerModel] = await Promise.all([
     getUser(uid),
     getLearnerModel(uid),
   ]);
+
+  // Load pillar content (lang-aware: ZH if available, EN fallback)
+  let pillarContent;
+  try {
+    pillarContent = loadPillarContent(pillar_id, profile?.lang ?? "en");
+  } catch {
+    return NextResponse.json({ error: "Pillar not available" }, { status: 404 });
+  }
 
   if (!profile) {
     return NextResponse.json({ error: "Profile not found" }, { status: 404 });

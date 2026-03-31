@@ -39,21 +39,37 @@ export interface CapstoneContent {
   sections: CapstoneSection[];
 }
 
-let _cached: CapstoneContent | null = null;
+const _cache: Partial<Record<"en" | "zh", CapstoneContent>> = {};
 
-export function loadCapstoneContent(): CapstoneContent {
-  if (_cached) return _cached;
-  const filePath = path.join(
-    process.cwd(),
-    "content",
-    "pillars",
-    "capstone.json"
-  );
-  if (!fs.existsSync(filePath)) {
+/**
+ * Loads the capstone content for the given language.
+ * Falls back to EN if the ZH file is not yet available.
+ */
+export function loadCapstoneContent(lang: "en" | "zh" = "en"): CapstoneContent {
+  if (_cache[lang]) return _cache[lang]!;
+
+  const enPath = path.join(process.cwd(), "content", "pillars", "capstone.json");
+  if (!fs.existsSync(enPath)) {
     throw new Error("Capstone content not found");
   }
-  _cached = JSON.parse(fs.readFileSync(filePath, "utf-8")) as CapstoneContent;
-  return _cached;
+
+  if (lang === "zh") {
+    const zhPath = path.join(
+      process.cwd(),
+      "content",
+      "zh",
+      "pillars",
+      "capstone.json"
+    );
+    if (fs.existsSync(zhPath)) {
+      _cache.zh = JSON.parse(fs.readFileSync(zhPath, "utf-8")) as CapstoneContent;
+      return _cache.zh;
+    }
+    // ZH file not yet available — fall back to EN silently
+  }
+
+  _cache.en = JSON.parse(fs.readFileSync(enPath, "utf-8")) as CapstoneContent;
+  return _cache.en;
 }
 
 // Note: fillScenario and fillSectionPrompt are in capstoneUtils.ts (no Node.js deps)
